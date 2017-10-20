@@ -24,3 +24,5 @@
     + Video que muestra como [realizar](https://youtu.be/lDp5OJzeG34) el ejercicio 3 de la clase.
 - [Clase 4](http://rpubs.com/derek_corcoran/Clase4). También puedes ver el [video](https://youtu.be/miqDWpVEMRg) de la clase.
 - [Clase 5](http://rpubs.com/derek_corcoran/Clase5). También puedes ver el [video](https://youtu.be/bvzi88XRq4c) de la clase.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bvzi88XRq4c" frameborder="0" allowfullscreen></iframe>
