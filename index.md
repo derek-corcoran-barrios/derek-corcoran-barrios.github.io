@@ -1,37 +1,23 @@
-## Welcome to GitHub Pages
+# BIO 4022. Análisis y manipulación de datos en R
 
-You can use the [editor on GitHub](https://github.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+### En el inicio se encuentra:
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+- Read me file, explicación del contenido de este repositorio
+- El pdf con el temario y evaluación del curso
 
-### Markdown
+### En la carpeta  de cada clase se encuentra:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- el archivo Rpres y HTML correspondiente a cada clase 
+- Los datos, figuras o links utilizados para cada clase
 
-```markdown
-Syntax highlighted code block
+# Links a las Clases en html
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+- Antes de empezar, si no has utilizado R anteriormente por favor revisa este 
+  [Video](https://youtu.be/w6L7Ye18yPE) y realiza las primeras 7 lecciones de 
+  *R Programming* en Swirl
+- [Clase 1](http://rpubs.com/derek_corcoran/Clase1)
+- [Clase 2](http://rpubs.com/derek_corcoran/Clase2). También puedes ver el [video](https://youtu.be/Ft6r7pD_eSs) de la clase.
+- [Clase 3](http://rpubs.com/derek_corcoran/Clase3). También puedes ver el [video](https://youtu.be/5tjCeFb2oSk) de la clase.
+    + Video que muestra como [realizar](https://youtu.be/lDp5OJzeG34) el ejercicio 3 de la clase.
+- [Clase 4](http://rpubs.com/derek_corcoran/Clase4). También puedes ver el [video](https://youtu.be/miqDWpVEMRg) de la clase.
+- [Clase 5](http://rpubs.com/derek_corcoran/Clase5). También puedes ver el [video](https://youtu.be/bvzi88XRq4c) de la clase.
