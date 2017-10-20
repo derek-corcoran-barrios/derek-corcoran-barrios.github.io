@@ -33,7 +33,7 @@ Este es un ejemplo de una shiny app
 
 ## Donde debieras vivir
 
-<iframe src="https://derek-corcoran.shinyapps.io/WhereShouldYouLive/" style="border: none; width: 440px; height: 500px"></iframe>
+<iframe src="https://derek-corcoran.shinyapps.io/WhereShouldYouLive/" style="border: none; width: 650; height: 350px"></iframe>
 
 Ajusta los sliders para determinar las características climáticas de tu preferencia, luego presiona actualizar y esto debiera te entregara en el mapa en areas rojas donde debieras vivir.
 
