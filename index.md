@@ -26,3 +26,15 @@
 - [Clase 5](http://rpubs.com/derek_corcoran/Clase5). También puedes ver el [video](https://youtu.be/bvzi88XRq4c) de la clase.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/bvzi88XRq4c" frameborder="0" allowfullscreen></iframe>
+
+# Shiny apps
+
+Este es un ejemplo de una shiny app
+
+## Donde debieras vivir
+
+<iframe src="https://derek-corcoran.shinyapps.io/WhereShouldYouLive/" style="border: none; width: 440px; height: 500px"></iframe>
+
+Ajusta los sliders para determinar las características climáticas de tu preferencia, luego presiona actualizar y esto debiera te entregara en el mapa en areas rojas donde debieras vivir.
+
+Ademas puedes bajar e interactuar con una tabla dinamica para ordenar y filtrar tus resultados
