@@ -1,0 +1,58 @@
+---
+title: "Sismos en Chile"
+output: html_document
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning=FALSE)
+```
+
+```{r, message=FALSE, echo=FALSE, warning=FALSE}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(ggmap, ggplot2, dplyr, readr, leaflet, dygraphs, xts, lubridate, geojsonio)
+```
+
+```{r, echo=FALSE, warning=FALSE, cache=FALSE}
+Earthquakes <- read_csv("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv")
+Chile <- as.data.frame(dplyr::filter(Earthquakes, latitude < -17 &  latitude >  -60 & longitude < -65 & longitude > -75))
+Last <- max(dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6))$time)
+```
+
+Desde el `r strftime(min(Earthquakes$time), format="%d-%m-%Y", usetz = FALSE)` al `r strftime(max(Earthquakes$time), format="%d-%m-%Y", usetz = FALSE)`, han habido `r NROW(dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6)))`. El sismo de mayor intensidad en ese tiempo sismos sobre magnitud `r ifelse(max(Chile$mag) < 6,max(Chile$mag), 6)` en Chile y sus cercanias en las localidades de `r dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6))$place`.
+
+El temblor sobre grado `r ifelse(max(Chile$mag) < 6,max(Chile$mag), 6)`, mas reciente ocurrio en `r strftime(max(dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6))$time), format="%d-%m-%Y", usetz = FALSE)`, y desde esa fecha han ocurrido un total de `r nrow(dplyr::filter(Chile, time >= Last))` sismos. 
+
+En el siguiente mapa interactivo, se ven todos los temblores del último año, en este se encuentran en rojo, todos los temblores con una magnitud sobre 6 en la escala de richter y en azul bajo 6. Si te posas sobre cada circulo te mostrará la magnitud de este temblor, y si haces click sobre un circulo, aparecerá el día y hora en que este temblor ocurrio.
+
+```{r, message=FALSE, echo=FALSE, warning=FALSE, fig.cap= "Sismos ocurridos en el mundo en los últimos 30 días con magnitud sobre 2.5 (Datos extraidos de USGS))"}
+plaques <- geojsonio::geojson_read("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json", what = "sp")
+
+MAG <- as.numeric(Earthquakes$mag)^1.3
+pal <- colorFactor(c("navy", "red"), domain = c("> 6", "< 6"))
+QK <- ifelse(Earthquakes$mag >= 6, "> 6", "< 6")
+leaflet(data = Earthquakes) %>% addTiles() %>% addPolylines(data = plaques)%>% setView(-71.0382679, -36, zoom = 4) %>%
+    addCircleMarkers(~longitude, ~latitude, popup = ~as.character(time), label = ~as.character(mag), fillOpacity = 0.5, radius = MAG, color = ~pal(QK))  
+#%>%  addLegend(position= "topright", pal = pal, values= ~QK, title = "Magnitud")
+```
+
+En la siguiente serie de tiempo, se muestran los temblores del ultimo mes, la linea punteada roja muestra el último sismo sobre `r ifelse(max(Chile$mag) < 6,max(Chile$mag), 6)` que ha ocurrido.
+
+```{r, message=FALSE, echo=FALSE, warning=FALSE}
+dyUnzoom <-function(dygraph) {
+  dyPlugin(
+    dygraph = dygraph,
+    name = "Unzoom",
+    path = system.file("plugins/unzoom.js", package = "dygraphs")
+  )
+}
+Earthquakes <- dplyr::filter(Earthquakes, latitude < -17 &  latitude >  -60 & longitude < -65 & longitude > -75)
+Earthquakes <- as.data.frame(Earthquakes)
+TimeSeries <- xts(Earthquakes[,c("mag")],Earthquakes[,"time"])
+dygraph(TimeSeries, main = "Sismos ultimos 30 dias en Chile", ylab = "Magnitud") %>% dyRangeSelector() %>%  dyOptions(drawPoints = TRUE, pointSize = 2) %>% dyHighlight(highlightCircleSize = 5) %>% dyLegend("follow") %>% dyUnzoom() %>% dyEvent(Last, "Ultimo evento", labelLoc = "bottom", color ="red")
+```
+
+

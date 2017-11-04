@@ -1,0 +1,27 @@
+name: "Derek Corcoran"
+navbar:
+  title: "Derek Corcoran"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - text: "Earthquakes in Chile"
+      href: Earthquake.html
+    - text: NBA
+      icon: fa-gear
+      menu:
+        - text: "Heading 1"
+        - text: "Projected Standings"
+          href: Projection.html
+        - text: "Spatial power rankings"
+          href: Rating.html
+    
+output_dir: '.'
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
+    include:
+      after_body: footer.html
+    css: styles.css
