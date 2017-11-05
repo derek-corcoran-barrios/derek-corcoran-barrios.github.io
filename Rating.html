@@ -13,7 +13,7 @@
 
 <title>Season Rating</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -22,6 +22,11 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<script src="site_libs/htmlwidgets-0.9/htmlwidgets.js"></script>
+<script src="site_libs/datatables-binding-0.2/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.12/js/jquery.dataTables.min.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -222,198 +227,8 @@ $(document).ready(function () {
 
 
 <p>These are the rankings for teams based on our spatial-based algorithm as of 04 November, 2017</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Team</th>
-<th align="right">offrating</th>
-<th align="right">defrating</th>
-<th align="right">netrating</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Mil</td>
-<td align="right">2.031</td>
-<td align="right">0.377</td>
-<td align="right">2.407</td>
-</tr>
-<tr class="even">
-<td align="left">GSW</td>
-<td align="right">3.142</td>
-<td align="right">-0.808</td>
-<td align="right">2.334</td>
-</tr>
-<tr class="odd">
-<td align="left">Okc</td>
-<td align="right">-1.188</td>
-<td align="right">2.835</td>
-<td align="right">1.647</td>
-</tr>
-<tr class="even">
-<td align="left">Ind</td>
-<td align="right">1.053</td>
-<td align="right">0.410</td>
-<td align="right">1.463</td>
-</tr>
-<tr class="odd">
-<td align="left">Den</td>
-<td align="right">1.991</td>
-<td align="right">-0.529</td>
-<td align="right">1.462</td>
-</tr>
-<tr class="even">
-<td align="left">Lal</td>
-<td align="right">0.113</td>
-<td align="right">1.123</td>
-<td align="right">1.236</td>
-</tr>
-<tr class="odd">
-<td align="left">ORL</td>
-<td align="right">2.067</td>
-<td align="right">-0.974</td>
-<td align="right">1.092</td>
-</tr>
-<tr class="even">
-<td align="left">Phi</td>
-<td align="right">1.690</td>
-<td align="right">-0.884</td>
-<td align="right">0.806</td>
-</tr>
-<tr class="odd">
-<td align="left">Lac</td>
-<td align="right">-0.482</td>
-<td align="right">1.198</td>
-<td align="right">0.716</td>
-</tr>
-<tr class="even">
-<td align="left">NY</td>
-<td align="right">-0.831</td>
-<td align="right">1.489</td>
-<td align="right">0.658</td>
-</tr>
-<tr class="odd">
-<td align="left">Cle</td>
-<td align="right">0.708</td>
-<td align="right">-0.072</td>
-<td align="right">0.636</td>
-</tr>
-<tr class="even">
-<td align="left">Cha</td>
-<td align="right">-0.526</td>
-<td align="right">1.116</td>
-<td align="right">0.590</td>
-</tr>
-<tr class="odd">
-<td align="left">Pho</td>
-<td align="right">-1.866</td>
-<td align="right">2.168</td>
-<td align="right">0.302</td>
-</tr>
-<tr class="even">
-<td align="left">Min</td>
-<td align="right">1.014</td>
-<td align="right">-0.758</td>
-<td align="right">0.256</td>
-</tr>
-<tr class="odd">
-<td align="left">Tor</td>
-<td align="right">-0.372</td>
-<td align="right">0.579</td>
-<td align="right">0.207</td>
-</tr>
-<tr class="even">
-<td align="left">Por</td>
-<td align="right">-2.534</td>
-<td align="right">2.686</td>
-<td align="right">0.152</td>
-</tr>
-<tr class="odd">
-<td align="left">Mem</td>
-<td align="right">-2.862</td>
-<td align="right">2.851</td>
-<td align="right">-0.011</td>
-</tr>
-<tr class="even">
-<td align="left">Was</td>
-<td align="right">1.784</td>
-<td align="right">-1.830</td>
-<td align="right">-0.046</td>
-</tr>
-<tr class="odd">
-<td align="left">Chi</td>
-<td align="right">-1.665</td>
-<td align="right">1.478</td>
-<td align="right">-0.187</td>
-</tr>
-<tr class="even">
-<td align="left">NO</td>
-<td align="right">1.351</td>
-<td align="right">-1.562</td>
-<td align="right">-0.211</td>
-</tr>
-<tr class="odd">
-<td align="left">Bos</td>
-<td align="right">-1.531</td>
-<td align="right">1.226</td>
-<td align="right">-0.305</td>
-</tr>
-<tr class="even">
-<td align="left">Bkn</td>
-<td align="right">0.783</td>
-<td align="right">-1.759</td>
-<td align="right">-0.975</td>
-</tr>
-<tr class="odd">
-<td align="left">Atl</td>
-<td align="right">-0.198</td>
-<td align="right">-0.890</td>
-<td align="right">-1.088</td>
-</tr>
-<tr class="even">
-<td align="left">Hou</td>
-<td align="right">-0.537</td>
-<td align="right">-0.758</td>
-<td align="right">-1.295</td>
-</tr>
-<tr class="odd">
-<td align="left">Sac</td>
-<td align="right">-1.429</td>
-<td align="right">-0.089</td>
-<td align="right">-1.518</td>
-</tr>
-<tr class="even">
-<td align="left">Mia</td>
-<td align="right">-0.726</td>
-<td align="right">-0.859</td>
-<td align="right">-1.585</td>
-</tr>
-<tr class="odd">
-<td align="left">Uta</td>
-<td align="right">-0.711</td>
-<td align="right">-0.984</td>
-<td align="right">-1.696</td>
-</tr>
-<tr class="even">
-<td align="left">Sas</td>
-<td align="right">-2.392</td>
-<td align="right">0.579</td>
-<td align="right">-1.813</td>
-</tr>
-<tr class="odd">
-<td align="left">Dal</td>
-<td align="right">-1.366</td>
-<td align="right">-1.204</td>
-<td align="right">-2.570</td>
-</tr>
-<tr class="even">
-<td align="left">Det</td>
-<td align="right">-1.389</td>
-<td align="right">-1.276</td>
-<td align="right">-2.665</td>
-</tr>
-</tbody>
-</table>
+<div id="htmlwidget-8c02233aef966fa895eb" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8c02233aef966fa895eb">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],["Mil","GSW","Okc","Den","Ind","Lal","ORL","Phi","NY","Cle","Cha","Mem","Pho","Min","Tor","Por","Was","NO","Chi","Bos","Lac","Bkn","Atl","Hou","Sac","Mia","Uta","Sas","Dal","Det"],[2.075,3.156,-1.174,2.03,1.073,0.143,2.076,1.728,-0.818,0.719,-0.497,-2.324,-1.833,1.054,-0.342,-2.509,1.839,1.381,-1.65,-1.51,-1.043,0.805,-0.196,-0.523,-1.43,-0.689,-0.687,-2.361,-1.348,-1.367],[0.342,-0.827,2.818,-0.516,0.423,1.122,-0.979,-0.886,1.46,-0.09,1.11,2.886,2.171,-0.768,0.569,2.667,-1.85,-1.557,1.451,1.26,0.765,-1.768,-0.905,-0.763,-0.118,-0.887,-0.987,0.564,-1.188,-1.299],[2.417,2.33,1.644,1.513,1.496,1.265,1.098,0.841,0.642,0.629,0.612,0.562,0.338,0.286,0.228,0.159,-0.011,-0.176,-0.199,-0.25,-0.278,-0.963,-1.101,-1.286,-1.548,-1.576,-1.674,-1.798,-2.536,-2.666]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Team<\/th>\n      <th>offrating<\/th>\n      <th>defrating<\/th>\n      <th>netrating<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script>
 
 <p>Copyright &copy; 2016 Skynet, Inc. All rights reserved.</p>
 

@@ -11,11 +11,13 @@ These are the rankings for teams based on our spatial-based algorithm as of `r f
 
 ```{r, results='hide'}
 library(SpatialBall)
+library(dplyr)
 Rank <- SpatialRating(Seasondata = Season2018)
+Rank <- Rank %>% mutate_if(is.numeric, funs(round(., 3)))
 ```
 
 
 ```{r}
-knitr::kable(Rank, digits = 3)
+DT::datatable(Rank)
 ```
 

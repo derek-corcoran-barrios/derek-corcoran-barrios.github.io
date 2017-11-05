@@ -381,16 +381,18 @@ ProjStandE <- dplyr::filter(ProjStand, Conference == "East")
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #options(DT.options = list(pageLength = 20, language = list(search = 'Filter:')))
-knitr::kable(ProjStandE)
-#DT::datatable(ProjStandE)
+#knitr::kable(ProjStandE)
+ProjStandE <- ProjStandE %>% mutate_if(is.numeric, funs(round(., 3)))
+DT::datatable(ProjStandE)
 ```
 
 
 ## Western Conference Standings
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(ProjStandW)
-#DT::datatable(ProjStandW)
+#knitr::kable(ProjStandW)
+ProjStandW <- ProjStandW %>% mutate_if(is.numeric, funs(round(., 3)))
+DT::datatable(ProjStandW)
 
 
 ```
@@ -401,7 +403,7 @@ In the table below we present the predicted spread for every NBA game played on 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 #knitr::kable(dplyr::filter(future_games[,c(1,2,4,9,10,11)], Date == Sys.Date()), digits = 3)
-DT::datatable(dplyr::filter(future_games[,c(1,2,3,6,8,7)], Date == Sys.Date()))
+DT::datatable(dplyr::filter(future_games[,c(1,2,4,9,10,11)], Date == Sys.Date()))
 #write.csv(x = dplyr::filter(future_games, Date == Sys.Date()), file =   paste("Future_games", Sys.Date(),".csv", sep = ""))
 #saveRDS(dplyr::filter(future_games, Date == Sys.Date()),  paste("Future_games", Sys.Date(),".rds", sep = ""))
 ```
