@@ -1,5 +1,14 @@
 ---
-title: "My Website"
+title: "Derek Corcoran"
 ---
 
-Hello, Website!
+Some text
+
+<iframe src="https://derek-corcoran.shinyapps.io/WhereShouldYouLive/"></iframe>
+```{r}
+knitr::include_app("https://derek-corcoran.shinyapps.io/WhereShouldYouLive/")
+```
+
+knitr::
+
+Some more text

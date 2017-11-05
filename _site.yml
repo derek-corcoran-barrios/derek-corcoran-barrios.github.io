@@ -11,11 +11,13 @@ navbar:
     - text: NBA
       icon: fa-gear
       menu:
-        - text: "Heading 1"
+        - text: "NBA research"
         - text: "Projected Standings"
           href: Projection.html
         - text: "Spatial power rankings"
           href: Rating.html
+        - text: "Team shot charts"
+          href: PlayerShotCharts.html
     
 output_dir: '.'
 output:

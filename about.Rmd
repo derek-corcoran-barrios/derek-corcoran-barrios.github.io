@@ -4,6 +4,7 @@ title: "Project description"
 
 We have created this site to share the results of our spatial analysis of the game of basketball with the public. The general concept behind this research project was to build a predictive model for the outcome of National Basketball Association (NBA) games based on the offensive and defensive matchup between teams. In order to do this, we examined around one million shots (about five years of data) by pairing up the offensive and defensive shot charts for every team in the NBA against all other opponents. From this, we have managed to build a machine learning algorithm which can be used for analysis such as:
 
+
 - Predicting the spread for every NBA game
 - Estimating the impact that trades have on expected outcome and performance for teams
 - Spatially analyzing the locations where teams perform well on offense and defense.
