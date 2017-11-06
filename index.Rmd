@@ -2,13 +2,12 @@
 title: "Derek Corcoran"
 ---
 
-Some text
+Some text1
 
-<iframe src="https://derek-corcoran.shinyapps.io/WhereShouldYouLive/"></iframe>
-```{r}
-knitr::include_app("https://derek-corcoran.shinyapps.io/WhereShouldYouLive/")
+some text2
+
+```{r, echo = FALSE}
+knitr::include_app("https://derek-corcoran.shinyapps.io/WhereShouldYouLive/", height = "1600px")
 ```
 
-knitr::
-
-Some more text
+more text3
