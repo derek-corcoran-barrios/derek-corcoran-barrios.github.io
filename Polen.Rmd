@@ -1,0 +1,89 @@
+---
+title: "El problema de los alergenos en Chile"
+author: "Derek Corcoran"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+
+
+```{r}
+library(rvest)
+library(lubridate)
+library(stringr)
+Alergia <- readRDS("Alergia.rds")
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+library(dygraphs)
+library(xts)
+
+TimeSeries1 <- xts(Alergia[,c("platano_oriental")],Alergia[,"Fechas"])
+TimeSeries2 <- xts(Alergia[,c("arboles_total")],Alergia[,"Fechas"])
+TimeSeries3 <- xts(Alergia[,c("pastos")],Alergia[,"Fechas"])
+
+TimeSeries <- cbind(TimeSeries1, TimeSeries2)
+TimeSeries <- cbind(TimeSeries, TimeSeries3)
+colnames(TimeSeries) <- c("Platano Oriental", "Arboles total", "Pastos")
+
+dyUnzoom <-function(dygraph) {
+  dyPlugin(
+    dygraph = dygraph,
+    name = "Unzoom",
+    path = system.file("plugins/unzoom.js", package = "dygraphs")
+  )
+}
+
+dygraph(TimeSeries , ylab = "polen de platano oriental /m³ de aire") %>% dyRangeSelector() %>%  dyOptions(drawPoints = TRUE, pointSize = 2) %>% dyHighlight(highlightCircleSize = 5) %>% dyLegend("always") %>% dyUnzoom()  %>% dyOptions(stackedGraph = TRUE)
+
+```
+```
+
+```{r}
+Weekly <- Alergia %>% select(Semana, platano_oriental) %>%group_by(Semana) %>% summarise_all(funs(mean, sd, max, min)) 
+
+
+ggplot(Weekly, aes(x = Semana, y = mean))+  geom_ribbon(aes(ymax = max, ymin = min, fill = "red")) + geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = "blue"), alpha = 1) + geom_line() + scale_fill_manual(name = "leyenda", values = c("blue", "red"), labels = c('Error estándar','Extremos')) + ylab("polen de platano oriental /m³ de aire") + theme_classic()  + theme(legend.position="bottom") + scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"))
+```
+
+```{r}
+Weekly2 <- Alergia %>% select(Semana, platano_oriental, arboles_total, pastos) %>% mutate(platano_oriental = platano_oriental/70, arboles_total = arboles_total/100, pastos = pastos/25) %>% gather(key = Especie, value = Polen, -Semana) %>%group_by(Semana, Especie) %>% summarise_if(is.numeric, funs(mean, sd, max, min))
+
+ggplot(Weekly2, aes(x = Semana, y = mean))+  geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = Especie), alpha = 0.5) + geom_line(aes(lty = Especie)) + ylab("polen/m³ de aire") + theme_classic()  + theme(legend.position="bottom") + scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")) + geom_hline(yintercept = 1, lty=2, color = "red")
+
+```
+
+
+```{r}
+Valpo <- readRDS("Valpo.rds")
+Alergia <- readRDS("Alergia.rds")
+
+AlergiaTotal <- Alergia %>% mutate(Santiago = arboles_total + platano_oriental + pastos) %>% select(Fechas,Anno, Mes, Semana, Santiago)
+
+ValpoTotal <-  Valpo %>% mutate(Valparaiso = arboles_total + platano_oriental + pastos) %>% select(Anno, Mes, Semana, Valparaiso)
+
+PolenTotal <- full_join(AlergiaTotal, ValpoTotal)
+PolenTotal <- PolenTotal[complete.cases(PolenTotal),]
+
+Stgo  <- xts(PolenTotal[,c("Santiago")],PolenTotal[,"Fechas"])
+
+ValpoT  <- xts(PolenTotal[,c("Valparaiso")],PolenTotal[,"Fechas"])
+
+PolenTotal <- cbind(Stgo, ValpoT)
+colnames(PolenTotal)<- c("Santiago", "Valparaiso")
+
+dyUnzoom <-function(dygraph) {
+  dyPlugin(
+    dygraph = dygraph,
+    name = "Unzoom",
+    path = system.file("plugins/unzoom.js", package = "dygraphs")
+  )
+}
+
+dygraph(PolenTotal , ylab = "polen total /m³ de aire") %>% dyRangeSelector() %>%  dyOptions(drawPoints = TRUE, pointSize = 2) %>% dyHighlight(highlightCircleSize = 5) %>% dyLegend("always") %>% dyUnzoom()  %>% dyOptions(stackedGraph = TRUE)
+
+```

@@ -2,12 +2,8 @@
 title: "Derek Corcoran"
 ---
 
-Some text1
-
+My new webpage
 some text2
 
-```{r, echo = FALSE}
-knitr::include_app("https://derek-corcoran.shinyapps.io/WhereShouldYouLive/", height = "1600px")
-```
 
 more text3
