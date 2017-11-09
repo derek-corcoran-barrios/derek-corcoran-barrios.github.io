@@ -1,6 +1,9 @@
 ---
 title: "El problema de los alergenos en Chile"
 author: "Derek Corcoran"
+output: html_document
+bibliography: bibliography.bib
+csl: nature.csl
 ---
 
 ### Resumen
@@ -8,6 +11,13 @@ author: "Derek Corcoran"
 Santiago de Chile, es una de las ciudades del país con mayor contaminación de aire. Pese a esto los planificadores urbanos de la zona, no han planificado el plantar vegetación urbana acorde a esta situación. Sinó que al contrario, han elegido plantar árboles exóticos con producción excesiva de polen, llegando a veces a valores de hasta 3000 particulas de polen por metro cúbico, siendo que 70, es considerado un nivel muy alto. Se comparan los niveles de alergenos para Santiago con los de Valparaiso y Talca, y se demuestra que Santiago es la ciudad que se ha planificado peor en cuanto a los árboles que se han plantado en la región, y que esto podría estar afectando tanto el bienestar de los ciudadanos de Santiago, como su economía debido a gastos en antihistamínicos.
 
 ### Introducción
+
+Dentro de los parámetros deseados del diseño de espacios verdes urbanos tomando en cuenta las alergias, se encuentran, el plantar gran diversidad de especies para evitar picos altos de polinización de una especie única, el no plantar especies exóticas para evitar exponer a la población urbana a nuevos agentes alergenos, y en el caso de tratarse de especies dioicas, no plantar individuos masculinos para evitar el polen [@carinanos2011urban]. En la población mundial entre el 10 y el 30 porciento de la población es alergica[@berger2003overview].
+
+Si bien en santiago se ha determinado que los árboles hen beneficiado la calidad del aire [@escobedo2008analyzing], la elección de las especies plantadas pueden tener un costo económico y social altisimo para la ciudadania, en Estados Unidos, se han estimado costos económicos directos e indirectos de 4912 dolares anuales por persona [@o2004burden]. Los costos directos concideran medicamentos, hospitalizaciones entre otras. En tanto que los costos indirectos incluyen menor aprendisaje y rendimiento, e incluso en un 25% de los alergicos, perdida de días de trabajo o escuela [@tanner1999effect], además de bajas de autoestima y/o disminución de la vida social y deportiva, llevando al sedentarismo [@fineman2002burden]. 
+
+Según el Instituto de Salud Publica de Chile, tan solo entre julio 2015 y julio 2016 se vendieron 6.265.562 de antialérgicos en el país.
+
 
 ### Resultados
 
@@ -114,3 +124,5 @@ dygraph(PolenTotal , ylab = "polen total /m³ de aire") %>% dyRangeSelector() %>
 ```{r}
 knitr::kable(SUMMAR)
 ```
+
+## Bibliografía
