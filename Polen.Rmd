@@ -41,13 +41,19 @@ dyUnzoom <-function(dygraph) {
 dygraph(TimeSeries , ylab = "polen de platano oriental /m³ de aire") %>% dyRangeSelector() %>%  dyOptions(drawPoints = TRUE, pointSize = 2) %>% dyHighlight(highlightCircleSize = 5) %>% dyLegend("always") %>% dyUnzoom()  %>% dyOptions(stackedGraph = TRUE)
 
 ```
-```
 
 ```{r}
 Weekly <- Alergia %>% select(Semana, platano_oriental) %>%group_by(Semana) %>% summarise_all(funs(mean, sd, max, min)) 
 
 
-ggplot(Weekly, aes(x = Semana, y = mean))+  geom_ribbon(aes(ymax = max, ymin = min, fill = "red")) + geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = "blue"), alpha = 1) + geom_line() + scale_fill_manual(name = "leyenda", values = c("blue", "red"), labels = c('Error estándar','Extremos')) + ylab("polen de platano oriental /m³ de aire") + theme_classic()  + theme(legend.position="bottom") + scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"))
+p <- ggplot(Weekly, aes(x = Semana, y = mean))+  geom_ribbon(aes(ymax = max, ymin = min, fill = "red")) + geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = "blue"), alpha = 1) + geom_line() + scale_fill_manual(name = "leyenda", values = c("blue", "red"), labels = c('Error estándar','Extremos')) + ylab("polen de platano oriental /m³ de aire") + theme_classic()  + theme(legend.position="bottom") + scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"))
+p
+
+library(ggvis)
+library(plotly)
+Weekly %>% ggvis(~Semana, ~mean) %>% layer_ribbons(y = ~max, y2 = ~min) %>%  layer_lines()
+
+ggplotly(p) %>% layout(legend = list(orientation = 'h'))
 ```
 
 ```{r}

@@ -8,12 +8,12 @@ navbar:
       href: about.html
     - text: "Donde vivir"
       href: DondeVivir.html
+    - text: "Alergia en Chile"
+      href: Polen.html
     - text: "Earthquakes in Chile"
       href: Earthquake.html
     - text: NBA
       icon: fa-gear
-    - text: "Alergia en Chile"
-      href: Polen.html
       menu:
         - text: "NBA research"
         - text: "Projected Standings"
