@@ -3,11 +3,20 @@ title: "El problema de los alergenos en Chile"
 author: "Derek Corcoran"
 ---
 
+### Resumen
+
+Santiago de Chile, es una de las ciudades del país con mayor contaminación de aire. Pese a esto los planificadores urbanos de la zona, no han planificado el plantar vegetación urbana acorde a esta situación. Sinó que al contrario, han elegido plantar árboles exóticos con producción excesiva de polen, llegando a veces a valores de hasta 3000 particulas de polen por metro cúbico, siendo que 70, es considerado un nivel muy alto. Se comparan los niveles de alergenos para Santiago con los de Valparaiso y Talca, y se demuestra que Santiago es la ciudad que se ha planificado peor en cuanto a los árboles que se han plantado en la región, y que esto podría estar afectando tanto el bienestar de los ciudadanos de Santiago, como su economía debido a gastos en antihistamínicos.
+
+### Introducción
+
+### Resultados
+
+#### Santiago
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 ```
 
-
+En el siguiente gráfico, vemos que en los últimos 15 años (2002 al 2017), santiago ha tenido ciclos en los cuales los niveles más altos de polen se encuentran principalemnte en los meses de Septiembre y Ocutbre y destaca dentro de los volumenes de polen el Platano oriental (*Platanus orientalis*) que puede generar hasta 3000 particulas de polen por metro cúbico, siendo este considerado en niveles altos de alergia cuando llega a 70. 
 
 ```{r}
 library(rvest)
@@ -38,7 +47,7 @@ dyUnzoom <-function(dygraph) {
   )
 }
 
-dygraph(TimeSeries , ylab = "polen de platano oriental /m³ de aire") %>% dyRangeSelector() %>%  dyOptions(drawPoints = TRUE, pointSize = 2) %>% dyHighlight(highlightCircleSize = 5) %>% dyLegend("always") %>% dyUnzoom()  %>% dyOptions(stackedGraph = TRUE)
+dygraph(TimeSeries , ylab = "Particulas de polen/m³ de aire") %>% dyRangeSelector() %>%  dyOptions(drawPoints = TRUE, pointSize = 2) %>% dyHighlight(highlightCircleSize = 5) %>% dyLegend("always") %>% dyUnzoom()  %>% dyOptions(stackedGraph = TRUE)
 
 ```
 
@@ -47,40 +56,47 @@ Weekly <- Alergia %>% select(Semana, platano_oriental) %>%group_by(Semana) %>% s
 
 
 p <- ggplot(Weekly, aes(x = Semana, y = mean))+  geom_ribbon(aes(ymax = max, ymin = min, fill = "red")) + geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = "blue"), alpha = 1) + geom_line() + scale_fill_manual(name = "leyenda", values = c("blue", "red"), labels = c('Error estándar','Extremos')) + ylab("polen de platano oriental /m³ de aire") + theme_classic()  + theme(legend.position="bottom") + scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"))
-p
-
-library(ggvis)
-library(plotly)
-Weekly %>% ggvis(~Semana, ~mean) %>% layer_ribbons(y = ~max, y2 = ~min) %>%  layer_lines()
-
-ggplotly(p) %>% layout(legend = list(orientation = 'h'))
 ```
+
+Para el siguiente gráfico, debido a que distintas plantas generan distintos niveles de alergia, estandarizamos los niveles de polen, debido ha esto, cada vez que en el gráfico se sobrepase la linea punteada roja, estamos ante niveles altos de alergia, si el valor llega a dos, significa que tenemos a el doble un nivel ya cosiderado alto. Los valores que se muestran para santiago son en las lineas los promedios desde el 2002, y en el colores la desviación estadard de la media.
 
 ```{r}
 Weekly2 <- Alergia %>% select(Semana, platano_oriental, arboles_total, pastos) %>% mutate(platano_oriental = platano_oriental/70, arboles_total = arboles_total/100, pastos = pastos/25) %>% gather(key = Especie, value = Polen, -Semana) %>%group_by(Semana, Especie) %>% summarise_if(is.numeric, funs(mean, sd, max, min))
 
-ggplot(Weekly2, aes(x = Semana, y = mean))+  geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = Especie), alpha = 0.5) + geom_line(aes(lty = Especie)) + ylab("polen/m³ de aire") + theme_classic()  + theme(legend.position="bottom") + scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")) + geom_hline(yintercept = 1, lty=2, color = "red")
+ggplot(Weekly2, aes(x = Semana, y = mean))+  geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = Especie), alpha = 0.5) + geom_line(aes(lty = Especie)) + ylab("Nivel estandarizado de polen") + xlab("Mes") + theme_classic()  + theme(legend.position="bottom") + scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")) + geom_hline(yintercept = 1, lty=2, color = "red") + annotate("text", x = 8, y = 2, label = "Niveles altos de polen", color = "red")
 
 ```
 
+Se observa como si bién en noviembre y diciembre, los pastos llegan a niveles altos de alregenos, mayormente no sobrepasan por mucho ese nivel, mientras que el platano oriental llega, en septiembreme, en promedio a estar 13.6 veces sobre niveles considerados altos.
+
+#### Comparación con otras ciudades de Chile
 
 ```{r}
 Valpo <- readRDS("Valpo.rds")
 Alergia <- readRDS("Alergia.rds")
+Talca <- readRDS("Talca.rds")
 
-AlergiaTotal <- Alergia %>% mutate(Santiago = arboles_total + platano_oriental + pastos) %>% select(Fechas,Anno, Mes, Semana, Santiago)
+AlergiaTotal <- Alergia %>% mutate(Santiago = (arboles_total/100) + (platano_oriental/70) + (pastos/25)) %>% select(Fechas,Anno, Mes, Semana, Santiago)
 
-ValpoTotal <-  Valpo %>% mutate(Valparaiso = arboles_total + platano_oriental + pastos) %>% select(Anno, Mes, Semana, Valparaiso)
+ValpoTotal <-  Valpo %>% mutate(Valparaiso = (arboles_total/100) + (platano_oriental/70) + (pastos/25)) %>% select(Anno, Mes, Semana, Valparaiso)
+
+TalcaTotal <-  Talca %>% mutate(Talca = (arboles_total/100) + (platano_oriental/70) + (pastos/25)) %>% select(Anno, Mes, Semana, Talca)
 
 PolenTotal <- full_join(AlergiaTotal, ValpoTotal)
+PolenTotal <- full_join(PolenTotal, TalcaTotal)
 PolenTotal <- PolenTotal[complete.cases(PolenTotal),]
+
+SUMMAR <- PolenTotal %>% select(Mes, Santiago, Valparaiso, Talca) %>%group_by(Mes) %>% dplyr::summarise_all(funs(mean))
 
 Stgo  <- xts(PolenTotal[,c("Santiago")],PolenTotal[,"Fechas"])
 
 ValpoT  <- xts(PolenTotal[,c("Valparaiso")],PolenTotal[,"Fechas"])
 
+TalcaT <- xts(PolenTotal[,c("Talca")],PolenTotal[,"Fechas"])
+
 PolenTotal <- cbind(Stgo, ValpoT)
-colnames(PolenTotal)<- c("Santiago", "Valparaiso")
+PolenTotal <- cbind(PolenTotal, TalcaT)
+colnames(PolenTotal)<- c("Santiago", "Valparaiso", "Talca")
 
 dyUnzoom <-function(dygraph) {
   dyPlugin(
@@ -90,6 +106,11 @@ dyUnzoom <-function(dygraph) {
   )
 }
 
-dygraph(PolenTotal , ylab = "polen total /m³ de aire") %>% dyRangeSelector() %>%  dyOptions(drawPoints = TRUE, pointSize = 2) %>% dyHighlight(highlightCircleSize = 5) %>% dyLegend("always") %>% dyUnzoom()  %>% dyOptions(stackedGraph = TRUE)
+dygraph(PolenTotal , ylab = "polen total /m³ de aire") %>% dyRangeSelector() %>%  dyOptions(drawPoints = TRUE, pointSize = 2) %>% dyHighlight(highlightCircleSize = 5) %>% dyLegend("always") %>% dyUnzoom()  %>% dyOptions(stackedGraph = TRUE)%>% dyLimit(1, color = "red")
 
+```
+
+
+```{r}
+knitr::kable(SUMMAR)
 ```

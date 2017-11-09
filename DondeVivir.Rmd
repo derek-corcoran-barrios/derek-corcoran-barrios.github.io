@@ -7,7 +7,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<iframe src="https://derek-corcoran.shinyapps.io/WhereShouldYouLive/?showcase=0" width="1000" height="1600px">
+</iframe>
 
 ```{r, echo = FALSE}
-knitr::include_app("https://derek-corcoran.shinyapps.io/WhereShouldYouLive/", height = "1600px")
+#knitr::include_app("https://derek-corcoran.shinyapps.io/WhereShouldYouLive/", height = "1600px")
 ```
