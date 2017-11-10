@@ -2,8 +2,8 @@
 title: "Derek Corcoran"
 ---
 
-My new webpage
-some text2
+Sitio web del data scientist Derek Corcoran
 
-
-more text3
+```{r}
+knitr::include_graphics('GSTxF.jpg')
+```
