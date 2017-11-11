@@ -4,6 +4,6 @@ title: "Derek Corcoran"
 
 Sitio web del data scientist Derek Corcoran
 
-```{r}
+```{r, echo=FALSE}
 knitr::include_graphics('GSTxF.jpg')
 ```
