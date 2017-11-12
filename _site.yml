@@ -6,6 +6,10 @@ navbar:
       href: index.html
     - text: "About"
       href: about.html
+      menu:
+        - text: "Cursos"
+        - text: "Curso de R"
+          href: CursoR.html
     - text: "Donde vivir"
       href: DondeVivir.html
     - text: "Alergia en Chile"

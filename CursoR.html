@@ -9,11 +9,12 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Derek Corcoran" />
 
 
-<title>NBA Projections 2018 season</title>
+<title>Curso de R</title>
 
-<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -22,11 +23,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
-<script src="site_libs/htmlwidgets-0.9/htmlwidgets.js"></script>
-<script src="site_libs/datatables-binding-0.2/datatables.js"></script>
-<link href="site_libs/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="site_libs/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="site_libs/dt-core-1.10.12/js/jquery.dataTables.min.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -240,27 +236,60 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">NBA Projections 2018 season</h1>
+<h1 class="title toc-ignore">Curso de R</h1>
+<h4 class="author"><em>Derek Corcoran</em></h4>
 
 </div>
 
 
-<p>These are the projected standings predicted by our spatial-based algorithm as of 11 November, 2017</p>
-<div id="eastern-conference-standings" class="section level2">
-<h2>Eastern Conference Standings</h2>
-<div id="htmlwidget-db3b0a6577bbe7a875c4" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-db3b0a6577bbe7a875c4">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],["Mil","Phi","ORL","Was","Ind","Bos","Cle","Mia","Det","NY","Tor","Cha","Bkn","Chi","Atl"],[5,6,8,6,6,11,5,6,9,6,7,5,5,2,2],[6,5,4,5,7,2,7,6,3,5,4,7,7,8,10],["East","East","East","East","East","East","East","East","East","East","East","East","East","East","East"],[71,62,61,59,57,53,42,37,35,34,34,32,25,23,14],[11,20,21,23,25,29,40,45,47,48,48,50,57,59,68]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Team<\/th>\n      <th>Current-W<\/th>\n      <th>Current-L<\/th>\n      <th>Conference<\/th>\n      <th>Projected-W<\/th>\n      <th>Projected-L<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":15,"columnDefs":[{"className":"dt-right","targets":[2,3,5,6]},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,15,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script>
+<div id="bio-4022.-analisis-y-manipulacion-de-datos-en-r" class="section level1">
+<h1>BIO 4022. Análisis y manipulación de datos en R</h1>
+<div id="en-el-inicio-se-encuentra" class="section level3">
+<h3>En el inicio se encuentra:</h3>
+<ul>
+<li>Read me file, explicación del contenido de este repositorio</li>
+<li>El pdf con el temario y evaluación del curso</li>
+</ul>
 </div>
-<div id="western-conference-standings" class="section level2">
-<h2>Western Conference Standings</h2>
-<div id="htmlwidget-346e816d9f30a564b9a0" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-346e816d9f30a564b9a0">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],["GSW","NO","Den","Mem","Min","Okc","Por","Pho","Lal","Sac","Hou","Sas","Uta","Lac","Dal"],[9,6,7,7,7,5,6,4,5,3,9,7,5,5,2],[3,6,5,4,4,7,6,9,7,8,3,5,7,6,10],["West","West","West","West","West","West","West","West","West","West","West","West","West","West","West"],[79,58,56,52,52,51,44,42,35,33,24,23,20,15,7],[3,24,26,30,30,31,38,40,47,49,58,59,62,67,75]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Team<\/th>\n      <th>Current-W<\/th>\n      <th>Current-L<\/th>\n      <th>Conference<\/th>\n      <th>Projected-W<\/th>\n      <th>Projected-L<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":15,"columnDefs":[{"className":"dt-right","targets":[2,3,5,6]},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,15,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script>
+<div id="en-la-carpeta-de-cada-clase-se-encuentra" class="section level3">
+<h3>En la carpeta de cada clase se encuentra:</h3>
+<ul>
+<li>el archivo Rpres y HTML correspondiente a cada clase</li>
+<li>Los datos, figuras o links utilizados para cada clase</li>
+</ul>
 </div>
-<div id="game-predictions" class="section level2">
-<h2>Game predictions</h2>
-<p>In the table below we present the predicted spread for every NBA game played on 11 November, 2017</p>
-<div id="htmlwidget-d389a795489e1bafda92" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d389a795489e1bafda92">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11"],["2017-11-11","2017-11-11","2017-11-11","2017-11-11","2017-11-11","2017-11-11","2017-11-11","2017-11-11","2017-11-11","2017-11-11","2017-11-11"],["Cle","ORL","Phi","Mem","Lal","Lac","Sac","Min","Chi","Bkn","Atl"],["Dal","Den","GSW","Hou","Mil","NO","NY","Pho","Sas","Uta","Was"],[2.15,-3.7,-8.01,1.9,-10.22,-10.07,-4.64,-3.87,0.94,-3.19,-11.03],["W","L","L","W","L","L","L","L","W","L","L"],["L","W","W","L","W","W","W","W","L","W","W"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Date<\/th>\n      <th>VTM<\/th>\n      <th>HTM<\/th>\n      <th>spread<\/th>\n      <th>Visit<\/th>\n      <th>Home<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":30,"columnDefs":[{"className":"dt-right","targets":4},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,25,30,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="links-a-las-clases-en-html" class="section level1">
+<h1>Links a las Clases en html</h1>
+<ul>
+<li>Antes de empezar, si no has utilizado R anteriormente por favor revisa este <a href="https://youtu.be/w6L7Ye18yPE">Video</a> y realiza las primeras 7 lecciones de <em>R Programming</em> en Swirl</li>
+<li><a href="http://rpubs.com/derek_corcoran/Clase1">Clase 1</a></li>
+<li><a href="http://rpubs.com/derek_corcoran/Clase2">Clase 2</a>. También puedes ver el video de la clase.</li>
+</ul>
+<iframe width="560" height="315" src="https://youtu.be/Ft6r7pD_eSs" frameborder="0" allowfullscreen>
+</iframe>
+<ul>
+<li><a href="http://rpubs.com/derek_corcoran/Clase3">Clase 3</a>. También puedes ver el video de la clase.
+<ul>
+<li>Video que muestra como <a href="https://youtu.be/lDp5OJzeG34">realizar</a> el ejercicio 3 de la clase.</li>
+</ul></li>
+</ul>
+<iframe width="560" height="315" src="https://youtu.be/5tjCeFb2oSk)" frameborder="0" allowfullscreen>
+</iframe>
+<ul>
+<li><a href="http://rpubs.com/derek_corcoran/Clase4">Clase 4</a>. También puedes ver el <a href="https://youtu.be/miqDWpVEMRg">video</a> de la clase.</li>
+<li><a href="http://rpubs.com/derek_corcoran/Clase5">Clase 5</a>. También puedes ver el <a href="https://youtu.be/bvzi88XRq4c">video</a> de la clase.</li>
+<li><a href="http://rpubs.com/derek_corcoran/Clase6">Clase 6</a>. También puedes ver el <a href="https://youtu.be/nGb2__ksaho">video</a> de la clase.</li>
+<li><a href="http://rpubs.com/derek_corcoran/Clase7">Clase 7</a>. También puedes ver el <a href="https://youtu.be/_deboekuWt0">video</a> de la clase.</li>
+</ul>
+</div>
+<div id="evaluaciones" class="section level1">
+<h1>Evaluaciones</h1>
+<ul>
+<li>Pueden ver en este <a href="http://rpubs.com/derek_corcoran/NotasBIO4022_2_2017">link</a> la evaluación de la primera tarea.</li>
+<li>En este <a href="http://rpubs.com/derek_corcoran/Eval2">link</a> pueden ver la evaluación de la segunda tarea</li>
+<li>Finalmente en este <a href="http://rpubs.com/derek_corcoran/NotasBIO4022_2_final2017">link</a> se encuentran las notas finales.</li>
+</ul>
 </div>
 
 <p>Copyright &copy; 2017 Cienciaustral, Inc. All rights reserved.</p>

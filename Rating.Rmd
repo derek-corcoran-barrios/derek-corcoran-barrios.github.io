@@ -12,12 +12,15 @@ These are the rankings for teams based on our spatial-based algorithm as of `r f
 ```{r, results='hide'}
 library(SpatialBall)
 library(dplyr)
+Season2018 <- readRDS("Season2018.rds")
 Rank <- SpatialRating(Seasondata = Season2018)
 Rank <- Rank %>% mutate_if(is.numeric, funs(round(., 3)))
 ```
 
 
 ```{r}
-DT::datatable(Rank)
+DT::datatable(Rank,  options = list(
+  autoWidth = TRUE, pageLength = 30
+))
 ```
 
