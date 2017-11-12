@@ -21,7 +21,7 @@ navbar:
         - text: "Spatial power rankings"
           href: Rating.html
         - text: "Team shot charts"
-          href: PlayerShotCharts.html
+          href: ShotCharts.html
     
 output_dir: '.'
 output:
