@@ -6,6 +6,8 @@ navbar:
       href: index.html
     - text: "About"
       href: about.html
+    - text: "Cursos"
+      icon: fa-gear
       menu:
         - text: "Cursos"
         - text: "Curso de R"
