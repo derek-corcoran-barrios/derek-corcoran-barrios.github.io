@@ -5,51 +5,6 @@ output: html_document
 runtime: shiny
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-Our website alows you to study teams offensive and defensive shot charts with simple selection tools:
-
-
-
-
-## Offensive shot charts
-
-```{r offense, echo=FALSE}
-#library(SpatialBall)
-#library(shiny)
-#Season2018 <- readRDS("Season2018.rds")
-#inputPanel(
-#  selectInput("team", label = "Select a Team:",
-#              choices = c("Bos", "Cle", "Hou", "GSW", "Cha", "Det", "Ind", "Bkn", "Mia", 
-#"ORL", "Was", "Phi", "Mil", "Mem", "NO", "Atl", "Dal", "Uta", 
-#"Den", "Sas", "Min", "Por", "Pho", "Sac", "Chi", "Tor", "NY", 
-#"Okc", "Lac", "Lal"), selected = "GSW"),
-#  selectInput("pps", label = "Points per shot or percentage", choices = c("PPS","PCT"))
-#)
-
-#renderPlot({
-#  OffShotSeasonGraphTeam(Seasondata = Season2018, team = input$team, type = input$pps)
-#})
-```
-
-## Defensive shot charts
-
-```{r eruptions, echo=FALSE}
-# library(SpatialBall)
-# 
-# Season2018 <- readRDS("Season2018.rds")
-# inputPanel(
-#   selectInput("Defteam", label = "Select a Team:",
-#               choices = c("Bos", "Cle", "Hou", "GSW", "Cha", "Det", "Ind", "Bkn", "Mia", 
-# "ORL", "Was", "Phi", "Mil", "Mem", "NO", "Atl", "Dal", "Uta", 
-# "Den", "Sas", "Min", "Por", "Pho", "Sac", "Chi", "Tor", "NY", 
-# "Okc", "Lac", "Lal"), selected = "GSW"),
-#   selectInput("Defpps", label = "Points per shot or percentage", choices = c("PPS","PCT"))
-# )
-# 
-# renderPlot({
-#   DefShotSeasonGraphTeam(Seasondata = Season2018, team = input$Defteam, type = input$Defpps)
-# })
-```
-
+<iframe src="https://derek-corcoran.shinyapps.io/ShotCharts/
+" width="1000" height="1600px">
+</iframe>
