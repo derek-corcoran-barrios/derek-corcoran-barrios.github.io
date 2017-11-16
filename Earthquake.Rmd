@@ -22,7 +22,7 @@ Chile <- as.data.frame(dplyr::filter(Earthquakes, latitude < -17 &  latitude >  
 Last <- max(dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6))$time)
 ```
 
-Desde el `r strftime(min(Earthquakes$time), format="%d-%m-%Y", usetz = FALSE)` al `r strftime(max(Earthquakes$time), format="%d-%m-%Y", usetz = FALSE)`, han habido `r NROW(dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6)))`. El sismo de mayor intensidad en ese tiempo sismos sobre magnitud `r ifelse(max(Chile$mag) < 6,max(Chile$mag), 6)` en Chile y sus cercanias en las localidades de `r str_replace(str_replace(dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6))$place, "km", " kms al"), "of", "de")`.
+Desde el `r strftime(min(Earthquakes$time), format="%d-%m-%Y", usetz = FALSE)` al `r strftime(max(Earthquakes$time), format="%d-%m-%Y", usetz = FALSE)`, han habido `r NROW(dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6)))` sismos sobre magnitud `r ifelse(max(Chile$mag) < 6,max(Chile$mag), 6)` en Chile y sus cercanias. Estos han ocurrido en las localidades de `r str_replace(str_replace(dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6))$place, "km", " kms al"), "of", "de")`.
 
 El temblor sobre grado `r ifelse(max(Chile$mag) < 6,max(Chile$mag), 6)`, mas reciente ocurrio en `r strftime(max(dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6))$time), format="%d-%m-%Y", usetz = FALSE)`, y desde esa fecha han ocurrido un total de `r nrow(dplyr::filter(Chile, time >= Last))` sismos. 
 
