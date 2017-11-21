@@ -413,4 +413,5 @@ DT::datatable(dplyr::filter(future_games[,c(1,2,4,9,11,10)], Date == Sys.Date())
 ))
 #write.csv(x = dplyr::filter(future_games, Date == Sys.Date()), file =   paste("Future_games", Sys.Date(),".csv", sep = ""))
 #saveRDS(dplyr::filter(future_games, Date == Sys.Date()),  paste("Future_games", Sys.Date(),".rds", sep = ""))
+saveRDS(Season2018, "Season2018.rds")
 ```
