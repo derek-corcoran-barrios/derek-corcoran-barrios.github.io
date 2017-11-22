@@ -4,8 +4,6 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "About"
-      href: about.html
     - text: "Cursos"
       icon: fa-gear
       menu:
@@ -22,6 +20,10 @@ navbar:
       icon: fa-gear
       menu:
         - text: "NBA research"
+        - text: "About"
+          href: about.html
+        - text: "Team Stats"
+          href: TeamStats.html
         - text: "Projected Standings"
           href: Projection.html
         - text: "Spatial power rankings"
@@ -36,4 +38,4 @@ output:
     highlight: textmate
     include:
       after_body: footer.html
-    css: styles.css
+css: styles.css

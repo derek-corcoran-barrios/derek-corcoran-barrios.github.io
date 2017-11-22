@@ -1,0 +1,38 @@
+---
+title: "Team Stats"
+date: "November 22, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = FALSE, message = FALSE, warning = FALSE)
+```
+
+## NBA stats updated on `r Sys.Date()`
+
+```{r load packs}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, DT, stringr, purrr)
+```
+
+
+
+```{r getting stats, echo=FALSE}
+Season2018 <- readRDS("Season2018.rds")
+TeamStats <- Season2018 %>% mutate(EVENT_TYPE = make.names(EVENT_TYPE), SHOT_TYPE = str_replace(SHOT_TYPE, " Field Goal", ""))  %>% group_by(TEAM_NAME, SHOT_TYPE, EVENT_TYPE) %>% dplyr::summarise(N = n()) %>% spread(key = EVENT_TYPE, value = N) %>% split(.$SHOT_TYPE) %>%  map(~mutate(.x, ShotPct = round(Made.Shot/(Made.Shot +Missed.Shot), 3), Total = Made.Shot + Missed.Shot))
+
+Points <- c("2Pts", "3Pts")
+
+for(i in 1:length(TeamStats)){
+  colnames(TeamStats[[i]])[2:6] <- paste0(colnames(TeamStats[[i]])[2:6], Points[i])
+}
+
+TeamStats <- TeamStats %>% reduce(merge) %>% select(-SHOT_TYPE2Pts, -SHOT_TYPE3Pts, -Made.Shot2Pts, -Made.Shot3Pts, -Missed.Shot2Pts, -Missed.Shot3Pts) %>% mutate(TotalShots = Total2Pts + Total3Pts) %>% mutate(PercentageOf2s = round(Total2Pts/TotalShots,2),PercentageOf3s = round(Total3Pts/TotalShots, 2)) %>% select(-TotalShots, -Total2Pts, -Total3Pts)
+```
+
+```{r MakeTable, echo=FALSE}
+DT::datatable(TeamStats,  options = list(
+  autoWidth = TRUE, pageLength = 30))
+```
+
+
