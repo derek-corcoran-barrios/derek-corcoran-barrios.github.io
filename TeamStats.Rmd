@@ -34,10 +34,10 @@ Prop <- data.frame(TEAM_NAME = Teams , PropShot = NA)
 
 for(i in 1:30){
 Offa <- dplyr::filter(Season2018, HTM == Teams[i] | VTM == Teams[i])
-Prop$PropShot[i] <- nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i]))
+Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
 }
 
-TeamStats <- full_join(TeamStats, Prop)
+TeamStats <- full_join(TeamStats, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3)) %>% rename(Team = TEAM_NAME)
 ```
 
 ```{r MakeTable, echo=FALSE}
