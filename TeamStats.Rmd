@@ -28,6 +28,16 @@ for(i in 1:length(TeamStats)){
 }
 
 TeamStats <- TeamStats %>% reduce(merge) %>% select(-SHOT_TYPE2Pts, -SHOT_TYPE3Pts, -Made.Shot2Pts, -Made.Shot3Pts, -Missed.Shot2Pts, -Missed.Shot3Pts) %>% mutate(TotalShots = Total2Pts + Total3Pts) %>% mutate(PercentageOf2s = round(Total2Pts/TotalShots,2),PercentageOf3s = round(Total3Pts/TotalShots, 2)) %>% select(-TotalShots, -Total2Pts, -Total3Pts)
+Teams <- unique(Season2018$TEAM_NAME)
+
+Prop <- data.frame(TEAM_NAME = Teams , PropShot = NA)
+
+for(i in 1:30){
+Offa <- dplyr::filter(Season2018, HTM == Teams[i] | VTM == Teams[i])
+Prop$PropShot[i] <- nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i]))
+}
+
+TeamStats <- full_join(TeamStats, Prop)
 ```
 
 ```{r MakeTable, echo=FALSE}
@@ -35,6 +45,3 @@ DT::datatable(TeamStats,  options = list(
   autoWidth = TRUE, pageLength = 30))
 ```
 
-Offa <- dplyr::filter(Season2018, HTM == "GSW" | VTM == "GSW")
-OffCorrection <- nrow(dplyr::filter(Offa, TEAM_NAME == "GSW"))/nrow(dplyr::filter(Offa,TEAM_NAME != "GSW"))
-  
