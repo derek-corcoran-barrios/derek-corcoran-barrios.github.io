@@ -35,4 +35,6 @@ DT::datatable(TeamStats,  options = list(
   autoWidth = TRUE, pageLength = 30))
 ```
 
-
+Offa <- dplyr::filter(Season2018, HTM == "GSW" | VTM == "GSW")
+OffCorrection <- nrow(dplyr::filter(Offa, TEAM_NAME == "GSW"))/nrow(dplyr::filter(Offa,TEAM_NAME != "GSW"))
+  
