@@ -1,6 +1,5 @@
 ---
 title: "Team Stats"
-date: "November 22, 2017"
 output: html_document
 ---
 
