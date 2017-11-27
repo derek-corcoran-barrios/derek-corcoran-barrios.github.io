@@ -1,41 +1,43 @@
-name: "Derek Corcoran"
+name: Derek Corcoran
 navbar:
-  title: "Derek Corcoran"
+  title: Derek Corcoran
   left:
-    - text: "Home"
-      href: index.html
-    - text: "Cursos"
-      icon: fa-gear
-      menu:
-        - text: "Cursos"
-        - text: "Curso de R"
-          href: CursoR.html
-    - text: "Donde vivir"
-      href: DondeVivir.html
-    - text: "Alergia en Chile"
-      href: Polen.html
-    - text: "Earthquakes in Chile"
-      href: Earthquake.html
-    - text: NBA
-      icon: fa-gear
-      menu:
-        - text: "NBA research"
-        - text: "About"
-          href: about.html
-        - text: "Team Stats"
-          href: TeamStats.html
-        - text: "Projected Standings"
-          href: Projection.html
-        - text: "Spatial power rankings"
-          href: Rating.html
-        - text: "Shot charts"
-          href: ShotCharts.html
-    
-output_dir: '.'
+  - text: Home
+    href: index.html
+  - text: Cursos
+    icon: fa-gear
+    menu:
+    - text: Cursos
+    - text: Curso de R
+      href: CursoR.html
+  - text: Donde vivir
+    href: DondeVivir.html
+  - text: Alergia en Chile
+    href: Polen.html
+  - text: Earthquakes in Chile
+    href: Earthquake.html
+  - text: NBA
+    icon: fa-gear
+    menu:
+    - text: NBA research
+    - text: About
+      href: about.html
+    - text: Team Stats
+      href: TeamStats.html
+    - text: Projected Standings
+      href: Projection.html
+    - text: Spatial power rankings
+      href: Rating.html
+    - text: Shot charts
+      href: ShotCharts.html
+output_dir: .
 output:
   html_document:
     theme: cosmo
     highlight: textmate
     include:
       after_body: footer.html
+    lib_dir: site_libs
+    self_contained: no
 css: styles.css
+
