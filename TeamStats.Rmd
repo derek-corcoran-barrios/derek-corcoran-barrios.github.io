@@ -14,6 +14,7 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, DT, stringr, purrr)
 ```
 
+## Offensive team stats
 
 
 ```{r getting stats, echo=FALSE}
@@ -43,4 +44,3 @@ TeamStats <- full_join(TeamStats, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*Pe
 DT::datatable(TeamStats,  options = list(
   autoWidth = TRUE, pageLength = 30))
 ```
-
