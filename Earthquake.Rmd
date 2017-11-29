@@ -18,6 +18,8 @@ pacman::p_load(ggmap, ggplot2, dplyr, readr, leaflet, dygraphs, xts, lubridate, 
 
 ```{r, echo=FALSE, warning=FALSE, cache=FALSE}
 Earthquakes <- read_csv("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.csv")
+
+Earthquakes$time <- lubridate::with_tz(Earthquakes$time, tz = "America/Santiago")
 Chile <- as.data.frame(dplyr::filter(Earthquakes, latitude < -17 &  latitude >  -60 & longitude < -65 & longitude > -75))
 Last <- max(dplyr::filter(Chile, mag >= ifelse(max(Chile$mag) < 6,max(Chile$mag), 6))$time)
 ```
