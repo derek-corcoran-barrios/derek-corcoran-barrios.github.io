@@ -34,7 +34,7 @@ Offa <- dplyr::filter(Season2018, HTM == Teams[i] | VTM == Teams[i])
 Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
 }
 
-TeamStats2018 <- full_join(TeamStats2018, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))
+TeamStats2018 <- full_join(TeamStats2018, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3)) %>% mutate(Season = 2018)
 ```
 
 ```{r MakeTable, echo=FALSE}
@@ -64,9 +64,9 @@ for(i in 1:length(Teams)){
   Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
 }
 
-TeamStats2001 <- full_join(TeamStats2001, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))
+TeamStats2001 <- full_join(TeamStats2001, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3)) %>% mutate(Season = 2001)
 
-TeamStats2001 <- TeamStats2001 %>% select(-AdjPPS)
+TeamStats2001 <- TeamStats2001 %>% select(-AdjPPS) 
 
 data("season2017")
 Season2017 <- season2017
@@ -88,7 +88,7 @@ for(i in 1:length(Teams)){
   Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
 }
 
-TeamStats2017 <- full_join(TeamStats2017, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))
+TeamStats2017 <- full_join(TeamStats2017, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3)) %>% mutate(Season = 2017)
 
 TeamStats2017 <- TeamStats2017 %>% select(-AdjPPS)
 
@@ -114,7 +114,7 @@ for(i in 1:length(Teams)){
   Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
 }
 
-TeamStats2016 <- full_join(TeamStats2016, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))
+TeamStats2016 <- full_join(TeamStats2016, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))%>% mutate(Season = 2016)
 
 TeamStats2016 <- TeamStats2016 %>% select(-AdjPPS)
 
@@ -139,12 +139,13 @@ for(i in 1:length(Teams)){
   Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
 }
 
-TeamStats2015 <- full_join(TeamStats2015, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))
+TeamStats2015 <- full_join(TeamStats2015, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))%>% mutate(Season = 2015)
 
 TeamStats2015 <- TeamStats2015 %>% select(-AdjPPS)
 
 
 ```
+
 
 
 ```{r}
@@ -153,15 +154,36 @@ TeamStats <- rbind(TeamStats2001, TeamStats2018)
 TeamStats <- rbind(TeamStats, TeamStats2017)
 TeamStats <- rbind(TeamStats, TeamStats2016)
 TeamStats <- rbind(TeamStats, TeamStats2015)
+TeamStats <- arrange(TeamStats, desc(PercentageOf3s))
 
 
 p <- ggplot(TeamStats, aes(x = PercentageOf3s, y = PPS)) + geom_point() + geom_smooth(method = "lm") + ggtitle("5 years of data") + geom_text(aes(label=TEAM_NAME),hjust=0, vjust=0) + xlab("Proportion of shots that are 3pts")
  
-ggplotly(p)
 ```
 
+## The first team ever to shoot more than half their shots beyond the three point line
+
+For while we`ve been wondering if there is such a thing as too many three pointers for a team. Well we can keep asking ourselves that, as today, december the second of 2017, the Houston Rockets are the first team to ever shoot over half their shots from beyond the three point line. And it's not even close.
+
+In the plot and table above we can see that this year the Rockets are shooting `r TeamStats$PercentageOf3s[1]*100` % of their shots from the three point range, this year, followed by the same team of last year. The third place, is last year's Cavs team, with `r TeamStats$PercentageOf3s[3]*100` %. That is a `r TeamStats$PercentageOf3s[1]*100 -TeamStats$PercentageOf3s[3]*100`% difference!!
+
+### Why keep jacking up threes?
+
+Does this make any sense? As we see in the graph bellow, there is a possitive relationship between the percentage of shots a team takes that are three pointers with their points per shot. Actually, if we don't count the Golden State Warriors teams from 2016, 2017 and this year encarnation of the team, this year Rockets team has the highest Point per shot mark in the last 5 years at `r TeamStats$PPS[1]`, while making only `r TeamStats$PPS[1]*100`% of them.
+
 ```{r}
-TeamStats <- arrange(TeamStats, desc(PercentageOf3s))
+ggplotly(p)
+
 DT::datatable(TeamStats)
+```
+
+
+
+```{r}
+
+prop <- ggplot(TeamStats, aes(x = PropShot, y = PPS)) + geom_point() + geom_smooth(method = "lm") + ggtitle("5 years of data") + geom_text(aes(label=TEAM_NAME),hjust=0, vjust=0) + xlab("Shots taken/shots taken by opponent")
+
+ggplotly(prop)
+
 ```
 
