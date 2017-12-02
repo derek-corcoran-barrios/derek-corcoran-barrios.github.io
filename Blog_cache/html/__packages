@@ -1,5 +1,4 @@
 base
-sp
 pacman
 ggplot2
 ggmap
@@ -23,6 +22,7 @@ bitops
 RCurl
 jpeg
 hexbin
+sp
 knitr
 purrr
 SpatialBall
