@@ -163,7 +163,7 @@ p <- ggplot(TeamStats, aes(x = PercentageOf3s, y = PPS)) + geom_point() + geom_s
 
 ## The first team ever to shoot more than half their shots beyond the three point line
 
-For while we`ve been wondering if there is such a thing as too many three pointers for a team. Well we can keep asking ourselves that, as today, December the second of 2017, the Houston Rockets are the first team to ever shoot over half their shots from beyond the three point line. And it's not even close. Just compare this years Rockets shot chart with 2001 NBA Champions LA Lakers, it's a completely different sport!
+For while we`ve been wondering if there is such a thing as too many three pointers for a team. Well we can keep asking ourselves that, as today December the second of 2017, the Houston Rockets are the first team to ever shoot over half their shots from beyond the three point line. And it's not even close to the second, just compare this years Rockets shot chart with 2001 NBA Champions LA Lakers, it's a completely different sport!
 
 ```{r}
 library(SpatialBall)
@@ -175,7 +175,7 @@ grid.arrange(a,b, ncol =2)
 
 ```
 
-In the plot and table bellow we can see that this year the Rockets are shooting `r TeamStats$PercentageOf3s[1]*100` % of their shots from the three point range, this year, followed by the same team of last year. The third place, is last year's Cavs team, with `r TeamStats$PercentageOf3s[3]*100` %. That is a `r TeamStats$PercentageOf3s[1]*100 -TeamStats$PercentageOf3s[3]*100`% difference!!
+In the plot and table bellow we can see that this year the Rockets are shooting `r TeamStats$PercentageOf3s[1]*100` % of their shots from the three point range, followed by the same team of last year. The third place, is last year's Cavs team, with `r TeamStats$PercentageOf3s[3]*100` %, that is a `r TeamStats$PercentageOf3s[1]*100 -TeamStats$PercentageOf3s[3]*100`% difference!!
 
 ### Why keep jacking up threes?
 
@@ -188,7 +188,7 @@ ggplotly(p)
 
 ### What would happend if the warriors shot as many threes as the Rockets
 
-As told above, this year warriors are the top team in the last 5 years in Points per shot making `r dplyr::filter(TeamStats, TEAM_NAME == "GSW" & Season == 2018)$PPS`. Points per shot. They are making an efficient `r dplyr::filter(TeamStats, TEAM_NAME == "GSW" & Season == 2018)$ShotPct3Pts*100` of their three pointers and an outstanding `r dplyr::filter(TeamStats, TEAM_NAME == "GSW" & Season == 2018)$ShotPct2Pts*100` o their two pointers. But what would happen if they shot they same proportion of their shots form the three point line as the Rockets did?
+As told above, this year warriors are the top team in the last 5 years in Points per shot making `r dplyr::filter(TeamStats, TEAM_NAME == "GSW" & Season == 2018)$PPS` points per shot. They are making an efficient `r dplyr::filter(TeamStats, TEAM_NAME == "GSW" & Season == 2018)$ShotPct3Pts*100`% of their three pointers and an outstanding `r dplyr::filter(TeamStats, TEAM_NAME == "GSW" & Season == 2018)$ShotPct2Pts*100`% of their two pointers. But what would happen if they shot they same proportion of their shots form the three point line as the Rockets did?
 
 Well, they would change their PPS to `r round((dplyr::filter(TeamStats, TEAM_NAME == "GSW" & Season == 2018)$ShotPct3Pts*3*dplyr::filter(TeamStats, TEAM_NAME == "Hou" & Season == 2018)$PercentageOf3s) + (dplyr::filter(TeamStats, TEAM_NAME == "GSW" & Season == 2018)$ShotPct2Pts*2*dplyr::filter(TeamStats, TEAM_NAME == "Hou" & Season == 2018)$PercentageOf2s),3)` which is an increment, but no by so much.
 
@@ -199,11 +199,11 @@ DT::datatable(TeamStats)
 
 ### Is there any downsides on shooting this many three pointers?
 
-If we look at the proportion of shots a team takes as a proportion of the number of shots their opponent takes as shown in the formula bellow, we see in the following graph (figure 2) that the more threes you take, the less proportions of shots you take, that is, the other team gets more second chances, but the slope of that tendency is lower than the one in Figure 1. That is, usually the proportion of shots you loose by taking more threes is more than offset by the increase in points per shots. 
+If we look at the proportion of shots a team takes as a proportion of the number of shots their opponent takes as shown in the formula bellow, we see in the following graph (figure 2) that the more threes you take, the less proportions of shots you take. The other team gets more second chances, but the slope of that tendency is lower than the one in Figure 1. That is, usually the proportion of shots you loose by taking more threes is more than offset by the increase in points per shots. 
 
 $$PropShot =\frac{ShotsTaken_{Offense}}{ShotsAllowed_{Defense}}$$
 
-On the other hand it can still change the outcome of a match, if you see in this years [team stats](https://derek-corcoran-barrios.github.io/TeamStats.html), you will see that even when Golden State has the higher Points per shot in the NBA, it only takes `r dplyr::filter(TeamStats, TEAM_NAME == "GSW" & Season == 2018)$PropShot` shots per every opponent shot. That is why we added the column AdjPPS, which is basically the Points per shot you take adjusted by the proportion of shots taken in a match. 
+On the other hand, it can still change the outcome of a match. If you see in this years [team stats](https://derek-corcoran-barrios.github.io/TeamStats.html), you will see that even when Golden State has the higher Points per shot in the NBA, it only takes `r dplyr::filter(TeamStats, TEAM_NAME == "GSW" & Season == 2018)$PropShot` shots per every opponent shot. That is why we added the column AdjPPS, which is basically the Points per shot you take adjusted by the proportion of shots taken in a match. 
 
 ```{r}
 
