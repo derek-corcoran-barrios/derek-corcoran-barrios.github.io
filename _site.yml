@@ -30,6 +30,8 @@ navbar:
       href: Rating.html
     - text: Shot charts
       href: ShotCharts.html
+    - text: Blog
+      href: Blog
 output_dir: .
 output:
   html_document:

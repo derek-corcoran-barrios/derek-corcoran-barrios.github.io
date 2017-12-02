@@ -1,0 +1,167 @@
+---
+title: "Blog"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = TRUE)
+```
+
+
+```{r load packs}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, DT, stringr, purrr, dplyr, ggplot2, plotly)
+```
+
+
+```{r getting stats, echo=FALSE}
+Season2018 <- readRDS("Season2018.rds")
+TeamStats2018 <- Season2018 %>% mutate(EVENT_TYPE = make.names(EVENT_TYPE), SHOT_TYPE = str_replace(SHOT_TYPE, " Field Goal", ""))  %>% group_by(TEAM_NAME, SHOT_TYPE, EVENT_TYPE) %>% dplyr::summarise(N = n()) %>% spread(key = EVENT_TYPE, value = N) %>% split(.$SHOT_TYPE) %>%  map(~mutate(.x, ShotPct = round(Made.Shot/(Made.Shot +Missed.Shot), 3), Total = Made.Shot + Missed.Shot))
+
+Points <- c("2Pts", "3Pts")
+
+for(i in 1:length(TeamStats2018)){
+  colnames(TeamStats2018[[i]])[2:6] <- paste0(colnames(TeamStats2018[[i]])[2:6], Points[i])
+}
+
+TeamStats2018 <- TeamStats2018 %>% reduce(merge) %>% select(-SHOT_TYPE2Pts, -SHOT_TYPE3Pts, -Made.Shot2Pts, -Made.Shot3Pts, -Missed.Shot2Pts, -Missed.Shot3Pts) %>% mutate(TotalShots = Total2Pts + Total3Pts) %>% mutate(PercentageOf2s = round(Total2Pts/TotalShots,2),PercentageOf3s = round(Total3Pts/TotalShots, 2)) %>% select(-TotalShots, -Total2Pts, -Total3Pts)
+Teams <- unique(Season2018$TEAM_NAME)
+
+Prop <- data.frame(TEAM_NAME = Teams , PropShot = NA)
+
+for(i in 1:30){
+Offa <- dplyr::filter(Season2018, HTM == Teams[i] | VTM == Teams[i])
+Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
+}
+
+TeamStats2018 <- full_join(TeamStats2018, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))
+```
+
+```{r MakeTable, echo=FALSE}
+TeamStats2018 <- TeamStats2018 %>% select(-AdjPPS)
+```
+
+```{r, cache = TRUE}
+pacman::p_load(tidyverse, DT, stringr, purrr, dplyr)
+library(SpatialBall)
+
+Season2001 <- readRDS("Season2001.rds")
+TeamStats2001 <- Season2001 %>% mutate(EVENT_TYPE = make.names(EVENT_TYPE), SHOT_TYPE = str_replace(SHOT_TYPE, " Field Goal", ""))  %>% group_by(TEAM_NAME, SHOT_TYPE, EVENT_TYPE) %>% dplyr::summarise(N = n()) %>% spread(key = EVENT_TYPE, value = N) %>% split(.$SHOT_TYPE) %>%  map(~mutate(.x, ShotPct = round(Made.Shot/(Made.Shot +Missed.Shot), 3), Total = Made.Shot + Missed.Shot))
+
+Points <- c("2Pts", "3Pts")
+
+for(i in 1:length(TeamStats2001)){
+  colnames(TeamStats2001[[i]])[2:6] <- paste0(colnames(TeamStats2001[[i]])[2:6], Points[i])
+}
+
+TeamStats2001 <- TeamStats2001 %>% reduce(merge) %>% select(-SHOT_TYPE2Pts, -SHOT_TYPE3Pts, -Made.Shot2Pts, -Made.Shot3Pts, -Missed.Shot2Pts, -Missed.Shot3Pts) %>% mutate(TotalShots = Total2Pts + Total3Pts) %>% mutate(PercentageOf2s = round(Total2Pts/TotalShots,2),PercentageOf3s = round(Total3Pts/TotalShots, 2)) %>% select(-TotalShots, -Total2Pts, -Total3Pts)
+Teams <- unique(Season2001$TEAM_NAME)
+
+Prop <- data.frame(TEAM_NAME = Teams , PropShot = NA)
+
+for(i in 1:length(Teams)){
+  Offa <- dplyr::filter(Season2001, HTM == Teams[i] | VTM == Teams[i])
+  Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
+}
+
+TeamStats2001 <- full_join(TeamStats2001, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))
+
+TeamStats2001 <- TeamStats2001 %>% select(-AdjPPS)
+
+data("season2017")
+Season2017 <- season2017
+TeamStats2017 <- Season2017 %>% mutate(EVENT_TYPE = make.names(EVENT_TYPE), SHOT_TYPE = str_replace(SHOT_TYPE, " Field Goal", ""))  %>% group_by(TEAM_NAME, SHOT_TYPE, EVENT_TYPE) %>% dplyr::summarise(N = n()) %>% spread(key = EVENT_TYPE, value = N) %>% split(.$SHOT_TYPE) %>%  map(~mutate(.x, ShotPct = round(Made.Shot/(Made.Shot +Missed.Shot), 3), Total = Made.Shot + Missed.Shot))
+
+Points <- c("2Pts", "3Pts")
+
+for(i in 1:length(TeamStats2017)){
+  colnames(TeamStats2017[[i]])[2:6] <- paste0(colnames(TeamStats2017[[i]])[2:6], Points[i])
+}
+
+TeamStats2017 <- TeamStats2017 %>% reduce(merge) %>% select(-SHOT_TYPE2Pts, -SHOT_TYPE3Pts, -Made.Shot2Pts, -Made.Shot3Pts, -Missed.Shot2Pts, -Missed.Shot3Pts) %>% mutate(TotalShots = Total2Pts + Total3Pts) %>% mutate(PercentageOf2s = round(Total2Pts/TotalShots,2),PercentageOf3s = round(Total3Pts/TotalShots, 2)) %>% select(-TotalShots, -Total2Pts, -Total3Pts)
+Teams <- unique(Season2017$TEAM_NAME)
+
+Prop <- data.frame(TEAM_NAME = Teams , PropShot = NA)
+
+for(i in 1:length(Teams)){
+  Offa <- dplyr::filter(Season2017, HTM == Teams[i] | VTM == Teams[i])
+  Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
+}
+
+TeamStats2017 <- full_join(TeamStats2017, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))
+
+TeamStats2017 <- TeamStats2017 %>% select(-AdjPPS)
+
+
+pacman::p_load(tidyverse, DT, stringr, purrr, dplyr)
+
+Season2016 <- readRDS("shotDataTotal2016.rds")
+TeamStats2016 <- Season2016 %>% mutate(EVENT_TYPE = make.names(EVENT_TYPE), SHOT_TYPE = str_replace(SHOT_TYPE, " Field Goal", ""))  %>% group_by(TEAM_NAME, SHOT_TYPE, EVENT_TYPE) %>% dplyr::summarise(N = n()) %>% spread(key = EVENT_TYPE, value = N) %>% split(.$SHOT_TYPE) %>%  map(~mutate(.x, ShotPct = round(Made.Shot/(Made.Shot +Missed.Shot), 3), Total = Made.Shot + Missed.Shot))
+
+Points <- c("2Pts", "3Pts")
+
+for(i in 1:length(TeamStats2016)){
+  colnames(TeamStats2016[[i]])[2:6] <- paste0(colnames(TeamStats2016[[i]])[2:6], Points[i])
+}
+
+TeamStats2016 <- TeamStats2016 %>% reduce(merge) %>% select(-SHOT_TYPE2Pts, -SHOT_TYPE3Pts, -Made.Shot2Pts, -Made.Shot3Pts, -Missed.Shot2Pts, -Missed.Shot3Pts) %>% mutate(TotalShots = Total2Pts + Total3Pts) %>% mutate(PercentageOf2s = round(Total2Pts/TotalShots,2),PercentageOf3s = round(Total3Pts/TotalShots, 2)) %>% select(-TotalShots, -Total2Pts, -Total3Pts)
+Teams <- unique(Season2016$TEAM_NAME)
+
+Prop <- data.frame(TEAM_NAME = Teams , PropShot = NA)
+
+for(i in 1:length(Teams)){
+  Offa <- dplyr::filter(Season2016, HTM == Teams[i] | VTM == Teams[i])
+  Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
+}
+
+TeamStats2016 <- full_join(TeamStats2016, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))
+
+TeamStats2016 <- TeamStats2016 %>% select(-AdjPPS)
+
+pacman::p_load(tidyverse, DT, stringr, purrr, dplyr)
+
+Season2015 <- readRDS("shotDataTotal2015.rds")
+TeamStats2015 <- Season2015 %>% mutate(EVENT_TYPE = make.names(EVENT_TYPE), SHOT_TYPE = str_replace(SHOT_TYPE, " Field Goal", ""))  %>% group_by(TEAM_NAME, SHOT_TYPE, EVENT_TYPE) %>% dplyr::summarise(N = n()) %>% spread(key = EVENT_TYPE, value = N) %>% split(.$SHOT_TYPE) %>%  map(~mutate(.x, ShotPct = round(Made.Shot/(Made.Shot +Missed.Shot), 3), Total = Made.Shot + Missed.Shot))
+
+Points <- c("2Pts", "3Pts")
+
+for(i in 1:length(TeamStats2015)){
+  colnames(TeamStats2015[[i]])[2:6] <- paste0(colnames(TeamStats2015[[i]])[2:6], Points[i])
+}
+
+TeamStats2015 <- TeamStats2015 %>% reduce(merge) %>% select(-SHOT_TYPE2Pts, -SHOT_TYPE3Pts, -Made.Shot2Pts, -Made.Shot3Pts, -Missed.Shot2Pts, -Missed.Shot3Pts) %>% mutate(TotalShots = Total2Pts + Total3Pts) %>% mutate(PercentageOf2s = round(Total2Pts/TotalShots,2),PercentageOf3s = round(Total3Pts/TotalShots, 2)) %>% select(-TotalShots, -Total2Pts, -Total3Pts)
+Teams <- unique(Season2015$TEAM_NAME)
+
+Prop <- data.frame(TEAM_NAME = Teams , PropShot = NA)
+
+for(i in 1:length(Teams)){
+  Offa <- dplyr::filter(Season2015, HTM == Teams[i] | VTM == Teams[i])
+  Prop$PropShot[i] <- round(nrow(dplyr::filter(Offa, TEAM_NAME == Teams[i]))/nrow(dplyr::filter(Offa,TEAM_NAME != Teams[i])),3)
+}
+
+TeamStats2015 <- full_join(TeamStats2015, Prop) %>% mutate(PPS = round((ShotPct2Pts*2*PercentageOf2s)+(ShotPct3Pts*3*PercentageOf3s),3)) %>% mutate(AdjPPS = round((PPS * PropShot),3))
+
+TeamStats2015 <- TeamStats2015 %>% select(-AdjPPS)
+
+
+```
+
+
+```{r}
+library(plotly)
+TeamStats <- rbind(TeamStats2001, TeamStats2018)
+TeamStats <- rbind(TeamStats, TeamStats2017)
+TeamStats <- rbind(TeamStats, TeamStats2016)
+TeamStats <- rbind(TeamStats, TeamStats2015)
+
+
+p <- ggplot(TeamStats, aes(x = PercentageOf3s, y = PPS)) + geom_point() + geom_smooth(method = "lm") + ggtitle("5 years of data") + geom_text(aes(label=TEAM_NAME),hjust=0, vjust=0) + xlab("Proportion of shots that are 3pts")
+ 
+ggplotly(p)
+```
+
+```{r}
+TeamStats <- arrange(TeamStats, desc(PercentageOf3s))
+DT::datatable(TeamStats)
+```
+
