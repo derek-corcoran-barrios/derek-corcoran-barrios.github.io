@@ -165,11 +165,11 @@ p <- ggplot(TeamStats, aes(x = PercentageOf3s, y = PPS)) + geom_point() + geom_s
 
 For while we`ve been wondering if there is such a thing as too many three pointers for a team. Well we can keep asking ourselves that, as today, December the second of 2017, the Houston Rockets are the first team to ever shoot over half their shots from beyond the three point line. And it's not even close.
 
-In the plot and table above we can see that this year the Rockets are shooting `r TeamStats$PercentageOf3s[1]*100` % of their shots from the three point range, this year, followed by the same team of last year. The third place, is last year's Cavs team, with `r TeamStats$PercentageOf3s[3]*100` %. That is a `r TeamStats$PercentageOf3s[1]*100 -TeamStats$PercentageOf3s[3]*100`% difference!!
+In the plot and table bellow we can see that this year the Rockets are shooting `r TeamStats$PercentageOf3s[1]*100` % of their shots from the three point range, this year, followed by the same team of last year. The third place, is last year's Cavs team, with `r TeamStats$PercentageOf3s[3]*100` %. That is a `r TeamStats$PercentageOf3s[1]*100 -TeamStats$PercentageOf3s[3]*100`% difference!!
 
 ### Why keep jacking up threes?
 
-Does this make any sense? As we see in the graph bellow, there is a positive relationship between the percentage of shots a team takes that are three pointers with their points per shot. Actually, if we don't count the Golden State Warriors teams from 2016, 2017 and this year incarnation of the team, this year Rockets team has the highest Point per shot mark in the last 5 years at `r TeamStats$PPS[1]`, while making only `r TeamStats$ShotPct3Pts[1]*100`% of them.
+Does this make any sense? As we see in figure 1, there is a positive relationship between the percentage of shots a team takes that are three pointers with their points per shot. Actually, if we don't count the Golden State Warriors teams from 2016, 2017 and this year incarnation of the team, this year Rockets team has the highest Point per shot mark in the last 5 years at `r TeamStats$PPS[1]`, while making only `r TeamStats$ShotPct3Pts[1]*100`% of them.
 
 
 ```{r}
