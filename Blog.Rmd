@@ -163,7 +163,17 @@ p <- ggplot(TeamStats, aes(x = PercentageOf3s, y = PPS)) + geom_point() + geom_s
 
 ## The first team ever to shoot more than half their shots beyond the three point line
 
-For while we`ve been wondering if there is such a thing as too many three pointers for a team. Well we can keep asking ourselves that, as today, December the second of 2017, the Houston Rockets are the first team to ever shoot over half their shots from beyond the three point line. And it's not even close.
+For while we`ve been wondering if there is such a thing as too many three pointers for a team. Well we can keep asking ourselves that, as today, December the second of 2017, the Houston Rockets are the first team to ever shoot over half their shots from beyond the three point line. And it's not even close. Just compare this years Rockets shot chart with 2001 NBA Champions LA Lakers, it's a completely different sport!
+
+```{r}
+library(SpatialBall)
+library(gridExtra)
+a <- SpatialBall::OffShotSeasonGraphTeam(Seasondata = Season2018, team = "Hou")
+b <- SpatialBall::OffShotSeasonGraphTeam(Seasondata = Season2001, team = "Lal")
+
+grid.arrange(a,b, ncol =2)
+
+```
 
 In the plot and table bellow we can see that this year the Rockets are shooting `r TeamStats$PercentageOf3s[1]*100` % of their shots from the three point range, this year, followed by the same team of last year. The third place, is last year's Cavs team, with `r TeamStats$PercentageOf3s[3]*100` %. That is a `r TeamStats$PercentageOf3s[1]*100 -TeamStats$PercentageOf3s[3]*100`% difference!!
 
@@ -202,3 +212,5 @@ prop <- ggplot(TeamStats, aes(x = PropShot, y = PPS)) + geom_point() + geom_smoo
 ggplotly(prop)
 
 ```
+
+
