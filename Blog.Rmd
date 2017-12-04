@@ -163,7 +163,7 @@ p <- ggplot(TeamStats, aes(x = PercentageOf3s, y = PPS)) + geom_point() + geom_s
 
 ## The first team ever to shoot more than half their shots beyond the three point line
 
-For while we`ve been wondering if there is such a thing as too many three pointers for a team. Well we can keep asking ourselves that, as today December the second of 2017, the Houston Rockets are the first team to ever shoot over half their shots from beyond the three point line. And it's not even close to the second, just compare this years Rockets shot chart with 2001 NBA Champions LA Lakers, it's a completely different sport!
+For while we`ve been wondering if there is such a thing as too many three pointers for a team. Well we can keep asking ourselves that, as today December the second of 2017, The Rockets are shooting an NBA all-time record 53% of their shots from three point range, followed by last season's Rockets with 46%. Third place is held by last year’s Cavs team, with 40%, a 13% difference. And it's not even close to the second, just compare this years Rockets shot chart with 2001 NBA Champions LA Lakers, it's a completely different sport!
 
 ```{r}
 library(SpatialBall)
@@ -199,7 +199,7 @@ DT::datatable(TeamStats)
 
 ### Is there any downsides on shooting this many three pointers?
 
-If we look at the proportion of shots a team takes as a proportion of the number of shots their opponent takes as shown in the formula bellow, we see in the following graph (figure 2) that the more threes you take, the less proportions of shots you take. The other team gets more second chances, but the slope of that tendency is lower than the one in Figure 1. That is, usually the proportion of shots you loose by taking more threes is more than offset by the increase in points per shots. 
+If we look at the proportion of shots a team takes as a proportion of the number of shots their opponent takes as shown in the formula bellow, we see in the following graph (figure 2) that the more threes you take, the less proportions of shots you take. The other team gets more second chances, but the slope of that tendency is a lot lower than the one in Figure 1. That is, usually the proportion of shots you loose by taking more threes is more than offset by the increase in points per shots. 
 
 $$PropShot =\frac{ShotsTaken_{Offense}}{ShotsAllowed_{Defense}}$$
 
@@ -207,7 +207,7 @@ On the other hand, it can still change the outcome of a match. If you see in thi
 
 ```{r}
 
-prop <- ggplot(TeamStats, aes(x = PropShot, y = PPS)) + geom_point() + geom_smooth(method = "lm") + ggtitle("Figure 2") + geom_text(aes(label=TEAM_NAME),hjust=0, vjust=0) + xlab("Shots taken/shots taken by opponent")
+prop <- ggplot(TeamStats, aes(x = PropShot, y = PercentageOf3s)) + geom_point() + geom_smooth(method = "lm") + ggtitle("Figure 2") + geom_text(aes(label=TEAM_NAME),hjust=0, vjust=0) + xlab("Shots taken/shots taken by opponent") + ylab("Proportion of shots that are 3pts")
 
 ggplotly(prop)
 
