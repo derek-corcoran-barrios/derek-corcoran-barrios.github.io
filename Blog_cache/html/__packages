@@ -1,4 +1,6 @@
 base
+sp
+bindrcpp
 pacman
 ggplot2
 ggmap
@@ -11,7 +13,6 @@ xts
 lubridate
 geojsonio
 stringr
-bindrcpp
 xml2
 rvest
 tidyr
@@ -22,7 +23,6 @@ bitops
 RCurl
 jpeg
 hexbin
-sp
 knitr
 purrr
 SpatialBall
