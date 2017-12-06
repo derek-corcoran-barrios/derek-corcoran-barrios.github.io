@@ -249,7 +249,7 @@ schedule[,5]<- gsub("New Orleans Hornets", "NO", schedule[,5])
 ```
 
 ```{r simulatingGames, echo=FALSE, message=FALSE, warning=FALSE}
-pacman::p_load(SpatialBall, dplyr,XML, lubridate, rvest)
+pacman::p_load(SpatialBall2, dplyr,XML, lubridate, rvest)
 
 colnames(schedule) <- c("Date", "Start..ET.","VTM", "PTS_Visitor", "HTM", "PTS_Home", "X", "X2", "Notes", "Season")
 
