@@ -6,6 +6,7 @@ grDevices
 graphics
 stats
 sp
+bindrcpp
 pacman
 ggplot2
 ggmap
@@ -18,7 +19,6 @@ xts
 lubridate
 geojsonio
 stringr
-bindrcpp
 xml2
 rvest
 tidyr
@@ -31,4 +31,11 @@ RCurl
 jpeg
 hexbin
 knitr
+purrr
+SpatialBall2
 XML
+SpatialBall
+tidyverse
+tibble
+forcats
+DT
