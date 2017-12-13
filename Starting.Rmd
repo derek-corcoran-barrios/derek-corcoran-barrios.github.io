@@ -8,10 +8,6 @@ output:
         toc: true
         toc_depth: 3 
         number_sections: true 
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
