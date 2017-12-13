@@ -275,14 +275,18 @@ $(document).ready(function () {
 
 <div id="TOC">
 <ul>
-<li><a href="#data-visualization"><span class="toc-section-number">0.1</span> Data visualization</a><ul>
-<li><a href="#player-level-visualization"><span class="toc-section-number">0.1.1</span> Player level visualization</a></li>
-<li><a href="#team-level-visualization"><span class="toc-section-number">0.1.2</span> Team level visualization</a></li>
-<li><a href="#league-level-visualization"><span class="toc-section-number">0.1.3</span> League level visualization</a></li>
+<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a><ul>
+<li><a href="#data-visualization"><span class="toc-section-number">1.1</span> Data visualization</a><ul>
+<li><a href="#player-level-visualization"><span class="toc-section-number">1.1.1</span> Player level visualization</a></li>
+<li><a href="#team-level-visualization"><span class="toc-section-number">1.1.2</span> Team level visualization</a></li>
+<li><a href="#league-level-visualization"><span class="toc-section-number">1.1.3</span> League level visualization</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
 
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
 <p>The Spatialball project was developed to analyze and visualize spatial data in the NBA. We can separate the Spatialball functions into three groups:</p>
 <ul>
 <li>Data scraping</li>
@@ -292,12 +296,12 @@ $(document).ready(function () {
 <p>The <em>SpatialBall</em> package has only the visualization capabilities of the project, and it has been thought mainly as a demo, and it comes with the full dataset of the 2016-17 season. The full software version was build for reasearch and consultancy. Its documentation can be found <a href="https://derek-corcoran-barrios.github.io/Starting.html">here</a>, if you want to ask about the <em>SpatialBall2</em> package you can e-mail Derek Corcoran (<a href="mailto:derek.corcoran.barrios@gmail.com">derek.corcoran.barrios@gmail.com</a>) or Nick Watanabe (<a href="mailto:nickwatanabe8@gmail.com">nickwatanabe8@gmail.com</a>)</p>
 <pre class="r"><code>library(SpatialBall)</code></pre>
 <div id="data-visualization" class="section level2">
-<h2><span class="header-section-number">0.1</span> Data visualization</h2>
+<h2><span class="header-section-number">1.1</span> Data visualization</h2>
 <p>We have three levels of data visualization with graphs at the player, team, and league level. We will go into detail in each of those categories. First for players and all other levels of visualization we have shot charts. In our shot charts (see Fig. 1 as an example) the color scheme will be a scale of the points per shot or percentage depending on the options you choose. The size of the hexagon in shot charts represents the frequency of the shots taken, by the league, team or player, with bigger hexagons meaning a higher frequency of shots. Now we will go in detail into each of the visualizations available in our package.</p>
 <div id="player-level-visualization" class="section level3">
-<h3><span class="header-section-number">0.1.1</span> Player level visualization</h3>
+<h3><span class="header-section-number">1.1.1</span> Player level visualization</h3>
 <div id="player-shot-charts" class="section level4">
-<h4><span class="header-section-number">0.1.1.1</span> Player shot charts</h4>
+<h4><span class="header-section-number">1.1.1.1</span> Player shot charts</h4>
 <p>For any given player that played in the league on a given season, you can build shot charts. The main function to do that is <em>ShotSeasonGraphPlayer</em>, in its most basic configuration, you only need to use the parameters <em>Seasondata</em> and the name of the player, as seen in figure 1.</p>
 <pre class="r"><code>data(&quot;season2017&quot;)
 ShotSeasonGraphPlayer(season2017, player = &quot;Stephen Curry&quot;)</code></pre>
@@ -317,7 +321,7 @@ Figure 2. Shot chart of Stephen Curry showing the percentage of shots made
 </div>
 </div>
 <div id="player-point-shot-charts" class="section level4">
-<h4><span class="header-section-number">0.1.1.2</span> Player point shot charts</h4>
+<h4><span class="header-section-number">1.1.1.2</span> Player point shot charts</h4>
 <p>When it’s eary in the season, or a player does not shot to much, making a frequency based shot chart might not be the best visualization tool. For that, we created the <em>PointShotSeasonGraphPlayer</em>. This function creates a shot chart for a player on a given season plotting a point for each taken shot separating by colors mades and misses, Also, you can add a kernel of the frequency of usage of areas. For example here is the “traditional” shot chart of Kyle Singler (Figure 3).</p>
 <pre class="r"><code>ShotSeasonGraphPlayer(season2017, player = &quot;Kyle Singler&quot;)</code></pre>
 <div class="figure">
@@ -352,9 +356,9 @@ Figure 6. Shot chart of Kyle Singler, points only, only made shots
 </div>
 </div>
 <div id="team-level-visualization" class="section level3">
-<h3><span class="header-section-number">0.1.2</span> Team level visualization</h3>
+<h3><span class="header-section-number">1.1.2</span> Team level visualization</h3>
 <div id="offensive-shot-charts" class="section level4">
-<h4><span class="header-section-number">0.1.2.1</span> Offensive shot charts</h4>
+<h4><span class="header-section-number">1.1.2.1</span> Offensive shot charts</h4>
 <p>This shot charts are made from the shots that the selected team has taken. The function to make team offensive shotcharts is <em>OffShotSeasonGraphTeam</em>, where in the most basic option for this function, you only have to provide the <em>Seasondata</em> and the <em>team</em> parameters. As an example of these, lets plot the offensive shot chart of the Golden State Warriors from the 2016-17 season with the data included in the package.</p>
 <pre class="r"><code>data(&quot;season2017&quot;)
 OffShotSeasonGraphTeam(season2017, team = &quot;GSW&quot;)</code></pre>
@@ -375,7 +379,7 @@ Figure 7. Offensive Shot chart of the Golden State Warriors, percentage of shots
 </div>
 </div>
 <div id="defensive-shot-charts" class="section level4">
-<h4><span class="header-section-number">0.1.2.2</span> Defensive shot charts</h4>
+<h4><span class="header-section-number">1.1.2.2</span> Defensive shot charts</h4>
 <p>Similar to the offensive shot charts, here we visualize the Points per shot or percentage allowed by the team we choose to graph, using the function <em>DefShotSeasonGraphTeam</em>. Similar to the functions <em>OffShotSeasonGraphTeam</em> and <em>ShotSeasonGraphPlayer</em>, this function allows the user to choose to visualize the shot chart with a Points per Shot ot Percentage scale as seen in figure 8.</p>
 <pre class="r"><code>data(&quot;season2017&quot;)
 DefShotSeasonGraphTeam(season2017, team = &quot;Sas&quot;, type = &quot;PCT&quot;)</code></pre>
@@ -388,7 +392,7 @@ Figure 8. Offensive Shot chart of the Golden State Warriors, percentage of shots
 </div>
 </div>
 <div id="league-level-visualization" class="section level3">
-<h3><span class="header-section-number">0.1.3</span> League level visualization</h3>
+<h3><span class="header-section-number">1.1.3</span> League level visualization</h3>
 <p>The <em>ShotSeasonGraph</em> function takes an NBA season object and makes a shot chart of all the shots takes through that regular season. You can choose to either plot the results based on Points per Shot or on Shooting Percentage, as in all previous functions. This function is exemplified in figure 12.</p>
 <pre class="r"><code>data(&quot;season2017&quot;)
 ShotSeasonGraph(season2017, quant = 0.4)</code></pre>
@@ -397,6 +401,7 @@ ShotSeasonGraph(season2017, quant = 0.4)</code></pre>
 <p class="caption">
 Figure 12. Shot chart of the Whole 2017 Season
 </p>
+</div>
 </div>
 </div>
 </div>

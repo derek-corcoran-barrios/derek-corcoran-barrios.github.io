@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Introduction
 
 The Spatialball project was developed to analyze and visualize spatial data in the NBA. We can separate the Spatialball functions into three groups:
 
