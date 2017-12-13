@@ -1,0 +1,195 @@
+---
+title: "Starting to use the Spatialball2 package"
+author: "Derek Corcoran, and Nicholas Watanabe"
+date: "`r Sys.Date()`"
+output:
+      rmarkdown::html_vignette:
+        fig_caption: yes
+        toc: true
+        toc_depth: 3 
+        number_sections: true 
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE, 
+  cache = TRUE
+)
+```
+
+#Introduction
+
+The **SpatialBall2** package was developed to analyze and visualize spatial data in the NBA. We can separate the Spatialball functions into three groups:
+
+* Data scraping
+* Data visualization
+* Data analysis
+
+
+```{r}
+library(SpatialBall2)
+```
+
+## Data scraping
+
+The *Seasonscrape* function, downloads data from the NBA.stats.com site the information needed for all the visualizations and analyses made in this package. You can request different seasons, and limit it to a range of dates, select if you want to analyse Regular season, playoffs, preseason, etc.
+
+As an example on how to scrape data from the 2017-18 for a given date is shown bellow.
+
+```{r}
+SeasonData2018 <- Seasonscrape(season = "2017-18", Start = "12/05/2017", End = "12/07/2017")
+```
+
+The only parameter that is mandatory for this function is season. If you only fill that parameter, you will get all the data from the regular season of the year you requested.
+
+## Data visualization
+
+We have three levels of data visualization with graphs at the player, team, and league level. We will go into detail in each of those categories. First for players and all other levels of visualization we have shot charts. In our shot charts (see Fig. 1 as an example) the color scheme will be a scale of the points per shot or percentage depending on the options you choose. The size of the hexagon in shot charts represents the frequency of the shots taken, by the league, team or player, with bigger hexagons meaning a higher frequency of shots. Now we will go in detail into each of the visualizations available in our package.
+
+### Player level visualization
+
+#### Player shot charts
+
+For any given player that played in the league on a given season, you can build shot charts. The main function to do that is *ShotSeasonGraphPlayer*, in its most basic configuration, you only need to use the parameters *Seasondata* and the name of the player, as seen in figure 1.
+
+```{r, fig.height= 5, fig.width=6, fig.cap="Figure 1. Shot chart of Stephen Curry"}
+data("season2017")
+ShotSeasonGraphPlayer(season2017, player = "Stephen Curry")
+```
+
+
+If you change the type parameter from "PPS" (Points Per Shot), which is the default, to "PCT" (Percentage of shots made), the color scale of the hexagon will change to reflect that, as seen in figure 2.
+
+```{r, fig.height= 5, fig.width=6, fig.cap="Figure 2. Shot chart of Stephen Curry showing the percentage of shots made"}
+ShotSeasonGraphPlayer(season2017, player = "Stephen Curry", type = "PCT")
+```
+
+#### Player point shot charts
+
+When it's early in the season, or a player does not shot to much, making a frequency based shot chart might not be the best visualization tool. For that, we created the *PointShotSeasonGraphPlayer*. This function creates a shot chart for a player on a given season plotting a point for each taken shot separating by colors made and misses, Also, you can add a kernel of the frequency of usage of areas. For example here is the "traditional" shot chart of Kyle Singler (Figure 3).
+
+```{r, fig.height= 5, fig.width=6, fig.cap="Figure 3. Shot chart of Kyle Singler"}
+data("season2017")
+ShotSeasonGraphPlayer(season2017, player = "Kyle Singler")
+```
+
+He only took 83 shots during the 2016-17 season, in that case, it might be better to plot every shot and a kernel of the most active areas for that player (Figure 4)
+
+```{r, fig.height= 5, fig.width=6, fig.cap="Figure 4. Shot chart of Kyle Singler, point and kernel"}
+PointShotSeasonGraphPlayer(season2017, player = "Kyle Singler")
+```
+
+We can show only the made shots as shown in figure 5, and/or remove the kernel as shown in figure 6.
+
+```{r, fig.height= 5, fig.width=6, fig.cap="Figure 5. Shot chart of Kyle Singler, point and kernel, only made shots"}
+PointShotSeasonGraphPlayer(season2017, player = "Kyle Singler", Type = "Made")
+```
+
+```{r, fig.height= 6, fig.width=6, fig.cap="Figure 6. Shot chart of Kyle Singler, points only, only made shots"}
+PointShotSeasonGraphPlayer(season2017, player = "Kyle Singler", Type = "Made", kernel = FALSE)
+```
+
+
+### Team level visualization
+
+#### Offensive shot charts
+
+This shot charts are made from the shots that the selected team has taken. The function to make team offensive shotcharts is *OffShotSeasonGraphTeam*, where in the most basic option for this function, you only have to provide the *Seasondata* and the *team* parameters. As an example of these, lets plot the offensive shot chart of the Golden State Warriors from the 2016-17 season with the data included in the package.
+
+```{r, fig.height= 5, fig.width=6, fig.cap="Figure 7. Offensive Shot chart of the Golden State Warriors"}
+OffShotSeasonGraphTeam(season2017, team = "GSW")
+```
+
+A we saw, the default graph has a color legend that varies according to the points per shot (PPS) of the team. This can be changed by changing the type parameter from `"PPS"` to `"PCT"` as follows.
+
+```{r, fig.height= 5, fig.width=6, fig.cap="Figure 8. Offensive Shot chart of the Golden State Warriors, percentage of shots made"}
+data("season2017")
+OffShotSeasonGraphTeam(season2017, team = "GSW", type = "PCT")
+```
+
+#### Defensive shot charts
+
+Similar to the offensive shot charts, here we visualize the Points per shot or percentage allowed by the team we choose to graph, using the function *DefShotSeasonGraphTeam*. Similar to the functions *OffShotSeasonGraphTeam* and *ShotSeasonGraphPlayer*, this function allows the user to choose to visualize the shot chart with a Points per Shot or Percentage scale as seen in figure 8.
+
+```{r, fig.height= 5, fig.width=6, fig.cap="Figure 9. Offensive Shot chart of the Golden State Warriors, percentage of shots made"}
+data("season2017")
+DefShotSeasonGraphTeam(season2017, team = "Sas", type = "PCT")
+```
+
+#### Comparative shot charts
+
+The function to visually compare two teams it’s called *ShotComparisonGraph*, and it uses our comparative shot charts, in this example we have Miami against Houston. In the top row we see the defensive shot chart of the Heat, the Offensive Shot Chart of the rockets, and the net Shot Chart of the expected points per Shot over average when Rockets offense faces the Heat Defense. This plot takes into account both the shot frequency attempted by the offense and defense and assumes that the shot frequency for each area in the court will be an in-between frequency. At points where the hexagons are blue, the defense is allowing fewer points than average and the offense is scoring fewer points than average, and the inverse is true for red hexagons. Conversely the bottom row shows what happens when the Heat attacks and the Rockets defend.
+
+```{r, fig.height= 5, fig.width=10, fig.cap="Figure 10. Comparative shot chart of 2016-17 Miami Heat against Houston Rockets"}
+ShotComparisonGraph(HomeTeam = "Hou", VisitorTeam = "Mia", Seasondata = season2017)
+```
+
+We can focus on the areas where the offensive team is favored by adding to the code the *focus = “plus”* command, as follows, which will change only the last column of the graph.
+
+```{r, fig.height= 5, fig.width=10, fig.cap="Figure 11. Comparative shot chart of 2016-17 Miami Heat against Houston Rockets, focusing in the areas where the attack has the advantage"}
+ShotComparisonGraph(HomeTeam = "Hou", VisitorTeam = "Mia", Seasondata = season2017, focus = "plus")
+```
+
+### League level visualization
+
+The *ShotSeasonGraph* function takes an NBA season object and makes a shot chart of all the shots takes through that regular season. You can choose to either plot the results based on Points per Shot or on Shooting Percentage, as in all previous functions. This function is exemplified in figure 12.
+
+```{r, fig.height= 5, fig.width=6, fig.cap="Figure 12. Shot chart of the Whole 2017 Season"}
+data("season2017")
+ShotSeasonGraph(season2017, quant = 0.4)
+```
+
+## Data analysis
+
+###Offensive and defensive team stats
+
+The *TeamStats* function are the basis of the table shown in [this link](https://derek-corcoran-barrios.github.io/TeamStats.html) which is updated daily. The only parameter needed for this function is the *Seasondata* parameter, which can be extracted from the *Seasonscrape* function. As shown in tables 1 (Offensive stats) and 2 (Defensive stats).
+
+```{r}
+data("season2017")
+Stats2017 <- TeamStats(Seasondata = season2017)
+```
+
+In the offensive shot stats we see the shooting percentage of 2 pointers and 3 pointers, also the percentage of shots taken that are 2 pointers and 3 pointers, the points per shots that a team makes. The shot-proportion, which is the amount of shots taken by a team for each shot taken by their opponents, and the adjusted points per shot, which is the points per shot adjusted by the shot-proportion.
+
+```{r, echo=FALSE}
+knitr::kable(Stats2017[[1]], caption = "Offensive team stats")
+```
+
+In the defensive shot stats we see the shooting percentage of 2 pointers and 3 pointers allowed, also the percentage of shots taken that are 2 pointers and 3 pointers taken by opponents, the points per shots that a the opponent makes. The shot-proportion, which is the amount of shots taken by the opponent for each shot taken by the team, and the adjusted points per shot, which is the points per shot adjusted by the shot-proportion.
+
+```{r, echo=FALSE}
+knitr::kable(Stats2017[[2]], caption = "Defensive team stats")
+```
+
+### Spread prediction
+
+The function Get_Apps will analyse the pairwise spatial components of the teams involved in the game proposed and using our algorithm based on Boosted Regression Trees will predict the spread of the game, as an example we will show the predicted spread for Charlotte playing against Boston at Home and on the road:
+
+```{r}
+data("season2017")
+Get_Apps(HomeTeam = "Cha", VisitorTeam = "Bos", Seasondata = season2017)
+```
+
+```{r}
+Get_Apps(HomeTeam = "Bos", VisitorTeam = "Cha", Seasondata = season2017)
+```
+
+### Spatial Rating
+
+Finally our function SpatialRating will calculate the offensive, defensive and net rating for every team, with the shots to the date during the season.
+
+```{r}
+knitr::kable(SpatialRating(Seasondata = season2017))
+```
+
+## Upcoming functions
+
+We are working on improved spread predictions and a function for trade analysis. There are options for Season projections as seen [here](https://derek-corcoran-barrios.github.io/Projection.html).

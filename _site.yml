@@ -32,6 +32,13 @@ navbar:
       href: ShotCharts.html
     - text: Blog
       href: Blog
+  - text: RPackages
+    icon: fa-gear
+    menu:
+    - text: RPackages
+    - text: SpatialBall2
+      href: Starting.html
+
 output_dir: .
 output:
   html_document:
