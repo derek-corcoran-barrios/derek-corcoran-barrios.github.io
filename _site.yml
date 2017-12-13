@@ -36,6 +36,8 @@ navbar:
     icon: fa-gear
     menu:
     - text: RPackages
+    - text: SpatialBall
+      href: SpatialBall.html
     - text: SpatialBall2
       href: Starting.html
 
