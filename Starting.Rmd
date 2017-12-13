@@ -3,7 +3,7 @@ title: "Starting to use the Spatialball2 package"
 author: "Derek Corcoran, and Nicholas Watanabe"
 date: "`r Sys.Date()`"
 output:
-      rmarkdown::html_vignette:
+      html_document:
         fig_caption: yes
         toc: true
         toc_depth: 3 

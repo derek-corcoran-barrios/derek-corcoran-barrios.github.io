@@ -28,3 +28,7 @@ purrr
 SpatialBall2
 XML
 SpatialBall
+tidyverse
+tibble
+forcats
+DT
