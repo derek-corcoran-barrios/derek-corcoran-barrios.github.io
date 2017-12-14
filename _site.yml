@@ -31,7 +31,7 @@ navbar:
     - text: Shot charts
       href: ShotCharts.html
     - text: Blog
-      href: Blog
+      href: BlogHome
   - text: RPackages
     icon: fa-gear
     menu:
