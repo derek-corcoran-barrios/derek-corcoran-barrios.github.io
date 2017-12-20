@@ -3,9 +3,37 @@ title: "BlogHome"
 output: html_document
 ---
 
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, warning = FALSE, message = FALSE)
 ```
+
+## [Does the recent Bulls winning streak mean something?](https://derek-corcoran-barrios.github.io/Mirotic)
+
+*December 20th, 2017*
+
+```{r}
+library(dplyr)
+library(lubridate)
+library(SpatialBall2)
+library(gridExtra)
+library(ggplot2)
+Season2018 <- readRDS("Season2018.rds")
+NM <- filter(Season2018, GAME_DATE >= dmy("8/12/2017"))
+WONM <- filter(Season2018, GAME_DATE < dmy("8/12/2017"))
+```
+
+### Shot charts with and without Nikola Mirotic
+
+Since Nikola, has just played 6 games, there's too few shots to make a passable shot chart of Chicago with him, so we will have to rely on team stats to figure what is going on.
+
+```{r, fig.width=6, fig.height=12}
+Without <- OffShotSeasonGraphTeam(Seasondata = WONM, team = "Chi") + ggtitle("Offensive without Mirotic")
+With <- OffShotSeasonGraphTeam(Seasondata = NM, team = "Chi", quant = 0.05)+ ggtitle("Offensive with Mirotic")
+
+grid.arrange(Without, With, ncol = 1)
+```
+[Read more...](https://derek-corcoran-barrios.github.io/Mirotic)
 
 ## [The first team ever to shoot more than half their shots beyond the three point line](https://derek-corcoran-barrios.github.io/Blog)
 
