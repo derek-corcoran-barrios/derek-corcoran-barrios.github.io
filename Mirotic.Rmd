@@ -23,7 +23,7 @@ WONM <- filter(Season2018, GAME_DATE < dmy("8/12/2017"))
 
 ### Shot charts with and without Nikola Mirotic
 
-Since Nikola, has just played 6 games, there's too few shots to make a passable shot chart of Chicago with him, so we will have to rely on team stats to figure what is going on.
+Since Nikola Mirotic has just played 6 games, there are too few shots to make a passable shot chart for the Chicago Bulls with him, so we will have to rely on team stats to figure what is going on.
 
 ```{r, fig.width=6, fig.height=12}
 Without <- OffShotSeasonGraphTeam(Seasondata = WONM, team = "Chi") + ggtitle("Offensive without Mirotic")
@@ -34,7 +34,7 @@ grid.arrange(Without, With, ncol = 1)
 
 ### Stats without Nikola Mirotic
 
-As seen in the table bellow, before Nikola Mirotic came back, the Bulls ranked 27th in the league in Adjusted points per shot made to a more respectable 14th. The defense has not changed all that much, but they improved a tick going from being 15th to 13th in adjusted points allowed per shot. 
+As seen in the table below, before Nikola Mirotic came back, the Bulls ranked 27th in the league in Adjusted points per shot (APPS), and then moved to a more respectable 14th after his return. The defense has not changed all that much, but they improved a tick going from being 15th to 13th in adjusted points allowed per shot.
 
 ```{r}
 statsWONM <- SpatialBall2::TeamStats(WONM)
@@ -66,15 +66,14 @@ knitr::kable(dplyr::filter(statsNM[[1]], TEAM_NAME == "Chi"))
 knitr::kable(dplyr::filter(statsNM[[2]], DefTeam == "Chi"))
 ```
 
-Chicago has diminished the percentage of shots taken from 3 since Mirotic is back, from 36% of their shots taken from beyond the 3 point line to only 26%, the main change for them has been the shooting efficiency. They rose their 2 point shooting pct from 45.7% to 51.5% and their 3 pointers from 34.2% to 38.2%.
+Chicago has diminished the percentage of 3-point shots taken since Mirotic came back, moving from 36% of their shots being taken from beyond the arc to only 26%. Overall, the main change for them has been the shooting efficiency, as their 2-point shooting percentage rose from 45.7% to 51.5% and their 3-point pct from 34.2% to 38.2%.
 
 ```{r}
 SpatialBall2::PointShotSeasonGraphPlayer(Seasondata = Season2018, player = "Nikola Mirotic", kernel = FALSE) + ggtitle("Shots taken by Mirotic")
 ```
 
 
-Mirotic is shooting and effective field goal percentage of 63% being while having a career 51.1% eFG%. This includes him making over 50% of his 3s, when he is a career 35.5% 3 point shooter. All this while having a 28% usage rate, the highest in his career by far, and shooting all over the court as we see above. All this points to an unsustainable efficiency, and a possible regression to the mean for the Nikola and the Bulls.
-
+In this season, Mirotic is shooting an effective field goal percentage of 63%, while having a career 51.1% eFG%. This includes him making over 50% of his 3’s, when he is a career 35.5% 3-point shooter. All this while having a 28% usage rate, the highest in his career by far, and shooting all over the court as we see above. If Mirotic can maintain this level of production and efficiency, the Bulls could certainly have a better season than predicted. However, all this points to an unsustainable efficiency, and a possible regression to the mean for the Nikola and the Bulls. 
 
 ```{r}
 knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/3/34/Nikola_Mirotic_%2816240996134%29.jpg")
