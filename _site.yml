@@ -40,7 +40,6 @@ navbar:
       href: SpatialBall.html
     - text: SpatialBall2
       href: Starting.html
-
 output_dir: .
 output:
   html_document:
