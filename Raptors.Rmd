@@ -1,0 +1,67 @@
+---
+title: "The evolution of the Raptors"
+author: "Derek Corcoran and Nick Watanabe"
+date: "December 28, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(dplyr)
+library(lubridate)
+library(SpatialBall2)
+library(gridExtra)
+library(ggplot2)
+Season2018 <- readRDS("Season2018.rds")
+data(season2017)
+```
+
+
+## Offense
+
+
+```{r}
+stats2018 <- TeamStats(Season2018)
+stats2017 <- TeamStats(season2017)
+stats2018[[1]]$Rank <- 1:30
+stats2018[[2]]$Rank <- 1:30
+stats2017[[1]]$Rank <- 1:30
+stats2017[[2]]$Rank <- 1:30
+
+```
+
+```{r}
+knitr::kable(dplyr::filter(stats2018[[1]], TEAM_NAME == "Tor"))
+knitr::kable(dplyr::filter(stats2017[[1]], TEAM_NAME == "Tor"))
+```
+
+
+```{r}
+OffShotSeasonGraphTeam(Seasondata = Season2018, team = "Tor")
+OffShotSeasonGraphTeam(Seasondata = season2017, team = "Tor")
+```
+
+## Defense
+
+```{r}
+knitr::kable(dplyr::filter(stats2018[[2]], DefTeam == "Tor"))
+knitr::kable(dplyr::filter(stats2017[[2]], DefTeam == "Tor"))
+
+```
+
+
+```{r}
+DefShotSeasonGraphTeam(Seasondata = Season2018, team = "Tor")
+DefShotSeasonGraphTeam(Seasondata = season2017, team = "Tor")
+```
+
+
+## DeRozan?
+
+```{r}
+PointShotSeasonGraphPlayer(Season2018, player = "Kyle Lowry")
+PointShotSeasonGraphPlayer(season2017, player = "Kyle Lowry")
+```
