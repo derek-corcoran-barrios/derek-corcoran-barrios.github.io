@@ -40,6 +40,8 @@ navbar:
       href: SpatialBall.html
     - text: SpatialBall2
       href: Starting.html
+    - text: NetworkExtinction
+      href: VignetteNetworkExt.html
 output_dir: .
 output:
   html_document:
