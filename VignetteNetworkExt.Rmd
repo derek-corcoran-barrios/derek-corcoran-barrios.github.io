@@ -6,10 +6,6 @@ output:
   rmarkdown::html_vignette:
     toc: yes
     fig_caption: yes
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 bibliography: biblio.bib
 
 ---
@@ -19,7 +15,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 knitr::opts_chunk$set(fig.width=6, fig.height=4)
-knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache = TRUE, message = FALSE, warning = FALSE)
 ```
 
 #Introduction
@@ -145,7 +141,7 @@ data("net")
 History <- ExtinctionOrder(Network = net, Order = c(1,2,3,4,5,6,7,8,9,10))
 
 set.seed(2)
-NullHyp <- RandomExtinctions(Network = net, nsim = 100)
+NullHyp <- RandomExtinctions(Network = net, nsim = 1000)
 
 Comparison <- CompareExtinctions(Nullmodel = NullHyp, Hypothesis = History)
 ```
