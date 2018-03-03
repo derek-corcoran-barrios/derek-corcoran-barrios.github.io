@@ -3,9 +3,11 @@ title: "How to use the NetworExtinction Package"
 author: "Isidora Avila and Derek Corcoran"
 date: "`r Sys.Date()`"
 output: 
-  rmarkdown::html_vignette:
-    toc: yes
-    fig_caption: yes
+      html_document:
+        fig_caption: yes
+        toc: true
+        toc_depth: 3 
+        number_sections: true 
 bibliography: biblio.bib
 
 ---
