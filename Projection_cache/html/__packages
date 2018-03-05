@@ -5,6 +5,7 @@ utils
 grDevices
 graphics
 stats
+sp
 bindrcpp
 pacman
 ggplot2
@@ -29,13 +30,6 @@ bitops
 RCurl
 jpeg
 hexbin
-sp
 knitr
 purrr
-SpatialBall2
 XML
-SpatialBall
-tidyverse
-tibble
-forcats
-DT

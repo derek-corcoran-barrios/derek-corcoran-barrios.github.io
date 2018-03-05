@@ -123,7 +123,7 @@ the objective is to compare whether the number of secondary extinctions that occ
 
 ```{r, message=FALSE}
 data(net)
-RandomExtinctions(Network= net, nsim= 10)
+RandomExtinctions(Network= net, nsim= 100)
 ```
 
 The result is a dataframe and a graph. 

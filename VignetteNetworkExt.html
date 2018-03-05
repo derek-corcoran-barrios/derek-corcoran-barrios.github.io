@@ -11,7 +11,7 @@
 
 <meta name="author" content="Isidora Avila and Derek Corcoran" />
 
-<meta name="date" content="2018-03-04" />
+<meta name="date" content="2018-03-05" />
 
 <title>How to use the NetworExtinction Package</title>
 
@@ -272,7 +272,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">How to use the NetworExtinction Package</h1>
 <h4 class="author"><em>Isidora Avila and Derek Corcoran</em></h4>
-<h4 class="date"><em>2018-03-04</em></h4>
+<h4 class="date"><em>2018-03-05</em></h4>
 
 </div>
 
@@ -425,19 +425,20 @@ ExtinctionOrder(Network = net, Order = c(2,4,7))
 <p>The function to do this analysis is called <em>RandomExtinctions</em> From a network, a certain amount of simulations is done (nsim), in which the species are extinguished in a random order.</p>
 <p>the objective is to compare whether the number of secondary extinctions that occur when extinguishing species in a particular order (MostConnected or Extinctionorder) is different from the number of secondary extinctions that occur when executing primary extinction orders in a random manner.</p>
 <pre class="r"><code>data(net)
-RandomExtinctions(Network= net, nsim= 10)
+RandomExtinctions(Network= net, nsim= 100)
 #&gt; $sims
-#&gt; # A tibble: 8 x 3
+#&gt; # A tibble: 9 x 3
 #&gt;   NumExt SdAccSecondaryExtinction AccSecondaryExtinction
 #&gt;    &lt;int&gt;                    &lt;dbl&gt;                  &lt;dbl&gt;
-#&gt; 1      1                    0.483                  0.300
-#&gt; 2      2                    0.816                  1.00 
-#&gt; 3      3                    0.972                  1.50 
-#&gt; 4      4                    1.33                   2.00 
-#&gt; 5      5                    1.25                   2.12 
-#&gt; 6      6                    1.07                   2.14 
-#&gt; 7      7                    1.15                   2.00 
-#&gt; 8      8                    1.15                   2.67 
+#&gt; 1      1                    0.456                  0.290
+#&gt; 2      2                    0.709                  0.680
+#&gt; 3      3                    0.916                  0.990
+#&gt; 4      4                    1.08                   1.31 
+#&gt; 5      5                    1.07                   1.57 
+#&gt; 6      6                    1.12                   1.83 
+#&gt; 7      7                    1.11                   1.90 
+#&gt; 8      8                    1.07                   2.16 
+#&gt; 9      9                    1.13                   2.44 
 #&gt; 
 #&gt; $graph</code></pre>
 <p><img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-6-1.png" width="576" /></p>
