@@ -280,13 +280,17 @@ $(document).ready(function () {
 <ul>
 <li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a><ul>
 <li><a href="#how-to-install-the-package"><span class="toc-section-number">1.1</span> How to install the package</a></li>
-<li><a href="#how-to-create-a-network-object"><span class="toc-section-number">1.2</span> How to create a network object</a><ul>
-<li><a href="#extinctions-from-most-connected-to-less-conected"><span class="toc-section-number">1.2.1</span> Extinctions from most connected to less conected</a></li>
-<li><a href="#extinctions-from-custom-order"><span class="toc-section-number">1.2.2</span> Extinctions from custom order</a></li>
-<li><a href="#random-extinction"><span class="toc-section-number">1.2.3</span> Random extinction</a></li>
-<li><a href="#comparison-of-null-hypothesis-with-other-extinction-histories"><span class="toc-section-number">1.2.4</span> Comparison of Null hypothesis with other extinction histories</a></li>
-<li><a href="#degree-distribution-analysis"><span class="toc-section-number">1.2.5</span> Degree distribution analysis</a></li>
+<li><a href="#how-to-represent-a-food-web-in-r"><span class="toc-section-number">1.2</span> How to represent a food-web in R</a></li>
 </ul></li>
+<li><a href="#functions"><span class="toc-section-number">2</span> Functions</a><ul>
+<li><a href="#extinctions-functions"><span class="toc-section-number">2.1</span> Extinctions functions</a><ul>
+<li><a href="#extinctions-from-most-to-less-conected-species-in-the-network"><span class="toc-section-number">2.1.1</span> Extinctions from most to less conected species in the network</a></li>
+<li><a href="#extinctions-using-a-customized-order"><span class="toc-section-number">2.1.2</span> Extinctions using a customized order</a></li>
+<li><a href="#random-extinction"><span class="toc-section-number">2.1.3</span> Random extinction</a></li>
+<li><a href="#comparison-of-null-hypothesis-with-other-extinction-histories"><span class="toc-section-number">2.1.4</span> Comparison of Null hypothesis with other extinction histories</a></li>
+</ul></li>
+<li><a href="#plotting-the-extinction-histories-of-a-network"><span class="toc-section-number">2.2</span> Plotting the extinction histories of a network</a></li>
+<li><a href="#degree-distribution-function"><span class="toc-section-number">2.3</span> Degree distribution function</a></li>
 </ul></li>
 <li><a href="#bibliography">Bibliography</a></li>
 </ul>
@@ -294,39 +298,56 @@ $(document).ready(function () {
 
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">1</span> Introduction</h1>
-<p>The objective of the NetworkExtinction package is to analyze and visualize the topology of the food-webs. At the same time to analyze and visualize how the food-web responds to the primary removal of species.</p>
-<p>The principal index that are incorporated are:</p>
+<p>The objectives of the <em>NetworkExtinction</em> package is to analyze and visualize the topology of food-webs and its responses to the simulated extinction of species.</p>
+<p>The main indexes used for these analyzes are:</p>
 <ol style="list-style-type: decimal">
-<li><p>Node numbers: Total number of species in the network <span class="citation">(Dunne, Williams, and Martinez 2002)</span>.</p></li>
-<li><p>Link number: Number of trophic relationships represented in the food web <span class="citation">(Dunne, Williams, and Martinez 2002)</span>.</p></li>
-<li><p>Connectance: Proportion of all possible trophic links that are actually realized <span class="citation">(Dunne, Williams, and Martinez 2002)</span>.</p></li>
-<li><p>Primary removals: Occurs when the researcher intentionally removes a species simulating an extinction.</p></li>
-<li><p>Secondary extinctions: A secondary extinction occurs when a non-basal species loses all of its prey items resulting from the primary removal of another species. In this context, basal species may experience primary removal, but not secondary extinctions <span class="citation">(Dunne, Williams, and Martinez 2002)</span>.</p></li>
-<li><p>Total extinctions: Primary species removal plus secondary extinctions</p></li>
+<li><p>Number of nodes: Total number of species in the network <span class="citation">(Dunne, Williams, and Martinez 2002)</span>.</p></li>
+<li><p>Number of links: Number of trophic relationships represented in the food web <span class="citation">(Dunne, Williams, and Martinez 2002)</span>.</p></li>
+<li><p>Connectance: Proportion of all possible trophic links that are completed <span class="citation">(Dunne, Williams, and Martinez 2002)</span>.</p></li>
+<li><p>Primary removals: It occurs when the researcher intentionally removes one species, simulating a single extinction.</p></li>
+<li><p>Secondary extinctions: A secondary extinction occurs when a non-basal species loses all of its prey items due to the removal of another species. In this context, basal species can experience primary removal, but not secondary extinctions <span class="citation">(Dunne, Williams, and Martinez 2002)</span>.</p></li>
+<li><p>Total extinctions: The sum of primary removal and secondary extinctions in one simulation.</p></li>
 </ol>
+<p>This package was built with a total of six functions. There are four functions to analyze the cascading effect of extinctions in a food-web, one function to plot the results of any of the extinction analysis, and another to analize the degree distribution in the network.</p>
+<p>Functions to analyze the cascading effect of extinctions are the following:</p>
+<ul>
+<li><p><em>Mostconnected:</em> To simulate extinctions from the most connected species to less connected in the network.</p></li>
+<li><p><em>ExtinctionOrder:</em> To simulate extinctions in a customized order.</p></li>
+<li><p><em>RandomExtinctions:</em> To develop a null hypothesis by generating random orders of simulated extinctions.</p></li>
+<li><p><em>CompareExtinctions:</em> To compare the observed secondary extinctions with the expected secondary extinction generated by random extinction.</p></li>
+</ul>
+<p>The function to plot results is:</p>
+<ul>
+<li><em>ExtinctionPlot:</em> To plot the results of any of the extinction functions</li>
+</ul>
+<p>The function to analize the degree distribution is:</p>
+<ul>
+<li><em>degree_distribution:</em> To test if the degrees in the network follow a power law, exponential, or truncated distribution.</li>
+</ul>
 <div id="how-to-install-the-package" class="section level2">
 <h2><span class="header-section-number">1.1</span> How to install the package</h2>
+<p>As any package in cran the <em>install.packages</em> function can be used to intall de <em>NetworkExtinction</em> package as shown in the following code.</p>
 <pre class="r"><code>install.packages(NetworkExtinction)
 library(NetworkExtinction)</code></pre>
-<p>This package has four different functions (see above for details):</p>
-<ul>
-<li><p><em>Mostconnected:</em> Extinctions from most connected to less connected</p></li>
-<li><p><em>ExtinctionOrder:</em> Extinctions from custom order</p></li>
-<li><p><em>RandomExtinctions:</em></p></li>
-<li><p><em>degree_distribution:</em> Degree distribution analysis</p></li>
-</ul>
 </div>
-<div id="how-to-create-a-network-object" class="section level2">
-<h2><span class="header-section-number">1.2</span> How to create a network object</h2>
-<p>NetworkExtinction package use a network object to make an analysis.</p>
-<p>For create a network object you can start with a matrix or a edgelist object (for more details see network package <span class="citation">(Butts and others 2008)</span>).</p>
-<div id="a-example" class="section level4">
-<h4><span class="header-section-number">1.2.0.1</span> A Example</h4>
-<pre class="r"><code>#create a matrix
-a&lt;- matrix(c(0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), nrow=10, ncol=10)
+<div id="how-to-represent-a-food-web-in-r" class="section level2">
+<h2><span class="header-section-number">1.2</span> How to represent a food-web in R</h2>
+<p>The first step to make any analysis in the <em>NetworkExtinction</em> package is to build a representation of a food-web, using the network package <span class="citation">(Butts and others 2008)</span>.</p>
+<p>In order to create a network object you can start with a matrix or an edgelist object (for more details see the <a href="(https://cran.r-project.org/web/packages/network/vignettes/networkVignette.pdf)">network package vignette</a>).</p>
+<p>As an example of how to build a food-web we will explain how to create the network shown in figure 1.</p>
+<div class="figure">
+<img src="toymodel_trophic-network5.jpg" alt="Figure 1. Food-web to be contructed in R" />
+<p class="caption">Figure 1. Food-web to be contructed in R</p>
+</div>
+<p>This network has ten nodes where each node represents one species. Here, four nodes are basal species (primary producers, from sp.1 to sp.4), three nodes are intermediate (primary consumers, from sp.5 to sp.7), and the remaining three are top predators (from sp.8 to sp.10).</p>
+<p>In order to build an interaction matrix (Figure 2) that represent the food-web, we create a square matrix with a column and a row representing each species. Columns represent the consumers and the rows the resources, where 1 represents a trophic interaction and 0 its absence. Note that in the columns, the first four species only have zeros because they are not consumers. For example, if we look at species 7, it feeds on species 4 and 3. In order to represent that, we would go to column 7 and put a 1 in rows 3 and 4.</p>
+<div class="figure">
+<img src="matrix.jpg" alt="Figure 2. Matrix representation of the food-web" />
+<p class="caption">Figure 2. Matrix representation of the food-web</p>
+</div>
+<p>The following code is an example of how to build the matrix in figure 2 using R:</p>
+<pre class="r"><code>a&lt;- matrix(c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0),nrow=10, ncol=10)
 
-#the matrix of the data(net) used below is the transpose of a
-a&lt;- t(a) #transpose matrix a
 a
 #&gt;       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
 #&gt;  [1,]    0    0    0    0    1    0    0    0    0     0
@@ -338,9 +359,9 @@ a
 #&gt;  [7,]    0    0    0    0    0    0    0    0    0     1
 #&gt;  [8,]    0    0    0    0    0    0    0    0    0     1
 #&gt;  [9,]    0    0    0    0    0    0    0    0    0     0
-#&gt; [10,]    0    0    0    0    0    0    0    0    0     0
-#create a network
-library(network)
+#&gt; [10,]    0    0    0    0    0    0    0    0    0     0</code></pre>
+<p>Once the matrix is ready, we use the <em>as.network</em> function from the <em>network</em> package to build a network object.</p>
+<pre class="r"><code>library(network)
 net &lt;- as.network(a, loops = TRUE)
 net
 #&gt;  Network attributes:
@@ -359,30 +380,89 @@ net
 #&gt; 
 #&gt; No edge attributes</code></pre>
 </div>
-<div id="extinctions-from-most-connected-to-less-conected" class="section level3">
-<h3><span class="header-section-number">1.2.1</span> Extinctions from most connected to less conected</h3>
-<p>The function to do this analysis is called <em>Mostconnected</em></p>
-<p>This function orders the species from the most connected species to the least connected species, using total degree. Then, remove the most connected species in the network and calculate the topological indexes of the network (which were mentioned above) and count how many species have indegree 0 (secondary extinction), without count primary producers. Then, remove the species that were secondarily extinct in the previous step and recalculate which is the new most connected species and so on, until the number of links in the network is zero <span class="citation">(Sole and Montoya 2001; Dunne, Williams, and Martinez 2002; Dunne and Williams 2009)</span></p>
+</div>
+<div id="functions" class="section level1">
+<h1><span class="header-section-number">2</span> Functions</h1>
+<div id="extinctions-functions" class="section level2">
+<h2><span class="header-section-number">2.1</span> Extinctions functions</h2>
+<div id="extinctions-from-most-to-less-conected-species-in-the-network" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Extinctions from most to less conected species in the network</h3>
+<p>The <em>Mostconnected</em> function sorts the species from the most connected node to the least connected node, using total degree. Then, it removes the most connected node in the network, simulating its extinction, and recalculates the topological indexes of the network and counts how many species have indegree 0 (secondary extinction), not considering primary producers. Then, it removes the nodes that were secondarily extinct in the previous step and recalculates which node is the new most connected species. This step is repeated until the number of links in the network is zero <span class="citation">(Sole and Montoya 2001; Dunne, Williams, and Martinez 2002; Dunne and Williams 2009)</span>.</p>
 <pre class="r"><code>library(NetworkExtinction)
 data(&quot;net&quot;)
-Mostconnected(Network = net)
-#&gt; [1] 1
+Mostconnected(Network = net)</code></pre>
+<pre><code>#&gt; [1] 1
 #&gt; [1] 2
 #&gt; [1] 3
-#&gt; [1] 4
-#&gt;   Spp nodesS linksS Conectance LinksPerSpecies Secondary_extinctions
-#&gt; 1   6      9      7 0.08641975       0.7777778                     1
-#&gt; 2   7      7      4 0.08163265       0.5714286                     0
-#&gt; 3   5      6      2 0.05555556       0.3333333                     1
-#&gt; 4   2      4      0 0.00000000       0.0000000                     1
-#&gt;   aislate_nodes AccSecondaryExtinction NumExt TotalExt
-#&gt; 1             1                      1      1        2
-#&gt; 2             2                      1      2        3
-#&gt; 3             3                      2      3        5
-#&gt; 4             4                      3      4        7</code></pre>
-<p>The result is a dataframe. The first column (Spp) indicates which was the species that was removed as a primary removal.</p>
-<p>The column Secondary_extinctions represent the numbers of the species that are extinguished in a secondary form, and the AccSecondaryExtinction column represents the accumulated secondary extinction.</p>
-<p>to plot the results, see function ExtinctionPlot</p>
+#&gt; [1] 4</code></pre>
+<table>
+<caption>Table 1: The resulting dataframe of the Mostconnected function</caption>
+<thead>
+<tr class="header">
+<th align="right">Spp</th>
+<th align="right">nodesS</th>
+<th align="right">linksS</th>
+<th align="right">Conectance</th>
+<th align="right">LinksPerSpecies</th>
+<th align="right">Secondary_extinctions</th>
+<th align="right">isolated_nodes</th>
+<th align="right">AccSecondaryExtinction</th>
+<th align="right">NumExt</th>
+<th align="right">TotalExt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">6</td>
+<td align="right">9</td>
+<td align="right">7</td>
+<td align="right">0.0864198</td>
+<td align="right">0.7777778</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">4</td>
+<td align="right">0.0816327</td>
+<td align="right">0.5714286</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">6</td>
+<td align="right">2</td>
+<td align="right">0.0555556</td>
+<td align="right">0.3333333</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">7</td>
+</tr>
+</tbody>
+</table>
+<p>The result of this function is the dataframe shown in table 1. The first column called <em>Spp</em> indicates the order in which the species were removed simulating an extinction. The column <em>Secondary_extinctions</em> represents the numbers of species that become extinct given that they do not have any food items left in the food-web, while the <em>AccSecondaryExtinction</em> column represents the accumulated secondary extinctions. (To plot the results, see function <em>ExtinctionPlot</em>.)</p>
 <pre class="r"><code>data(&quot;net&quot;)
 history &lt;- Mostconnected(Network = net)
 #&gt; [1] 1
@@ -391,130 +471,263 @@ history &lt;- Mostconnected(Network = net)
 #&gt; [1] 4
 ExtinctionPlot(History = history, Variable = &quot;AccSecondaryExtinction&quot;)</code></pre>
 <div class="figure">
-<img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-4-1.png" alt="Fig 1. The graph shows the number of accumulated secondary extinctions that occur when removing species from the most connected to the least connected" width="576" />
+<img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-6-1.png" alt="Figure 3. The graph shows the number of accumulated secondary extinctions that occur when removing species from the most to the least connected species" width="576" />
 <p class="caption">
-Fig 1. The graph shows the number of accumulated secondary extinctions that occur when removing species from the most connected to the least connected
+Figure 3. The graph shows the number of accumulated secondary extinctions that occur when removing species from the most to the least connected species
 </p>
 </div>
 </div>
-<div id="extinctions-from-custom-order" class="section level3">
-<h3><span class="header-section-number">1.2.2</span> Extinctions from custom order</h3>
-<p>The function to do this analysis is called <em>ExtinctionOrder</em></p>
-<p>It takes a network extinguishes species using a given order, then it calculates the topological food-web index and the secondary extinctions.</p>
+<div id="extinctions-using-a-customized-order" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Extinctions using a customized order</h3>
+<p>The <em>ExtinctionOrder</em> function takes a network and extinguishes nodes using a customized order. Then, it calculates the topological network indexes and the secondary extinctions.</p>
 <pre class="r"><code>data(&quot;net&quot;)
-ExtinctionOrder(Network = net, Order = c(2,4,7))
-#&gt; $DF
-#&gt;   Spp nodesS linksS Conectance Secondary_extinctions
-#&gt; 1   2      9      8 0.09876543                     1
-#&gt; 2   4      7      5 0.10204082                     1
-#&gt; 3   7      5      3 0.12000000                     0
-#&gt;   AccSecondaryExtinction NumExt TotalExt
-#&gt; 1                      1      1        2
-#&gt; 2                      2      2        4
-#&gt; 3                      2      3        5
-#&gt; 
-#&gt; $Graph</code></pre>
-<p><img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-5-1.png" width="576" /></p>
-<pre><code>#&gt; 
-#&gt; attr(,&quot;class&quot;)
-#&gt; [1] &quot;ExtinctionOrder&quot;</code></pre>
-<p>The results it is a dataframe with the topological index of the food-web in each extinction step (like MostConnected results). Additionally, the result generate a plot that show the number of accumulated secondary extinctions that occur when removing species</p>
+ExtinctionOrder(Network = net, Order = c(2,4,7))</code></pre>
+<table>
+<caption>Table 2: The resulting dataframe of the ExtinctionOrder function</caption>
+<thead>
+<tr class="header">
+<th align="right">Spp</th>
+<th align="right">nodesS</th>
+<th align="right">linksS</th>
+<th align="right">Conectance</th>
+<th align="right">Secondary_extinctions</th>
+<th align="right">AccSecondaryExtinction</th>
+<th align="right">NumExt</th>
+<th align="right">TotalExt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">9</td>
+<td align="right">8</td>
+<td align="right">0.0987654</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">7</td>
+<td align="right">5</td>
+<td align="right">0.1020408</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">5</td>
+<td align="right">3</td>
+<td align="right">0.1200000</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">5</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-9-1.png" alt="Figure 4. The graph shows the number of accumulated secondary extinctions that occur when removing species in a custom order. In this example species 2 is removed followed by 4 and lastly species 7 is removed" width="576" />
+<p class="caption">
+Figure 4. The graph shows the number of accumulated secondary extinctions that occur when removing species in a custom order. In this example species 2 is removed followed by 4 and lastly species 7 is removed
+</p>
+</div>
+<p>The results of this function are a dataframe with the topological indexes of the network calculated from each extinction step (Table 2), and a plot that shows the number of accumulated secondary extinctions that occured with each removed node (Figure 4).</p>
 </div>
 <div id="random-extinction" class="section level3">
-<h3><span class="header-section-number">1.2.3</span> Random extinction</h3>
-<p>The function to do this analysis is called <em>RandomExtinctions</em> From a network, a certain amount of simulations is done (nsim), in which the species are extinguished in a random order.</p>
-<p>the objective is to compare whether the number of secondary extinctions that occur when extinguishing species in a particular order (MostConnected or Extinctionorder) is different from the number of secondary extinctions that occur when executing primary extinction orders in a random manner.</p>
+<h3><span class="header-section-number">2.1.3</span> Random extinction</h3>
+<p>The <em>RandomExtinctions</em> function generates n random extinction orders, determined by the argument <em>nsim</em>. The first result of this function is a dataframe (table 3). The column <em>NumExt</em> represents the number of species removed, <em>AccSecondaryExtinction</em> is the average number of secondary extinctions for each species removed, and <em>SdAccSecondaryExtinction</em> is its standard deviation. The second result is a graph (figure 5), where the x axis is the number of species removed and the y axis is the number of accumulated secondary extinctions. The solid line is the average number of secondary extinctions for every simulated primary extinction, and the red area represents the mean <span class="math inline">\(\pm\)</span> the standard deviation of the simulations.</p>
 <pre class="r"><code>data(net)
-RandomExtinctions(Network= net, nsim= 100)
-#&gt; $sims
-#&gt; # A tibble: 9 x 3
-#&gt;   NumExt SdAccSecondaryExtinction AccSecondaryExtinction
-#&gt;    &lt;int&gt;                    &lt;dbl&gt;                  &lt;dbl&gt;
-#&gt; 1      1                    0.456                  0.290
-#&gt; 2      2                    0.709                  0.680
-#&gt; 3      3                    0.916                  0.990
-#&gt; 4      4                    1.08                   1.31 
-#&gt; 5      5                    1.07                   1.57 
-#&gt; 6      6                    1.12                   1.83 
-#&gt; 7      7                    1.11                   1.90 
-#&gt; 8      8                    1.07                   2.16 
-#&gt; 9      9                    1.13                   2.44 
-#&gt; 
-#&gt; $graph</code></pre>
-<p><img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-6-1.png" width="576" /></p>
-<p>The result is a dataframe and a graph.</p>
-<ul>
-<li><p>In the dataframe, The first column (NumExt) represents the number of extinction that occurs by primary removal. The second one, represents the deviation to the average of the accumulated secondary extinctions that occur when, independently of species identity, a certain number of species is extracted by primary removal. The third one, represents the average of the accumulated secondary extinctions that occur when, regardless of the specie identity, a certain number of species is extracted by primary removal.</p></li>
-<li><p>In the graph, the figure shows the accumulated secondary extinction with their deviation (red shadow) that occur as the number of primary removal increases</p></li>
-</ul>
+RandomExtinctions(Network= net, nsim= 500)</code></pre>
+<table>
+<caption>Table 3: The resulting dataframe of the RandomExtinctions function</caption>
+<thead>
+<tr class="header">
+<th align="right">NumExt</th>
+<th align="right">SdAccSecondaryExtinction</th>
+<th align="right">AccSecondaryExtinction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.4587165</td>
+<td align="right">0.300000</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">0.7549941</td>
+<td align="right">0.682000</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.9540547</td>
+<td align="right">1.140000</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">1.0935849</td>
+<td align="right">1.592000</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">1.1795574</td>
+<td align="right">1.993865</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">1.2518519</td>
+<td align="right">2.235981</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">1.1971914</td>
+<td align="right">2.231270</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">1.1779286</td>
+<td align="right">2.258065</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="right">1.1227299</td>
+<td align="right">2.320755</td>
+</tr>
+</tbody>
+</table>
+<div class="figure">
+<img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-12-1.png" alt="Figure 5. The resulting graph of the RandomExtinctions function" width="576" />
+<p class="caption">
+Figure 5. The resulting graph of the RandomExtinctions function
+</p>
+</div>
 </div>
 <div id="comparison-of-null-hypothesis-with-other-extinction-histories" class="section level3">
-<h3><span class="header-section-number">1.2.4</span> Comparison of Null hypothesis with other extinction histories</h3>
-<p>By using the <em>RandomExtincton</em> function, we create a null hypothesis for us to compare it with either an extinction history generated by the <em>ExtinctionOrder</em> function or the <em>Mostconnected</em> function. In order to compare the expected extinctions developed by our null hypotehsis with the observed extinction history we developed the <em>CompareExtinctions</em> fucntion.</p>
-<p>The way to use this function is to first create the extinction history and the null hypothesis and then use the function to compare them:</p>
+<h3><span class="header-section-number">2.1.4</span> Comparison of Null hypothesis with other extinction histories</h3>
+<p>The <em>RandomExtinctons</em> function generates a null hypothesis for us to compare it with either an extinction history generated by the <em>ExtinctionOrder</em> function or the <em>Mostconnected</em> function. In order to compare the expected extinctions developed by our null hypothesis with the observed extinction history, we developed the <em>CompareExtinctions</em> function. The way to use this last function is to first create the extinction history and the null hypothesis, and then the <em>CompareExtinctins</em> function to compare both extinction histories.</p>
 <pre class="r"><code>data(&quot;net&quot;)
 History &lt;- ExtinctionOrder(Network = net, Order = c(1,2,3,4,5,6,7,8,9,10))
 
 set.seed(2)
-NullHyp &lt;- RandomExtinctions(Network = net, nsim = 1000)
+NullHyp &lt;- RandomExtinctions(Network = net, nsim = 500)
 
 Comparison &lt;- CompareExtinctions(Nullmodel = NullHyp, Hypothesis = History)</code></pre>
-<p>the resulting object will have a graph with a dashed line showing the observed extincion histoy, and a solid line showing the expected value of secondary extinctions originated at random:</p>
-<pre class="r"><code>Comparison$graph</code></pre>
-<p><img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-8-1.png" width="576" /></p>
-<p>We will also get a Test object which will show the goodness of fit statistics of the comparison:</p>
+<p>The first result will be a graph (Figue 6) with a dashed line showing the observed extinction history and a solid line showing the expected value of secondary extinctions randomly generated.</p>
+<p>The second result will be a Test object which will show the goodness of fit statistics of the comparison. In this case, since the p value is 0.22 which is larger than 0.05, we consider that the generated extinction history is significantly different than the null hypothesis.</p>
+<div class="figure">
+<img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-14-1.png" alt="Figure 6. The resulting graph of the CompareExtinctions function, where the dashed line shows the observed extinction history, and a solid line shows the expected value of secondary extinctions originated at random" width="576" />
+<p class="caption">
+Figure 6. The resulting graph of the CompareExtinctions function, where the dashed line shows the observed extinction history, and a solid line shows the expected value of secondary extinctions originated at random
+</p>
+</div>
 <pre class="r"><code>Comparison$Test
 #&gt; 
 #&gt;  Pearson&#39;s Chi-squared test
 #&gt; 
 #&gt; data:  Hypothesis$DF$AccSecondaryExtinction and Nullmodel$sims$AccSecondaryExtinction[1:length(Hypothesis$DF$AccSecondaryExtinction)]
 #&gt; X-squared = 20, df = 16, p-value = 0.2202</code></pre>
-<p>since the p value is 0.22 which is larger than 0.05, we consider that the generated extinction history is significantly different than the null hypothesis.</p>
 </div>
-<div id="degree-distribution-analysis" class="section level3">
-<h3><span class="header-section-number">1.2.5</span> Degree distribution analysis</h3>
-<p>The function to do this analysis is called <em>degree_distribution</em></p>
-<p>degree_distribution function calculate the cumulative distribution of the number of links that each species in the food network has <span class="citation">(Estrada 2007)</span>. Then, three expected distribution to the observed distribution, this are: * Exponential distribution model * Power-law distribution model<br />
-* Truncated power-law distribution model</p>
-<p>At the same time, the degree_distribution function calculate the AIC to recognize among the three models mentioned above, which is the one that best fits to the observed distribution.</p>
-<p>Finally, the degree_distribution function generate a plot of the observed degree distribution in a log-log scale fitting the three models mentioned above</p>
-<pre class="r"><code>data(&quot;net&quot;)
-degree_distribution(net, name = &quot;Test&quot;)
-#&gt; $DDvalues
-#&gt;   K Cumulative Scenario       Exp     power  truncated
-#&gt; 1 0        1.0     Test 1.0000000        NA         NA
-#&gt; 2 1        0.6     Test 0.5518412 1.0000000 0.58194330
-#&gt; 3 2        0.4     Test 0.3045288 0.4000002 0.09412862
-#&gt; 4 3        0.0     Test 0.1680515        NA         NA
-#&gt; 
-#&gt; $models
-#&gt;       sigma isConv       finTol     logLik       AIC        BIC   deviance
-#&gt; 1 0.1150005   TRUE 2.576500e-06  3.5508855 -3.101771 -4.3291822 0.03967534
-#&gt; 2 0.3064039   TRUE 7.401290e-06  0.2209724  3.558055  0.9443495 0.09388334
-#&gt; 3 0.4000000   TRUE 5.034098e-07 -0.3121484  4.624297  2.0105912 0.16000000
-#&gt;   df.residual       model
-#&gt; 1           3 Exponential
-#&gt; 2           1   truncated
-#&gt; 3           1       Power
-#&gt; 
-#&gt; $graph</code></pre>
-<p><img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-10-1.png" width="576" /></p>
-<p>The function generate three results:</p>
-<ol style="list-style-type: decimal">
-<li><p>A list with the observed value of the network degree distribution (column K and Cumulative) and the expected values of the each fitting model (Exp = Exponential model, Power = Power-law model, truncated = Truncated Power-law model). k represent the degree of the network and cumulative the probability that each specie could be have this degree (pk).</p></li>
-<li><p>A list with the results if the AIC among the three models. In this case the model list are order from the best to the worst model.</p></li>
-<li><p>A Graph of the observed degree distribution with the fit of the three models.</p></li>
-</ol>
-<ul>
-<li>Observation: In the graph, the zero values are not represented but this result are incorporate in the DDvalues result.</li>
-</ul>
-<p>Note the various macros within the <code>vignette</code> section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your vignette.</p>
 </div>
+<div id="plotting-the-extinction-histories-of-a-network" class="section level2">
+<h2><span class="header-section-number">2.2</span> Plotting the extinction histories of a network</h2>
+<p>The <em>ExtinctionPlot</em> function takes a NetworkTopology class object and plots the index of interest after every extinction. By default, the function plots the number of accumulated secondary extinctions after every primary extinction (Figure 7), but any of the indexes can be ploted with the function by changing the Variable argument (Figure 8).</p>
+<pre class="r"><code>data(net)
+history &lt;- Mostconnected(Network = net)
+#&gt; [1] 1
+#&gt; [1] 2
+#&gt; [1] 3
+#&gt; [1] 4
+ExtinctionPlot(History = history)</code></pre>
+<div class="figure">
+<img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-16-1.png" alt="Figure 7. Example of the use of the ExtinctionPlot function showing the accumulated secondary extinctions against number of extinctions" width="576" />
+<p class="caption">
+Figure 7. Example of the use of the ExtinctionPlot function showing the accumulated secondary extinctions against number of extinctions
+</p>
+</div>
+<pre class="r"><code>ExtinctionPlot(History = history, Variable = &quot;LinksPerSpecies&quot;)</code></pre>
+<div class="figure">
+<img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-17-1.png" alt="Figure 8. Another example of the use of the ExtinctionPlot function showing the number of links per species against number of extinctions" width="576" />
+<p class="caption">
+Figure 8. Another example of the use of the ExtinctionPlot function showing the number of links per species against number of extinctions
+</p>
+</div>
+</div>
+<div id="degree-distribution-function" class="section level2">
+<h2><span class="header-section-number">2.3</span> Degree distribution function</h2>
+<p>The <em>degree_distribution</em> function calculates the cumulative distribution of the number of links that each species in the food network has <span class="citation">(Estrada 2007)</span>. Then, the observed distribution is fitted to the exponential, power-law and truncated power-law distribution models.</p>
+<p>The results of this function are shown in figure 9 and table 4. The graph shows the observed degree distribution in a log-log scale fitting the three models mentioned above, for this example we use an example dataset of Chilean litoral rocky shores <span class="citation">(Kéfi et al. 2015)</span>. The table shows the fitted model information ordered by descending AIC, that is, the model in the first row is the most probable distribution, followed by the second an finally the third distribution in this case (Table 3), the Exponential distribution would be the best model, followed by the Power-law and finally the Truncated power-law model.</p>
+<pre class="r"><code>data(&quot;chilean_intertidal&quot;)
+degree_distribution(chilean_intertidal, name = &quot;Test&quot;)</code></pre>
+<div class="figure">
+<img src="VignetteNetworkExt_files/figure-html/unnamed-chunk-20-1.png" alt="Figure 9: Fitted vs observed values of the degree distribution. The black line and points show the observed values, the red, green and blue lines show the fitted values for the Exponential, power law and trucated distribution, respectively" width="576" />
+<p class="caption">
+Figure 9: Fitted vs observed values of the degree distribution. The black line and points show the observed values, the red, green and blue lines show the fitted values for the Exponential, power law and trucated distribution, respectively
+</p>
+</div>
+<table>
+<caption>Table 4: Model selection analysis</caption>
+<thead>
+<tr class="header">
+<th align="right">sigma</th>
+<th align="left">isConv</th>
+<th align="right">finTol</th>
+<th align="right">logLik</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">deviance</th>
+<th align="right">df.residual</th>
+<th align="left">model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.0922763</td>
+<td align="left">TRUE</td>
+<td align="right">8.8e-06</td>
+<td align="right">66.057711</td>
+<td align="right">-128.115423</td>
+<td align="right">-123.676408</td>
+<td align="right">0.5704994</td>
+<td align="right">67</td>
+<td align="left">Exponential</td>
+</tr>
+<tr class="even">
+<td align="right">0.2246009</td>
+<td align="left">TRUE</td>
+<td align="right">2.3e-06</td>
+<td align="right">5.420293</td>
+<td align="right">-6.840586</td>
+<td align="right">-2.461276</td>
+<td align="right">3.2789603</td>
+<td align="right">65</td>
+<td align="left">Power</td>
+</tr>
+<tr class="odd">
+<td align="right">0.4845141</td>
+<td align="left">TRUE</td>
+<td align="right">3.2e-06</td>
+<td align="right">-45.321942</td>
+<td align="right">94.643884</td>
+<td align="right">99.023194</td>
+<td align="right">15.2590056</td>
+<td align="right">65</td>
+<td align="left">truncated</td>
+</tr>
+</tbody>
+</table>
+<p>The main objective of fitting the cumulative distribution of the degrees to those models, is to determine if the vulnerability of the network to the removal of the most connected species is related to their degree distribution. Networks that follow a power law distribution are very vulnerable to the removal of the most connected nodes, while networks that follow exponential degree distribution are less vulnerable to the removal of the most connected nodes <span class="citation">(see Albert and Barabási 2002, <span class="citation">Dunne, Williams, and Martinez (2002)</span>, <span class="citation">Estrada (2007)</span>, <span class="citation">Santana et al. (2013)</span>)</span>.</p>
 </div>
 </div>
 <div id="bibliography" class="section level1 unnumbered">
 <h1>Bibliography</h1>
 <div id="refs" class="references">
+<div id="ref-albert2002statistical">
+<p>Albert, Réka, and Albert-László Barabási. 2002. “Statistical Mechanics of Complex Networks.” <em>Reviews of Modern Physics</em> 74 (1). APS: 47.</p>
+</div>
 <div id="ref-butts2008network">
 <p>Butts, Carter T, and others. 2008. “Network: A Package for Managing Relational Data in R.” <em>Journal of Statistical Software</em> 24 (2): 1–36.</p>
 </div>
@@ -526,6 +739,12 @@ degree_distribution(net, name = &quot;Test&quot;)
 </div>
 <div id="ref-estrada2007food">
 <p>Estrada, Ernesto. 2007. “Food Webs Robustness to Biodiversity Loss: The Roles of Connectance, Expansibility and Degree Distribution.” <em>Journal of Theoretical Biology</em> 244 (2). Elsevier: 296–307.</p>
+</div>
+<div id="ref-kefi2015network">
+<p>Kéfi, Sonia, Eric L Berlow, Evie A Wieters, Lucas N Joppa, Spencer A Wood, Ulrich Brose, and Sergio A Navarrete. 2015. “Network Structure Beyond Food Webs: Mapping Non-Trophic and Trophic Interactions on Chilean Rocky Shores.” <em>Ecology</em> 96 (1). Wiley Online Library: 291–303.</p>
+</div>
+<div id="ref-de2013topological">
+<p>Santana, Charles N de, Alejandro F Rozenfeld, Pablo A Marquet, and Carlos M Duarte. 2013. “Topological Properties of Polar Food Webs.” <em>Marine Ecology Progress Series</em> 474: 15–26.</p>
 </div>
 <div id="ref-sole2001complexity">
 <p>Sole, Ricard V, and M Montoya. 2001. “Complexity and Fragility in Ecological Networks.” <em>Proceedings of the Royal Society of London B: Biological Sciences</em> 268 (1480). The Royal Society: 2039–45.</p>
