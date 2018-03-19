@@ -66,6 +66,7 @@ Para el siguiente gráfico, debido a que distintas plantas generan distintos niv
 
 ```{r}
 Weekly2 <- Alergia %>% select(Semana, platano_oriental, arboles_total, pastos) %>% mutate(platano_oriental = platano_oriental/70, arboles_total = arboles_total/100, pastos = pastos/25) %>% gather(key = Especie, value = Polen, -Semana) %>%group_by(Semana, Especie) %>% summarise_if(is.numeric, funs(mean, sd, max, min))
+Weekly2 <- as.data.frame(Weekly2)
 
 ggplot(Weekly2, aes(x = Semana, y = mean))+  geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = Especie), alpha = 0.5) + geom_line(aes(lty = Especie)) + ylab("Nivel estandarizado de polen") + xlab("Mes") + theme_classic()  + theme(legend.position="bottom") + scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")) + geom_hline(yintercept = 1, lty=2, color = "red") + annotate("text", x = 8, y = 2, label = "Niveles altos de polen", color = "red")
 
