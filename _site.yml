@@ -42,7 +42,7 @@ navbar:
       href: Starting.html
     - text: NetworkExtinction
       href: VignetteNetworkExt.html
-output_dir: .
+output_dir: .na.real
 output:
   html_document:
     theme: cosmo
