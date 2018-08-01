@@ -45,6 +45,50 @@ Si nunca han usado `R` antes de este curso, porfavor installar el paquete [Swirl
 
 Pueden ver un video explicativo de como usar swirl en el siguiente link
 
+## Descripción
+
+Este curso está enfocado en entregar los principios de investigación reproducible en R, con énfasis en la recopilación y/o lectura de datos de forma reproducible y automatizada. Para esto se trabajará con bases de datos complejos, las cuales deberán ser transformadas y organizadas para optimizar su análisis. Se generarán documentos reproducibles integrando en un documento código, bibliografía, exploración y análisis de datos. Se culminará el curso con la generación de un manuscrito, presentación y/o documento interactivo reproducible.
+
+##  Objetivos
+
+1. Conocer y entender el concepto de Investigación reproducible como un forma y filosofía de investigación que permite que las investigaciones sean más ordenadas y replicables, desde  la toma de datos hasta la escritura de resultados.
+
+2. Conocer y aplicar el concepto de pipeline, el cual permite generar una modularidad desde la toma de datos hasta la escritura de resultados, donde la corrección independiente de un paso tiene un efecto cascada sobre el resultado final.
+
+3. Aprender buenas prácticas de recolección y estandarización de bases de datos, con la finalidad de optimizar el análisis de datos y la revisión de estas por pares.
+
+4. Realizar análisis críticos de la naturaleza de los datos al realizar análisis exploratorios, que permitirán determinar la mejor forma de comprobar hipótesis asociadas a estas bases de datos.
+
+## Contenidos
+
+1. Tidy Data, optimización de base de datos, limpieza y transformación de bases de datos.
+
+2. Investigación reproducible. Generación de documentos Rmarkdown en R, códigos en chunk y en texto. Generación de tablas en Rmd
+
+3. El Hadleyverso y el tidyverso, el concepto de pipeline. LImpieza de  datos complejos
+4. Visualización de datos, visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
+
+5. Creación de funciones propias y loops. Generación de funciones propias en R y loops
+
+6. Escritura de manuscritos en R, transformación de documentos Rmd en un manuscrito
+
+7. Presentaciones en R y generar documentos interactivos. Transformación de datos en una presentación o en una Shiny app. Realizar una presentación o aplicación en R.
+
+## Metodología
+
+Todas las clases serán prácticas y estarán divididas en dos partes: I. Clases de principios y herramientas, donde se presentarán los principios de investigación reproducible y tidy data, junto con las herramientas actuales más utilizadas, y II. Clases aplicadas donde se trabajará con
+datos propios para desarrollar un documento reproducible. A los estudiantes que no cuenten con datos propios, se les será proporcionado un set de datos o se simularán dependiendo del caso.
+
+Además se deberán generar informes y presentaciones siguiendo los principios de investigación reproducible, usando datos propios o entregados. Se realizará un informe final, en el cual se espera un trabajo 
+
+
+##  Evaluación
+
+* Evaluación 1: Informe exploratorio de base de datos 25%
+* Evaluación 2: Presentación 25%
+* Evaluación 3: Informe final 50%
+
+
 ## Objetivo del curso
 
 Aprender los principios de investigación reproducible y tidy data a través del aprendizaje de programación y uso de R. Los principios de este curso están explicados en los siguientes libros gratuitos.

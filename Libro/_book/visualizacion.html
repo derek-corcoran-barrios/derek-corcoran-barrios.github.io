@@ -134,8 +134,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Parte I</a></li>
 <li class="chapter" data-level="1" data-path="requerimientos.html"><a href="requerimientos.html"><i class="fa fa-check"></i><b>1</b> Requerimientos</a><ul>
 <li class="chapter" data-level="1.1" data-path="requerimientos.html"><a href="requerimientos.html#si-nunca-has-usado-r-antes"><i class="fa fa-check"></i><b>1.1</b> Si nunca has usado R antes</a></li>
-<li class="chapter" data-level="1.2" data-path="requerimientos.html"><a href="requerimientos.html#objetivo-del-curso"><i class="fa fa-check"></i><b>1.2</b> Objetivo del curso</a></li>
-<li class="chapter" data-level="1.3" data-path="requerimientos.html"><a href="requerimientos.html#contenidos"><i class="fa fa-check"></i><b>1.3</b> Contenidos</a></li>
+<li class="chapter" data-level="1.2" data-path="requerimientos.html"><a href="requerimientos.html#descripcion"><i class="fa fa-check"></i><b>1.2</b> Descripción</a></li>
+<li class="chapter" data-level="1.3" data-path="requerimientos.html"><a href="requerimientos.html#objetivos"><i class="fa fa-check"></i><b>1.3</b> Objetivos</a></li>
+<li class="chapter" data-level="1.4" data-path="requerimientos.html"><a href="requerimientos.html#contenidos"><i class="fa fa-check"></i><b>1.4</b> Contenidos</a></li>
+<li class="chapter" data-level="1.5" data-path="requerimientos.html"><a href="requerimientos.html#metodologia"><i class="fa fa-check"></i><b>1.5</b> Metodología</a></li>
+<li class="chapter" data-level="1.6" data-path="requerimientos.html"><a href="requerimientos.html#evaluacion"><i class="fa fa-check"></i><b>1.6</b> Evaluación</a></li>
+<li class="chapter" data-level="1.7" data-path="requerimientos.html"><a href="requerimientos.html#objetivo-del-curso"><i class="fa fa-check"></i><b>1.7</b> Objetivo del curso</a></li>
+<li class="chapter" data-level="1.8" data-path="requerimientos.html"><a href="requerimientos.html#contenidos-1"><i class="fa fa-check"></i><b>1.8</b> Contenidos</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>2</b> Tidy Data y manipulación de datos</a></li>
 <li class="chapter" data-level="3" data-path="reproducible.html"><a href="reproducible.html"><i class="fa fa-check"></i><b>3</b> Investigación reproducible</a></li>
@@ -179,17 +184,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>El esqueleto de una visualización usando <em>ggplot2</em> es la siguiente</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">ggplot</span>(data.frame, <span class="kw">aes</span>(nombres de columna)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_algo</span>(argumentos, <span class="kw">aes</span>(columnas)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_algo</span>()</a></code></pre></div>
 <p>Como ejemplo para discutir usaremos el siguiente código que genera la figura <a href="visualizacion.html#fig:ejemplo1-ggplot">5.1</a>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
-<pre><code>## ── Attaching packages ───────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
-<pre><code>## ✔ ggplot2 2.2.1.9000     ✔ purrr   0.2.5     
-## ✔ tibble  1.4.2          ✔ dplyr   0.7.6     
-## ✔ tidyr   0.8.1          ✔ stringr 1.3.1     
-## ✔ readr   1.1.1          ✔ forcats 0.3.0</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;diamonds&quot;</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y=</span>price)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> cut)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">data</span>(<span class="st">&quot;diamonds&quot;</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y=</span>price)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> cut)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:ejemplo1-ggplot"></span>
 <img src="Libro_files/figure-html/ejemplo1-ggplot-1.png" alt="Gráfico en el cual gráficamos los quilates de diamantes versus su precio, con el corte del diamante representado por el color" width="80%" />
 <p class="caption">
@@ -207,8 +204,8 @@ Figura 5.1: Gráfico en el cual gráficamos los quilates de diamantes versus su 
 <div id="geom_boxplot" class="section level4">
 <h4><span class="header-section-number">5.2.1.1</span> geom_boxplot</h4>
 <p>En la figura <a href="visualizacion.html#fig:boxplot">5.2</a>, generado a partir del código a continuacón con la base de datos iris presente en <code>R</code> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:boxplot"></span>
 <img src="Libro_files/figure-html/boxplot-1.png" alt="Boxplot que representa los largos del sépalo de tres especies del género Iris" width="80%" />
 <p class="caption">
@@ -217,7 +214,7 @@ Figura 5.2: Boxplot que representa los largos del sépalo de tres especies del g
 </div>
 <p>Los boxplots muestran una linea gruesa central (la mediana), una caja, que delimita el primer y tercer cuartil, y los bigotes, los cuales se extienden hasta los valores extremos. A menos que estos esten por sobre 1.5 veces la distance entre el primer y tercer cuartil, en cuyo caso se consideran outlyers, y estos son representados por puntos. En la figura <a href="visualizacion.html#fig:boxplot">5.2</a>, solo <em>Iris virginica</em> presenta un outlayer en cuanto a las medidas del largo del sepalo.</p>
 <p>Los boxplots, como todos los gráficos pueden ser personalizados usando otros argumentos, los cuales son detallados en la sección <a href="visualizacion.html#argumentos">5.3</a>, pero en los ejemplos que mostraremos en esta sección los iremos introduciendo de a poco. Si quisieramos por ejemplo que el color de las cajas del <em>boxplot</em> fuera deacuerdo a la especie, cambiamos el llenado (<strong>fill</strong>) de la caja, como vemos en el siguiente ejemplo y figura <a href="visualizacion.html#fig:boxplot2">5.3</a></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Species))</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Species))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:boxplot2"></span>
 <img src="Libro_files/figure-html/boxplot2-1.png" alt="Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie" width="80%" />
 <p class="caption">
@@ -228,7 +225,7 @@ Figura 5.3: Boxplot que representa los largos del sépalo de tres especies del g
 </div>
 <div id="geom_jitter" class="section level4">
 <h4><span class="header-section-number">5.2.1.2</span> geom_jitter</h4>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:jitter"></span>
 <img src="Libro_files/figure-html/jitter-1.png" alt="Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie" width="80%" />
 <p class="caption">
