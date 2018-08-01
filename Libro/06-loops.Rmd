@@ -1,0 +1,2 @@
+# Loops (purrr) y bibliografía (rticles) {#loops}
+

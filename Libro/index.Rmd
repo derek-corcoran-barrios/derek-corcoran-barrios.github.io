@@ -1,0 +1,58 @@
+--- 
+title: "BIO 4022. Análisis y manipulación de datos en R"
+author: "Derek Corcoran"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R"
+---
+
+# Parte I {-}
+
+# Requerimientos
+
+La última versión de RStudio y R [@R-base], también se requiere de los paquetes *tidyverse* y *tinytex*. El código para la instalación de esos paquetes es el siguiente
+
+```{r eval=FALSE}
+install.packages("tidyverse", "tinytex")
+```
+
+
+Si necesitan ayuda para la instalación contactarse con elinstructor del curso.
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+## Si nunca has usado R antes
+
+Si nunca han usado `R` antes de este curso, porfavor installar el paquete [Swirl](http://swirlstats.com/students.html) y realizar los primeros 7 modulos del programa *R Programming: The basics of programming in R* que incluye:
+
+* Basic Building Blocks
+* Workspace and Files
+* Sequences of Numbers
+* Vectors
+* Missing Values
+* Subsetting Vectors
+* Matrices and Data Frames
+
+
+Pueden ver un video explicativo de como usar swirl en el siguiente link
+
+## Objetivo del curso
+
+Aprender los principios de investigación reproducible y tidy data a través del aprendizaje de programación y uso de R. Los principios de este curso están explicados en los siguientes libros gratuitos.
+
+* Gandrud, Christopher. Reproducible Research with R and R Studio. CRC Press, 2013. Available for free in the following
+[link](https://englianhu.files.wordpress.com/2016/01/reproducible-research-with-r-and-studio-2nd-edition.pdf)
+* Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. Implementing reproducible research. CRC Press, 2014. Available for free in the following [link](http://web.stanford.edu/~vcs/papers/ijclp-STODDEN-2009.pdf)
+
+## Contenidos
+
+* En el Capítulo \@ref(tidydata) aprenderemos que es una base de datos *tidy*, y como manipular estas bases de datos con el paquete *dplyr* [@R-dplyr]

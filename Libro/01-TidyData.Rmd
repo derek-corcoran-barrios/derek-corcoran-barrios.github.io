@@ -1,0 +1,3 @@
+# Tidy Data y manipulación de datos {#tidydata}
+
+En este capítulo explicaremos que es una base de datos *tidy* y  aprenderemos a usar funciones del paquete *dplyr* [@R-dplyr] para manipular datos.

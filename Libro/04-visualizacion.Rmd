@@ -1,0 +1,58 @@
+# Visualización de datos {#visualizacion}
+
+En este capítulo aprenderemos a usar el paquete *ggplot2* [@Wickhamggplot], parte del paquete *tidyverse* [@Wickhamtidyverse]. 
+
+## El esqueleto
+
+El esqueleto de una visualización usando *ggplot2* es la siguiente
+
+```{r, eval = FALSE}
+ggplot(data.frame, aes(nombres de columna)) + geom_algo(argumentos, aes(columnas)) + theme_algo()
+```
+
+Como ejemplo para discutir usaremos el siguiente código que genera la figura \@ref(fig:ejemplo1-ggplot):
+
+```{r ejemplo1-ggplot, fig.cap='Gráfico en el cual gráficamos los quilates de diamantes versus su precio, con el corte del diamante representado por el color', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE}
+library(tidyverse)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
+```
+
+
+En este caso general, lo primero que ponemos después de ggplot es el data.frame desde el cuál graficaremos algo, en el ejemplo de la figura \@ref(fig:ejemplo1-ggplot) usamos la base de datos *diamonds* del paquete *ggplot2* [@Wickhamggplot]. Luego dentro de `aes` ponemos las columnas que graficaremos como *x* y/o *y*, en nuestro ejemplo dentro de aes ponemos como eje *x* los kilates de los diamantes (caret) y como *y* el precio de los mismos (price). La necesidad de poner `aes` en ggplot2 (algo que no había sido necesario cuando usamos *dplyr* o *tidyr*) es que ggplot2 es el paquete mas antiguo del *tidyverse*.
+
+## geom_algo
+
+Luego de especificar una base de datos, esto viene seguido de un `geom_algo`, esto nos indicará que tipo de gráfico usaremos, estos pueden ser combinados como veremos en ejemplos futuros
+
+### Una variable categórica una continua
+
+Primero veremos algunos de los *geom* que podemos utilizar con una variable categórica y una continua
+
+#### geom_boxplot
+
+En la figura \@ref(fig:boxplot), generado a partir del código a continuacón con la base de datos iris presente en `R` [@anderson1935irises].  
+
+```{r boxplot, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE}
+data("iris")
+ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_boxplot()
+```
+
+Los boxplots muestran una linea gruesa central (la mediana), una caja, que delimita el primer y tercer cuartil, y los bigotes, los cuales se extienden hasta los valores extremos. A menos que estos esten por sobre 1.5 veces la distance entre el primer y tercer cuartil, en cuyo caso se consideran outlyers, y estos son representados por puntos. En la figura \@ref(fig:boxplot), solo *Iris virginica* presenta un outlayer en cuanto a las medidas del largo del sepalo.
+
+Los boxplots, como todos los gráficos pueden ser personalizados usando otros argumentos, los cuales son detallados en la sección \@ref(argumentos), pero en los ejemplos que mostraremos en esta sección los iremos introduciendo de a poco. Si quisieramos por ejemplo que el color de las cajas del *boxplot* fuera deacuerdo a la especie, cambiamos el llenado (**fill**) de la caja, como vemos en el siguiente ejemplo y figura \@ref(fig:boxplot2)
+
+```{r boxplot2, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE}
+ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_boxplot(aes(fill = Species))
+```
+
+Dos cosas a notar en este ejemplo, por un lado la leyenda se genera de forma automática, y por otro lado, vemos que es necesario poner *Species* dentro de `aes`, esto es debido a que Species es una columna y como se explicó al principio de este capítulo, todas las columnas deben ser incuidas dentro de la función `aes` para poder ser referenciadas.
+
+#### geom_jitter
+
+```{r jitter, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE}
+ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_jitter(aes(color = Species))
+```
+
+
+## Argumentos {#argumentos}
