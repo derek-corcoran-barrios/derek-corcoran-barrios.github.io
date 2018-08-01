@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
 ```
 
 
@@ -251,7 +251,7 @@ schedule[,5]<- gsub("New Orleans Hornets", "NO", schedule[,5])
 ```{r simulatingGames, echo=FALSE, message=FALSE, warning=FALSE}
 pacman::p_load(SpatialBall2, dplyr,XML, lubridate, rvest)
 
-colnames(schedule) <- c("Date", "Start..ET.","VTM", "PTS_Visitor", "HTM", "PTS_Home", "X", "X2", "Notes", "Season")
+colnames(schedule) <- c("Date", "Start..ET.","VTM", "PTS_Visitor", "HTM", "PTS_Home", "X", "X2", "X3","Notes", "Season")
 
 schedule <- dplyr::select(schedule, Date, VTM, PTS_Visitor, HTM, PTS_Home, Season)
 

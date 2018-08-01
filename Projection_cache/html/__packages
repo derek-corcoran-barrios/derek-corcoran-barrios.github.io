@@ -1,10 +1,4 @@
 base
-methods
-datasets
-utils
-grDevices
-graphics
-stats
 sp
 bindrcpp
 pacman
@@ -23,7 +17,6 @@ xml2
 rvest
 tidyr
 rjson
-grid
 gridExtra
 png
 bitops

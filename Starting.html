@@ -11,7 +11,7 @@
 
 <meta name="author" content="Derek Corcoran, and Nicholas Watanabe" />
 
-<meta name="date" content="2018-04-24" />
+<meta name="date" content="2018-08-01" />
 
 <title>Starting to use the Spatialball2 package</title>
 
@@ -24,7 +24,9 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -92,6 +94,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -272,31 +277,27 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Starting to use the Spatialball2 package</h1>
 <h4 class="author"><em>Derek Corcoran, and Nicholas Watanabe</em></h4>
-<h4 class="date"><em>2018-04-24</em></h4>
+<h4 class="date"><em>2018-08-01</em></h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a><ul>
-<li><a href="#data-scraping"><span class="toc-section-number">1.1</span> Data scraping</a></li>
-<li><a href="#data-visualization"><span class="toc-section-number">1.2</span> Data visualization</a><ul>
-<li><a href="#player-level-visualization"><span class="toc-section-number">1.2.1</span> Player level visualization</a></li>
-<li><a href="#team-level-visualization"><span class="toc-section-number">1.2.2</span> Team level visualization</a></li>
-<li><a href="#league-level-visualization"><span class="toc-section-number">1.2.3</span> League level visualization</a></li>
+<li><a href="#data-scraping"><span class="toc-section-number">0.1</span> Data scraping</a></li>
+<li><a href="#data-visualization"><span class="toc-section-number">0.2</span> Data visualization</a><ul>
+<li><a href="#player-level-visualization"><span class="toc-section-number">0.2.1</span> Player level visualization</a></li>
+<li><a href="#team-level-visualization"><span class="toc-section-number">0.2.2</span> Team level visualization</a></li>
+<li><a href="#league-level-visualization"><span class="toc-section-number">0.2.3</span> League level visualization</a></li>
 </ul></li>
-<li><a href="#data-analysis"><span class="toc-section-number">1.3</span> Data analysis</a><ul>
-<li><a href="#offensive-and-defensive-team-stats"><span class="toc-section-number">1.3.1</span> Offensive and defensive team stats</a></li>
-<li><a href="#spread-prediction"><span class="toc-section-number">1.3.2</span> Spread prediction</a></li>
-<li><a href="#spatial-rating"><span class="toc-section-number">1.3.3</span> Spatial Rating</a></li>
+<li><a href="#data-analysis"><span class="toc-section-number">0.3</span> Data analysis</a><ul>
+<li><a href="#spread-prediction"><span class="toc-section-number">0.3.1</span> Spread prediction</a></li>
+<li><a href="#spatial-rating"><span class="toc-section-number">0.3.2</span> Spatial Rating</a></li>
 </ul></li>
-<li><a href="#upcoming-functions"><span class="toc-section-number">1.4</span> Upcoming functions</a></li>
-</ul></li>
+<li><a href="#upcoming-functions"><span class="toc-section-number">0.4</span> Upcoming functions</a></li>
 </ul>
 </div>
 
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>#Introduction</p>
 <p>The <strong>SpatialBall2</strong> package was developed to analyze and visualize spatial data in the NBA. We can separate the Spatialball functions into three groups:</p>
 <ul>
 <li>Data scraping</li>
@@ -305,19 +306,19 @@ $(document).ready(function () {
 </ul>
 <pre class="r"><code>library(SpatialBall2)</code></pre>
 <div id="data-scraping" class="section level2">
-<h2><span class="header-section-number">1.1</span> Data scraping</h2>
+<h2><span class="header-section-number">0.1</span> Data scraping</h2>
 <p>The <em>Seasonscrape</em> function, downloads data from the NBA.stats.com site the information needed for all the visualizations and analyses made in this package. You can request different seasons, and limit it to a range of dates, select if you want to analyse Regular season, playoffs, preseason, etc.</p>
 <p>As an example on how to scrape data from the 2017-18 for a given date is shown bellow.</p>
 <pre class="r"><code>SeasonData2018 &lt;- Seasonscrape(season = &quot;2017-18&quot;, Start = &quot;12/05/2017&quot;, End = &quot;12/07/2017&quot;)</code></pre>
 <p>The only parameter that is mandatory for this function is season. If you only fill that parameter, you will get all the data from the regular season of the year you requested.</p>
 </div>
 <div id="data-visualization" class="section level2">
-<h2><span class="header-section-number">1.2</span> Data visualization</h2>
+<h2><span class="header-section-number">0.2</span> Data visualization</h2>
 <p>We have three levels of data visualization with graphs at the player, team, and league level. We will go into detail in each of those categories. First for players and all other levels of visualization we have shot charts. In our shot charts (see Fig. 1 as an example) the color scheme will be a scale of the points per shot or percentage depending on the options you choose. The size of the hexagon in shot charts represents the frequency of the shots taken, by the league, team or player, with bigger hexagons meaning a higher frequency of shots. Now we will go in detail into each of the visualizations available in our package.</p>
 <div id="player-level-visualization" class="section level3">
-<h3><span class="header-section-number">1.2.1</span> Player level visualization</h3>
+<h3><span class="header-section-number">0.2.1</span> Player level visualization</h3>
 <div id="player-shot-charts" class="section level4">
-<h4><span class="header-section-number">1.2.1.1</span> Player shot charts</h4>
+<h4><span class="header-section-number">0.2.1.1</span> Player shot charts</h4>
 <p>For any given player that played in the league on a given season, you can build shot charts. The main function to do that is <em>ShotSeasonGraphPlayer</em>, in its most basic configuration, you only need to use the parameters <em>Seasondata</em> and the name of the player, as seen in figure 1.</p>
 <pre class="r"><code>data(&quot;season2017&quot;)
 ShotSeasonGraphPlayer(season2017, player = &quot;Stephen Curry&quot;)</code></pre>
@@ -337,7 +338,7 @@ Figure 2. Shot chart of Stephen Curry showing the percentage of shots made
 </div>
 </div>
 <div id="player-point-shot-charts" class="section level4">
-<h4><span class="header-section-number">1.2.1.2</span> Player point shot charts</h4>
+<h4><span class="header-section-number">0.2.1.2</span> Player point shot charts</h4>
 <p>When it’s early in the season, or a player does not shot to much, making a frequency based shot chart might not be the best visualization tool. For that, we created the <em>PointShotSeasonGraphPlayer</em>. This function creates a shot chart for a player on a given season plotting a point for each taken shot separating by colors made and misses, Also, you can add a kernel of the frequency of usage of areas. For example here is the “traditional” shot chart of Kyle Singler (Figure 3).</p>
 <pre class="r"><code>data(&quot;season2017&quot;)
 ShotSeasonGraphPlayer(season2017, player = &quot;Kyle Singler&quot;)</code></pre>
@@ -373,9 +374,9 @@ Figure 6. Shot chart of Kyle Singler, points only, only made shots
 </div>
 </div>
 <div id="team-level-visualization" class="section level3">
-<h3><span class="header-section-number">1.2.2</span> Team level visualization</h3>
+<h3><span class="header-section-number">0.2.2</span> Team level visualization</h3>
 <div id="offensive-shot-charts" class="section level4">
-<h4><span class="header-section-number">1.2.2.1</span> Offensive shot charts</h4>
+<h4><span class="header-section-number">0.2.2.1</span> Offensive shot charts</h4>
 <p>This shot charts are made from the shots that the selected team has taken. The function to make team offensive shotcharts is <em>OffShotSeasonGraphTeam</em>, where in the most basic option for this function, you only have to provide the <em>Seasondata</em> and the <em>team</em> parameters. As an example of these, lets plot the offensive shot chart of the Golden State Warriors from the 2016-17 season with the data included in the package.</p>
 <pre class="r"><code>OffShotSeasonGraphTeam(season2017, team = &quot;GSW&quot;)</code></pre>
 <div class="figure">
@@ -395,7 +396,7 @@ Figure 8. Offensive Shot chart of the Golden State Warriors, percentage of shots
 </div>
 </div>
 <div id="defensive-shot-charts" class="section level4">
-<h4><span class="header-section-number">1.2.2.2</span> Defensive shot charts</h4>
+<h4><span class="header-section-number">0.2.2.2</span> Defensive shot charts</h4>
 <p>Similar to the offensive shot charts, here we visualize the Points per shot or percentage allowed by the team we choose to graph, using the function <em>DefShotSeasonGraphTeam</em>. Similar to the functions <em>OffShotSeasonGraphTeam</em> and <em>ShotSeasonGraphPlayer</em>, this function allows the user to choose to visualize the shot chart with a Points per Shot or Percentage scale as seen in figure 8.</p>
 <pre class="r"><code>data(&quot;season2017&quot;)
 DefShotSeasonGraphTeam(season2017, team = &quot;Sas&quot;, type = &quot;PCT&quot;)</code></pre>
@@ -407,7 +408,7 @@ Figure 9. Offensive Shot chart of the Golden State Warriors, percentage of shots
 </div>
 </div>
 <div id="comparative-shot-charts" class="section level4">
-<h4><span class="header-section-number">1.2.2.3</span> Comparative shot charts</h4>
+<h4><span class="header-section-number">0.2.2.3</span> Comparative shot charts</h4>
 <p>The function to visually compare two teams it’s called <em>ShotComparisonGraph</em>, and it uses our comparative shot charts, in this example we have Miami against Houston. In the top row we see the defensive shot chart of the Heat, the Offensive Shot Chart of the rockets, and the net Shot Chart of the expected points per Shot over average when Rockets offense faces the Heat Defense. This plot takes into account both the shot frequency attempted by the offense and defense and assumes that the shot frequency for each area in the court will be an in-between frequency. At points where the hexagons are blue, the defense is allowing fewer points than average and the offense is scoring fewer points than average, and the inverse is true for red hexagons. Conversely the bottom row shows what happens when the Heat attacks and the Rockets defend.</p>
 <pre class="r"><code>ShotComparisonGraph(HomeTeam = &quot;Hou&quot;, VisitorTeam = &quot;Mia&quot;, Seasondata = season2017)</code></pre>
 <div class="figure">
@@ -427,7 +428,7 @@ Figure 11. Comparative shot chart of 2016-17 Miami Heat against Houston Rockets,
 </div>
 </div>
 <div id="league-level-visualization" class="section level3">
-<h3><span class="header-section-number">1.2.3</span> League level visualization</h3>
+<h3><span class="header-section-number">0.2.3</span> League level visualization</h3>
 <p>The <em>ShotSeasonGraph</em> function takes an NBA season object and makes a shot chart of all the shots takes through that regular season. You can choose to either plot the results based on Points per Shot or on Shooting Percentage, as in all previous functions. This function is exemplified in figure 12.</p>
 <pre class="r"><code>data(&quot;season2017&quot;)
 ShotSeasonGraph(season2017, quant = 0.4)</code></pre>
@@ -440,9 +441,8 @@ Figure 12. Shot chart of the Whole 2017 Season
 </div>
 </div>
 <div id="data-analysis" class="section level2">
-<h2><span class="header-section-number">1.3</span> Data analysis</h2>
-<div id="offensive-and-defensive-team-stats" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> Offensive and defensive team stats</h3>
+<h2><span class="header-section-number">0.3</span> Data analysis</h2>
+<p>###Offensive and defensive team stats</p>
 <p>The <em>TeamStats</em> function are the basis of the table shown in <a href="https://derek-corcoran-barrios.github.io/TeamStats.html">this link</a> which is updated daily. The only parameter needed for this function is the <em>Seasondata</em> parameter, which can be extracted from the <em>Seasonscrape</em> function. As shown in tables 1 (Offensive stats) and 2 (Defensive stats).</p>
 <pre class="r"><code>data(&quot;season2017&quot;)
 Stats2017 &lt;- TeamStats(Seasondata = season2017)</code></pre>
@@ -1082,9 +1082,8 @@ Stats2017 &lt;- TeamStats(Seasondata = season2017)</code></pre>
 </tr>
 </tbody>
 </table>
-</div>
 <div id="spread-prediction" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> Spread prediction</h3>
+<h3><span class="header-section-number">0.3.1</span> Spread prediction</h3>
 <p>The function Get_Apps will analyse the pairwise spatial components of the teams involved in the game proposed and using our algorithm based on Boosted Regression Trees will predict the spread of the game, as an example we will show the predicted spread for Charlotte playing against Boston at Home and on the road:</p>
 <pre class="r"><code>data(&quot;season2017&quot;)
 Get_Apps(HomeTeam = &quot;Cha&quot;, VisitorTeam = &quot;Bos&quot;, Seasondata = season2017)
@@ -1095,7 +1094,7 @@ Get_Apps(HomeTeam = &quot;Cha&quot;, VisitorTeam = &quot;Bos&quot;, Seasondata =
 #&gt; 1 -0.01071023 -0.01542924 -3.873041</code></pre>
 </div>
 <div id="spatial-rating" class="section level3">
-<h3><span class="header-section-number">1.3.3</span> Spatial Rating</h3>
+<h3><span class="header-section-number">0.3.2</span> Spatial Rating</h3>
 <p>Finally our function SpatialRating will calculate the offensive, defensive and net rating for every team, with the shots to the date during the season.</p>
 <pre class="r"><code>knitr::kable(SpatialRating(Seasondata = season2017))
 #&gt; [1] &quot;1 of 30&quot;
@@ -1323,9 +1322,8 @@ Get_Apps(HomeTeam = &quot;Cha&quot;, VisitorTeam = &quot;Bos&quot;, Seasondata =
 </div>
 </div>
 <div id="upcoming-functions" class="section level2">
-<h2><span class="header-section-number">1.4</span> Upcoming functions</h2>
+<h2><span class="header-section-number">0.4</span> Upcoming functions</h2>
 <p>We are working on improved spread predictions and a function for trade analysis. There are options for Season projections as seen <a href="https://derek-corcoran-barrios.github.io/Projection.html">here</a>.</p>
-</div>
 </div>
 
 <p>Copyright &copy; 2017 Cienciaustral, Inc. <img src="https://ia601308.us.archive.org/13/items/LogoCuadrado3/logo%20cuadrado%203.jpg" height="20" width="20"/> All rights reserved.</p>
