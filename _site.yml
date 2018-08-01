@@ -10,6 +10,8 @@ navbar:
     - text: Cursos
     - text: Curso de R
       href: CursoR.html
+    - text: BIO4022
+      href: Libro/_book/index.html
   - text: Donde vivir
     href: DondeVivir.html
   - text: Alergia en Chile
