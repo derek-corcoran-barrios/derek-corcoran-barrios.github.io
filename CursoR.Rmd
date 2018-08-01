@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE)
 - Antes de empezar, si no has utilizado R anteriormente por favor revisa este 
   [Video](https://youtu.be/w6L7Ye18yPE) y realiza las primeras 7 lecciones de 
   *R Programming* en Swirl
-- [Clase 1](http://rpubs.com/derek_corcoran/Clase1)
+- [Clase 1](https://derek-corcoran-barrios.github.io/Clase1/Clase1TidyData)
 - [Clase 2](http://rpubs.com/derek_corcoran/Clase2). También puedes ver el video de la clase.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ft6r7pD_eSs" frameborder="0" allowfullscreen></iframe>
