@@ -65,8 +65,10 @@ Este curso está enfocado en entregar los principios de investigación reproduci
     + En el Capítulo \@ref(tidydata) aprenderemos que es una base de datos *tidy*, y como manipular estas bases de datos con el paquete *dplyr* [@R-dplyr]
 
 3. Investigación reproducible. Generación de documentos Rmarkdown en R, códigos en chunk y en texto. Generación de tablas en Rmd
+    + En el Capitulo \ref(Reproducible) entenderemos el como generar un documento que combine códigos de `R` y texto para generar documentos reporducibles utilizando el paquete *rmarkdown* [@Allaire2018]
+    
+4. El tidyverso, el concepto de pipeline. Limpieza de  datos complejos
 
-4. El Hadleyverso y el tidyverso, el concepto de pipeline. LImpieza de  datos complejos
 5. Visualización de datos, visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
 
 6. Creación de funciones propias y loops. Generación de funciones propias en R y loops
