@@ -61,18 +61,19 @@ Este curso está enfocado en entregar los principios de investigación reproduci
 
 ## Contenidos
 
-1. Tidy Data, optimización de base de datos, limpieza y transformación de bases de datos.
+2. *Tidy Data, optimización de base de datos, limpieza y transformación de bases de datos*. 
+    + En el Capítulo \@ref(tidydata) aprenderemos que es una base de datos *tidy*, y como manipular estas bases de datos con el paquete *dplyr* [@R-dplyr]
 
-2. Investigación reproducible. Generación de documentos Rmarkdown en R, códigos en chunk y en texto. Generación de tablas en Rmd
+3. Investigación reproducible. Generación de documentos Rmarkdown en R, códigos en chunk y en texto. Generación de tablas en Rmd
 
-3. El Hadleyverso y el tidyverso, el concepto de pipeline. LImpieza de  datos complejos
-4. Visualización de datos, visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
+4. El Hadleyverso y el tidyverso, el concepto de pipeline. LImpieza de  datos complejos
+5. Visualización de datos, visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
 
-5. Creación de funciones propias y loops. Generación de funciones propias en R y loops
+6. Creación de funciones propias y loops. Generación de funciones propias en R y loops
 
-6. Escritura de manuscritos en R, transformación de documentos Rmd en un manuscrito
+7. Escritura de manuscritos en R, transformación de documentos Rmd en un manuscrito
 
-7. Presentaciones en R y generar documentos interactivos. Transformación de datos en una presentación o en una Shiny app. Realizar una presentación o aplicación en R.
+8. Presentaciones en R y generar documentos interactivos. Transformación de datos en una presentación o en una Shiny app. Realizar una presentación o aplicación en R.
 
 ## Metodología
 
@@ -97,6 +98,4 @@ Aprender los principios de investigación reproducible y tidy data a través del
 [link](https://englianhu.files.wordpress.com/2016/01/reproducible-research-with-r-and-studio-2nd-edition.pdf)
 * Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. Implementing reproducible research. CRC Press, 2014. Available for free in the following [link](http://web.stanford.edu/~vcs/papers/ijclp-STODDEN-2009.pdf)
 
-## Contenidos
-
-* En el Capítulo \@ref(tidydata) aprenderemos que es una base de datos *tidy*, y como manipular estas bases de datos con el paquete *dplyr* [@R-dplyr]
+## Bibliografía
