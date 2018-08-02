@@ -14,10 +14,16 @@ description: "Este libro es una compañia al curso BIO4022, análisis y manipula
 
 # Requerimientos
 
-La última versión de RStudio y R [@R-base], también se requiere de los paquetes *pacman*, *tidyverse* y *tinytex*. El código para la instalación de esos paquetes es el siguiente
+La última versión de RStudio y R [@R-base], también se requiere de los paquetes *pacman*, *tidyverse* y *tinytex*. 
+
+Si no han usado R o RStudio, pueden ver un video de como instalar ambos programas, asi como los paquetes más necesarios para este curso, que son *pacman*, *rmarkdown*, *tidyverse* y *tinytex* en el siguiente [link](https://youtu.be/RtkCAKXsVbw).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RtkCAKXsVbw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+El código para la instalación de esos paquetes es el siguiente
 
 ```{r eval=FALSE}
-install.packages("tidyverse", "tinytex")
+install.packages("pacman", "rmarldown", "tidyverse", "tinytex")
 ```
 
 
