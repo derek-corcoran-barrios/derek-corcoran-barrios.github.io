@@ -1,3 +1,16 @@
 # Tidy Data y manipulación de datos {#tidydata}
 
-En este capítulo explicaremos que es una base de datos *tidy* y  aprenderemos a usar funciones del paquete *dplyr* [@R-dplyr] para manipular datos.
+En este capítulo explicaremos que es una base de datos *tidy* [@wickham2014tidy] y  aprenderemos a usar funciones del paquete *dplyr* [@R-dplyr] para manipular datos.
+
+Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este link[link](https://derek-corcoran-barrios.github.io/Clase1/Clase1TidyData), y en cuanto el video de la clase este disponible encontrarás un link aca.
+
+## Tidy data
+
+Una base de datos tidy es una base de datos en la cual:
+
+* Cada varaible que midas debiera estar en una columna.
+* Cada observación distinta de esa variable debiera estar en una fila diferente.
+
+## dplyr
+
+El paquete *dplyr* es definido por sus autores como una gramática para la manipulación de datos. De este modo sus funciones son conocidas como verbos. 

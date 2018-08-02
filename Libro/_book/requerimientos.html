@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-01">
+<meta name="date" content="2018-08-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -142,7 +142,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.7" data-path="requerimientos.html"><a href="requerimientos.html#objetivo-del-curso"><i class="fa fa-check"></i><b>1.7</b> Objetivo del curso</a></li>
 <li class="chapter" data-level="1.8" data-path="requerimientos.html"><a href="requerimientos.html#bibliografia"><i class="fa fa-check"></i><b>1.8</b> Bibliografía</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>2</b> Tidy Data y manipulación de datos</a></li>
+<li class="chapter" data-level="2" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>2</b> Tidy Data y manipulación de datos</a><ul>
+<li class="chapter" data-level="2.1" data-path="tidydata.html"><a href="tidydata.html#tidy-data"><i class="fa fa-check"></i><b>2.1</b> Tidy data</a></li>
+<li class="chapter" data-level="2.2" data-path="tidydata.html"><a href="tidydata.html#dplyr"><i class="fa fa-check"></i><b>2.2</b> dplyr</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="reproducible.html"><a href="reproducible.html"><i class="fa fa-check"></i><b>3</b> Investigación reproducible</a></li>
 <li class="chapter" data-level="4" data-path="tidyverso.html"><a href="tidyverso.html"><i class="fa fa-check"></i><b>4</b> El Tidyverso</a></li>
 <li class="chapter" data-level="5" data-path="visualizacion.html"><a href="visualizacion.html"><i class="fa fa-check"></i><b>5</b> Visualización de datos</a><ul>
@@ -178,7 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="requerimientos" class="section level1">
 <h1><span class="header-section-number">Capítulo 1</span> Requerimientos</h1>
-<p>La última versión de RStudio y R <span class="citation">(R Core Team <a href="#ref-R-base">2018</a>)</span>, también se requiere de los paquetes <em>tidyverse</em> y <em>tinytex</em>. El código para la instalación de esos paquetes es el siguiente</p>
+<p>La última versión de RStudio y R <span class="citation">(R Core Team <a href="#ref-R-base">2018</a>)</span>, también se requiere de los paquetes <em>pacman</em>, <em>tidyverse</em> y <em>tinytex</em>. El código para la instalación de esos paquetes es el siguiente</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;tinytex&quot;</span>)</a></code></pre></div>
 <p>Si necesitan ayuda para la instalación contactarse con elinstructor del curso.</p>
 <div id="si-nunca-has-usado-r-antes" class="section level2">
@@ -193,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Subsetting Vectors</li>
 <li>Matrices and Data Frames</li>
 </ul>
-<p>Pueden ver un video explicativo de como usar swirl en el siguiente link</p>
+<p>Pueden ver un video explicativo de como usar swirl en el siguiente <a href="https://youtu.be/w6L7Ye18yPE">Video</a></p>
 </div>
 <div id="descripcion" class="section level2">
 <h2><span class="header-section-number">1.2</span> Descripción</h2>
@@ -210,16 +213,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="contenidos" class="section level2">
 <h2><span class="header-section-number">1.4</span> Contenidos</h2>
-<ol start="2" style="list-style-type: decimal">
-<li><em>Tidy Data, optimización de base de datos, limpieza y transformación de bases de datos</em>.
 <ul>
-<li>En el Capítulo <a href="tidydata.html#tidydata">2</a> aprenderemos que es una base de datos <em>tidy</em>, y como manipular estas bases de datos con el paquete <em>dplyr</em> <span class="citation">(Wickham et al. <a href="#ref-R-dplyr">2018</a>)</span></li>
-</ul></li>
-<li>Investigación reproducible. Generación de documentos Rmarkdown en R, códigos en chunk y en texto. Generación de tablas en Rmd
-<ul>
-<li>En el Capitulo <a href="reproducible.html#reproducible">3</a> entenderemos el como generar un documento que combine códigos de <code>R</code> y texto para generar documentos reporducibles utilizando el paquete <em>rmarkdown</em> <span class="citation">(Allaire et al. <a href="#ref-Allaire2018">2018</a>)</span></li>
-</ul></li>
-<li><p>El tidyverso, el concepto de pipeline. Limpieza de datos complejos</p></li>
+<li><p>Capítulo <a href="tidydata.html#tidydata">2</a> <em>Tidy Data</em>: En este capítulo, aprenderemos de como optimizar una de base de datos, limpieza y transformación de bases de datos, que es una base de datos <em>tidy</em>, y como manipular estas bases de datos con el paquete <em>dplyr</em> <span class="citation">(Wickham et al. <a href="#ref-R-dplyr">2018</a>)</span></p></li>
+<li><p>Capitulo <a href="reproducible.html#reproducible">3</a> <em>Investigación reproducible</em>: entenderemos el como generar un documento que combine códigos de <code>R</code> y texto para generar documentos reporducibles utilizando el paquete <em>rmarkdown</em> <span class="citation">(Allaire et al. <a href="#ref-Allaire2018">2018</a>)</span>, además veremos como al usar RStudio podemos guardar nuestro proyecto en un repositorio de github.</p></li>
+<li><p>Capitulo (tidyverso) <em>El tidyverso</em>, el concepto de pipeline. Limpieza de datos complejos</p></li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
 <li><p>Visualización de datos, visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd</p></li>
 <li><p>Creación de funciones propias y loops. Generación de funciones propias en R y loops</p></li>
 <li><p>Escritura de manuscritos en R, transformación de documentos Rmd en un manuscrito</p></li>

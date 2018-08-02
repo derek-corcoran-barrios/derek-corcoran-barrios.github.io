@@ -14,7 +14,7 @@ description: "Este libro es una compañia al curso BIO4022, análisis y manipula
 
 # Requerimientos
 
-La última versión de RStudio y R [@R-base], también se requiere de los paquetes *tidyverse* y *tinytex*. El código para la instalación de esos paquetes es el siguiente
+La última versión de RStudio y R [@R-base], también se requiere de los paquetes *pacman*, *tidyverse* y *tinytex*. El código para la instalación de esos paquetes es el siguiente
 
 ```{r eval=FALSE}
 install.packages("tidyverse", "tinytex")
@@ -43,7 +43,7 @@ Si nunca han usado `R` antes de este curso, porfavor installar el paquete [Swirl
 * Matrices and Data Frames
 
 
-Pueden ver un video explicativo de como usar swirl en el siguiente link
+Pueden ver un video explicativo de como usar swirl en el siguiente [Video](https://youtu.be/w6L7Ye18yPE)
 
 ## Descripción
 
@@ -61,13 +61,11 @@ Este curso está enfocado en entregar los principios de investigación reproduci
 
 ## Contenidos
 
-2. *Tidy Data, optimización de base de datos, limpieza y transformación de bases de datos*. 
-    + En el Capítulo \@ref(tidydata) aprenderemos que es una base de datos *tidy*, y como manipular estas bases de datos con el paquete *dplyr* [@R-dplyr]
++  Capítulo \@ref(tidydata) *Tidy Data*: En este capítulo, aprenderemos de como optimizar una de base de datos, limpieza y transformación de bases de datos, que es una base de datos *tidy*, y como manipular estas bases de datos con el paquete *dplyr* [@R-dplyr]
 
-3. Investigación reproducible. Generación de documentos Rmarkdown en R, códigos en chunk y en texto. Generación de tablas en Rmd
-    + En el Capitulo \@ref(reproducible) entenderemos el como generar un documento que combine códigos de `R` y texto para generar documentos reporducibles utilizando el paquete *rmarkdown* [@Allaire2018]
++  Capitulo \@ref(reproducible) *Investigación reproducible*: entenderemos el como generar un documento que combine códigos de `R` y texto para generar documentos reporducibles utilizando el paquete *rmarkdown* [@Allaire2018], además veremos como al usar RStudio podemos guardar nuestro proyecto en un repositorio de github.
     
-4. El tidyverso, el concepto de pipeline. Limpieza de  datos complejos
++ Capitulo \ref(tidyverso) *El tidyverso*, el concepto de pipeline. Limpieza de  datos complejos
 
 5. Visualización de datos, visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
 
