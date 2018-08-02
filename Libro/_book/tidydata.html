@@ -182,10 +182,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tidydata" class="section level1">
 <h1><span class="header-section-number">Capítulo 2</span> Tidy Data y manipulación de datos</h1>
 <p>En este capítulo explicaremos que es una base de datos <em>tidy</em> <span class="citation">(Wickham and others <a href="#ref-wickham2014tidy">2014</a>)</span> y aprenderemos a usar funciones del paquete <em>dplyr</em> <span class="citation">(Wickham et al. <a href="#ref-R-dplyr">2018</a>)</span> para manipular datos.</p>
-<p>Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este link<a href="https://derek-corcoran-barrios.github.io/Clase1/Clase1TidyData">link</a>, y en cuanto el video de la clase este disponible encontrarás un link aca.</p>
+<p>Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este <a href="https://derek-corcoran-barrios.github.io/Clase1/Clase1TidyData">link</a>, y en cuanto el video de la clase este disponible encontrarás un link aca.</p>
 <div id="tidy-data" class="section level2">
 <h2><span class="header-section-number">2.1</span> Tidy data</h2>
-<p>Una base de datos tidy es una base de datos en la cual:</p>
+<p>Una base de datos tidy es una base de datos en la cuál (modificado de <span class="citation">(Leek <a href="#ref-leek2015elements">2015</a>)</span>):</p>
 <ul>
 <li>Cada varaible que midas debiera estar en una columna.</li>
 <li>Cada observación distinta de esa variable debiera estar en una fila diferente.</li>
@@ -193,7 +193,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="dplyr" class="section level2">
 <h2><span class="header-section-number">2.2</span> dplyr</h2>
-<p>El paquete <em>dplyr</em> es definido por sus autores como una gramática para la manipulación de datos. De este modo sus funciones son conocidas como verbos.</p>
+<p>El paquete <em>dplyr</em> es definido por sus autores como una gramática para la manipulación de datos. De este modo sus funciones son conocidas como verbos. Un resumen útil de muchas de estas funciones se encuentra en este <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">link</a>.</p>
+<p>Este paquete tiene un gran número de verbos y sería difícil ver todos en una clase, en este capítulo nos enfocaremos en sus funciones más utilizadas, las cuales son:</p>
+<ul>
+<li><em>group_by</em> (agrupa datos)</li>
+<li><em>summarize</em> (resume datos agrupados)</li>
+<li><em>filter</em> (Encuentra filas con ciertas condiciones)</li>
+<li><em>select</em> junto a <em>starts_with</em>, <em>ends_with</em> o <em>contains</em></li>
+<li><em>mutate</em> (Genera variables nuevas)</li>
+<li><em>%&gt;%</em> pipeline</li>
+</ul>
 
 </div>
 </div>
@@ -204,6 +213,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="ref-R-dplyr">
 <p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2018. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a>.</p>
+</div>
+<div id="ref-leek2015elements">
+<p>Leek, Jeff. 2015. “The Elements of Data Analytic Style.” <em>J. Leek.—Amazon Digital Services, Inc</em>.</p>
 </div>
 </div>
             </section>

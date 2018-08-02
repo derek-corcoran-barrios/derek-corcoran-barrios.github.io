@@ -32,7 +32,7 @@ knitr::write_bib(c(
 
 ## Si nunca has usado R antes
 
-Si nunca han usado `R` antes de este curso, porfavor installar el paquete [Swirl](http://swirlstats.com/students.html) y realizar los primeros 7 modulos del programa *R Programming: The basics of programming in R* que incluye:
+Si nunca han usado `R` antes de este curso, porfavor installar el paquete [Swirl](http://swirlstats.com/students.html) [@Kross2017] y realizar los primeros 7 modulos del programa *R Programming: The basics of programming in R* que incluye:
 
 * Basic Building Blocks
 * Workspace and Files
@@ -44,6 +44,8 @@ Si nunca han usado `R` antes de este curso, porfavor installar el paquete [Swirl
 
 
 Pueden ver un video explicativo de como usar swirl en el siguiente [Video](https://youtu.be/w6L7Ye18yPE)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/w6L7Ye18yPE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## Descripción
 
@@ -65,7 +67,7 @@ Este curso está enfocado en entregar los principios de investigación reproduci
 
 +  Capitulo \@ref(reproducible) *Investigación reproducible*: entenderemos el como generar un documento que combine códigos de `R` y texto para generar documentos reporducibles utilizando el paquete *rmarkdown* [@Allaire2018], además veremos como al usar RStudio podemos guardar nuestro proyecto en un repositorio de github.
     
-+ Capitulo \ref(tidyverso) *El tidyverso*, el concepto de pipeline. Limpieza de  datos complejos
++ Capitulo \@ref(tidyverso) *El tidyverso*, el concepto de pipeline. Limpieza de  datos complejos
 
 5. Visualización de datos, visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
 
