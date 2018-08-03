@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>BIO 4022. Análisis y manipulación de datos en R</title>
+  <title>BIO 4022. Manipulación de datos e investigación reproducible en R</title>
   <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="BIO 4022. Análisis y manipulación de datos en R" />
+  <meta property="og:title" content="BIO 4022. Manipulación de datos e investigación reproducible en R" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="BIO 4022. Análisis y manipulación de datos en R" />
+  <meta name="twitter:title" content="BIO 4022. Manipulación de datos e investigación reproducible en R" />
   
   <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
   
@@ -173,7 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BIO 4022. Análisis y manipulación de datos en R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BIO 4022. Manipulación de datos e investigación reproducible en R</a>
           </h1>
         </div>
 
@@ -208,11 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="summarize" class="section level3">
 <h3><span class="header-section-number">2.2.1</span> summarize</h3>
-<p>la función <code>summarize</code>, toma los datos de un data frame y las resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, seguido del nombre que queremos darle a una variable resumen, seguida del signo = y luego la formula a aplicar a una o mas columnas. Por ejemplo si tomaramos la base de datos <code>iris</code>, que viene en <code>R</code>, y de las cual podemos ver parte de sus datos en la tabla <a href="tidydata.html#tab:iris">2.1</a></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">knitr<span class="op">::</span><span class="kw">kable</span>(</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  iris[<span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">15</span>, <span class="dt">to =</span> <span class="dv">150</span>, <span class="dt">length.out =</span> <span class="dv">10</span>),], <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">caption =</span> <span class="st">&#39;una tabla con 10 filas de la base de datos iris.&#39;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">)</a></code></pre></div>
+<p>la función <code>summarize</code>, toma los datos de un data frame y las resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, seguido del nombre que queremos darle a una variable resumen, seguida del signo = y luego la formula a aplicar a una o mas columnas. Por ejemplo si tomaramos la base de datos <code>iris</code> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span>, que viene en <code>R</code>, y de las cual podemos ver parte de sus datos en la tabla <a href="tidydata.html#tab:iris">2.1</a></p>
 <table>
 <caption><span id="tab:iris">Tabla 2.1: </span>una tabla con 10 filas de la base de datos iris.</caption>
 <thead>
@@ -297,6 +293,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
+<p>Si quisieramos resumir esa tabla y generar un par de variables que fueran la media y la deviación estándar de el largo del pétalo, lo haríamos con el siguiente código:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">Summary.Petal &lt;-<span class="st"> </span><span class="kw">summarize</span>(iris, <span class="dt">Mean.Petal.Length =</span> <span class="kw">mean</span>(Petal.Length), <span class="dt">SD.Petal.Length =</span> <span class="kw">sd</span>(Petal.Length))</a></code></pre></div>
+<p>El resultado lo vemos en la tabla <a href="tidydata.html#tab:SummaryPetaltab">2.2</a>, en el cuál obtenemos los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar</p>
+<table>
+<caption><span id="tab:SummaryPetaltab">Tabla 2.2: </span>Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.</caption>
+<thead>
+<tr class="header">
+<th align="right">Mean.Petal.Length</th>
+<th align="right">SD.Petal.Length</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">3.758</td>
+<td align="right">1.765298</td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>
@@ -311,6 +326,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="ref-leek2015elements">
 <p>Leek, Jeff. 2015. “The Elements of Data Analytic Style.” <em>J. Leek.—Amazon Digital Services, Inc</em>.</p>
+</div>
+<div id="ref-anderson1935irises">
+<p>Anderson, Edgar. 1935. “The Irises of the Gaspe Peninsula.” <em>Bulletin of the American Iris Society</em> 59: 2–5.</p>
 </div>
 </div>
             </section>

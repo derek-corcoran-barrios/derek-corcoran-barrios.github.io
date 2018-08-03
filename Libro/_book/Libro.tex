@@ -24,7 +24,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
 \hypersetup{unicode=true,
-            pdftitle={BIO 4022. Análisis y manipulación de datos en R},
+            pdftitle={BIO 4022. Manipulación de datos e investigación reproducible en R},
             pdfauthor={Derek Corcoran},
             pdfborder={0 0 0},
             breaklinks=true}
@@ -117,7 +117,7 @@
 
 \setlength{\droptitle}{-2em}
 
-  \title{BIO 4022. Análisis y manipulación de datos en R}
+  \title{BIO 4022. Manipulación de datos e investigación reproducible en R}
     \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
     \author{Derek Corcoran}
@@ -388,38 +388,57 @@ la función \texttt{summarize}, toma los datos de un data frame y las
 resume. Para usar esta función, el primer argumento que tomaríamos sería
 un data frame, seguido del nombre que queremos darle a una variable
 resumen, seguida del signo = y luego la formula a aplicar a una o mas
-columnas. Por ejemplo si tomaramos la base de datos \texttt{iris}, que
-viene en \texttt{R}, y de las cual podemos ver parte de sus datos en la
-tabla \ref{tab:iris}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
-\NormalTok{  iris[}\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \DecValTok{15}\NormalTok{, }\DataTypeTok{to =} \DecValTok{150}\NormalTok{, }\DataTypeTok{length.out =} \DecValTok{10}\NormalTok{),], }\DataTypeTok{booktabs =} \OtherTok{TRUE}\NormalTok{,}
-  \DataTypeTok{caption =} \StringTok{'una tabla con 10 filas de la base de datos iris.'}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
+columnas. Por ejemplo si tomaramos la base de datos \texttt{iris}
+\citep{anderson1935irises}, que viene en \texttt{R}, y de las cual
+podemos ver parte de sus datos en la tabla \ref{tab:iris}
 
 \begin{table}
 
 \caption{\label{tab:iris}una tabla con 10 filas de la base de datos iris.}
 \centering
-\begin{tabular}[t]{lrrrrl}
+\begin{tabular}[t]{rrrrl}
 \toprule
-  & Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
+Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
 \midrule
-15 & 5.8 & 4.0 & 1.2 & 0.2 & setosa\\
-30 & 4.7 & 3.2 & 1.6 & 0.2 & setosa\\
-45 & 5.1 & 3.8 & 1.9 & 0.4 & setosa\\
-60 & 5.2 & 2.7 & 3.9 & 1.4 & versicolor\\
-75 & 6.4 & 2.9 & 4.3 & 1.3 & versicolor\\
+5.8 & 4.0 & 1.2 & 0.2 & setosa\\
+4.7 & 3.2 & 1.6 & 0.2 & setosa\\
+5.1 & 3.8 & 1.9 & 0.4 & setosa\\
+5.2 & 2.7 & 3.9 & 1.4 & versicolor\\
+6.4 & 2.9 & 4.3 & 1.3 & versicolor\\
 \addlinespace
-90 & 5.5 & 2.5 & 4.0 & 1.3 & versicolor\\
-105 & 6.5 & 3.0 & 5.8 & 2.2 & virginica\\
-120 & 6.0 & 2.2 & 5.0 & 1.5 & virginica\\
-135 & 6.1 & 2.6 & 5.6 & 1.4 & virginica\\
-150 & 5.9 & 3.0 & 5.1 & 1.8 & virginica\\
+5.5 & 2.5 & 4.0 & 1.3 & versicolor\\
+6.5 & 3.0 & 5.8 & 2.2 & virginica\\
+6.0 & 2.2 & 5.0 & 1.5 & virginica\\
+6.1 & 2.6 & 5.6 & 1.4 & virginica\\
+5.9 & 3.0 & 5.1 & 1.8 & virginica\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Si quisieramos resumir esa tabla y generar un par de variables que
+fueran la media y la deviación estándar de el largo del pétalo, lo
+haríamos con el siguiente código:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\NormalTok{Summary.Petal <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(iris, }\DataTypeTok{Mean.Petal.Length =} \KeywordTok{mean}\NormalTok{(Petal.Length), }\DataTypeTok{SD.Petal.Length =} \KeywordTok{sd}\NormalTok{(Petal.Length))}
+\end{Highlighting}
+\end{Shaded}
+
+El resultado lo vemos en la tabla \ref{tab:SummaryPetaltab}, en el cuál
+obtenemos los promedios y desviaciones estándar de los largos de los
+pétalos. Es importante notar
+
+\begin{table}
+
+\caption{\label{tab:SummaryPetaltab}Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.}
+\centering
+\begin{tabular}[t]{rr}
+\toprule
+Mean.Petal.Length & SD.Petal.Length\\
+\midrule
+3.758 & 1.765298\\
 \bottomrule
 \end{tabular}
 \end{table}

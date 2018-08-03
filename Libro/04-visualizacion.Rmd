@@ -12,7 +12,7 @@ ggplot(data.frame, aes(nombres de columna)) + geom_algo(argumentos, aes(columnas
 
 Como ejemplo para discutir usaremos el siguiente código que genera la figura \@ref(fig:ejemplo1-ggplot):
 
-```{r ejemplo1-ggplot, fig.cap='Gráfico en el cual gráficamos los quilates de diamantes versus su precio, con el corte del diamante representado por el color', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE}
+```{r ejemplo1-ggplot, fig.cap='Gráfico en el cual gráficamos los quilates de diamantes versus su precio, con el corte del diamante representado por el color', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 library(tidyverse)
 data("diamonds")
 ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
@@ -33,7 +33,7 @@ Primero veremos algunos de los *geom* que podemos utilizar con una variable cate
 
 En la figura \@ref(fig:boxplot), generado a partir del código a continuacón con la base de datos iris presente en `R` [@anderson1935irises].  
 
-```{r boxplot, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE}
+```{r boxplot, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 data("iris")
 ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_boxplot()
 ```
@@ -42,7 +42,7 @@ Los boxplots muestran una linea gruesa central (la mediana), una caja, que delim
 
 Los boxplots, como todos los gráficos pueden ser personalizados usando otros argumentos, los cuales son detallados en la sección \@ref(argumentos), pero en los ejemplos que mostraremos en esta sección los iremos introduciendo de a poco. Si quisieramos por ejemplo que el color de las cajas del *boxplot* fuera deacuerdo a la especie, cambiamos el llenado (**fill**) de la caja, como vemos en el siguiente ejemplo y figura \@ref(fig:boxplot2)
 
-```{r boxplot2, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE}
+```{r boxplot2, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_boxplot(aes(fill = Species))
 ```
 
@@ -50,7 +50,7 @@ Dos cosas a notar en este ejemplo, por un lado la leyenda se genera de forma aut
 
 #### geom_jitter
 
-```{r jitter, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE}
+```{r jitter, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_jitter(aes(color = Species))
 ```
 

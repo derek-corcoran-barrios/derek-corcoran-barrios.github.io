@@ -14,7 +14,7 @@
 Clase 1 Tidy Data y manipulación de datos
 ========================================================
 author: Derek Corcoran
-date: "01/08, 2018"
+date: "03/08, 2018"
 autosize: true
 transition: rotate
 
@@ -141,6 +141,7 @@ incremental: true
 
 summarize y group_by
 =================
+class: small-code
 
 - *group_by* reune observaciones según una variable
 - *summarize* resume una variable
@@ -148,32 +149,33 @@ summarize y group_by
 
 ```r
 library(tidyverse)
-MEAN <- summarize(iris, MEAN.PETAL = mean(Petal.Length))
+Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 ```
 
 
 
-| MEAN.PETAL|
-|----------:|
-|      3.758|
+| Mean.Petal.Length| SD.Petal.Length|
+|-----------------:|---------------:|
+|             3.758|        1.765298|
 
 summarize y group_by (continuado)
 =================
+class: small-code
 
 
 ```r
 library(tidyverse)
-MEAN <- group_by(iris, Species)
-MEAN <- summarize(MEAN, MEAN.PETAL = mean(Petal.Length))
+Summary.Petal <- group_by(iris, Species)
+Summary.Petal <- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 ```
 
 
 
-|Species    | MEAN.PETAL|
-|:----------|----------:|
-|setosa     |      1.462|
-|versicolor |      4.260|
-|virginica  |      5.552|
+|Species    | Mean.Petal.Length| SD.Petal.Length|
+|:----------|-----------------:|---------------:|
+|setosa     |             1.462|       0.1736640|
+|versicolor |             4.260|       0.4699110|
+|virginica  |             5.552|       0.5518947|
 
 Pipeline (%>%)
 =================

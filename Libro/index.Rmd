@@ -1,5 +1,5 @@
 --- 
-title: "BIO 4022. Análisis y manipulación de datos en R"
+title: "BIO 4022. Manipulación de datos e investigación reproducible en R"
 author: "Derek Corcoran"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site

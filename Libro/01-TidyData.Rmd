@@ -28,12 +28,32 @@ Este paquete tiene un gran número de verbos y sería difícil ver todos en una 
 
 ### summarize
 
-la función `summarize`, toma los datos de un data frame y las resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, seguido del nombre que queremos darle a una variable resumen, seguida del signo = y luego la formula a aplicar a una o mas columnas. Por ejemplo si tomaramos la base de datos `iris`, que viene en `R`, y de las cual podemos ver parte de sus datos en la tabla \@ref(tab:iris)
+la función `summarize`, toma los datos de un data frame y las resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, seguido del nombre que queremos darle a una variable resumen, seguida del signo = y luego la formula a aplicar a una o mas columnas. Por ejemplo si tomaramos la base de datos `iris` [@anderson1935irises], que viene en `R`, y de las cual podemos ver parte de sus datos en la tabla \@ref(tab:iris)
 
-```{r iris}
+```{r iris, echo = FALSE}
 knitr::kable(
   iris[seq(from = 15, to = 150, length.out = 10),], booktabs = TRUE,
   caption = 'una tabla con 10 filas de la base de datos iris.', row.names = FALSE
 )
+```
+
+Si quisieramos resumir esa tabla y generar un par de variables que fueran la media y la deviación estándar de el largo del pétalo, lo haríamos con el siguiente código:
+
+```{r, eval=FALSE}
+library(tidyverse)
+Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
+```
+
+El resultado lo vemos en la tabla \@ref(tab:SummaryPetaltab), en el cuál obtenemos los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar
+
+```{r, echo = FALSE}
+library(dplyr)
+Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
+```
+
+
+```{r SummaryPetaltab, echo = FALSE}
+knitr::kable(Summary.Petal, booktabs = TRUE,
+  caption = 'Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.', row.names = FALSE)
 ```
 

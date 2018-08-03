@@ -133,39 +133,42 @@ incremental: true
 
 summarize y group_by
 =================
+class: small-code
 
 - *group_by* reune observaciones según una variable
 - *summarize* resume una variable
 
 ```{r, eval=FALSE}
 library(tidyverse)
-MEAN <- summarize(iris, MEAN.PETAL = mean(Petal.Length))
+Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 ```
 
 
 ```{r, echo = FALSE}
 library(dplyr)
 library(knitr)
-MEAN <- summarize(iris, MEAN.PETAL = mean(Petal.Length))
-kable(MEAN)
+Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
+
+kable(Summary.Petal)
 ```
 
 summarize y group_by (continuado)
 =================
+class: small-code
 
 ```{r, eval = FALSE}
 library(tidyverse)
-MEAN <- group_by(iris, Species)
-MEAN <- summarize(MEAN, MEAN.PETAL = mean(Petal.Length))
+Summary.Petal <- group_by(iris, Species)
+Summary.Petal <- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 ```
 
 
 ```{r, echo = FALSE}
 library(dplyr)
 library(knitr)
-MEAN <- group_by(iris, Species)
-MEAN <- summarize(MEAN, MEAN.PETAL = mean(Petal.Length))
-kable(MEAN)
+Summary.Petal <- group_by(iris, Species)
+Summary.Petal <- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
+kable(Summary.Petal)
 ```
 
 Pipeline (%>%)
