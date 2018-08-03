@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-02">
+<meta name="date" content="2018-08-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -144,7 +144,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>2</b> Tidy Data y manipulación de datos</a><ul>
 <li class="chapter" data-level="2.1" data-path="tidydata.html"><a href="tidydata.html#tidy-data"><i class="fa fa-check"></i><b>2.1</b> Tidy data</a></li>
-<li class="chapter" data-level="2.2" data-path="tidydata.html"><a href="tidydata.html#dplyr"><i class="fa fa-check"></i><b>2.2</b> dplyr</a></li>
+<li class="chapter" data-level="2.2" data-path="tidydata.html"><a href="tidydata.html#dplyr"><i class="fa fa-check"></i><b>2.2</b> dplyr</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="tidydata.html"><a href="tidydata.html#summarize"><i class="fa fa-check"></i><b>2.2.1</b> summarize</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="reproducible.html"><a href="reproducible.html"><i class="fa fa-check"></i><b>3</b> Investigación reproducible</a></li>
 <li class="chapter" data-level="4" data-path="tidyverso.html"><a href="tidyverso.html"><i class="fa fa-check"></i><b>4</b> El Tidyverso</a></li>
@@ -190,6 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Cada varaible que midas debiera estar en una columna.</li>
 <li>Cada observación distinta de esa variable debiera estar en una fila diferente.</li>
 </ul>
+<p>En general, la forma en que representarímos una base de datos <em>tidy</em> en <code>R</code> es usando un <em>data frame</em>.</p>
 </div>
 <div id="dplyr" class="section level2">
 <h2><span class="header-section-number">2.2</span> dplyr</h2>
@@ -203,7 +206,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><em>mutate</em> (Genera variables nuevas)</li>
 <li><em>%&gt;%</em> pipeline</li>
 </ul>
+<div id="summarize" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> summarize</h3>
+<p>la función <code>summarize</code>, toma los datos de un data frame y las resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, seguido del nombre que queremos darle a una variable resumen, seguida del signo = y luego la formula a aplicar a una o mas columnas. Por ejemplo si tomaramos la base de datos <code>iris</code>, que viene en <code>R</code>, y de las cual podemos ver parte de sus datos en la tabla <a href="tidydata.html#tab:iris">2.1</a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">knitr<span class="op">::</span><span class="kw">kable</span>(</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  iris[<span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">15</span>, <span class="dt">to =</span> <span class="dv">150</span>, <span class="dt">length.out =</span> <span class="dv">10</span>),], <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">caption =</span> <span class="st">&#39;una tabla con 10 filas de la base de datos iris.&#39;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">)</a></code></pre></div>
+<table>
+<caption><span id="tab:iris">Tabla 2.1: </span>una tabla con 10 filas de la base de datos iris.</caption>
+<thead>
+<tr class="header">
+<th align="right">Sepal.Length</th>
+<th align="right">Sepal.Width</th>
+<th align="right">Petal.Length</th>
+<th align="right">Petal.Width</th>
+<th align="left">Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">5.8</td>
+<td align="right">4.0</td>
+<td align="right">1.2</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">4.7</td>
+<td align="right">3.2</td>
+<td align="right">1.6</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="odd">
+<td align="right">5.1</td>
+<td align="right">3.8</td>
+<td align="right">1.9</td>
+<td align="right">0.4</td>
+<td align="left">setosa</td>
+</tr>
+<tr class="even">
+<td align="right">5.2</td>
+<td align="right">2.7</td>
+<td align="right">3.9</td>
+<td align="right">1.4</td>
+<td align="left">versicolor</td>
+</tr>
+<tr class="odd">
+<td align="right">6.4</td>
+<td align="right">2.9</td>
+<td align="right">4.3</td>
+<td align="right">1.3</td>
+<td align="left">versicolor</td>
+</tr>
+<tr class="even">
+<td align="right">5.5</td>
+<td align="right">2.5</td>
+<td align="right">4.0</td>
+<td align="right">1.3</td>
+<td align="left">versicolor</td>
+</tr>
+<tr class="odd">
+<td align="right">6.5</td>
+<td align="right">3.0</td>
+<td align="right">5.8</td>
+<td align="right">2.2</td>
+<td align="left">virginica</td>
+</tr>
+<tr class="even">
+<td align="right">6.0</td>
+<td align="right">2.2</td>
+<td align="right">5.0</td>
+<td align="right">1.5</td>
+<td align="left">virginica</td>
+</tr>
+<tr class="odd">
+<td align="right">6.1</td>
+<td align="right">2.6</td>
+<td align="right">5.6</td>
+<td align="right">1.4</td>
+<td align="left">virginica</td>
+</tr>
+<tr class="even">
+<td align="right">5.9</td>
+<td align="right">3.0</td>
+<td align="right">5.1</td>
+<td align="right">1.8</td>
+<td align="left">virginica</td>
+</tr>
+</tbody>
+</table>
 
+</div>
 </div>
 </div>
 <h3>References</h3>

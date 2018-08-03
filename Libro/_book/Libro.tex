@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-08-02}
+    \date{2018-08-03}
 
 \usepackage{booktabs}
 
@@ -348,6 +348,9 @@ Una base de datos tidy es una base de datos en la cuál (modificado de
   diferente.
 \end{itemize}
 
+En general, la forma en que representarímos una base de datos
+\emph{tidy} en \texttt{R} es usando un \emph{data frame}.
+
 \hypertarget{dplyr}{%
 \section{dplyr}\label{dplyr}}
 
@@ -377,6 +380,49 @@ utilizadas, las cuales son:
 \item
   \emph{\%\textgreater{}\%} pipeline
 \end{itemize}
+
+\hypertarget{summarize}{%
+\subsection{summarize}\label{summarize}}
+
+la función \texttt{summarize}, toma los datos de un data frame y las
+resume. Para usar esta función, el primer argumento que tomaríamos sería
+un data frame, seguido del nombre que queremos darle a una variable
+resumen, seguida del signo = y luego la formula a aplicar a una o mas
+columnas. Por ejemplo si tomaramos la base de datos \texttt{iris}, que
+viene en \texttt{R}, y de las cual podemos ver parte de sus datos en la
+tabla \ref{tab:iris}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
+\NormalTok{  iris[}\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \DecValTok{15}\NormalTok{, }\DataTypeTok{to =} \DecValTok{150}\NormalTok{, }\DataTypeTok{length.out =} \DecValTok{10}\NormalTok{),], }\DataTypeTok{booktabs =} \OtherTok{TRUE}\NormalTok{,}
+  \DataTypeTok{caption =} \StringTok{'una tabla con 10 filas de la base de datos iris.'}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:iris}una tabla con 10 filas de la base de datos iris.}
+\centering
+\begin{tabular}[t]{lrrrrl}
+\toprule
+  & Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
+\midrule
+15 & 5.8 & 4.0 & 1.2 & 0.2 & setosa\\
+30 & 4.7 & 3.2 & 1.6 & 0.2 & setosa\\
+45 & 5.1 & 3.8 & 1.9 & 0.4 & setosa\\
+60 & 5.2 & 2.7 & 3.9 & 1.4 & versicolor\\
+75 & 6.4 & 2.9 & 4.3 & 1.3 & versicolor\\
+\addlinespace
+90 & 5.5 & 2.5 & 4.0 & 1.3 & versicolor\\
+105 & 6.5 & 3.0 & 5.8 & 2.2 & virginica\\
+120 & 6.0 & 2.2 & 5.0 & 1.5 & virginica\\
+135 & 6.1 & 2.6 & 5.6 & 1.4 & virginica\\
+150 & 5.9 & 3.0 & 5.1 & 1.8 & virginica\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \hypertarget{reproducible}{%
 \chapter{Investigación reproducible}\label{reproducible}}

@@ -11,6 +11,8 @@ Una base de datos tidy es una base de datos en la cuál (modificado de [@leek201
 * Cada varaible que midas debiera estar en una columna.
 * Cada observación distinta de esa variable debiera estar en una fila diferente.
 
+En general, la forma en que representarímos una base de datos *tidy* en `R` es usando un *data frame*. 
+
 ## dplyr
 
 El paquete *dplyr* es definido por sus autores como una gramática para la manipulación de datos. De este modo sus funciones son conocidas como verbos. Un resumen útil de muchas de estas funciones se encuentra en este [link](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf).
@@ -23,3 +25,15 @@ Este paquete tiene un gran número de verbos y sería difícil ver todos en una 
 - *select* junto a *starts_with*, *ends_with* o *contains*
 - *mutate* (Genera variables nuevas)
 - *%>%* pipeline
+
+### summarize
+
+la función `summarize`, toma los datos de un data frame y las resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, seguido del nombre que queremos darle a una variable resumen, seguida del signo = y luego la formula a aplicar a una o mas columnas. Por ejemplo si tomaramos la base de datos `iris`, que viene en `R`, y de las cual podemos ver parte de sus datos en la tabla \@ref(tab:iris)
+
+```{r iris}
+knitr::kable(
+  iris[seq(from = 15, to = 150, length.out = 10),], booktabs = TRUE,
+  caption = 'una tabla con 10 filas de la base de datos iris.', row.names = FALSE
+)
+```
+
