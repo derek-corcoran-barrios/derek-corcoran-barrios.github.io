@@ -431,6 +431,23 @@ obtenemos los promedios y desviaciones estándar de los largos de los
 pétalos. Es importante notar que al usar summarize, todas las otras
 variables desapareceran de la tabla.
 
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
 \begin{table}
 
 \caption{\label{tab:SummaryPetaltab}Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.}
@@ -449,7 +466,15 @@ Mean.Petal.Length & SD.Petal.Length\\
 
 La función \texttt{group\_by} por si sola no genera cambios visibles en
 tu base de datos, sin embargo al ser utilizada en conjunto con
-\texttt{summarize}
+\texttt{summarize} te permite resumir una variable agrupada (usualmente)
+basada en una o más variables categóricas.
+
+Como ejemplo seguiremos con el caso de las plantas del género
+\emph{Iris}, el resumen que teníamos en el caso de la tabla
+\ref{tab:SummaryPetaltab}, no es tan útil considerando que tenemos tres
+especies presentes en la tabla de datos. Si queremos ver el promedio del
+largo del pétalo por especie, ocupamos la función \texttt{group\_by} de
+la siguiente forma:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -457,6 +482,10 @@ tu base de datos, sin embargo al ser utilizada en conjunto con
 \NormalTok{Summary.Byspecies <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(BySpecies, }\DataTypeTok{Mean.Petal.Length =} \KeywordTok{mean}\NormalTok{(Petal.Length), }\DataTypeTok{SD.Petal.Length =} \KeywordTok{sd}\NormalTok{(Petal.Length))}
 \end{Highlighting}
 \end{Shaded}
+
+Esto nos dá como resultado la tabla \ref{tab:SummaryBySpecies}, con la
+cuál ya podemos ver que \emph{Iris setosa} es tiene pétalos mucho más
+cortos que las otras dos especies del mismo género.
 
 \begin{table}
 
@@ -469,6 +498,73 @@ Species & Mean.Petal.Length & SD.Petal.Length\\
 setosa & 1.462 & 0.1736640\\
 versicolor & 4.260 & 0.4699110\\
 virginica & 5.552 & 0.5518947\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{group_by-en-mas-de-una-variable}{%
+\subsubsection{group\_by en mas de una
+variable}\label{group_by-en-mas-de-una-variable}}
+
+Podemos usar la función \texttt{group\_by} en más de una variable, y
+esto generaría un resumen anidado. Como ejemplo usaremos la base de
+datos \texttt{mtcars} presente en R \citep{henderson1981building}, en el
+cuál hay una variable \emph{mpg} (Miles per gallon), una medida de
+eficiencia de combustible, y resumiremos esto en base a la variable
+\emph{am}, (que se refiere al tipo de transmición, donde 0 es automático
+y 1 es manual) y al número de cilindros del motor, para eso usamos el
+siguiente código:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Grouped <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(mtcars, cyl, am)}
+\NormalTok{Eficiencia <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(Grouped, }\DataTypeTok{Eficiencia =} \KeywordTok{mean}\NormalTok{(mtcars))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Grouped <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(mtcars, cyl, am)}
+\NormalTok{Eficiencia <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(Grouped, }\DataTypeTok{Eficiencia =} \KeywordTok{mean}\NormalTok{(mtcars))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
+
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
+
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
+
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
+
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
+
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
+\end{verbatim}
+
+Vemos en la tabla \ref{tab:Eficienciatab}, que
+
+\begin{table}
+
+\caption{\label{tab:Eficienciatab}Millas por galón promedio en vehiculos automáticos (am = 0) y manuales (am = 1), con los distintos tipos de cilindros}
+\centering
+\begin{tabular}[t]{rrr}
+\toprule
+cyl & am & Eficiencia\\
+\midrule
+4 & 0 & NA\\
+4 & 1 & NA\\
+6 & 0 & NA\\
+6 & 1 & NA\\
+8 & 0 & NA\\
+8 & 1 & NA\\
 \bottomrule
 \end{tabular}
 \end{table}

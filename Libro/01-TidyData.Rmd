@@ -83,4 +83,21 @@ knitr::kable(Summary.Byspecies, booktabs = TRUE,
 
 #### group_by en mas de una variable
 
-Podemos usar la función `group_by` en más de una variable, y esto generaría un resumen anidado, 
+Podemos usar la función `group_by` en más de una variable, y esto generaría un resumen anidado. Como ejemplo usaremos la base de datos `mtcars` presente en R [@henderson1981building], en el cuál hay una variable *mpg* (Miles per gallon), una medida de eficiencia de combustible, y resumiremos esto en base a la variable *am*, (que se refiere al tipo de transmición, donde 0 es automático y 1 es manual) y al número de cilindros del motor, para eso usamos el siguiente código:
+
+```{r, eval=FALSE}
+Grouped <- group_by(mtcars, cyl, am)
+Eficiencia <- summarize(Grouped, Eficiencia = mean(mtcars))
+```
+
+```{r}
+Grouped <- group_by(mtcars, cyl, am)
+Eficiencia <- summarize(Grouped, Eficiencia = mean(mtcars))
+```
+
+Vemos en la tabla \@ref(tab:Eficienciatab), que
+
+```{r Eficienciatab, echo = FALSE}
+knitr::kable(Eficiencia, booktabs = TRUE,
+  caption = 'Millas por galón promedio en vehiculos automáticos (am = 0) y manuales (am = 1), con los distintos tipos de cilindros', row.names = FALSE)
+```

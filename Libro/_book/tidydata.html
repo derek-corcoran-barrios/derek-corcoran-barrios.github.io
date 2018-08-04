@@ -316,9 +316,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="group_by" class="section level3">
 <h3><span class="header-section-number">2.2.2</span> group_by</h3>
-<p>La función <code>group_by</code> por si sola no genera cambios visibles en tu base de datos, sin embargo al ser utilizada en conjunto con <code>summarize</code></p>
+<p>La función <code>group_by</code> por si sola no genera cambios visibles en tu base de datos, sin embargo al ser utilizada en conjunto con <code>summarize</code> te permite resumir una variable agrupada (usualmente) basada en una o más variables categóricas.</p>
+<p>Como ejemplo seguiremos con el caso de las plantas del género <em>Iris</em>, el resumen que teníamos en el caso de la tabla <a href="tidydata.html#tab:SummaryPetaltab">2.2</a>, no es tan útil considerando que tenemos tres especies presentes en la tabla de datos. Si queremos ver el promedio del largo del pétalo por especie, ocupamos la función <code>group_by</code> de la siguiente forma:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">BySpecies &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">Summary.Byspecies &lt;-<span class="st"> </span><span class="kw">summarize</span>(BySpecies, <span class="dt">Mean.Petal.Length =</span> <span class="kw">mean</span>(Petal.Length), <span class="dt">SD.Petal.Length =</span> <span class="kw">sd</span>(Petal.Length))</a></code></pre></div>
+<p>Esto nos dá como resultado la tabla <a href="tidydata.html#tab:SummaryBySpecies">2.3</a>, con la cuál ya podemos ver que <em>Iris setosa</em> es tiene pétalos mucho más cortos que las otras dos especies del mismo género.</p>
 <table>
 <caption><span id="tab:SummaryBySpecies">Tabla 2.3: </span>Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.</caption>
 <thead>
@@ -346,7 +348,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
+<div id="group_by-en-mas-de-una-variable" class="section level4">
+<h4><span class="header-section-number">2.2.2.1</span> group_by en mas de una variable</h4>
+<p>Podemos usar la función <code>group_by</code> en más de una variable, y esto generaría un resumen anidado. Como ejemplo usaremos la base de datos <code>mtcars</code> presente en R <span class="citation">(Henderson and Velleman <a href="#ref-henderson1981building">1981</a>)</span>, en el cuál hay una variable <em>mpg</em> (Miles per gallon), una medida de eficiencia de combustible, y resumiremos esto en base a la variable <em>am</em>, (que se refiere al tipo de transmición, donde 0 es automático y 1 es manual) y al número de cilindros del motor, para eso usamos el siguiente código:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(mtcars, cyl, am)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">Eficiencia &lt;-<span class="st"> </span><span class="kw">summarize</span>(Grouped, <span class="dt">Eficiencia =</span> <span class="kw">mean</span>(mtcars))</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">Grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(mtcars, cyl, am)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">Eficiencia &lt;-<span class="st"> </span><span class="kw">summarize</span>(Grouped, <span class="dt">Eficiencia =</span> <span class="kw">mean</span>(mtcars))</a></code></pre></div>
+<pre><code>## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
 
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
+
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
+
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
+
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA
+
+## Warning in mean.default(mtcars): argument is not numeric or logical:
+## returning NA</code></pre>
+<p>Vemos en la tabla <a href="tidydata.html#tab:Eficienciatab">2.4</a>, que</p>
+<table>
+<caption><span id="tab:Eficienciatab">Tabla 2.4: </span>Millas por galón promedio en vehiculos automáticos (am = 0) y manuales (am = 1), con los distintos tipos de cilindros</caption>
+<thead>
+<tr class="header">
+<th align="right">cyl</th>
+<th align="right">am</th>
+<th align="right">Eficiencia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">0</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+
+</div>
 </div>
 </div>
 </div>
@@ -363,6 +433,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="ref-anderson1935irises">
 <p>Anderson, Edgar. 1935. “The Irises of the Gaspe Peninsula.” <em>Bulletin of the American Iris Society</em> 59: 2–5.</p>
+</div>
+<div id="ref-henderson1981building">
+<p>Henderson, Harold V, and Paul F Velleman. 1981. “Building Multiple Regression Models Interactively.” <em>Biometrics</em>. JSTOR, 391–411.</p>
 </div>
 </div>
             </section>
