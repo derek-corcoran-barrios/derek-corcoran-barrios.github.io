@@ -14,7 +14,7 @@
 Clase 1 Tidy Data y manipulación de datos
 ========================================================
 author: Derek Corcoran
-date: "03/08, 2018"
+date: "04/08, 2018"
 autosize: true
 transition: rotate
 
@@ -142,6 +142,7 @@ incremental: true
 summarize y group_by
 =================
 class: small-code
+incremental: true
 
 - *group_by* reune observaciones según una variable
 - *summarize* resume una variable
@@ -161,6 +162,7 @@ Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Peta
 summarize y group_by (continuado)
 =================
 class: small-code
+incremental: true
 
 
 ```r
@@ -177,9 +179,36 @@ Summary.Petal <- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length)
 |versicolor |             4.260|       0.4699110|
 |virginica  |             5.552|       0.5518947|
 
+summarize y group_by (continuado)
+=================
+class: small-code
+incremental: true
+
+* Pueden agrupar por más de una variable a la vez
+
+
+```r
+data("mtcars")
+Mtcars2 <- group_by(mtcars, am, cyl)
+Consumo <- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
+```
+
+
+
+| am| cyl| Consumo_promedio|      desv|
+|--:|---:|----------------:|---------:|
+|  0|   4|         22.90000| 1.4525839|
+|  0|   6|         19.12500| 1.6317169|
+|  0|   8|         15.05000| 2.7743959|
+|  1|   4|         28.07500| 4.4838599|
+|  1|   6|         20.56667| 0.7505553|
+|  1|   8|         15.40000| 0.5656854|
+
+
 Pipeline (%>%)
 =================
 class: small-code
+incremental: true
 
 - Ahorra líneas, se parte con un data.frame
 - Se agregan funciones de dplyr hasta llegar al resultado deseado

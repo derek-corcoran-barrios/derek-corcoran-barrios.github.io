@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-03">
+<meta name="date" content="2018-08-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -146,6 +146,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="tidydata.html"><a href="tidydata.html#tidy-data"><i class="fa fa-check"></i><b>2.1</b> Tidy data</a></li>
 <li class="chapter" data-level="2.2" data-path="tidydata.html"><a href="tidydata.html#dplyr"><i class="fa fa-check"></i><b>2.2</b> dplyr</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="tidydata.html"><a href="tidydata.html#summarize"><i class="fa fa-check"></i><b>2.2.1</b> summarize</a></li>
+<li class="chapter" data-level="2.2.2" data-path="tidydata.html"><a href="tidydata.html#group_by"><i class="fa fa-check"></i><b>2.2.2</b> group_by</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="reproducible.html"><a href="reproducible.html"><i class="fa fa-check"></i><b>3</b> Investigación reproducible</a></li>
@@ -296,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Si quisieramos resumir esa tabla y generar un par de variables que fueran la media y la deviación estándar de el largo del pétalo, lo haríamos con el siguiente código:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">Summary.Petal &lt;-<span class="st"> </span><span class="kw">summarize</span>(iris, <span class="dt">Mean.Petal.Length =</span> <span class="kw">mean</span>(Petal.Length), <span class="dt">SD.Petal.Length =</span> <span class="kw">sd</span>(Petal.Length))</a></code></pre></div>
-<p>El resultado lo vemos en la tabla <a href="tidydata.html#tab:SummaryPetaltab">2.2</a>, en el cuál obtenemos los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar</p>
+<p>El resultado lo vemos en la tabla <a href="tidydata.html#tab:SummaryPetaltab">2.2</a>, en el cuál obtenemos los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar que al usar summarize, todas las otras variables desapareceran de la tabla.</p>
 <table>
 <caption><span id="tab:SummaryPetaltab">Tabla 2.2: </span>Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.</caption>
 <thead>
@@ -309,6 +310,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td align="right">3.758</td>
 <td align="right">1.765298</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="group_by" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> group_by</h3>
+<p>La función <code>group_by</code> por si sola no genera cambios visibles en tu base de datos, sin embargo al ser utilizada en conjunto con <code>summarize</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">BySpecies &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">Summary.Byspecies &lt;-<span class="st"> </span><span class="kw">summarize</span>(BySpecies, <span class="dt">Mean.Petal.Length =</span> <span class="kw">mean</span>(Petal.Length), <span class="dt">SD.Petal.Length =</span> <span class="kw">sd</span>(Petal.Length))</a></code></pre></div>
+<table>
+<caption><span id="tab:SummaryBySpecies">Tabla 2.3: </span>Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.</caption>
+<thead>
+<tr class="header">
+<th align="left">Species</th>
+<th align="right">Mean.Petal.Length</th>
+<th align="right">SD.Petal.Length</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">setosa</td>
+<td align="right">1.462</td>
+<td align="right">0.1736640</td>
+</tr>
+<tr class="even">
+<td align="left">versicolor</td>
+<td align="right">4.260</td>
+<td align="right">0.4699110</td>
+</tr>
+<tr class="odd">
+<td align="left">virginica</td>
+<td align="right">5.552</td>
+<td align="right">0.5518947</td>
 </tr>
 </tbody>
 </table>

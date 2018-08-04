@@ -44,7 +44,7 @@ library(tidyverse)
 Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 ```
 
-El resultado lo vemos en la tabla \@ref(tab:SummaryPetaltab), en el cuál obtenemos los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar
+El resultado lo vemos en la tabla \@ref(tab:SummaryPetaltab), en el cuál obtenemos los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar que al usar summarize, todas las otras variables desapareceran de la tabla. 
 
 ```{r, echo = FALSE}
 library(dplyr)
@@ -57,3 +57,30 @@ knitr::kable(Summary.Petal, booktabs = TRUE,
   caption = 'Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.', row.names = FALSE)
 ```
 
+### group_by
+
+La función `group_by` por si sola no genera cambios visibles en tu base de datos, sin embargo al ser utilizada en conjunto con `summarize` te permite resumir una variable agrupada (usualmente) basada en una o más variables categóricas. 
+
+Como ejemplo seguiremos con el caso de las plantas del género *Iris*, el resumen que teníamos en el caso de la tabla \@ref(tab:SummaryPetaltab), no es tan útil considerando que tenemos tres especies presentes en la tabla de datos. Si queremos ver el promedio del largo del pétalo por especie, ocupamos la función `group_by` de la siguiente forma:
+
+```{r, eval=FALSE}
+BySpecies <- group_by(iris, Species)
+Summary.Byspecies <- summarize(BySpecies, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
+```
+
+Esto nos dá como resultado la tabla \@ref(tab:SummaryBySpecies), con la cuál ya podemos ver que *Iris setosa* es tiene pétalos mucho más cortos que las otras dos especies del mismo género.
+
+```{r, echo = FALSE}
+library(dplyr)
+BySpecies <- group_by(iris, Species)
+Summary.Byspecies <- summarize(BySpecies, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
+```
+
+```{r SummaryBySpecies, echo = FALSE}
+knitr::kable(Summary.Byspecies, booktabs = TRUE,
+  caption = 'Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.', row.names = FALSE)
+```
+
+#### group_by en mas de una variable
+
+Podemos usar la función `group_by` en más de una variable, y esto generaría un resumen anidado, 

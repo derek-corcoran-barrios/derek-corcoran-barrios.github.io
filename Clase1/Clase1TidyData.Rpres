@@ -134,6 +134,7 @@ incremental: true
 summarize y group_by
 =================
 class: small-code
+incremental: true
 
 - *group_by* reune observaciones según una variable
 - *summarize* resume una variable
@@ -155,6 +156,7 @@ kable(Summary.Petal)
 summarize y group_by (continuado)
 =================
 class: small-code
+incremental: true
 
 ```{r, eval = FALSE}
 library(tidyverse)
@@ -171,9 +173,34 @@ Summary.Petal <- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length)
 kable(Summary.Petal)
 ```
 
+summarize y group_by (continuado)
+=================
+class: small-code
+incremental: true
+
+* Pueden agrupar por más de una variable a la vez
+
+```{r, eval = FALSE}
+data("mtcars")
+Mtcars2 <- group_by(mtcars, am, cyl)
+Consumo <- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
+```
+
+
+```{r, echo = FALSE}
+library(dplyr)
+library(knitr)
+data("mtcars")
+Mtcars2 <- group_by(mtcars, am, cyl)
+Consumo <- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
+kable(Consumo)
+```
+
+
 Pipeline (%>%)
 =================
 class: small-code
+incremental: true
 
 - Ahorra líneas, se parte con un data.frame
 - Se agregan funciones de dplyr hasta llegar al resultado deseado

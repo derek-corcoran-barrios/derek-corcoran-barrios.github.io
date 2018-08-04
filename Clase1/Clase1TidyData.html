@@ -784,7 +784,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="default" data-transition-speed="default">
-<h1>Clase 1 Tidy Data y manipulación de datos</h1><p>Derek Corcoran<br/>&quot;01&#x2F;08, 2018&quot;</p>
+<h1>Clase 1 Tidy Data y manipulación de datos</h1><p>Derek Corcoran<br/>&quot;04&#x2F;08, 2018&quot;</p>
 
 <div class="slideContent" >
 
@@ -990,23 +990,25 @@ Hair    Brown Blue Hazel Green
 </section>
 <section data-transition="default" data-transition-speed="default">
 <h3>summarize y group_by</h3>
-<div class="slideContent" >
+<div class="slideContent small-code" >
 <ul>
-<li><em>group_by</em> reune observaciones según una variable</li>
-<li><em>summarize</em> resume una variable</li>
+<li class="fragment"><em>group_by</em> reune observaciones según una variable</li>
+<li class="fragment"><em>summarize</em> resume una variable</li>
 </ul>
 
-<pre><code class="r">library(tidyverse)
-MEAN &lt;- summarize(iris, MEAN.PETAL = mean(Petal.Length))
+<pre class="fragment"><code class="r">library(tidyverse)
+Summary.Petal &lt;- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 </code></pre>
 
 <table><thead>
 <tr>
-<th align="right">MEAN.PETAL</th>
+<th align="right">Mean.Petal.Length</th>
+<th align="right">SD.Petal.Length</th>
 </tr>
 </thead><tbody>
 <tr>
 <td align="right">3.758</td>
+<td align="right">1.765298</td>
 </tr>
 </tbody></table>
 
@@ -1015,29 +1017,94 @@ MEAN &lt;- summarize(iris, MEAN.PETAL = mean(Petal.Length))
 </section>
 <section data-transition="default" data-transition-speed="default">
 <h3>summarize y group_by (continuado)</h3>
-<div class="slideContent" >
-<pre><code class="r">library(tidyverse)
-MEAN &lt;- group_by(iris, Species)
-MEAN &lt;- summarize(MEAN, MEAN.PETAL = mean(Petal.Length))
+<div class="slideContent small-code" >
+<pre class="fragment"><code class="r">library(tidyverse)
+Summary.Petal &lt;- group_by(iris, Species)
+Summary.Petal &lt;- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 </code></pre>
 
 <table><thead>
 <tr>
 <th align="left">Species</th>
-<th align="right">MEAN.PETAL</th>
+<th align="right">Mean.Petal.Length</th>
+<th align="right">SD.Petal.Length</th>
 </tr>
 </thead><tbody>
 <tr>
 <td align="left">setosa</td>
 <td align="right">1.462</td>
+<td align="right">0.1736640</td>
 </tr>
 <tr>
 <td align="left">versicolor</td>
 <td align="right">4.260</td>
+<td align="right">0.4699110</td>
 </tr>
 <tr>
 <td align="left">virginica</td>
 <td align="right">5.552</td>
+<td align="right">0.5518947</td>
+</tr>
+</tbody></table>
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
+<h3>summarize y group_by (continuado)</h3>
+<div class="slideContent small-code" >
+<ul>
+<li class="fragment">Pueden agrupar por más de una variable a la vez</li>
+</ul>
+
+<pre class="fragment"><code class="r">data(&quot;mtcars&quot;)
+Mtcars2 &lt;- group_by(mtcars, am, cyl)
+Consumo &lt;- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="right">am</th>
+<th align="right">cyl</th>
+<th align="right">Consumo_promedio</th>
+<th align="right">desv</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">22.90000</td>
+<td align="right">1.4525839</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">19.12500</td>
+<td align="right">1.6317169</td>
+</tr>
+<tr>
+<td align="right">0</td>
+<td align="right">8</td>
+<td align="right">15.05000</td>
+<td align="right">2.7743959</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">28.07500</td>
+<td align="right">4.4838599</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">20.56667</td>
+<td align="right">0.7505553</td>
+</tr>
+<tr>
+<td align="right">1</td>
+<td align="right">8</td>
+<td align="right">15.40000</td>
+<td align="right">0.5656854</td>
 </tr>
 </tbody></table>
 
@@ -1048,11 +1115,11 @@ MEAN &lt;- summarize(MEAN, MEAN.PETAL = mean(Petal.Length))
 <h3>Pipeline (%&gt;%)</h3>
 <div class="slideContent small-code" >
 <ul>
-<li>Ahorra líneas, se parte con un data.frame</li>
-<li>Se agregan funciones de dplyr hasta llegar al resultado deseado</li>
+<li class="fragment">Ahorra líneas, se parte con un data.frame</li>
+<li class="fragment">Se agregan funciones de dplyr hasta llegar al resultado deseado</li>
 </ul>
 
-<pre><code class="r">library(tidyverse)
+<pre class="fragment"><code class="r">library(tidyverse)
 MEAN &lt;- iris %&gt;% group_by(Species) %&gt;% summarize(MEAN.PETAL = mean(Petal.Length))
 </code></pre>
 
