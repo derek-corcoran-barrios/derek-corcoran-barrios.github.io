@@ -14,7 +14,7 @@
 Clase 1 Tidy Data y manipulación de datos
 ========================================================
 author: Derek Corcoran
-date: "04/08, 2018"
+date: "05/08, 2018"
 autosize: true
 transition: rotate
 
@@ -205,30 +205,107 @@ Consumo <- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
 |  1|   8|         15.40000| 0.5656854|
 
 
+
+mutate
+=======================
+class: small-code
+
+* Crea variables nuevas
+
+
+```r
+DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
+```
+
+
+| Sepal.Length| Sepal.Width| Petal.Length| Petal.Width|Species    | Petal.Sepal.Ratio|
+|------------:|-----------:|------------:|-----------:|:----------|-----------------:|
+|          5.8|         4.0|          1.2|         0.2|setosa     |              0.21|
+|          4.7|         3.2|          1.6|         0.2|setosa     |              0.34|
+|          5.1|         3.8|          1.9|         0.4|setosa     |              0.37|
+|          5.2|         2.7|          3.9|         1.4|versicolor |              0.75|
+|          6.4|         2.9|          4.3|         1.3|versicolor |              0.67|
+|          5.5|         2.5|          4.0|         1.3|versicolor |              0.73|
+|          6.5|         3.0|          5.8|         2.2|virginica  |              0.89|
+|          6.0|         2.2|          5.0|         1.5|virginica  |              0.83|
+|          6.1|         2.6|          5.6|         1.4|virginica  |              0.92|
+|          5.9|         3.0|          5.1|         1.8|virginica  |              0.86|
+
 Pipeline (%>%)
 =================
 class: small-code
 incremental: true
 
-- Ahorra líneas, se parte con un data.frame
-- Se agregan funciones de dplyr hasta llegar al resultado deseado
+- Para realizar varias operaciones de forma secuencial 
+- sin recurrir a parentesis anidados 
+- sobrescribir multiples bases de datos
 
 
 ```r
-library(tidyverse)
-MEAN <- iris %>% group_by(Species) %>% summarize(MEAN.PETAL = mean(Petal.Length))
+x <- c(1,4,6,8)
+y <- round(mean(sqrt(log(x))),2)
+```
+
+- Que hice ahí?
+
+
+```r
+x <- c(1,4,6,8)
+y <- x %>% log() %>% sqrt() %>% mean() %>% round(2)
+```
+
+
+```
+[1] 0.99
+```
+
+Pipeline (%>%)
+=================
+class: small-code
+incremental: true
+
+* Muchos objetos intermedios
+
+
+```r
+DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
+BySpecies <- group_by(DF, Species)
+Summary.Byspecies <- summarize(BySpecies, MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
 ```
 
 
 
-|Species    | MEAN.PETAL|
-|:----------|----------:|
-|setosa     |      1.462|
-|versicolor |      4.260|
-|virginica  |      5.552|
+|Species    |      MEAN|        SD|
+|:----------|---------:|---------:|
+|setosa     | 0.2927557| 0.0347958|
+|versicolor | 0.7177285| 0.0536255|
+|virginica  | 0.8437495| 0.0438064|
+
+Pipeline (%>%)
+=================
+class: small-code
+incremental: true
+
+* Con pipe
+
+
+```r
+Summary.Byspecies <- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length), Species), MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
+```
+
+
+
+|Species    |      MEAN|        SD|
+|:----------|---------:|---------:|
+|setosa     | 0.2927557| 0.0347958|
+|versicolor | 0.7177285| 0.0536255|
+|virginica  | 0.8437495| 0.0438064|
+
+
 
 Pipeline (%>%) otro ejemplo
 ==========================
+class: small-code
 
 
 ```r
@@ -247,6 +324,7 @@ Filter
 =======
 incremental:true
 - Selecciona según una o más variables
+
 
 |simbolo |significado     |simbolo_cont |significado_cont |
 |:-------|:---------------|:------------|:----------------|
@@ -272,6 +350,22 @@ DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summari
 |setosa    |        5.006|       3.428|        1.462|       0.246|
 |virginica |        6.588|       2.974|        5.552|       2.026|
 
+Ejemplos de filter
+===============================
+class: small-code
+
+
+```r
+DF <- iris %>% filter(Petal.Length >= 4 & Sepal.Length >= 5) %>% group_by(Species) %>% summarise(N = n())
+```
+
+
+|Species    |  N|
+|:----------|--:|
+|versicolor | 39|
+|virginica  | 49|
+
+
 Más de una función
 ===============================
 class: small-code
@@ -291,206 +385,74 @@ DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summari
 Select
 =======================
 class: small-code
+incremental: true
 
-* Selecciona columnas dentro de un data.frame
+* Selecciona columnas dentro de un data.frame, se pueden restar
 
 
 ```r
-data(nasa)
-Nasa2 <- as.data.frame(nasa)
-Temp <- Nasa2 %>% filter(year != 1995) %>% group_by(year) %>% select(contains("temp")) %>% summarize_all(mean)
+iris %>% group_by(Species) %>% select(Petal.Length, Petal.Width) %>% summarize_all(mean)
 ```
+
+
+```r
+iris %>% group_by(Species) %>% select(-Sepal.Length, -Sepal.Width) %>% summarize_all(mean)
+```
+
+
+```r
+iris %>% group_by(Species) %>% select(contains("Petal")) %>% summarize_all(mean)
+```
+
+
+```r
+iris %>% group_by(Species) %>% select(-contains("Sepal")) %>% summarize_all(mean)
+```
+
+
+
 ***
 
-| year| surftemp| temperature|
-|----:|--------:|-----------:|
-| 1996| 295.8562|    297.1005|
-| 1997| 296.7291|    297.9566|
-| 1998| 297.1221|    298.7028|
-| 1999| 295.6850|    298.1364|
-| 2000| 295.7263|    298.3358|
+|Species    | Petal.Length| Petal.Width|
+|:----------|------------:|-----------:|
+|setosa     |        1.462|       0.246|
+|versicolor |        4.260|       1.326|
+|virginica  |        5.552|       2.026|
 
-mutate
-=======================
-class: small-code
-
-* Crea variables nuevas
-
-
-```r
-DF <- iris %>% mutate(Petal.Sepal.Ratio = Petal.Length/Sepal.Length) %>% select(Petal.Length, Sepal.Length, Petal.Sepal.Ratio, Species)
-```
-
-
-| Petal.Length| Sepal.Length| Petal.Sepal.Ratio|Species    |
-|------------:|------------:|-----------------:|:----------|
-|          1.4|          5.1|         0.2745098|setosa     |
-|          1.4|          4.9|         0.2857143|setosa     |
-|          1.3|          4.7|         0.2765957|setosa     |
-|          1.5|          4.6|         0.3260870|setosa     |
-|          1.4|          5.0|         0.2800000|setosa     |
-|          1.7|          5.4|         0.3148148|setosa     |
-|          1.4|          4.6|         0.3043478|setosa     |
-|          1.5|          5.0|         0.3000000|setosa     |
-|          1.4|          4.4|         0.3181818|setosa     |
-|          1.5|          4.9|         0.3061224|setosa     |
-|          1.5|          5.4|         0.2777778|setosa     |
-|          1.6|          4.8|         0.3333333|setosa     |
-|          1.4|          4.8|         0.2916667|setosa     |
-|          1.1|          4.3|         0.2558140|setosa     |
-|          1.2|          5.8|         0.2068966|setosa     |
-|          1.5|          5.7|         0.2631579|setosa     |
-|          1.3|          5.4|         0.2407407|setosa     |
-|          1.4|          5.1|         0.2745098|setosa     |
-|          1.7|          5.7|         0.2982456|setosa     |
-|          1.5|          5.1|         0.2941176|setosa     |
-|          1.7|          5.4|         0.3148148|setosa     |
-|          1.5|          5.1|         0.2941176|setosa     |
-|          1.0|          4.6|         0.2173913|setosa     |
-|          1.7|          5.1|         0.3333333|setosa     |
-|          1.9|          4.8|         0.3958333|setosa     |
-|          1.6|          5.0|         0.3200000|setosa     |
-|          1.6|          5.0|         0.3200000|setosa     |
-|          1.5|          5.2|         0.2884615|setosa     |
-|          1.4|          5.2|         0.2692308|setosa     |
-|          1.6|          4.7|         0.3404255|setosa     |
-|          1.6|          4.8|         0.3333333|setosa     |
-|          1.5|          5.4|         0.2777778|setosa     |
-|          1.5|          5.2|         0.2884615|setosa     |
-|          1.4|          5.5|         0.2545455|setosa     |
-|          1.5|          4.9|         0.3061224|setosa     |
-|          1.2|          5.0|         0.2400000|setosa     |
-|          1.3|          5.5|         0.2363636|setosa     |
-|          1.4|          4.9|         0.2857143|setosa     |
-|          1.3|          4.4|         0.2954545|setosa     |
-|          1.5|          5.1|         0.2941176|setosa     |
-|          1.3|          5.0|         0.2600000|setosa     |
-|          1.3|          4.5|         0.2888889|setosa     |
-|          1.3|          4.4|         0.2954545|setosa     |
-|          1.6|          5.0|         0.3200000|setosa     |
-|          1.9|          5.1|         0.3725490|setosa     |
-|          1.4|          4.8|         0.2916667|setosa     |
-|          1.6|          5.1|         0.3137255|setosa     |
-|          1.4|          4.6|         0.3043478|setosa     |
-|          1.5|          5.3|         0.2830189|setosa     |
-|          1.4|          5.0|         0.2800000|setosa     |
-|          4.7|          7.0|         0.6714286|versicolor |
-|          4.5|          6.4|         0.7031250|versicolor |
-|          4.9|          6.9|         0.7101449|versicolor |
-|          4.0|          5.5|         0.7272727|versicolor |
-|          4.6|          6.5|         0.7076923|versicolor |
-|          4.5|          5.7|         0.7894737|versicolor |
-|          4.7|          6.3|         0.7460317|versicolor |
-|          3.3|          4.9|         0.6734694|versicolor |
-|          4.6|          6.6|         0.6969697|versicolor |
-|          3.9|          5.2|         0.7500000|versicolor |
-|          3.5|          5.0|         0.7000000|versicolor |
-|          4.2|          5.9|         0.7118644|versicolor |
-|          4.0|          6.0|         0.6666667|versicolor |
-|          4.7|          6.1|         0.7704918|versicolor |
-|          3.6|          5.6|         0.6428571|versicolor |
-|          4.4|          6.7|         0.6567164|versicolor |
-|          4.5|          5.6|         0.8035714|versicolor |
-|          4.1|          5.8|         0.7068966|versicolor |
-|          4.5|          6.2|         0.7258065|versicolor |
-|          3.9|          5.6|         0.6964286|versicolor |
-|          4.8|          5.9|         0.8135593|versicolor |
-|          4.0|          6.1|         0.6557377|versicolor |
-|          4.9|          6.3|         0.7777778|versicolor |
-|          4.7|          6.1|         0.7704918|versicolor |
-|          4.3|          6.4|         0.6718750|versicolor |
-|          4.4|          6.6|         0.6666667|versicolor |
-|          4.8|          6.8|         0.7058824|versicolor |
-|          5.0|          6.7|         0.7462687|versicolor |
-|          4.5|          6.0|         0.7500000|versicolor |
-|          3.5|          5.7|         0.6140351|versicolor |
-|          3.8|          5.5|         0.6909091|versicolor |
-|          3.7|          5.5|         0.6727273|versicolor |
-|          3.9|          5.8|         0.6724138|versicolor |
-|          5.1|          6.0|         0.8500000|versicolor |
-|          4.5|          5.4|         0.8333333|versicolor |
-|          4.5|          6.0|         0.7500000|versicolor |
-|          4.7|          6.7|         0.7014925|versicolor |
-|          4.4|          6.3|         0.6984127|versicolor |
-|          4.1|          5.6|         0.7321429|versicolor |
-|          4.0|          5.5|         0.7272727|versicolor |
-|          4.4|          5.5|         0.8000000|versicolor |
-|          4.6|          6.1|         0.7540984|versicolor |
-|          4.0|          5.8|         0.6896552|versicolor |
-|          3.3|          5.0|         0.6600000|versicolor |
-|          4.2|          5.6|         0.7500000|versicolor |
-|          4.2|          5.7|         0.7368421|versicolor |
-|          4.2|          5.7|         0.7368421|versicolor |
-|          4.3|          6.2|         0.6935484|versicolor |
-|          3.0|          5.1|         0.5882353|versicolor |
-|          4.1|          5.7|         0.7192982|versicolor |
-|          6.0|          6.3|         0.9523810|virginica  |
-|          5.1|          5.8|         0.8793103|virginica  |
-|          5.9|          7.1|         0.8309859|virginica  |
-|          5.6|          6.3|         0.8888889|virginica  |
-|          5.8|          6.5|         0.8923077|virginica  |
-|          6.6|          7.6|         0.8684211|virginica  |
-|          4.5|          4.9|         0.9183673|virginica  |
-|          6.3|          7.3|         0.8630137|virginica  |
-|          5.8|          6.7|         0.8656716|virginica  |
-|          6.1|          7.2|         0.8472222|virginica  |
-|          5.1|          6.5|         0.7846154|virginica  |
-|          5.3|          6.4|         0.8281250|virginica  |
-|          5.5|          6.8|         0.8088235|virginica  |
-|          5.0|          5.7|         0.8771930|virginica  |
-|          5.1|          5.8|         0.8793103|virginica  |
-|          5.3|          6.4|         0.8281250|virginica  |
-|          5.5|          6.5|         0.8461538|virginica  |
-|          6.7|          7.7|         0.8701299|virginica  |
-|          6.9|          7.7|         0.8961039|virginica  |
-|          5.0|          6.0|         0.8333333|virginica  |
-|          5.7|          6.9|         0.8260870|virginica  |
-|          4.9|          5.6|         0.8750000|virginica  |
-|          6.7|          7.7|         0.8701299|virginica  |
-|          4.9|          6.3|         0.7777778|virginica  |
-|          5.7|          6.7|         0.8507463|virginica  |
-|          6.0|          7.2|         0.8333333|virginica  |
-|          4.8|          6.2|         0.7741935|virginica  |
-|          4.9|          6.1|         0.8032787|virginica  |
-|          5.6|          6.4|         0.8750000|virginica  |
-|          5.8|          7.2|         0.8055556|virginica  |
-|          6.1|          7.4|         0.8243243|virginica  |
-|          6.4|          7.9|         0.8101266|virginica  |
-|          5.6|          6.4|         0.8750000|virginica  |
-|          5.1|          6.3|         0.8095238|virginica  |
-|          5.6|          6.1|         0.9180328|virginica  |
-|          6.1|          7.7|         0.7922078|virginica  |
-|          5.6|          6.3|         0.8888889|virginica  |
-|          5.5|          6.4|         0.8593750|virginica  |
-|          4.8|          6.0|         0.8000000|virginica  |
-|          5.4|          6.9|         0.7826087|virginica  |
-|          5.6|          6.7|         0.8358209|virginica  |
-|          5.1|          6.9|         0.7391304|virginica  |
-|          5.1|          5.8|         0.8793103|virginica  |
-|          5.9|          6.8|         0.8676471|virginica  |
-|          5.7|          6.7|         0.8507463|virginica  |
-|          5.2|          6.7|         0.7761194|virginica  |
-|          5.0|          6.3|         0.7936508|virginica  |
-|          5.2|          6.5|         0.8000000|virginica  |
-|          5.4|          6.2|         0.8709677|virginica  |
-|          5.1|          5.9|         0.8644068|virginica  |
 
 Ejercicios
 ========================================================
 incremental: true
+class: small-code
 
 * Usando la base de datos *storm* del paquete *dplyr*, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
-    + solución:
-    + storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
-    + storms %>% filter(status == "hurricane" & !is.na(hu_diameter)) %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
-    + storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(funs(mean), na.rm = TRUE)
+    + soluciónes:
+
+```r
+storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
+```
+
+
+```r
+storms %>% filter(status == "hurricane" & !is.na(hu_diameter)) %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
+```
+
+
+```r
+storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(funs(mean), na.rm = TRUE)
+```
 
 Ejercicios 2
 ==================================
 incremental: true
+class: small-code
 
-* La base de datos mpg tiene datos de eficiencia vehicular en millas por galón en ciudad (*cty*) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 km = 1.609 millas; 1 galón = 3.78541 litros)
-    + Solution <- mpg %>% filter(year > 2004 & class == "compact") %>% mutate(kpl = (cty*1.609)/3.78541)
+* La base de datos `mpg` del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (*cty*) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 km = 1.609 millas; 1 galón = 3.78541 litros)
+
+
+```r
+Solution <- mpg %>% filter(year > 2004 & class == "compact") %>% mutate(kpl = (cty*1.609)/3.78541)
+```
 
 Bases de datos con que trabajar
 ========================================================

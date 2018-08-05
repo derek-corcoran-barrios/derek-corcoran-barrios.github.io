@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="tidyverso.html">
-<link rel="next" href="modelos.html">
+<link rel="prev" href="references.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -194,80 +194,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="visualizacion" class="section level1">
-<h1><span class="header-section-number">Capítulo 5</span> Visualización de datos</h1>
-<p>En este capítulo aprenderemos a usar el paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-Wickhamggplot">2016</a>)</span>, parte del paquete <em>tidyverse</em> <span class="citation">(Wickham <a href="#ref-Wickhamtidyverse">2017</a>)</span>.</p>
-<div id="el-esqueleto" class="section level2">
-<h2><span class="header-section-number">5.1</span> El esqueleto</h2>
-<p>El esqueleto de una visualización usando <em>ggplot2</em> es la siguiente</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">ggplot</span>(data.frame, <span class="kw">aes</span>(nombres de columna)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_algo</span>(argumentos, <span class="kw">aes</span>(columnas)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_algo</span>()</a></code></pre></div>
-<p>Como ejemplo para discutir usaremos el siguiente código que genera la figura <a href="visualizacion.html#fig:ejemplo1-ggplot">5.1</a>:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw">data</span>(<span class="st">&quot;diamonds&quot;</span>)</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y=</span>price)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> cut)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:ejemplo1-ggplot"></span>
-<img src="Libro_files/figure-html/ejemplo1-ggplot-1.png" alt="Gráfico en el cual gráficamos los quilates de diamantes versus su precio, con el corte del diamante representado por el color" width="80%" />
-<p class="caption">
-Figura 5.1: Gráfico en el cual gráficamos los quilates de diamantes versus su precio, con el corte del diamante representado por el color
-</p>
+<div id="soluciones" class="section level1">
+<h1><span class="header-section-number">Capítulo 9</span> Soluciones a porblemas</h1>
+<p>Todos los problemas en programación tienen más de una forma de llegar a ellos, es por esto que las soluciones acá mostradas deben tomarse solo como una referencia, y revisar si el resultado final de tu código (aunque sea distinto de este), sea igual al que presentamos.</p>
+<div id="capitulo-1" class="section level2">
+<h2><span class="header-section-number">9.1</span> Capítulo 1</h2>
+<div id="ejercicio-1-1" class="section level3">
+<h3><span class="header-section-number">9.1.1</span> Ejercicio 1</h3>
+<p>Algunas posibles soluciones:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">    hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(hu_diameter)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">    </span><span class="kw">select</span>(year, wind, hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">    hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(mean), </a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
-<p>En este caso general, lo primero que ponemos después de ggplot es el data.frame desde el cuál graficaremos algo, en el ejemplo de la figura <a href="visualizacion.html#fig:ejemplo1-ggplot">5.1</a> usamos la base de datos <em>diamonds</em> del paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-Wickhamggplot">2016</a>)</span>. Luego dentro de <code>aes</code> ponemos las columnas que graficaremos como <em>x</em> y/o <em>y</em>, en nuestro ejemplo dentro de aes ponemos como eje <em>x</em> los kilates de los diamantes (caret) y como <em>y</em> el precio de los mismos (price). La necesidad de poner <code>aes</code> en ggplot2 (algo que no había sido necesario cuando usamos <em>dplyr</em> o <em>tidyr</em>) es que ggplot2 es el paquete mas antiguo del <em>tidyverse</em>.</p>
-</div>
-<div id="geom_algo" class="section level2">
-<h2><span class="header-section-number">5.2</span> geom_algo</h2>
-<p>Luego de especificar una base de datos, esto viene seguido de un <code>geom_algo</code>, esto nos indicará que tipo de gráfico usaremos, estos pueden ser combinados como veremos en ejemplos futuros</p>
-<div id="una-variable-categorica-una-continua" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Una variable categórica una continua</h3>
-<p>Primero veremos algunos de los <em>geom</em> que podemos utilizar con una variable categórica y una continua</p>
-<div id="geom_boxplot" class="section level4">
-<h4><span class="header-section-number">5.2.1.1</span> geom_boxplot</h4>
-<p>En la figura <a href="visualizacion.html#fig:boxplot">5.2</a>, generado a partir del código a continuacón con la base de datos iris presente en <code>R</code> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:boxplot"></span>
-<img src="Libro_files/figure-html/boxplot-1.png" alt="Boxplot que representa los largos del sépalo de tres especies del género Iris" width="80%" />
-<p class="caption">
-Figura 5.2: Boxplot que representa los largos del sépalo de tres especies del género Iris
-</p>
-</div>
-<p>Los boxplots muestran una linea gruesa central (la mediana), una caja, que delimita el primer y tercer cuartil, y los bigotes, los cuales se extienden hasta los valores extremos. A menos que estos esten por sobre 1.5 veces la distance entre el primer y tercer cuartil, en cuyo caso se consideran outlyers, y estos son representados por puntos. En la figura <a href="visualizacion.html#fig:boxplot">5.2</a>, solo <em>Iris virginica</em> presenta un outlayer en cuanto a las medidas del largo del sepalo.</p>
-<p>Los boxplots, como todos los gráficos pueden ser personalizados usando otros argumentos, los cuales son detallados en la sección <a href="visualizacion.html#argumentos">5.3</a>, pero en los ejemplos que mostraremos en esta sección los iremos introduciendo de a poco. Si quisieramos por ejemplo que el color de las cajas del <em>boxplot</em> fuera deacuerdo a la especie, cambiamos el llenado (<strong>fill</strong>) de la caja, como vemos en el siguiente ejemplo y figura <a href="visualizacion.html#fig:boxplot2">5.3</a></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Species))</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:boxplot2"></span>
-<img src="Libro_files/figure-html/boxplot2-1.png" alt="Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie" width="80%" />
-<p class="caption">
-Figura 5.3: Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie
-</p>
-</div>
-<p>Dos cosas a notar en este ejemplo, por un lado la leyenda se genera de forma automática, y por otro lado, vemos que es necesario poner <em>Species</em> dentro de <code>aes</code>, esto es debido a que Species es una columna y como se explicó al principio de este capítulo, todas las columnas deben ser incuidas dentro de la función <code>aes</code> para poder ser referenciadas.</p>
-</div>
-<div id="geom_jitter" class="section level4">
-<h4><span class="header-section-number">5.2.1.2</span> geom_jitter</h4>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</a></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:jitter"></span>
-<img src="Libro_files/figure-html/jitter-1.png" alt="Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie" width="80%" />
-<p class="caption">
-Figura 5.4: Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie
-</p>
-</div>
-</div>
-</div>
-</div>
-<div id="argumentos" class="section level2">
-<h2><span class="header-section-number">5.3</span> Argumentos</h2>
+<div id="ejercicio-2-1" class="section level3">
+<h3><span class="header-section-number">9.1.2</span> Ejercicio 2</h3>
+<p>Una de las soluciones posibles:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">Solution &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">2004</span> <span class="op">&amp;</span><span class="st"> </span>class <span class="op">==</span><span class="st"> &quot;compact&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">kpl =</span> (cty <span class="op">*</span><span class="st"> </span><span class="fl">1.609</span>)<span class="op">/</span><span class="fl">3.78541</span>)</a></code></pre></div>
 
-</div>
-</div>
-<h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-Wickhamggplot">
+<div>
+<p>Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, and Winston Chang. 2018. <em>Rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown" class="uri">https://CRAN.R-project.org/package=rmarkdown</a>.</p>
+</div>
+<div>
+<p>Anderson, Edgar. 1935. “The Irises of the Gaspe Peninsula.” <em>Bulletin of the American Iris Society</em> 59: 2–5.</p>
+</div>
+<div>
+<p>Henderson, Harold V, and Paul F Velleman. 1981. “Building Multiple Regression Models Interactively.” <em>Biometrics</em>. JSTOR, 391–411.</p>
+</div>
+<div>
+<p>Kross, Sean, Nick Carchedi, Bill Bauer, and Gina Grdina. 2017. <em>Swirl: Learn R, in R</em>. <a href="https://CRAN.R-project.org/package=swirl" class="uri">https://CRAN.R-project.org/package=swirl</a>.</p>
+</div>
+<div>
+<p>Leek, Jeff. 2015. “The Elements of Data Analytic Style.” <em>J. Leek.—Amazon Digital Services, Inc</em>.</p>
+</div>
+<div>
+<p>R Core Team. 2018. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
+</div>
+<div>
 <p>Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="http://ggplot2.org" class="uri">http://ggplot2.org</a>.</p>
 </div>
-<div id="ref-Wickhamtidyverse">
-<p>Wickham, Hadley. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</p>
+<div>
+<p>———. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</p>
 </div>
-<div id="ref-anderson1935irises">
-<p>Anderson, Edgar. 1935. “The Irises of the Gaspe Peninsula.” <em>Bulletin of the American Iris Society</em> 59: 2–5.</p>
+<div>
+<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2018. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a>.</p>
+</div>
+<div>
+<p>Wickham, Hadley, and others. 2014. “Tidy Data.” <em>Journal of Statistical Software</em> 59 (10). Foundation for Open Access Statistics: 1–23.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
             </section>
@@ -275,8 +256,8 @@ Figura 5.4: Boxplot que representa los largos del sépalo de tres especies del g
           </div>
         </div>
       </div>
-<a href="tidyverso.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modelos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

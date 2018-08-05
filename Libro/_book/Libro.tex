@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-08-04}
+    \date{2018-08-05}
 
 \usepackage{booktabs}
 
@@ -323,6 +323,12 @@ este curso están explicados en los siguientes libros gratuitos.
 \hypertarget{tidydata}{%
 \chapter{Tidy Data y manipulación de datos}\label{tidydata}}
 
+\hypertarget{paquetes-necesarios-para-este-capitulo}{%
+\section{Paquetes necesarios para este
+capítulo}\label{paquetes-necesarios-para-este-capitulo}}
+
+Para este capitulo necesitas tener instalado el paqute \emph{tidyverse}
+
 En este capítulo explicaremos que es una base de datos \emph{tidy}
 \citep{wickham2014tidy} y aprenderemos a usar funciones del paquete
 \emph{dplyr} \citep{R-dplyr} para manipular datos.
@@ -371,14 +377,14 @@ utilizadas, las cuales son:
 \item
   \emph{summarize} (resume datos agrupados)
 \item
+  \emph{mutate} (Genera variables nuevas)
+\item
+  \emph{\%\textgreater{}\%} pipeline
+\item
   \emph{filter} (Encuentra filas con ciertas condiciones)
 \item
   \emph{select} junto a \emph{starts\_with}, \emph{ends\_with} o
   \emph{contains}
-\item
-  \emph{mutate} (Genera variables nuevas)
-\item
-  \emph{\%\textgreater{}\%} pipeline
 \end{itemize}
 
 \hypertarget{summarize}{%
@@ -422,7 +428,8 @@ haríamos con el siguiente código:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(tidyverse)}
-\NormalTok{Summary.Petal <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(iris, }\DataTypeTok{Mean.Petal.Length =} \KeywordTok{mean}\NormalTok{(Petal.Length), }\DataTypeTok{SD.Petal.Length =} \KeywordTok{sd}\NormalTok{(Petal.Length))}
+\NormalTok{Summary.Petal <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(iris, }\DataTypeTok{Mean.Petal.Length =} \KeywordTok{mean}\NormalTok{(Petal.Length), }
+    \DataTypeTok{SD.Petal.Length =} \KeywordTok{sd}\NormalTok{(Petal.Length))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -430,23 +437,6 @@ El resultado lo vemos en la tabla \ref{tab:SummaryPetaltab}, en el cuál
 obtenemos los promedios y desviaciones estándar de los largos de los
 pétalos. Es importante notar que al usar summarize, todas las otras
 variables desapareceran de la tabla.
-
-\begin{verbatim}
-## 
-## Attaching package: 'dplyr'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-\end{verbatim}
 
 \begin{table}
 
@@ -479,7 +469,8 @@ la siguiente forma:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{BySpecies <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(iris, Species)}
-\NormalTok{Summary.Byspecies <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(BySpecies, }\DataTypeTok{Mean.Petal.Length =} \KeywordTok{mean}\NormalTok{(Petal.Length), }\DataTypeTok{SD.Petal.Length =} \KeywordTok{sd}\NormalTok{(Petal.Length))}
+\NormalTok{Summary.Byspecies <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(BySpecies, }\DataTypeTok{Mean.Petal.Length =} \KeywordTok{mean}\NormalTok{(Petal.Length), }
+    \DataTypeTok{SD.Petal.Length =} \KeywordTok{sd}\NormalTok{(Petal.Length))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -518,38 +509,14 @@ siguiente código:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{Grouped <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(mtcars, cyl, am)}
-\NormalTok{Eficiencia <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(Grouped, }\DataTypeTok{Eficiencia =} \KeywordTok{mean}\NormalTok{(mtcars))}
+\NormalTok{Eficiencia <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(Grouped, }\DataTypeTok{Eficiencia =} \KeywordTok{mean}\NormalTok{(mpg))}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{Grouped <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(mtcars, cyl, am)}
-\NormalTok{Eficiencia <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(Grouped, }\DataTypeTok{Eficiencia =} \KeywordTok{mean}\NormalTok{(mtcars))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in mean.default(mtcars): argument is not numeric or logical:
-## returning NA
-
-## Warning in mean.default(mtcars): argument is not numeric or logical:
-## returning NA
-
-## Warning in mean.default(mtcars): argument is not numeric or logical:
-## returning NA
-
-## Warning in mean.default(mtcars): argument is not numeric or logical:
-## returning NA
-
-## Warning in mean.default(mtcars): argument is not numeric or logical:
-## returning NA
-
-## Warning in mean.default(mtcars): argument is not numeric or logical:
-## returning NA
-\end{verbatim}
-
-Vemos en la tabla \ref{tab:Eficienciatab}, que
+Vemos en la tabla \ref{tab:Eficienciatab}, que en todos los casos los
+autos con cambios manuales tienen mejor eficiencia de combustible.
+Prueba cambiar el ordern de las variables con las cuales agrupas y
+observa los distintos resultados.
 
 \begin{table}
 
@@ -559,15 +526,321 @@ Vemos en la tabla \ref{tab:Eficienciatab}, que
 \toprule
 cyl & am & Eficiencia\\
 \midrule
-4 & 0 & NA\\
-4 & 1 & NA\\
-6 & 0 & NA\\
-6 & 1 & NA\\
-8 & 0 & NA\\
-8 & 1 & NA\\
+4 & 0 & 22.90000\\
+4 & 1 & 28.07500\\
+6 & 0 & 19.12500\\
+6 & 1 & 20.56667\\
+8 & 0 & 15.05000\\
+8 & 1 & 15.40000\\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\hypertarget{mutate}{%
+\subsection{mutate}\label{mutate}}
+
+Esta función tiene como objetivo el crear variables nuevas basadas en
+otras variables. Es muy facil de usar, como argumento usamos el nombre
+de la variable nueva que queremos crear y realizamos una operación con
+variables que ya estan ahí. Por ejemplo, sigamos con la base de datos
+\emph{Iris} y creemos una nueva variable que sea la razón entre el largo
+del pétalo y el del sépalo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{DF <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(iris, }\DataTypeTok{Petal.Sepal.Ratio =}\NormalTok{ Petal.Length}\OperatorTok{/}\NormalTok{Sepal.Length)}
+\end{Highlighting}
+\end{Shaded}
+
+El resultado de esta operación es la tabla \ref{tab:Mutate}. Siempre la
+variable que acabamos de crear aparecerá al final de nuestro data frame
+
+\begin{table}
+
+\caption{\label{tab:Mutate}Tabla con diez de las observaciones de la nueva base de datos con la variable nueva creada con mutate}
+\centering
+\begin{tabular}[t]{rrrrlr}
+\toprule
+Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species & Petal.Sepal.Ratio\\
+\midrule
+5.8 & 4.0 & 1.2 & 0.2 & setosa & 0.21\\
+4.7 & 3.2 & 1.6 & 0.2 & setosa & 0.34\\
+5.1 & 3.8 & 1.9 & 0.4 & setosa & 0.37\\
+5.2 & 2.7 & 3.9 & 1.4 & versicolor & 0.75\\
+6.4 & 2.9 & 4.3 & 1.3 & versicolor & 0.67\\
+\addlinespace
+5.5 & 2.5 & 4.0 & 1.3 & versicolor & 0.73\\
+6.5 & 3.0 & 5.8 & 2.2 & virginica & 0.89\\
+6.0 & 2.2 & 5.0 & 1.5 & virginica & 0.83\\
+6.1 & 2.6 & 5.6 & 1.4 & virginica & 0.92\\
+5.9 & 3.0 & 5.1 & 1.8 & virginica & 0.86\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{pipeline}{%
+\subsection{Pipeline (\%\textgreater{}\%)}\label{pipeline}}
+
+El pipeline es un simbolo operatorio \texttt{\%\textgreater{}\%} el cual
+sirve para realizar varias operaciones de forma secuencial sin recurrir
+a muchos parentesis anidados o a sobrescribir multiples bases de datos,
+primero veamos como funcionaría esto con un vecctor.
+
+Supongamos que tuvieramos una variable a la cual quisieramos primero
+obtener su logaritmo, luego su raíz cuadrada y finalmente obtener el
+promedio de esta variable con dos cifras significatigas, usalmente
+haríamos lo siguiente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{mean}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\KeywordTok{log}\NormalTok{(x))), }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Si hicieramos lo mismo con el pipeline, nos daría un código mucho más
+ordenado, donde partimos por el objeto a procesar, seguido de cada una
+de las funciones, con sus argumentos si es necesario:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+\NormalTok{y <-}\StringTok{ }\NormalTok{x }\OperatorTok{%>%}\StringTok{ }\KeywordTok{log}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{sqrt}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mean}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }\KeywordTok{round}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.99
+\end{verbatim}
+
+Este código es mucho más fácil de interpretar a primera vista ya que
+leemos de izquierda a derecha y no de adentro hacia afuera, y como
+veremos en el ejemplo siguiente, se hace aún más importante cuando lo
+usamos con un \emph{Data frame}
+
+\hypertarget{el-pipeline-en-data-frames}{%
+\subsubsection{El pipeline en data
+frames}\label{el-pipeline-en-data-frames}}
+
+Tomemos como ejemplo el caso de querer resumir la variable recien creada
+de la razón entre el sépalo y el petalo. Esto, si empezaramos desde la
+base de datos original nos tomaría varias lineas de código y la creación
+de multiples bases de datos intermedias:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{DF <-}\StringTok{ }\KeywordTok{mutate}\NormalTok{(iris, }\DataTypeTok{Petal.Sepal.Ratio =}\NormalTok{ Petal.Length}\OperatorTok{/}\NormalTok{Sepal.Length)}
+\NormalTok{BySpecies <-}\StringTok{ }\KeywordTok{group_by}\NormalTok{(DF, Species)}
+\NormalTok{Summary.Byspecies <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(BySpecies, }\DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(Petal.Sepal.Ratio), }
+    \DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(Petal.Sepal.Ratio))}
+\end{Highlighting}
+\end{Shaded}
+
+Otra opción sería usar parentesis anidados, que nos daría el siguiente
+código
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Summary.Byspecies <-}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\KeywordTok{group_by}\NormalTok{(}\KeywordTok{mutate}\NormalTok{(iris, }\DataTypeTok{Petal.Sepal.Ratio =}\NormalTok{ Petal.Length}\OperatorTok{/}\NormalTok{Sepal.Length), }
+\NormalTok{    Species), }\DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(Petal.Sepal.Ratio), }\DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(Petal.Sepal.Ratio))}
+\end{Highlighting}
+\end{Shaded}
+
+Esto se simplifica mucho al usar el pipeline, lo cual nos permite usar
+partir en un \emph{Data Frame} y luego usar el pipeline, esto nos
+permitiría tener el mismo resultado que en las operaciones anteriores
+con el siguiente código:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Summary.Byspecies <-}\StringTok{ }\NormalTok{iris }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Petal.Sepal.Ratio =}\NormalTok{ Petal.Length}\OperatorTok{/}\NormalTok{Sepal.Length) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Species) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{MEAN =} \KeywordTok{mean}\NormalTok{(Petal.Sepal.Ratio), }
+    \DataTypeTok{SD =} \KeywordTok{sd}\NormalTok{(Petal.Sepal.Ratio))}
+\end{Highlighting}
+\end{Shaded}
+
+Estos tres códigos son correctos (tabla \ref{tab:Pipe}), pero
+definitivamente el uso del pipeline nos da el código mas conciso y fácil
+de interpretar sin pasos intermedios.
+
+\begin{table}
+
+\caption{\label{tab:Pipe}Razón pétalo sépalo promedio para las tres especies de Iris}
+\centering
+\begin{tabular}[t]{lrr}
+\toprule
+Species & MEAN & SD\\
+\midrule
+setosa & 0.2927557 & 0.0347958\\
+versicolor & 0.7177285 & 0.0536255\\
+virginica & 0.8437495 & 0.0438064\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{filter}{%
+\subsection{filter}\label{filter}}
+
+Esta función nos permite seleccionar filas que cumplan con ciertas
+condiciones, como por tener un valor mayor a un umbral o pertenecer a
+cierta clase, los símbolos más típicos a usar en este caso son los que
+vemos en la tabla \ref{tab:Logicas}.
+
+\begin{table}
+
+\caption{\label{tab:Logicas}Símbolos logicos de R y su significado}
+\centering
+\begin{tabular}[t]{llll}
+\toprule
+simbolo & significado & simbolo\_cont & significado\_cont\\
+\midrule
+> & Mayor que & != & distinto a\\
+< & Menor que & \%in\% & dentro del grupo\\
+== & Igual a & is.na & es NA\\
+>= & mayor o igual a & !is.na & no es NA\\
+<= & menor o igual a & | \& & o, y\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Por ejemplo si quisieramos estudiar las características florales de las
+plantas del género \emph{Iris}, pero no tomar en cuenta a la especie
+\emph{Iris versicolor} usaríamos el siguiente código:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"iris"}\NormalTok{)}
+\NormalTok{DF <-}\StringTok{ }\NormalTok{iris }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Species }\OperatorTok{!=}\StringTok{ "versicolor"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(Species) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{summarise_all}\NormalTok{(mean)}
+\end{Highlighting}
+\end{Shaded}
+
+obteniendo como resultado la tabla \ref{tab:MenosVersicolor}, en este
+caso aprovechamos de introducir la función \texttt{summarize\_all} de
+\texttt{summarize}, la cual aplica la función que se le da como
+argumento a todas las variables de la base de datos.
+
+\begin{table}
+
+\caption{\label{tab:MenosVersicolor}Resumen de la media de todas las características florales de las especies Iris setosa e Iris virginica}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+Species & Sepal.Length & Sepal.Width & Petal.Length & Petal.Width\\
+\midrule
+setosa & 5.006 & 3.428 & 1.462 & 0.246\\
+virginica & 6.588 & 2.974 & 5.552 & 2.026\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Por otro lado si quisieramos estudiar cuantas plantas de cada especie
+tienen un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5
+usaríamos el siguiente código:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{DF <-}\StringTok{ }\NormalTok{iris }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Petal.Length }\OperatorTok{>=}\StringTok{ }\DecValTok{4} \OperatorTok{&}\StringTok{ }\NormalTok{Sepal.Length }\OperatorTok{>=}\StringTok{ }\DecValTok{5}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{group_by}\NormalTok{(Species) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{N =} \KeywordTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+En la tabla tabla \ref{tab:Numero} vemos que con este filtro,
+desaparecen de la base de datos todas las plantas de \emph{Iris setosa}
+y que todas menos una planta de \emph{Iris virginica} tienen ambas
+características.
+
+\begin{table}
+
+\caption{\label{tab:Numero}Número de plantas de cada especie con un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5 centímetros}
+\centering
+\begin{tabular}[t]{lr}
+\toprule
+Species & N\\
+\midrule
+versicolor & 39\\
+virginica & 49\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{select}{%
+\subsection{select}\label{select}}
+
+Esta función permite seleccionar las variables a utilizar, en muchos
+casos nos encontraremos con bases de datos con demasiadas variables, y
+por lo tanto queremos reducirlas para solo trabajar en una tabla con las
+variables necesarias.
+
+Con select hay varias formas de trabajar, por un lado podemos escribir
+las variables que usaremos, o restar las que no usaremos, en ese sentido
+estos cuatro códigos dan exactamente el mismo resultado, el cual vemos
+en la tabla \ref{tab:Selected}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(Species) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(Petal.Length, Petal.Width) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{summarize_all}\NormalTok{(mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(Species) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{Sepal.Length, }\OperatorTok{-}\NormalTok{Sepal.Width) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{summarize_all}\NormalTok{(mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(Species) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(}\KeywordTok{contains}\NormalTok{(}\StringTok{"Petal"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{summarize_all}\NormalTok{(mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(Species) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\KeywordTok{contains}\NormalTok{(}\StringTok{"Sepal"}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{summarize_all}\NormalTok{(mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:Selected}Promedio de largo de pétalo y ancho de pétalo para las especies del genero Iris}
+\centering
+\begin{tabular}[t]{lrr}
+\toprule
+Species & Petal.Length & Petal.Width\\
+\midrule
+setosa & 1.462 & 0.246\\
+versicolor & 4.260 & 1.326\\
+virginica & 5.552 & 2.026\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{ejercicios}{%
+\subsection{Ejercicios}\label{ejercicios}}
+
+\hypertarget{ejercicio-1}{%
+\subsubsection{Ejercicio 1}\label{ejercicio-1}}
+
+Usando la base de datos \texttt{storm} del paquete \emph{dplyr}, calcula
+la velocidad promedio y diámetro promedio (hu\_diameter) de las
+tormentas que han sido declaradas huracanes para cada año.
+
+\hypertarget{ejercicio-2}{%
+\subsubsection{Ejercicio 2}\label{ejercicio-2}}
+
+La base de datos \texttt{mpg} del paquete ggplot2 tiene datos de
+eficiencia vehicular en millas por galón en ciudad (\emph{cty}) en
+varios vehículos, obten los datos de vehiculos del año 2004 en adelante,
+que sean compactos, y transforma la eficiencia Km/litro (1 km = 1.609
+millas; 1 galón = 3.78541 litros)
+
+las soluciones a estos ejercicios se encuentran en el capítulo
+\ref{soluciones}
 
 \hypertarget{reproducible}{%
 \chapter{Investigación reproducible}\label{reproducible}}
@@ -734,6 +1007,56 @@ We have finished a nice book.
 
 \hypertarget{presentacion}{%
 \chapter{Presentaciones en R}\label{presentacion}}
+
+\hypertarget{soluciones}{%
+\chapter{Soluciones a porblemas}\label{soluciones}}
+
+Todos los problemas en programación tienen más de una forma de llegar a
+ellos, es por esto que las soluciones acá mostradas deben tomarse solo
+como una referencia, y revisar si el resultado final de tu código
+(aunque sea distinto de este), sea igual al que presentamos.
+
+\hypertarget{capitulo-1}{%
+\section{Capítulo 1}\label{capitulo-1}}
+
+\hypertarget{ejercicio-1-1}{%
+\subsection{Ejercicio 1}\label{ejercicio-1-1}}
+
+Algunas posibles soluciones:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{storms }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(status }\OperatorTok{==}\StringTok{ "hurricane"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(year, wind, }
+\NormalTok{    hu_diameter) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(year) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize_all}\NormalTok{(mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{storms }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(status }\OperatorTok{==}\StringTok{ "hurricane"} \OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(hu_diameter)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{select}\NormalTok{(year, wind, hu_diameter) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(year) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize_all}\NormalTok{(mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{storms }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(status }\OperatorTok{==}\StringTok{ "hurricane"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(year, wind, }
+\NormalTok{    hu_diameter) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(year) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize_all}\NormalTok{(}\KeywordTok{funs}\NormalTok{(mean), }
+    \DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ejercicio-2-1}{%
+\subsection{Ejercicio 2}\label{ejercicio-2-1}}
+
+Una de las soluciones posibles:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Solution <-}\StringTok{ }\NormalTok{mpg }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(year }\OperatorTok{>}\StringTok{ }\DecValTok{2004} \OperatorTok{&}\StringTok{ }\NormalTok{class }\OperatorTok{==}\StringTok{ "compact"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{kpl =}\NormalTok{ (cty }\OperatorTok{*}\StringTok{ }\FloatTok{1.609}\NormalTok{)}\OperatorTok{/}\FloatTok{3.78541}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \bibliography{book.bib,packages.bib}
 

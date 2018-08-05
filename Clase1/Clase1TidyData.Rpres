@@ -197,27 +197,92 @@ kable(Consumo)
 ```
 
 
+
+mutate
+=======================
+class: small-code
+
+* Crea variables nuevas
+
+```{r, eval = FALSE}
+DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
+```
+
+```{r, echo = FALSE}
+DF <- mutate(iris, Petal.Sepal.Ratio = round((Petal.Length/Sepal.Length),2))
+
+kable(DF[seq(from = 15, to = 150, length.out = 10),], row.names = FALSE)
+```
+
 Pipeline (%>%)
 =================
 class: small-code
 incremental: true
 
-- Ahorra líneas, se parte con un data.frame
-- Se agregan funciones de dplyr hasta llegar al resultado deseado
+- Para realizar varias operaciones de forma secuencial 
+- sin recurrir a parentesis anidados 
+- sobrescribir multiples bases de datos
 
 ```{r, eval=FALSE}
-library(tidyverse)
-MEAN <- iris %>% group_by(Species) %>% summarize(MEAN.PETAL = mean(Petal.Length))
+x <- c(1,4,6,8)
+y <- round(mean(sqrt(log(x))),2)
+```
+
+- Que hice ahí?
+
+```{r, eval=FALSE}
+x <- c(1,4,6,8)
+y <- x %>% log() %>% sqrt() %>% mean() %>% round(2)
+```
+
+```{r, echo=FALSE}
+x <- c(1,4,6,8)
+x %>% log() %>% sqrt() %>% mean() %>% round(2)
+```
+
+Pipeline (%>%)
+=================
+class: small-code
+incremental: true
+
+* Muchos objetos intermedios
+
+```{r, eval=FALSE}
+DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
+BySpecies <- group_by(DF, Species)
+Summary.Byspecies <- summarize(BySpecies, MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
 ```
 
 
 ```{r, echo=FALSE}
-MEAN <- iris %>% group_by(Species) %>% summarize(MEAN.PETAL = mean(Petal.Length))
-kable(MEAN)
+DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
+BySpecies <- group_by(DF, Species)
+Summary.Byspecies <- summarize(BySpecies, MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
+kable(Summary.Byspecies)
 ```
+
+Pipeline (%>%)
+=================
+class: small-code
+incremental: true
+
+* Con pipe
+
+```{r, eval=FALSE}
+Summary.Byspecies <- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length), Species), MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
+```
+
+
+```{r, echo=FALSE}
+Summary.Byspecies <- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length), Species), MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
+kable(Summary.Byspecies)
+```
+
+
 
 Pipeline (%>%) otro ejemplo
 ==========================
+class: small-code
 
 ```{r, eval=FALSE}
 library(tidyverse)
@@ -235,6 +300,7 @@ Filter
 =======
 incremental:true
 - Selecciona según una o más variables
+
 ```{r, echo=FALSE}
 DF <- data.frame(simbolo = c(">", "<", "==", ">=", "<="), significado = c("Mayor que", "Menor que", "Igual a", "mayor o igual a", "menor o igual a"), simbolo_cont = c("!=","%in%", "is.na", "!is.na", "| &"), significado_cont = c("distinto a", "dentro del grupo", "es NA", "no es NA", "o, y"))
 kable (DF)
@@ -256,6 +322,20 @@ DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summari
 kable(DF)
 ```
 
+Ejemplos de filter
+===============================
+class: small-code
+
+```{r, eval = FALSE}
+DF <- iris %>% filter(Petal.Length >= 4 & Sepal.Length >= 5) %>% group_by(Species) %>% summarise(N = n())
+```
+
+```{r, echo = FALSE}
+DF <- iris %>% filter(Petal.Length >= 4 & Sepal.Length >= 5) %>% group_by(Species) %>% summarise(N = n())
+kable(DF)
+```
+
+
 Más de una función
 ===============================
 class: small-code
@@ -275,52 +355,65 @@ kable(DF)
 Select
 =======================
 class: small-code
+incremental: true
 
-* Selecciona columnas dentro de un data.frame
+* Selecciona columnas dentro de un data.frame, se pueden restar
 
-```{r}
-data(nasa)
-Nasa2 <- as.data.frame(nasa)
-Temp <- Nasa2 %>% filter(year != 1995) %>% group_by(year) %>% select(contains("temp")) %>% summarize_all(mean)
+```{r, eval=FALSE}
+iris %>% group_by(Species) %>% select(Petal.Length, Petal.Width) %>% summarize_all(mean)
 ```
+
+```{r, eval=FALSE}
+iris %>% group_by(Species) %>% select(-Sepal.Length, -Sepal.Width) %>% summarize_all(mean)
+```
+
+```{r, eval=FALSE}
+iris %>% group_by(Species) %>% select(contains("Petal")) %>% summarize_all(mean)
+```
+
+```{r, eval=FALSE}
+iris %>% group_by(Species) %>% select(-contains("Sepal")) %>% summarize_all(mean)
+```
+
+```{r, echo = FALSE}
+DF <- iris %>% group_by(Species) %>% select(-contains("Sepal")) %>% summarize_all(mean)
+```
+
 ***
 ```{r, echo = FALSE}
-kable(Temp)
-```
-
-mutate
-=======================
-class: small-code
-
-* Crea variables nuevas
-
-```{r, eval = FALSE}
-DF <- iris %>% mutate(Petal.Sepal.Ratio = Petal.Length/Sepal.Length) %>% select(Petal.Length, Sepal.Length, Petal.Sepal.Ratio, Species)
-```
-
-```{r, echo = FALSE}
-library(dplyr)
-data("iris")
-DF <- iris %>% mutate(Petal.Sepal.Ratio = Petal.Length/Sepal.Length) %>% select(Petal.Length, Sepal.Length, Petal.Sepal.Ratio, Species)
 kable(DF)
 ```
+
 
 Ejercicios
 ========================================================
 incremental: true
+class: small-code
 
 * Usando la base de datos *storm* del paquete *dplyr*, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
-    + solución:
-    + storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
-    + storms %>% filter(status == "hurricane" & !is.na(hu_diameter)) %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
-    + storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(funs(mean), na.rm = TRUE)
+    + soluciónes:
+```{r, eval = FALSE}
+storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
+```
+
+```{r, eval = FALSE}
+storms %>% filter(status == "hurricane" & !is.na(hu_diameter)) %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
+```
+
+```{r, eval = FALSE}
+storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(funs(mean), na.rm = TRUE)
+```
 
 Ejercicios 2
 ==================================
 incremental: true
+class: small-code
 
-* La base de datos mpg tiene datos de eficiencia vehicular en millas por galón en ciudad (*cty*) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 km = 1.609 millas; 1 galón = 3.78541 litros)
-    + Solution <- mpg %>% filter(year > 2004 & class == "compact") %>% mutate(kpl = (cty*1.609)/3.78541)
+* La base de datos `mpg` del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (*cty*) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 km = 1.609 millas; 1 galón = 3.78541 litros)
+
+```{r, eval = FALSE}
+Solution <- mpg %>% filter(year > 2004 & class == "compact") %>% mutate(kpl = (cty*1.609)/3.78541)
+```
 
 Bases de datos con que trabajar
 ========================================================

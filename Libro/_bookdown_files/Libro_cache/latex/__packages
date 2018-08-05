@@ -9,3 +9,4 @@ readr
 purrr
 stringr
 forcats
+bindrcpp

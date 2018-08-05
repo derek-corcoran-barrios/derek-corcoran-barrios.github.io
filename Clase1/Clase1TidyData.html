@@ -784,7 +784,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="default" data-transition-speed="default">
-<h1>Clase 1 Tidy Data y manipulación de datos</h1><p>Derek Corcoran<br/>&quot;04&#x2F;08, 2018&quot;</p>
+<h1>Clase 1 Tidy Data y manipulación de datos</h1><p>Derek Corcoran<br/>&quot;05&#x2F;08, 2018&quot;</p>
 
 <div class="slideContent" >
 
@@ -1112,34 +1112,207 @@ Consumo &lt;- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
 
 </section>
 <section data-transition="default" data-transition-speed="default">
+<h3>mutate</h3>
+<div class="slideContent small-code" >
+<ul>
+<li>Crea variables nuevas</li>
+</ul>
+
+<pre><code class="r">DF &lt;- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="right">Sepal.Length</th>
+<th align="right">Sepal.Width</th>
+<th align="right">Petal.Length</th>
+<th align="right">Petal.Width</th>
+<th align="left">Species</th>
+<th align="right">Petal.Sepal.Ratio</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="right">5.8</td>
+<td align="right">4.0</td>
+<td align="right">1.2</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+<td align="right">0.21</td>
+</tr>
+<tr>
+<td align="right">4.7</td>
+<td align="right">3.2</td>
+<td align="right">1.6</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+<td align="right">0.34</td>
+</tr>
+<tr>
+<td align="right">5.1</td>
+<td align="right">3.8</td>
+<td align="right">1.9</td>
+<td align="right">0.4</td>
+<td align="left">setosa</td>
+<td align="right">0.37</td>
+</tr>
+<tr>
+<td align="right">5.2</td>
+<td align="right">2.7</td>
+<td align="right">3.9</td>
+<td align="right">1.4</td>
+<td align="left">versicolor</td>
+<td align="right">0.75</td>
+</tr>
+<tr>
+<td align="right">6.4</td>
+<td align="right">2.9</td>
+<td align="right">4.3</td>
+<td align="right">1.3</td>
+<td align="left">versicolor</td>
+<td align="right">0.67</td>
+</tr>
+<tr>
+<td align="right">5.5</td>
+<td align="right">2.5</td>
+<td align="right">4.0</td>
+<td align="right">1.3</td>
+<td align="left">versicolor</td>
+<td align="right">0.73</td>
+</tr>
+<tr>
+<td align="right">6.5</td>
+<td align="right">3.0</td>
+<td align="right">5.8</td>
+<td align="right">2.2</td>
+<td align="left">virginica</td>
+<td align="right">0.89</td>
+</tr>
+<tr>
+<td align="right">6.0</td>
+<td align="right">2.2</td>
+<td align="right">5.0</td>
+<td align="right">1.5</td>
+<td align="left">virginica</td>
+<td align="right">0.83</td>
+</tr>
+<tr>
+<td align="right">6.1</td>
+<td align="right">2.6</td>
+<td align="right">5.6</td>
+<td align="right">1.4</td>
+<td align="left">virginica</td>
+<td align="right">0.92</td>
+</tr>
+<tr>
+<td align="right">5.9</td>
+<td align="right">3.0</td>
+<td align="right">5.1</td>
+<td align="right">1.8</td>
+<td align="left">virginica</td>
+<td align="right">0.86</td>
+</tr>
+</tbody></table>
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
 <h3>Pipeline (%&gt;%)</h3>
 <div class="slideContent small-code" >
 <ul>
-<li class="fragment">Ahorra líneas, se parte con un data.frame</li>
-<li class="fragment">Se agregan funciones de dplyr hasta llegar al resultado deseado</li>
+<li class="fragment">Para realizar varias operaciones de forma secuencial </li>
+<li class="fragment">sin recurrir a parentesis anidados </li>
+<li class="fragment">sobrescribir multiples bases de datos</li>
 </ul>
 
-<pre class="fragment"><code class="r">library(tidyverse)
-MEAN &lt;- iris %&gt;% group_by(Species) %&gt;% summarize(MEAN.PETAL = mean(Petal.Length))
+<pre class="fragment"><code class="r">x &lt;- c(1,4,6,8)
+y &lt;- round(mean(sqrt(log(x))),2)
+</code></pre>
+
+<ul>
+<li class="fragment">Que hice ahí?</li>
+</ul>
+
+<pre class="fragment"><code class="r">x &lt;- c(1,4,6,8)
+y &lt;- x %&gt;% log() %&gt;% sqrt() %&gt;% mean() %&gt;% round(2)
+</code></pre>
+
+<pre class="fragment"><code>[1] 0.99
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
+<h3>Pipeline (%&gt;%)</h3>
+<div class="slideContent small-code" >
+<ul>
+<li class="fragment">Muchos objetos intermedios</li>
+</ul>
+
+<pre class="fragment"><code class="r">DF &lt;- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
+BySpecies &lt;- group_by(DF, Species)
+Summary.Byspecies &lt;- summarize(BySpecies, MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
 </code></pre>
 
 <table><thead>
 <tr>
 <th align="left">Species</th>
-<th align="right">MEAN.PETAL</th>
+<th align="right">MEAN</th>
+<th align="right">SD</th>
 </tr>
 </thead><tbody>
 <tr>
 <td align="left">setosa</td>
-<td align="right">1.462</td>
+<td align="right">0.2927557</td>
+<td align="right">0.0347958</td>
 </tr>
 <tr>
 <td align="left">versicolor</td>
-<td align="right">4.260</td>
+<td align="right">0.7177285</td>
+<td align="right">0.0536255</td>
 </tr>
 <tr>
 <td align="left">virginica</td>
-<td align="right">5.552</td>
+<td align="right">0.8437495</td>
+<td align="right">0.0438064</td>
+</tr>
+</tbody></table>
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
+<h3>Pipeline (%&gt;%)</h3>
+<div class="slideContent small-code" >
+<ul>
+<li class="fragment">Con pipe</li>
+</ul>
+
+<pre class="fragment"><code class="r">Summary.Byspecies &lt;- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length), Species), MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left">Species</th>
+<th align="right">MEAN</th>
+<th align="right">SD</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">setosa</td>
+<td align="right">0.2927557</td>
+<td align="right">0.0347958</td>
+</tr>
+<tr>
+<td align="left">versicolor</td>
+<td align="right">0.7177285</td>
+<td align="right">0.0536255</td>
+</tr>
+<tr>
+<td align="left">virginica</td>
+<td align="right">0.8437495</td>
+<td align="right">0.0438064</td>
 </tr>
 </tbody></table>
 
@@ -1148,7 +1321,7 @@ MEAN &lt;- iris %&gt;% group_by(Species) %&gt;% summarize(MEAN.PETAL = mean(Peta
 </section>
 <section data-transition="default" data-transition-speed="default">
 <h3>Pipeline (%&gt;%) otro ejemplo</h3>
-<div class="slideContent" >
+<div class="slideContent small-code" >
 <pre><code class="r">library(tidyverse)
 MEAN &lt;- iris %&gt;% group_by(Species) %&gt;% summarize_all(mean)
 </code></pre>
@@ -1274,6 +1447,31 @@ DF &lt;- iris %&gt;% filter(Species != &quot;versicolor&quot;) %&gt;% group_by(S
 
 </section>
 <section data-transition="default" data-transition-speed="default">
+<h3>Ejemplos de filter</h3>
+<div class="slideContent small-code" >
+<pre><code class="r">DF &lt;- iris %&gt;% filter(Petal.Length &gt;= 4 &amp; Sepal.Length &gt;= 5) %&gt;% group_by(Species) %&gt;% summarise(N = n())
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left">Species</th>
+<th align="right">N</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">versicolor</td>
+<td align="right">39</td>
+</tr>
+<tr>
+<td align="left">virginica</td>
+<td align="right">49</td>
+</tr>
+</tbody></table>
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
 <h3>Más de una función</h3>
 <div class="slideContent small-code" >
 <pre><code class="r">data(&quot;iris&quot;)
@@ -1324,12 +1522,19 @@ DF &lt;- iris %&gt;% filter(Species != &quot;versicolor&quot;) %&gt;% group_by(S
 <h3>Select</h3>
 <div class="column column1 slideContent small-code" >
 <ul>
-<li>Selecciona columnas dentro de un data.frame</li>
+<li class="fragment">Selecciona columnas dentro de un data.frame, se pueden restar</li>
 </ul>
 
-<pre><code class="r">data(nasa)
-Nasa2 &lt;- as.data.frame(nasa)
-Temp &lt;- Nasa2 %&gt;% filter(year != 1995) %&gt;% group_by(year) %&gt;% select(contains(&quot;temp&quot;)) %&gt;% summarize_all(mean)
+<pre class="fragment"><code class="r">iris %&gt;% group_by(Species) %&gt;% select(Petal.Length, Petal.Width) %&gt;% summarize_all(mean)
+</code></pre>
+
+<pre class="fragment"><code class="r">iris %&gt;% group_by(Species) %&gt;% select(-Sepal.Length, -Sepal.Width) %&gt;% summarize_all(mean)
+</code></pre>
+
+<pre class="fragment"><code class="r">iris %&gt;% group_by(Species) %&gt;% select(contains(&quot;Petal&quot;)) %&gt;% summarize_all(mean)
+</code></pre>
+
+<pre class="fragment"><code class="r">iris %&gt;% group_by(Species) %&gt;% select(-contains(&quot;Sepal&quot;)) %&gt;% summarize_all(mean)
 </code></pre>
 
 
@@ -1340,958 +1545,25 @@ Temp &lt;- Nasa2 %&gt;% filter(year != 1995) %&gt;% group_by(year) %&gt;% select
 
 <table><thead>
 <tr>
-<th align="right">year</th>
-<th align="right">surftemp</th>
-<th align="right">temperature</th>
-</tr>
-</thead><tbody>
-<tr>
-<td align="right">1996</td>
-<td align="right">295.8562</td>
-<td align="right">297.1005</td>
-</tr>
-<tr>
-<td align="right">1997</td>
-<td align="right">296.7291</td>
-<td align="right">297.9566</td>
-</tr>
-<tr>
-<td align="right">1998</td>
-<td align="right">297.1221</td>
-<td align="right">298.7028</td>
-</tr>
-<tr>
-<td align="right">1999</td>
-<td align="right">295.6850</td>
-<td align="right">298.1364</td>
-</tr>
-<tr>
-<td align="right">2000</td>
-<td align="right">295.7263</td>
-<td align="right">298.3358</td>
-</tr>
-</tbody></table>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>mutate</h3>
-<div class="slideContent small-code" >
-<ul>
-<li>Crea variables nuevas</li>
-</ul>
-
-<pre><code class="r">DF &lt;- iris %&gt;% mutate(Petal.Sepal.Ratio = Petal.Length/Sepal.Length) %&gt;% select(Petal.Length, Sepal.Length, Petal.Sepal.Ratio, Species)
-</code></pre>
-
-<table><thead>
-<tr>
-<th align="right">Petal.Length</th>
-<th align="right">Sepal.Length</th>
-<th align="right">Petal.Sepal.Ratio</th>
 <th align="left">Species</th>
+<th align="right">Petal.Length</th>
+<th align="right">Petal.Width</th>
 </tr>
 </thead><tbody>
 <tr>
-<td align="right">1.4</td>
-<td align="right">5.1</td>
-<td align="right">0.2745098</td>
 <td align="left">setosa</td>
+<td align="right">1.462</td>
+<td align="right">0.246</td>
 </tr>
 <tr>
-<td align="right">1.4</td>
-<td align="right">4.9</td>
-<td align="right">0.2857143</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.3</td>
-<td align="right">4.7</td>
-<td align="right">0.2765957</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">4.6</td>
-<td align="right">0.3260870</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">5.0</td>
-<td align="right">0.2800000</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.7</td>
-<td align="right">5.4</td>
-<td align="right">0.3148148</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">4.6</td>
-<td align="right">0.3043478</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">5.0</td>
-<td align="right">0.3000000</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">4.4</td>
-<td align="right">0.3181818</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">4.9</td>
-<td align="right">0.3061224</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">5.4</td>
-<td align="right">0.2777778</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.6</td>
-<td align="right">4.8</td>
-<td align="right">0.3333333</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">4.8</td>
-<td align="right">0.2916667</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.1</td>
-<td align="right">4.3</td>
-<td align="right">0.2558140</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.2</td>
-<td align="right">5.8</td>
-<td align="right">0.2068966</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">5.7</td>
-<td align="right">0.2631579</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.3</td>
-<td align="right">5.4</td>
-<td align="right">0.2407407</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">5.1</td>
-<td align="right">0.2745098</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.7</td>
-<td align="right">5.7</td>
-<td align="right">0.2982456</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">5.1</td>
-<td align="right">0.2941176</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.7</td>
-<td align="right">5.4</td>
-<td align="right">0.3148148</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">5.1</td>
-<td align="right">0.2941176</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.0</td>
-<td align="right">4.6</td>
-<td align="right">0.2173913</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.7</td>
-<td align="right">5.1</td>
-<td align="right">0.3333333</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.9</td>
-<td align="right">4.8</td>
-<td align="right">0.3958333</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.6</td>
-<td align="right">5.0</td>
-<td align="right">0.3200000</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.6</td>
-<td align="right">5.0</td>
-<td align="right">0.3200000</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">5.2</td>
-<td align="right">0.2884615</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">5.2</td>
-<td align="right">0.2692308</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.6</td>
-<td align="right">4.7</td>
-<td align="right">0.3404255</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.6</td>
-<td align="right">4.8</td>
-<td align="right">0.3333333</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">5.4</td>
-<td align="right">0.2777778</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">5.2</td>
-<td align="right">0.2884615</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">5.5</td>
-<td align="right">0.2545455</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">4.9</td>
-<td align="right">0.3061224</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.2</td>
-<td align="right">5.0</td>
-<td align="right">0.2400000</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.3</td>
-<td align="right">5.5</td>
-<td align="right">0.2363636</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">4.9</td>
-<td align="right">0.2857143</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.3</td>
-<td align="right">4.4</td>
-<td align="right">0.2954545</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">5.1</td>
-<td align="right">0.2941176</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.3</td>
-<td align="right">5.0</td>
-<td align="right">0.2600000</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.3</td>
-<td align="right">4.5</td>
-<td align="right">0.2888889</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.3</td>
-<td align="right">4.4</td>
-<td align="right">0.2954545</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.6</td>
-<td align="right">5.0</td>
-<td align="right">0.3200000</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.9</td>
-<td align="right">5.1</td>
-<td align="right">0.3725490</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">4.8</td>
-<td align="right">0.2916667</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.6</td>
-<td align="right">5.1</td>
-<td align="right">0.3137255</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">4.6</td>
-<td align="right">0.3043478</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.5</td>
-<td align="right">5.3</td>
-<td align="right">0.2830189</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">1.4</td>
-<td align="right">5.0</td>
-<td align="right">0.2800000</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="right">4.7</td>
-<td align="right">7.0</td>
-<td align="right">0.6714286</td>
 <td align="left">versicolor</td>
+<td align="right">4.260</td>
+<td align="right">1.326</td>
 </tr>
 <tr>
-<td align="right">4.5</td>
-<td align="right">6.4</td>
-<td align="right">0.7031250</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.9</td>
-<td align="right">6.9</td>
-<td align="right">0.7101449</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.0</td>
-<td align="right">5.5</td>
-<td align="right">0.7272727</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.6</td>
-<td align="right">6.5</td>
-<td align="right">0.7076923</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.5</td>
-<td align="right">5.7</td>
-<td align="right">0.7894737</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.7</td>
-<td align="right">6.3</td>
-<td align="right">0.7460317</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.3</td>
-<td align="right">4.9</td>
-<td align="right">0.6734694</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.6</td>
-<td align="right">6.6</td>
-<td align="right">0.6969697</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.9</td>
-<td align="right">5.2</td>
-<td align="right">0.7500000</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.5</td>
-<td align="right">5.0</td>
-<td align="right">0.7000000</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.2</td>
-<td align="right">5.9</td>
-<td align="right">0.7118644</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.0</td>
-<td align="right">6.0</td>
-<td align="right">0.6666667</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.7</td>
-<td align="right">6.1</td>
-<td align="right">0.7704918</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.6</td>
-<td align="right">5.6</td>
-<td align="right">0.6428571</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.4</td>
-<td align="right">6.7</td>
-<td align="right">0.6567164</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.5</td>
-<td align="right">5.6</td>
-<td align="right">0.8035714</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.1</td>
-<td align="right">5.8</td>
-<td align="right">0.7068966</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.5</td>
-<td align="right">6.2</td>
-<td align="right">0.7258065</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.9</td>
-<td align="right">5.6</td>
-<td align="right">0.6964286</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.8</td>
-<td align="right">5.9</td>
-<td align="right">0.8135593</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.0</td>
-<td align="right">6.1</td>
-<td align="right">0.6557377</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.9</td>
-<td align="right">6.3</td>
-<td align="right">0.7777778</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.7</td>
-<td align="right">6.1</td>
-<td align="right">0.7704918</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.3</td>
-<td align="right">6.4</td>
-<td align="right">0.6718750</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.4</td>
-<td align="right">6.6</td>
-<td align="right">0.6666667</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.8</td>
-<td align="right">6.8</td>
-<td align="right">0.7058824</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">5.0</td>
-<td align="right">6.7</td>
-<td align="right">0.7462687</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.5</td>
-<td align="right">6.0</td>
-<td align="right">0.7500000</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.5</td>
-<td align="right">5.7</td>
-<td align="right">0.6140351</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.8</td>
-<td align="right">5.5</td>
-<td align="right">0.6909091</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.7</td>
-<td align="right">5.5</td>
-<td align="right">0.6727273</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.9</td>
-<td align="right">5.8</td>
-<td align="right">0.6724138</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">5.1</td>
-<td align="right">6.0</td>
-<td align="right">0.8500000</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.5</td>
-<td align="right">5.4</td>
-<td align="right">0.8333333</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.5</td>
-<td align="right">6.0</td>
-<td align="right">0.7500000</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.7</td>
-<td align="right">6.7</td>
-<td align="right">0.7014925</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.4</td>
-<td align="right">6.3</td>
-<td align="right">0.6984127</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.1</td>
-<td align="right">5.6</td>
-<td align="right">0.7321429</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.0</td>
-<td align="right">5.5</td>
-<td align="right">0.7272727</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.4</td>
-<td align="right">5.5</td>
-<td align="right">0.8000000</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.6</td>
-<td align="right">6.1</td>
-<td align="right">0.7540984</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.0</td>
-<td align="right">5.8</td>
-<td align="right">0.6896552</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.3</td>
-<td align="right">5.0</td>
-<td align="right">0.6600000</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.2</td>
-<td align="right">5.6</td>
-<td align="right">0.7500000</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.2</td>
-<td align="right">5.7</td>
-<td align="right">0.7368421</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.2</td>
-<td align="right">5.7</td>
-<td align="right">0.7368421</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.3</td>
-<td align="right">6.2</td>
-<td align="right">0.6935484</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">3.0</td>
-<td align="right">5.1</td>
-<td align="right">0.5882353</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">4.1</td>
-<td align="right">5.7</td>
-<td align="right">0.7192982</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="right">6.0</td>
-<td align="right">6.3</td>
-<td align="right">0.9523810</td>
 <td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.1</td>
-<td align="right">5.8</td>
-<td align="right">0.8793103</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.9</td>
-<td align="right">7.1</td>
-<td align="right">0.8309859</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.6</td>
-<td align="right">6.3</td>
-<td align="right">0.8888889</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.8</td>
-<td align="right">6.5</td>
-<td align="right">0.8923077</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">6.6</td>
-<td align="right">7.6</td>
-<td align="right">0.8684211</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">4.5</td>
-<td align="right">4.9</td>
-<td align="right">0.9183673</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">6.3</td>
-<td align="right">7.3</td>
-<td align="right">0.8630137</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.8</td>
-<td align="right">6.7</td>
-<td align="right">0.8656716</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">6.1</td>
-<td align="right">7.2</td>
-<td align="right">0.8472222</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.1</td>
-<td align="right">6.5</td>
-<td align="right">0.7846154</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.3</td>
-<td align="right">6.4</td>
-<td align="right">0.8281250</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.5</td>
-<td align="right">6.8</td>
-<td align="right">0.8088235</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.0</td>
-<td align="right">5.7</td>
-<td align="right">0.8771930</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.1</td>
-<td align="right">5.8</td>
-<td align="right">0.8793103</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.3</td>
-<td align="right">6.4</td>
-<td align="right">0.8281250</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.5</td>
-<td align="right">6.5</td>
-<td align="right">0.8461538</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">6.7</td>
-<td align="right">7.7</td>
-<td align="right">0.8701299</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">6.9</td>
-<td align="right">7.7</td>
-<td align="right">0.8961039</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.0</td>
-<td align="right">6.0</td>
-<td align="right">0.8333333</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.7</td>
-<td align="right">6.9</td>
-<td align="right">0.8260870</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">4.9</td>
-<td align="right">5.6</td>
-<td align="right">0.8750000</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">6.7</td>
-<td align="right">7.7</td>
-<td align="right">0.8701299</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">4.9</td>
-<td align="right">6.3</td>
-<td align="right">0.7777778</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.7</td>
-<td align="right">6.7</td>
-<td align="right">0.8507463</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">6.0</td>
-<td align="right">7.2</td>
-<td align="right">0.8333333</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">4.8</td>
-<td align="right">6.2</td>
-<td align="right">0.7741935</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">4.9</td>
-<td align="right">6.1</td>
-<td align="right">0.8032787</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.6</td>
-<td align="right">6.4</td>
-<td align="right">0.8750000</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.8</td>
-<td align="right">7.2</td>
-<td align="right">0.8055556</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">6.1</td>
-<td align="right">7.4</td>
-<td align="right">0.8243243</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">6.4</td>
-<td align="right">7.9</td>
-<td align="right">0.8101266</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.6</td>
-<td align="right">6.4</td>
-<td align="right">0.8750000</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.1</td>
-<td align="right">6.3</td>
-<td align="right">0.8095238</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.6</td>
-<td align="right">6.1</td>
-<td align="right">0.9180328</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">6.1</td>
-<td align="right">7.7</td>
-<td align="right">0.7922078</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.6</td>
-<td align="right">6.3</td>
-<td align="right">0.8888889</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.5</td>
-<td align="right">6.4</td>
-<td align="right">0.8593750</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">4.8</td>
-<td align="right">6.0</td>
-<td align="right">0.8000000</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.4</td>
-<td align="right">6.9</td>
-<td align="right">0.7826087</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.6</td>
-<td align="right">6.7</td>
-<td align="right">0.8358209</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.1</td>
-<td align="right">6.9</td>
-<td align="right">0.7391304</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.1</td>
-<td align="right">5.8</td>
-<td align="right">0.8793103</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.9</td>
-<td align="right">6.8</td>
-<td align="right">0.8676471</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.7</td>
-<td align="right">6.7</td>
-<td align="right">0.8507463</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.2</td>
-<td align="right">6.7</td>
-<td align="right">0.7761194</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.0</td>
-<td align="right">6.3</td>
-<td align="right">0.7936508</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.2</td>
-<td align="right">6.5</td>
-<td align="right">0.8000000</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.4</td>
-<td align="right">6.2</td>
-<td align="right">0.8709677</td>
-<td align="left">virginica</td>
-</tr>
-<tr>
-<td align="right">5.1</td>
-<td align="right">5.9</td>
-<td align="right">0.8644068</td>
-<td align="left">virginica</td>
+<td align="right">5.552</td>
+<td align="right">2.026</td>
 </tr>
 </tbody></table>
 
@@ -2300,31 +1572,36 @@ Temp &lt;- Nasa2 %&gt;% filter(year != 1995) %&gt;% group_by(year) %&gt;% select
 </section>
 <section data-transition="default" data-transition-speed="default">
 <h3>Ejercicios</h3>
-<div class="slideContent" >
+<div class="slideContent small-code" >
 <ul>
 <li class="fragment">Usando la base de datos <em>storm</em> del paquete <em>dplyr</em>, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
 
 <ul>
-<li class="fragment">solución:</li>
-<li class="fragment">storms %&gt;% filter(status == &ldquo;hurricane&rdquo;) %&gt;% select(year, wind, hu_diameter) %&gt;% group_by(year) %&gt;% summarize_all(mean)</li>
-<li class="fragment">storms %&gt;% filter(status == &ldquo;hurricane&rdquo; &amp; !is.na(hu_diameter)) %&gt;% select(year, wind, hu_diameter) %&gt;% group_by(year) %&gt;% summarize_all(mean)</li>
-<li class="fragment">storms %&gt;% filter(status == &ldquo;hurricane&rdquo;) %&gt;% select(year, wind, hu_diameter) %&gt;% group_by(year) %&gt;% summarize_all(funs(mean), na.rm = TRUE)</li>
+<li class="fragment">soluciónes:</li>
 </ul></li>
 </ul>
+
+<pre class="fragment"><code class="r">storms %&gt;% filter(status == &quot;hurricane&quot;) %&gt;% select(year, wind, hu_diameter) %&gt;% group_by(year) %&gt;% summarize_all(mean)
+</code></pre>
+
+<pre class="fragment"><code class="r">storms %&gt;% filter(status == &quot;hurricane&quot; &amp; !is.na(hu_diameter)) %&gt;% select(year, wind, hu_diameter) %&gt;% group_by(year) %&gt;% summarize_all(mean)
+</code></pre>
+
+<pre class="fragment"><code class="r">storms %&gt;% filter(status == &quot;hurricane&quot;) %&gt;% select(year, wind, hu_diameter) %&gt;% group_by(year) %&gt;% summarize_all(funs(mean), na.rm = TRUE)
+</code></pre>
 
 </div>
 
 </section>
 <section data-transition="default" data-transition-speed="default">
 <h3>Ejercicios 2</h3>
-<div class="slideContent" >
+<div class="slideContent small-code" >
 <ul>
-<li class="fragment">La base de datos mpg tiene datos de eficiencia vehicular en millas por galón en ciudad (<em>cty</em>) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 km = 1.609 millas; 1 galón = 3.78541 litros)
-
-<ul>
-<li class="fragment">Solution &lt;- mpg %&gt;% filter(year &gt; 2004 &amp; class == &ldquo;compact&rdquo;) %&gt;% mutate(kpl = (cty*1.609)/3.78541)</li>
-</ul></li>
+<li class="fragment">La base de datos <code>mpg</code> del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (<em>cty</em>) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 km = 1.609 millas; 1 galón = 3.78541 litros)</li>
 </ul>
+
+<pre class="fragment"><code class="r">Solution &lt;- mpg %&gt;% filter(year &gt; 2004 &amp; class == &quot;compact&quot;) %&gt;% mutate(kpl = (cty*1.609)/3.78541)
+</code></pre>
 
 </div>
 
