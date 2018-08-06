@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>BIO 4022. Manipulación de datos e investigación reproducible en R</title>
+  <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="BIO 4022. Manipulación de datos e investigación reproducible en R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="BIO 4022. Manipulación de datos e investigación reproducible en R" />
+  
+  <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  
+
+<meta name="author" content="Derek Corcoran">
+
+
+<meta name="date" content="2018-08-06">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="reproducible.html">
+<link rel="next" href="tidyverso.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Manipupación de datos en R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Parte I</a></li>
+<li class="chapter" data-level="1" data-path="requerimientos.html"><a href="requerimientos.html"><i class="fa fa-check"></i><b>1</b> Requerimientos</a><ul>
+<li class="chapter" data-level="1.1" data-path="requerimientos.html"><a href="requerimientos.html#si-nunca-has-usado-r-antes"><i class="fa fa-check"></i><b>1.1</b> Si nunca has usado R antes</a></li>
+<li class="chapter" data-level="1.2" data-path="requerimientos.html"><a href="requerimientos.html#descripcion"><i class="fa fa-check"></i><b>1.2</b> Descripción</a></li>
+<li class="chapter" data-level="1.3" data-path="requerimientos.html"><a href="requerimientos.html#objetivos"><i class="fa fa-check"></i><b>1.3</b> Objetivos</a></li>
+<li class="chapter" data-level="1.4" data-path="requerimientos.html"><a href="requerimientos.html#contenidos"><i class="fa fa-check"></i><b>1.4</b> Contenidos</a></li>
+<li class="chapter" data-level="1.5" data-path="requerimientos.html"><a href="requerimientos.html#metodologia"><i class="fa fa-check"></i><b>1.5</b> Metodología</a></li>
+<li class="chapter" data-level="1.6" data-path="requerimientos.html"><a href="requerimientos.html#evaluacion"><i class="fa fa-check"></i><b>1.6</b> Evaluación</a></li>
+<li class="chapter" data-level="1.7" data-path="requerimientos.html"><a href="requerimientos.html#objetivo-del-curso"><i class="fa fa-check"></i><b>1.7</b> Objetivo del curso</a></li>
+<li class="chapter" data-level="1.8" data-path="requerimientos.html"><a href="requerimientos.html#bibliografia"><i class="fa fa-check"></i><b>1.8</b> Bibliografía</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>2</b> Tidy Data y manipulación de datos</a><ul>
+<li class="chapter" data-level="2.1" data-path="tidydata.html"><a href="tidydata.html#paquetes-necesarios-para-este-capitulo"><i class="fa fa-check"></i><b>2.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="2.2" data-path="tidydata.html"><a href="tidydata.html#tidy-data"><i class="fa fa-check"></i><b>2.2</b> Tidy data</a></li>
+<li class="chapter" data-level="2.3" data-path="tidydata.html"><a href="tidydata.html#dplyr"><i class="fa fa-check"></i><b>2.3</b> dplyr</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="tidydata.html"><a href="tidydata.html#summarize"><i class="fa fa-check"></i><b>2.3.1</b> summarize</a></li>
+<li class="chapter" data-level="2.3.2" data-path="tidydata.html"><a href="tidydata.html#group_by"><i class="fa fa-check"></i><b>2.3.2</b> group_by</a></li>
+<li class="chapter" data-level="2.3.3" data-path="tidydata.html"><a href="tidydata.html#mutate"><i class="fa fa-check"></i><b>2.3.3</b> mutate</a></li>
+<li class="chapter" data-level="2.3.4" data-path="tidydata.html"><a href="tidydata.html#pipeline"><i class="fa fa-check"></i><b>2.3.4</b> Pipeline (%&gt;%)</a></li>
+<li class="chapter" data-level="2.3.5" data-path="tidydata.html"><a href="tidydata.html#filter"><i class="fa fa-check"></i><b>2.3.5</b> filter</a></li>
+<li class="chapter" data-level="2.3.6" data-path="tidydata.html"><a href="tidydata.html#select"><i class="fa fa-check"></i><b>2.3.6</b> select</a></li>
+<li class="chapter" data-level="2.3.7" data-path="tidydata.html"><a href="tidydata.html#ejercicios"><i class="fa fa-check"></i><b>2.3.7</b> Ejercicios</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="reproducible.html"><a href="reproducible.html"><i class="fa fa-check"></i><b>3</b> Investigación reproducible</a><ul>
+<li class="chapter" data-level="3.1" data-path="reproducible.html"><a href="reproducible.html#paquetes-necesarios-para-este-capitulo-1"><i class="fa fa-check"></i><b>3.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="3.2" data-path="reproducible.html"><a href="reproducible.html#investigacion-reproducible"><i class="fa fa-check"></i><b>3.2</b> Investigación reproducible</a></li>
+<li class="chapter" data-level="3.3" data-path="reproducible.html"><a href="reproducible.html#guardando-nuestro-proyecto-en-github"><i class="fa fa-check"></i><b>3.3</b> Guardando nuestro proyecto en github</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="reproducible.html"><a href="reproducible.html#que-es-github"><i class="fa fa-check"></i><b>3.3.1</b> Que es github?</a></li>
+<li class="chapter" data-level="3.3.2" data-path="reproducible.html"><a href="reproducible.html#creando-un-proyecto-de-github-en-rstudio"><i class="fa fa-check"></i><b>3.3.2</b> creando un proyecto de github en RStudio</a></li>
+<li class="chapter" data-level="3.3.3" data-path="reproducible.html"><a href="reproducible.html#los-tres-principales-pasos-de-un-repositorio"><i class="fa fa-check"></i><b>3.3.3</b> Los tres principales pasos de un repositorio</a></li>
+<li class="chapter" data-level="3.3.4" data-path="reproducible.html"><a href="reproducible.html#reproducibilidad-en-r"><i class="fa fa-check"></i><b>3.3.4</b> Reproducibilidad en R</a></li>
+<li class="chapter" data-level="3.3.5" data-path="reproducible.html"><a href="reproducible.html#creando-un-rmarkdown"><i class="fa fa-check"></i><b>3.3.5</b> Creando un Rmarkdown</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="titulo-1.html"><a href="titulo-1.html"><i class="fa fa-check"></i>Título 1</a><ul>
+<li class="chapter" data-level="" data-path="titulo-1.html"><a href="titulo-1.html#subtitulo-2"><i class="fa fa-check"></i>subtitulo 2</a><ul>
+<li class="chapter" data-level="" data-path="titulo-1.html"><a href="titulo-1.html#subtitulo-3"><i class="fa fa-check"></i>subtítulo 3</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="tidyverso.html"><a href="tidyverso.html"><i class="fa fa-check"></i><b>4</b> El Tidyverso</a></li>
+<li class="chapter" data-level="5" data-path="visualizacion.html"><a href="visualizacion.html"><i class="fa fa-check"></i><b>5</b> Visualización de datos</a><ul>
+<li class="chapter" data-level="5.1" data-path="visualizacion.html"><a href="visualizacion.html#el-esqueleto"><i class="fa fa-check"></i><b>5.1</b> El esqueleto</a></li>
+<li class="chapter" data-level="5.2" data-path="visualizacion.html"><a href="visualizacion.html#geom_algo"><i class="fa fa-check"></i><b>5.2</b> geom_algo</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="visualizacion.html"><a href="visualizacion.html#una-variable-categorica-una-continua"><i class="fa fa-check"></i><b>5.2.1</b> Una variable categórica una continua</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="visualizacion.html"><a href="visualizacion.html#argumentos"><i class="fa fa-check"></i><b>5.3</b> Argumentos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>6</b> Modelos en R</a></li>
+<li class="chapter" data-level="7" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>7</b> Loops (purrr) y bibliografía (rticles)</a></li>
+<li class="chapter" data-level="8" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>8</b> Presentaciones en R</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="9" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>9</b> Soluciones a problemas</a><ul>
+<li class="chapter" data-level="9.1" data-path="soluciones.html"><a href="soluciones.html#capitulo-1"><i class="fa fa-check"></i><b>9.1</b> Capítulo 1</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-1"><i class="fa fa-check"></i><b>9.1.1</b> Ejercicio 1</a></li>
+<li class="chapter" data-level="9.1.2" data-path="soluciones.html"><a href="soluciones.html#ejercicio-2-1"><i class="fa fa-check"></i><b>9.1.2</b> Ejercicio 2</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BIO 4022. Manipulación de datos e investigación reproducible en R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="titulo-1" class="section level1 unnumbered">
+<h1>Título 1</h1>
+<div id="subtitulo-2" class="section level2 unnumbered">
+<h2>subtitulo 2</h2>
+<div id="subtitulo-3" class="section level3 unnumbered">
+<h3>subtítulo 3</h3>
+<p>se vería de la siguiente manera en el código</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># Título 1 {-}</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">## subtitulo 2 {-}</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">### subtítulo 3 {-}</a></code></pre></div>
+<div id="chunks" class="section level4">
+<h4><span class="header-section-number">3.3.5.2</span> Chunks</h4>
+<div id="opciones-de-los-chunks" class="section level5">
+<h5><span class="header-section-number">3.3.5.2.1</span> Opciones de los chunks</h5>
+</div>
+</div>
+<div id="inline-code" class="section level4">
+<h4><span class="header-section-number">3.3.5.3</span> inline code</h4>
+</div>
+<div id="tablas-en-rmarkdown" class="section level4">
+<h4><span class="header-section-number">3.3.5.4</span> Tablas en Rmarkdown</h4>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="reproducible.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tidyverso.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["Libro.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

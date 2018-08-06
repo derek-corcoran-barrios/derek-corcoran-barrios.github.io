@@ -1,4 +1,4 @@
-# Soluciones a porblemas {#soluciones}
+# Soluciones a problemas {#soluciones}
 
 Todos los problemas en programación tienen más de una forma de llegar a ellos, es por esto que las soluciones acá mostradas deben tomarse solo como una referencia, y revisar si el resultado final de tu código (aunque sea distinto de este), sea igual al que presentamos.
 

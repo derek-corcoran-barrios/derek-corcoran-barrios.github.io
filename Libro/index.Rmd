@@ -12,22 +12,20 @@ description: "Este libro es una compañia al curso BIO4022, análisis y manipula
 
 # Parte I {-}
 
-# Requerimientos
+# Requerimientos {-}
 
-La última versión de RStudio y R [@R-base], también se requiere de los paquetes *pacman*, *tidyverse* y *tinytex*. 
-
-Si no han usado R o RStudio, pueden ver un video de como instalar ambos programas, asi como los paquetes más necesarios para este curso, que son *pacman*, *rmarkdown*, *tidyverse* y *tinytex* en el siguiente [link](https://youtu.be/RtkCAKXsVbw).
+Para comenzar el trabajo se necesita la última versión de R y RStudio [@R-base].También se requiere de los paquetes *pacman*, *rmarkdown*, *tidyverse* y *tinytex*. Si no se ha usado R o RStudio anteriormente, el siguiente video muestra cómo instalar ambos programas y los paquetes necesarios para este curso en el siguiente [link](https://youtu.be/RtkCAKXsVbw).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/RtkCAKXsVbw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-El código para la instalación de esos paquetes es el siguiente
+El código para la instalación de esos paquetes es el siguiente:
 
 ```{r eval=FALSE}
-install.packages("pacman", "rmarldown", "tidyverse", "tinytex")
+install.packages("pacman", "rmarkdown", "tidyverse", "tinytex")
 ```
 
 
-Si necesitan ayuda para la instalación contactarse con elinstructor del curso.
+En caso de necesitar ayuda para la instalación, contactarse con el instructor del curso.
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
@@ -36,9 +34,9 @@ knitr::write_bib(c(
 ), 'packages.bib')
 ```
 
-## Si nunca has usado R antes
+## Antes de comenzar
 
-Si nunca han usado `R` antes de este curso, porfavor installar el paquete [Swirl](http://swirlstats.com/students.html) [@Kross2017] y realizar los primeros 7 modulos del programa *R Programming: The basics of programming in R* que incluye:
+Si nunca se ha trabajado con `R` antes de este curso, una buena herramienta es provista por el paquete [Swirl](http://swirlstats.com/students.html) [@Kross2017]. Para comenzar la práctica, realizar los primeros 7 modulos del programa *R Programming: The basics of programming in R* que incluye:
 
 * Basic Building Blocks
 * Workspace and Files
@@ -49,47 +47,45 @@ Si nunca han usado `R` antes de este curso, porfavor installar el paquete [Swirl
 * Matrices and Data Frames
 
 
-Pueden ver un video explicativo de como usar swirl en el siguiente [Video](https://youtu.be/w6L7Ye18yPE)
+El siguiente link muestra un video explicativo de cómo usar el paquete swirl [Video](https://youtu.be/w6L7Ye18yPE)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/w6L7Ye18yPE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-## Descripción
+## Descripción del curso
 
-Este curso está enfocado en entregar los principios de investigación reproducible en R, con énfasis en la recopilación y/o lectura de datos de forma reproducible y automatizada. Para esto se trabajará con bases de datos complejos, las cuales deberán ser transformadas y organizadas para optimizar su análisis. Se generarán documentos reproducibles integrando en un documento código, bibliografía, exploración y análisis de datos. Se culminará el curso con la generación de un manuscrito, presentación y/o documento interactivo reproducible.
+Este curso está enfocado en entregar principios básicos de investigación reproducible en R, con énfasis en la recopilación y/o lectura de datos de forma reproducible y automatizada. Para esto se trabajará con bases de datos complejas, las cuales deberán ser transformadas y organizadas para optimizar su análisis. Se generarán documentos reproducibles integrando en un documento: código, bibliografía, exploración y análisis de datos. Se culminará el curso con la generación de un manuscrito, una presentación y/o un documento interactivo reproducible.
 
-##  Objetivos
+##  Objetivos del curso
 
-1. Conocer y entender el concepto de Investigación reproducible como un forma y filosofía de investigación que permite que las investigaciones sean más ordenadas y replicables, desde  la toma de datos hasta la escritura de resultados.
+1. Conocer y entender el concepto de investigación reproducible como una forma y filosofía de trabajo que permite que las investigaciones sean más ordenadas y replicables, desde  la toma de datos hasta la escritura de resultados.
 
 2. Conocer y aplicar el concepto de pipeline, el cual permite generar una modularidad desde la toma de datos hasta la escritura de resultados, donde la corrección independiente de un paso tiene un efecto cascada sobre el resultado final.
 
-3. Aprender buenas prácticas de recolección y estandarización de bases de datos, con la finalidad de optimizar el análisis de datos y la revisión de estas por pares.
+3. Aprender buenas prácticas de recolección y estandarización de bases de datos, con la finalidad de optimizar el análisis de datos y la revisión de éstas por pares.
 
 4. Realizar análisis críticos de la naturaleza de los datos al realizar análisis exploratorios, que permitirán determinar la mejor forma de comprobar hipótesis asociadas a estas bases de datos.
 
 ## Contenidos
 
-+  Capítulo \@ref(tidydata) *Tidy Data*: En este capítulo, aprenderemos de como optimizar una de base de datos, limpieza y transformación de bases de datos, que es una base de datos *tidy*, y como manipular estas bases de datos con el paquete *dplyr* [@R-dplyr]
++  Capítulo \@ref(tidydata) *Tidy Data*: En este capítulo se aprenderá a cómo optimizar una de base de datos, sobre la limpieza y transformación de bases de datos, qué es una base de datos *tidy* y cómo manipular estas bases de datos con el paquete *dplyr* [@R-dplyr].
 
-+  Capitulo \@ref(reproducible) *Investigación reproducible*: entenderemos el como generar un documento que combine códigos de `R` y texto para generar documentos reporducibles utilizando el paquete *rmarkdown* [@Allaire2018], además veremos como al usar RStudio podemos guardar nuestro proyecto en un repositorio de github.
++  Capítulo \@ref(reproducible) *Investigación reproducible*: En este capítulo se trabajará en la confección de un documento que combine códigos de `R` y texto para generar documentos reproducibles utilizando el paquete *rmarkdown* [@Allaire2018]. Además, se verá cómo al usar RStudio se pueden guardar los proyectos en un repositorio de github.
     
-+ Capitulo \@ref(tidyverso) *El tidyverso*, el concepto de pipeline. Limpieza de  datos complejos
++ Capítulo \@ref(tidyverso) *El tidyverso* y el concepto de pipeline:En este capítulo se aprenderá sobre la limpieza de datos complejos.
 
-5. Visualización de datos, visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
+4. Visualización de datos, visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
 
-6. Creación de funciones propias y loops. Generación de funciones propias en R y loops
+5. Creación de funciones propias y loops. Generación de funciones propias en R y loops
 
-7. Escritura de manuscritos en R, transformación de documentos Rmd en un manuscrito
+6. Escritura de manuscritos en R, transformación de documentos Rmd en un manuscrito
 
-8. Presentaciones en R y generar documentos interactivos. Transformación de datos en una presentación o en una Shiny app. Realizar una presentación o aplicación en R.
+7. Presentaciones en R y generar documentos interactivos. Transformación de datos en una presentación o en una Shiny app. Realizar una presentación o aplicación en R.
 
 ## Metodología
 
-Todas las clases serán prácticas y estarán divididas en dos partes: I. Clases de principios y herramientas, donde se presentarán los principios de investigación reproducible y tidy data, junto con las herramientas actuales más utilizadas, y II. Clases aplicadas donde se trabajará con
-datos propios para desarrollar un documento reproducible. A los estudiantes que no cuenten con datos propios, se les será proporcionado un set de datos o se simularán dependiendo del caso.
+Todas las clases estarán divididas en dos partes: I. Clases expositivas de principios y herramientas, donde se presentarán los principios de investigación reproducible y tidy data, junto con las herramientas actuales más utilizadas, y II. Clases prácticas donde cada estudiante trabajará con datos propios para desarrollar un documento reproducible. Los estudiantes que no cuenten con datos propios podrán acceder a sets de datos para su trabajo o podrán simularlos, dependiendo del caso.
 
-Además se deberán generar informes y presentaciones siguiendo los principios de investigación reproducible, usando datos propios o entregados. Se realizará un informe final, en el cual se espera un trabajo 
-
+Además, se deberán generar informes y presentaciones siguiendo los principios de investigación reproducible, en base al trabajo con sus datos. Se realizará un informe final, en el cual se espera un trabajo que compile los conociminetos adquiridos durante el curso.
 
 ##  Evaluación
 
@@ -98,9 +94,9 @@ Además se deberán generar informes y presentaciones siguiendo los principios d
 * Evaluación 3: Informe final 50%
 
 
-## Objetivo del curso
+## Libros de consulta
 
-Aprender los principios de investigación reproducible y tidy data a través del aprendizaje de programación y uso de R. Los principios de este curso están explicados en los siguientes libros gratuitos.
+Los principios de este curso están explicados en los siguientes libros gratuitos.
 
 * Gandrud, Christopher. Reproducible Research with R and R Studio. CRC Press, 2013. Available for free in the following
 [link](https://englianhu.files.wordpress.com/2016/01/reproducible-research-with-r-and-studio-2nd-edition.pdf)

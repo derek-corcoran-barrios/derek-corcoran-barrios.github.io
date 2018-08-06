@@ -105,19 +105,48 @@ Finalmente *push* te permitirá guardar los cambios en tu repositorio remoto, lo
 knitr::include_graphics("Push.png")
 ```
 
-
 ### Reproducibilidad en R
+
+Existen varios paquetes que permiten que hagamos investigación reproducible en `R`, pero sin duda los más relevantes son *rmarkdown* y *knitr*. Ambos paquetes funcionana en conjunto cuando generamos un archivo *Rmd* (Rmarkdown), en el cual ocupamos al mismo tiempo texto, código de R y otros elementos para generar un documento word, pdf, página web, presentación y/o aplicación web (fig \@ref(fig:Rmark)).
+
+```{r Rmark, echo = FALSE, fig.cap= "El objetivo de Rmarkdown es el unir código de r con texto y datos para generar un documento reproducible", out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics("Rmark.png")
+```
 
 ### Creando un Rmarkdown
 
-### Chunks
+Para crear un archivo Rmarkdown, simplemente ve a el menu *File > New file > Rmarkdown* y con eso habrás creado un nuevo archivo *Rmd*, veremos en momentos algunos de los elementos más típicos de un arcchivo Rmarkdown.
 
-#### Opciones de los chunks
+#### Markdown
 
-### Markdown
+El markdown es la parte del archivo en que simplemente escribimos texto, aunque tiene algunos detalles para el formato como generar texto en negrita, cursiva, títulos y subtitulos. 
 
-### inline code
+Para hacer que un texto este en **negrita**, deben ponerlo entre dos asteriscos `**negrita**`, para que un texto aparezca en *cursiva* debe estar entre asteriscos `*cursiva*`, otros ejemplos son los titulos de distintos niveles, los cuales se denotan con distintos números de `#`, así los siguientes 4 títulos o subtitulos:
 
-### Tablas en Rmarkdown
+## subtitulo 1 {-}
 
-Here is a review of existing methods.
+### subtítulo 2 {-}
+
+#### subtítulo 3 {-}
+
+##### subtítulo 4 {-}
+
+se vería de la siguiente manera en el código
+
+```{r, eval = FALSE}
+## subtitulo 1
+
+### subtítulo 2
+
+#### subtítulo 3
+
+##### subtítulo 4
+```
+
+#### Chunks
+
+##### Opciones de los chunks
+
+#### inline code
+
+#### Tablas en Rmarkdown

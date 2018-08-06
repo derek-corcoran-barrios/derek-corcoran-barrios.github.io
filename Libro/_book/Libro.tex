@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-08-05}
+    \date{2018-08-06}
 
 \usepackage{booktabs}
 
@@ -141,34 +141,35 @@
 \addcontentsline{toc}{chapter}{Parte I}
 
 \hypertarget{requerimientos}{%
-\chapter{Requerimientos}\label{requerimientos}}
+\chapter*{Requerimientos}\label{requerimientos}}
+\addcontentsline{toc}{chapter}{Requerimientos}
 
-La última versión de RStudio y R \citep{R-base}, también se requiere de
-los paquetes \emph{pacman}, \emph{tidyverse} y \emph{tinytex}.
+Para comenzar el trabajo se necesita la última versión de R y RStudio
+\citep{R-base}.También se requiere de los paquetes \emph{pacman},
+\emph{rmarkdown}, \emph{tidyverse} y \emph{tinytex}. Si no se ha usado R
+o RStudio anteriormente, el siguiente video muestra cómo instalar ambos
+programas y los paquetes necesarios para este curso en el siguiente
+\href{https://youtu.be/RtkCAKXsVbw}{link}.
 
-Si no han usado R o RStudio, pueden ver un video de como instalar ambos
-programas, asi como los paquetes más necesarios para este curso, que son
-\emph{pacman}, \emph{rmarkdown}, \emph{tidyverse} y \emph{tinytex} en el
-siguiente \href{https://youtu.be/RtkCAKXsVbw}{link}.
-
-El código para la instalación de esos paquetes es el siguiente
+El código para la instalación de esos paquetes es el siguiente:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{install.packages}\NormalTok{(}\StringTok{"pacman"}\NormalTok{, }\StringTok{"rmarldown"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"tinytex"}\NormalTok{)}
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"pacman"}\NormalTok{, }\StringTok{"rmarkdown"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"tinytex"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Si necesitan ayuda para la instalación contactarse con elinstructor del
-curso.
+En caso de necesitar ayuda para la instalación, contactarse con el
+instructor del curso.
 
-\hypertarget{si-nunca-has-usado-r-antes}{%
-\section{Si nunca has usado R antes}\label{si-nunca-has-usado-r-antes}}
+\hypertarget{antes-de-comenzar}{%
+\section{Antes de comenzar}\label{antes-de-comenzar}}
 
-Si nunca han usado \texttt{R} antes de este curso, porfavor installar el
-paquete \href{http://swirlstats.com/students.html}{Swirl}
-\citep{Kross2017} y realizar los primeros 7 modulos del programa \emph{R
-Programming: The basics of programming in R} que incluye:
+Si nunca se ha trabajado con \texttt{R} antes de este curso, una buena
+herramienta es provista por el paquete
+\href{http://swirlstats.com/students.html}{Swirl} \citep{Kross2017}.
+Para comenzar la práctica, realizar los primeros 7 modulos del programa
+\emph{R Programming: The basics of programming in R} que incluye:
 
 \begin{itemize}
 \tightlist
@@ -188,31 +189,31 @@ Programming: The basics of programming in R} que incluye:
   Matrices and Data Frames
 \end{itemize}
 
-Pueden ver un video explicativo de como usar swirl en el siguiente
-\href{https://youtu.be/w6L7Ye18yPE}{Video}
+El siguiente link muestra un video explicativo de cómo usar el paquete
+swirl \href{https://youtu.be/w6L7Ye18yPE}{Video}
 
-\hypertarget{descripcion}{%
-\section{Descripción}\label{descripcion}}
+\hypertarget{descripcion-del-curso}{%
+\section{Descripción del curso}\label{descripcion-del-curso}}
 
-Este curso está enfocado en entregar los principios de investigación
+Este curso está enfocado en entregar principios básicos de investigación
 reproducible en R, con énfasis en la recopilación y/o lectura de datos
 de forma reproducible y automatizada. Para esto se trabajará con bases
-de datos complejos, las cuales deberán ser transformadas y organizadas
+de datos complejas, las cuales deberán ser transformadas y organizadas
 para optimizar su análisis. Se generarán documentos reproducibles
-integrando en un documento código, bibliografía, exploración y análisis
-de datos. Se culminará el curso con la generación de un manuscrito,
-presentación y/o documento interactivo reproducible.
+integrando en un documento: código, bibliografía, exploración y análisis
+de datos. Se culminará el curso con la generación de un manuscrito, una
+presentación y/o un documento interactivo reproducible.
 
-\hypertarget{objetivos}{%
-\section{Objetivos}\label{objetivos}}
+\hypertarget{objetivos-del-curso}{%
+\section{Objetivos del curso}\label{objetivos-del-curso}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Conocer y entender el concepto de Investigación reproducible como un
-  forma y filosofía de investigación que permite que las investigaciones
-  sean más ordenadas y replicables, desde la toma de datos hasta la
-  escritura de resultados.
+  Conocer y entender el concepto de investigación reproducible como una
+  forma y filosofía de trabajo que permite que las investigaciones sean
+  más ordenadas y replicables, desde la toma de datos hasta la escritura
+  de resultados.
 \item
   Conocer y aplicar el concepto de pipeline, el cual permite generar una
   modularidad desde la toma de datos hasta la escritura de resultados,
@@ -221,7 +222,7 @@ presentación y/o documento interactivo reproducible.
 \item
   Aprender buenas prácticas de recolección y estandarización de bases de
   datos, con la finalidad de optimizar el análisis de datos y la
-  revisión de estas por pares.
+  revisión de éstas por pares.
 \item
   Realizar análisis críticos de la naturaleza de los datos al realizar
   análisis exploratorios, que permitirán determinar la mejor forma de
@@ -233,21 +234,22 @@ presentación y/o documento interactivo reproducible.
 
 \begin{itemize}
 \item
-  Capítulo \ref{tidydata} \emph{Tidy Data}: En este capítulo,
-  aprenderemos de como optimizar una de base de datos, limpieza y
-  transformación de bases de datos, que es una base de datos
-  \emph{tidy}, y como manipular estas bases de datos con el paquete
-  \emph{dplyr} \citep{R-dplyr}
+  Capítulo \ref{tidydata} \emph{Tidy Data}: En este capítulo se
+  aprenderá a cómo optimizar una de base de datos, sobre la limpieza y
+  transformación de bases de datos, qué es una base de datos \emph{tidy}
+  y cómo manipular estas bases de datos con el paquete \emph{dplyr}
+  \citep{R-dplyr}.
 \item
-  Capitulo \ref{reproducible} \emph{Investigación reproducible}:
-  entenderemos el como generar un documento que combine códigos de
-  \texttt{R} y texto para generar documentos reporducibles utilizando el
-  paquete \emph{rmarkdown} \citep{Allaire2018}, además veremos como al
-  usar RStudio podemos guardar nuestro proyecto en un repositorio de
-  github.
+  Capítulo \ref{reproducible} \emph{Investigación reproducible}: En este
+  capítulo se trabajará en la confección de un documento que combine
+  códigos de \texttt{R} y texto para generar documentos reproducibles
+  utilizando el paquete \emph{rmarkdown} \citep{Allaire2018}. Además, se
+  verá cómo al usar RStudio se pueden guardar los proyectos en un
+  repositorio de github.
 \item
-  Capitulo \ref{tidyverso} \emph{El tidyverso}, el concepto de pipeline.
-  Limpieza de datos complejos
+  Capítulo \ref{tidyverso} \emph{El tidyverso} y el concepto de
+  pipeline:En este capítulo se aprenderá sobre la limpieza de datos
+  complejos.
 \end{itemize}
 
 \begin{enumerate}
@@ -271,18 +273,18 @@ presentación y/o documento interactivo reproducible.
 \hypertarget{metodologia}{%
 \section{Metodología}\label{metodologia}}
 
-Todas las clases serán prácticas y estarán divididas en dos partes: I.
-Clases de principios y herramientas, donde se presentarán los principios
-de investigación reproducible y tidy data, junto con las herramientas
-actuales más utilizadas, y II. Clases aplicadas donde se trabajará con
-datos propios para desarrollar un documento reproducible. A los
-estudiantes que no cuenten con datos propios, se les será proporcionado
-un set de datos o se simularán dependiendo del caso.
+Todas las clases estarán divididas en dos partes: I. Clases expositivas
+de principios y herramientas, donde se presentarán los principios de
+investigación reproducible y tidy data, junto con las herramientas
+actuales más utilizadas, y II. Clases prácticas donde cada estudiante
+trabajará con datos propios para desarrollar un documento reproducible.
+Los estudiantes que no cuenten con datos propios podrán acceder a sets
+de datos para su trabajo o podrán simularlos, dependiendo del caso.
 
-Además se deberán generar informes y presentaciones siguiendo los
-principios de investigación reproducible, usando datos propios o
-entregados. Se realizará un informe final, en el cual se espera un
-trabajo
+Además, se deberán generar informes y presentaciones siguiendo los
+principios de investigación reproducible, en base al trabajo con sus
+datos. Se realizará un informe final, en el cual se espera un trabajo
+que compile los conociminetos adquiridos durante el curso.
 
 \hypertarget{evaluacion}{%
 \section{Evaluación}\label{evaluacion}}
@@ -297,12 +299,11 @@ trabajo
   Evaluación 3: Informe final 50\%
 \end{itemize}
 
-\hypertarget{objetivo-del-curso}{%
-\section{Objetivo del curso}\label{objetivo-del-curso}}
+\hypertarget{libros-de-consulta}{%
+\section{Libros de consulta}\label{libros-de-consulta}}
 
-Aprender los principios de investigación reproducible y tidy data a
-través del aprendizaje de programación y uso de R. Los principios de
-este curso están explicados en los siguientes libros gratuitos.
+Los principios de este curso están explicados en los siguientes libros
+gratuitos.
 
 \begin{itemize}
 \tightlist
@@ -1096,25 +1097,86 @@ entrando a nuestra sesión de github.
 \hypertarget{reproducibilidad-en-r}{%
 \subsection{Reproducibilidad en R}\label{reproducibilidad-en-r}}
 
+Existen varios paquetes que permiten que hagamos investigación
+reproducible en \texttt{R}, pero sin duda los más relevantes son
+\emph{rmarkdown} y \emph{knitr}. Ambos paquetes funcionana en conjunto
+cuando generamos un archivo \emph{Rmd} (Rmarkdown), en el cual ocupamos
+al mismo tiempo texto, código de R y otros elementos para generar un
+documento word, pdf, página web, presentación y/o aplicación web (fig
+\ref{fig:Rmark}).
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Rmark} 
+
+}
+
+\caption{El objetivo de Rmarkdown es el unir código de r con texto y datos para generar un documento reproducible}\label{fig:Rmark}
+\end{figure}
+
 \hypertarget{creando-un-rmarkdown}{%
 \subsection{Creando un Rmarkdown}\label{creando-un-rmarkdown}}
 
-\hypertarget{chunks}{%
-\subsection{Chunks}\label{chunks}}
-
-\hypertarget{opciones-de-los-chunks}{%
-\subsubsection{Opciones de los chunks}\label{opciones-de-los-chunks}}
+Para crear un archivo Rmarkdown, simplemente ve a el menu \emph{File
+\textgreater{} New file \textgreater{} Rmarkdown} y con eso habrás
+creado un nuevo archivo \emph{Rmd}, veremos en momentos algunos de los
+elementos más típicos de un arcchivo Rmarkdown.
 
 \hypertarget{markdown}{%
-\subsection{Markdown}\label{markdown}}
+\subsubsection{Markdown}\label{markdown}}
+
+El markdown es la parte del archivo en que simplemente escribimos texto,
+aunque tiene algunos detalles para el formato como generar texto en
+negrita, cursiva, títulos y subtitulos.
+
+Para hacer que un texto este en \textbf{negrita}, deben ponerlo entre
+dos asteriscos \texttt{**negrita**}, para que un texto aparezca en
+\emph{cursiva} debe estar entre asteriscos \texttt{*cursiva*}, otros
+ejemplos son los titulos de distintos niveles, los cuales se denotan con
+distintos números de \texttt{\#}, así los siguientes 4 títulos o
+subtitulos:
+
+\hypertarget{subtitulo-1}{%
+\section*{subtitulo 1}\label{subtitulo-1}}
+\addcontentsline{toc}{section}{subtitulo 1}
+
+\hypertarget{subtitulo-2}{%
+\subsection*{subtítulo 2}\label{subtitulo-2}}
+\addcontentsline{toc}{subsection}{subtítulo 2}
+
+\hypertarget{subtitulo-3}{%
+\subsubsection*{subtítulo 3}\label{subtitulo-3}}
+\addcontentsline{toc}{subsubsection}{subtítulo 3}
+
+\hypertarget{subtitulo-4}{%
+\paragraph{subtítulo 4}\label{subtitulo-4}}
+\addcontentsline{toc}{paragraph}{subtítulo 4}
+
+se vería de la siguiente manera en el código
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{## subtitulo 1}
+
+\NormalTok{### subtítulo 2}
+
+\NormalTok{#### subtítulo 3}
+
+\NormalTok{##### subtítulo 4}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{chunks}{%
+\subsubsection{Chunks}\label{chunks}}
+
+\hypertarget{opciones-de-los-chunks}{%
+\paragraph{Opciones de los chunks}\label{opciones-de-los-chunks}}
 
 \hypertarget{inline-code}{%
-\subsection{inline code}\label{inline-code}}
+\subsubsection{inline code}\label{inline-code}}
 
 \hypertarget{tablas-en-rmarkdown}{%
-\subsection{Tablas en Rmarkdown}\label{tablas-en-rmarkdown}}
-
-Here is a review of existing methods.
+\subsubsection{Tablas en Rmarkdown}\label{tablas-en-rmarkdown}}
 
 \hypertarget{tidyverso}{%
 \chapter{El Tidyverso}\label{tidyverso}}
@@ -1279,7 +1341,7 @@ We have finished a nice book.
 \chapter{Presentaciones en R}\label{presentacion}}
 
 \hypertarget{soluciones}{%
-\chapter{Soluciones a porblemas}\label{soluciones}}
+\chapter{Soluciones a problemas}\label{soluciones}}
 
 Todos los problemas en programación tienen más de una forma de llegar a
 ellos, es por esto que las soluciones acá mostradas deben tomarse solo
