@@ -16,7 +16,7 @@ La investigación reproducible no es lo mismo que la investigación replicable. 
 knitr::include_graphics("Reproducible.png")
 ```
 
-En la figura @\ref(fig:reproducible) vemos el continuo de replicabilidad [@peng2011reproducible]. En este continuo tenemos el ejemplo de no reproducibilidad como una publicación sin código. Pasando de menos a más reproducible por la publicación y el código que genero los resultados y gráficos; seguido por la publicación, el código y los datos que generan los resultados y gráficos; y por último código, datos y texto entrelazados de forma tal que al correr el código obtenemos exactamente la mismma publicación que leimos.
+En la figura \@ref(fig:reproducible) vemos el continuo de replicabilidad [@peng2011reproducible]. En este continuo tenemos el ejemplo de no reproducibilidad como una publicación sin código. Pasando de menos a más reproducible por la publicación y el código que genero los resultados y gráficos; seguido por la publicación, el código y los datos que generan los resultados y gráficos; y por último código, datos y texto entrelazados de forma tal que al correr el código obtenemos exactamente la mismma publicación que leimos.
 
 Esto tiene muchas ventajas, incluyendo el que es más fácil aplicar exactamente los mismos metodos a otra base de datos, basta poner la nueva base de datos en el formato que tenía el autor de la primera publicación y podremos comparar los resultados.
 
@@ -30,18 +30,24 @@ Github es una suerte de dropbox o google drive pensado para la investigación re
 
 ### creando un proyecto de github en RStudio
 
-Para crear un proyecto en github presionamos **start a project** en la pagina inicial de nuestra cuenta como vemos en la figura @\ref(fig:Start)
+Para crear un proyecto en github presionamos **start a project** en la pagina inicial de nuestra cuenta como vemos en la figura \@ref(fig:Start)
 
 ```{r Start, echo = FALSE, fig.cap= "Para empezar un projecto en github, debes presionar Start a project en tu página de inicio"}
 knitr::include_graphics("StartAProject.png")
 ```
 
-Luego crea un nombre unico, y sin cambiar nada más presiona **create repository** en el botón verde como vemos en la figura @\ref(fig:Name).
+Luego crea un nombre unico, y sin cambiar nada más presiona **create repository** en el botón verde como vemos en la figura \@ref(fig:Name).
+
 
 ```{r Name, echo = FALSE, fig.cap= "Crea el nombre de tu repositorio y apreta el boton create repository"}
 knitr::include_graphics("NombreRepo.png")
 ```
 
+Esto te llevará a una página donde te aparecera una url de tu nuevo repositorio como en la figura \@ref(fig:ssh)
+
+```{r ssh, echo = FALSE, fig.cap= "Crea el nombre de tu repositorio y apreta el boton create repository"}
+knitr::include_graphics("GitAdress.png")
+```
 
 ### git add
 
