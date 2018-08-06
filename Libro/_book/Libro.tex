@@ -874,7 +874,12 @@ similares, mientras que la investigación reproducible implica que desde
 los mismos datos, y/o el mismo código.
 
 \begin{figure}
-\includegraphics[width=11.96in]{Reproducible} \caption{Continuo de reproducibilidad (extraido de Peng 2011)}\label{fig:reproducible}
+
+{\centering \includegraphics[width=0.8\linewidth]{Reproducible} 
+
+}
+
+\caption{Continuo de reproducibilidad (extraido de Peng 2011)}\label{fig:reproducible}
 \end{figure}
 
 En la figura \ref{fig:reproducible} vemos el continuo de replicabilidad
@@ -917,7 +922,12 @@ la pagina inicial de nuestra cuenta como vemos en la figura
 \ref{fig:Start}
 
 \begin{figure}
-\includegraphics[width=14.64in]{StartAProject} \caption{Para empezar un projecto en github, debes presionar Start a project en tu página de inicio}\label{fig:Start}
+
+{\centering \includegraphics[width=0.8\linewidth]{StartAProject} 
+
+}
+
+\caption{Para empezar un projecto en github, debes presionar Start a project en tu página de inicio}\label{fig:Start}
 \end{figure}
 
 Luego crea un nombre unico, y sin cambiar nada más presiona
@@ -925,24 +935,163 @@ Luego crea un nombre unico, y sin cambiar nada más presiona
 \ref{fig:Name}.
 
 \begin{figure}
-\includegraphics[width=14.21in]{NombreRepo} \caption{Crea el nombre de tu repositorio y apreta el boton create repository}\label{fig:Name}
+
+{\centering \includegraphics[width=0.8\linewidth]{NombreRepo} 
+
+}
+
+\caption{Crea el nombre de tu repositorio y apreta el boton create repository}\label{fig:Name}
 \end{figure}
 
 Esto te llevará a una página donde te aparecera una url de tu nuevo
 repositorio como en la figura \ref{fig:ssh}
 
 \begin{figure}
-\includegraphics[width=18.06in]{GitAdress} \caption{Crea el nombre de tu repositorio y apreta el boton create repository}\label{fig:ssh}
+
+{\centering \includegraphics[width=0.8\linewidth]{GitAdress} 
+
+}
+
+\caption{El contenido del cuadro en el cual dice ssh es la url de tu repisitorio}\label{fig:ssh}
 \end{figure}
 
+Para incorporar tu proyecto en tu repositorio, lo primero que debes
+hacer es generar un proyecto en RStudio, para esto debes ir en el menú
+superior de \emph{Rstudio} a \emph{File \textgreater{} New Project
+\textgreater{} Git} como se ve en las figuras \ref{fig:NewProject} y
+\ref{fig:NewProject}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{NewProject} 
+
+}
+
+\caption{Menú para crear un proyecto nuevo}\label{fig:NewProject}
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Git} 
+
+}
+
+\caption{Seleccionar git dentro de las opciones}\label{fig:Git}
+\end{figure}
+
+Luego, seleccionar la ubicación del proyecto nuevo y pegar el url que
+aparece en la figura \ref{fig:ssh} en el espacio que dice
+\textbf{Repository URL:} como muestra en la figura \ref{fig:GitRstudio}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{GitRstudio} 
+
+}
+
+\caption{Pegar el url del repositorio en el cuadro de dialogo Repository URL:}\label{fig:GitRstudio}
+\end{figure}
+
+Cuando tu proyecto de R ya este siguiendo los cambios en github, te
+aparecera una pestaña git dentro de la ventana superior derecha de tu
+sesión de RStudio, tal como vemos en la figura \ref{fig:GitPan}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{GitPan} 
+
+}
+
+\caption{Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha}\label{fig:GitPan}
+\end{figure}
+
+\hypertarget{los-tres-principales-pasos-de-un-repositorio}{%
+\subsection{Los tres principales pasos de un
+repositorio}\label{los-tres-principales-pasos-de-un-repositorio}}
+
+Github es todo un mundo, con muchas funciones, hay expertos en el uso de
+github, pero en este curso, nos enfocaremos en los 3 pasos principales
+de un repositorio, \emph{Add}, \emph{commit} y \emph{push}. Para
+entender bien que significan cada uno de estos pasos tenemos que
+entender que existen dos repositorios en todo momento. Uno local (en tu
+computador) u otro remoto (en github.com). Los dos primeros pasos
+\emph{Add} y commit, solo generan cambios en tu repositorio local.
+Mientras que \emph{push}, salva los cambios al repositorio remoto.
+
 \hypertarget{git-add}{%
-\subsection{git add}\label{git-add}}
+\subsubsection{git add}\label{git-add}}
+
+Esta función, es la que agrega archivos a tu repositorio local. Solo
+estos archivos serán guardados en github. Cuando tienes bases de datos
+mayores a 1 GB no es convenientes guardarlos en github, ya que si bién
+te dan repositorios ilimitados, el espacio de cada uno no lo es, en
+particular en cuanto a bases de datos. Para adicionar un archivo a tu
+repositorio tan solo debes selecionar los archivos en la pestaña git. Al
+hacer eso una letra A verde aparecera en vez de los dos signos de
+interrogación amarillos, como vemos en la figura \ref{fig:Add}. En este
+caso solo adicionamos al repositorio el archivo \emph{Analisis.r} pero
+no el resto.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{GitAdd} 
+
+}
+
+\caption{Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha}\label{fig:Add}
+\end{figure}
 
 \hypertarget{git-commit}{%
-\subsection{git commit}\label{git-commit}}
+\subsubsection{git commit}\label{git-commit}}
+
+Cuando ocupas el comando \emph{commit} estas guardando los cambios de
+los archivos que adicionaste, en tu repositorio local. Para hacer esto
+en Rstudio, en la misma pestaña de git, debes presionar el botón commit
+como vemos en la figura \ref{fig:Commit}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Commit} 
+
+}
+
+\caption{Para guardar los cambios en tu repositorio apretar commit en la pestaña git de la ventana superior derecha}\label{fig:Commit}
+\end{figure}
+
+Al presionar Commit, se abrira una ventana emergente, donde deberás
+escribir un mensaje que describa lo que guardaras. Una vez echo eso
+presiona commit nuevamente en la ventana emergente como aparece en la
+figura \ref{fig:MensajeCommit}.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{MensajeCommit} 
+
+}
+
+\caption{Escribir un mensaje que recuerde los cambios que hiciste en la ventana emergente}\label{fig:MensajeCommit}
+\end{figure}
 
 \hypertarget{git-push}{%
-\subsection{git push}\label{git-push}}
+\subsubsection{git push}\label{git-push}}
+
+Finalmente \emph{push} te permitirá guardar los cambios en tu
+repositorio remoto, lo cual asegura tus datos en la nube, y además lo
+hace disponible a otros investigadores. Luego de apretar commit en la
+ventana emergente (figura \ref{fig:MensajeCommit}), podemos presionar
+\emph{push} en la flecha verde de la ventana emergente como se ve el a
+figura \ref{fig:push}. Luego se nos pedira nuestro nombre de usuario y
+contraseña, y ya podemos revisar que nuestro repositorio esta online
+entrando a nuestra sesión de github.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Push} 
+
+}
+
+\caption{Para guardar en el repositorio remoto apretar push en la ventana emergente}\label{fig:push}
+\end{figure}
 
 \hypertarget{reproducibilidad-en-r}{%
 \subsection{Reproducibilidad en R}\label{reproducibilidad-en-r}}
@@ -986,7 +1135,8 @@ El esqueleto de una visualización usando \emph{ggplot2} es la siguiente
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{ggplot}\NormalTok{(data.frame, }\KeywordTok{aes}\NormalTok{(nombres de columna)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_algo}\NormalTok{(argumentos, }\KeywordTok{aes}\NormalTok{(columnas)) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_algo}\NormalTok{()}
+\KeywordTok{ggplot}\NormalTok{(data.frame, }\KeywordTok{aes}\NormalTok{(nombres_de_columna)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_algo}\NormalTok{(argumentos, }
+    \KeywordTok{aes}\NormalTok{(columnas)) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_algo}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 

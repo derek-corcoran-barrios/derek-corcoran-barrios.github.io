@@ -12,7 +12,7 @@ Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clas
 
 La investigación reproducible no es lo mismo que la investigación replicable. La replicabilidad implica que experimentos o estudios llevados a cabo en condiciones similares nos llevarán a conclusiones similares, mientras que la investigación reproducible implica que desde los mismos datos, y/o el mismo código.
 
-```{r reproducible, fig.cap= "Continuo de reproducibilidad (extraido de Peng 2011)", echo = FALSE}
+```{r reproducible, fig.cap= "Continuo de reproducibilidad (extraido de Peng 2011)", echo = FALSE, out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("Reproducible.png")
 ```
 
@@ -32,28 +32,79 @@ Github es una suerte de dropbox o google drive pensado para la investigación re
 
 Para crear un proyecto en github presionamos **start a project** en la pagina inicial de nuestra cuenta como vemos en la figura \@ref(fig:Start)
 
-```{r Start, echo = FALSE, fig.cap= "Para empezar un projecto en github, debes presionar Start a project en tu página de inicio"}
+```{r Start, echo = FALSE, fig.cap= "Para empezar un projecto en github, debes presionar Start a project en tu página de inicio", out.width='80%', fig.asp=.75, fig.align="center"}
 knitr::include_graphics("StartAProject.png")
 ```
 
 Luego crea un nombre unico, y sin cambiar nada más presiona **create repository** en el botón verde como vemos en la figura \@ref(fig:Name).
 
 
-```{r Name, echo = FALSE, fig.cap= "Crea el nombre de tu repositorio y apreta el boton create repository"}
+```{r Name, echo = FALSE, fig.cap= "Crea el nombre de tu repositorio y apreta el boton create repository", out.width='80%', fig.asp=.75, fig.align="center"}
 knitr::include_graphics("NombreRepo.png")
 ```
 
 Esto te llevará a una página donde te aparecera una url de tu nuevo repositorio como en la figura \@ref(fig:ssh)
 
-```{r ssh, echo = FALSE, fig.cap= "Crea el nombre de tu repositorio y apreta el boton create repository"}
+```{r ssh, echo = FALSE, fig.cap= "El contenido del cuadro en el cual dice ssh es la url de tu repisitorio", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("GitAdress.png")
 ```
 
-### git add
+Para incorporar tu proyecto en tu repositorio, lo primero que debes hacer es generar un proyecto en RStudio, para esto debes ir en el menú superior de *Rstudio* a *File > New Project > Git* como se ve en las figuras \@ref(fig:NewProject) y \@ref(fig:NewProject).  
 
-### git commit
+```{r NewProject, echo = FALSE, fig.cap= "Menú para crear un proyecto nuevo", out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics("NewProject.png")
+```
 
-### git push
+```{r Git, echo = FALSE, fig.cap= "Seleccionar git dentro de las opciones", out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics("Git.png")
+```
+
+Luego, seleccionar la ubicación del proyecto nuevo y pegar el url que aparece en la figura \@ref(fig:ssh) en el espacio que dice **Repository URL:** como muestra en la figura \@ref(fig:GitRstudio).
+
+```{r GitRstudio, echo = FALSE, fig.cap= "Pegar el url del repositorio en el cuadro de dialogo Repository URL:", out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics("GitRstudio.png")
+```
+
+Cuando tu proyecto de R ya este siguiendo los cambios en github, te aparecera una pestaña git dentro de la ventana superior derecha de tu sesión de RStudio, tal como vemos en la figura \@ref(fig:GitPan)
+
+```{r GitPan, echo = FALSE, fig.cap= "Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha", out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics("GitPan.png")
+```
+
+### Los tres principales pasos de un repositorio
+
+Github es todo un mundo, con muchas funciones, hay expertos en el uso de github, pero en este curso, nos enfocaremos en los 3 pasos principales de un repositorio, *Add*, *commit* y *push*. Para entender bien que significan cada uno de estos pasos tenemos que entender que existen dos repositorios en todo momento. Uno local (en tu computador) u otro remoto (en github.com). Los dos primeros pasos *Add* y commit, solo generan cambios en tu repositorio local. Mientras que *push*, salva los cambios al repositorio remoto.
+
+#### git add
+
+Esta función, es la que agrega archivos a tu repositorio local. Solo estos archivos serán guardados en github. Cuando tienes bases de datos mayores a 1 GB no es convenientes guardarlos en github, ya que si bién te dan repositorios ilimitados, el espacio de cada uno no lo es, en particular en cuanto a bases de datos. Para adicionar un archivo a tu repositorio tan solo debes selecionar los archivos en la pestaña git. Al hacer eso una letra A verde aparecera en vez de los dos signos de interrogación amarillos, como vemos en la figura \@ref(fig:Add). En este caso solo adicionamos al repositorio el archivo *Analisis.r* pero no el resto.
+
+```{r Add, echo = FALSE, fig.cap= "Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha", out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics("GitAdd.png")
+```
+
+#### git commit
+
+Cuando ocupas el comando *commit* estas guardando los cambios de los archivos que adicionaste, en tu repositorio local. Para hacer esto en Rstudio, en la misma pestaña de git, debes presionar el botón commit como vemos en la figura \@ref(fig:Commit). 
+
+```{r Commit, echo = FALSE, fig.cap= "Para guardar los cambios en tu repositorio apretar commit en la pestaña git de la ventana superior derecha", out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics("Commit.png")
+```
+
+Al presionar Commit, se abrira una ventana emergente, donde deberás escribir un mensaje que describa lo que guardaras. Una vez echo eso presiona commit nuevamente en la ventana emergente como aparece en la figura \@ref(fig:MensajeCommit).
+
+```{r MensajeCommit, echo = FALSE, fig.cap= "Escribir un mensaje que recuerde los cambios que hiciste en la ventana emergente", out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics("MensajeCommit.png")
+```
+
+#### git push
+
+Finalmente *push* te permitirá guardar los cambios en tu repositorio remoto, lo cual asegura tus datos en la nube, y además lo hace disponible a otros investigadores. Luego de apretar commit en la ventana emergente (figura \@ref(fig:MensajeCommit)), podemos presionar *push* en la flecha verde de la ventana emergente como se ve el a figura \@ref(fig:push). Luego se nos pedira nuestro nombre de usuario y contraseña, y ya podemos revisar que nuestro repositorio esta online entrando a nuestra sesión de github.
+
+```{r push, echo = FALSE, fig.cap= "Para guardar en el repositorio remoto apretar push en la ventana emergente", out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics("Push.png")
+```
+
 
 ### Reproducibilidad en R
 

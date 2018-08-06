@@ -7,7 +7,7 @@ En este capítulo aprenderemos a usar el paquete *ggplot2* [@Wickhamggplot], par
 El esqueleto de una visualización usando *ggplot2* es la siguiente
 
 ```{r, eval = FALSE}
-ggplot(data.frame, aes(nombres de columna)) + geom_algo(argumentos, aes(columnas)) + theme_algo()
+ggplot(data.frame, aes(nombres_de_columna)) + geom_algo(argumentos, aes(columnas)) + theme_algo()
 ```
 
 Como ejemplo para discutir usaremos el siguiente código que genera la figura \@ref(fig:ejemplo1-ggplot):

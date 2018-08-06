@@ -161,15 +161,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="reproducible.html"><a href="reproducible.html#guardando-nuestro-proyecto-en-github"><i class="fa fa-check"></i><b>3.3</b> Guardando nuestro proyecto en github</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="reproducible.html"><a href="reproducible.html#que-es-github"><i class="fa fa-check"></i><b>3.3.1</b> Que es github?</a></li>
 <li class="chapter" data-level="3.3.2" data-path="reproducible.html"><a href="reproducible.html#creando-un-proyecto-de-github-en-rstudio"><i class="fa fa-check"></i><b>3.3.2</b> creando un proyecto de github en RStudio</a></li>
-<li class="chapter" data-level="3.3.3" data-path="reproducible.html"><a href="reproducible.html#git-add"><i class="fa fa-check"></i><b>3.3.3</b> git add</a></li>
-<li class="chapter" data-level="3.3.4" data-path="reproducible.html"><a href="reproducible.html#git-commit"><i class="fa fa-check"></i><b>3.3.4</b> git commit</a></li>
-<li class="chapter" data-level="3.3.5" data-path="reproducible.html"><a href="reproducible.html#git-push"><i class="fa fa-check"></i><b>3.3.5</b> git push</a></li>
-<li class="chapter" data-level="3.3.6" data-path="reproducible.html"><a href="reproducible.html#reproducibilidad-en-r"><i class="fa fa-check"></i><b>3.3.6</b> Reproducibilidad en R</a></li>
-<li class="chapter" data-level="3.3.7" data-path="reproducible.html"><a href="reproducible.html#creando-un-rmarkdown"><i class="fa fa-check"></i><b>3.3.7</b> Creando un Rmarkdown</a></li>
-<li class="chapter" data-level="3.3.8" data-path="reproducible.html"><a href="reproducible.html#chunks"><i class="fa fa-check"></i><b>3.3.8</b> Chunks</a></li>
-<li class="chapter" data-level="3.3.9" data-path="reproducible.html"><a href="reproducible.html#markdown"><i class="fa fa-check"></i><b>3.3.9</b> Markdown</a></li>
-<li class="chapter" data-level="3.3.10" data-path="reproducible.html"><a href="reproducible.html#inline-code"><i class="fa fa-check"></i><b>3.3.10</b> inline code</a></li>
-<li class="chapter" data-level="3.3.11" data-path="reproducible.html"><a href="reproducible.html#tablas-en-rmarkdown"><i class="fa fa-check"></i><b>3.3.11</b> Tablas en Rmarkdown</a></li>
+<li class="chapter" data-level="3.3.3" data-path="reproducible.html"><a href="reproducible.html#los-tres-principales-pasos-de-un-repositorio"><i class="fa fa-check"></i><b>3.3.3</b> Los tres principales pasos de un repositorio</a></li>
+<li class="chapter" data-level="3.3.4" data-path="reproducible.html"><a href="reproducible.html#reproducibilidad-en-r"><i class="fa fa-check"></i><b>3.3.4</b> Reproducibilidad en R</a></li>
+<li class="chapter" data-level="3.3.5" data-path="reproducible.html"><a href="reproducible.html#creando-un-rmarkdown"><i class="fa fa-check"></i><b>3.3.5</b> Creando un Rmarkdown</a></li>
+<li class="chapter" data-level="3.3.6" data-path="reproducible.html"><a href="reproducible.html#chunks"><i class="fa fa-check"></i><b>3.3.6</b> Chunks</a></li>
+<li class="chapter" data-level="3.3.7" data-path="reproducible.html"><a href="reproducible.html#markdown"><i class="fa fa-check"></i><b>3.3.7</b> Markdown</a></li>
+<li class="chapter" data-level="3.3.8" data-path="reproducible.html"><a href="reproducible.html#inline-code"><i class="fa fa-check"></i><b>3.3.8</b> inline code</a></li>
+<li class="chapter" data-level="3.3.9" data-path="reproducible.html"><a href="reproducible.html#tablas-en-rmarkdown"><i class="fa fa-check"></i><b>3.3.9</b> Tablas en Rmarkdown</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="tidyverso.html"><a href="tidyverso.html"><i class="fa fa-check"></i><b>4</b> El Tidyverso</a></li>
@@ -221,8 +219,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="investigacion-reproducible" class="section level2">
 <h2><span class="header-section-number">3.2</span> Investigación reproducible</h2>
 <p>La investigación reproducible no es lo mismo que la investigación replicable. La replicabilidad implica que experimentos o estudios llevados a cabo en condiciones similares nos llevarán a conclusiones similares, mientras que la investigación reproducible implica que desde los mismos datos, y/o el mismo código.</p>
-<div class="figure"><span id="fig:reproducible"></span>
-<img src="Reproducible.png" alt="Continuo de reproducibilidad (extraido de Peng 2011)" width="430" />
+<div class="figure" style="text-align: center"><span id="fig:reproducible"></span>
+<img src="Reproducible.png" alt="Continuo de reproducibilidad (extraido de Peng 2011)" width="80%" />
 <p class="caption">
 Figura 3.1: Continuo de reproducibilidad (extraido de Peng 2011)
 </p>
@@ -240,56 +238,115 @@ Figura 3.1: Continuo de reproducibilidad (extraido de Peng 2011)
 <div id="creando-un-proyecto-de-github-en-rstudio" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> creando un proyecto de github en RStudio</h3>
 <p>Para crear un proyecto en github presionamos <strong>start a project</strong> en la pagina inicial de nuestra cuenta como vemos en la figura <a href="reproducible.html#fig:Start">3.2</a></p>
-<div class="figure"><span id="fig:Start"></span>
-<img src="StartAProject.png" alt="Para empezar un projecto en github, debes presionar Start a project en tu página de inicio" width="527" />
+<div class="figure" style="text-align: center"><span id="fig:Start"></span>
+<img src="StartAProject.png" alt="Para empezar un projecto en github, debes presionar Start a project en tu página de inicio" width="80%" />
 <p class="caption">
 Figura 3.2: Para empezar un projecto en github, debes presionar Start a project en tu página de inicio
 </p>
 </div>
 <p>Luego crea un nombre unico, y sin cambiar nada más presiona <strong>create repository</strong> en el botón verde como vemos en la figura <a href="reproducible.html#fig:Name">3.3</a>.</p>
-<div class="figure"><span id="fig:Name"></span>
-<img src="NombreRepo.png" alt="Crea el nombre de tu repositorio y apreta el boton create repository" width="512" />
+<div class="figure" style="text-align: center"><span id="fig:Name"></span>
+<img src="NombreRepo.png" alt="Crea el nombre de tu repositorio y apreta el boton create repository" width="80%" />
 <p class="caption">
 Figura 3.3: Crea el nombre de tu repositorio y apreta el boton create repository
 </p>
 </div>
 <p>Esto te llevará a una página donde te aparecera una url de tu nuevo repositorio como en la figura <a href="reproducible.html#fig:ssh">3.4</a></p>
-<div class="figure"><span id="fig:ssh"></span>
-<img src="GitAdress.png" alt="Crea el nombre de tu repositorio y apreta el boton create repository" width="650" />
+<div class="figure" style="text-align: center"><span id="fig:ssh"></span>
+<img src="GitAdress.png" alt="El contenido del cuadro en el cual dice ssh es la url de tu repisitorio" width="80%" />
 <p class="caption">
-Figura 3.4: Crea el nombre de tu repositorio y apreta el boton create repository
+Figura 3.4: El contenido del cuadro en el cual dice ssh es la url de tu repisitorio
+</p>
+</div>
+<p>Para incorporar tu proyecto en tu repositorio, lo primero que debes hacer es generar un proyecto en RStudio, para esto debes ir en el menú superior de <em>Rstudio</em> a <em>File &gt; New Project &gt; Git</em> como se ve en las figuras <a href="reproducible.html#fig:NewProject">3.5</a> y <a href="reproducible.html#fig:NewProject">3.5</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:NewProject"></span>
+<img src="NewProject.png" alt="Menú para crear un proyecto nuevo" width="80%" />
+<p class="caption">
+Figura 3.5: Menú para crear un proyecto nuevo
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:Git"></span>
+<img src="Git.png" alt="Seleccionar git dentro de las opciones" width="80%" />
+<p class="caption">
+Figura 3.6: Seleccionar git dentro de las opciones
+</p>
+</div>
+<p>Luego, seleccionar la ubicación del proyecto nuevo y pegar el url que aparece en la figura <a href="reproducible.html#fig:ssh">3.4</a> en el espacio que dice <strong>Repository URL:</strong> como muestra en la figura <a href="reproducible.html#fig:GitRstudio">3.7</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:GitRstudio"></span>
+<img src="GitRstudio.png" alt="Pegar el url del repositorio en el cuadro de dialogo Repository URL:" width="80%" />
+<p class="caption">
+Figura 3.7: Pegar el url del repositorio en el cuadro de dialogo Repository URL:
+</p>
+</div>
+<p>Cuando tu proyecto de R ya este siguiendo los cambios en github, te aparecera una pestaña git dentro de la ventana superior derecha de tu sesión de RStudio, tal como vemos en la figura <a href="reproducible.html#fig:GitPan">3.8</a></p>
+<div class="figure" style="text-align: center"><span id="fig:GitPan"></span>
+<img src="GitPan.png" alt="Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha" width="80%" />
+<p class="caption">
+Figura 3.8: Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha
 </p>
 </div>
 </div>
-<div id="git-add" class="section level3">
-<h3><span class="header-section-number">3.3.3</span> git add</h3>
+<div id="los-tres-principales-pasos-de-un-repositorio" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> Los tres principales pasos de un repositorio</h3>
+<p>Github es todo un mundo, con muchas funciones, hay expertos en el uso de github, pero en este curso, nos enfocaremos en los 3 pasos principales de un repositorio, <em>Add</em>, <em>commit</em> y <em>push</em>. Para entender bien que significan cada uno de estos pasos tenemos que entender que existen dos repositorios en todo momento. Uno local (en tu computador) u otro remoto (en github.com). Los dos primeros pasos <em>Add</em> y commit, solo generan cambios en tu repositorio local. Mientras que <em>push</em>, salva los cambios al repositorio remoto.</p>
+<div id="git-add" class="section level4">
+<h4><span class="header-section-number">3.3.3.1</span> git add</h4>
+<p>Esta función, es la que agrega archivos a tu repositorio local. Solo estos archivos serán guardados en github. Cuando tienes bases de datos mayores a 1 GB no es convenientes guardarlos en github, ya que si bién te dan repositorios ilimitados, el espacio de cada uno no lo es, en particular en cuanto a bases de datos. Para adicionar un archivo a tu repositorio tan solo debes selecionar los archivos en la pestaña git. Al hacer eso una letra A verde aparecera en vez de los dos signos de interrogación amarillos, como vemos en la figura <a href="reproducible.html#fig:Add">3.9</a>. En este caso solo adicionamos al repositorio el archivo <em>Analisis.r</em> pero no el resto.</p>
+<div class="figure" style="text-align: center"><span id="fig:Add"></span>
+<img src="GitAdd.png" alt="Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha" width="80%" />
+<p class="caption">
+Figura 3.9: Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha
+</p>
 </div>
-<div id="git-commit" class="section level3">
-<h3><span class="header-section-number">3.3.4</span> git commit</h3>
 </div>
-<div id="git-push" class="section level3">
-<h3><span class="header-section-number">3.3.5</span> git push</h3>
+<div id="git-commit" class="section level4">
+<h4><span class="header-section-number">3.3.3.2</span> git commit</h4>
+<p>Cuando ocupas el comando <em>commit</em> estas guardando los cambios de los archivos que adicionaste, en tu repositorio local. Para hacer esto en Rstudio, en la misma pestaña de git, debes presionar el botón commit como vemos en la figura <a href="reproducible.html#fig:Commit">3.10</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:Commit"></span>
+<img src="Commit.png" alt="Para guardar los cambios en tu repositorio apretar commit en la pestaña git de la ventana superior derecha" width="80%" />
+<p class="caption">
+Figura 3.10: Para guardar los cambios en tu repositorio apretar commit en la pestaña git de la ventana superior derecha
+</p>
+</div>
+<p>Al presionar Commit, se abrira una ventana emergente, donde deberás escribir un mensaje que describa lo que guardaras. Una vez echo eso presiona commit nuevamente en la ventana emergente como aparece en la figura <a href="reproducible.html#fig:MensajeCommit">3.11</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:MensajeCommit"></span>
+<img src="MensajeCommit.png" alt="Escribir un mensaje que recuerde los cambios que hiciste en la ventana emergente" width="80%" />
+<p class="caption">
+Figura 3.11: Escribir un mensaje que recuerde los cambios que hiciste en la ventana emergente
+</p>
+</div>
+</div>
+<div id="git-push" class="section level4">
+<h4><span class="header-section-number">3.3.3.3</span> git push</h4>
+<p>Finalmente <em>push</em> te permitirá guardar los cambios en tu repositorio remoto, lo cual asegura tus datos en la nube, y además lo hace disponible a otros investigadores. Luego de apretar commit en la ventana emergente (figura <a href="reproducible.html#fig:MensajeCommit">3.11</a>), podemos presionar <em>push</em> en la flecha verde de la ventana emergente como se ve el a figura <a href="reproducible.html#fig:push">3.12</a>. Luego se nos pedira nuestro nombre de usuario y contraseña, y ya podemos revisar que nuestro repositorio esta online entrando a nuestra sesión de github.</p>
+<div class="figure" style="text-align: center"><span id="fig:push"></span>
+<img src="Push.png" alt="Para guardar en el repositorio remoto apretar push en la ventana emergente" width="80%" />
+<p class="caption">
+Figura 3.12: Para guardar en el repositorio remoto apretar push en la ventana emergente
+</p>
+</div>
+</div>
 </div>
 <div id="reproducibilidad-en-r" class="section level3">
-<h3><span class="header-section-number">3.3.6</span> Reproducibilidad en R</h3>
+<h3><span class="header-section-number">3.3.4</span> Reproducibilidad en R</h3>
 </div>
 <div id="creando-un-rmarkdown" class="section level3">
-<h3><span class="header-section-number">3.3.7</span> Creando un Rmarkdown</h3>
+<h3><span class="header-section-number">3.3.5</span> Creando un Rmarkdown</h3>
 </div>
 <div id="chunks" class="section level3">
-<h3><span class="header-section-number">3.3.8</span> Chunks</h3>
+<h3><span class="header-section-number">3.3.6</span> Chunks</h3>
 <div id="opciones-de-los-chunks" class="section level4">
-<h4><span class="header-section-number">3.3.8.1</span> Opciones de los chunks</h4>
+<h4><span class="header-section-number">3.3.6.1</span> Opciones de los chunks</h4>
 </div>
 </div>
 <div id="markdown" class="section level3">
-<h3><span class="header-section-number">3.3.9</span> Markdown</h3>
+<h3><span class="header-section-number">3.3.7</span> Markdown</h3>
 </div>
 <div id="inline-code" class="section level3">
-<h3><span class="header-section-number">3.3.10</span> inline code</h3>
+<h3><span class="header-section-number">3.3.8</span> inline code</h3>
 </div>
 <div id="tablas-en-rmarkdown" class="section level3">
-<h3><span class="header-section-number">3.3.11</span> Tablas en Rmarkdown</h3>
+<h3><span class="header-section-number">3.3.9</span> Tablas en Rmarkdown</h3>
 <p>Here is a review of existing methods.</p>
 
 </div>
