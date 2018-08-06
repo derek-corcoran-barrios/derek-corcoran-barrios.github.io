@@ -145,6 +145,31 @@ se vería de la siguiente manera en el código
 
 #### Chunks
 
+Los *chunks* son una de las partes más importantes del un Rmarkdown. En estos es donde se agrega el código de R (u otros lenguajes de programación). Lo cual permíte que el producto de nuestro código no sea solo un escrito con resultados pegados, sino que efectivamente generados en el mismo documento que nuestro escrito, la forma más fácil de agregar un chunk es apretando el botón de insert chunk en Rstudio, este boton se encuentra en la ventana superior izquierda de nuestra sesión de RStudio, tal como se muestra en la figura \@ref(fig:Insertchunk)
+
+```{r Insertchunk, echo = FALSE, fig.cap= "Al apretar el botón insert chunk, aparecera un espacio en el cuál insertar código", out.width='80%', fig.asp=.75, fig.align='center'}
+knitr::include_graphics("Insertchunk.png")
+```
+
+Al apretar este código aparecera un espacio tal como el que aparece abajo
+
+
+`r ''````{r}
+
+```
+
+
+```{block2, type='Consejo'}
+Esta es una lista de consejos
+- Este es un consejo
+- Este es otro
+
+Con esto terminamos los consejos.
+```
+
+
+
+
 ##### Opciones de los chunks
 
 #### inline code
