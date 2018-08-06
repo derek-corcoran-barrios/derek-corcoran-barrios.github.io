@@ -845,6 +845,119 @@ las soluciones a estos ejercicios se encuentran en el capítulo
 \hypertarget{reproducible}{%
 \chapter{Investigación reproducible}\label{reproducible}}
 
+\hypertarget{paquetes-necesarios-para-este-capitulo-1}{%
+\section{Paquetes necesarios para este
+capítulo}\label{paquetes-necesarios-para-este-capitulo-1}}
+
+Para este capitulo necesitas tener instalado los paquetes
+\emph{rmarkdown}, \emph{knitr} y \emph{stargazer}
+
+En este capítulo explicaremos que es la investigación reproducible, y
+como aplicarla usando github, y los paquetes \emph{rmarkdown}
+\citep{Allaire2018} y \emph{knitr} \citep{xie2015}. Además aprenderemos
+a usar tablas usando \emph{knitr} \citep{xie2015} y \emph{stargazer}
+\citep{hlavak2018}
+
+Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir
+la clase de este curso en este
+\href{https://derek-corcoran-barrios.github.io/Clase2/Clase2InvestigacionReproducible}{link},
+y en cuanto el video de la clase este disponible encontrarás un link
+aca.
+
+\hypertarget{investigacion-reproducible}{%
+\section{Investigación reproducible}\label{investigacion-reproducible}}
+
+La investigación reproducible no es lo mismo que la investigación
+replicable. La replicabilidad implica que experimentos o estudios
+llevados a cabo en condiciones similares nos llevarán a conclusiones
+similares, mientras que la investigación reproducible implica que desde
+los mismos datos, y/o el mismo código.
+
+\begin{figure}
+\includegraphics[width=11.96in]{Reproducible} \caption{Continuo de reproducibilidad (extraido de Peng 2011)}\label{fig:reproducible}
+\end{figure}
+
+En la figura @\ref(fig:reproducible) vemos el continuo de replicabilidad
+\citep{peng2011reproducible}. En este continuo tenemos el ejemplo de no
+reproducibilidad como una publicación sin código. Pasando de menos a más
+reproducible por la publicación y el código que genero los resultados y
+gráficos; seguido por la publicación, el código y los datos que generan
+los resultados y gráficos; y por último código, datos y texto
+entrelazados de forma tal que al correr el código obtenemos exactamente
+la mismma publicación que leimos.
+
+Esto tiene muchas ventajas, incluyendo el que es más fácil aplicar
+exactamente los mismos metodos a otra base de datos, basta poner la
+nueva base de datos en el formato que tenía el autor de la primera
+publicación y podremos comparar los resultados.
+
+Además en un momento en que la ciencia está basada cada vez más en bases
+de datos, se puede poner en el código la recolección y/o muestreo de
+datos.
+
+\hypertarget{guardando-nuestro-proyecto-en-github}{%
+\section{Guardando nuestro proyecto en
+github}\label{guardando-nuestro-proyecto-en-github}}
+
+\hypertarget{que-es-github}{%
+\subsection{Que es github?}\label{que-es-github}}
+
+Github es una suerte de dropbox o google drive pensado para la
+investigación reproducible, en github cada proyecto es un
+\emph{repositorio}. La mayoría de los investigadores que trabajan en
+investigación reproducible dejan todo su trabajo documentado en sus
+repositorios, lo cual permite interactuar con otros autores.
+
+\hypertarget{creando-un-proyecto-de-github-en-rstudio}{%
+\subsection{creando un proyecto de github en
+RStudio}\label{creando-un-proyecto-de-github-en-rstudio}}
+
+Para crear un proyecto en github presionamos \textbf{start a project} en
+la pagina inicial de nuestra cuenta como vemos en la figura
+@\ref(fig:Start)
+
+\begin{figure}
+\includegraphics[width=14.64in]{StartAProject} \caption{Para empezar un projecto en github, debes presionar Start a project en tu página de inicio}\label{fig:Start}
+\end{figure}
+
+Luego crea un nombre unico, y sin cambiar nada más presiona
+\textbf{create repository} en el botón verde como vemos en la figura
+@\ref(fig:Name).
+
+\begin{figure}
+\includegraphics[width=14.21in]{NombreRepo} \caption{Crea el nombre de tu repositorio y apreta el boton create repository}\label{fig:Name}
+\end{figure}
+
+\hypertarget{git-add}{%
+\subsection{git add}\label{git-add}}
+
+\hypertarget{git-commit}{%
+\subsection{git commit}\label{git-commit}}
+
+\hypertarget{git-push}{%
+\subsection{git push}\label{git-push}}
+
+\hypertarget{reproducibilidad-en-r}{%
+\subsection{Reproducibilidad en R}\label{reproducibilidad-en-r}}
+
+\hypertarget{creando-un-rmarkdown}{%
+\subsection{Creando un Rmarkdown}\label{creando-un-rmarkdown}}
+
+\hypertarget{chunks}{%
+\subsection{Chunks}\label{chunks}}
+
+\hypertarget{opciones-de-los-chunks}{%
+\subsubsection{Opciones de los chunks}\label{opciones-de-los-chunks}}
+
+\hypertarget{markdown}{%
+\subsection{Markdown}\label{markdown}}
+
+\hypertarget{inline-code}{%
+\subsection{inline code}\label{inline-code}}
+
+\hypertarget{tablas-en-rmarkdown}{%
+\subsection{Tablas en Rmarkdown}\label{tablas-en-rmarkdown}}
+
 Here is a review of existing methods.
 
 \hypertarget{tidyverso}{%

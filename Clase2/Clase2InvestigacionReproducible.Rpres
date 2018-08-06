@@ -1,0 +1,238 @@
+<style>
+.reveal h1, .reveal h2, .reveal h3 {
+  word-wrap: normal;
+  -moz-hyphens: none;
+}
+</style>
+
+<style>
+.small-code pre code {
+  font-size: 1em;
+}
+</style>
+
+Clase 2: Investigación reproducible
+========================================================
+author: Derek Corcoran
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+autosize: true
+transition: rotate
+
+¿Que es investigación reproducible?
+========================================================
+```{r, message=FALSE, echo=FALSE, warning=FALSE}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(ggmap, ggplot2, dplyr, readr, leaflet, dygraphs, xts, lubridate, geojsonio)
+```
+
+- Código, datos (**Crudos**) y texto entrelazados
+- en R: Rmarkdown (Rmd) y Rpresentation (Rpres) entre otros
+
+![Peng](Reproducible.png)
+
+
+Github
+========================================================
+
+- Como "Google Drive" o "Dropbox" para código
+- Control de cambios (Podemos volver a cualquier versión anterior)
+- En base a codigo (idealmente), pero hay GUIs
+- Cada proyecto es un repositorio
+
+***
+![Git](https://www.cs.swarthmore.edu/~newhall/unixhelp/gitrepos.gif)
+
+Crear primer repositorio (Meta 4)
+========================================================
+
+- Crearse cuenta en githib.com
+- Crear repositorio en github
+
+Crear primer repositorio (Meta 4)
+========================================================
+
+- git remote add origin "URL del repositorio remoto"
+- git remote -v
+- git push origin master
+
+De ahí en adelante
+========================================================
+
+- git add -A (a menos que tengas un archivo muuuy grande)
+- git commit -am "<mensaje a recordar>"
+- git push
+
+A guardar el repositorio
+========================================================
+
+![Repo](https://cdn.shopify.com/s/files/1/0051/4802/products/mainmap_1024x1024.jpg?v=1424989816)
+
+
+Reproducibilidad en R
+========================================================
+
+![Rep](Rmark.png)
+
+***
+
+1. Una carpeta
+    + Datos crudos (csv, xls, html, json)
+    + Codigo y texto (Rmd, Rpres, shiny)
+    + Resultados (Manuscrito, Pagina Web, App)
+
+Metas del día de hoy
+========================================================
+
+1.  Un código en un chunk
+2.  Un inline code
+3.  Una tabla en el Rmarkdown
+4.  Primer commit en github
+5.  Entender que significan las metas de hoy
+
+Crear un nuevo Rmarkdown
+========================================================
+
+![NewRMD](https://archive.org/download/NewRmd/NewRmd.png)
+
+Partes de un Rmd
+========================================================
+left: 30%
+
+1. Chunks
+2. Texto
+3. Inline code
+4. [Cheat sheet Rmd](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+5. El botón mágico **Knit**
+
+***
+
+![NewRMD](RMDexample.png)
+
+Chunks (Meta 1)
+========================================================
+
+![Chunk](Chunk.png)
+
++ *echo* = T o F muestro o no codigo
++ *message* = T o F muestra mensajes de paquetes
++ *warning* = T o F muestra advertencias 
++ hasta el infinito
+
+Texto
+========================================================
+class: small-code
+
+# Titulo
+
+## subtitulo
+
+*cursiva*
+
+**negrita**
+
+[link](https://stackoverflow.com/users/3808018/derek-corcoran)
+
+***
+
+```{r, echo = TRUE, eval=FALSE}
+# Titulo
+
+## subtitulo
+
+*cursiva*
+
+**negrita**
+
+[link](https://stackoverflow.com/users/3808018/derek-corcoran)
+```
+
+Inline code (Meta 2)
+========================================================
+
+![Inline](Inline.png)
+
+- Código entrelazado en el texto
+- Para actualizar medias, maximos, minimos
+- Valores de p, diferencias estadísticas
+
+Ejemplo
+========================================================
+
+Pueden copiar el codigo de el siguiente [link](https://raw.githubusercontent.com/derek-corcoran-barrios/CursoR/master/Clase1/Sismos.Rmd), copiarlo en un archivo rmd, apretar knit y debieran ver algo como esto:
+
+- Otro [ejemplo](http://ec2-18-191-191-69.us-east-2.compute.amazonaws.com:3838/WhereToLive/)
+
+![Terremotos](ExampleShown.png)
+
+Ejercicio 1
+==============================
+incremental: true
+
+* Usando la base de datos *iris* crea un inline code que diga cuál es la media del largo del pétalo de la especie *Iris virginica*
+    + solución:
+    + la media para I. virginica es `r mean((iris %>% filter(Species == "virginica"))$Petal.Length)`
+    + "la media para I. virginica es "r mean((iris %>% filter(Species == "virginica"))$Petal.Length)""
+
+
+Empezemos a trabajar!!!
+========================================================
+
+![Arrr](http://photos1.blogger.com/x/blogger/1599/2546/1600/667273/R-is-for-Pirate.jpg)
+
+
+Tablas: Kable y Stargazer
+========================================================
+
+- kable parte de knitr, tabla igual a lo ingresado 
+- [stargazer](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf) mas avanzado, comparación de modelos
+- otras opciones como texreg
+
+Stargazer: Tablas resumen (Meta 3)
+========================================================
+
+- Chunk debe estar en results: "asis"
+- Si es para html la opción debe estar en type = "html"
+- Si es para pdf la opción debe estar en type = "latex"
+- Se puede exportar tabla
+
+```{r, results='asis', echo=TRUE}
+library(stargazer)
+stargazer(iris,type = "html")
+```
+
+Stargazer: Resumen de modelos economía combustible 1
+========================================================
+
+```{r, results='asis', echo=TRUE}
+data("mtcars")
+kable(head(mtcars))
+```
+
+Stargazer: Resumen de modelos economía combustible 2
+========================================================
+
+```{r, results='asis', echo=TRUE}
+M1 <- lm(mpg~wt, data = mtcars)
+M2 <- lm(mpg~hp, data = mtcars)
+M3 <- lm(mpg~hp + wt, data = mtcars)
+```
+
+========================================================
+class: small-code
+
+```{r, results='asis', echo=TRUE}
+stargazer(M1, M2, M3, type ="html", single.row=TRUE)
+```
+
+Armemos nuestras propias tablas!!!
+========================================================
+
+![Tabla](http://www.chemicalprocessing.com/assets/Media/0908/cartoon_0906.jpg)
+
+
+
+
+Meta del día de hoy
+===================
+
+Piensen en una pregunta a resolver con sus datos

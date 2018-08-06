@@ -155,7 +155,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3.7" data-path="tidydata.html"><a href="tidydata.html#ejercicios"><i class="fa fa-check"></i><b>2.3.7</b> Ejercicios</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="reproducible.html"><a href="reproducible.html"><i class="fa fa-check"></i><b>3</b> Investigación reproducible</a></li>
+<li class="chapter" data-level="3" data-path="reproducible.html"><a href="reproducible.html"><i class="fa fa-check"></i><b>3</b> Investigación reproducible</a><ul>
+<li class="chapter" data-level="3.1" data-path="reproducible.html"><a href="reproducible.html#paquetes-necesarios-para-este-capitulo-1"><i class="fa fa-check"></i><b>3.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="3.2" data-path="reproducible.html"><a href="reproducible.html#investigacion-reproducible"><i class="fa fa-check"></i><b>3.2</b> Investigación reproducible</a></li>
+<li class="chapter" data-level="3.3" data-path="reproducible.html"><a href="reproducible.html#guardando-nuestro-proyecto-en-github"><i class="fa fa-check"></i><b>3.3</b> Guardando nuestro proyecto en github</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="reproducible.html"><a href="reproducible.html#que-es-github"><i class="fa fa-check"></i><b>3.3.1</b> Que es github?</a></li>
+<li class="chapter" data-level="3.3.2" data-path="reproducible.html"><a href="reproducible.html#creando-un-proyecto-de-github-en-rstudio"><i class="fa fa-check"></i><b>3.3.2</b> creando un proyecto de github en RStudio</a></li>
+<li class="chapter" data-level="3.3.3" data-path="reproducible.html"><a href="reproducible.html#git-add"><i class="fa fa-check"></i><b>3.3.3</b> git add</a></li>
+<li class="chapter" data-level="3.3.4" data-path="reproducible.html"><a href="reproducible.html#git-commit"><i class="fa fa-check"></i><b>3.3.4</b> git commit</a></li>
+<li class="chapter" data-level="3.3.5" data-path="reproducible.html"><a href="reproducible.html#git-push"><i class="fa fa-check"></i><b>3.3.5</b> git push</a></li>
+<li class="chapter" data-level="3.3.6" data-path="reproducible.html"><a href="reproducible.html#reproducibilidad-en-r"><i class="fa fa-check"></i><b>3.3.6</b> Reproducibilidad en R</a></li>
+<li class="chapter" data-level="3.3.7" data-path="reproducible.html"><a href="reproducible.html#creando-un-rmarkdown"><i class="fa fa-check"></i><b>3.3.7</b> Creando un Rmarkdown</a></li>
+<li class="chapter" data-level="3.3.8" data-path="reproducible.html"><a href="reproducible.html#chunks"><i class="fa fa-check"></i><b>3.3.8</b> Chunks</a></li>
+<li class="chapter" data-level="3.3.9" data-path="reproducible.html"><a href="reproducible.html#markdown"><i class="fa fa-check"></i><b>3.3.9</b> Markdown</a></li>
+<li class="chapter" data-level="3.3.10" data-path="reproducible.html"><a href="reproducible.html#inline-code"><i class="fa fa-check"></i><b>3.3.10</b> inline code</a></li>
+<li class="chapter" data-level="3.3.11" data-path="reproducible.html"><a href="reproducible.html#tablas-en-rmarkdown"><i class="fa fa-check"></i><b>3.3.11</b> Tablas en Rmarkdown</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="tidyverso.html"><a href="tidyverso.html"><i class="fa fa-check"></i><b>4</b> El Tidyverso</a></li>
 <li class="chapter" data-level="5" data-path="visualizacion.html"><a href="visualizacion.html"><i class="fa fa-check"></i><b>5</b> Visualización de datos</a><ul>
 <li class="chapter" data-level="5.1" data-path="visualizacion.html"><a href="visualizacion.html#el-esqueleto"><i class="fa fa-check"></i><b>5.1</b> El esqueleto</a></li>
@@ -196,8 +212,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="reproducible" class="section level1">
 <h1><span class="header-section-number">Capítulo 3</span> Investigación reproducible</h1>
+<div id="paquetes-necesarios-para-este-capitulo-1" class="section level2">
+<h2><span class="header-section-number">3.1</span> Paquetes necesarios para este capítulo</h2>
+<p>Para este capitulo necesitas tener instalado los paquetes <em>rmarkdown</em>, <em>knitr</em> y <em>stargazer</em></p>
+<p>En este capítulo explicaremos que es la investigación reproducible, y como aplicarla usando github, y los paquetes <em>rmarkdown</em> <span class="citation">(Allaire et al. <a href="#ref-Allaire2018">2018</a>)</span> y <em>knitr</em> <span class="citation">(Xie <a href="#ref-xie2015">2015</a>)</span>. Además aprenderemos a usar tablas usando <em>knitr</em> <span class="citation">(Xie <a href="#ref-xie2015">2015</a>)</span> y <em>stargazer</em> <span class="citation">(Hlavac <a href="#ref-hlavak2018">2018</a>)</span></p>
+<p>Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este <a href="https://derek-corcoran-barrios.github.io/Clase2/Clase2InvestigacionReproducible">link</a>, y en cuanto el video de la clase este disponible encontrarás un link aca.</p>
+</div>
+<div id="investigacion-reproducible" class="section level2">
+<h2><span class="header-section-number">3.2</span> Investigación reproducible</h2>
+<p>La investigación reproducible no es lo mismo que la investigación replicable. La replicabilidad implica que experimentos o estudios llevados a cabo en condiciones similares nos llevarán a conclusiones similares, mientras que la investigación reproducible implica que desde los mismos datos, y/o el mismo código.</p>
+<div class="figure"><span id="fig:reproducible"></span>
+<img src="Reproducible.png" alt="Continuo de reproducibilidad (extraido de Peng 2011)" width="430" />
+<p class="caption">
+Figura 3.1: Continuo de reproducibilidad (extraido de Peng 2011)
+</p>
+</div>
+<p>En la figura @(fig:reproducible) vemos el continuo de replicabilidad <span class="citation">(Peng <a href="#ref-peng2011reproducible">2011</a>)</span>. En este continuo tenemos el ejemplo de no reproducibilidad como una publicación sin código. Pasando de menos a más reproducible por la publicación y el código que genero los resultados y gráficos; seguido por la publicación, el código y los datos que generan los resultados y gráficos; y por último código, datos y texto entrelazados de forma tal que al correr el código obtenemos exactamente la mismma publicación que leimos.</p>
+<p>Esto tiene muchas ventajas, incluyendo el que es más fácil aplicar exactamente los mismos metodos a otra base de datos, basta poner la nueva base de datos en el formato que tenía el autor de la primera publicación y podremos comparar los resultados.</p>
+<p>Además en un momento en que la ciencia está basada cada vez más en bases de datos, se puede poner en el código la recolección y/o muestreo de datos.</p>
+</div>
+<div id="guardando-nuestro-proyecto-en-github" class="section level2">
+<h2><span class="header-section-number">3.3</span> Guardando nuestro proyecto en github</h2>
+<div id="que-es-github" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Que es github?</h3>
+<p>Github es una suerte de dropbox o google drive pensado para la investigación reproducible, en github cada proyecto es un <em>repositorio</em>. La mayoría de los investigadores que trabajan en investigación reproducible dejan todo su trabajo documentado en sus repositorios, lo cual permite interactuar con otros autores.</p>
+</div>
+<div id="creando-un-proyecto-de-github-en-rstudio" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> creando un proyecto de github en RStudio</h3>
+<p>Para crear un proyecto en github presionamos <strong>start a project</strong> en la pagina inicial de nuestra cuenta como vemos en la figura @(fig:Start)</p>
+<div class="figure"><span id="fig:Start"></span>
+<img src="StartAProject.png" alt="Para empezar un projecto en github, debes presionar Start a project en tu página de inicio" width="527" />
+<p class="caption">
+Figura 3.2: Para empezar un projecto en github, debes presionar Start a project en tu página de inicio
+</p>
+</div>
+<p>Luego crea un nombre unico, y sin cambiar nada más presiona <strong>create repository</strong> en el botón verde como vemos en la figura @(fig:Name).</p>
+<div class="figure"><span id="fig:Name"></span>
+<img src="NombreRepo.png" alt="Crea el nombre de tu repositorio y apreta el boton create repository" width="512" />
+<p class="caption">
+Figura 3.3: Crea el nombre de tu repositorio y apreta el boton create repository
+</p>
+</div>
+</div>
+<div id="git-add" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> git add</h3>
+</div>
+<div id="git-commit" class="section level3">
+<h3><span class="header-section-number">3.3.4</span> git commit</h3>
+</div>
+<div id="git-push" class="section level3">
+<h3><span class="header-section-number">3.3.5</span> git push</h3>
+</div>
+<div id="reproducibilidad-en-r" class="section level3">
+<h3><span class="header-section-number">3.3.6</span> Reproducibilidad en R</h3>
+</div>
+<div id="creando-un-rmarkdown" class="section level3">
+<h3><span class="header-section-number">3.3.7</span> Creando un Rmarkdown</h3>
+</div>
+<div id="chunks" class="section level3">
+<h3><span class="header-section-number">3.3.8</span> Chunks</h3>
+<div id="opciones-de-los-chunks" class="section level4">
+<h4><span class="header-section-number">3.3.8.1</span> Opciones de los chunks</h4>
+</div>
+</div>
+<div id="markdown" class="section level3">
+<h3><span class="header-section-number">3.3.9</span> Markdown</h3>
+</div>
+<div id="inline-code" class="section level3">
+<h3><span class="header-section-number">3.3.10</span> inline code</h3>
+</div>
+<div id="tablas-en-rmarkdown" class="section level3">
+<h3><span class="header-section-number">3.3.11</span> Tablas en Rmarkdown</h3>
 <p>Here is a review of existing methods.</p>
 
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Allaire2018">
+<p>Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, and Winston Chang. 2018. <em>Rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown" class="uri">https://CRAN.R-project.org/package=rmarkdown</a>.</p>
+</div>
+<div id="ref-xie2015">
+<p>Xie, Yihui. 2015. <em>Dynamic Documents with R and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.name/knitr/" class="uri">http://yihui.name/knitr/</a>.</p>
+</div>
+<div id="ref-hlavak2018">
+<p>Hlavac, Marek. 2018. <em>Stargazer: Well-Formatted Regression and Summary Statistics Tables</em>. Bratislava, Slovakia: Central European Labour Studies Institute (CELSI). <a href="https://CRAN.R-project.org/package=stargazer" class="uri">https://CRAN.R-project.org/package=stargazer</a>.</p>
+</div>
+<div id="ref-peng2011reproducible">
+<p>Peng, Roger D. 2011. “Reproducible Research in Computational Science.” <em>Science</em> 334 (6060). American Association for the Advancement of Science: 1226–7.</p>
+</div>
 </div>
             </section>
 

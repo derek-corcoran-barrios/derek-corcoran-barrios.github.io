@@ -462,6 +462,15 @@ Bases de datos con que trabajar
 - [cooldatasets](https://www.cooldatasets.com/)
 - [Datos de FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/)
 
+Para la otra clase, es necesario:
+========================================================
+class: small-code
+incremental:true
+
+
+* Crearse cuenta de [github](https://github.com/)
+* Instalar los paquetes knitr, rmarkdown y stargazer
+
 
 
 Consejo reproducible 1

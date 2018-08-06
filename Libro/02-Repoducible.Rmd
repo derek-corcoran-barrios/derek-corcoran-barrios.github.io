@@ -1,3 +1,66 @@
 # Investigación reproducible {#reproducible}
 
+## Paquetes necesarios para este capítulo
+
+Para este capitulo necesitas tener instalado los paquetes *rmarkdown*, *knitr* y *stargazer*
+
+En este capítulo explicaremos que es la investigación reproducible, y como aplicarla usando github, y los paquetes *rmarkdown* [@Allaire2018] y *knitr* [@xie2015]. Además aprenderemos a usar tablas usando *knitr* [@xie2015] y *stargazer* [@hlavak2018]
+
+Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este [link](https://derek-corcoran-barrios.github.io/Clase2/Clase2InvestigacionReproducible), y en cuanto el video de la clase este disponible encontrarás un link aca.
+
+## Investigación reproducible
+
+La investigación reproducible no es lo mismo que la investigación replicable. La replicabilidad implica que experimentos o estudios llevados a cabo en condiciones similares nos llevarán a conclusiones similares, mientras que la investigación reproducible implica que desde los mismos datos, y/o el mismo código.
+
+```{r reproducible, fig.cap= "Continuo de reproducibilidad (extraido de Peng 2011)", echo = FALSE}
+knitr::include_graphics("Reproducible.png")
+```
+
+En la figura @\ref(fig:reproducible) vemos el continuo de replicabilidad [@peng2011reproducible]. En este continuo tenemos el ejemplo de no reproducibilidad como una publicación sin código. Pasando de menos a más reproducible por la publicación y el código que genero los resultados y gráficos; seguido por la publicación, el código y los datos que generan los resultados y gráficos; y por último código, datos y texto entrelazados de forma tal que al correr el código obtenemos exactamente la mismma publicación que leimos.
+
+Esto tiene muchas ventajas, incluyendo el que es más fácil aplicar exactamente los mismos metodos a otra base de datos, basta poner la nueva base de datos en el formato que tenía el autor de la primera publicación y podremos comparar los resultados.
+
+Además en un momento en que la ciencia está basada cada vez más en bases de datos, se puede poner en el código la recolección y/o muestreo de datos.
+
+## Guardando nuestro proyecto en github
+
+### Que es github?
+
+Github es una suerte de dropbox o google drive pensado para la investigación reproducible, en github cada proyecto es un *repositorio*. La mayoría de los investigadores que trabajan en investigación reproducible dejan todo su trabajo documentado en sus repositorios, lo cual permite interactuar con otros autores.
+
+### creando un proyecto de github en RStudio
+
+Para crear un proyecto en github presionamos **start a project** en la pagina inicial de nuestra cuenta como vemos en la figura @\ref(fig:Start)
+
+```{r Start, echo = FALSE, fig.cap= "Para empezar un projecto en github, debes presionar Start a project en tu página de inicio"}
+knitr::include_graphics("StartAProject.png")
+```
+
+Luego crea un nombre unico, y sin cambiar nada más presiona **create repository** en el botón verde como vemos en la figura @\ref(fig:Name).
+
+```{r Name, echo = FALSE, fig.cap= "Crea el nombre de tu repositorio y apreta el boton create repository"}
+knitr::include_graphics("NombreRepo.png")
+```
+
+
+### git add
+
+### git commit
+
+### git push
+
+### Reproducibilidad en R
+
+### Creando un Rmarkdown
+
+### Chunks
+
+#### Opciones de los chunks
+
+### Markdown
+
+### inline code
+
+### Tablas en Rmarkdown
+
 Here is a review of existing methods.
