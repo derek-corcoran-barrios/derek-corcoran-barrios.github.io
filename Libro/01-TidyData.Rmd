@@ -2,25 +2,25 @@
 
 ## Paquetes necesarios para este capítulo
 
-Para este capitulo necesitas tener instalado el paqute *tidyverse*
+Para este capitulo necesitas tener instalado el paquete *tidyverse*
 
 ```{r, echo=FALSE}
 library(knitr)
 opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 ```
 
-En este capítulo explicaremos que es una base de datos *tidy* [@wickham2014tidy] y  aprenderemos a usar funciones del paquete *dplyr* [@R-dplyr] para manipular datos.
+En este capítulo se explicará qué es una base de datos *tidy* [@wickham2014tidy] y  se aprenderá a usar funciones del paquete *dplyr* [@R-dplyr] para manipular datos.
 
-Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este [link](https://derek-corcoran-barrios.github.io/Clase1/Clase1TidyData), y en cuanto el video de la clase este disponible encontrarás un link aca.
+Dado que este libro es un apoyo para el curso BIO4022, esta clase del curso puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase1/Clase1TidyData). El video de la clase se encuentra disponible en este link.
 
 ## Tidy data
 
 Una base de datos tidy es una base de datos en la cuál (modificado de [@leek2015elements]):
 
-* Cada varaible que midas debiera estar en una columna.
-* Cada observación distinta de esa variable debiera estar en una fila diferente.
+* Cada vararible que se medida debe estar en una columna.
+* Cada observación distinta de esa variable debe estar en una fila diferente.
 
-En general, la forma en que representarímos una base de datos *tidy* en `R` es usando un *data frame*. 
+En general, la forma en que representaríamos una base de datos *tidy* en `R` es usando un *data frame*. 
 
 ## dplyr
 
@@ -30,14 +30,14 @@ Este paquete tiene un gran número de verbos y sería difícil ver todos en una 
 
 - *group_by* (agrupa datos)
 - *summarize* (resume datos agrupados)
-- *mutate* (Genera variables nuevas)
-- *%>%* pipeline
-- *filter* (Encuentra filas con ciertas condiciones)
+- *mutate* (genera variables nuevas)
+- *%>%* (pipeline)
+- *filter* (encuentra filas con ciertas condiciones)
 - *select* junto a *starts_with*, *ends_with* o *contains*
 
 ### summarize
 
-la función `summarize`, toma los datos de un data frame y las resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, seguido del nombre que queremos darle a una variable resumen, seguida del signo = y luego la formula a aplicar a una o mas columnas. Por ejemplo si tomaramos la base de datos `iris` [@anderson1935irises], que viene en `R`, y de las cual podemos ver parte de sus datos en la tabla \@ref(tab:iris)
+La función `summarize` toma los datos de un data frame y los resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, se continúa del nombre que queremos darle a una variable resumen, seguida del signo = y luego la fórmula a aplicar a una o mas columnas. COmo un ejemplo se utilizará la base de datos `iris` [@anderson1935irises] que viene en `R` y de las cual podemos ver parte de sus datos en la tabla \@ref(tab:iris)
 
 ```{r iris, echo = FALSE}
 knitr::kable(
@@ -46,14 +46,14 @@ knitr::kable(
 )
 ```
 
-Si quisieramos resumir esa tabla y generar un par de variables que fueran la media y la deviación estándar de el largo del pétalo, lo haríamos con el siguiente código:
+Si quisieramos resumir esa tabla y generar un par de variables que fueran la media y la desviación estándar del largo del pétalo, lo haríamos con el siguiente código:
 
 ```{r, eval=FALSE}
 library(tidyverse)
 Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 ```
 
-El resultado lo vemos en la tabla \@ref(tab:SummaryPetaltab), en el cuál obtenemos los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar que al usar summarize, todas las otras variables desapareceran de la tabla. 
+El resultado se puedde ver en la tabla \@ref(tab:SummaryPetaltab), en el cuál se obtienen los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar que al usar summarize, todas las otras variables desapareceran de la tabla. 
 
 ```{r, echo = FALSE}
 library(dplyr)
@@ -68,16 +68,16 @@ knitr::kable(Summary.Petal, booktabs = TRUE,
 
 ### group_by
 
-La función `group_by` por si sola no genera cambios visibles en tu base de datos, sin embargo al ser utilizada en conjunto con `summarize` te permite resumir una variable agrupada (usualmente) basada en una o más variables categóricas. 
+La función `group_by` por si sola no genera cambios visibles en las bases de datos. Sin embargo, al ser utilizada en conjunto con `summarize` permite resumir una variable agrupada (usualmente) basada en una o más variables categóricas. 
 
-Como ejemplo seguiremos con el caso de las plantas del género *Iris*, el resumen que teníamos en el caso de la tabla \@ref(tab:SummaryPetaltab), no es tan útil considerando que tenemos tres especies presentes en la tabla de datos. Si queremos ver el promedio del largo del pétalo por especie, ocupamos la función `group_by` de la siguiente forma:
+Se puede ver que para el ejemplo con el caso de las plantas del género *Iris*, el resumen que se obtiene en el caso de la tabla \@ref(tab:SummaryPetaltab) no es tan útil considerando que tenemos tres especies presentes. Si se quiere ver el promedio del largo del pétalo por especie, se debe ocupar la función `group_by` de la siguiente forma:
 
 ```{r, eval=FALSE}
 BySpecies <- group_by(iris, Species)
 Summary.Byspecies <- summarize(BySpecies, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 ```
 
-Esto nos dá como resultado la tabla \@ref(tab:SummaryBySpecies), con la cuál ya podemos ver que *Iris setosa* es tiene pétalos mucho más cortos que las otras dos especies del mismo género.
+Esto dá como resultado la tabla \@ref(tab:SummaryBySpecies), con la cuál se puede ver que *Iris setosa* tiene pétalos mucho más cortos que las otras dos especies del mismo género.
 
 ```{r, echo = FALSE}
 library(dplyr)
@@ -90,9 +90,9 @@ knitr::kable(Summary.Byspecies, booktabs = TRUE,
   caption = 'Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.', row.names = FALSE)
 ```
 
-#### group_by en mas de una variable
+#### group_by en más de una variable
 
-Podemos usar la función `group_by` en más de una variable, y esto generaría un resumen anidado. Como ejemplo usaremos la base de datos `mtcars` presente en R [@henderson1981building], en el cuál hay una variable *mpg* (Miles per gallon), una medida de eficiencia de combustible, y resumiremos esto en base a la variable *am*, (que se refiere al tipo de transmición, donde 0 es automático y 1 es manual) y al número de cilindros del motor, para eso usamos el siguiente código:
+Se puede usar la función `group_by` en más de una variable, y esto generaría un resumen anidado. Como ejemplo se usará la base de datos `mtcars` presente en R [@henderson1981building]. Esta base de datos presenta una variable llamada *mpg* (miles per gallon) y una medida de eficiencia de combustible. Se resumirá la información en base a la variable *am* (que se refiere al tipo de transmisión, donde 0 es automático y 1 es manual) y al número de cilindros del motor. Para eso se utilizará el siguiente código:
 
 ```{r, eval=FALSE}
 Grouped <- group_by(mtcars, cyl, am)
@@ -104,7 +104,7 @@ Grouped <- group_by(mtcars, cyl, am)
 Eficiencia <- summarize(Grouped, Eficiencia = mean(mpg))
 ```
 
-Vemos en la tabla \@ref(tab:Eficienciatab), que en todos los casos los autos con cambios manuales tienen mejor eficiencia de combustible. Prueba cambiar el ordern de las variables con las cuales agrupas y observa los distintos resultados.
+Como puede verse en la tabla \@ref(tab:Eficienciatab), en todos los casos los autos con cambios manuales tienen mejor eficiencia de combustible. Se podría probar el cambiar el orden de las variables con las cuales agrupar y observar los distintos resultados que se pueden obtener.
 
 ```{r Eficienciatab, echo = FALSE}
 knitr::kable(Eficiencia, booktabs = TRUE,
@@ -113,13 +113,13 @@ knitr::kable(Eficiencia, booktabs = TRUE,
 
 ### mutate
 
-Esta función tiene como objetivo el crear variables nuevas basadas en otras variables. Es muy facil de usar, como argumento usamos el nombre de la variable nueva que queremos crear y realizamos una operación con variables que ya estan ahí. Por ejemplo, sigamos con la base de datos *Iris* y creemos una nueva variable que sea la razón entre el largo del pétalo y el del sépalo:
+Esta función tiene como objetivo crear variables nuevas basadas en otras variables. Es muy facil de usar, como argumento se usa el nombre de la variable nueva que se quiere crear y se realiza una operación con variables que ya estan ahí. Por ejemplo, si se continúa el trabajo con la base de datos *Iris*, al crear una nueva variable que sea la razón entre el largo del pétalo y el del sépalo, resulta lo siguiente:
 
 ```{r, eval = FALSE}
 DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
 ```
 
-El resultado de esta operación es la tabla \@ref(tab:Mutate). Siempre la variable que acabamos de crear aparecerá al final de nuestro data frame
+El resultado de esta operación es la tabla \@ref(tab:Mutate). Siempre la variable que se acaba de crear aparecerá al final del data frame.
 
 ```{r, echo=FALSE}
 DF <- mutate(iris, Petal.Sepal.Ratio = round((Petal.Length/Sepal.Length),2))
@@ -133,16 +133,16 @@ knitr::kable(DF[seq(from = 15, to = 150, length.out = 10),], booktabs = TRUE,
 
 ### Pipeline (%>%)
 
-El pipeline es un simbolo operatorio `%>%` el cual sirve para realizar varias operaciones de forma secuencial sin recurrir a muchos parentesis anidados o a sobrescribir multiples bases de datos, primero veamos como funcionaría esto con un vecctor.
+El pipeline es un simbolo operatorio `%>%` que sirve para realizar varias operaciones de forma secuencial sin recurrir a parentesis anidados o a sobrescribir muúltiples bases de datos.
 
-Supongamos que tuvieramos una variable a la cual quisieramos primero obtener su logaritmo, luego su raíz cuadrada y finalmente obtener el promedio de esta variable con dos cifras significatigas, usalmente haríamos lo siguiente:
+Para ver como funciona esto como un vector, supongamos que se tiene una variable a la cual se quiere primero obtener su logaritmo, luego su raíz cuadrada y finalmente su promedio con dos cifras significativas. Para realizar esto se debe seguir lo siguiente:
 
 ```{r, eval=FALSE}
 x <- c(1,4,6,8)
 y <- round(mean(sqrt(log(x))),2)
 ```
 
-Si hicieramos lo mismo con el pipeline, nos daría un código mucho más ordenado, donde partimos por el objeto a procesar, seguido de cada una de las funciones, con sus argumentos si es necesario:
+Si se utiliza pipeline, el código sería mucho más ordenado. En ese caso, se partiría por el objeto a procesar y luego cada una de las funciones con sus argumentos si es necesario:
 
 ```{r, eval=FALSE}
 x <- c(1,4,6,8)
@@ -154,11 +154,11 @@ x <- c(1,4,6,8)
 x %>% log() %>% sqrt() %>% mean() %>% round(2)
 ```
 
-Este código es mucho más fácil de interpretar a primera vista ya que leemos de izquierda a derecha y no de adentro hacia afuera, y como veremos en el ejemplo siguiente, se hace aún más importante cuando lo usamos con un *Data frame*
+El código con pipeline es mucho más fácil de interpretar a primera vista ya que se lee de izquierda a derecha y no de adentro hacia afuera. EL uso de pipeli se hace aun más importante cuando se usa con un *Data frame*, como se ve en el siguiente ejemplo:
 
 #### El pipeline en data frames
 
-Tomemos como ejemplo el caso de querer resumir la variable recien creada de la razón entre el sépalo y el petalo. Esto, si empezaramos desde la base de datos original nos tomaría varias lineas de código y la creación de multiples bases de datos intermedias:
+POr ejemplo se quiere resumir la variable recien creada de la razón entre el sépalo y el petalo. Para hacer esto, si se partiera desde la base de datos original, tomaría varias líneas de código y la creación de múltiples bases de datos intermedias
 
 ```{r, eval = FALSE}
 DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
@@ -166,13 +166,13 @@ BySpecies <- group_by(DF, Species)
 Summary.Byspecies <- summarize(BySpecies, MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
 ```
 
-Otra opción sería usar parentesis anidados, que nos daría el siguiente código
+Otra opción es usar paréntesis anidados, lo que se traduce en el siguiente código:
 
 ```{r, eval = FALSE}
 Summary.Byspecies <- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length), Species), MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
 ```
 
-Esto se simplifica mucho al usar el pipeline, lo cual nos permite usar partir en un *Data Frame* y luego usar el pipeline, esto nos permitiría tener el mismo resultado que en las operaciones anteriores con el siguiente código:
+Esto se simplifica mucho más al usar el pipeline, lo cual permite partir en un *Data Frame* y luego usar el pipeline. Esto permite obtener el mismo resultado que en las operaciones anteriores con el siguiente código:
 
 ```{r, eval = FALSE}
 Summary.Byspecies <- iris %>% mutate(Petal.Sepal.Ratio = Petal.Length/Sepal.Length) %>% group_by(Species) %>%  summarize(MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
@@ -183,7 +183,7 @@ Summary.Byspecies <- iris %>% mutate(Petal.Sepal.Ratio = Petal.Length/Sepal.Leng
 ```
 
 
-Estos tres códigos son correctos (tabla \@ref(tab:Pipe)), pero definitivamente el uso del pipeline nos da el código mas conciso y fácil de interpretar sin pasos intermedios.
+Estos tres códigos son correctos (tabla \@ref(tab:Pipe)), pero definitivamente el uso del pipeline da el código más conciso y fácil de interpretar sin pasos intermedios.
 
 ```{r Pipe, echo = FALSE}
 knitr::kable(Summary.Byspecies, booktabs = TRUE,
@@ -192,7 +192,7 @@ knitr::kable(Summary.Byspecies, booktabs = TRUE,
 
 ### filter
 
-Esta función nos permite seleccionar filas que cumplan con ciertas condiciones, como por tener un valor mayor a un umbral o pertenecer a cierta clase, los símbolos más típicos a usar en este caso son los que vemos en la tabla \@ref(tab:Logicas).
+Esta función permite seleccionar filas que cumplen con ciertas condiciones, como tener un valor mayor a un umbral o pertenecer a cierta clase Los símbolos más típicos a usar en este caso son los que se ven en la tabla \@ref(tab:Logicas).
 
 ```{r, echo=FALSE}
 DF <- data.frame(simbolo = c(">", "<", "==", ">=", "<="), significado = c("Mayor que", "Menor que", "Igual a", "mayor o igual a", "menor o igual a"), simbolo_cont = c("!=","%in%", "is.na", "!is.na", "| &"), significado_cont = c("distinto a", "dentro del grupo", "es NA", "no es NA", "o, y"))
@@ -200,17 +200,17 @@ DF <- data.frame(simbolo = c(">", "<", "==", ">=", "<="), significado = c("Mayor
 
 ```{r Logicas, echo = FALSE}
 knitr::kable(DF, booktabs = TRUE,
-  caption = 'Símbolos logicos de R y su significado', row.names = FALSE)
+  caption = 'Símbolos lógicos de R y su significado', row.names = FALSE)
 ```
 
-Por ejemplo si quisieramos estudiar las características florales de las plantas del género *Iris*, pero no tomar en cuenta a la especie *Iris versicolor* usaríamos el siguiente código:
+Por ejemplo si se quiere estudiar las características florales de las plantas del género *Iris*, pero no tomar en cuenta a la especie *Iris versicolor* se deberá usar el siguiente código:
 
 ```{r, eval = FALSE}
 data("iris")
 DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(mean)
 ```
 
-obteniendo como resultado la tabla \@ref(tab:MenosVersicolor), en este caso aprovechamos de introducir la función `summarize_all` de `summarize`, la cual aplica la función que se le da como argumento a todas las variables de la base de datos.
+De esta forma se obtiene como resultado la tabla \@ref(tab:MenosVersicolor). En este caso se introduce la función `summarize_all` de `summarize`, la cual aplica la función que se le da como argumento a todas las variables de la base de datos.
 
 ```{r, echo = FALSE}
 library(dplyr)
@@ -223,13 +223,13 @@ knitr::kable(DF, booktabs = TRUE,
   caption = 'Resumen de la media de todas las características florales de las especies Iris setosa e Iris virginica', row.names = FALSE)
 ```
 
-Por otro lado si quisieramos estudiar cuantas plantas de cada especie tienen un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5 usaríamos el siguiente código:
+Por otro lado si se quiere estudiar cuántas plantas de cada especie tienen un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5 se deberá usar el siguiente código:
 
 ```{r, eval = FALSE}
 DF <- iris %>% filter(Petal.Length >= 4 & Sepal.Length >= 5) %>% group_by(Species) %>% summarise(N = n())
 ```
 
-En la tabla tabla \@ref(tab:Numero) vemos que con este filtro, desaparecen de la base de datos todas las plantas de *Iris setosa* y que todas menos una planta de *Iris virginica* tienen ambas características.
+En la tabla tabla \@ref(tab:Numero) se ve que con este filtro desaparecen de la base de datos todas las plantas de *Iris setosa* y que todas menos una planta de *Iris virginica* tienen ambas características.
 
 ```{r, echo = FALSE}
 DF <- iris %>% filter(Petal.Length >= 4 & Sepal.Length >= 5) %>% group_by(Species) %>% summarise(N = n())
@@ -243,9 +243,9 @@ knitr::kable(DF, booktabs = TRUE,
 
 ### select
 
-Esta función permite seleccionar las variables a utilizar, en muchos casos nos encontraremos con bases de datos con demasiadas variables, y por lo tanto queremos reducirlas para solo trabajar en una tabla con las variables necesarias.
+Esta función permite seleccionar las variables a utilizar dado que en muchos casos nos encontraremos con bases de datos con demasiadas variables y por lo tanto, se querrá reducirlas para solo trabajar en una tabla con las variables necesarias.
 
-Con select hay varias formas de trabajar, por un lado podemos escribir las variables que usaremos, o restar las que no usaremos, en ese sentido estos cuatro códigos dan exactamente el mismo resultado, el cual vemos en la tabla \@ref(tab:Selected)
+Con select hay varias formas de trabajar, por un lado se puede escribir las variables que se utilizarán, o restar las que no. En ese sentido estos cuatro códigos dan exactamente el mismo resultado. Esto se puede ver en la tabla \@ref(tab:Selected)
 
 ```{r, eval=FALSE}
 iris %>% group_by(Species) %>% select(Petal.Length, Petal.Width) %>% summarize_all(mean)
@@ -276,10 +276,10 @@ knitr::kable(DF, booktabs = TRUE,
 
 #### Ejercicio 1
 
-Usando la base de datos `storm` del paquete *dplyr*, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas que han sido declaradas huracanes para cada año. 
+Usando la base de datos `storm` del paquete *dplyr*, calcular la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas que han sido declaradas huracanes para cada año. 
 
 #### Ejercicio 2
 
-La base de datos `mpg` del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (*cty*) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 km = 1.609 millas; 1 galón = 3.78541 litros)
+La base de datos `mpg` del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (*cty*) en varios vehículos. Obtener los datos de vehículos del año 2004 en adelante que sean compactos y transformar la eficiencia Km/litro (1 km = 1.609 millas; 1 galón = 3.78541 litros)
 
-las soluciones a estos ejercicios se encuentran en el capítulo \@ref(soluciones)
+Las soluciones a estos ejercicios se encuentran en el capítulo \@ref(soluciones)

@@ -98,8 +98,8 @@ Partes de un Rmd
 ========================================================
 left: 30%
 
-1. Chunks
-2. Texto
+1. Texto
+2. Cunks
 3. Inline code
 4. [Cheat sheet Rmd](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 5. El botón mágico **Knit**
@@ -107,16 +107,6 @@ left: 30%
 ***
 
 ![NewRMD](RMDexample.png)
-
-Chunks (Meta 1)
-========================================================
-
-![Chunk](Chunk.png)
-
-+ *echo* = T o F muestro o no codigo
-+ *message* = T o F muestra mensajes de paquetes
-+ *warning* = T o F muestra advertencias 
-+ hasta el infinito
 
 Texto
 ========================================================
@@ -146,14 +136,30 @@ class: small-code
 [link](https://stackoverflow.com/users/3808018/derek-corcoran)
 ```
 
+
+Chunks (Meta 1)
+========================================================
+incremental:true
+
+![Chunk](Chunk.png)
+
++ *echo* = T o F muestro o no codigo
++ *message* = T o F muestra mensajes de paquetes
++ *warning* = T o F muestra advertencias 
++ *eval* = T o F evaluar o no el código
++ *cache* = T o F guarda o no el resultado
++ Para más opciones ver este [link](https://yihui.name/knitr/options/)
+
+
 Inline code (Meta 2)
 ========================================================
 
 ![Inline](Inline.png)
 
 - Código entrelazado en el texto
-- Para actualizar medias, maximos, minimos
+- Para actualizar medias, máximos, mínimos
 - Valores de p, diferencias estadísticas
+- Pueden ser vectores, no tablas.
 
 Ejemplo
 ========================================================

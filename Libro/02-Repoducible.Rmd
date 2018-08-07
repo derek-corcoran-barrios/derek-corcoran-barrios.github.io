@@ -105,7 +105,7 @@ Finalmente *push* te permitirá guardar los cambios en tu repositorio remoto, lo
 knitr::include_graphics("Push.png")
 ```
 
-### Reproducibilidad en R
+## Reproducibilidad en R
 
 Existen varios paquetes que permiten que hagamos investigación reproducible en `R`, pero sin duda los más relevantes son *rmarkdown* y *knitr*. Ambos paquetes funcionana en conjunto cuando generamos un archivo *Rmd* (Rmarkdown), en el cual ocupamos al mismo tiempo texto, código de R y otros elementos para generar un documento word, pdf, página web, presentación y/o aplicación web (fig \@ref(fig:Rmark)).
 
@@ -151,27 +151,34 @@ Los *chunks* son una de las partes más importantes del un Rmarkdown. En estos e
 knitr::include_graphics("Insertchunk.png")
 ```
 
-Al apretar este código aparecera un espacio tal como el que aparece abajo
+Al apretar este código aparecera un espacio, uno podría agregar un código como el que aparece a continuación, y vemos a continuación los resultados. 
 
-
+````markdown
 `r ''````{r}
-
+library(tidyverse)
+iris %>% group_by(Species) %>% summarize(Petal.Length = mean(Petal.length))
 ```
+````
 
 
-```{block2, type='Consejo'}
-Esta es una lista de consejos
-- Este es un consejo
-- Este es otro
-
-Con esto terminamos los consejos.
+```{r, echo = FALSE}
+iris %>% group_by(Species) %>% summarize(Petal.Length = mean(Petal.Length))
 ```
-
 
 
 
 ##### Opciones de los chunks
 
+Existen muchas opciones para los chunks, una documentación completa podemos encontrarle en el siguiente [link](https://yihui.name/knitr/options/), pero acá mostraremos los más comunes:
+
++ *echo* = T o F muestro o no codigo
++ *message* = T o F muestra mensajes de paquetes
++ *warning* = T o F muestra advertencias 
++ *eval* = T o F evaluar o no el código
++ *cache* = T o F guarda o no el resultado
+
 #### inline code
+
+syntax for the latter is `` ``r ''`r R_CODE` ``, and it can be embedded inline with other document elements. R code chunks look like plain code blocks, but have `{r}` after the three backticks and (optionally) chunk options inside `{}`, e.g.,
 
 #### Tablas en Rmarkdown
