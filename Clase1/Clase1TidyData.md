@@ -14,7 +14,7 @@
 Clase 1 Tidy Data y manipulación de datos
 ========================================================
 author: Derek Corcoran
-date: "05/08, 2018"
+date: "07/08, 2018"
 autosize: true
 transition: rotate
 
@@ -425,7 +425,7 @@ Ejercicios
 incremental: true
 class: small-code
 
-* Usando la base de datos *storm* del paquete *dplyr*, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
+* Usando la base de datos *storms* del paquete *dplyr*, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
     + soluciónes:
 
 ```r
@@ -447,7 +447,7 @@ Ejercicios 2
 incremental: true
 class: small-code
 
-* La base de datos `mpg` del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (*cty*) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 km = 1.609 millas; 1 galón = 3.78541 litros)
+* La base de datos `mpg` del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (*cty*) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 milla = 1.609 km; 1 galón = 3.78541 litros)
 
 
 ```r

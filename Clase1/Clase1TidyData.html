@@ -784,7 +784,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="default" data-transition-speed="default">
-<h1>Clase 1 Tidy Data y manipulación de datos</h1><p>Derek Corcoran<br/>&quot;05&#x2F;08, 2018&quot;</p>
+<h1>Clase 1 Tidy Data y manipulación de datos</h1><p>Derek Corcoran<br/>&quot;07&#x2F;08, 2018&quot;</p>
 
 <div class="slideContent" >
 
@@ -1574,7 +1574,7 @@ DF &lt;- iris %&gt;% filter(Species != &quot;versicolor&quot;) %&gt;% group_by(S
 <h3>Ejercicios</h3>
 <div class="slideContent small-code" >
 <ul>
-<li class="fragment">Usando la base de datos <em>storm</em> del paquete <em>dplyr</em>, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
+<li class="fragment">Usando la base de datos <em>storms</em> del paquete <em>dplyr</em>, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
 
 <ul>
 <li class="fragment">soluciónes:</li>
@@ -1597,7 +1597,7 @@ DF &lt;- iris %&gt;% filter(Species != &quot;versicolor&quot;) %&gt;% group_by(S
 <h3>Ejercicios 2</h3>
 <div class="slideContent small-code" >
 <ul>
-<li class="fragment">La base de datos <code>mpg</code> del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (<em>cty</em>) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 km = 1.609 millas; 1 galón = 3.78541 litros)</li>
+<li class="fragment">La base de datos <code>mpg</code> del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (<em>cty</em>) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 milla = 1.609 km; 1 galón = 3.78541 litros)</li>
 </ul>
 
 <pre class="fragment"><code class="r">Solution &lt;- mpg %&gt;% filter(year &gt; 2004 &amp; class == &quot;compact&quot;) %&gt;% mutate(kpl = (cty*1.609)/3.78541)
