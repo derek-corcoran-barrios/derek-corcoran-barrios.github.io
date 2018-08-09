@@ -179,6 +179,31 @@ Existen muchas opciones para los chunks, una documentación completa podemos enc
 
 #### inline code
 
-syntax for the latter is `` ``r ''`r R_CODE` ``, and it can be embedded inline with other document elements. R code chunks look like plain code blocks, but have `{r}` after the three backticks and (optionally) chunk options inside `{}`, e.g.,
+Los *inline codes* son utiles para agregar algún valor en el texto, como por ejemplo el valor de p, o la media. Para usarlo, se debe poner un backtick, r, el código en cuestion y otro backtick como se ve a continuación `` ``r ''`r R_código` ``. No podemos poner cualquier cosa en un *inline code*, ya que sólo puede generar vectores, lo cuál muchas veces requiere de mucha creatividad para lograr lo que queremos. Por ejemplo si quisieramos poner el promedio del largo del sépalo de la base da dato `iris` en un inline code pondríamos  `` ``r ''`r mean(iris$Sepal.Length)` ``, lo cual resultaría en `r mean(iris$Sepal.Length)`. Como en un texto se vería extraño un número con 7 cifras significativas, querríamos usar ademas la función `round`, para que tenga 2 cifras significativas, para eso ponemos el siguiente inline code `` ``r ''`r round(mean(iris$Sepal.Length),2)` `` que da como resultado `r round(mean(iris$Sepal.Length),2)`. Esto se puede complejizar más aún, si queremos trabajar con una tabla resumen, por ejemplo si quisieramos listar el promedio del tamaño de sépalo usariamos `summarize` de *dplyr*, pero esto nos daría como resultado un data.frame, el cual no aparece si intentamos hacer un inline code. Partamos por ver como se vería el código donde obtuvieramos la media del tamaño del sépalo.
+
+```{r, eval = FALSE}
+iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length))
+```
+
+El resultado de ese código lo veríamos \@ref(tab:SummarySepaltab)
+
+```{r SummarySepaltab, echo = FALSE}
+knitr::kable((iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length))), booktabs = TRUE,
+  caption = 'Resumen del promedio del largo de sépalo de las flores del genero Iris.', row.names = FALSE)
+```
+
+Para sacar de este data frame el vector de la média podríamos subsetearlo con el signo `$`, entonces si queremos sacar como vector la columna *Mean*, del data frame que creamos haríamos lo siguiente `` ``r ''`r (iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length)))$Mean` ``, lo cual daría como resultado `r (iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length)))$Mean`.
 
 #### Tablas en Rmarkdown
+
+la función más típica para generar tablas en un archivo *rmd* es `kable` del paquete *knitr*, que en su forma más simple se incluye un dataframe adentro y obtenemos una tabla, además de esto, podemos agregar algunos parametros como *caption*, que nos permite poner un título a la tabla o *row.names*, que si se pone como se ve en el código (FALSE) no mostrará en la tabla los nombres de las filas, tal como se ve en la tabla \@ref(tab:SummaryMeans).
+
+```{r, eval = FALSE}
+DF <- iris %>% group_by(Species) %>% summarize_all(mean)
+kable(DF, caption = 'Promedio por especie de todas las variables de la base de datos iris.', row.names = FALSE)
+```
+
+```{r SummaryMeans, echo = FALSE}
+knitr::kable((iris %>% group_by(Species) %>% summarize_all(mean)), booktabs = TRUE,
+  caption = 'Promedio por especie de todas las variables de la base de datos iris.', row.names = FALSE)
+```

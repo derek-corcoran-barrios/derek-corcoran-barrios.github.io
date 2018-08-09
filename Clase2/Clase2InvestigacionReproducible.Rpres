@@ -40,27 +40,66 @@ Github
 - Cada proyecto es un repositorio
 
 ***
-![Git](https://www.cs.swarthmore.edu/~newhall/unixhelp/gitrepos.gif)
+```{r, echo=FALSE}
+knitr::include_graphics("Octocat.png")
+```
 
-Crear primer repositorio (Meta 4)
+
+Crear primer repositorio
 ========================================================
 
 - Crearse cuenta en githib.com
 - Crear repositorio en github
 
-Crear primer repositorio (Meta 4)
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("StartAProject.png")
+```
+
+
+Crear primer repositorio
 ========================================================
 
-- git remote add origin "URL del repositorio remoto"
-- git remote -v
-- git push origin master
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("NombreRepo.png")
+```
 
-De ahí en adelante
+Copiar la url
 ========================================================
 
-- git add -A (a menos que tengas un archivo muuuy grande)
-- git commit -am "<mensaje a recordar>"
-- git push
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("GitAdress.png")
+```
+
+Volvamos a RStudio
+========================================================
+
+* Creamos un proyecto nuevo
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("NewProject.png")
+```
+
+Pegamos la URL 
+========================================================
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("GitRstudio.png")
+```
+
+La nueva pestaña git
+========================================================
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("GitPan.png")
+```
+
+Los "¿tres?" pasos de un repositorio 
+=============================
+
+* **Git add:** Agregar a los archivos que vas a guardar
+* **Git commit:** Guardar en el repositorio local (Mi computador)
+* **Git push:** Guardar en el repositorio remoto (En la nube)
+
 
 A guardar el repositorio
 ========================================================
