@@ -30,6 +30,14 @@ pacman::p_load(ggmap, ggplot2, dplyr, readr, leaflet, dygraphs, xts, lubridate, 
 
 ![Peng](Reproducible.png)
 
+Metas del día de hoy
+========================================================
+
+1.  Primer commit en github
+2.  Un código en un chunk
+3.  Un inline code
+4.  Una tabla en el Rmarkdown
+
 
 Github
 ========================================================
@@ -48,7 +56,7 @@ knitr::include_graphics("Octocat.png")
 Crear primer repositorio
 ========================================================
 
-- Crearse cuenta en githib.com
+- Crearse cuenta en github.com
 - Crear repositorio en github
 
 ```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
@@ -100,12 +108,47 @@ Los "¿tres?" pasos de un repositorio
 * **Git commit:** Guardar en el repositorio local (Mi computador)
 * **Git push:** Guardar en el repositorio remoto (En la nube)
 
+Git Add
+========
 
-A guardar el repositorio
+* Sumar un archivo al repositorio
+* ¿Cuando no hacerlo?
+    + Limite de un archivo de 100 Mb
+    + Límite de un repositorio de un Gb
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("GitAdd.png")
+```
+
+Git commit
+========
+
+* Con esto dices quiero guardar mis cambios en mi disco duro
+* Se guarda en tu repositorio local (Tu computador)
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("Commit.png")
+```
+
+Mensaje del commit
+========
+
+* Debe ser relevante (ejemplo, no poner *Version final ahora si*)
+* Si te equivocas puedes restablecer a cualquier commit anterior (si sabes cual es)
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("MensajeCommit.png")
+```
+
+
+A guardar el repositorio (git push)
 ========================================================
 
-![Repo](https://cdn.shopify.com/s/files/1/0051/4802/products/mainmap_1024x1024.jpg?v=1424989816)
+* Con esto subes tu commit a la nube (queda respaldado)
 
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("Push.png")
+```
 
 Reproducibilidad en R
 ========================================================
@@ -119,14 +162,6 @@ Reproducibilidad en R
     + Codigo y texto (Rmd, Rpres, shiny)
     + Resultados (Manuscrito, Pagina Web, App)
 
-Metas del día de hoy
-========================================================
-
-1.  Un código en un chunk
-2.  Un inline code
-3.  Una tabla en el Rmarkdown
-4.  Primer commit en github
-5.  Entender que significan las metas de hoy
 
 Crear un nuevo Rmarkdown
 ========================================================
@@ -175,8 +210,7 @@ class: small-code
 [link](https://stackoverflow.com/users/3808018/derek-corcoran)
 ```
 
-
-Chunks (Meta 1)
+Chunks
 ========================================================
 incremental:true
 
@@ -190,7 +224,7 @@ incremental:true
 + Para más opciones ver este [link](https://yihui.name/knitr/options/)
 
 
-Inline code (Meta 2)
+Inline code
 ========================================================
 
 ![Inline](Inline.png)
@@ -232,7 +266,7 @@ Tablas: Kable y Stargazer
 - [stargazer](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf) mas avanzado, comparación de modelos
 - otras opciones como texreg
 
-Stargazer: Tablas resumen (Meta 3)
+Stargazer: Tablas resumen
 ========================================================
 
 - Chunk debe estar en results: "asis"
