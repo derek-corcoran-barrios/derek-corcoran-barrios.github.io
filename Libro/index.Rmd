@@ -10,7 +10,6 @@ link-citations: yes
 description: "Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R"
 ---
 
-# Parte I {-}
 
 # Requerimientos {-}
 

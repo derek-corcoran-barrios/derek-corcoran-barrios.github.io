@@ -29,7 +29,7 @@ Una de las soluciones posibles:
 Solution <- mpg %>% filter(year > 2004 & class == "compact") %>% mutate(kpl = (cty*1.609)/3.78541)
 ```
 
-## Capítulo 1
+## Capítulo 2
 
 ### Ejercicio 1
 

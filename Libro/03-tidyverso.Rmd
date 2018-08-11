@@ -22,4 +22,11 @@ El tidiverso se refiere al paquete [tidiverse](https://www.tidyverse.org/), el c
 
 ### readr
 
-El paquete *readr* esta generado
+El paquete *readr* [@Wickhamreadr] tiene como función el leer y exportar archivos. En general nosotros usaremos archivos del tipo *csv*. Para este tipo de archivos, *readr* tiene la función `read_csv`. Para exportar un archivo ocupamos la función `write_csv`. Ambas funciones son 10 veces más rápidas que las versiones de r base. Para más información sobre este revisar su [página oficial](https://readr.tidyverse.org/).
+
+### dplyr
+
+Este paquete sirve para modificar variables, los detalles de este paquete los vemos en el capítulo \@ref(tidydata). Los cinco verbos principales que tiene son `mutate` para generar nuevas variables, que vienen de variables ya existentes, `select` para seleccionar variables basadas en su nombre, `filter` para seleccionar filas de acuerdo a si cumplen o no con condiciones en una o mas variables, `summarize` para resumir las variables, y `arrange` para reordenar las filas de acuerdo a alguna variable. Para más información sobre este paquete revisar su [pagina oficial](https://dplyr.tidyverse.org/).
+
+### tidyr
+
