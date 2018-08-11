@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-09">
+<meta name="date" content="2018-08-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -168,6 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="reproducible.html"><a href="reproducible.html#subtitulo-1"><i class="fa fa-check"></i>subtitulo 1</a><ul>
 <li class="chapter" data-level="" data-path="reproducible.html"><a href="reproducible.html#subtitulo-2"><i class="fa fa-check"></i>subtítulo 2</a></li>
+<li class="chapter" data-level="2.4.2" data-path="reproducible.html"><a href="reproducible.html#ejercicios-1"><i class="fa fa-check"></i><b>2.4.2</b> Ejercicios</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tidyverso.html"><a href="tidyverso.html"><i class="fa fa-check"></i><b>3</b> El Tidyverso</a></li>
@@ -184,8 +185,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
 <li class="chapter" data-level="8.1" data-path="soluciones.html"><a href="soluciones.html#capitulo-1"><i class="fa fa-check"></i><b>8.1</b> Capítulo 1</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-1"><i class="fa fa-check"></i><b>8.1.1</b> Ejercicio 1</a></li>
+<li class="chapter" data-level="8.1.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-2"><i class="fa fa-check"></i><b>8.1.1</b> Ejercicio 1</a></li>
 <li class="chapter" data-level="8.1.2" data-path="soluciones.html"><a href="soluciones.html#ejercicio-2-1"><i class="fa fa-check"></i><b>8.1.2</b> Ejercicio 2</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="soluciones.html"><a href="soluciones.html#capitulo-1-1"><i class="fa fa-check"></i><b>8.2</b> Capítulo 1</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-3"><i class="fa fa-check"></i><b>8.2.1</b> Ejercicio 1</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -213,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Todos los problemas en programación tienen más de una forma de llegar a ellos, es por esto que las soluciones acá mostradas deben tomarse solo como una referencia, y revisar si el resultado final de tu código (aunque sea distinto de este), sea igual al que presentamos.</p>
 <div id="capitulo-1" class="section level2">
 <h2><span class="header-section-number">8.1</span> Capítulo 1</h2>
-<div id="ejercicio-1-1" class="section level3">
+<div id="ejercicio-1-2" class="section level3">
 <h3><span class="header-section-number">8.1.1</span> Ejercicio 1</h3>
 <p>Algunas posibles soluciones:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
@@ -229,6 +233,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Una de las soluciones posibles:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">Solution &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">2004</span> <span class="op">&amp;</span><span class="st"> </span>class <span class="op">==</span><span class="st"> &quot;compact&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">kpl =</span> (cty <span class="op">*</span><span class="st"> </span><span class="fl">1.609</span>)<span class="op">/</span><span class="fl">3.78541</span>)</a></code></pre></div>
+</div>
+</div>
+<div id="capitulo-1-1" class="section level2">
+<h2><span class="header-section-number">8.2</span> Capítulo 1</h2>
+<div id="ejercicio-1-3" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> Ejercicio 1</h3>
+<p>Una posible solución a este problema sería:</p>
+<p><code>`r mean((iris %&gt;% filter(Species == &quot;virginica&quot;))$Petal.Length)`</code></p>
 
 <div id="refs" class="references">
 <div>

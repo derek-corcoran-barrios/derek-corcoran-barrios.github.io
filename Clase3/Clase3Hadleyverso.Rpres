@@ -1,0 +1,195 @@
+<style>
+.reveal h1, .reveal h2, .reveal h3 {
+  word-wrap: normal;
+  -moz-hyphens: none;
+}
+</style>
+
+<style>
+.small-code pre code {
+  font-size: 1em;
+}
+</style>
+
+Clase 3 El Tidyverso
+========================================================
+author: Derek Corcoran
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+autosize: true
+transition: rotate
+
+
+Tidiverso
+========================================================
+class: small-code
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning=FALSE)
+```
+
+```{r, echo=FALSE}
+library(tidyverse)
+library(knitr)
+```
+
+Hadleyverso: Conjunto de paquetes creado por Hadley Wickham, generados para hacer el trabajo con Tidy Data mucho más fácil
+
+```{r, echo=FALSE}
+include_graphics("http://hadley.nz/hadley-wickham.jpg")
+```
+
+***
+
+[Tidyverso](https://www.tidyverse.org): Desde que David Robinson y algunos otros empezaron a aportar
+
+```{r, eval=FALSE}
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+```{r, echo=FALSE}
+include_graphics("http://varianceexplained.org/images/david_robinson_picture2.jpg")
+```
+
+Paquetes del Tidyverso
+========================================================
+incremental: true
+
+En el corazón del Tidyverso
+
+* readr (ya la estamos usando)
+* dplyr (Clase anterior)
+* tidyr (Hoy)
+* forcats (Para variables categóricas)
+* stringr (Para carácteres, Palabras)
+* ggplot2 (Próxima clase)
+* purrr (En clase sobre loops)
+
+ ***
+ 
+Adyacente al Tidyverso
+
+* lubridate para fechas y fechas/horas (Hoy en algunos casos)
+* hms para horas
+* broom tablas para modelos tidy
+* readxl para leer archivos excel
+
+Tidyr
+====================
+
+Dos funciones
+
+* *gather* hace que tablas anchas se vuelvan largas
+* *spread* hace que tablas largas se vuelvan anchan
+
+***
+
+```{r, echo=FALSE}
+include_graphics("https://exceleratorbi.com.au/wp-content/uploads/2016/09/image.png")
+```
+
+Gather
+=============
+class: small-code
+
+```{r}
+data(iris)
+mini_iris <- iris[c(1, 51, 101), ]
+kable(mini_iris)
+```
+
+Gather (cont)
+=============
+class: small-code
+
+```{r}
+MI <- mini_iris %>% gather(key = flower_att, value = measurement, -Species)
+kable(MI)
+```
+
+
+spread
+============
+```{r}
+M <- spread(MI, flower_att, measurement)
+kable(M)
+```
+
+Ejercicios
+==============
+incremental: true
+class: small-code
+* ¿Como paso de esto?
+```{r}
+counts_df <- data.frame(
+  day = c("Monday", "Tuesday", "Wednesday"),
+  wolf = c(2, 1, 3),
+  hare = c(20, 25, 30),
+  fox = c(4, 4, 4)
+)
+kable(counts_df)
+```
+
+* a tidy data?
+
+Solución
+==============
+class: small-code
+
+```{r}
+DF <- counts_df %>% gather(key = Species, value = Count, -day)
+kable(DF)
+```
+
+
+Ejercicio 2
+=================
+class: small-code
+a. Quedarse con solo las observaciones que tienen coordenadas geograficas
+
+b. Cuantas observaciones son de observacion humana y cuantas de especimen de museo? 
+```{r}
+library(dismo)
+library(dplyr)
+Huemul <- gbif('Hippocamelus', 'bisulcus', down=TRUE)
+colnames(Huemul)
+```
+
+Solucion a
+=====================
+class: small-code
+
+```{r}
+Sola <- Huemul %>% dplyr::select(lon, lat, basisOfRecord) %>% filter(!is.na(lat) & !is.na(lon))
+kable(Sola)
+```
+
+Solucion b
+=====================
+class: small-code
+
+```{r, message = FALSE, warning = FALSE}
+Solb <- Huemul %>% group_by(basisOfRecord) %>% summarize(N = n())
+kable(Solb)
+```
+
+
+
+Ejercicio 3
+==================
+incremental: true
+
+* Entrar a [INE ambiental](http://www.ine.cl/estadisticas/medioambiente/series-cronologicas-vba) y bajar la base de datos de Dimensión Aire.
+* Generar una base de datos **tidy** con las siguientes 5 columnas
+    + El nombre de la localidad donde se encuntra la estación
+    + El año en que se tomo la medida
+    + El mes en que se tomo la medida
+    + La temperatura media de ese mes
+    + La media del mp25 de ese mes
+    + Humedad relativa media mensual
+    
+Ejercicio 3 Continuado
+==================
+
+* De la base de datos anterior obterner un segundo data frame en la cual calculen para cada variable y estación la media y desviación estandar para cada mes

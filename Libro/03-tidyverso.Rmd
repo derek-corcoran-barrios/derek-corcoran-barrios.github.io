@@ -1,3 +1,25 @@
 # El Tidyverso {#tidyverso}
 
-We describe our methods in this chapter.
+## Paquetes necesarios para este capítulo
+
+Para este capitulo necesitas tener instalado el paquete *tidyverse*
+
+En este capítulo se explicará qué es el paquete *tidyverse* [@Wickhamtidyverse] y cuales son sus componentes, ya demás veremos las funciones del paqute *tidyr* [@Wickhamtidy], con sus dos funciones `gather` y `spread`.
+
+Dado que este libro es un apoyo para el curso BIO4022, esta clase del curso puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase3/Clase3Hadleyverso). El video de la clase se encontrará disponible en este link.
+
+## El tidiverso
+
+El tidiverso se refiere al paquete [tidiverse](https://www.tidyverse.org/), el cual es una colección de paquetes coehrentes, que tienen una gramática, filosofía y estructura similar. Todos se basan el la idea de tidy data propuesta por Hadley Wickham [@wickham2014tidy]. Los paquetes que forman parte del tidyverso son:
+
+* readr (ya la estamos usando)
+* dplyr (Clase anterior)
+* tidyr (Hoy)
+* forcats (Para variables categóricas)
+* stringr (Para carácteres, Palabras)
+* ggplot2 (Próxima clase)
+* purrr (En clase sobre loops)
+
+### readr
+
+El paquete *readr* esta generado

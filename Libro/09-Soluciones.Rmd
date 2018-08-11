@@ -28,3 +28,11 @@ Una de las soluciones posibles:
 ```{r, eval = FALSE}
 Solution <- mpg %>% filter(year > 2004 & class == "compact") %>% mutate(kpl = (cty*1.609)/3.78541)
 ```
+
+## Capítulo 1
+
+### Ejercicio 1
+
+Una posible solución a este problema sería:
+
+`` ``r ''`r mean((iris %>% filter(Species == "virginica"))$Petal.Length)` ``

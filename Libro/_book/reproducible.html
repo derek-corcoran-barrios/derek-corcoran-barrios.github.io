@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-09">
+<meta name="date" content="2018-08-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -168,6 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="reproducible.html"><a href="reproducible.html#subtitulo-1"><i class="fa fa-check"></i>subtitulo 1</a><ul>
 <li class="chapter" data-level="" data-path="reproducible.html"><a href="reproducible.html#subtitulo-2"><i class="fa fa-check"></i>subtítulo 2</a></li>
+<li class="chapter" data-level="2.4.2" data-path="reproducible.html"><a href="reproducible.html#ejercicios-1"><i class="fa fa-check"></i><b>2.4.2</b> Ejercicios</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tidyverso.html"><a href="tidyverso.html"><i class="fa fa-check"></i><b>3</b> El Tidyverso</a></li>
@@ -184,8 +185,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
 <li class="chapter" data-level="8.1" data-path="soluciones.html"><a href="soluciones.html#capitulo-1"><i class="fa fa-check"></i><b>8.1</b> Capítulo 1</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-1"><i class="fa fa-check"></i><b>8.1.1</b> Ejercicio 1</a></li>
+<li class="chapter" data-level="8.1.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-2"><i class="fa fa-check"></i><b>8.1.1</b> Ejercicio 1</a></li>
 <li class="chapter" data-level="8.1.2" data-path="soluciones.html"><a href="soluciones.html#ejercicio-2-1"><i class="fa fa-check"></i><b>8.1.2</b> Ejercicio 2</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="soluciones.html"><a href="soluciones.html#capitulo-1-1"><i class="fa fa-check"></i><b>8.2</b> Capítulo 1</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-3"><i class="fa fa-check"></i><b>8.2.1</b> Ejercicio 1</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -427,8 +431,16 @@ Figura 2.14: Al apretar el botón insert chunk, aparecera un espacio en el cuál
 </table>
 <p>Para sacar de este data frame el vector de la média podríamos subsetearlo con el signo <code>$</code>, entonces si queremos sacar como vector la columna <em>Mean</em>, del data frame que creamos haríamos lo siguiente <code>`r (iris %&gt;% group_by(Species) %&gt;% summarize(Mean = mean(Sepal.Length)))$Mean`</code>, lo cual daría como resultado 5.006, 5.936, 6.588.</p>
 </div>
+</div>
+<div id="ejercicios-1" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Ejercicios</h3>
+<div id="ejercicio-1-1" class="section level4">
+<h4><span class="header-section-number">2.4.2.1</span> Ejercicio 1</h4>
+<p>Usando la base de datos <em>iris</em> crea un inline code que diga cuál es la media del largo del pétalo de la especie <em>Iris virginica</em></p>
+<p>La solución a este ejercicio se encuentra en el capítulo <a href="soluciones.html#soluciones">8</a></p>
+</div>
 <div id="tablas-en-rmarkdown" class="section level4">
-<h4><span class="header-section-number">2.4.1.4</span> Tablas en Rmarkdown</h4>
+<h4><span class="header-section-number">2.4.2.2</span> Tablas en Rmarkdown</h4>
 <p>la función más típica para generar tablas en un archivo <em>rmd</em> es <code>kable</code> del paquete <em>knitr</em>, que en su forma más simple se incluye un dataframe adentro y obtenemos una tabla, además de esto, podemos agregar algunos parametros como <em>caption</em>, que nos permite poner un título a la tabla o <em>row.names</em>, que si se pone como se ve en el código (FALSE) no mostrará en la tabla los nombres de las filas, tal como se ve en la tabla <a href="reproducible.html#tab:SummaryMeans">2.2</a>.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">kable</span>(DF, <span class="dt">caption =</span> <span class="st">&quot;Promedio por especie de todas las variables de la base de datos iris.&quot;</span>, </a>

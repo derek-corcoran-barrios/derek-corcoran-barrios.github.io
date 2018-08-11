@@ -194,6 +194,15 @@ knitr::kable((iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length)
 
 Para sacar de este data frame el vector de la média podríamos subsetearlo con el signo `$`, entonces si queremos sacar como vector la columna *Mean*, del data frame que creamos haríamos lo siguiente `` ``r ''`r (iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length)))$Mean` ``, lo cual daría como resultado `r (iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length)))$Mean`.
 
+### Ejercicios
+
+#### Ejercicio 1
+
+Usando la base de datos *iris* crea un inline code que diga cuál es la media del largo del pétalo de la especie *Iris virginica*
+
+La solución a este ejercicio se encuentra en el capítulo \@ref(soluciones)
+
+
 #### Tablas en Rmarkdown
 
 la función más típica para generar tablas en un archivo *rmd* es `kable` del paquete *knitr*, que en su forma más simple se incluye un dataframe adentro y obtenemos una tabla, además de esto, podemos agregar algunos parametros como *caption*, que nos permite poner un título a la tabla o *row.names*, que si se pone como se ve en el código (FALSE) no mostrará en la tabla los nombres de las filas, tal como se ve en la tabla \@ref(tab:SummaryMeans).
@@ -207,3 +216,4 @@ kable(DF, caption = 'Promedio por especie de todas las variables de la base de d
 knitr::kable((iris %>% group_by(Species) %>% summarize_all(mean)), booktabs = TRUE,
   caption = 'Promedio por especie de todas las variables de la base de datos iris.', row.names = FALSE)
 ```
+

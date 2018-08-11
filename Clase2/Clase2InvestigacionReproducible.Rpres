@@ -37,6 +37,7 @@ Metas del día de hoy
 2.  Un código en un chunk
 3.  Un inline code
 4.  Una tabla en el Rmarkdown
+5.  Generar una primera exploración de datos con la base de datos
 
 
 Github
@@ -162,6 +163,13 @@ Reproducibilidad en R
     + Codigo y texto (Rmd, Rpres, shiny)
     + Resultados (Manuscrito, Pagina Web, App)
 
+Antes de empezar (importar datos)
+=========================
+incremental:true
+
+* Hasta ahora hemos usado `data` (sólo para bases incorporadas en R)
+* Dede hoy usaremos `read_csv` (Para csv, para otros archivos hay otras funciones)
+
 
 Crear un nuevo Rmarkdown
 ========================================================
@@ -253,65 +261,16 @@ incremental: true
     + "la media para I. virginica es "r mean((iris %>% filter(Species == "virginica"))$Petal.Length)""
 
 
-Empezemos a trabajar!!!
-========================================================
-
-![Arrr](http://photos1.blogger.com/x/blogger/1599/2546/1600/667273/R-is-for-Pirate.jpg)
-
-
-Tablas: Kable y Stargazer
+Tablas: Kable
 ========================================================
 
 - kable parte de knitr, tabla igual a lo ingresado 
-- [stargazer](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf) mas avanzado, comparación de modelos
+- [stargazer](https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf), comparación de modelos
 - otras opciones como texreg
 
-Stargazer: Tablas resumen
-========================================================
-
-- Chunk debe estar en results: "asis"
-- Si es para html la opción debe estar en type = "html"
-- Si es para pdf la opción debe estar en type = "latex"
-- Se puede exportar tabla
-
-```{r, results='asis', echo=TRUE}
-library(stargazer)
-stargazer(iris,type = "html")
-```
-
-Stargazer: Resumen de modelos economía combustible 1
-========================================================
-
-```{r, results='asis', echo=TRUE}
-data("mtcars")
-kable(head(mtcars))
-```
-
-Stargazer: Resumen de modelos economía combustible 2
-========================================================
-
-```{r, results='asis', echo=TRUE}
-M1 <- lm(mpg~wt, data = mtcars)
-M2 <- lm(mpg~hp, data = mtcars)
-M3 <- lm(mpg~hp + wt, data = mtcars)
-```
-
-========================================================
-class: small-code
-
-```{r, results='asis', echo=TRUE}
-stargazer(M1, M2, M3, type ="html", single.row=TRUE)
-```
 
 Armemos nuestras propias tablas!!!
 ========================================================
 
 ![Tabla](http://www.chemicalprocessing.com/assets/Media/0908/cartoon_0906.jpg)
 
-
-
-
-Meta del día de hoy
-===================
-
-Piensen en una pregunta a resolver con sus datos
