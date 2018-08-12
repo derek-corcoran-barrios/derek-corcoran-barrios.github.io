@@ -145,27 +145,90 @@ Ejercicios
 ==============
 incremental: true
 class: small-code
+
 * ¿Como paso de esto?
 
+
 ```r
-counts_df <- data.frame(
-  day = c("Monday", "Tuesday", "Wednesday"),
-  wolf = c(2, 1, 3),
-  hare = c(20, 25, 30),
-  fox = c(4, 4, 4)
+df_cuentas <- data.frame(
+  dia = c("Lunes", "Martes", "Miercoles"),
+  Lobo = c(2, 1, 3),
+  Liebre = c(20, 25, 30),
+  Zorro = c(4, 4, 4)
 )
-kable(counts_df)
+kable(df_cuentas)
 ```
 
 
 
-|day       | wolf| hare| fox|
-|:---------|----:|----:|---:|
-|Monday    |    2|   20|   4|
-|Tuesday   |    1|   25|   4|
-|Wednesday |    3|   30|   4|
+|dia       | Lobo| Liebre| Zorro|
+|:---------|----:|------:|-----:|
+|Lunes     |    2|     20|     4|
+|Martes    |    1|     25|     4|
+|Miercoles |    3|     30|     4|
 
 * a tidy data?
+
+Antes de la solución
+====================
+incremental: true
+class: small-code
+
+Entendamos la función
+
+* **key:** Nombre que tendra la columna con los nombres de las columnas
+* **value:** Nombre que tendrá la columna de los valores
+* **...:** Nombres de las columnas que quieres incluir (o no) en el alargamiento
+
+
+```r
+library(tidyverse)
+DF_largo <- df_cuentas %>% gather(key = Columnas, value = Valores)
+```
+
+***
+
+
+|Columnas |Valores   |
+|:--------|:---------|
+|dia      |Lunes     |
+|dia      |Martes    |
+|dia      |Miercoles |
+|Lobo     |2         |
+|Lobo     |1         |
+|Lobo     |3         |
+|Liebre   |20        |
+|Liebre   |25        |
+|Liebre   |30        |
+|Zorro    |4         |
+|Zorro    |4         |
+|Zorro    |4         |
+
+Quitemos el día
+====================
+incremental: true
+class: small-code
+
+
+```r
+DF_largo <- df_cuentas %>% gather(key = Columnas, value = Valores, -dia)
+```
+
+
+
+|dia       |Columnas | Valores|
+|:---------|:--------|-------:|
+|Lunes     |Lobo     |       2|
+|Martes    |Lobo     |       1|
+|Miercoles |Lobo     |       3|
+|Lunes     |Liebre   |      20|
+|Martes    |Liebre   |      25|
+|Miercoles |Liebre   |      30|
+|Lunes     |Zorro    |       4|
+|Martes    |Zorro    |       4|
+|Miercoles |Zorro    |       4|
+
+
 
 Solución
 ==============
@@ -173,24 +236,21 @@ class: small-code
 
 
 ```r
-DF <- counts_df %>% gather(key = Species, value = Count, -day)
-kable(DF)
+DF <- df_cuentas %>% gather(key = Especie, value = Cuenta, -dia)
 ```
 
 
-
-|day       |Species | Count|
-|:---------|:-------|-----:|
-|Monday    |wolf    |     2|
-|Tuesday   |wolf    |     1|
-|Wednesday |wolf    |     3|
-|Monday    |hare    |    20|
-|Tuesday   |hare    |    25|
-|Wednesday |hare    |    30|
-|Monday    |fox     |     4|
-|Tuesday   |fox     |     4|
-|Wednesday |fox     |     4|
-
+|dia       |Columnas | Valores|
+|:---------|:--------|-------:|
+|Lunes     |Lobo     |       2|
+|Martes    |Lobo     |       1|
+|Miercoles |Lobo     |       3|
+|Lunes     |Liebre   |      20|
+|Martes    |Liebre   |      25|
+|Miercoles |Liebre   |      30|
+|Lunes     |Zorro    |       4|
+|Martes    |Zorro    |       4|
+|Miercoles |Zorro    |       4|
 
 Ejercicio 2
 =================

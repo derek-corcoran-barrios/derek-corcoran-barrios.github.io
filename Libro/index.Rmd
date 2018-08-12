@@ -72,9 +72,9 @@ Este curso está enfocado en entregar principios básicos de investigación repr
     
 + Capítulo \@ref(tidyverso) *El tidyverso* y el concepto de pipeline:En este capítulo se aprenderá sobre la limpieza de datos complejos.
 
-4. Visualización de datos, visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
++ Capítulo \@ref(visualizacion) *Visualización de datos* visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
 
-5. Creación de funciones propias y loops. Generación de funciones propias en R y loops
++ Capítulo \@ref(loops) *Loops*. Generación de funciones propias en R y loops
 
 6. Escritura de manuscritos en R, transformación de documentos Rmd en un manuscrito
 

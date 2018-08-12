@@ -821,13 +821,13 @@ library(tidyverse)
 <p>En el corazón del Tidyverso</p>
 
 <ul>
+<li class="fragment">readr (ya la estamos usando)</li>
 <li class="fragment">dplyr (Clase anterior)</li>
 <li class="fragment">tidyr (Hoy)</li>
-<li class="fragment">ggplot2 (Próxima clase)</li>
-<li class="fragment">readr (ya la estamos usando)</li>
-<li class="fragment">purrr (En clase sobre loops)</li>
 <li class="fragment">forcats (Para variables categóricas)</li>
-<li class="fragment"><p class="fragment">stringr (Para carácteres, Palabras)</p>
+<li class="fragment">stringr (Para carácteres, Palabras)</li>
+<li class="fragment">ggplot2 (Próxima clase)</li>
+<li class="fragment"><p class="fragment">purrr (En clase sobre loops)</p>
 
 
 </div>
@@ -1044,37 +1044,37 @@ kable(M)
 <li class="fragment">¿Como paso de esto?</li>
 </ul>
 
-<pre class="fragment"><code class="r">counts_df &lt;- data.frame(
-  day = c(&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;),
-  wolf = c(2, 1, 3),
-  hare = c(20, 25, 30),
-  fox = c(4, 4, 4)
+<pre class="fragment"><code class="r">df_cuentas &lt;- data.frame(
+  dia = c(&quot;Lunes&quot;, &quot;Martes&quot;, &quot;Miercoles&quot;),
+  Lobo = c(2, 1, 3),
+  Liebre = c(20, 25, 30),
+  Zorro = c(4, 4, 4)
 )
-kable(counts_df)
+kable(df_cuentas)
 </code></pre>
 
 <table><thead>
 <tr>
-<th align="left">day</th>
-<th align="right">wolf</th>
-<th align="right">hare</th>
-<th align="right">fox</th>
+<th align="left">dia</th>
+<th align="right">Lobo</th>
+<th align="right">Liebre</th>
+<th align="right">Zorro</th>
 </tr>
 </thead><tbody>
 <tr>
-<td align="left">Monday</td>
+<td align="left">Lunes</td>
 <td align="right">2</td>
 <td align="right">20</td>
 <td align="right">4</td>
 </tr>
 <tr>
-<td align="left">Tuesday</td>
+<td align="left">Martes</td>
 <td align="right">1</td>
 <td align="right">25</td>
 <td align="right">4</td>
 </tr>
 <tr>
-<td align="left">Wednesday</td>
+<td align="left">Miercoles</td>
 <td align="right">3</td>
 <td align="right">30</td>
 <td align="right">4</td>
@@ -1089,62 +1089,204 @@ kable(counts_df)
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>Solución</h3>
+<h3>Antes de la solución</h3>
+<div class="column column1 slideContent small-code" >
+<p>Entendamos la función</p>
+
+<ul>
+<li class="fragment"><strong>key:</strong> Nombre que tendra la columna con los nombres de las columnas</li>
+<li class="fragment"><strong>value:</strong> Nombre que tendrá la columna de los valores</li>
+<li class="fragment"><strong>&hellip;:</strong> Nombres de las columnas que quieres incluir (o no) en el alargamiento</li>
+</ul>
+
+<pre class="fragment"><code class="r">library(tidyverse)
+DF_largo &lt;- df_cuentas %&gt;% gather(key = Columnas, value = Valores)
+</code></pre>
+
+
+</div>
+
+<div class="column column2 slideContent small-code" >
+
+
+<table><thead>
+<tr>
+<th align="left">Columnas</th>
+<th align="left">Valores</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">dia</td>
+<td align="left">Lunes</td>
+</tr>
+<tr>
+<td align="left">dia</td>
+<td align="left">Martes</td>
+</tr>
+<tr>
+<td align="left">dia</td>
+<td align="left">Miercoles</td>
+</tr>
+<tr>
+<td align="left">Lobo</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">Lobo</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">Lobo</td>
+<td align="left">3</td>
+</tr>
+<tr>
+<td align="left">Liebre</td>
+<td align="left">20</td>
+</tr>
+<tr>
+<td align="left">Liebre</td>
+<td align="left">25</td>
+</tr>
+<tr>
+<td align="left">Liebre</td>
+<td align="left">30</td>
+</tr>
+<tr>
+<td align="left">Zorro</td>
+<td align="left">4</td>
+</tr>
+<tr>
+<td align="left">Zorro</td>
+<td align="left">4</td>
+</tr>
+<tr>
+<td align="left">Zorro</td>
+<td align="left">4</td>
+</tr>
+</tbody></table>
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
+<h3>Quitemos el día</h3>
 <div class="slideContent small-code" >
-<pre><code class="r">DF &lt;- counts_df %&gt;% gather(key = Species, value = Count, -day)
-kable(DF)
+<pre class="fragment"><code class="r">DF_largo &lt;- df_cuentas %&gt;% gather(key = Columnas, value = Valores, -dia)
 </code></pre>
 
 <table><thead>
 <tr>
-<th align="left">day</th>
-<th align="left">Species</th>
-<th align="right">Count</th>
+<th align="left">dia</th>
+<th align="left">Columnas</th>
+<th align="right">Valores</th>
 </tr>
 </thead><tbody>
 <tr>
-<td align="left">Monday</td>
-<td align="left">wolf</td>
+<td align="left">Lunes</td>
+<td align="left">Lobo</td>
 <td align="right">2</td>
 </tr>
 <tr>
-<td align="left">Tuesday</td>
-<td align="left">wolf</td>
+<td align="left">Martes</td>
+<td align="left">Lobo</td>
 <td align="right">1</td>
 </tr>
 <tr>
-<td align="left">Wednesday</td>
-<td align="left">wolf</td>
+<td align="left">Miercoles</td>
+<td align="left">Lobo</td>
 <td align="right">3</td>
 </tr>
 <tr>
-<td align="left">Monday</td>
-<td align="left">hare</td>
+<td align="left">Lunes</td>
+<td align="left">Liebre</td>
 <td align="right">20</td>
 </tr>
 <tr>
-<td align="left">Tuesday</td>
-<td align="left">hare</td>
+<td align="left">Martes</td>
+<td align="left">Liebre</td>
 <td align="right">25</td>
 </tr>
 <tr>
-<td align="left">Wednesday</td>
-<td align="left">hare</td>
+<td align="left">Miercoles</td>
+<td align="left">Liebre</td>
 <td align="right">30</td>
 </tr>
 <tr>
-<td align="left">Monday</td>
-<td align="left">fox</td>
+<td align="left">Lunes</td>
+<td align="left">Zorro</td>
 <td align="right">4</td>
 </tr>
 <tr>
-<td align="left">Tuesday</td>
-<td align="left">fox</td>
+<td align="left">Martes</td>
+<td align="left">Zorro</td>
 <td align="right">4</td>
 </tr>
 <tr>
-<td align="left">Wednesday</td>
-<td align="left">fox</td>
+<td align="left">Miercoles</td>
+<td align="left">Zorro</td>
+<td align="right">4</td>
+</tr>
+</tbody></table>
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
+<h3>Solución</h3>
+<div class="slideContent small-code" >
+<pre><code class="r">DF &lt;- df_cuentas %&gt;% gather(key = Especie, value = Cuenta, -dia)
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left">dia</th>
+<th align="left">Columnas</th>
+<th align="right">Valores</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">Lunes</td>
+<td align="left">Lobo</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="left">Martes</td>
+<td align="left">Lobo</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">Miercoles</td>
+<td align="left">Lobo</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td align="left">Lunes</td>
+<td align="left">Liebre</td>
+<td align="right">20</td>
+</tr>
+<tr>
+<td align="left">Martes</td>
+<td align="left">Liebre</td>
+<td align="right">25</td>
+</tr>
+<tr>
+<td align="left">Miercoles</td>
+<td align="left">Liebre</td>
+<td align="right">30</td>
+</tr>
+<tr>
+<td align="left">Lunes</td>
+<td align="left">Zorro</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td align="left">Martes</td>
+<td align="left">Zorro</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td align="left">Miercoles</td>
+<td align="left">Zorro</td>
 <td align="right">4</td>
 </tr>
 </tbody></table>

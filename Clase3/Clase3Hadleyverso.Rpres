@@ -120,28 +120,70 @@ Ejercicios
 ==============
 incremental: true
 class: small-code
+
 * ¿Como paso de esto?
+
 ```{r}
-counts_df <- data.frame(
-  day = c("Monday", "Tuesday", "Wednesday"),
-  wolf = c(2, 1, 3),
-  hare = c(20, 25, 30),
-  fox = c(4, 4, 4)
+df_cuentas <- data.frame(
+  dia = c("Lunes", "Martes", "Miercoles"),
+  Lobo = c(2, 1, 3),
+  Liebre = c(20, 25, 30),
+  Zorro = c(4, 4, 4)
 )
-kable(counts_df)
+kable(df_cuentas)
 ```
 
 * a tidy data?
+
+Antes de la solución
+====================
+incremental: true
+class: small-code
+
+Entendamos la función
+
+* **key:** Nombre que tendra la columna con los nombres de las columnas
+* **value:** Nombre que tendrá la columna de los valores
+* **...:** Nombres de las columnas que quieres incluir (o no) en el alargamiento
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+DF_largo <- df_cuentas %>% gather(key = Columnas, value = Valores)
+```
+
+***
+
+```{r, echo = FALSE}
+knitr::kable(DF_largo)
+```
+
+Quitemos el día
+====================
+incremental: true
+class: small-code
+
+```{r, warning=FALSE, message=FALSE}
+DF_largo <- df_cuentas %>% gather(key = Columnas, value = Valores, -dia)
+```
+
+
+```{r, echo = FALSE}
+knitr::kable(DF_largo)
+```
+
+
 
 Solución
 ==============
 class: small-code
 
 ```{r}
-DF <- counts_df %>% gather(key = Species, value = Count, -day)
-kable(DF)
+DF <- df_cuentas %>% gather(key = Especie, value = Cuenta, -dia)
 ```
 
+```{r, echo = FALSE}
+knitr::kable(DF_largo)
+```
 
 Ejercicio 2
 =================
