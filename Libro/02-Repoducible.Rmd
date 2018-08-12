@@ -2,23 +2,23 @@
 
 ## Paquetes necesarios para este capítulo
 
-Para este capitulo necesitas tener instalado los paquetes *rmarkdown*, *knitr* y *stargazer*
+Para este capítulo se necesita tener instalado los paquetes *rmarkdown*, *knitr* y *stargazer*
 
-En este capítulo explicaremos que es la investigación reproducible, y como aplicarla usando github, y los paquetes *rmarkdown* [@Allaire2018] y *knitr* [@xie2015]. Además aprenderemos a usar tablas usando *knitr* [@xie2015] y *stargazer* [@hlavak2018]
+En este capítulo se explicará qué es investigación reproducible, cómo aplicarla usando github más los paquetes *rmarkdown* [@Allaire2018] y *knitr* [@xie2015]. Además, se aprenderá a usar tablas usando *knitr* [@xie2015] y *stargazer* [@hlavak2018]
 
-Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este [link](https://derek-corcoran-barrios.github.io/Clase2/Clase2InvestigacionReproducible), y en cuanto el video de la clase este disponible encontrarás un link aca.
+Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este [link](https://derek-corcoran-barrios.github.io/Clase2/Clase2InvestigacionReproducible), y en cuanto el video de la clase encontrarás un link aca.
 
 ## Investigación reproducible
 
-La investigación reproducible no es lo mismo que la investigación replicable. La replicabilidad implica que experimentos o estudios llevados a cabo en condiciones similares nos llevarán a conclusiones similares, mientras que la investigación reproducible implica que desde los mismos datos, y/o el mismo código.
+La investigación reproducible no es lo mismo que la investigación replicable. La replicabilidad implica que experimentos o estudios llevados a cabo en condiciones similares nos llevarán a conclusiones similares. La investigación reproducible implica que desde los mismos datos y/o el mismo código se generarán los mismos resultados.
 
 ```{r reproducible, fig.cap= "Continuo de reproducibilidad (extraido de Peng 2011)", echo = FALSE, out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("Reproducible.png")
 ```
 
-En la figura \@ref(fig:reproducible) vemos el continuo de replicabilidad [@peng2011reproducible]. En este continuo tenemos el ejemplo de no reproducibilidad como una publicación sin código. Pasando de menos a más reproducible por la publicación y el código que genero los resultados y gráficos; seguido por la publicación, el código y los datos que generan los resultados y gráficos; y por último código, datos y texto entrelazados de forma tal que al correr el código obtenemos exactamente la mismma publicación que leimos.
+En la figura \@ref(fig:reproducible) vemos el continuo de reproducibilidad [@peng2011reproducible]. En este continuo tenemos el ejemplo de no reproducibilidad como una publicación sin código. Se pasa de menos a más reproducible por la publicación y el código que generó los resultados y gráficos; seguido por la publicación, el código y los datos que generan los resultados y gráficos; y por último código, datos y texto entrelazados de forma tal que al correr el código obtenemos exactamente la mismma publicación que leímos.
 
-Esto tiene muchas ventajas, incluyendo el que es más fácil aplicar exactamente los mismos metodos a otra base de datos, basta poner la nueva base de datos en el formato que tenía el autor de la primera publicación y podremos comparar los resultados.
+Esto tiene muchas ventajas, incluyendo el que es más fácil aplicar exactamente los mismos métodos a otra base de datos. Basta poner la nueva base de datos en el formato que tenía el autor de la primera publicación y podremos comparar los resultados.
 
 Además en un momento en que la ciencia está basada cada vez más en bases de datos, se puede poner en el código la recolección y/o muestreo de datos.
 
@@ -26,30 +26,30 @@ Además en un momento en que la ciencia está basada cada vez más en bases de d
 
 ### Que es github?
 
-Github es una suerte de dropbox o google drive pensado para la investigación reproducible, en github cada proyecto es un *repositorio*. La mayoría de los investigadores que trabajan en investigación reproducible dejan todo su trabajo documentado en sus repositorios, lo cual permite interactuar con otros autores.
+Github es una suerte de dropbox o google drive pensado para la investigación reproducible, en donde cada proyecto es un *repositorio*. La mayoría de los investigadores que trabajan en investigación reproducible dejan todo su trabajo documentado en sus repositorios, lo cual permite interactuar con otros autores.
 
 ### creando un proyecto de github en RStudio
 
-Para crear un proyecto en github presionamos **start a project** en la pagina inicial de nuestra cuenta como vemos en la figura \@ref(fig:Start)
+Para crear un proyecto en github presionamos **start a project** en la página inicial de nuestra cuenta, como vemos en la figura \@ref(fig:Start)
 
 ```{r Start, echo = FALSE, fig.cap= "Para empezar un projecto en github, debes presionar Start a project en tu página de inicio", out.width='80%', fig.asp=.75, fig.align="center"}
 knitr::include_graphics("StartAProject.png")
 ```
 
-Luego crea un nombre unico, y sin cambiar nada más presiona **create repository** en el botón verde como vemos en la figura \@ref(fig:Name).
+Luego se debe crear un nombre único, y sin cambiar nada más presiona **create repository** en el botón verde como vemos en la figura \@ref(fig:Name).
 
 
 ```{r Name, echo = FALSE, fig.cap= "Crea el nombre de tu repositorio y apreta el boton create repository", out.width='80%', fig.asp=.75, fig.align="center"}
 knitr::include_graphics("NombreRepo.png")
 ```
 
-Esto te llevará a una página donde te aparecera una url de tu nuevo repositorio como en la figura \@ref(fig:ssh)
+Esto te llevará a una página donde aparecerá una url de tu nuevo repositorio como en la figura \@ref(fig:ssh)
 
 ```{r ssh, echo = FALSE, fig.cap= "El contenido del cuadro en el cual dice ssh es la url de tu repisitorio", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("GitAdress.png")
 ```
 
-Para incorporar tu proyecto en tu repositorio, lo primero que debes hacer es generar un proyecto en RStudio, para esto debes ir en el menú superior de *Rstudio* a *File > New Project > Git* como se ve en las figuras \@ref(fig:NewProject) y \@ref(fig:NewProject).  
+Para incorporar tu proyecto en tu repositorio, lo primero que debes hacer es generar un proyecto en RStudio. Para esto debes ir en el menú superior de *Rstudio* a *File > New Project > Git* como se ve en las figuras \@ref(fig:NewProject) y \@ref(fig:NewProject).  
 
 ```{r NewProject, echo = FALSE, fig.cap= "Menú para crear un proyecto nuevo", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("NewProject.png")
@@ -59,13 +59,13 @@ knitr::include_graphics("NewProject.png")
 knitr::include_graphics("Git.png")
 ```
 
-Luego, seleccionar la ubicación del proyecto nuevo y pegar el url que aparece en la figura \@ref(fig:ssh) en el espacio que dice **Repository URL:** como muestra en la figura \@ref(fig:GitRstudio).
+Luego seleccionar la ubicación del proyecto nuevo y pegar el url que aparece en la figura \@ref(fig:ssh) en el espacio que dice **Repository URL:**, como muestra en la figura \@ref(fig:GitRstudio).
 
 ```{r GitRstudio, echo = FALSE, fig.cap= "Pegar el url del repositorio en el cuadro de dialogo Repository URL:", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("GitRstudio.png")
 ```
 
-Cuando tu proyecto de R ya este siguiendo los cambios en github, te aparecera una pestaña git dentro de la ventana superior derecha de tu sesión de RStudio, tal como vemos en la figura \@ref(fig:GitPan)
+Cuando tu proyecto de R ya este siguiendo los cambios en github, te aparecerá una pestaña git dentro de la ventana superior derecha de tu sesión de RStudio, tal como vemos en la figura \@ref(fig:GitPan)
 
 ```{r GitPan, echo = FALSE, fig.cap= "Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("GitPan.png")
@@ -73,11 +73,11 @@ knitr::include_graphics("GitPan.png")
 
 ### Los tres principales pasos de un repositorio
 
-Github es todo un mundo, con muchas funciones, hay expertos en el uso de github, pero en este curso, nos enfocaremos en los 3 pasos principales de un repositorio, *Add*, *commit* y *push*. Para entender bien que significan cada uno de estos pasos tenemos que entender que existen dos repositorios en todo momento. Uno local (en tu computador) u otro remoto (en github.com). Los dos primeros pasos *Add* y commit, solo generan cambios en tu repositorio local. Mientras que *push*, salva los cambios al repositorio remoto.
+Github es todo un mundo, existen muchas funciones y hay expertos en el uso de github. En este curso, nos enfocaremos en los 3 pasos principales de un repositorio: *add*, *commit* y *push*. Para entender bien qué significa cada uno de estos pasos, tenemos que entender que existen dos repositorios en todo momento: uno local (en tu computador) y otro remoto (en github.com). Los dos primeros pasos *add* y *commit*, solo generan cambios en tu repositorio local. Mientras que *push*, salva los cambios al repositorio remoto.
 
 #### git add
 
-Esta función, es la que agrega archivos a tu repositorio local. Solo estos archivos serán guardados en github. Github tienen un límite de tamaño de repositorio de 1 GB y de archivos de 100 MB, ya que si bién te dan repositorios ilimitados, el espacio de cada uno no lo es, en particular en cuanto a bases de datos. Para adicionar un archivo a tu repositorio tan solo debes selecionar los archivos en la pestaña git. Al hacer eso una letra A verde aparecera en vez de los dos signos de interrogación amarillos, como vemos en la figura \@ref(fig:Add). En este caso solo adicionamos al repositorio el archivo *Analisis.r* pero no el resto.
+Esta función es la que agrega archivos a tu repositorio local. Solo estos archivos serán guardados en github. Github tienen un límite de tamaño de repositorio de 1 GB y de archivos de 100 MB, ya que si bien te dan repositorios ilimitados, el espacio de cada uno no lo es, en particular en cuanto a bases de datos. Para adicionar un archivo a tu repositorio tan solo debes selecionar los archivos en la pestaña git. Al hacer eso una letra A verde aparecerá en vez de los dos signos de interrogación amarillos, como vemos en la figura \@ref(fig:Add). En este caso solo adicionamos al repositorio el archivo *Analisis.r* pero no el resto.
 
 ```{r Add, echo = FALSE, fig.cap= "Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("GitAdd.png")
@@ -85,13 +85,13 @@ knitr::include_graphics("GitAdd.png")
 
 #### git commit
 
-Cuando ocupas el comando *commit* estas guardando los cambios de los archivos que adicionaste, en tu repositorio local. Para hacer esto en Rstudio, en la misma pestaña de git, debes presionar el botón commit como vemos en la figura \@ref(fig:Commit). 
+Cuando ocupas el comando *commit* estas guardando los cambios de los archivos que adicionaste en tu repositorio local. Para hacer esto en Rstudio, en la misma pestaña de git, debes presionar el botón *commit* como vemos en la figura \@ref(fig:Commit). 
 
 ```{r Commit, echo = FALSE, fig.cap= "Para guardar los cambios en tu repositorio apretar commit en la pestaña git de la ventana superior derecha", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("Commit.png")
 ```
 
-Al presionar Commit, se abrira una ventana emergente, donde deberás escribir un mensaje que describa lo que guardaras. Una vez echo eso presiona commit nuevamente en la ventana emergente como aparece en la figura \@ref(fig:MensajeCommit).
+Al presionar *commit*, se abrirá una ventana emergente, donde deberás escribir un mensaje que describa lo que guardarás. Una vez echo eso, presiona *commit* nuevamente en la ventana emergente como aparece en la figura \@ref(fig:MensajeCommit).
 
 ```{r MensajeCommit, echo = FALSE, fig.cap= "Escribir un mensaje que recuerde los cambios que hiciste en la ventana emergente", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("MensajeCommit.png")
@@ -99,7 +99,7 @@ knitr::include_graphics("MensajeCommit.png")
 
 #### git push
 
-Finalmente *push* te permitirá guardar los cambios en tu repositorio remoto, lo cual asegura tus datos en la nube, y además lo hace disponible a otros investigadores. Luego de apretar commit en la ventana emergente (figura \@ref(fig:MensajeCommit)), podemos presionar *push* en la flecha verde de la ventana emergente como se ve el a figura \@ref(fig:push). Luego se nos pedira nuestro nombre de usuario y contraseña, y ya podemos revisar que nuestro repositorio esta online entrando a nuestra sesión de github.
+Finalmente, *push* te permitirá guardar los cambios en tu repositorio remoto, lo cual asegura tus datos en la nube y además lo hace disponible a otros investigadores. Luego de apretar *commit* en la ventana emergente (figura \@ref(fig:MensajeCommit)), podemos presionar *push* en la flecha verde de la ventana emergente como se ve el a figura \@ref(fig:push). Luego se nos pedirá nuestro nombre de usuario y contraseña, y ya podemos revisar que nuestro repositorio esta online entrando a nuestra sesión de github.
 
 ```{r push, echo = FALSE, fig.cap= "Para guardar en el repositorio remoto apretar push en la ventana emergente", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("Push.png")
@@ -107,7 +107,7 @@ knitr::include_graphics("Push.png")
 
 ## Reproducibilidad en R
 
-Existen varios paquetes que permiten que hagamos investigación reproducible en `R`, pero sin duda los más relevantes son *rmarkdown* y *knitr*. Ambos paquetes funcionana en conjunto cuando generamos un archivo *Rmd* (Rmarkdown), en el cual ocupamos al mismo tiempo texto, código de R y otros elementos para generar un documento word, pdf, página web, presentación y/o aplicación web (fig \@ref(fig:Rmark)).
+Existen varios paquetes que permiten que hagamos investigación reproducible en `R`, pero sin duda los más relevantes son *rmarkdown* y *knitr*. Ambos paquetes funcionan en conjunto cuando generamos un archivo *Rmd* (Rmarkdown), en el cual ocupamos al mismo tiempo texto, código de R y otros elementos para generar un documento word, pdf, página web, presentación y/o aplicación web (fig \@ref(fig:Rmark)).
 
 ```{r Rmark, echo = FALSE, fig.cap= "El objetivo de Rmarkdown es el unir código de r con texto y datos para generar un documento reproducible", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("Rmark.png")
@@ -115,13 +115,13 @@ knitr::include_graphics("Rmark.png")
 
 ### Creando un Rmarkdown
 
-Para crear un archivo Rmarkdown, simplemente ve a el menu *File > New file > Rmarkdown* y con eso habrás creado un nuevo archivo *Rmd*, veremos en momentos algunos de los elementos más típicos de un arcchivo Rmarkdown.
+Para crear un archivo Rmarkdown, simplemente ve a el menu *File > New file > Rmarkdown* y con eso habrás creado un nuevo archivo *Rmd*. Veremos  algunos de los elementos más típicos de un archivo Rmarkdown.
 
 #### Markdown
 
 El markdown es la parte del archivo en que simplemente escribimos texto, aunque tiene algunos detalles para el formato como generar texto en negrita, cursiva, títulos y subtitulos. 
 
-Para hacer que un texto este en **negrita**, deben ponerlo entre dos asteriscos `**negrita**`, para que un texto aparezca en *cursiva* debe estar entre asteriscos `*cursiva*`, otros ejemplos son los titulos de distintos niveles, los cuales se denotan con distintos números de `#`, así los siguientes 4 títulos o subtitulos:
+Para hacer que un texto este en **negrita**, se debe poner entre dos asteriscos `**negrita**`, para que un texto aparezca en *cursiva* debe estar entre asteriscos `*cursiva*`. Otros ejemplos son los títulos de distintos niveles, los cuales se denotan con distintos números de `#`, así los siguientes 4 títulos o subtítulos:
 
 ## subtitulo 1 {-}
 
@@ -145,13 +145,13 @@ se vería de la siguiente manera en el código
 
 #### Chunks
 
-Los *chunks* son una de las partes más importantes del un Rmarkdown. En estos es donde se agrega el código de R (u otros lenguajes de programación). Lo cual permíte que el producto de nuestro código no sea solo un escrito con resultados pegados, sino que efectivamente generados en el mismo documento que nuestro escrito, la forma más fácil de agregar un chunk es apretando el botón de insert chunk en Rstudio, este boton se encuentra en la ventana superior izquierda de nuestra sesión de RStudio, tal como se muestra en la figura \@ref(fig:Insertchunk)
+Los *chunks* son una de las partes más importantes del un Rmarkdown. En estos es donde se agrega el código de R (u otros lenguajes de programación). Lo cual permíte que el producto de nuestro código no sea sólo un escrito con resultados pegados, sino que efectivamente generados en el mismo documento que nuestro escrito. La forma más fácil de agregar un chunk es apretando el botón de *insert chunk* en Rstudio, este boton se encuentra en la ventana superior izquierda de nuestra sesión de RStudio, tal como se muestra en la figura \@ref(fig:Insertchunk)
 
 ```{r Insertchunk, echo = FALSE, fig.cap= "Al apretar el botón insert chunk, aparecera un espacio en el cuál insertar código", out.width='80%', fig.asp=.75, fig.align='center'}
 knitr::include_graphics("Insertchunk.png")
 ```
 
-Al apretar este código aparecera un espacio, uno podría agregar un código como el que aparece a continuación, y vemos a continuación los resultados. 
+Al apretar este botón aparecera un espacio, ahí se puede agregar un código como el que aparece a continuación, y ver a continuación los resultados. 
 
 ````markdown
 `r ''````{r}
@@ -171,15 +171,15 @@ iris %>% group_by(Species) %>% summarize(Petal.Length = mean(Petal.Length))
 
 Existen muchas opciones para los chunks, una documentación completa podemos encontrarle en el siguiente [link](https://yihui.name/knitr/options/), pero acá mostraremos los más comunes:
 
-+ *echo* = T o F muestro o no codigo
-+ *message* = T o F muestra mensajes de paquetes
-+ *warning* = T o F muestra advertencias 
-+ *eval* = T o F evaluar o no el código
-+ *cache* = T o F guarda o no el resultado
++ *echo* = T o F muestro o no el código, respectivamente
++ *message* = T o F muestra mensajes de paquetes, respectivamente
++ *warning* = T o F muestra advertencias, respectivamente 
++ *eval* = T o F evaluar o no el código, respectivamente
++ *cache* = T o F guarda o no el resultado, respectivamente
 
 #### inline code
 
-Los *inline codes* son utiles para agregar algún valor en el texto, como por ejemplo el valor de p, o la media. Para usarlo, se debe poner un backtick, r, el código en cuestion y otro backtick como se ve a continuación `` ``r ''`r R_código` ``. No podemos poner cualquier cosa en un *inline code*, ya que sólo puede generar vectores, lo cuál muchas veces requiere de mucha creatividad para lograr lo que queremos. Por ejemplo si quisieramos poner el promedio del largo del sépalo de la base da dato `iris` en un inline code pondríamos  `` ``r ''`r mean(iris$Sepal.Length)` ``, lo cual resultaría en `r mean(iris$Sepal.Length)`. Como en un texto se vería extraño un número con 7 cifras significativas, querríamos usar ademas la función `round`, para que tenga 2 cifras significativas, para eso ponemos el siguiente inline code `` ``r ''`r round(mean(iris$Sepal.Length),2)` `` que da como resultado `r round(mean(iris$Sepal.Length),2)`. Esto se puede complejizar más aún, si queremos trabajar con una tabla resumen, por ejemplo si quisieramos listar el promedio del tamaño de sépalo usariamos `summarize` de *dplyr*, pero esto nos daría como resultado un data.frame, el cual no aparece si intentamos hacer un inline code. Partamos por ver como se vería el código donde obtuvieramos la media del tamaño del sépalo.
+Los *inline codes* son útiles para agregar algún valor en el texto, como por ejemplo el valor de p o la media. Para usarlo, se debe poner un backtick (comilla simple hacia atrás), r, el código en cuestion y otro backtick como se ve a continuación `` ``r ''`r R_código` ``. No podemos poner cualquier cosa en un *inline code*, ya que sólo puede generar vectores, lo cuál muchas veces requiere de mucha creatividad para lograr lo que queremos. Por ejemplo si se quisiera poner el promedio del largo del sépalo de la base da dato `iris` en un *inline code* pondríamos  `` ``r ''`r mean(iris$Sepal.Length)` ``, lo cual resultaría en `r mean(iris$Sepal.Length)`. Como en un texto se vería extraño un número con 7 cifras significativas, querríamos usar ademas la función `round`, para que tenga 2 cifras significativas, para eso ponemos el siguiente inline code `` ``r ''`r round(mean(iris$Sepal.Length),2)` `` que da como resultado `r round(mean(iris$Sepal.Length),2)`. Esto se puede complejizar más aún si se quiere trabajar con una tabla resumen. Por ejemplo, si quisieramos listar el promedio del tamaño de sépalo usaríamos `summarize` de *dplyr*, pero esto nos daría como resultado un data.frame, el cual no aparece si intentamos hacer un inline code. Partamos por ver como se vería el código donde obtuvieramos la media del tamaño del sépalo.
 
 ```{r, eval = FALSE}
 iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length))
@@ -192,20 +192,20 @@ knitr::kable((iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length)
   caption = 'Resumen del promedio del largo de sépalo de las flores del genero Iris.', row.names = FALSE)
 ```
 
-Para sacar de este data frame el vector de la média podríamos subsetearlo con el signo `$`, entonces si queremos sacar como vector la columna *Mean*, del data frame que creamos haríamos lo siguiente `` ``r ''`r (iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length)))$Mean` ``, lo cual daría como resultado `r (iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length)))$Mean`.
+Para sacar de este data frame el vector de la media podríamos subsetearlo con el signo `$`. Entonces si queremos sacar como vector la columna *Mean* del data frame que creamos, haríamos lo siguiente `` ``r ''`r (iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length)))$Mean` ``. Esto daría como resultado `r (iris %>% group_by(Species) %>% summarize(Mean = mean(Sepal.Length)))$Mean`.
 
 ### Ejercicios
 
 #### Ejercicio 1
 
-Usando la base de datos *iris* crea un inline code que diga cuál es la media del largo del pétalo de la especie *Iris virginica*
+Usando la base de datos *iris*, crea un inline code que diga cuál es la media del largo del pétalo de la especie *Iris virginica*
 
 La solución a este ejercicio se encuentra en el capítulo \@ref(soluciones)
 
 
 #### Tablas en Rmarkdown
 
-la función más típica para generar tablas en un archivo *rmd* es `kable` del paquete *knitr*, que en su forma más simple se incluye un dataframe adentro y obtenemos una tabla, además de esto, podemos agregar algunos parametros como *caption*, que nos permite poner un título a la tabla o *row.names*, que si se pone como se ve en el código (FALSE) no mostrará en la tabla los nombres de las filas, tal como se ve en la tabla \@ref(tab:SummaryMeans).
+La función más típica para generar tablas en un archivo *rmd* es `kable` del paquete *knitr*, que en su forma más simple se incluye un dataframe como único argumento. Además de esto, podemos agregar algunos parámetros como *caption*, que nos permite poner un título a la tabla o *row.names*, que si se pone como se ve en el código (FALSE) no mostrará en la tabla los nombres de las filas, tal como se ve en la tabla \@ref(tab:SummaryMeans).
 
 ```{r, eval = FALSE}
 DF <- iris %>% group_by(Species) %>% summarize_all(mean)

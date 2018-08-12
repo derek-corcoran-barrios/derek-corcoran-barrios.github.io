@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-11">
+<meta name="date" content="2018-08-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -172,12 +172,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="tidyverso.html"><a href="tidyverso.html"><i class="fa fa-check"></i><b>3</b> El Tidyverso</a><ul>
 <li class="chapter" data-level="3.1" data-path="tidyverso.html"><a href="tidyverso.html#paquetes-necesarios-para-este-capitulo-2"><i class="fa fa-check"></i><b>3.1</b> Paquetes necesarios para este capítulo</a></li>
-<li class="chapter" data-level="3.2" data-path="tidyverso.html"><a href="tidyverso.html#el-tidiverso"><i class="fa fa-check"></i><b>3.2</b> El tidiverso</a><ul>
+<li class="chapter" data-level="3.2" data-path="tidyverso.html"><a href="tidyverso.html#el-tidyverso"><i class="fa fa-check"></i><b>3.2</b> El tidyverso</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="tidyverso.html"><a href="tidyverso.html#readr"><i class="fa fa-check"></i><b>3.2.1</b> readr</a></li>
 <li class="chapter" data-level="3.2.2" data-path="tidyverso.html"><a href="tidyverso.html#dplyr-1"><i class="fa fa-check"></i><b>3.2.2</b> dplyr</a></li>
 <li class="chapter" data-level="3.2.3" data-path="tidyverso.html"><a href="tidyverso.html#tidyr"><i class="fa fa-check"></i><b>3.2.3</b> tidyr</a></li>
 <li class="chapter" data-level="3.2.4" data-path="tidyverso.html"><a href="tidyverso.html#ggplot2"><i class="fa fa-check"></i><b>3.2.4</b> ggplot2</a></li>
-<li class="chapter" data-level="3.2.5" data-path="tidyverso.html"><a href="tidyverso.html#purrrr"><i class="fa fa-check"></i><b>3.2.5</b> purrrr</a></li>
+<li class="chapter" data-level="3.2.5" data-path="tidyverso.html"><a href="tidyverso.html#purrr"><i class="fa fa-check"></i><b>3.2.5</b> purrr</a></li>
 <li class="chapter" data-level="3.2.6" data-path="tidyverso.html"><a href="tidyverso.html#forcats"><i class="fa fa-check"></i><b>3.2.6</b> forcats</a></li>
 <li class="chapter" data-level="3.2.7" data-path="tidyverso.html"><a href="tidyverso.html#stringr"><i class="fa fa-check"></i><b>3.2.7</b> stringr</a></li>
 </ul></li>
@@ -229,53 +229,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Capítulo 2</span> Investigación reproducible</h1>
 <div id="paquetes-necesarios-para-este-capitulo-1" class="section level2">
 <h2><span class="header-section-number">2.1</span> Paquetes necesarios para este capítulo</h2>
-<p>Para este capitulo necesitas tener instalado los paquetes <em>rmarkdown</em>, <em>knitr</em> y <em>stargazer</em></p>
-<p>En este capítulo explicaremos que es la investigación reproducible, y como aplicarla usando github, y los paquetes <em>rmarkdown</em> <span class="citation">(Allaire et al. <a href="#ref-Allaire2018">2018</a>)</span> y <em>knitr</em> <span class="citation">(Xie <a href="#ref-xie2015">2015</a>)</span>. Además aprenderemos a usar tablas usando <em>knitr</em> <span class="citation">(Xie <a href="#ref-xie2015">2015</a>)</span> y <em>stargazer</em> <span class="citation">(Hlavac <a href="#ref-hlavak2018">2018</a>)</span></p>
-<p>Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este <a href="https://derek-corcoran-barrios.github.io/Clase2/Clase2InvestigacionReproducible">link</a>, y en cuanto el video de la clase este disponible encontrarás un link aca.</p>
+<p>Para este capítulo se necesita tener instalado los paquetes <em>rmarkdown</em>, <em>knitr</em> y <em>stargazer</em></p>
+<p>En este capítulo se explicará qué es investigación reproducible, cómo aplicarla usando github más los paquetes <em>rmarkdown</em> <span class="citation">(Allaire et al. <a href="#ref-Allaire2018">2018</a>)</span> y <em>knitr</em> <span class="citation">(Xie <a href="#ref-xie2015">2015</a>)</span>. Además, se aprenderá a usar tablas usando <em>knitr</em> <span class="citation">(Xie <a href="#ref-xie2015">2015</a>)</span> y <em>stargazer</em> <span class="citation">(Hlavac <a href="#ref-hlavak2018">2018</a>)</span></p>
+<p>Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este <a href="https://derek-corcoran-barrios.github.io/Clase2/Clase2InvestigacionReproducible">link</a>, y en cuanto el video de la clase encontrarás un link aca.</p>
 </div>
 <div id="investigacion-reproducible" class="section level2">
 <h2><span class="header-section-number">2.2</span> Investigación reproducible</h2>
-<p>La investigación reproducible no es lo mismo que la investigación replicable. La replicabilidad implica que experimentos o estudios llevados a cabo en condiciones similares nos llevarán a conclusiones similares, mientras que la investigación reproducible implica que desde los mismos datos, y/o el mismo código.</p>
+<p>La investigación reproducible no es lo mismo que la investigación replicable. La replicabilidad implica que experimentos o estudios llevados a cabo en condiciones similares nos llevarán a conclusiones similares. La investigación reproducible implica que desde los mismos datos y/o el mismo código se generarán los mismos resultados.</p>
 <div class="figure" style="text-align: center"><span id="fig:reproducible"></span>
 <img src="Reproducible.png" alt="Continuo de reproducibilidad (extraido de Peng 2011)" width="80%" />
 <p class="caption">
 Figura 2.1: Continuo de reproducibilidad (extraido de Peng 2011)
 </p>
 </div>
-<p>En la figura <a href="reproducible.html#fig:reproducible">2.1</a> vemos el continuo de replicabilidad <span class="citation">(Peng <a href="#ref-peng2011reproducible">2011</a>)</span>. En este continuo tenemos el ejemplo de no reproducibilidad como una publicación sin código. Pasando de menos a más reproducible por la publicación y el código que genero los resultados y gráficos; seguido por la publicación, el código y los datos que generan los resultados y gráficos; y por último código, datos y texto entrelazados de forma tal que al correr el código obtenemos exactamente la mismma publicación que leimos.</p>
-<p>Esto tiene muchas ventajas, incluyendo el que es más fácil aplicar exactamente los mismos metodos a otra base de datos, basta poner la nueva base de datos en el formato que tenía el autor de la primera publicación y podremos comparar los resultados.</p>
+<p>En la figura <a href="reproducible.html#fig:reproducible">2.1</a> vemos el continuo de reproducibilidad <span class="citation">(Peng <a href="#ref-peng2011reproducible">2011</a>)</span>. En este continuo tenemos el ejemplo de no reproducibilidad como una publicación sin código. Se pasa de menos a más reproducible por la publicación y el código que generó los resultados y gráficos; seguido por la publicación, el código y los datos que generan los resultados y gráficos; y por último código, datos y texto entrelazados de forma tal que al correr el código obtenemos exactamente la mismma publicación que leímos.</p>
+<p>Esto tiene muchas ventajas, incluyendo el que es más fácil aplicar exactamente los mismos métodos a otra base de datos. Basta poner la nueva base de datos en el formato que tenía el autor de la primera publicación y podremos comparar los resultados.</p>
 <p>Además en un momento en que la ciencia está basada cada vez más en bases de datos, se puede poner en el código la recolección y/o muestreo de datos.</p>
 </div>
 <div id="guardando-nuestro-proyecto-en-github" class="section level2">
 <h2><span class="header-section-number">2.3</span> Guardando nuestro proyecto en github</h2>
 <div id="que-es-github" class="section level3">
 <h3><span class="header-section-number">2.3.1</span> Que es github?</h3>
-<p>Github es una suerte de dropbox o google drive pensado para la investigación reproducible, en github cada proyecto es un <em>repositorio</em>. La mayoría de los investigadores que trabajan en investigación reproducible dejan todo su trabajo documentado en sus repositorios, lo cual permite interactuar con otros autores.</p>
+<p>Github es una suerte de dropbox o google drive pensado para la investigación reproducible, en donde cada proyecto es un <em>repositorio</em>. La mayoría de los investigadores que trabajan en investigación reproducible dejan todo su trabajo documentado en sus repositorios, lo cual permite interactuar con otros autores.</p>
 </div>
 <div id="creando-un-proyecto-de-github-en-rstudio" class="section level3">
 <h3><span class="header-section-number">2.3.2</span> creando un proyecto de github en RStudio</h3>
-<p>Para crear un proyecto en github presionamos <strong>start a project</strong> en la pagina inicial de nuestra cuenta como vemos en la figura <a href="reproducible.html#fig:Start">2.2</a></p>
+<p>Para crear un proyecto en github presionamos <strong>start a project</strong> en la página inicial de nuestra cuenta, como vemos en la figura <a href="reproducible.html#fig:Start">2.2</a></p>
 <div class="figure" style="text-align: center"><span id="fig:Start"></span>
 <img src="StartAProject.png" alt="Para empezar un projecto en github, debes presionar Start a project en tu página de inicio" width="80%" />
 <p class="caption">
 Figura 2.2: Para empezar un projecto en github, debes presionar Start a project en tu página de inicio
 </p>
 </div>
-<p>Luego crea un nombre unico, y sin cambiar nada más presiona <strong>create repository</strong> en el botón verde como vemos en la figura <a href="reproducible.html#fig:Name">2.3</a>.</p>
+<p>Luego se debe crear un nombre único, y sin cambiar nada más presiona <strong>create repository</strong> en el botón verde como vemos en la figura <a href="reproducible.html#fig:Name">2.3</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:Name"></span>
 <img src="NombreRepo.png" alt="Crea el nombre de tu repositorio y apreta el boton create repository" width="80%" />
 <p class="caption">
 Figura 2.3: Crea el nombre de tu repositorio y apreta el boton create repository
 </p>
 </div>
-<p>Esto te llevará a una página donde te aparecera una url de tu nuevo repositorio como en la figura <a href="reproducible.html#fig:ssh">2.4</a></p>
+<p>Esto te llevará a una página donde aparecerá una url de tu nuevo repositorio como en la figura <a href="reproducible.html#fig:ssh">2.4</a></p>
 <div class="figure" style="text-align: center"><span id="fig:ssh"></span>
 <img src="GitAdress.png" alt="El contenido del cuadro en el cual dice ssh es la url de tu repisitorio" width="80%" />
 <p class="caption">
 Figura 2.4: El contenido del cuadro en el cual dice ssh es la url de tu repisitorio
 </p>
 </div>
-<p>Para incorporar tu proyecto en tu repositorio, lo primero que debes hacer es generar un proyecto en RStudio, para esto debes ir en el menú superior de <em>Rstudio</em> a <em>File &gt; New Project &gt; Git</em> como se ve en las figuras <a href="reproducible.html#fig:NewProject">2.5</a> y <a href="reproducible.html#fig:NewProject">2.5</a>.</p>
+<p>Para incorporar tu proyecto en tu repositorio, lo primero que debes hacer es generar un proyecto en RStudio. Para esto debes ir en el menú superior de <em>Rstudio</em> a <em>File &gt; New Project &gt; Git</em> como se ve en las figuras <a href="reproducible.html#fig:NewProject">2.5</a> y <a href="reproducible.html#fig:NewProject">2.5</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:NewProject"></span>
 <img src="NewProject.png" alt="Menú para crear un proyecto nuevo" width="80%" />
 <p class="caption">
@@ -288,14 +288,14 @@ Figura 2.5: Menú para crear un proyecto nuevo
 Figura 2.6: Seleccionar git dentro de las opciones
 </p>
 </div>
-<p>Luego, seleccionar la ubicación del proyecto nuevo y pegar el url que aparece en la figura <a href="reproducible.html#fig:ssh">2.4</a> en el espacio que dice <strong>Repository URL:</strong> como muestra en la figura <a href="reproducible.html#fig:GitRstudio">2.7</a>.</p>
+<p>Luego seleccionar la ubicación del proyecto nuevo y pegar el url que aparece en la figura <a href="reproducible.html#fig:ssh">2.4</a> en el espacio que dice <strong>Repository URL:</strong>, como muestra en la figura <a href="reproducible.html#fig:GitRstudio">2.7</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:GitRstudio"></span>
 <img src="GitRstudio.png" alt="Pegar el url del repositorio en el cuadro de dialogo Repository URL:" width="80%" />
 <p class="caption">
 Figura 2.7: Pegar el url del repositorio en el cuadro de dialogo Repository URL:
 </p>
 </div>
-<p>Cuando tu proyecto de R ya este siguiendo los cambios en github, te aparecera una pestaña git dentro de la ventana superior derecha de tu sesión de RStudio, tal como vemos en la figura <a href="reproducible.html#fig:GitPan">2.8</a></p>
+<p>Cuando tu proyecto de R ya este siguiendo los cambios en github, te aparecerá una pestaña git dentro de la ventana superior derecha de tu sesión de RStudio, tal como vemos en la figura <a href="reproducible.html#fig:GitPan">2.8</a></p>
 <div class="figure" style="text-align: center"><span id="fig:GitPan"></span>
 <img src="GitPan.png" alt="Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha" width="80%" />
 <p class="caption">
@@ -305,10 +305,10 @@ Figura 2.8: Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pes
 </div>
 <div id="los-tres-principales-pasos-de-un-repositorio" class="section level3">
 <h3><span class="header-section-number">2.3.3</span> Los tres principales pasos de un repositorio</h3>
-<p>Github es todo un mundo, con muchas funciones, hay expertos en el uso de github, pero en este curso, nos enfocaremos en los 3 pasos principales de un repositorio, <em>Add</em>, <em>commit</em> y <em>push</em>. Para entender bien que significan cada uno de estos pasos tenemos que entender que existen dos repositorios en todo momento. Uno local (en tu computador) u otro remoto (en github.com). Los dos primeros pasos <em>Add</em> y commit, solo generan cambios en tu repositorio local. Mientras que <em>push</em>, salva los cambios al repositorio remoto.</p>
+<p>Github es todo un mundo, existen muchas funciones y hay expertos en el uso de github. En este curso, nos enfocaremos en los 3 pasos principales de un repositorio: <em>add</em>, <em>commit</em> y <em>push</em>. Para entender bien qué significa cada uno de estos pasos, tenemos que entender que existen dos repositorios en todo momento: uno local (en tu computador) y otro remoto (en github.com). Los dos primeros pasos <em>add</em> y <em>commit</em>, solo generan cambios en tu repositorio local. Mientras que <em>push</em>, salva los cambios al repositorio remoto.</p>
 <div id="git-add" class="section level4">
 <h4><span class="header-section-number">2.3.3.1</span> git add</h4>
-<p>Esta función, es la que agrega archivos a tu repositorio local. Solo estos archivos serán guardados en github. Github tienen un límite de tamaño de repositorio de 1 GB y de archivos de 100 MB, ya que si bién te dan repositorios ilimitados, el espacio de cada uno no lo es, en particular en cuanto a bases de datos. Para adicionar un archivo a tu repositorio tan solo debes selecionar los archivos en la pestaña git. Al hacer eso una letra A verde aparecera en vez de los dos signos de interrogación amarillos, como vemos en la figura <a href="reproducible.html#fig:Add">2.9</a>. En este caso solo adicionamos al repositorio el archivo <em>Analisis.r</em> pero no el resto.</p>
+<p>Esta función es la que agrega archivos a tu repositorio local. Solo estos archivos serán guardados en github. Github tienen un límite de tamaño de repositorio de 1 GB y de archivos de 100 MB, ya que si bien te dan repositorios ilimitados, el espacio de cada uno no lo es, en particular en cuanto a bases de datos. Para adicionar un archivo a tu repositorio tan solo debes selecionar los archivos en la pestaña git. Al hacer eso una letra A verde aparecerá en vez de los dos signos de interrogación amarillos, como vemos en la figura <a href="reproducible.html#fig:Add">2.9</a>. En este caso solo adicionamos al repositorio el archivo <em>Analisis.r</em> pero no el resto.</p>
 <div class="figure" style="text-align: center"><span id="fig:Add"></span>
 <img src="GitAdd.png" alt="Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pestaña git en la ventana superior derecha" width="80%" />
 <p class="caption">
@@ -318,14 +318,14 @@ Figura 2.9: Al incluir tu repositorio en tu sesión de Rstudio, aparecera la pes
 </div>
 <div id="git-commit" class="section level4">
 <h4><span class="header-section-number">2.3.3.2</span> git commit</h4>
-<p>Cuando ocupas el comando <em>commit</em> estas guardando los cambios de los archivos que adicionaste, en tu repositorio local. Para hacer esto en Rstudio, en la misma pestaña de git, debes presionar el botón commit como vemos en la figura <a href="reproducible.html#fig:Commit">2.10</a>.</p>
+<p>Cuando ocupas el comando <em>commit</em> estas guardando los cambios de los archivos que adicionaste en tu repositorio local. Para hacer esto en Rstudio, en la misma pestaña de git, debes presionar el botón <em>commit</em> como vemos en la figura <a href="reproducible.html#fig:Commit">2.10</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:Commit"></span>
 <img src="Commit.png" alt="Para guardar los cambios en tu repositorio apretar commit en la pestaña git de la ventana superior derecha" width="80%" />
 <p class="caption">
 Figura 2.10: Para guardar los cambios en tu repositorio apretar commit en la pestaña git de la ventana superior derecha
 </p>
 </div>
-<p>Al presionar Commit, se abrira una ventana emergente, donde deberás escribir un mensaje que describa lo que guardaras. Una vez echo eso presiona commit nuevamente en la ventana emergente como aparece en la figura <a href="reproducible.html#fig:MensajeCommit">2.11</a>.</p>
+<p>Al presionar <em>commit</em>, se abrirá una ventana emergente, donde deberás escribir un mensaje que describa lo que guardarás. Una vez echo eso, presiona <em>commit</em> nuevamente en la ventana emergente como aparece en la figura <a href="reproducible.html#fig:MensajeCommit">2.11</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:MensajeCommit"></span>
 <img src="MensajeCommit.png" alt="Escribir un mensaje que recuerde los cambios que hiciste en la ventana emergente" width="80%" />
 <p class="caption">
@@ -335,7 +335,7 @@ Figura 2.11: Escribir un mensaje que recuerde los cambios que hiciste en la vent
 </div>
 <div id="git-push" class="section level4">
 <h4><span class="header-section-number">2.3.3.3</span> git push</h4>
-<p>Finalmente <em>push</em> te permitirá guardar los cambios en tu repositorio remoto, lo cual asegura tus datos en la nube, y además lo hace disponible a otros investigadores. Luego de apretar commit en la ventana emergente (figura <a href="reproducible.html#fig:MensajeCommit">2.11</a>), podemos presionar <em>push</em> en la flecha verde de la ventana emergente como se ve el a figura <a href="reproducible.html#fig:push">2.12</a>. Luego se nos pedira nuestro nombre de usuario y contraseña, y ya podemos revisar que nuestro repositorio esta online entrando a nuestra sesión de github.</p>
+<p>Finalmente, <em>push</em> te permitirá guardar los cambios en tu repositorio remoto, lo cual asegura tus datos en la nube y además lo hace disponible a otros investigadores. Luego de apretar <em>commit</em> en la ventana emergente (figura <a href="reproducible.html#fig:MensajeCommit">2.11</a>), podemos presionar <em>push</em> en la flecha verde de la ventana emergente como se ve el a figura <a href="reproducible.html#fig:push">2.12</a>. Luego se nos pedirá nuestro nombre de usuario y contraseña, y ya podemos revisar que nuestro repositorio esta online entrando a nuestra sesión de github.</p>
 <div class="figure" style="text-align: center"><span id="fig:push"></span>
 <img src="Push.png" alt="Para guardar en el repositorio remoto apretar push en la ventana emergente" width="80%" />
 <p class="caption">
@@ -347,7 +347,7 @@ Figura 2.12: Para guardar en el repositorio remoto apretar push en la ventana em
 </div>
 <div id="reproducibilidad-en-r" class="section level2">
 <h2><span class="header-section-number">2.4</span> Reproducibilidad en R</h2>
-<p>Existen varios paquetes que permiten que hagamos investigación reproducible en <code>R</code>, pero sin duda los más relevantes son <em>rmarkdown</em> y <em>knitr</em>. Ambos paquetes funcionana en conjunto cuando generamos un archivo <em>Rmd</em> (Rmarkdown), en el cual ocupamos al mismo tiempo texto, código de R y otros elementos para generar un documento word, pdf, página web, presentación y/o aplicación web (fig <a href="reproducible.html#fig:Rmark">2.13</a>).</p>
+<p>Existen varios paquetes que permiten que hagamos investigación reproducible en <code>R</code>, pero sin duda los más relevantes son <em>rmarkdown</em> y <em>knitr</em>. Ambos paquetes funcionan en conjunto cuando generamos un archivo <em>Rmd</em> (Rmarkdown), en el cual ocupamos al mismo tiempo texto, código de R y otros elementos para generar un documento word, pdf, página web, presentación y/o aplicación web (fig <a href="reproducible.html#fig:Rmark">2.13</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:Rmark"></span>
 <img src="Rmark.png" alt="El objetivo de Rmarkdown es el unir código de r con texto y datos para generar un documento reproducible" width="80%" />
 <p class="caption">
@@ -356,11 +356,11 @@ Figura 2.13: El objetivo de Rmarkdown es el unir código de r con texto y datos 
 </div>
 <div id="creando-un-rmarkdown" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Creando un Rmarkdown</h3>
-<p>Para crear un archivo Rmarkdown, simplemente ve a el menu <em>File &gt; New file &gt; Rmarkdown</em> y con eso habrás creado un nuevo archivo <em>Rmd</em>, veremos en momentos algunos de los elementos más típicos de un arcchivo Rmarkdown.</p>
+<p>Para crear un archivo Rmarkdown, simplemente ve a el menu <em>File &gt; New file &gt; Rmarkdown</em> y con eso habrás creado un nuevo archivo <em>Rmd</em>. Veremos algunos de los elementos más típicos de un archivo Rmarkdown.</p>
 <div id="markdown" class="section level4">
 <h4><span class="header-section-number">2.4.1.1</span> Markdown</h4>
 <p>El markdown es la parte del archivo en que simplemente escribimos texto, aunque tiene algunos detalles para el formato como generar texto en negrita, cursiva, títulos y subtitulos.</p>
-<p>Para hacer que un texto este en <strong>negrita</strong>, deben ponerlo entre dos asteriscos <code>**negrita**</code>, para que un texto aparezca en <em>cursiva</em> debe estar entre asteriscos <code>*cursiva*</code>, otros ejemplos son los titulos de distintos niveles, los cuales se denotan con distintos números de <code>#</code>, así los siguientes 4 títulos o subtitulos:</p>
+<p>Para hacer que un texto este en <strong>negrita</strong>, se debe poner entre dos asteriscos <code>**negrita**</code>, para que un texto aparezca en <em>cursiva</em> debe estar entre asteriscos <code>*cursiva*</code>. Otros ejemplos son los títulos de distintos niveles, los cuales se denotan con distintos números de <code>#</code>, así los siguientes 4 títulos o subtítulos:</p>
 </div>
 </div>
 </div>
@@ -384,14 +384,14 @@ Figura 2.13: El objetivo de Rmarkdown es el unir código de r con texto y datos 
 </div>
 <div id="chunks" class="section level4">
 <h4><span class="header-section-number">2.4.1.2</span> Chunks</h4>
-<p>Los <em>chunks</em> son una de las partes más importantes del un Rmarkdown. En estos es donde se agrega el código de R (u otros lenguajes de programación). Lo cual permíte que el producto de nuestro código no sea solo un escrito con resultados pegados, sino que efectivamente generados en el mismo documento que nuestro escrito, la forma más fácil de agregar un chunk es apretando el botón de insert chunk en Rstudio, este boton se encuentra en la ventana superior izquierda de nuestra sesión de RStudio, tal como se muestra en la figura <a href="reproducible.html#fig:Insertchunk">2.14</a></p>
+<p>Los <em>chunks</em> son una de las partes más importantes del un Rmarkdown. En estos es donde se agrega el código de R (u otros lenguajes de programación). Lo cual permíte que el producto de nuestro código no sea sólo un escrito con resultados pegados, sino que efectivamente generados en el mismo documento que nuestro escrito. La forma más fácil de agregar un chunk es apretando el botón de <em>insert chunk</em> en Rstudio, este boton se encuentra en la ventana superior izquierda de nuestra sesión de RStudio, tal como se muestra en la figura <a href="reproducible.html#fig:Insertchunk">2.14</a></p>
 <div class="figure" style="text-align: center"><span id="fig:Insertchunk"></span>
 <img src="Insertchunk.png" alt="Al apretar el botón insert chunk, aparecera un espacio en el cuál insertar código" width="80%" />
 <p class="caption">
 Figura 2.14: Al apretar el botón insert chunk, aparecera un espacio en el cuál insertar código
 </p>
 </div>
-<p>Al apretar este código aparecera un espacio, uno podría agregar un código como el que aparece a continuación, y vemos a continuación los resultados.</p>
+<p>Al apretar este botón aparecera un espacio, ahí se puede agregar un código como el que aparece a continuación, y ver a continuación los resultados.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb19-1" data-line-number="1">```{r}</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">library(tidyverse)</a>
 <a class="sourceLine" id="cb19-3" data-line-number="3">iris %&gt;% group_by(Species) %&gt;% summarize(Petal.Length = mean(Petal.length))</a>
@@ -406,17 +406,17 @@ Figura 2.14: Al apretar el botón insert chunk, aparecera un espacio en el cuál
 <h5><span class="header-section-number">2.4.1.2.1</span> Opciones de los chunks</h5>
 <p>Existen muchas opciones para los chunks, una documentación completa podemos encontrarle en el siguiente <a href="https://yihui.name/knitr/options/">link</a>, pero acá mostraremos los más comunes:</p>
 <ul>
-<li><em>echo</em> = T o F muestro o no codigo</li>
-<li><em>message</em> = T o F muestra mensajes de paquetes</li>
-<li><em>warning</em> = T o F muestra advertencias</li>
-<li><em>eval</em> = T o F evaluar o no el código</li>
-<li><em>cache</em> = T o F guarda o no el resultado</li>
+<li><em>echo</em> = T o F muestro o no el código, respectivamente</li>
+<li><em>message</em> = T o F muestra mensajes de paquetes, respectivamente</li>
+<li><em>warning</em> = T o F muestra advertencias, respectivamente</li>
+<li><em>eval</em> = T o F evaluar o no el código, respectivamente</li>
+<li><em>cache</em> = T o F guarda o no el resultado, respectivamente</li>
 </ul>
 </div>
 </div>
 <div id="inline-code" class="section level4">
 <h4><span class="header-section-number">2.4.1.3</span> inline code</h4>
-<p>Los <em>inline codes</em> son utiles para agregar algún valor en el texto, como por ejemplo el valor de p, o la media. Para usarlo, se debe poner un backtick, r, el código en cuestion y otro backtick como se ve a continuación <code>`r R_código`</code>. No podemos poner cualquier cosa en un <em>inline code</em>, ya que sólo puede generar vectores, lo cuál muchas veces requiere de mucha creatividad para lograr lo que queremos. Por ejemplo si quisieramos poner el promedio del largo del sépalo de la base da dato <code>iris</code> en un inline code pondríamos <code>`r mean(iris$Sepal.Length)`</code>, lo cual resultaría en 5.8433333. Como en un texto se vería extraño un número con 7 cifras significativas, querríamos usar ademas la función <code>round</code>, para que tenga 2 cifras significativas, para eso ponemos el siguiente inline code <code>`r round(mean(iris$Sepal.Length),2)`</code> que da como resultado 5.84. Esto se puede complejizar más aún, si queremos trabajar con una tabla resumen, por ejemplo si quisieramos listar el promedio del tamaño de sépalo usariamos <code>summarize</code> de <em>dplyr</em>, pero esto nos daría como resultado un data.frame, el cual no aparece si intentamos hacer un inline code. Partamos por ver como se vería el código donde obtuvieramos la media del tamaño del sépalo.</p>
+<p>Los <em>inline codes</em> son útiles para agregar algún valor en el texto, como por ejemplo el valor de p o la media. Para usarlo, se debe poner un backtick (comilla simple hacia atrás), r, el código en cuestion y otro backtick como se ve a continuación <code>`r R_código`</code>. No podemos poner cualquier cosa en un <em>inline code</em>, ya que sólo puede generar vectores, lo cuál muchas veces requiere de mucha creatividad para lograr lo que queremos. Por ejemplo si se quisiera poner el promedio del largo del sépalo de la base da dato <code>iris</code> en un <em>inline code</em> pondríamos <code>`r mean(iris$Sepal.Length)`</code>, lo cual resultaría en 5.8433333. Como en un texto se vería extraño un número con 7 cifras significativas, querríamos usar ademas la función <code>round</code>, para que tenga 2 cifras significativas, para eso ponemos el siguiente inline code <code>`r round(mean(iris$Sepal.Length),2)`</code> que da como resultado 5.84. Esto se puede complejizar más aún si se quiere trabajar con una tabla resumen. Por ejemplo, si quisieramos listar el promedio del tamaño de sépalo usaríamos <code>summarize</code> de <em>dplyr</em>, pero esto nos daría como resultado un data.frame, el cual no aparece si intentamos hacer un inline code. Partamos por ver como se vería el código donde obtuvieramos la media del tamaño del sépalo.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(Sepal.Length))</a></code></pre></div>
 <p>El resultado de ese código lo veríamos <a href="reproducible.html#tab:SummarySepaltab">2.1</a></p>
 <table>
@@ -442,19 +442,19 @@ Figura 2.14: Al apretar el botón insert chunk, aparecera un espacio en el cuál
 </tr>
 </tbody>
 </table>
-<p>Para sacar de este data frame el vector de la média podríamos subsetearlo con el signo <code>$</code>, entonces si queremos sacar como vector la columna <em>Mean</em>, del data frame que creamos haríamos lo siguiente <code>`r (iris %&gt;% group_by(Species) %&gt;% summarize(Mean = mean(Sepal.Length)))$Mean`</code>, lo cual daría como resultado 5.006, 5.936, 6.588.</p>
+<p>Para sacar de este data frame el vector de la media podríamos subsetearlo con el signo <code>$</code>. Entonces si queremos sacar como vector la columna <em>Mean</em> del data frame que creamos, haríamos lo siguiente <code>`r (iris %&gt;% group_by(Species) %&gt;% summarize(Mean = mean(Sepal.Length)))$Mean`</code>. Esto daría como resultado 5.006, 5.936, 6.588.</p>
 </div>
 </div>
 <div id="ejercicios-1" class="section level3">
 <h3><span class="header-section-number">2.4.2</span> Ejercicios</h3>
 <div id="ejercicio-1-1" class="section level4">
 <h4><span class="header-section-number">2.4.2.1</span> Ejercicio 1</h4>
-<p>Usando la base de datos <em>iris</em> crea un inline code que diga cuál es la media del largo del pétalo de la especie <em>Iris virginica</em></p>
+<p>Usando la base de datos <em>iris</em>, crea un inline code que diga cuál es la media del largo del pétalo de la especie <em>Iris virginica</em></p>
 <p>La solución a este ejercicio se encuentra en el capítulo <a href="soluciones.html#soluciones">8</a></p>
 </div>
 <div id="tablas-en-rmarkdown" class="section level4">
 <h4><span class="header-section-number">2.4.2.2</span> Tablas en Rmarkdown</h4>
-<p>la función más típica para generar tablas en un archivo <em>rmd</em> es <code>kable</code> del paquete <em>knitr</em>, que en su forma más simple se incluye un dataframe adentro y obtenemos una tabla, además de esto, podemos agregar algunos parametros como <em>caption</em>, que nos permite poner un título a la tabla o <em>row.names</em>, que si se pone como se ve en el código (FALSE) no mostrará en la tabla los nombres de las filas, tal como se ve en la tabla <a href="reproducible.html#tab:SummaryMeans">2.2</a>.</p>
+<p>la función más típica para generar tablas en un archivo <em>rmd</em> es <code>kable</code> del paquete <em>knitr</em>, que en su forma más simple se incluye un dataframe como único argumento y obtenemos una tabla. Además de esto, podemos agregar algunos parámetros como <em>caption</em>, que nos permite poner un título a la tabla o <em>row.names</em>, que si se pone como se ve en el código (FALSE) no mostrará en la tabla los nombres de las filas, tal como se ve en la tabla <a href="reproducible.html#tab:SummaryMeans">2.2</a>.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">kable</span>(DF, <span class="dt">caption =</span> <span class="st">&quot;Promedio por especie de todas las variables de la base de datos iris.&quot;</span>, </a>
 <a class="sourceLine" id="cb22-3" data-line-number="3">    <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
