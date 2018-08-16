@@ -11,10 +11,10 @@
 }
 </style>
 
-Clase 3 El Tidyverso
+Clase 3 El Tidyverso y tidyr
 ========================================================
 author: Derek Corcoran
-date: "11/08, 2018"
+date: "16/08, 2018"
 autosize: true
 transition: rotate
 
@@ -78,70 +78,8 @@ Dos funciones
 
 ![plot of chunk unnamed-chunk-5](https://exceleratorbi.com.au/wp-content/uploads/2016/09/image.png)
 
+
 Gather
-=============
-class: small-code
-
-
-```r
-data(iris)
-mini_iris <- iris[c(1, 51, 101), ]
-kable(mini_iris)
-```
-
-
-
-|    | Sepal.Length| Sepal.Width| Petal.Length| Petal.Width|Species    |
-|:---|------------:|-----------:|------------:|-----------:|:----------|
-|1   |          5.1|         3.5|          1.4|         0.2|setosa     |
-|51  |          7.0|         3.2|          4.7|         1.4|versicolor |
-|101 |          6.3|         3.3|          6.0|         2.5|virginica  |
-
-Gather (cont)
-=============
-class: small-code
-
-
-```r
-MI <- mini_iris %>% gather(key = flower_att, value = measurement, -Species)
-kable(MI)
-```
-
-
-
-|Species    |flower_att   | measurement|
-|:----------|:------------|-----------:|
-|setosa     |Sepal.Length |         5.1|
-|versicolor |Sepal.Length |         7.0|
-|virginica  |Sepal.Length |         6.3|
-|setosa     |Sepal.Width  |         3.5|
-|versicolor |Sepal.Width  |         3.2|
-|virginica  |Sepal.Width  |         3.3|
-|setosa     |Petal.Length |         1.4|
-|versicolor |Petal.Length |         4.7|
-|virginica  |Petal.Length |         6.0|
-|setosa     |Petal.Width  |         0.2|
-|versicolor |Petal.Width  |         1.4|
-|virginica  |Petal.Width  |         2.5|
-
-
-spread
-============
-
-```r
-M <- spread(MI, flower_att, measurement)
-kable(M)
-```
-
-
-
-|Species    | Petal.Length| Petal.Width| Sepal.Length| Sepal.Width|
-|:----------|------------:|-----------:|------------:|-----------:|
-|setosa     |          1.4|         0.2|          5.1|         3.5|
-|versicolor |          4.7|         1.4|          7.0|         3.2|
-|virginica  |          6.0|         2.5|          6.3|         3.3|
-
-Ejercicios
 ==============
 incremental: true
 class: small-code
@@ -152,20 +90,20 @@ class: small-code
 ```r
 df_cuentas <- data.frame(
   dia = c("Lunes", "Martes", "Miercoles"),
-  Lobo = c(2, 1, 3),
-  Liebre = c(20, 25, 30),
-  Zorro = c(4, 4, 4)
+  Tratamiento_1 = c(2, 1, 3),
+  Tratamiento_2 = c(20, 25, 30),
+  Tratamiento_3 = c(4, 4, 4)
 )
 kable(df_cuentas)
 ```
 
 
 
-|dia       | Lobo| Liebre| Zorro|
-|:---------|----:|------:|-----:|
-|Lunes     |    2|     20|     4|
-|Martes    |    1|     25|     4|
-|Miercoles |    3|     30|     4|
+|dia       | Tratamiento_1| Tratamiento_2| Tratamiento_3|
+|:---------|-------------:|-------------:|-------------:|
+|Lunes     |             2|            20|             4|
+|Martes    |             1|            25|             4|
+|Miercoles |             3|            30|             4|
 
 * a tidy data?
 
@@ -189,20 +127,20 @@ DF_largo <- df_cuentas %>% gather(key = Columnas, value = Valores)
 ***
 
 
-|Columnas |Valores   |
-|:--------|:---------|
-|dia      |Lunes     |
-|dia      |Martes    |
-|dia      |Miercoles |
-|Lobo     |2         |
-|Lobo     |1         |
-|Lobo     |3         |
-|Liebre   |20        |
-|Liebre   |25        |
-|Liebre   |30        |
-|Zorro    |4         |
-|Zorro    |4         |
-|Zorro    |4         |
+|Columnas      |Valores   |
+|:-------------|:---------|
+|dia           |Lunes     |
+|dia           |Martes    |
+|dia           |Miercoles |
+|Tratamiento_1 |2         |
+|Tratamiento_1 |1         |
+|Tratamiento_1 |3         |
+|Tratamiento_2 |20        |
+|Tratamiento_2 |25        |
+|Tratamiento_2 |30        |
+|Tratamiento_3 |4         |
+|Tratamiento_3 |4         |
+|Tratamiento_3 |4         |
 
 Quitemos el día
 ====================
@@ -216,17 +154,17 @@ DF_largo <- df_cuentas %>% gather(key = Columnas, value = Valores, -dia)
 
 
 
-|dia       |Columnas | Valores|
-|:---------|:--------|-------:|
-|Lunes     |Lobo     |       2|
-|Martes    |Lobo     |       1|
-|Miercoles |Lobo     |       3|
-|Lunes     |Liebre   |      20|
-|Martes    |Liebre   |      25|
-|Miercoles |Liebre   |      30|
-|Lunes     |Zorro    |       4|
-|Martes    |Zorro    |       4|
-|Miercoles |Zorro    |       4|
+|dia       |Columnas      | Valores|
+|:---------|:-------------|-------:|
+|Lunes     |Tratamiento_1 |       2|
+|Martes    |Tratamiento_1 |       1|
+|Miercoles |Tratamiento_1 |       3|
+|Lunes     |Tratamiento_2 |      20|
+|Martes    |Tratamiento_2 |      25|
+|Miercoles |Tratamiento_2 |      30|
+|Lunes     |Tratamiento_3 |       4|
+|Martes    |Tratamiento_3 |       4|
+|Miercoles |Tratamiento_3 |       4|
 
 
 
@@ -240,28 +178,77 @@ DF <- df_cuentas %>% gather(key = Especie, value = Cuenta, -dia)
 ```
 
 
-|dia       |Columnas | Valores|
-|:---------|:--------|-------:|
-|Lunes     |Lobo     |       2|
-|Martes    |Lobo     |       1|
-|Miercoles |Lobo     |       3|
-|Lunes     |Liebre   |      20|
-|Martes    |Liebre   |      25|
-|Miercoles |Liebre   |      30|
-|Lunes     |Zorro    |       4|
-|Martes    |Zorro    |       4|
-|Miercoles |Zorro    |       4|
+|dia       |Columnas      | Valores|
+|:---------|:-------------|-------:|
+|Lunes     |Tratamiento_1 |       2|
+|Martes    |Tratamiento_1 |       1|
+|Miercoles |Tratamiento_1 |       3|
+|Lunes     |Tratamiento_2 |      20|
+|Martes    |Tratamiento_2 |      25|
+|Miercoles |Tratamiento_2 |      30|
+|Lunes     |Tratamiento_3 |       4|
+|Martes    |Tratamiento_3 |       4|
+|Miercoles |Tratamiento_3 |       4|
 
-Ejercicio 2
+Spread
+=============
+class: small-code
+
+* Inverso de gather hace tablas anchas
+* **key:** Variable que pasará a ser nombres de columnas
+* **value:** Variable que llenará esas columnas
+
+
+```r
+Ancho <- DF %>% spread(key= dia, value = Cuenta)
+```
+
+
+```r
+knitr::kable(Ancho)
+```
+
+
+
+|Especie       | Lunes| Martes| Miercoles|
+|:-------------|-----:|------:|---------:|
+|Tratamiento_1 |     2|      1|         3|
+|Tratamiento_2 |    20|     25|        30|
+|Tratamiento_3 |     4|      4|         4|
+
+Spread
+=============
+class: small-code
+
+
+```r
+Ancho <- DF %>% spread(key= Especie, value = Cuenta)
+```
+
+
+```r
+knitr::kable(Ancho)
+```
+
+
+
+|dia       | Tratamiento_1| Tratamiento_2| Tratamiento_3|
+|:---------|-------------:|-------------:|-------------:|
+|Lunes     |             2|            20|             4|
+|Martes    |             1|            25|             4|
+|Miercoles |             3|            30|             4|
+
+
+Ejercicio 1
 =================
 class: small-code
 a. Quedarse con solo las observaciones que tienen coordenadas geograficas
 
 b. Cuantas observaciones son de observacion humana y cuantas de especimen de museo? 
 
+
 ```r
 library(dismo)
-library(dplyr)
 Huemul <- gbif('Hippocamelus', 'bisulcus', down=TRUE)
 colnames(Huemul)
 ```
@@ -444,7 +431,7 @@ kable(Solb)
 
 
 
-Ejercicio 3
+Ejercicio 2
 ==================
 incremental: true
 

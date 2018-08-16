@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Clase 3 El Tidyverso</title>
+  <title>Clase 3 El Tidyverso y tidyr</title>
     
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -784,7 +784,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="default" data-transition-speed="default">
-<h1>Clase 3 El Tidyverso</h1><p>Derek Corcoran<br/>&quot;11&#x2F;08, 2018&quot;</p>
+<h1>Clase 3 El Tidyverso y tidyr</h1><p>Derek Corcoran<br/>&quot;16&#x2F;08, 2018&quot;</p>
 
 <div class="slideContent" >
 
@@ -872,183 +872,15 @@ library(tidyverse)
 <section data-transition="default" data-transition-speed="default">
 <h3>Gather</h3>
 <div class="slideContent small-code" >
-<pre><code class="r">data(iris)
-mini_iris &lt;- iris[c(1, 51, 101), ]
-kable(mini_iris)
-</code></pre>
-
-<table><thead>
-<tr>
-<th align="left"></th>
-<th align="right">Sepal.Length</th>
-<th align="right">Sepal.Width</th>
-<th align="right">Petal.Length</th>
-<th align="right">Petal.Width</th>
-<th align="left">Species</th>
-</tr>
-</thead><tbody>
-<tr>
-<td align="left">1</td>
-<td align="right">5.1</td>
-<td align="right">3.5</td>
-<td align="right">1.4</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr>
-<td align="left">51</td>
-<td align="right">7.0</td>
-<td align="right">3.2</td>
-<td align="right">4.7</td>
-<td align="right">1.4</td>
-<td align="left">versicolor</td>
-</tr>
-<tr>
-<td align="left">101</td>
-<td align="right">6.3</td>
-<td align="right">3.3</td>
-<td align="right">6.0</td>
-<td align="right">2.5</td>
-<td align="left">virginica</td>
-</tr>
-</tbody></table>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>Gather (cont)</h3>
-<div class="slideContent small-code" >
-<pre><code class="r">MI &lt;- mini_iris %&gt;% gather(key = flower_att, value = measurement, -Species)
-kable(MI)
-</code></pre>
-
-<table><thead>
-<tr>
-<th align="left">Species</th>
-<th align="left">flower_att</th>
-<th align="right">measurement</th>
-</tr>
-</thead><tbody>
-<tr>
-<td align="left">setosa</td>
-<td align="left">Sepal.Length</td>
-<td align="right">5.1</td>
-</tr>
-<tr>
-<td align="left">versicolor</td>
-<td align="left">Sepal.Length</td>
-<td align="right">7.0</td>
-</tr>
-<tr>
-<td align="left">virginica</td>
-<td align="left">Sepal.Length</td>
-<td align="right">6.3</td>
-</tr>
-<tr>
-<td align="left">setosa</td>
-<td align="left">Sepal.Width</td>
-<td align="right">3.5</td>
-</tr>
-<tr>
-<td align="left">versicolor</td>
-<td align="left">Sepal.Width</td>
-<td align="right">3.2</td>
-</tr>
-<tr>
-<td align="left">virginica</td>
-<td align="left">Sepal.Width</td>
-<td align="right">3.3</td>
-</tr>
-<tr>
-<td align="left">setosa</td>
-<td align="left">Petal.Length</td>
-<td align="right">1.4</td>
-</tr>
-<tr>
-<td align="left">versicolor</td>
-<td align="left">Petal.Length</td>
-<td align="right">4.7</td>
-</tr>
-<tr>
-<td align="left">virginica</td>
-<td align="left">Petal.Length</td>
-<td align="right">6.0</td>
-</tr>
-<tr>
-<td align="left">setosa</td>
-<td align="left">Petal.Width</td>
-<td align="right">0.2</td>
-</tr>
-<tr>
-<td align="left">versicolor</td>
-<td align="left">Petal.Width</td>
-<td align="right">1.4</td>
-</tr>
-<tr>
-<td align="left">virginica</td>
-<td align="left">Petal.Width</td>
-<td align="right">2.5</td>
-</tr>
-</tbody></table>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>spread</h3>
-<div class="slideContent" >
-<pre><code class="r">M &lt;- spread(MI, flower_att, measurement)
-kable(M)
-</code></pre>
-
-<table><thead>
-<tr>
-<th align="left">Species</th>
-<th align="right">Petal.Length</th>
-<th align="right">Petal.Width</th>
-<th align="right">Sepal.Length</th>
-<th align="right">Sepal.Width</th>
-</tr>
-</thead><tbody>
-<tr>
-<td align="left">setosa</td>
-<td align="right">1.4</td>
-<td align="right">0.2</td>
-<td align="right">5.1</td>
-<td align="right">3.5</td>
-</tr>
-<tr>
-<td align="left">versicolor</td>
-<td align="right">4.7</td>
-<td align="right">1.4</td>
-<td align="right">7.0</td>
-<td align="right">3.2</td>
-</tr>
-<tr>
-<td align="left">virginica</td>
-<td align="right">6.0</td>
-<td align="right">2.5</td>
-<td align="right">6.3</td>
-<td align="right">3.3</td>
-</tr>
-</tbody></table>
-
-</div>
-
-</section>
-<section data-transition="default" data-transition-speed="default">
-<h3>Ejercicios</h3>
-<div class="slideContent small-code" >
 <ul>
 <li class="fragment">¿Como paso de esto?</li>
 </ul>
 
 <pre class="fragment"><code class="r">df_cuentas &lt;- data.frame(
   dia = c(&quot;Lunes&quot;, &quot;Martes&quot;, &quot;Miercoles&quot;),
-  Lobo = c(2, 1, 3),
-  Liebre = c(20, 25, 30),
-  Zorro = c(4, 4, 4)
+  Tratamiento_1 = c(2, 1, 3),
+  Tratamiento_2 = c(20, 25, 30),
+  Tratamiento_3 = c(4, 4, 4)
 )
 kable(df_cuentas)
 </code></pre>
@@ -1056,9 +888,9 @@ kable(df_cuentas)
 <table><thead>
 <tr>
 <th align="left">dia</th>
-<th align="right">Lobo</th>
-<th align="right">Liebre</th>
-<th align="right">Zorro</th>
+<th align="right">Tratamiento_1</th>
+<th align="right">Tratamiento_2</th>
+<th align="right">Tratamiento_3</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -1128,39 +960,39 @@ DF_largo &lt;- df_cuentas %&gt;% gather(key = Columnas, value = Valores)
 <td align="left">Miercoles</td>
 </tr>
 <tr>
-<td align="left">Lobo</td>
+<td align="left">Tratamiento_1</td>
 <td align="left">2</td>
 </tr>
 <tr>
-<td align="left">Lobo</td>
+<td align="left">Tratamiento_1</td>
 <td align="left">1</td>
 </tr>
 <tr>
-<td align="left">Lobo</td>
+<td align="left">Tratamiento_1</td>
 <td align="left">3</td>
 </tr>
 <tr>
-<td align="left">Liebre</td>
+<td align="left">Tratamiento_2</td>
 <td align="left">20</td>
 </tr>
 <tr>
-<td align="left">Liebre</td>
+<td align="left">Tratamiento_2</td>
 <td align="left">25</td>
 </tr>
 <tr>
-<td align="left">Liebre</td>
+<td align="left">Tratamiento_2</td>
 <td align="left">30</td>
 </tr>
 <tr>
-<td align="left">Zorro</td>
+<td align="left">Tratamiento_3</td>
 <td align="left">4</td>
 </tr>
 <tr>
-<td align="left">Zorro</td>
+<td align="left">Tratamiento_3</td>
 <td align="left">4</td>
 </tr>
 <tr>
-<td align="left">Zorro</td>
+<td align="left">Tratamiento_3</td>
 <td align="left">4</td>
 </tr>
 </tbody></table>
@@ -1183,47 +1015,47 @@ DF_largo &lt;- df_cuentas %&gt;% gather(key = Columnas, value = Valores)
 </thead><tbody>
 <tr>
 <td align="left">Lunes</td>
-<td align="left">Lobo</td>
+<td align="left">Tratamiento_1</td>
 <td align="right">2</td>
 </tr>
 <tr>
 <td align="left">Martes</td>
-<td align="left">Lobo</td>
+<td align="left">Tratamiento_1</td>
 <td align="right">1</td>
 </tr>
 <tr>
 <td align="left">Miercoles</td>
-<td align="left">Lobo</td>
+<td align="left">Tratamiento_1</td>
 <td align="right">3</td>
 </tr>
 <tr>
 <td align="left">Lunes</td>
-<td align="left">Liebre</td>
+<td align="left">Tratamiento_2</td>
 <td align="right">20</td>
 </tr>
 <tr>
 <td align="left">Martes</td>
-<td align="left">Liebre</td>
+<td align="left">Tratamiento_2</td>
 <td align="right">25</td>
 </tr>
 <tr>
 <td align="left">Miercoles</td>
-<td align="left">Liebre</td>
+<td align="left">Tratamiento_2</td>
 <td align="right">30</td>
 </tr>
 <tr>
 <td align="left">Lunes</td>
-<td align="left">Zorro</td>
+<td align="left">Tratamiento_3</td>
 <td align="right">4</td>
 </tr>
 <tr>
 <td align="left">Martes</td>
-<td align="left">Zorro</td>
+<td align="left">Tratamiento_3</td>
 <td align="right">4</td>
 </tr>
 <tr>
 <td align="left">Miercoles</td>
-<td align="left">Zorro</td>
+<td align="left">Tratamiento_3</td>
 <td align="right">4</td>
 </tr>
 </tbody></table>
@@ -1246,47 +1078,47 @@ DF_largo &lt;- df_cuentas %&gt;% gather(key = Columnas, value = Valores)
 </thead><tbody>
 <tr>
 <td align="left">Lunes</td>
-<td align="left">Lobo</td>
+<td align="left">Tratamiento_1</td>
 <td align="right">2</td>
 </tr>
 <tr>
 <td align="left">Martes</td>
-<td align="left">Lobo</td>
+<td align="left">Tratamiento_1</td>
 <td align="right">1</td>
 </tr>
 <tr>
 <td align="left">Miercoles</td>
-<td align="left">Lobo</td>
+<td align="left">Tratamiento_1</td>
 <td align="right">3</td>
 </tr>
 <tr>
 <td align="left">Lunes</td>
-<td align="left">Liebre</td>
+<td align="left">Tratamiento_2</td>
 <td align="right">20</td>
 </tr>
 <tr>
 <td align="left">Martes</td>
-<td align="left">Liebre</td>
+<td align="left">Tratamiento_2</td>
 <td align="right">25</td>
 </tr>
 <tr>
 <td align="left">Miercoles</td>
-<td align="left">Liebre</td>
+<td align="left">Tratamiento_2</td>
 <td align="right">30</td>
 </tr>
 <tr>
 <td align="left">Lunes</td>
-<td align="left">Zorro</td>
+<td align="left">Tratamiento_3</td>
 <td align="right">4</td>
 </tr>
 <tr>
 <td align="left">Martes</td>
-<td align="left">Zorro</td>
+<td align="left">Tratamiento_3</td>
 <td align="right">4</td>
 </tr>
 <tr>
 <td align="left">Miercoles</td>
-<td align="left">Zorro</td>
+<td align="left">Tratamiento_3</td>
 <td align="right">4</td>
 </tr>
 </tbody></table>
@@ -1295,14 +1127,99 @@ DF_largo &lt;- df_cuentas %&gt;% gather(key = Columnas, value = Valores)
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>Ejercicio 2</h3>
+<h3>Spread</h3>
+<div class="slideContent small-code" >
+<ul>
+<li>Inverso de gather hace tablas anchas</li>
+<li><strong>key:</strong> Variable que pasará a ser nombres de columnas</li>
+<li><strong>value:</strong> Variable que llenará esas columnas</li>
+</ul>
+
+<pre><code class="r">Ancho &lt;- DF %&gt;% spread(key= dia, value = Cuenta)
+</code></pre>
+
+<pre><code class="r">knitr::kable(Ancho)
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left">Especie</th>
+<th align="right">Lunes</th>
+<th align="right">Martes</th>
+<th align="right">Miercoles</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">Tratamiento_1</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td align="left">Tratamiento_2</td>
+<td align="right">20</td>
+<td align="right">25</td>
+<td align="right">30</td>
+</tr>
+<tr>
+<td align="left">Tratamiento_3</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+</tbody></table>
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
+<h3>Spread</h3>
+<div class="slideContent small-code" >
+<pre><code class="r">Ancho &lt;- DF %&gt;% spread(key= Especie, value = Cuenta)
+</code></pre>
+
+<pre><code class="r">knitr::kable(Ancho)
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left">dia</th>
+<th align="right">Tratamiento_1</th>
+<th align="right">Tratamiento_2</th>
+<th align="right">Tratamiento_3</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">Lunes</td>
+<td align="right">2</td>
+<td align="right">20</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td align="left">Martes</td>
+<td align="right">1</td>
+<td align="right">25</td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td align="left">Miercoles</td>
+<td align="right">3</td>
+<td align="right">30</td>
+<td align="right">4</td>
+</tr>
+</tbody></table>
+
+</div>
+
+</section>
+<section data-transition="default" data-transition-speed="default">
+<h3>Ejercicio 1</h3>
 <div class="slideContent small-code" >
 <p>a. Quedarse con solo las observaciones que tienen coordenadas geograficas</p>
 
 <p>b. Cuantas observaciones son de observacion humana y cuantas de especimen de museo? </p>
 
 <pre><code class="r">library(dismo)
-library(dplyr)
 Huemul &lt;- gbif(&#39;Hippocamelus&#39;, &#39;bisulcus&#39;, down=TRUE)
 colnames(Huemul)
 </code></pre>
@@ -1599,7 +1516,7 @@ kable(Solb)
 
 </section>
 <section data-transition="default" data-transition-speed="default">
-<h3>Ejercicio 3</h3>
+<h3>Ejercicio 2</h3>
 <div class="slideContent" >
 <ul>
 <li class="fragment">Entrar a <a href="http://www.ine.cl/estadisticas/medioambiente/series-cronologicas-vba">INE ambiental</a> y bajar la base de datos de Dimensión Aire.</li>

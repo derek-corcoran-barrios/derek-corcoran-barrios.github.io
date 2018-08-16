@@ -10,3 +10,6 @@ purrr
 stringr
 forcats
 bindrcpp
+sp
+raster
+dismo

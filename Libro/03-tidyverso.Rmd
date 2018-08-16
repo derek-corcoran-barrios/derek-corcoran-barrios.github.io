@@ -1,8 +1,8 @@
-# El Tidyverso {#tidyverso}
+# El Tidyverso y tidyr {#tidyverso}
 
 ## Paquetes necesarios para este capítulo
 
-Para este capítulo necesitas tener instalado el paquete *tidyverse*
+Para este capítulo necesitas tener instalado el paquete *tidyverse* y el paquete *dismo* para uno de los ejercicios.
 
 En este capítulo se explicará qué es el paquete *tidyverse* [@Wickhamtidyverse] y cuales son sus componentes. Además veremos las funciones del paqute *tidyr* [@Wickhamtidy] con sus dos funciones `gather` y `spread`.
 
@@ -124,3 +124,66 @@ DF_largo <- df_cuentas %>% gather(key = Especie, value = Abundancia, -dia)
 knitr::kable(DF_largo,
   caption = 'Abundancia detectada por especie en tres días de muestreo', booktabs = TRUE, row.names = FALSE)
 ```
+
+### spread
+
+`spread` es la función inversa a `gather`, esto es, toma una tabla de datos en formato ancho y la trnasforma en una base de datos de formato largo. Esta función tiene dos argumentos básicos. *key* que es el nombre de la variable que pasará a ser nombres de columna y *value*, que es el nombre de la columna con los valores que llenarán estas columnas.
+
+#### Continuación ejemplo de censos
+
+Volvamos al ejemplo de los censos donde quedamos, en nuestro último ejercicio creamos el data frame *DF_largo* que vemos en la tabla \@ref(tab:Larga3). Veremos algunos ejemplos de como podemos cambiar este data frame en una tabla ancha:
+
+```{r, warning=FALSE, message=FALSE}
+DF_ancho <- DF_largo %>% spread(key = dia, value = Abundancia)
+```
+
+Con el código anterior generamos la \@ref(tab:Ancha1), la cuál es distinta a la original en la tabla \@ref(tab:Censo)), en esta los días quedaron como nombres de columnas, y las especies pasaron a ser una variable.
+ 
+```{r Ancha1, echo = FALSE}
+knitr::kable(DF_ancho,
+  caption = 'Abundancia detectada por especie en tres días de muestreo', booktabs = TRUE, row.names = FALSE)
+```
+
+En la tabla \@ref(tab:Ops) se ven todas las opciones de como generar una tabla ancha en base a el data frame *DF_largo*, pruebe opciones hasta entender la función, algunas de estas opciones darán errores.
+
+```{r, warning=FALSE, message=FALSE, echo = FALSE}
+Ops <-  expand.grid(Key = colnames(DF_largo), Value = colnames(DF_largo)) %>% filter(Key != Value)
+```
+
+```{r Ops, echo = FALSE}
+knitr::kable(Ops,
+  caption = 'Todas las opciones a probar para generar una tabla ancha', booktabs = TRUE, row.names = FALSE)
+```
+
+## Ejercicios
+
+### Ejercicio 1
+
+Utilizando el siguiente código usando el paquete dismo bajaras la base de datos del *GBIF* (Global Biodiversity Information Facility) de presencias conocidas del huemul (*Hippocamelus bisulcus*):
+
+```{r, eval = FALSE}
+library(dismo)
+Huemul <- gbif('Hippocamelus', 'bisulcus', down=TRUE)
+colnames(Huemul)
+```
+
+Tomando la base de datos generada:
+
+a. Quedarse con solo las observaciones que tienen coordenadas geograficas
+
+b. Determinar cuantas observaciones son de observacion humana y cuantas de especimen de museo 
+
+### Ejercicio 2
+
+Entrar a [INE ambiental](http://www.ine.cl/estadisticas/medioambiente/series-cronologicas-vba) y bajar la base de datos de Dimensión Aire. 
+
+a. Generar una base de datos **tidy** con las siguientes 5 columnas
+
+* El nombre de la localidad donde se encuntra la estación
+* El año en que se tomo la medida
+* El mes en que se tomo la medida
+* La temperatura media de ese mes
+* La media del mp25 de ese mes
+* Humedad relativa media mensual
+
+b. De la base de datos anterior obterner un segundo data frame en la cual calculen para cada variable y estación la media y desviación estandar para cada mes

@@ -36,3 +36,33 @@ Solution <- mpg %>% filter(year > 2004 & class == "compact") %>% mutate(kpl = (c
 Una posible solución a este problema sería:
 
 `` ``r ''`r mean((iris %>% filter(Species == "virginica"))$Petal.Length)` ``
+
+## Capítulo 3
+
+### Ejercicio 1
+
+```{r, echo = FALSE, cache=TRUE, message=FALSE, warning=FALSE, results='hide'}
+library(dismo)
+Huemul <- gbif('Hippocamelus', 'bisulcus', down=TRUE)
+```
+
+#### a
+
+```{r}
+Sola <- Huemul %>% dplyr::select(lon, lat, basisOfRecord) %>% filter(!is.na(lat) & !is.na(lon))
+```
+
+```{r, echo = FALSE}
+knitr::kable(Sola)
+```
+
+#### b
+
+```{r}
+Solb <- Huemul %>% group_by(basisOfRecord) %>% summarize(N = n())
+```
+
+
+```{r, echo = FALSE}
+knitr::kable(Solb)
+```

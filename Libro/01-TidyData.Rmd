@@ -249,24 +249,24 @@ Esta función permite seleccionar las variables a utilizar dado que en muchos ca
 
 Con select hay varias formas de trabajar, por un lado se puede escribir las variables que se utilizarán, o restar las que no. En ese sentido estos cuatro códigos dan exactamente el mismo resultado. Esto se puede ver en la tabla \@ref(tab:Selected)
 
-```{r, eval=FALSE}
+```{r Select1, eval=FALSE}
 iris %>% group_by(Species) %>% select(Petal.Length, Petal.Width) %>% summarize_all(mean)
 ```
 
-```{r, eval=FALSE}
+```{r Select2, eval=FALSE}
 iris %>% group_by(Species) %>% select(-Sepal.Length, -Sepal.Width) %>% summarize_all(mean)
 ```
 
-```{r, eval=FALSE}
+```{r select3, eval=FALSE}
 iris %>% group_by(Species) %>% select(contains("Petal")) %>% summarize_all(mean)
 ```
 
-```{r, eval=FALSE}
+```{r select4, eval=FALSE}
 iris %>% group_by(Species) %>% select(-contains("Sepal")) %>% summarize_all(mean)
 ```
 
-```{r, echo = FALSE}
-DF <- iris %>% group_by(Species) %>% select(-contains("Sepal")) %>% summarize_all(mean)
+```{r select5, echo = FALSE}
+DF <- iris %>% group_by(Species) %>% dplyr::select(-contains("Sepal")) %>% summarize_all(mean)
 ```
 
 ```{r Selected, echo = FALSE}

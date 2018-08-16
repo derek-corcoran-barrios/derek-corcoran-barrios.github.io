@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-08-12}
+    \date{2018-08-13}
 
 \usepackage{booktabs}
 
@@ -1299,13 +1299,13 @@ La solución a este ejercicio se encuentra en el capítulo
 \hypertarget{tablas-en-rmarkdown}{%
 \subsubsection{Tablas en Rmarkdown}\label{tablas-en-rmarkdown}}
 
-la función más típica para generar tablas en un archivo \emph{rmd} es
+La función más típica para generar tablas en un archivo \emph{rmd} es
 \texttt{kable} del paquete \emph{knitr}, que en su forma más simple se
-incluye un dataframe como único argumento y obtenemos una tabla. Además
-de esto, podemos agregar algunos parámetros como \emph{caption}, que nos
-permite poner un título a la tabla o \emph{row.names}, que si se pone
-como se ve en el código (FALSE) no mostrará en la tabla los nombres de
-las filas, tal como se ve en la tabla \ref{tab:SummaryMeans}.
+incluye un dataframe como único argumento. Además de esto, podemos
+agregar algunos parámetros como \emph{caption}, que nos permite poner un
+título a la tabla o \emph{row.names}, que si se pone como se ve en el
+código (FALSE) no mostrará en la tabla los nombres de las filas, tal
+como se ve en la tabla \ref{tab:SummaryMeans}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1331,13 +1331,14 @@ virginica & 6.588 & 2.974 & 5.552 & 2.026\\
 \end{table}
 
 \hypertarget{tidyverso}{%
-\chapter{El Tidyverso}\label{tidyverso}}
+\chapter{El Tidyverso y tidyr}\label{tidyverso}}
 
 \hypertarget{paquetes-necesarios-para-este-capitulo-2}{%
 \section{Paquetes necesarios para este
 capítulo}\label{paquetes-necesarios-para-este-capitulo-2}}
 
 Para este capítulo necesitas tener instalado el paquete \emph{tidyverse}
+y el paquete \emph{dismo} para uno de los ejercicios.
 
 En este capítulo se explicará qué es el paquete \emph{tidyverse}
 \citep{Wickhamtidyverse} y cuales son sus componentes. Además veremos
@@ -1682,6 +1683,142 @@ Miercoles & Zorro & 4\\
 \end{tabular}
 \end{table}
 
+\hypertarget{spread}{%
+\subsection{spread}\label{spread}}
+
+\texttt{spread} es la función inversa a \texttt{gather}, esto es, toma
+una tabla de datos en formato ancho y la trnasforma en una base de datos
+de formato largo. Esta función tiene dos argumentos básicos. \emph{key}
+que es el nombre de la variable que pasará a ser nombres de columna y
+\emph{value}, que es el nombre de la columna con los valores que
+llenarán estas columnas.
+
+\hypertarget{continuacion-ejemplo-de-censos}{%
+\subsubsection{Continuación ejemplo de
+censos}\label{continuacion-ejemplo-de-censos}}
+
+Volvamos al ejemplo de los censos donde quedamos, en nuestro último
+ejercicio creamos el data frame \emph{DF\_largo} que vemos en la tabla
+\ref{tab:Larga3}. Veremos algunos ejemplos de como podemos cambiar este
+data frame en una tabla ancha:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{DF_ancho <-}\StringTok{ }\NormalTok{DF_largo }\OperatorTok{%>%}\StringTok{ }\KeywordTok{spread}\NormalTok{(}\DataTypeTok{key =}\NormalTok{ dia, }\DataTypeTok{value =}\NormalTok{ Abundancia)}
+\end{Highlighting}
+\end{Shaded}
+
+Con el código anterior generamos la \ref{tab:Ancha1}, la cuál es
+distinta a la original en la tabla \ref{tab:Censo}), en esta los días
+quedaron como nombres de columnas, y las especies pasaron a ser una
+variable.
+
+\begin{table}
+
+\caption{\label{tab:Ancha1}Abundancia detectada por especie en tres días de muestreo}
+\centering
+\begin{tabular}[t]{lrrr}
+\toprule
+Especie & Lunes & Martes & Miercoles\\
+\midrule
+Liebre & 20 & 25 & 30\\
+Lobo & 2 & 1 & 3\\
+Zorro & 4 & 4 & 4\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+En la tabla \ref{tab:Ops} se ven todas las opciones de como generar una
+tabla ancha en base a el data frame \emph{DF\_largo}, pruebe opciones
+hasta entender la función, algunas de estas opciones darán errores.
+
+\begin{table}
+
+\caption{\label{tab:Ops}Todas las opciones a probar para generar una tabla ancha}
+\centering
+\begin{tabular}[t]{ll}
+\toprule
+Key & Value\\
+\midrule
+Especie & dia\\
+Abundancia & dia\\
+dia & Especie\\
+Abundancia & Especie\\
+dia & Abundancia\\
+Especie & Abundancia\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{ejercicios-2}{%
+\section{Ejercicios}\label{ejercicios-2}}
+
+\hypertarget{ejercicio-1-2}{%
+\subsection{Ejercicio 1}\label{ejercicio-1-2}}
+
+Utilizando el siguiente código usando el paquete dismo bajaras la base
+de datos del \emph{GBIF} (Global Biodiversity Information Facility) de
+presencias conocidas del huemul (\emph{Hippocamelus bisulcus}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dismo)}
+\NormalTok{Huemul <-}\StringTok{ }\KeywordTok{gbif}\NormalTok{(}\StringTok{"Hippocamelus"}\NormalTok{, }\StringTok{"bisulcus"}\NormalTok{, }\DataTypeTok{down =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(Huemul)}
+\end{Highlighting}
+\end{Shaded}
+
+Tomando la base de datos generada:
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\item
+  Quedarse con solo las observaciones que tienen coordenadas geograficas
+\item
+  Determinar cuantas observaciones son de observacion humana y cuantas
+  de especimen de museo
+\end{enumerate}
+
+\hypertarget{ejercicio-2-1}{%
+\subsection{Ejercicio 2}\label{ejercicio-2-1}}
+
+Entrar a
+\href{http://www.ine.cl/estadisticas/medioambiente/series-cronologicas-vba}{INE
+ambiental} y bajar la base de datos de Dimensión Aire.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Generar una base de datos \textbf{tidy} con las siguientes 5 columnas
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  El nombre de la localidad donde se encuntra la estación
+\item
+  El año en que se tomo la medida
+\item
+  El mes en que se tomo la medida
+\item
+  La temperatura media de ese mes
+\item
+  La media del mp25 de ese mes
+\item
+  Humedad relativa media mensual
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  De la base de datos anterior obterner un segundo data frame en la cual
+  calculen para cada variable y estación la media y desviación estandar
+  para cada mes
+\end{enumerate}
+
 \hypertarget{visualizacion}{%
 \chapter{Visualización de datos}\label{visualizacion}}
 
@@ -1850,8 +1987,8 @@ como una referencia, y revisar si el resultado final de tu código
 \hypertarget{capitulo-1}{%
 \section{Capítulo 1}\label{capitulo-1}}
 
-\hypertarget{ejercicio-1-2}{%
-\subsection{Ejercicio 1}\label{ejercicio-1-2}}
+\hypertarget{ejercicio-1-3}{%
+\subsection{Ejercicio 1}\label{ejercicio-1-3}}
 
 Algunas posibles soluciones:
 
@@ -1877,8 +2014,8 @@ Algunas posibles soluciones:
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{ejercicio-2-1}{%
-\subsection{Ejercicio 2}\label{ejercicio-2-1}}
+\hypertarget{ejercicio-2-2}{%
+\subsection{Ejercicio 2}\label{ejercicio-2-2}}
 
 Una de las soluciones posibles:
 
@@ -1892,12 +2029,103 @@ Una de las soluciones posibles:
 \hypertarget{capitulo-2}{%
 \section{Capítulo 2}\label{capitulo-2}}
 
-\hypertarget{ejercicio-1-3}{%
-\subsection{Ejercicio 1}\label{ejercicio-1-3}}
+\hypertarget{ejercicio-1-4}{%
+\subsection{Ejercicio 1}\label{ejercicio-1-4}}
 
 Una posible solución a este problema sería:
 
 \texttt{\textasciigrave{}r\ mean((iris\ \%\textgreater{}\%\ filter(Species\ ==\ "virginica"))\$Petal.Length)\textasciigrave{}}
+
+\hypertarget{capitulo-3}{%
+\section{Capítulo 3}\label{capitulo-3}}
+
+\hypertarget{ejercicio-1-5}{%
+\subsection{Ejercicio 1}\label{ejercicio-1-5}}
+
+\hypertarget{a}{%
+\subsubsection{a}\label{a}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Sola <-}\StringTok{ }\NormalTok{Huemul }\OperatorTok{%>%}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(lon, lat, basisOfRecord) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(lat) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(lon))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{r|r|l}
+\hline
+lon & lat & basisOfRecord\\
+\hline
+-72.93940 & -49.37483 & HUMAN\_OBSERVATION\\
+\hline
+-72.97712 & -51.01511 & HUMAN\_OBSERVATION\\
+\hline
+-71.87026 & -46.08686 & HUMAN\_OBSERVATION\\
+\hline
+-72.43751 & -47.20485 & HUMAN\_OBSERVATION\\
+\hline
+-73.01456 & -51.03635 & HUMAN\_OBSERVATION\\
+\hline
+-73.03190 & -51.17531 & HUMAN\_OBSERVATION\\
+\hline
+-72.72944 & -46.25602 & HUMAN\_OBSERVATION\\
+\hline
+-71.31538 & -41.30110 & PRESERVED\_SPECIMEN\\
+\hline
+-71.31538 & -41.30110 & PRESERVED\_SPECIMEN\\
+\hline
+-71.71667 & -44.86667 & PRESERVED\_SPECIMEN\\
+\hline
+-71.71667 & -44.86667 & PRESERVED\_SPECIMEN\\
+\hline
+-71.30989 & -40.81978 & PRESERVED\_SPECIMEN\\
+\hline
+-71.31538 & -41.30110 & PRESERVED\_SPECIMEN\\
+\hline
+-73.02467 & -50.46476 & PRESERVED\_SPECIMEN\\
+\hline
+-71.33186 & -41.26523 & PRESERVED\_SPECIMEN\\
+\hline
+-73.01764 & -50.46747 & PRESERVED\_SPECIMEN\\
+\hline
+-71.70000 & -45.26667 & PRESERVED\_SPECIMEN\\
+\hline
+-71.70000 & -45.26667 & PRESERVED\_SPECIMEN\\
+\hline
+-71.70000 & -45.26667 & PRESERVED\_SPECIMEN\\
+\hline
+-72.08000 & -47.25000 & PRESERVED\_SPECIMEN\\
+\hline
+-72.00000 & -41.50000 & PRESERVED\_SPECIMEN\\
+\hline
+-71.36714 & -41.13574 & PRESERVED\_SPECIMEN\\
+\hline
+-71.71094 & -42.75692 & HUMAN\_OBSERVATION\\
+\hline
+-71.64718 & -40.22605 & PRESERVED\_SPECIMEN\\
+\hline
+-67.88534 & -43.99376 & PRESERVED\_SPECIMEN\\
+\hline
+\end{tabular}
+
+\hypertarget{b}{%
+\subsubsection{b}\label{b}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Solb <-}\StringTok{ }\NormalTok{Huemul }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(basisOfRecord) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{N =} \KeywordTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r}
+\hline
+basisOfRecord & N\\
+\hline
+HUMAN\_OBSERVATION & 102\\
+\hline
+PRESERVED\_SPECIMEN & 65\\
+\hline
+\end{tabular}
 
 \bibliography{book.bib,packages.bib}
 
