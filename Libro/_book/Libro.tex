@@ -2129,6 +2129,9 @@ dentro de ggplot tal como vemos en el siguiente código y en la figura
 \subsubsection{geom\_smooth y
 stat\_smooth}\label{geom_smooth-y-stat_smooth}}
 
+\hypertarget{geom_smooth}{%
+\paragraph{geom\_smooth}\label{geom_smooth}}
+
 Estas funciones nos permiten generar lineas de tendencias con intervalos
 de confianza para estas lineas, así si quisieramos ver lineas de
 tendencias para nuestro scatterplot, dependiendo de la dieta, usaríamos
@@ -2151,8 +2154,63 @@ el siguiente código el cual nos da la figura \ref{fig:scatterLoess}.
 
 }
 
-\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta}\label{fig:scatterLoess}
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en el método loess}\label{fig:scatterLoess}
 \end{figure}
+
+Por defeccto, la función \texttt{geom\_smooth} generará una tendencia
+basada en \emph{loess}, lo cual es una correlación local. En general, es
+mejor hacer una linea de tendencia basado en modelos que uno puede
+explicar mejor como un modelo lineal. Para esto, cambiamos el argumento
+method a lm como en el siguiente código y la figura \ref{fig:scatterLM}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(ChickWeight, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Time, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \KeywordTok{factor}\NormalTok{(Diet))) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{factor}\NormalTok{(Diet)), }\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/scatterLM-1} 
+
+}
+
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales}\label{fig:scatterLM}
+\end{figure}
+
+\hypertarget{stat_smooth}{%
+\paragraph{stat\_smooth}\label{stat_smooth}}
+
+La función \texttt{stat\_smooth} es más flexible que
+\texttt{geom\_smooth}. La gran diferencia es que nos permite incluir una
+formula para expresar la relación entre \(x\) e \(y\), por ejemplo, si
+pensaramos que en el caso de la base de datos \texttt{ChickWeight} la
+relación entre el peso y el tiempo se expresa mejor con una ecuación
+cuadrática (ver ecuacación \eqref{eq:quad}) generaríamos el siguiente
+código que genera la figura \ref{fig:scatterQuad}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(ChickWeight, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Time, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \KeywordTok{factor}\NormalTok{(Diet))) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{stat_smooth}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{factor}\NormalTok{(Diet)), }\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }
+\StringTok{        }\NormalTok{x }\OperatorTok{+}\StringTok{ }\KeywordTok{I}\NormalTok{(x}\OperatorTok{^}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/scatterQuad-1} 
+
+}
+
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales}\label{fig:scatterQuad}
+\end{figure}
+
+\begin{equation} 
+  y = \beta_2 x^2 + \beta_1 x + c
+  \label{eq:quad}
+\end{equation}
 
 \hypertarget{argumentos}{%
 \section{Argumentos}\label{argumentos}}

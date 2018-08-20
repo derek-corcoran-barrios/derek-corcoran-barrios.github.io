@@ -125,11 +125,31 @@ ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Di
 
 #### geom_smooth y stat_smooth
 
+##### geom_smooth
 Estas funciones nos permiten generar lineas de tendencias con intervalos de confianza para estas lineas, así si quisieramos ver lineas de tendencias para nuestro scatterplot, dependiendo de la dieta, usaríamos el siguiente código el cual nos da la figura \@ref(fig:scatterLoess).
 
-```{r scatterLoess, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+```{r scatterLoess, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en el método loess', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Diet))) + geom_smooth(aes(fill = factor(Diet)))
 ```
+
+Por defeccto, la función `geom_smooth` generará una tendencia basada en *loess*, lo cual es una correlación local. En general, es mejor hacer una linea de tendencia basado en modelos que uno puede explicar mejor como un modelo lineal. Para esto, cambiamos el argumento method a lm como en el siguiente código y la figura \@ref(fig:scatterLM).
+
+```{r scatterLM, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Diet))) + geom_smooth(aes(fill = factor(Diet)), method = "lm")
+```
+
+##### stat_smooth
+
+La función `stat_smooth` es más flexible que `geom_smooth`. La gran diferencia es que nos permite incluir una formula para expresar la relación entre $x$ e $y$, por ejemplo, si pensaramos que en el caso de la base de datos `ChickWeight` la relación entre el peso y el tiempo se expresa mejor con una ecuación cuadrática (ver ecuacación \@ref(eq:quad)) generaríamos el siguiente código que genera la figura \@ref(fig:scatterQuad).
+
+```{r scatterQuad, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales con una relación cuadrática', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Diet))) + stat_smooth(aes(fill = factor(Diet)), method = "lm", formula = y ~ x + I(x^2))
+```
+
+\begin{equation} 
+  y = \beta_2 x^2 + \beta_1 x + c
+  (\#eq:quad)
+\end{equation} 
 
 
 ## Argumentos {#argumentos}
