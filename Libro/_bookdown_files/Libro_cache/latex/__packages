@@ -13,3 +13,6 @@ bindrcpp
 sp
 raster
 dismo
+SpatialBall2
+readxl
+lubridate

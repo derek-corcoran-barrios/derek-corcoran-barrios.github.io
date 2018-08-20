@@ -1,6 +1,12 @@
 # Visualización de datos {#visualizacion}
 
-En este capítulo aprenderemos a usar el paquete *ggplot2* [@Wickhamggplot], parte del paquete *tidyverse* [@Wickhamtidyverse]. 
+## Paquetes necesarios para este capítulo
+
+Para este capítulo necesitas tener instalado el paquete *tidyverse*.
+
+En este capítulo se explicará qué es el paquete *ggplot2* [@Wickhamggplot] y como podemos utilizarlo para visualizar datos.
+
+Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase4/Clase4Visualizacion). El video de la clase se encontrará disponible en este [link]
 
 ## El esqueleto
 
@@ -19,7 +25,13 @@ ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme
 ```
 
 
-En este caso general, lo primero que ponemos después de ggplot es el data.frame desde el cuál graficaremos algo, en el ejemplo de la figura \@ref(fig:ejemplo1-ggplot) usamos la base de datos *diamonds* del paquete *ggplot2* [@Wickhamggplot]. Luego dentro de `aes` ponemos las columnas que graficaremos como *x* y/o *y*, en nuestro ejemplo dentro de aes ponemos como eje *x* los kilates de los diamantes (caret) y como *y* el precio de los mismos (price). La necesidad de poner `aes` en ggplot2 (algo que no había sido necesario cuando usamos *dplyr* o *tidyr*) es que ggplot2 es el paquete mas antiguo del *tidyverse*.
+En este caso general, lo primero que ponemos después de ggplot es el data.frame desde el cuál graficaremos algo, en el ejemplo de la figura \@ref(fig:ejemplo1-ggplot) usamos la base de datos *diamonds* del paquete *ggplot2* [@Wickhamggplot]. Luego dentro de `aes` ponemos las columnas que graficaremos como *x* y/o *y*, en nuestro ejemplo dentro de aes ponemos como eje *x* los kilates de los diamantes (caret) y como *y* el precio de los mismos (price). La necesidad de poner `aes` en ggplot2 (algo que no había sido necesario cuando usamos *dplyr* o *tidyr*).
+
+## Por que usamos aes() y +
+
+Al ser el primer paquete creado en el tidyverse, *ggplot2* tiene un par de convenciones distintas, por un lado cada vez que usamos el nombre de una columna que esta en un data frame usamos debemos usarlo dentro de la función `aes`
+
+Además, cuando se creo el paquete *ggplot2* no existia el pipeline (`%>%`), por lo que se utilizaba el signo `+` con la misma función
 
 ## geom_algo
 
@@ -50,8 +62,36 @@ Dos cosas a notar en este ejemplo, por un lado la leyenda se genera de forma aut
 
 #### geom_jitter
 
-```{r jitter, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+Utilizando la misma base de datos, podemos crear un gráfico del tipo *jitter*, en este caso hay un punto por cada observación, lo cual puede ayudar a entender mejor los datos que tenemos.
+
+```{r jitter, fig.cap='jitter plot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de los puntos representan la especie', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_jitter(aes(color = Species))
+```
+
+En la figura \@ref(fig:jitter) vemos los mismos datos, que en la figura \@ref(fig:boxplot), el agregar el `color = Species` dentro del `aes` nos permite que el color de cada punto este determinado por la especie a la que pertenece.
+
+#### Otros geom categoricos
+
+Otros geom categóricos que podemos explorar con esta base de datos son:
+
+* geom_violin
+* geom_bar
+* geom_col
+
+## Combinando geoms
+
+Uno puede combinar geoms para formar un grafico combinado, por ejemplo podriamos generar un grafico con un boxplot y un jitter plot como vemos en la figura \@ref(fig:boxjitter)
+
+```{r boxjitter, fig.cap='Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris.', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_boxplot() + geom_jitter(aes(color = Species))
+```
+
+### El orden importa
+
+Si bien se pueden combinar los geom, el orden de estos importa, ya que *ggplot2* genera las figuras por capas, esto es ilustrado en la figura  \@ref(fig:jitterbox), en la cual al crear primero el jitter y luego el boxplot, las cajas del boxplot tapan los puntos, a diferencia de la figura \@ref(fig:boxjitter)
+
+```{r jitterbox, fig.cap='Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris, en este caso al llamar al jitter antes del boxplot, las cajas tapan los puntos.', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_jitter(aes(color = Species)) + geom_boxplot()
 ```
 
 

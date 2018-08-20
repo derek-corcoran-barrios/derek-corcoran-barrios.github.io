@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-08-16}
+    \date{2018-08-19}
 
 \usepackage{booktabs}
 
@@ -435,23 +435,6 @@ El resultado se puedde ver en la tabla \ref{tab:SummaryPetaltab}, en el
 cuál se obtienen los promedios y desviaciones estándar de los largos de
 los pétalos. Es importante notar que al usar summarize, todas las otras
 variables desapareceran de la tabla.
-
-\begin{verbatim}
-## 
-## Attaching package: 'dplyr'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-\end{verbatim}
 
 \begin{table}
 
@@ -1840,9 +1823,20 @@ ambiental} y bajar la base de datos de Dimensión Aire.
 \hypertarget{visualizacion}{%
 \chapter{Visualización de datos}\label{visualizacion}}
 
-En este capítulo aprenderemos a usar el paquete \emph{ggplot2}
-\citep{Wickhamggplot}, parte del paquete \emph{tidyverse}
-\citep{Wickhamtidyverse}.
+\hypertarget{paquetes-necesarios-para-este-capitulo-3}{%
+\section{Paquetes necesarios para este
+capítulo}\label{paquetes-necesarios-para-este-capitulo-3}}
+
+Para este capítulo necesitas tener instalado el paquete
+\emph{tidyverse}.
+
+En este capítulo se explicará qué es el paquete \emph{ggplot2}
+\citep{Wickhamggplot} y como podemos utilizarlo para visualizar datos.
+
+Dado que este libro es un apoyo para el curso BIO4022, esta clase puede
+también ser seguida en este
+\href{https://derek-corcoran-barrios.github.io/Clase4/Clase4Visualizacion}{link}.
+El video de la clase se encontrará disponible en este {[}link{]}
 
 \hypertarget{el-esqueleto}{%
 \section{El esqueleto}\label{el-esqueleto}}
@@ -1884,8 +1878,19 @@ paquete \emph{ggplot2} \citep{Wickhamggplot}. Luego dentro de
 \emph{y}, en nuestro ejemplo dentro de aes ponemos como eje \emph{x} los
 kilates de los diamantes (caret) y como \emph{y} el precio de los mismos
 (price). La necesidad de poner \texttt{aes} en ggplot2 (algo que no
-había sido necesario cuando usamos \emph{dplyr} o \emph{tidyr}) es que
-ggplot2 es el paquete mas antiguo del \emph{tidyverse}.
+había sido necesario cuando usamos \emph{dplyr} o \emph{tidyr}).
+
+\hypertarget{por-que-usamos-aes-y}{%
+\section{Por que usamos aes() y +}\label{por-que-usamos-aes-y}}
+
+Al ser el primer paquete creado en el tidyverse, \emph{ggplot2} tiene un
+par de convenciones distintas, por un lado cada vez que usamos el nombre
+de una columna que esta en un data frame usamos debemos usarlo dentro de
+la función \texttt{aes}
+
+Además, cuando se creo el paquete \emph{ggplot2} no existia el pipeline
+(\texttt{\%\textgreater{}\%}), por lo que se utilizaba el signo
+\texttt{+} con la misma función
 
 \hypertarget{geom_algo}{%
 \section{geom\_algo}\label{geom_algo}}
@@ -1965,6 +1970,10 @@ ser referenciadas.
 \hypertarget{geom_jitter}{%
 \subsubsection{geom\_jitter}\label{geom_jitter}}
 
+Utilizando la misma base de datos, podemos crear un gráfico del tipo
+\emph{jitter}, en este caso hay un punto por cada observación, lo cual
+puede ayudar a entender mejor los datos que tenemos.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{ggplot}\NormalTok{(iris, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Species, }\DataTypeTok{y =}\NormalTok{ Sepal.Length)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_jitter}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Species))}
@@ -1977,7 +1986,75 @@ ser referenciadas.
 
 }
 
-\caption{Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie}\label{fig:jitter}
+\caption{jitter plot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de los puntos representan la especie}\label{fig:jitter}
+\end{figure}
+
+En la figura \ref{fig:jitter} vemos los mismos datos, que en la figura
+\ref{fig:boxplot}, el agregar el \texttt{color\ =\ Species} dentro del
+\texttt{aes} nos permite que el color de cada punto este determinado por
+la especie a la que pertenece.
+
+\hypertarget{otros-geom-categoricos}{%
+\subsubsection{Otros geom categoricos}\label{otros-geom-categoricos}}
+
+Otros geom categóricos que podemos explorar con esta base de datos son:
+
+\begin{itemize}
+\tightlist
+\item
+  geom\_violin
+\item
+  geom\_bar
+\item
+  geom\_col
+\end{itemize}
+
+\hypertarget{combinando-geoms}{%
+\section{Combinando geoms}\label{combinando-geoms}}
+
+Uno puede combinar geoms para formar un grafico combinado, por ejemplo
+podriamos generar un grafico con un boxplot y un jitter plot como vemos
+en la figura \ref{fig:boxjitter}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(iris, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Species, }\DataTypeTok{y =}\NormalTok{ Sepal.Length)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_jitter}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Species))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/boxjitter-1} 
+
+}
+
+\caption{Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris.}\label{fig:boxjitter}
+\end{figure}
+
+\hypertarget{el-orden-importa}{%
+\subsection{El orden importa}\label{el-orden-importa}}
+
+Si bien se pueden combinar los geom, el orden de estos importa, ya que
+\emph{ggplot2} genera las figuras por capas, esto es ilustrado en la
+figura \ref{fig:jitterbox}, en la cual al crear primero el jitter y
+luego el boxplot, las cajas del boxplot tapan los puntos, a diferencia
+de la figura \ref{fig:boxjitter}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(iris, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Species, }\DataTypeTok{y =}\NormalTok{ Sepal.Length)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_jitter}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Species)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/jitterbox-1} 
+
+}
+
+\caption{Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris, en este caso al llamar al jitter antes del boxplot, las cajas tapan los puntos.}\label{fig:jitterbox}
 \end{figure}
 
 \hypertarget{argumentos}{%
@@ -2144,6 +2221,243 @@ HUMAN\_OBSERVATION & 102\\
 PRESERVED\_SPECIMEN & 65\\
 \hline
 \end{tabular}
+
+\hypertarget{ejercicio-2-3}{%
+\subsection{Ejercicio 2}\label{ejercicio-2-3}}
+
+\hypertarget{a-1}{%
+\subsubsection{a}\label{a-1}}
+
+Primero bajamos la base de datos, lo cual se puede hacer de forma manual
+o como en el código siguiente utilizando la función
+\texttt{download.file}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{download.file}\NormalTok{(}\StringTok{"http://www.ine.cl/docs/default-source/medioambiente-(micrositio)/variables-b%C3%A1sicas-ambientales-(vba)/aire/dimensi%C3%B3n-aire-factor-estado.xlsx?sfvrsn=4"}\NormalTok{, }
+    \DataTypeTok{destfile =} \StringTok{"test.xlsx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Una vez bajada esta base de datos utilizaremos los paquetes
+\emph{readxl} para leer los archivos excel, \emph{tidyverse} para
+manipular los datos y \emph{stringr} para trabajar con texto.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(readxl)}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(stringr)}
+\end{Highlighting}
+\end{Shaded}
+
+Partimos leyendo la pestaña que contiene las estaciones meteorológicas
+con su código:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{EM <-}\StringTok{ }\KeywordTok{read_excel}\NormalTok{(}\StringTok{"test.xlsx"}\NormalTok{, }\DataTypeTok{sheet =} \StringTok{"T001"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Luego para poder más adelante unir esta base de datos con otras,
+cambiamos el nombre de la columna \emph{Codigo\_Est\_Meteoro} a
+\emph{Est\_Meteoro} como aparece en las otras bases de datos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{EM <-}\StringTok{ }\NormalTok{EM }\OperatorTok{%>%}\StringTok{ }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{Est_Meteoro =}\NormalTok{ Codigo_Est_Meteoro)}
+\end{Highlighting}
+\end{Shaded}
+
+Luego empezamos a trabajar con la base de datos de temperatura media,
+para esto leemos la pestaña \emph{E10000003}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TempMedia <-}\StringTok{ }\KeywordTok{read_excel}\NormalTok{(}\StringTok{"test.xlsx"}\NormalTok{, }\DataTypeTok{sheet =} \StringTok{"E10000003"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Existen varias variables que no utilizaremos, por ejemplo el código de
+la variable, y la unidad de medida. Además vemos que la variable día,
+siempre tiene valor 0, por lo cuál podemos eliminarla también.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TempMedia <-}\StringTok{ }\NormalTok{TempMedia }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{Codigo_variable, }\OperatorTok{-}\NormalTok{Unidad_medida, }
+    \OperatorTok{-}\NormalTok{Día)}
+\end{Highlighting}
+\end{Shaded}
+
+Además podemos cambiar los nombres de la columna \emph{ValorF} que no
+tiene ningún significado a \emph{TempMedia} y \emph{Año} a \emph{Year},
+esta última variable es cambiada solo por que la letra Ñ puede no ser
+leída por todos los computadores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TempMedia <-}\StringTok{ }\NormalTok{TempMedia }\OperatorTok{%>%}\StringTok{ }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{TempMedia =}\NormalTok{ ValorF, }\DataTypeTok{Year =}\NormalTok{ Año)}
+\end{Highlighting}
+\end{Shaded}
+
+Si nos fijamos, hay algunos años, en los cuales todos los meses aparecen
+como 13, esto nos indica que en estos años no se registró en que mes se
+realizó la medición, por lo cual se eliminarán esas obsevaciones.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TempMedia <-}\StringTok{ }\NormalTok{TempMedia }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Mes }\OperatorTok{!=}\StringTok{ }\DecValTok{13}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Posterior a esto, unumos la base de datos \emph{TempMedia} con la base
+de datos \emph{EM} y seleccionamos tan solo las columnas que nos
+interesan:
+
+\begin{verbatim}
+## Joining, by = "Est_Meteoro"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TempMedia <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(TempMedia, EM) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(Mes, Year, TempMedia, }
+\NormalTok{    Ciudad_localidad)}
+\end{Highlighting}
+\end{Shaded}
+
+Si hicieramos todo esto en un comando tendriamos el siguiente código
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TempMedia <-}\StringTok{ }\KeywordTok{read_excel}\NormalTok{(}\StringTok{"test.xlsx"}\NormalTok{, }\DataTypeTok{sheet =} \StringTok{"E10000003"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{Codigo_variable, }\OperatorTok{-}\NormalTok{Unidad_medida, }\OperatorTok{-}\NormalTok{Día) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{TempMedia =}\NormalTok{ ValorF, }
+    \DataTypeTok{Year =}\NormalTok{ Año) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Mes }\OperatorTok{!=}\StringTok{ }\DecValTok{13}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{left_join}\NormalTok{(EM) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{select}\NormalTok{(Mes, Year, TempMedia, Ciudad_localidad)}
+\end{Highlighting}
+\end{Shaded}
+
+De la misma manera modificamos el código de arriba para la humedad con
+la salvedad que la columna de día no tiene tilde en esta pestaña a la
+fecha de 19 de Agosto del 2018:
+
+\begin{verbatim}
+## Joining, by = "Est_Meteoro"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{HumMedia <-}\StringTok{ }\KeywordTok{read_excel}\NormalTok{(}\StringTok{"test.xlsx"}\NormalTok{, }\DataTypeTok{sheet =} \StringTok{"E10000006"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{Codigo_variable, }\OperatorTok{-}\NormalTok{Unidad_medida, }\OperatorTok{-}\NormalTok{Dia) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{HumMedia =}\NormalTok{ ValorF, }\DataTypeTok{Year =}\NormalTok{ Año) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Mes }\OperatorTok{!=}\StringTok{ }
+\StringTok{    }\DecValTok{13}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{left_join}\NormalTok{(EM) }\OperatorTok{%>%}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(Mes, Year, HumMedia, }
+\NormalTok{    Ciudad_localidad)}
+\end{Highlighting}
+\end{Shaded}
+
+En el siguiente código unimos las dos bases de datos, vemos las primeras
+20 observaciones de la base de datos resultante en la tabla
+\ref{tab:TempHum}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TempHum <-}\StringTok{ }\KeywordTok{full_join}\NormalTok{(TempMedia, HumMedia)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = c("Mes", "Year", "Ciudad_localidad")
+\end{verbatim}
+
+\begin{table}
+
+\caption{\label{tab:TempHum}Las primeras 20 observaciones de temperatura y humedad unidas}
+\centering
+\begin{tabular}[t]{lrrlr}
+\toprule
+Mes & Year & TempMedia & Ciudad\_localidad & HumMedia\\
+\midrule
+01 & 1981 & 22.0 & Arica & NA\\
+02 & 1981 & 22.2 & Arica & NA\\
+03 & 1981 & 22.1 & Arica & NA\\
+04 & 1981 & 20.3 & Arica & NA\\
+05 & 1981 & 18.2 & Arica & NA\\
+\addlinespace
+06 & 1981 & 17.0 & Arica & NA\\
+07 & 1981 & 15.0 & Arica & NA\\
+08 & 1981 & 16.0 & Arica & NA\\
+09 & 1981 & 16.6 & Arica & NA\\
+10 & 1981 & 15.9 & Arica & NA\\
+\addlinespace
+11 & 1981 & 19.1 & Arica & NA\\
+12 & 1981 & 21.1 & Arica & NA\\
+01 & 1981 & 19.7 & Iquique & NA\\
+02 & 1981 & 21.1 & Iquique & NA\\
+03 & 1981 & 20.9 & Iquique & NA\\
+\addlinespace
+04 & 1981 & 19.9 & Iquique & NA\\
+05 & 1981 & 17.6 & Iquique & NA\\
+06 & 1981 & 15.9 & Iquique & NA\\
+07 & 1981 & 14.6 & Iquique & NA\\
+08 & 1981 & 15.6 & Iquique & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Con esto vemos que la humedad media no es medida en los mismos años ni
+en todos los lugares que se mide la temperatura media, pero como ambas
+variables nos interesan por igual, la mantenemos de todas maneras con
+sus valores \emph{NA}
+
+\hypertarget{b-1}{%
+\subsubsection{b}\label{b-1}}
+
+El segundo ejercicio es mucho mas simple, donde solo tenemos que agrupar
+por ciudad y mes, y usar \texttt{summarize\_all} para las funciones
+\texttt{mean} y \texttt{sd} como vemos en la tabla
+\ref{tab:TempHumMonthly}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{TempHumMonthly <-}\StringTok{ }\NormalTok{TempHum }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{Year) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(Mes, }
+\NormalTok{    Ciudad_localidad) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize_all}\NormalTok{(}\KeywordTok{funs}\NormalTok{(mean, sd), }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:TempHumMonthly}Las primeras 20 observaciones de temperatura y humedad agrupadas por mes y localidad}
+\centering
+\begin{tabular}[t]{llrrrr}
+\toprule
+Mes & Ciudad\_localidad & TempMedia\_mean & HumMedia\_mean & TempMedia\_sd & HumMedia\_sd\\
+\midrule
+01 & Antártica Chilena & 1.388889 & 87.35000 & 0.6319031 & 3.483772\\
+01 & Antofagasta & 20.125000 & 69.70000 & 0.8378118 & 1.589549\\
+01 & Arica & 22.375000 & 62.72500 & 0.9391105 & 2.394960\\
+01 & Balmaceda & 12.358823 & 56.37500 & 1.2200640 & 2.487804\\
+01 & Calama & 17.000000 & 25.00000 & NA & NA\\
+\addlinespace
+01 & Cerrillos & 20.996000 & NaN & 0.7855359 & NaN\\
+01 & Chillán & 19.747059 & 63.05000 & 0.7054916 & 3.750111\\
+01 & Concepción & 16.683333 & 73.75000 & 0.6222080 & 6.727308\\
+01 & Copiapó & 19.604348 & NaN & 0.7449700 & NaN\\
+01 & Coyhaique & 13.980556 & 58.27500 & 1.2537531 & 1.543535\\
+\addlinespace
+01 & Curicó & 20.632353 & 59.65000 & 0.7293503 & 6.310573\\
+01 & Graneros & 21.480000 & NaN & 0.4661330 & NaN\\
+01 & Iquique & 21.791667 & 61.72500 & 1.0332680 & 3.981101\\
+01 & Isla Juan Fernández & 18.513889 & 71.22500 & 0.5111068 & 3.044531\\
+01 & La Serena & 17.311429 & 75.97500 & 0.7275145 & 3.187868\\
+\addlinespace
+01 & Osorno & 15.807407 & 74.10000 & 0.9388725 & 2.265686\\
+01 & Pudahuel & 20.652778 & 47.53333 & 0.7268272 & 5.852635\\
+01 & Puerto Montt & 14.451429 & 78.00000 & 0.7184016 & 2.499333\\
+01 & Punta Arenas & 10.852778 & 62.55000 & 0.7443064 & 3.349129\\
+01 & Quinta Normal & 21.261111 & 53.35000 & 0.5530579 & 6.507688\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \bibliography{book.bib,packages.bib}
 

@@ -3,7 +3,7 @@ download.file("http://www.ine.cl/docs/default-source/medioambiente-(micrositio)/
 #para leer los archivos
 library(readxl)
 #Para manipular los datos
-library(dplyr)
+library(tidyverse)
 #Para transformar los textos
 library(stringr)
 #para generar las fechas
@@ -11,42 +11,30 @@ library(lubridate)
 ####Leer la pestaña estaciones Meteorologicas
 EM <- read_excel("test.xlsx", sheet = "T001")
 #Cambiar el nombre de la columna 1 para que sea igual que las columnas de la temperatura y humedad
-colnames(EM)[1] <- "Est_Meteoro"
+EM <- EM %>% rename(Est_Meteoro = Codigo_Est_Meteoro)
 
 ########################################################################
 ####Leer la pestaña de la temperatura media
-TempMedia <- read_excel("~/Downloads/estado-aire80422dea683e61618024ff030098b759.xlsx", sheet = "E10000003")
+TempMedia <- read_excel("test.xlsx", sheet = "E10000003")
 
 #Eliminar de TempMedia las columnas codigo variable y Unidad de medida, y 
-#cambiar el nombre de la columna valorF a TempMedia
+#cambiar el nombre de la columna valorF a TempMedia y eliminar día, ya que solo tiene valores 0
 
-TempMedia <- TempMedia %>% select(-Codigo_variable, -Unidad_medida)
-colnames(TempMedia)[4] <- "TempMedia"
+TempMedia <- TempMedia %>% dplyr::select(-Codigo_variable, -Unidad_medida, -Día)
+TempMedia <- TempMedia %>% rename(TempMedia = ValorF, Year = Año)
 
 #Eliminar fechas con valor de mes 13
 
-TempMedia <- TempMedia[!str_detect(TempMedia$Fecha, "_13"),]
-
-#Remplazar dias 00, por 01
-
-TempMedia$Fecha <- str_replace(TempMedia$Fecha, "_00", "_01")
+TempMedia <- TempMedia %>% filter(Mes != 13)
 
 ##Transformar en formato Fecha
 
-TempMedia$Fecha <- ymd(TempMedia$Fecha)
-
-#Generar las columas para mes y año
-
-TempMedia$Year <- year(TempMedia$Fecha)
-
-TempMedia$mes <- month(TempMedia$Fecha)
-
-TempMedia <- left_join(TempMedia, EM) %>% select(Fecha, Year, mes, TempMedia, Ciudad_localidad)
+TempMedia <- left_join(TempMedia, EM) %>% select(Mes, Year, TempMedia, Ciudad_localidad)
 
 
 ##############################################################################################3
 ####Leer la pestaña Humedad Media
-HumMedia <- read_excel("~/Downloads/estado-aire80422dea683e61618024ff030098b759.xlsx", sheet = "E10000006")
+HumMedia <- read_excel("test.xlsx",, sheet = "E10000006")
 
 
 #Eliminar de HumMedia las columnas codigo variable y Unidad de medida, y 

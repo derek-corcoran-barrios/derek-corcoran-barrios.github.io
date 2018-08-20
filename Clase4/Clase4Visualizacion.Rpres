@@ -1,0 +1,351 @@
+<style>
+.reveal h1, .reveal h2, .reveal h3 {
+  word-wrap: normal;
+  -moz-hyphens: none;
+}
+</style>
+
+<style>
+.small-code pre code {
+  font-size: 1em;
+}
+</style>
+
+Clase 4 visualización de datos
+========================================================
+author: Derek Corcoran
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+autosize: true
+transition: rotate
+
+ggplot2
+========================================================
+class: small-code
+
+* <small>Paquete de visualización de datos de tidy data.</small>
+* <small>ggplot(data.frame, aes(nombres de columna)).</small>
+* <small>+ geom_algo(argumentos, aes(columnas)).</small>
+* <small>+ theme_algo() estilo.</small>
+* <small>Personalización de ejes y leyendas.</small>
+* <small>Dos [links](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/) para aprender [mas](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf).</small>
+
+```{r, eval=FALSE}
+library(ggplot2)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
+```
+
+***
+
+```{r, echo=FALSE}
+library(ggplot2)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
+```
+
+Que diablos es aes() y por que +?
+==============
+incremental:true
+
+* en ggplot2 cada vez que mencionamos una columna debe ser dentro de aes()
+* ggplot2 es el paquete mas antiguo del tidyverse, %>% no existia
+
+
+Argumentos para geoms
+=================
+
+* **color**: color de líneas o puntos 
+* **alpha**: transparencia, de 0 (transparente) a 1 (sólido)
+* **size**: tamaño de puntos
+* **shape**: típo de punto
+* **fill**: color dentro de un área (barras, intervalos)
+
+color
+=================
+class: small-code
+
+```{r}
+library(ggplot2)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
+```
+
+alpha
+=================
+class: small-code
+
+```{r}
+library(ggplot2)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut), alpha = 0.1) + theme_classic()
+```
+
+size
+=================
+class: small-code
+
+```{r}
+library(ggplot2)
+data("mtcars")
+ggplot(mtcars, aes(x = wt, y=mpg)) + geom_point(aes(size = hp)) + theme_classic()
+```
+
+shape
+=================
+class: small-code
+
+```{r}
+library(ggplot2)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(shape = cut)) + theme_classic()
+```
+
+fill
+=================
+class: small-code
+
+```{r}
+library(dplyr)
+d2 <- diamonds %>% filter(clarity == "I1" | clarity == "IF")
+ggplot(d2, aes(x = cut, y=price)) + geom_boxplot(aes(fill = clarity)) + theme_classic()
+```
+
+Una variable categórica una continua
+===========
+
+* geom_boxplot
+* geom_jitter
+* geom_violin
+* geom_bar
+
+geom_jitter
+==================
+class: small-code
+
+```{r}
+data("iris")
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species))
+```
+
+geom_violin
+================
+class: small-code
+
+```{r}
+data("iris")
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_violin(fill = "red")
+```
+
+Se pueden combinar
+============
+class: small-code
+
+```{r}
+data("iris")
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_violin() + geom_jitter(aes(color = Species))
+```
+
+Pero el orden importa
+============
+class: small-code
+
+```{r}
+data("iris")
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species)) + geom_violin()
+```
+
+
+Dos variables continuas
+===========
+
+* geom_point
+* geom_smooth
+* geom_line
+* geom_hex
+* geom_rug
+
+geom_hex
+========================
+```{r}
+ggplot(diamonds, aes(carat, price)) + geom_hex()
+```
+
+geom_point y geom_smooth
+================
+class: small-code
+
+```{r}
+data("mtcars")
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_smooth() + geom_point()
+```
+
+geom_smooth, method
+================
+class: small-code
+
+```{r}
+data("mtcars")
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_smooth(method = "lm") + geom_point()
+```
+
+stat_smooth más control que geom_smooth
+========================================
+class: small-code
+
+```{r}
+library(dplyr)
+library(knitr)
+TempHum <- readRDS("TempHum.rds")
+PA <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas")
+kable(PA)
+```
+
+stat_smooth más control que geom_smooth
+========================================
+class: small-code
+
+```{r}
+library(ggplot2)
+ggplot(PA, aes(x = mes, y = TempMedia)) + geom_point()
+```
+
+stat_smooth más control que geom_smooth
+========================================
+class: small-code
+
+```{r}
+ggplot(PA, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm") 
+```
+
+Ecuación cuadrática
+========================================
+class: small-code
+```{r, echo=FALSE}
+library(knitr)
+include_graphics("Cuadratica.png")
+```
+
+***
+
+```{r, echo=FALSE}
+library(knitr)
+include_graphics("Lineal.png")
+```
+
+stat_smooth más control que geom_smooth
+========================================
+class: small-code
+
+```{r}
+ggplot(PA, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) 
+```
+
+Que podemos hacer con tidyr??
+========================================
+class: small-code
+
+```{r}
+library(tidyr)
+San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal")
+SATH <- gather(San, key = Unidad, value = medida, TempMedia, HumMedia)
+ggplot(SATH, aes(x = mes, y = medida)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad)) 
+```
+
+incluirlo en rmd con leyenda abajo
+========================================
+class: small-code
+
+```{r, echo=FALSE}
+include_graphics("YAML.png")
+```
+
+
+```{r, echo=FALSE}
+include_graphics("Chunk.png")
+```
+
+Primera evaluación
+========================================
+incremental:true
+
+* Generar un rmd
+* Debe tener
+    + Al menos un chunk
+    + Al menos un inline code
+    + Al menos una tabla con leyenda (kable, stargazer)
+    + Al menos una figura (con leyenda)
+
+***
+
+* Enviar por correo con subject evaluación 1 R
+    + El link de rpubs con el documento publicado
+    + El archivo rmd con el que generaron el documento
+    + Para el martes 24 de Octubre
+
+Como combinar gráficos
+======================================
+class: small-code
+
+```{r}
+Ari <- TempHum %>% filter(Ciudad_localidad == "Arica")
+Ari  <- ggplot(Ari , aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Arica")
+Jua <- TempHum %>% filter(Ciudad_localidad == "Isla Juan Fernández")
+Jua  <- ggplot(Jua , aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Juan Fernandez")
+San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal")
+San <- ggplot(San, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Santiago")
+Con <- TempHum %>% filter(Ciudad_localidad == "Concepción")
+Con <- ggplot(Con, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Concepcion")
+Pun <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas")
+Pun <- ggplot(Pun, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Punta Arenas")
+Ant <- TempHum %>% filter(Ciudad_localidad == "Antártica Chilena")
+Ant <- ggplot(Ant, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Antartica")
+```
+
+Como combinar gráficos
+======================================
+class: small-code
+
+```{r}
+library(gridExtra)
+grid.arrange(Ari, Jua, San, Con, Pun, Ant, nrow = 3, ncol = 2)
+```
+    
+Algunos gráficos interesantes hechos con ggplot
+======================================
+class: small-code
+
+```{r}
+library(SpatialBall2)
+data("season2017")
+ShotSeasonGraphPlayer(season2017, player = "Stephen Curry")
+```
+
+    
+Algunos gráficos interesantes
+======================================
+class: small-code
+
+```{r, eval=FALSE}
+ggplot(Weekly, aes(x = Semana, y = mean)) + 
+geom_ribbon(aes(ymax = max, ymin = min, fill = "red")) + 
+geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = "blue"), alpha = 1) + 
+geom_line() + 
+  scale_fill_manual(name = "leyenda", values = c("blue", "red"), labels = c('Error estándar','Extremos')) + 
+ylab("polen de platano oriental /m³ de aire") + theme_classic()  + theme(legend.position="bottom") + 
+scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"))
+```
+
+Algunos gráficos interesantes
+======================================
+class: small-code
+
+```{r, echo=FALSE}
+Weekly <- readRDS("Alergia.rds") %>% group_by(Semana) %>% summarize()
+ggplot(Weekly, aes(x = Semana, y = mean)) + 
+geom_ribbon(aes(ymax = max, ymin = min, fill = "red")) + 
+geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = "blue"), alpha = 1) + 
+geom_line() + 
+  scale_fill_manual(name = "leyenda", values = c("blue", "red"), labels = c('Error estándar','Extremos')) + 
+ylab("polen de platano oriental /m³ de aire") + theme_classic()  + theme(legend.position="bottom") + 
+scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"))
+```

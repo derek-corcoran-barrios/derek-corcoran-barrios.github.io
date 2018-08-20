@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-16">
+<meta name="date" content="2018-08-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -191,11 +191,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="visualizacion.html"><a href="visualizacion.html"><i class="fa fa-check"></i><b>4</b> Visualización de datos</a><ul>
-<li class="chapter" data-level="4.1" data-path="visualizacion.html"><a href="visualizacion.html#el-esqueleto"><i class="fa fa-check"></i><b>4.1</b> El esqueleto</a></li>
-<li class="chapter" data-level="4.2" data-path="visualizacion.html"><a href="visualizacion.html#geom_algo"><i class="fa fa-check"></i><b>4.2</b> geom_algo</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="visualizacion.html"><a href="visualizacion.html#una-variable-categorica-una-continua"><i class="fa fa-check"></i><b>4.2.1</b> Una variable categórica una continua</a></li>
+<li class="chapter" data-level="4.1" data-path="visualizacion.html"><a href="visualizacion.html#paquetes-necesarios-para-este-capitulo-3"><i class="fa fa-check"></i><b>4.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="4.2" data-path="visualizacion.html"><a href="visualizacion.html#el-esqueleto"><i class="fa fa-check"></i><b>4.2</b> El esqueleto</a></li>
+<li class="chapter" data-level="4.3" data-path="visualizacion.html"><a href="visualizacion.html#por-que-usamos-aes-y"><i class="fa fa-check"></i><b>4.3</b> Por que usamos aes() y +</a></li>
+<li class="chapter" data-level="4.4" data-path="visualizacion.html"><a href="visualizacion.html#geom_algo"><i class="fa fa-check"></i><b>4.4</b> geom_algo</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="visualizacion.html"><a href="visualizacion.html#una-variable-categorica-una-continua"><i class="fa fa-check"></i><b>4.4.1</b> Una variable categórica una continua</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="visualizacion.html"><a href="visualizacion.html#argumentos"><i class="fa fa-check"></i><b>4.3</b> Argumentos</a></li>
+<li class="chapter" data-level="4.5" data-path="visualizacion.html"><a href="visualizacion.html#combinando-geoms"><i class="fa fa-check"></i><b>4.5</b> Combinando geoms</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="visualizacion.html"><a href="visualizacion.html#el-orden-importa"><i class="fa fa-check"></i><b>4.5.1</b> El orden importa</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="visualizacion.html"><a href="visualizacion.html#argumentos"><i class="fa fa-check"></i><b>4.6</b> Argumentos</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a></li>
 <li class="chapter" data-level="6" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>6</b> Loops (purrr) y bibliografía (rticles)</a></li>
@@ -210,6 +215,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="soluciones.html"><a href="soluciones.html#capitulo-3"><i class="fa fa-check"></i><b>8.3</b> Capítulo 3</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-5"><i class="fa fa-check"></i><b>8.3.1</b> Ejercicio 1</a></li>
+<li class="chapter" data-level="8.3.2" data-path="soluciones.html"><a href="soluciones.html#ejercicio-2-3"><i class="fa fa-check"></i><b>8.3.2</b> Ejercicio 2</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i><b>9</b> Referencias</a></li>
@@ -235,9 +241,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="visualizacion" class="section level1">
 <h1><span class="header-section-number">Capítulo 4</span> Visualización de datos</h1>
-<p>En este capítulo aprenderemos a usar el paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-Wickhamggplot">2016</a>)</span>, parte del paquete <em>tidyverse</em> <span class="citation">(Wickham <a href="#ref-Wickhamtidyverse">2017</a>)</span>.</p>
+<div id="paquetes-necesarios-para-este-capitulo-3" class="section level2">
+<h2><span class="header-section-number">4.1</span> Paquetes necesarios para este capítulo</h2>
+<p>Para este capítulo necesitas tener instalado el paquete <em>tidyverse</em>.</p>
+<p>En este capítulo se explicará qué es el paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-Wickhamggplot">2016</a>)</span> y como podemos utilizarlo para visualizar datos.</p>
+<p>Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este <a href="https://derek-corcoran-barrios.github.io/Clase4/Clase4Visualizacion">link</a>. El video de la clase se encontrará disponible en este [link]</p>
+</div>
 <div id="el-esqueleto" class="section level2">
-<h2><span class="header-section-number">4.1</span> El esqueleto</h2>
+<h2><span class="header-section-number">4.2</span> El esqueleto</h2>
 <p>El esqueleto de una visualización usando <em>ggplot2</em> es la siguiente</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">ggplot</span>(data.frame, <span class="kw">aes</span>(nombres_de_columna)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_algo</span>(argumentos, </a>
 <a class="sourceLine" id="cb29-2" data-line-number="2">    <span class="kw">aes</span>(columnas)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_algo</span>()</a></code></pre></div>
@@ -251,16 +262,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Figura 4.1: Gráfico en el cual gráficamos los quilates de diamantes versus su precio, con el corte del diamante representado por el color
 </p>
 </div>
-<p>En este caso general, lo primero que ponemos después de ggplot es el data.frame desde el cuál graficaremos algo, en el ejemplo de la figura <a href="visualizacion.html#fig:ejemplo1-ggplot">4.1</a> usamos la base de datos <em>diamonds</em> del paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-Wickhamggplot">2016</a>)</span>. Luego dentro de <code>aes</code> ponemos las columnas que graficaremos como <em>x</em> y/o <em>y</em>, en nuestro ejemplo dentro de aes ponemos como eje <em>x</em> los kilates de los diamantes (caret) y como <em>y</em> el precio de los mismos (price). La necesidad de poner <code>aes</code> en ggplot2 (algo que no había sido necesario cuando usamos <em>dplyr</em> o <em>tidyr</em>) es que ggplot2 es el paquete mas antiguo del <em>tidyverse</em>.</p>
+<p>En este caso general, lo primero que ponemos después de ggplot es el data.frame desde el cuál graficaremos algo, en el ejemplo de la figura <a href="visualizacion.html#fig:ejemplo1-ggplot">4.1</a> usamos la base de datos <em>diamonds</em> del paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-Wickhamggplot">2016</a>)</span>. Luego dentro de <code>aes</code> ponemos las columnas que graficaremos como <em>x</em> y/o <em>y</em>, en nuestro ejemplo dentro de aes ponemos como eje <em>x</em> los kilates de los diamantes (caret) y como <em>y</em> el precio de los mismos (price). La necesidad de poner <code>aes</code> en ggplot2 (algo que no había sido necesario cuando usamos <em>dplyr</em> o <em>tidyr</em>).</p>
+</div>
+<div id="por-que-usamos-aes-y" class="section level2">
+<h2><span class="header-section-number">4.3</span> Por que usamos aes() y +</h2>
+<p>Al ser el primer paquete creado en el tidyverse, <em>ggplot2</em> tiene un par de convenciones distintas, por un lado cada vez que usamos el nombre de una columna que esta en un data frame usamos debemos usarlo dentro de la función <code>aes</code></p>
+<p>Además, cuando se creo el paquete <em>ggplot2</em> no existia el pipeline (<code>%&gt;%</code>), por lo que se utilizaba el signo <code>+</code> con la misma función</p>
 </div>
 <div id="geom_algo" class="section level2">
-<h2><span class="header-section-number">4.2</span> geom_algo</h2>
+<h2><span class="header-section-number">4.4</span> geom_algo</h2>
 <p>Luego de especificar una base de datos, esto viene seguido de un <code>geom_algo</code>, esto nos indicará que tipo de gráfico usaremos, estos pueden ser combinados como veremos en ejemplos futuros</p>
 <div id="una-variable-categorica-una-continua" class="section level3">
-<h3><span class="header-section-number">4.2.1</span> Una variable categórica una continua</h3>
+<h3><span class="header-section-number">4.4.1</span> Una variable categórica una continua</h3>
 <p>Primero veremos algunos de los <em>geom</em> que podemos utilizar con una variable categórica y una continua</p>
 <div id="geom_boxplot" class="section level4">
-<h4><span class="header-section-number">4.2.1.1</span> geom_boxplot</h4>
+<h4><span class="header-section-number">4.4.1.1</span> geom_boxplot</h4>
 <p>En la figura <a href="visualizacion.html#fig:boxplot">4.2</a>, generado a partir del código a continuacón con la base de datos iris presente en <code>R</code> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span>.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</a>
 <a class="sourceLine" id="cb31-2" data-line-number="2"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
@@ -271,7 +287,7 @@ Figura 4.2: Boxplot que representa los largos del sépalo de tres especies del g
 </p>
 </div>
 <p>Los boxplots muestran una linea gruesa central (la mediana), una caja, que delimita el primer y tercer cuartil, y los bigotes, los cuales se extienden hasta los valores extremos. A menos que estos esten por sobre 1.5 veces la distance entre el primer y tercer cuartil, en cuyo caso se consideran outlyers, y estos son representados por puntos. En la figura <a href="visualizacion.html#fig:boxplot">4.2</a>, solo <em>Iris virginica</em> presenta un outlayer en cuanto a las medidas del largo del sepalo.</p>
-<p>Los boxplots, como todos los gráficos pueden ser personalizados usando otros argumentos, los cuales son detallados en la sección <a href="visualizacion.html#argumentos">4.3</a>, pero en los ejemplos que mostraremos en esta sección los iremos introduciendo de a poco. Si quisieramos por ejemplo que el color de las cajas del <em>boxplot</em> fuera deacuerdo a la especie, cambiamos el llenado (<strong>fill</strong>) de la caja, como vemos en el siguiente ejemplo y figura <a href="visualizacion.html#fig:boxplot2">4.3</a></p>
+<p>Los boxplots, como todos los gráficos pueden ser personalizados usando otros argumentos, los cuales son detallados en la sección <a href="visualizacion.html#argumentos">4.6</a>, pero en los ejemplos que mostraremos en esta sección los iremos introduciendo de a poco. Si quisieramos por ejemplo que el color de las cajas del <em>boxplot</em> fuera deacuerdo a la especie, cambiamos el llenado (<strong>fill</strong>) de la caja, como vemos en el siguiente ejemplo y figura <a href="visualizacion.html#fig:boxplot2">4.3</a></p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Species))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:boxplot2"></span>
 <img src="Libro_files/figure-html/boxplot2-1.png" alt="Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie" width="80%" />
@@ -282,19 +298,54 @@ Figura 4.3: Boxplot que representa los largos del sépalo de tres especies del g
 <p>Dos cosas a notar en este ejemplo, por un lado la leyenda se genera de forma automática, y por otro lado, vemos que es necesario poner <em>Species</em> dentro de <code>aes</code>, esto es debido a que Species es una columna y como se explicó al principio de este capítulo, todas las columnas deben ser incuidas dentro de la función <code>aes</code> para poder ser referenciadas.</p>
 </div>
 <div id="geom_jitter" class="section level4">
-<h4><span class="header-section-number">4.2.1.2</span> geom_jitter</h4>
+<h4><span class="header-section-number">4.4.1.2</span> geom_jitter</h4>
+<p>Utilizando la misma base de datos, podemos crear un gráfico del tipo <em>jitter</em>, en este caso hay un punto por cada observación, lo cual puede ayudar a entender mejor los datos que tenemos.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:jitter"></span>
-<img src="Libro_files/figure-html/jitter-1.png" alt="Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie" width="80%" />
+<img src="Libro_files/figure-html/jitter-1.png" alt="jitter plot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de los puntos representan la especie" width="80%" />
 <p class="caption">
-Figura 4.4: Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie
+Figura 4.4: jitter plot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de los puntos representan la especie
+</p>
+</div>
+<p>En la figura <a href="visualizacion.html#fig:jitter">4.4</a> vemos los mismos datos, que en la figura <a href="visualizacion.html#fig:boxplot">4.2</a>, el agregar el <code>color = Species</code> dentro del <code>aes</code> nos permite que el color de cada punto este determinado por la especie a la que pertenece.</p>
+</div>
+<div id="otros-geom-categoricos" class="section level4">
+<h4><span class="header-section-number">4.4.1.3</span> Otros geom categoricos</h4>
+<p>Otros geom categóricos que podemos explorar con esta base de datos son:</p>
+<ul>
+<li>geom_violin</li>
+<li>geom_bar</li>
+<li>geom_col</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="combinando-geoms" class="section level2">
+<h2><span class="header-section-number">4.5</span> Combinando geoms</h2>
+<p>Uno puede combinar geoms para formar un grafico combinado, por ejemplo podriamos generar un grafico con un boxplot y un jitter plot como vemos en la figura <a href="visualizacion.html#fig:boxjitter">4.5</a></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:boxjitter"></span>
+<img src="Libro_files/figure-html/boxjitter-1.png" alt="Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris." width="80%" />
+<p class="caption">
+Figura 4.5: Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris.
+</p>
+</div>
+<div id="el-orden-importa" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> El orden importa</h3>
+<p>Si bien se pueden combinar los geom, el orden de estos importa, ya que <em>ggplot2</em> genera las figuras por capas, esto es ilustrado en la figura <a href="visualizacion.html#fig:jitterbox">4.6</a>, en la cual al crear primero el jitter y luego el boxplot, las cajas del boxplot tapan los puntos, a diferencia de la figura <a href="visualizacion.html#fig:boxjitter">4.5</a></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:jitterbox"></span>
+<img src="Libro_files/figure-html/jitterbox-1.png" alt="Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris, en este caso al llamar al jitter antes del boxplot, las cajas tapan los puntos." width="80%" />
+<p class="caption">
+Figura 4.6: Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris, en este caso al llamar al jitter antes del boxplot, las cajas tapan los puntos.
 </p>
 </div>
 </div>
 </div>
-</div>
 <div id="argumentos" class="section level2">
-<h2><span class="header-section-number">4.3</span> Argumentos</h2>
+<h2><span class="header-section-number">4.6</span> Argumentos</h2>
 
 </div>
 </div>
@@ -302,9 +353,6 @@ Figura 4.4: Boxplot que representa los largos del sépalo de tres especies del g
 <div id="refs" class="references">
 <div id="ref-Wickhamggplot">
 <p>Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="http://ggplot2.org" class="uri">http://ggplot2.org</a>.</p>
-</div>
-<div id="ref-Wickhamtidyverse">
-<p>Wickham, Hadley. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</p>
 </div>
 <div id="ref-anderson1935irises">
 <p>Anderson, Edgar. 1935. “The Irises of the Gaspe Peninsula.” <em>Bulletin of the American Iris Society</em> 59: 2–5.</p>
