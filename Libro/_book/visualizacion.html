@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-19">
+<meta name="date" content="2018-08-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -199,6 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="visualizacion.html"><a href="visualizacion.html#combinando-geoms"><i class="fa fa-check"></i><b>4.5</b> Combinando geoms</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="visualizacion.html"><a href="visualizacion.html#el-orden-importa"><i class="fa fa-check"></i><b>4.5.1</b> El orden importa</a></li>
+<li class="chapter" data-level="4.5.2" data-path="visualizacion.html"><a href="visualizacion.html#una-variable-categorica-una-continua-1"><i class="fa fa-check"></i><b>4.5.2</b> Una variable categórica una continua</a></li>
 </ul></li>
 <li class="chapter" data-level="4.6" data-path="visualizacion.html"><a href="visualizacion.html#argumentos"><i class="fa fa-check"></i><b>4.6</b> Argumentos</a></li>
 </ul></li>
@@ -341,6 +342,52 @@ Figura 4.5: Boxplot y jitter plot combinados que representa los largos del sépa
 <p class="caption">
 Figura 4.6: Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris, en este caso al llamar al jitter antes del boxplot, las cajas tapan los puntos.
 </p>
+</div>
+</div>
+<div id="una-variable-categorica-una-continua-1" class="section level3">
+<h3><span class="header-section-number">4.5.2</span> Una variable categórica una continua</h3>
+<p>Algunos de los geoms que podemos usar para dos variables continuas son:</p>
+<ul>
+<li>geom_point</li>
+<li>geom_smooth</li>
+<li>geom_line</li>
+<li>geom_hex</li>
+<li>geom_rug</li>
+</ul>
+<p>Ahora veremos algunas de ellas:</p>
+<div id="geom_point" class="section level4">
+<h4><span class="header-section-number">4.5.2.1</span> geom_point</h4>
+<p>Este geom es el que nos permite hacer un gráfico de dispersión en R. Para esto tenemos que poner como x e y en ggplot variables continuas y agragar la función <code>geom_point</code> como vemos en el siguiente código y en la figura <a href="visualizacion.html#fig:scatter">4.7</a>.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;ChickWeight&quot;</span>)</a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:scatter"></span>
+<img src="Libro_files/figure-html/scatter-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo" width="80%" />
+<p class="caption">
+Figura 4.7: Gráfico en el cual vemos el peso de pollos en el tiempo
+</p>
+</div>
+<p>Si quisieramos que el color de cada punto estuviera separado por peso, podríamos agregarle <code>aes(color = Diet)</code> a geom_point, pero deberíamos transformar Diet en factor, ya sea antes de usar ggplot o dentro de ggplot tal como vemos en el siguiente código y en la figura <a href="visualizacion.html#fig:scatterColor">4.8</a>.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;ChickWeight&quot;</span>)</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">factor</span>(Diet)))</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:scatterColor"></span>
+<img src="Libro_files/figure-html/scatterColor-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta" width="80%" />
+<p class="caption">
+Figura 4.8: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta
+</p>
+</div>
+</div>
+<div id="geom_smooth-y-stat_smooth" class="section level4">
+<h4><span class="header-section-number">4.5.2.2</span> geom_smooth y stat_smooth</h4>
+<p>Estas funciones nos permiten generar lineas de tendencias con intervalos de confianza para estas lineas, así si quisieramos ver lineas de tendencias para nuestro scatterplot, dependiendo de la dieta, usaríamos el siguiente código el cual nos da la figura <a href="visualizacion.html#fig:scatterLoess">4.9</a>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">factor</span>(Diet))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">factor</span>(Diet)))</a></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:scatterLoess"></span>
+<img src="Libro_files/figure-html/scatterLoess-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta" width="80%" />
+<p class="caption">
+Figura 4.9: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta
+</p>
+</div>
 </div>
 </div>
 </div>

@@ -94,5 +94,42 @@ Si bien se pueden combinar los geom, el orden de estos importa, ya que *ggplot2*
 ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_jitter(aes(color = Species)) + geom_boxplot()
 ```
 
+### Una variable categórica una continua
+
+Algunos de los geoms que podemos usar para dos variables continuas son:
+
+* geom_point
+* geom_smooth
+* geom_line
+* geom_hex
+* geom_rug
+
+Ahora veremos algunas de ellas:
+
+#### geom_point
+
+Este geom es el que nos permite hacer un gráfico de dispersión en R. Para esto tenemos que poner como x e y en ggplot variables continuas y agragar la función `geom_point` como vemos en el siguiente código y en la figura \@ref(fig:scatter).
+
+
+```{r scatter, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+data("ChickWeight")
+ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point()
+```
+
+Si quisieramos que el color de cada punto estuviera separado por peso, podríamos agregarle `aes(color = Diet)` a geom_point, pero deberíamos transformar Diet en factor, ya sea antes de usar ggplot o dentro de ggplot tal como vemos en el siguiente código y en la figura \@ref(fig:scatterColor).
+
+```{r scatterColor, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+data("ChickWeight")
+ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Diet)))
+```
+
+#### geom_smooth y stat_smooth
+
+Estas funciones nos permiten generar lineas de tendencias con intervalos de confianza para estas lineas, así si quisieramos ver lineas de tendencias para nuestro scatterplot, dependiendo de la dieta, usaríamos el siguiente código el cual nos da la figura \@ref(fig:scatterLoess).
+
+```{r scatterLoess, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Diet))) + geom_smooth(aes(fill = factor(Diet)))
+```
+
 
 ## Argumentos {#argumentos}

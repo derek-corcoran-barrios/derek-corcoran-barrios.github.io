@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-08-19}
+    \date{2018-08-20}
 
 \usepackage{booktabs}
 
@@ -2057,6 +2057,103 @@ de la figura \ref{fig:boxjitter}
 \caption{Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris, en este caso al llamar al jitter antes del boxplot, las cajas tapan los puntos.}\label{fig:jitterbox}
 \end{figure}
 
+\hypertarget{una-variable-categorica-una-continua-1}{%
+\subsection{Una variable categórica una
+continua}\label{una-variable-categorica-una-continua-1}}
+
+Algunos de los geoms que podemos usar para dos variables continuas son:
+
+\begin{itemize}
+\tightlist
+\item
+  geom\_point
+\item
+  geom\_smooth
+\item
+  geom\_line
+\item
+  geom\_hex
+\item
+  geom\_rug
+\end{itemize}
+
+Ahora veremos algunas de ellas:
+
+\hypertarget{geom_point}{%
+\subsubsection{geom\_point}\label{geom_point}}
+
+Este geom es el que nos permite hacer un gráfico de dispersión en R.
+Para esto tenemos que poner como x e y en ggplot variables continuas y
+agragar la función \texttt{geom\_point} como vemos en el siguiente
+código y en la figura \ref{fig:scatter}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"ChickWeight"}\NormalTok{)}
+\KeywordTok{ggplot}\NormalTok{(ChickWeight, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Time, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/scatter-1} 
+
+}
+
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo}\label{fig:scatter}
+\end{figure}
+
+Si quisieramos que el color de cada punto estuviera separado por peso,
+podríamos agregarle \texttt{aes(color\ =\ Diet)} a geom\_point, pero
+deberíamos transformar Diet en factor, ya sea antes de usar ggplot o
+dentro de ggplot tal como vemos en el siguiente código y en la figura
+\ref{fig:scatterColor}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(}\StringTok{"ChickWeight"}\NormalTok{)}
+\KeywordTok{ggplot}\NormalTok{(ChickWeight, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Time, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \KeywordTok{factor}\NormalTok{(Diet)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/scatterColor-1} 
+
+}
+
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta}\label{fig:scatterColor}
+\end{figure}
+
+\hypertarget{geom_smooth-y-stat_smooth}{%
+\subsubsection{geom\_smooth y
+stat\_smooth}\label{geom_smooth-y-stat_smooth}}
+
+Estas funciones nos permiten generar lineas de tendencias con intervalos
+de confianza para estas lineas, así si quisieramos ver lineas de
+tendencias para nuestro scatterplot, dependiendo de la dieta, usaríamos
+el siguiente código el cual nos da la figura \ref{fig:scatterLoess}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(ChickWeight, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Time, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =} \KeywordTok{factor}\NormalTok{(Diet))) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_smooth}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =} \KeywordTok{factor}\NormalTok{(Diet)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+\end{verbatim}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/scatterLoess-1} 
+
+}
+
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta}\label{fig:scatterLoess}
+\end{figure}
+
 \hypertarget{argumentos}{%
 \section{Argumentos}\label{argumentos}}
 
@@ -2313,7 +2410,7 @@ realizó la medición, por lo cual se eliminarán esas obsevaciones.
 
 Posterior a esto, unumos la base de datos \emph{TempMedia} con la base
 de datos \emph{EM} y seleccionamos tan solo las columnas que nos
-interesan:
+interesan y finalmente transformamos el mes en una variable numérica:
 
 \begin{verbatim}
 ## Joining, by = "Est_Meteoro"
@@ -2322,7 +2419,7 @@ interesan:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{TempMedia <-}\StringTok{ }\KeywordTok{left_join}\NormalTok{(TempMedia, EM) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(Mes, Year, TempMedia, }
-\NormalTok{    Ciudad_localidad)}
+\NormalTok{    Ciudad_localidad) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Mes =} \KeywordTok{as.numeric}\NormalTok{(Mes))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2333,7 +2430,7 @@ Si hicieramos todo esto en un comando tendriamos el siguiente código
 \NormalTok{TempMedia <-}\StringTok{ }\KeywordTok{read_excel}\NormalTok{(}\StringTok{"test.xlsx"}\NormalTok{, }\DataTypeTok{sheet =} \StringTok{"E10000003"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{    }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{Codigo_variable, }\OperatorTok{-}\NormalTok{Unidad_medida, }\OperatorTok{-}\NormalTok{Día) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{TempMedia =}\NormalTok{ ValorF, }
     \DataTypeTok{Year =}\NormalTok{ Año) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Mes }\OperatorTok{!=}\StringTok{ }\DecValTok{13}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{left_join}\NormalTok{(EM) }\OperatorTok{%>%}\StringTok{ }
-\StringTok{    }\KeywordTok{select}\NormalTok{(Mes, Year, TempMedia, Ciudad_localidad)}
+\StringTok{    }\KeywordTok{select}\NormalTok{(Mes, Year, TempMedia, Ciudad_localidad) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Mes =} \KeywordTok{as.numeric}\NormalTok{(Mes))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2351,7 +2448,7 @@ fecha de 19 de Agosto del 2018:
 \StringTok{    }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{Codigo_variable, }\OperatorTok{-}\NormalTok{Unidad_medida, }\OperatorTok{-}\NormalTok{Dia) }\OperatorTok{%>%}\StringTok{ }
 \StringTok{    }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{HumMedia =}\NormalTok{ ValorF, }\DataTypeTok{Year =}\NormalTok{ Año) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(Mes }\OperatorTok{!=}\StringTok{ }
 \StringTok{    }\DecValTok{13}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{left_join}\NormalTok{(EM) }\OperatorTok{%>%}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(Mes, Year, HumMedia, }
-\NormalTok{    Ciudad_localidad)}
+\NormalTok{    Ciudad_localidad) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{Mes =} \KeywordTok{as.numeric}\NormalTok{(Mes))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2373,33 +2470,33 @@ En el siguiente código unimos las dos bases de datos, vemos las primeras
 
 \caption{\label{tab:TempHum}Las primeras 20 observaciones de temperatura y humedad unidas}
 \centering
-\begin{tabular}[t]{lrrlr}
+\begin{tabular}[t]{rrrlr}
 \toprule
 Mes & Year & TempMedia & Ciudad\_localidad & HumMedia\\
 \midrule
-01 & 1981 & 22.0 & Arica & NA\\
-02 & 1981 & 22.2 & Arica & NA\\
-03 & 1981 & 22.1 & Arica & NA\\
-04 & 1981 & 20.3 & Arica & NA\\
-05 & 1981 & 18.2 & Arica & NA\\
+1 & 1981 & 22.0 & Arica & NA\\
+2 & 1981 & 22.2 & Arica & NA\\
+3 & 1981 & 22.1 & Arica & NA\\
+4 & 1981 & 20.3 & Arica & NA\\
+5 & 1981 & 18.2 & Arica & NA\\
 \addlinespace
-06 & 1981 & 17.0 & Arica & NA\\
-07 & 1981 & 15.0 & Arica & NA\\
-08 & 1981 & 16.0 & Arica & NA\\
-09 & 1981 & 16.6 & Arica & NA\\
+6 & 1981 & 17.0 & Arica & NA\\
+7 & 1981 & 15.0 & Arica & NA\\
+8 & 1981 & 16.0 & Arica & NA\\
+9 & 1981 & 16.6 & Arica & NA\\
 10 & 1981 & 15.9 & Arica & NA\\
 \addlinespace
 11 & 1981 & 19.1 & Arica & NA\\
 12 & 1981 & 21.1 & Arica & NA\\
-01 & 1981 & 19.7 & Iquique & NA\\
-02 & 1981 & 21.1 & Iquique & NA\\
-03 & 1981 & 20.9 & Iquique & NA\\
+1 & 1981 & 19.7 & Iquique & NA\\
+2 & 1981 & 21.1 & Iquique & NA\\
+3 & 1981 & 20.9 & Iquique & NA\\
 \addlinespace
-04 & 1981 & 19.9 & Iquique & NA\\
-05 & 1981 & 17.6 & Iquique & NA\\
-06 & 1981 & 15.9 & Iquique & NA\\
-07 & 1981 & 14.6 & Iquique & NA\\
-08 & 1981 & 15.6 & Iquique & NA\\
+4 & 1981 & 19.9 & Iquique & NA\\
+5 & 1981 & 17.6 & Iquique & NA\\
+6 & 1981 & 15.9 & Iquique & NA\\
+7 & 1981 & 14.6 & Iquique & NA\\
+8 & 1981 & 15.6 & Iquique & NA\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -2428,33 +2525,33 @@ por ciudad y mes, y usar \texttt{summarize\_all} para las funciones
 
 \caption{\label{tab:TempHumMonthly}Las primeras 20 observaciones de temperatura y humedad agrupadas por mes y localidad}
 \centering
-\begin{tabular}[t]{llrrrr}
+\begin{tabular}[t]{rlrrrr}
 \toprule
 Mes & Ciudad\_localidad & TempMedia\_mean & HumMedia\_mean & TempMedia\_sd & HumMedia\_sd\\
 \midrule
-01 & Antártica Chilena & 1.388889 & 87.35000 & 0.6319031 & 3.483772\\
-01 & Antofagasta & 20.125000 & 69.70000 & 0.8378118 & 1.589549\\
-01 & Arica & 22.375000 & 62.72500 & 0.9391105 & 2.394960\\
-01 & Balmaceda & 12.358823 & 56.37500 & 1.2200640 & 2.487804\\
-01 & Calama & 17.000000 & 25.00000 & NA & NA\\
+1 & Antártica Chilena & 1.388889 & 87.35000 & 0.6319031 & 3.483772\\
+1 & Antofagasta & 20.125000 & 69.70000 & 0.8378118 & 1.589549\\
+1 & Arica & 22.375000 & 62.72500 & 0.9391105 & 2.394960\\
+1 & Balmaceda & 12.358823 & 56.37500 & 1.2200640 & 2.487804\\
+1 & Calama & 17.000000 & 25.00000 & NA & NA\\
 \addlinespace
-01 & Cerrillos & 20.996000 & NaN & 0.7855359 & NaN\\
-01 & Chillán & 19.747059 & 63.05000 & 0.7054916 & 3.750111\\
-01 & Concepción & 16.683333 & 73.75000 & 0.6222080 & 6.727308\\
-01 & Copiapó & 19.604348 & NaN & 0.7449700 & NaN\\
-01 & Coyhaique & 13.980556 & 58.27500 & 1.2537531 & 1.543535\\
+1 & Cerrillos & 20.996000 & NaN & 0.7855359 & NaN\\
+1 & Chillán & 19.747059 & 63.05000 & 0.7054916 & 3.750111\\
+1 & Concepción & 16.683333 & 73.75000 & 0.6222080 & 6.727308\\
+1 & Copiapó & 19.604348 & NaN & 0.7449700 & NaN\\
+1 & Coyhaique & 13.980556 & 58.27500 & 1.2537531 & 1.543535\\
 \addlinespace
-01 & Curicó & 20.632353 & 59.65000 & 0.7293503 & 6.310573\\
-01 & Graneros & 21.480000 & NaN & 0.4661330 & NaN\\
-01 & Iquique & 21.791667 & 61.72500 & 1.0332680 & 3.981101\\
-01 & Isla Juan Fernández & 18.513889 & 71.22500 & 0.5111068 & 3.044531\\
-01 & La Serena & 17.311429 & 75.97500 & 0.7275145 & 3.187868\\
+1 & Curicó & 20.632353 & 59.65000 & 0.7293503 & 6.310573\\
+1 & Graneros & 21.480000 & NaN & 0.4661330 & NaN\\
+1 & Iquique & 21.791667 & 61.72500 & 1.0332680 & 3.981101\\
+1 & Isla Juan Fernández & 18.513889 & 71.22500 & 0.5111068 & 3.044531\\
+1 & La Serena & 17.311429 & 75.97500 & 0.7275145 & 3.187868\\
 \addlinespace
-01 & Osorno & 15.807407 & 74.10000 & 0.9388725 & 2.265686\\
-01 & Pudahuel & 20.652778 & 47.53333 & 0.7268272 & 5.852635\\
-01 & Puerto Montt & 14.451429 & 78.00000 & 0.7184016 & 2.499333\\
-01 & Punta Arenas & 10.852778 & 62.55000 & 0.7443064 & 3.349129\\
-01 & Quinta Normal & 21.261111 & 53.35000 & 0.5530579 & 6.507688\\
+1 & Osorno & 15.807407 & 74.10000 & 0.9388725 & 2.265686\\
+1 & Pudahuel & 20.652778 & 47.53333 & 0.7268272 & 5.852635\\
+1 & Puerto Montt & 14.451429 & 78.00000 & 0.7184016 & 2.499333\\
+1 & Punta Arenas & 10.852778 & 62.55000 & 0.7443064 & 3.349129\\
+1 & Quinta Normal & 21.261111 & 53.35000 & 0.5530579 & 6.507688\\
 \bottomrule
 \end{tabular}
 \end{table}

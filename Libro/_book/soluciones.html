@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-19">
+<meta name="date" content="2018-08-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -199,6 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="visualizacion.html"><a href="visualizacion.html#combinando-geoms"><i class="fa fa-check"></i><b>4.5</b> Combinando geoms</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="visualizacion.html"><a href="visualizacion.html#el-orden-importa"><i class="fa fa-check"></i><b>4.5.1</b> El orden importa</a></li>
+<li class="chapter" data-level="4.5.2" data-path="visualizacion.html"><a href="visualizacion.html#una-variable-categorica-una-continua-1"><i class="fa fa-check"></i><b>4.5.2</b> Una variable categórica una continua</a></li>
 </ul></li>
 <li class="chapter" data-level="4.6" data-path="visualizacion.html"><a href="visualizacion.html#argumentos"><i class="fa fa-check"></i><b>4.6</b> Argumentos</a></li>
 </ul></li>
@@ -247,19 +248,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ejercicio-1-3" class="section level3">
 <h3><span class="header-section-number">8.1.1</span> Ejercicio 1</h3>
 <p>Algunas posibles soluciones:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
-<a class="sourceLine" id="cb36-2" data-line-number="2">    hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(hu_diameter)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="st">    </span><span class="kw">select</span>(year, wind, hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
-<a class="sourceLine" id="cb38-2" data-line-number="2">    hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(mean), </a>
-<a class="sourceLine" id="cb38-3" data-line-number="3">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
+<a class="sourceLine" id="cb40-2" data-line-number="2">    hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(hu_diameter)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">    </span><span class="kw">select</span>(year, wind, hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
+<a class="sourceLine" id="cb42-2" data-line-number="2">    hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(mean), </a>
+<a class="sourceLine" id="cb42-3" data-line-number="3">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 <div id="ejercicio-2-2" class="section level3">
 <h3><span class="header-section-number">8.1.2</span> Ejercicio 2</h3>
 <p>Una de las soluciones posibles:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">Solution &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">2004</span> <span class="op">&amp;</span><span class="st"> </span>class <span class="op">==</span><span class="st"> &quot;compact&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">kpl =</span> (cty <span class="op">*</span><span class="st"> </span><span class="fl">1.609</span>)<span class="op">/</span><span class="fl">3.78541</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">Solution &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">2004</span> <span class="op">&amp;</span><span class="st"> </span>class <span class="op">==</span><span class="st"> &quot;compact&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">kpl =</span> (cty <span class="op">*</span><span class="st"> </span><span class="fl">1.609</span>)<span class="op">/</span><span class="fl">3.78541</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="capitulo-2" class="section level2">
@@ -276,8 +277,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">8.3.1</span> Ejercicio 1</h3>
 <div id="a" class="section level4">
 <h4><span class="header-section-number">8.3.1.1</span> a</h4>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">Sola &lt;-<span class="st"> </span>Huemul <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(lon, lat, basisOfRecord) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(lat) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(lon))</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">Sola &lt;-<span class="st"> </span>Huemul <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(lon, lat, basisOfRecord) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(lat) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(lon))</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -417,7 +418,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="b" class="section level4">
 <h4><span class="header-section-number">8.3.1.2</span> b</h4>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">Solb &lt;-<span class="st"> </span>Huemul <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(basisOfRecord) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">N =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">Solb &lt;-<span class="st"> </span>Huemul <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(basisOfRecord) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">N =</span> <span class="kw">n</span>())</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -443,49 +444,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="a-1" class="section level4">
 <h4><span class="header-section-number">8.3.2.1</span> a</h4>
 <p>Primero bajamos la base de datos, lo cual se puede hacer de forma manual o como en el código siguiente utilizando la función <code>download.file</code></p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">download.file</span>(<span class="st">&quot;http://www.ine.cl/docs/default-source/medioambiente-(micrositio)/variables-b%C3%A1sicas-ambientales-(vba)/aire/dimensi%C3%B3n-aire-factor-estado.xlsx?sfvrsn=4&quot;</span>, </a>
-<a class="sourceLine" id="cb42-2" data-line-number="2">    <span class="dt">destfile =</span> <span class="st">&quot;test.xlsx&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">download.file</span>(<span class="st">&quot;http://www.ine.cl/docs/default-source/medioambiente-(micrositio)/variables-b%C3%A1sicas-ambientales-(vba)/aire/dimensi%C3%B3n-aire-factor-estado.xlsx?sfvrsn=4&quot;</span>, </a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">    <span class="dt">destfile =</span> <span class="st">&quot;test.xlsx&quot;</span>)</a></code></pre></div>
 <p>Una vez bajada esta base de datos utilizaremos los paquetes <em>readxl</em> para leer los archivos excel, <em>tidyverse</em> para manipular los datos y <em>stringr</em> para trabajar con texto.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">library</span>(readxl)</a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="kw">library</span>(stringr)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">library</span>(readxl)</a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="kw">library</span>(stringr)</a></code></pre></div>
 <p>Partimos leyendo la pestaña que contiene las estaciones meteorológicas con su código:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">EM &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;T001&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">EM &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;T001&quot;</span>)</a></code></pre></div>
 <p>Luego para poder más adelante unir esta base de datos con otras, cambiamos el nombre de la columna <em>Codigo_Est_Meteoro</em> a <em>Est_Meteoro</em> como aparece en las otras bases de datos.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">EM &lt;-<span class="st"> </span>EM <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">Est_Meteoro =</span> Codigo_Est_Meteoro)</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">EM &lt;-<span class="st"> </span>EM <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">Est_Meteoro =</span> Codigo_Est_Meteoro)</a></code></pre></div>
 <p>Luego empezamos a trabajar con la base de datos de temperatura media, para esto leemos la pestaña <em>E10000003</em></p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;E10000003&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;E10000003&quot;</span>)</a></code></pre></div>
 <p>Existen varias variables que no utilizaremos, por ejemplo el código de la variable, y la unidad de medida. Además vemos que la variable día, siempre tiene valor 0, por lo cuál podemos eliminarla también.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span>TempMedia <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Codigo_variable, <span class="op">-</span>Unidad_medida, </a>
-<a class="sourceLine" id="cb47-2" data-line-number="2">    <span class="op">-</span>Día)</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span>TempMedia <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Codigo_variable, <span class="op">-</span>Unidad_medida, </a>
+<a class="sourceLine" id="cb51-2" data-line-number="2">    <span class="op">-</span>Día)</a></code></pre></div>
 <p>Además podemos cambiar los nombres de la columna <em>ValorF</em> que no tiene ningún significado a <em>TempMedia</em> y <em>Año</em> a <em>Year</em>, esta última variable es cambiada solo por que la letra Ñ puede no ser leída por todos los computadores.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span>TempMedia <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">TempMedia =</span> ValorF, <span class="dt">Year =</span> Año)</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span>TempMedia <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">TempMedia =</span> ValorF, <span class="dt">Year =</span> Año)</a></code></pre></div>
 <p>Si nos fijamos, hay algunos años, en los cuales todos los meses aparecen como 13, esto nos indica que en estos años no se registró en que mes se realizó la medición, por lo cual se eliminarán esas obsevaciones.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span>TempMedia <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Mes <span class="op">!=</span><span class="st"> </span><span class="dv">13</span>)</a></code></pre></div>
-<p>Posterior a esto, unumos la base de datos <em>TempMedia</em> con la base de datos <em>EM</em> y seleccionamos tan solo las columnas que nos interesan:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span>TempMedia <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Mes <span class="op">!=</span><span class="st"> </span><span class="dv">13</span>)</a></code></pre></div>
+<p>Posterior a esto, unumos la base de datos <em>TempMedia</em> con la base de datos <em>EM</em> y seleccionamos tan solo las columnas que nos interesan y finalmente transformamos el mes en una variable numérica:</p>
 <pre><code>## Joining, by = &quot;Est_Meteoro&quot;</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span><span class="kw">left_join</span>(TempMedia, EM) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Mes, Year, TempMedia, </a>
-<a class="sourceLine" id="cb51-2" data-line-number="2">    Ciudad_localidad)</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span><span class="kw">left_join</span>(TempMedia, EM) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Mes, Year, TempMedia, </a>
+<a class="sourceLine" id="cb55-2" data-line-number="2">    Ciudad_localidad) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Mes =</span> <span class="kw">as.numeric</span>(Mes))</a></code></pre></div>
 <p>Si hicieramos todo esto en un comando tendriamos el siguiente código</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;E10000003&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>Codigo_variable, <span class="op">-</span>Unidad_medida, <span class="op">-</span>Día) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">TempMedia =</span> ValorF, </a>
-<a class="sourceLine" id="cb52-3" data-line-number="3">    <span class="dt">Year =</span> Año) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Mes <span class="op">!=</span><span class="st"> </span><span class="dv">13</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(EM) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb52-4" data-line-number="4"><span class="st">    </span><span class="kw">select</span>(Mes, Year, TempMedia, Ciudad_localidad)</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;E10000003&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>Codigo_variable, <span class="op">-</span>Unidad_medida, <span class="op">-</span>Día) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">TempMedia =</span> ValorF, </a>
+<a class="sourceLine" id="cb56-3" data-line-number="3">    <span class="dt">Year =</span> Año) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Mes <span class="op">!=</span><span class="st"> </span><span class="dv">13</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(EM) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-4" data-line-number="4"><span class="st">    </span><span class="kw">select</span>(Mes, Year, TempMedia, Ciudad_localidad) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Mes =</span> <span class="kw">as.numeric</span>(Mes))</a></code></pre></div>
 <p>De la misma manera modificamos el código de arriba para la humedad con la salvedad que la columna de día no tiene tilde en esta pestaña a la fecha de 19 de Agosto del 2018:</p>
 <pre><code>## Joining, by = &quot;Est_Meteoro&quot;</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">HumMedia &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;E10000006&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>Codigo_variable, <span class="op">-</span>Unidad_medida, <span class="op">-</span>Dia) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb54-3" data-line-number="3"><span class="st">    </span><span class="kw">rename</span>(<span class="dt">HumMedia =</span> ValorF, <span class="dt">Year =</span> Año) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Mes <span class="op">!=</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb54-4" data-line-number="4"><span class="st">    </span><span class="dv">13</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(EM) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(Mes, Year, HumMedia, </a>
-<a class="sourceLine" id="cb54-5" data-line-number="5">    Ciudad_localidad)</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1">HumMedia &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;E10000006&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>Codigo_variable, <span class="op">-</span>Unidad_medida, <span class="op">-</span>Dia) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">    </span><span class="kw">rename</span>(<span class="dt">HumMedia =</span> ValorF, <span class="dt">Year =</span> Año) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Mes <span class="op">!=</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb58-4" data-line-number="4"><span class="st">    </span><span class="dv">13</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(EM) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(Mes, Year, HumMedia, </a>
+<a class="sourceLine" id="cb58-5" data-line-number="5">    Ciudad_localidad) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Mes =</span> <span class="kw">as.numeric</span>(Mes))</a></code></pre></div>
 <p>En el siguiente código unimos las dos bases de datos, vemos las primeras 20 observaciones de la base de datos resultante en la tabla <a href="soluciones.html#tab:TempHum">8.1</a></p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">TempHum &lt;-<span class="st"> </span><span class="kw">full_join</span>(TempMedia, HumMedia)</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">TempHum &lt;-<span class="st"> </span><span class="kw">full_join</span>(TempMedia, HumMedia)</a></code></pre></div>
 <pre><code>## Joining, by = c(&quot;Mes&quot;, &quot;Year&quot;, &quot;Ciudad_localidad&quot;)</code></pre>
 <table>
 <caption><span id="tab:TempHum">Tabla 8.1: </span>Las primeras 20 observaciones de temperatura y humedad unidas</caption>
 <thead>
 <tr class="header">
-<th align="left">Mes</th>
+<th align="right">Mes</th>
 <th align="right">Year</th>
 <th align="right">TempMedia</th>
 <th align="left">Ciudad_localidad</th>
@@ -494,140 +495,140 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="right">1981</td>
 <td align="right">22.0</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">02</td>
+<td align="right">2</td>
 <td align="right">1981</td>
 <td align="right">22.2</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">03</td>
+<td align="right">3</td>
 <td align="right">1981</td>
 <td align="right">22.1</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">04</td>
+<td align="right">4</td>
 <td align="right">1981</td>
 <td align="right">20.3</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">05</td>
+<td align="right">5</td>
 <td align="right">1981</td>
 <td align="right">18.2</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">06</td>
+<td align="right">6</td>
 <td align="right">1981</td>
 <td align="right">17.0</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">07</td>
+<td align="right">7</td>
 <td align="right">1981</td>
 <td align="right">15.0</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">08</td>
+<td align="right">8</td>
 <td align="right">1981</td>
 <td align="right">16.0</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">09</td>
+<td align="right">9</td>
 <td align="right">1981</td>
 <td align="right">16.6</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">10</td>
+<td align="right">10</td>
 <td align="right">1981</td>
 <td align="right">15.9</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">11</td>
+<td align="right">11</td>
 <td align="right">1981</td>
 <td align="right">19.1</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">12</td>
+<td align="right">12</td>
 <td align="right">1981</td>
 <td align="right">21.1</td>
 <td align="left">Arica</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="right">1981</td>
 <td align="right">19.7</td>
 <td align="left">Iquique</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">02</td>
+<td align="right">2</td>
 <td align="right">1981</td>
 <td align="right">21.1</td>
 <td align="left">Iquique</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">03</td>
+<td align="right">3</td>
 <td align="right">1981</td>
 <td align="right">20.9</td>
 <td align="left">Iquique</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">04</td>
+<td align="right">4</td>
 <td align="right">1981</td>
 <td align="right">19.9</td>
 <td align="left">Iquique</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">05</td>
+<td align="right">5</td>
 <td align="right">1981</td>
 <td align="right">17.6</td>
 <td align="left">Iquique</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">06</td>
+<td align="right">6</td>
 <td align="right">1981</td>
 <td align="right">15.9</td>
 <td align="left">Iquique</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">07</td>
+<td align="right">7</td>
 <td align="right">1981</td>
 <td align="right">14.6</td>
 <td align="left">Iquique</td>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">08</td>
+<td align="right">8</td>
 <td align="right">1981</td>
 <td align="right">15.6</td>
 <td align="left">Iquique</td>
@@ -640,13 +641,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="b-1" class="section level4">
 <h4><span class="header-section-number">8.3.2.2</span> b</h4>
 <p>El segundo ejercicio es mucho mas simple, donde solo tenemos que agrupar por ciudad y mes, y usar <code>summarize_all</code> para las funciones <code>mean</code> y <code>sd</code> como vemos en la tabla <a href="soluciones.html#tab:TempHumMonthly">8.2</a></p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">TempHumMonthly &lt;-<span class="st"> </span>TempHum <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Mes, </a>
-<a class="sourceLine" id="cb57-2" data-line-number="2">    Ciudad_localidad) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(mean, sd), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">TempHumMonthly &lt;-<span class="st"> </span>TempHum <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Mes, </a>
+<a class="sourceLine" id="cb61-2" data-line-number="2">    Ciudad_localidad) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(mean, sd), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <table>
 <caption><span id="tab:TempHumMonthly">Tabla 8.2: </span>Las primeras 20 observaciones de temperatura y humedad agrupadas por mes y localidad</caption>
 <thead>
 <tr class="header">
-<th align="left">Mes</th>
+<th align="right">Mes</th>
 <th align="left">Ciudad_localidad</th>
 <th align="right">TempMedia_mean</th>
 <th align="right">HumMedia_mean</th>
@@ -656,7 +657,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Antártica Chilena</td>
 <td align="right">1.388889</td>
 <td align="right">87.35000</td>
@@ -664,7 +665,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">3.483772</td>
 </tr>
 <tr class="even">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Antofagasta</td>
 <td align="right">20.125000</td>
 <td align="right">69.70000</td>
@@ -672,7 +673,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">1.589549</td>
 </tr>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Arica</td>
 <td align="right">22.375000</td>
 <td align="right">62.72500</td>
@@ -680,7 +681,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">2.394960</td>
 </tr>
 <tr class="even">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Balmaceda</td>
 <td align="right">12.358823</td>
 <td align="right">56.37500</td>
@@ -688,7 +689,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">2.487804</td>
 </tr>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Calama</td>
 <td align="right">17.000000</td>
 <td align="right">25.00000</td>
@@ -696,7 +697,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Cerrillos</td>
 <td align="right">20.996000</td>
 <td align="right">NaN</td>
@@ -704,7 +705,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">NaN</td>
 </tr>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Chillán</td>
 <td align="right">19.747059</td>
 <td align="right">63.05000</td>
@@ -712,7 +713,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">3.750111</td>
 </tr>
 <tr class="even">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Concepción</td>
 <td align="right">16.683333</td>
 <td align="right">73.75000</td>
@@ -720,7 +721,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">6.727308</td>
 </tr>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Copiapó</td>
 <td align="right">19.604348</td>
 <td align="right">NaN</td>
@@ -728,7 +729,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">NaN</td>
 </tr>
 <tr class="even">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Coyhaique</td>
 <td align="right">13.980556</td>
 <td align="right">58.27500</td>
@@ -736,7 +737,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">1.543535</td>
 </tr>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Curicó</td>
 <td align="right">20.632353</td>
 <td align="right">59.65000</td>
@@ -744,7 +745,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">6.310573</td>
 </tr>
 <tr class="even">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Graneros</td>
 <td align="right">21.480000</td>
 <td align="right">NaN</td>
@@ -752,7 +753,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">NaN</td>
 </tr>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Iquique</td>
 <td align="right">21.791667</td>
 <td align="right">61.72500</td>
@@ -760,7 +761,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">3.981101</td>
 </tr>
 <tr class="even">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Isla Juan Fernández</td>
 <td align="right">18.513889</td>
 <td align="right">71.22500</td>
@@ -768,7 +769,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">3.044531</td>
 </tr>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">La Serena</td>
 <td align="right">17.311429</td>
 <td align="right">75.97500</td>
@@ -776,7 +777,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">3.187868</td>
 </tr>
 <tr class="even">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Osorno</td>
 <td align="right">15.807407</td>
 <td align="right">74.10000</td>
@@ -784,7 +785,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">2.265686</td>
 </tr>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Pudahuel</td>
 <td align="right">20.652778</td>
 <td align="right">47.53333</td>
@@ -792,7 +793,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">5.852635</td>
 </tr>
 <tr class="even">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Puerto Montt</td>
 <td align="right">14.451429</td>
 <td align="right">78.00000</td>
@@ -800,7 +801,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">2.499333</td>
 </tr>
 <tr class="odd">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Punta Arenas</td>
 <td align="right">10.852778</td>
 <td align="right">62.55000</td>
@@ -808,7 +809,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="right">3.349129</td>
 </tr>
 <tr class="even">
-<td align="left">01</td>
+<td align="right">1</td>
 <td align="left">Quinta Normal</td>
 <td align="right">21.261111</td>
 <td align="right">53.35000</td>

@@ -206,7 +206,7 @@ class: small-code
 
 ```{r}
 library(ggplot2)
-ggplot(PA, aes(x = mes, y = TempMedia)) + geom_point()
+ggplot(PA, aes(x = Mes, y = TempMedia)) + geom_point()
 ```
 
 stat_smooth más control que geom_smooth
@@ -214,7 +214,7 @@ stat_smooth más control que geom_smooth
 class: small-code
 
 ```{r}
-ggplot(PA, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm") 
+ggplot(PA, aes(x = Mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm") 
 ```
 
 Ecuación cuadrática
@@ -237,7 +237,7 @@ stat_smooth más control que geom_smooth
 class: small-code
 
 ```{r}
-ggplot(PA, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) 
+ggplot(PA, aes(x = Mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) 
 ```
 
 Que podemos hacer con tidyr??
@@ -246,9 +246,8 @@ class: small-code
 
 ```{r}
 library(tidyr)
-San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal")
-SATH <- gather(San, key = Unidad, value = medida, TempMedia, HumMedia)
-ggplot(SATH, aes(x = mes, y = medida)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad)) 
+San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal") %>%  gather(key = Unidad, value = medida, TempMedia, HumMedia)
+ggplot(San, aes(x = Mes, y = medida)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad)) 
 ```
 
 incluirlo en rmd con leyenda abajo
@@ -264,41 +263,32 @@ include_graphics("YAML.png")
 include_graphics("Chunk.png")
 ```
 
-Primera evaluación
+Primera evaluación exploración de datos
 ========================================
 incremental:true
 
-* Generar un rmd
+* Generar un informe rmd
 * Debe tener
-    + Al menos un chunk
-    + Al menos un inline code
-    + Al menos una tabla con leyenda (kable, stargazer)
-    + Al menos una figura (con leyenda)
+    + chunks
+    + inline code
+    + tabla con leyenda (kable, stargazer)
+    + figura con leyenda
 
 ***
 
 * Enviar por correo con subject evaluación 1 R
     + El link de rpubs con el documento publicado
     + El archivo rmd con el que generaron el documento
-    + Para el martes 24 de Octubre
+    + El repositorio de github donde tienen ambas cosas
+    + Para el martes 28 de Agosto
 
-Como combinar gráficos
+Como combinar gráficos con facet_wrap
 ======================================
 class: small-code
 
 ```{r}
-Ari <- TempHum %>% filter(Ciudad_localidad == "Arica")
-Ari  <- ggplot(Ari , aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Arica")
-Jua <- TempHum %>% filter(Ciudad_localidad == "Isla Juan Fernández")
-Jua  <- ggplot(Jua , aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Juan Fernandez")
-San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal")
-San <- ggplot(San, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Santiago")
-Con <- TempHum %>% filter(Ciudad_localidad == "Concepción")
-Con <- ggplot(Con, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Concepcion")
-Pun <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas")
-Pun <- ggplot(Pun, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Punta Arenas")
-Ant <- TempHum %>% filter(Ciudad_localidad == "Antártica Chilena")
-Ant <- ggplot(Ant, aes(x = mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) + ggtitle("Antartica")
+Algunos <- TempHum %>% filter(Ciudad_localidad %in% c("Arica", "Rapa Nui", "La Serena", "Valparaíso", "Quinta Normal", "Concepción", "Valdivia", "Punta Arenas")) %>% gather(key = Unidad, value = medida, TempMedia, HumMedia)
+
 ```
 
 Como combinar gráficos
@@ -306,8 +296,7 @@ Como combinar gráficos
 class: small-code
 
 ```{r}
-library(gridExtra)
-grid.arrange(Ari, Jua, San, Con, Pun, Ant, nrow = 3, ncol = 2)
+ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad), alpha = 0.5) + facet_wrap(~Ciudad_localidad, ncol = 2)
 ```
     
 Algunos gráficos interesantes hechos con ggplot
@@ -326,6 +315,7 @@ Algunos gráficos interesantes
 class: small-code
 
 ```{r, eval=FALSE}
+Weekly <- readRDS("Alergia.rds") %>% group_by(Semana) %>% summarize(mean = mean(platano_oriental, na.rm = TRUE), max = max(platano_oriental, na.rm = TRUEl), min = min(platano_oriental, na.rm = TRUE), sd = sd(platano_oriental, na.rm = TRUE))
 ggplot(Weekly, aes(x = Semana, y = mean)) + 
 geom_ribbon(aes(ymax = max, ymin = min, fill = "red")) + 
 geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = "blue"), alpha = 1) + 
@@ -340,7 +330,7 @@ Algunos gráficos interesantes
 class: small-code
 
 ```{r, echo=FALSE}
-Weekly <- readRDS("Alergia.rds") %>% group_by(Semana) %>% summarize()
+Weekly <- readRDS("Alergia.rds") %>% group_by(Semana) %>% summarize(mean = mean(platano_oriental, na.rm = TRUE), max = max(platano_oriental, na.rm = TRUE), min = min(platano_oriental, na.rm = TRUE), sd = sd(platano_oriental, na.rm = TRUE))
 ggplot(Weekly, aes(x = Semana, y = mean)) + 
 geom_ribbon(aes(ymax = max, ymin = min, fill = "red")) + 
 geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = "blue"), alpha = 1) + 

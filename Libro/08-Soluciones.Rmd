@@ -126,32 +126,32 @@ Si nos fijamos, hay algunos años, en los cuales todos los meses aparecen como 1
 TempMedia <- TempMedia %>% filter(Mes != 13)
 ```
 
-Posterior a esto, unumos la base de datos *TempMedia* con la base de datos *EM* y seleccionamos tan solo las columnas que nos interesan:
+Posterior a esto, unumos la base de datos *TempMedia* con la base de datos *EM* y seleccionamos tan solo las columnas que nos interesan y finalmente transformamos el mes en una variable numérica:
 
 ```{r, echo = FALSE}
-TempMedia <- left_join(TempMedia, EM) %>% dplyr::select(Mes, Year, TempMedia, Ciudad_localidad)
+TempMedia <- left_join(TempMedia, EM) %>% dplyr::select(Mes, Year, TempMedia, Ciudad_localidad) %>% mutate(Mes = as.numeric(Mes))
 
 ```
 
 
 ```{r, eval = FALSE}
-TempMedia <- left_join(TempMedia, EM) %>% select(Mes, Year, TempMedia, Ciudad_localidad)
+TempMedia <- left_join(TempMedia, EM) %>% select(Mes, Year, TempMedia, Ciudad_localidad)  %>% mutate(Mes = as.numeric(Mes))
 ```
 
 Si hicieramos todo esto en un comando tendriamos el siguiente código
 
 ```{r, eval = FALSE}
-TempMedia <- read_excel("test.xlsx", sheet = "E10000003") %>% select(-Codigo_variable, -Unidad_medida, -Día) %>% rename(TempMedia = ValorF, Year = Año) %>% filter(Mes != 13) %>% left_join(EM) %>% select(Mes, Year, TempMedia, Ciudad_localidad)
+TempMedia <- read_excel("test.xlsx", sheet = "E10000003") %>% select(-Codigo_variable, -Unidad_medida, -Día) %>% rename(TempMedia = ValorF, Year = Año) %>% filter(Mes != 13) %>% left_join(EM) %>% select(Mes, Year, TempMedia, Ciudad_localidad) %>% mutate(Mes = as.numeric(Mes))
 ```
 
 De la misma manera modificamos el código de arriba para la humedad con la salvedad que la columna de día no tiene tilde en esta pestaña a la fecha de 19 de Agosto del 2018:
 
 ```{r, echo = FALSE}
-HumMedia <- read_excel("test.xlsx", sheet = "E10000006") %>% dplyr::select(-Codigo_variable, -Unidad_medida, -Dia) %>% rename(HumMedia = ValorF, Year = Año) %>% filter(Mes != 13) %>% left_join(EM) %>% dplyr::select(Mes, Year, HumMedia, Ciudad_localidad)
+HumMedia <- read_excel("test.xlsx", sheet = "E10000006") %>% dplyr::select(-Codigo_variable, -Unidad_medida, -Dia) %>% rename(HumMedia = ValorF, Year = Año) %>% filter(Mes != 13) %>% left_join(EM) %>% dplyr::select(Mes, Year, HumMedia, Ciudad_localidad) %>% mutate(Mes = as.numeric(Mes))
 ```
 
 ```{r, eval=FALSE}
-HumMedia <- read_excel("test.xlsx", sheet = "E10000006") %>% dplyr::select(-Codigo_variable, -Unidad_medida, -Dia) %>% rename(HumMedia = ValorF, Year = Año) %>% filter(Mes != 13) %>% left_join(EM) %>% dplyr::select(Mes, Year, HumMedia, Ciudad_localidad)
+HumMedia <- read_excel("test.xlsx", sheet = "E10000006") %>% dplyr::select(-Codigo_variable, -Unidad_medida, -Dia) %>% rename(HumMedia = ValorF, Year = Año) %>% filter(Mes != 13) %>% left_join(EM) %>% dplyr::select(Mes, Year, HumMedia, Ciudad_localidad) %>% mutate(Mes = as.numeric(Mes))
 ```
 
 En el siguiente código unimos las dos bases de datos, vemos las primeras 20 observaciones de la base de datos resultante en la tabla \@ref(tab:TempHum)
@@ -172,6 +172,7 @@ Con esto vemos que la humedad media no es medida en los mismos años ni en todos
 El segundo ejercicio es mucho mas simple, donde solo tenemos que agrupar por ciudad y mes, y usar `summarize_all` para las funciones `mean` y `sd` como vemos en la tabla \@ref(tab:TempHumMonthly)
 
 ```{r, echo = FALSE}
+saveRDS(TempHum,"TempHum.rds")
 TempHumMonthly <- TempHum %>% dplyr::select(-Year) %>% group_by(Mes, Ciudad_localidad) %>% summarize_all(funs(mean, sd), na.rm = TRUE)
 ```
 
