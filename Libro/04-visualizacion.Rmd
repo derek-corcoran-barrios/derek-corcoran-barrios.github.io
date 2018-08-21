@@ -4,7 +4,7 @@
 
 Para este capítulo necesitas tener instalado el paquete *tidyverse*.
 
-En este capítulo se explicará qué es el paquete *ggplot2* [@Wickhamggplot] y como podemos utilizarlo para visualizar datos.
+En este capítulo se explicará qué es el paquete *ggplot2* [@Wickhamggplot] y cómo utilizarlo para visualizar datos.
 
 Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase4/Clase4Visualizacion). El video de la clase se encontrará disponible en este [link]
 
@@ -25,17 +25,15 @@ ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme
 ```
 
 
-En este caso general, lo primero que ponemos después de ggplot es el data.frame desde el cuál graficaremos algo, en el ejemplo de la figura \@ref(fig:ejemplo1-ggplot) usamos la base de datos *diamonds* del paquete *ggplot2* [@Wickhamggplot]. Luego dentro de `aes` ponemos las columnas que graficaremos como *x* y/o *y*, en nuestro ejemplo dentro de aes ponemos como eje *x* los kilates de los diamantes (caret) y como *y* el precio de los mismos (price). La necesidad de poner `aes` en ggplot2 (algo que no había sido necesario cuando usamos *dplyr* o *tidyr*).
+En este caso general, lo primero que ponemos después de ggplot es el data.frame desde el cual graficaremos algo. En el ejemplo de la figura \@ref(fig:ejemplo1-ggplot) usamos la base de datos *diamonds* del paquete *ggplot2* [@Wickhamggplot], luego dentro de `aes` ponemos las columnas que graficaremos como *x* y/o *y*. En nuestro ejemplo dentro de aes ponemos como eje *x* los quilates de los diamantes (caret) y como *y* el precio de los mismos (price). Ojo que existe la necesidad de poner `aes` en ggplot2 (algo que no había sido necesario cuando usamos *dplyr* o *tidyr*).
 
 ## Por que usamos aes() y +
 
-Al ser el primer paquete creado en el tidyverse, *ggplot2* tiene un par de convenciones distintas, por un lado cada vez que usamos el nombre de una columna que esta en un data frame usamos debemos usarlo dentro de la función `aes`
-
-Además, cuando se creo el paquete *ggplot2* no existia el pipeline (`%>%`), por lo que se utilizaba el signo `+` con la misma función
+Al ser el primer paquete creado en el tidyverse, *ggplot2* tiene un par de convenciones distintas. Por un lado, cada vez que usamos el nombre de una columna que está en un data frame debemos usarlo dentro de la función `aes`. Además, cuando se creó el paquete *ggplot2* no existia el pipeline (`%>%`), por lo que se utilizaba el signo `+` con la misma función.
 
 ## geom_algo
 
-Luego de especificar una base de datos, esto viene seguido de un `geom_algo`, esto nos indicará que tipo de gráfico usaremos, estos pueden ser combinados como veremos en ejemplos futuros
+Luego de especificar una base de datos, se debe continuar con un `geom_algo`, esto nos indicará que tipo de gráfico usaremos. Los gráficos pueden ser combinados como veremos en ejemplos futuros.
 
 ### Una variable categórica una continua
 
@@ -43,16 +41,16 @@ Primero veremos algunos de los *geom* que podemos utilizar con una variable cate
 
 #### geom_boxplot
 
-En la figura \@ref(fig:boxplot), generado a partir del código a continuacón con la base de datos iris presente en `R` [@anderson1935irises].  
+En la figura \@ref(fig:boxplot), generado a partir del código a continuación con la base de datos iris presente en `R` [@anderson1935irises].  
 
 ```{r boxplot, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 data("iris")
 ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_boxplot()
 ```
 
-Los boxplots muestran una linea gruesa central (la mediana), una caja, que delimita el primer y tercer cuartil, y los bigotes, los cuales se extienden hasta los valores extremos. A menos que estos esten por sobre 1.5 veces la distance entre el primer y tercer cuartil, en cuyo caso se consideran outlyers, y estos son representados por puntos. En la figura \@ref(fig:boxplot), solo *Iris virginica* presenta un outlayer en cuanto a las medidas del largo del sepalo.
+Los boxplots muestran una línea gruesa central (la mediana), una caja, que delimita el primer y tercer cuartil y los bigotes, los cuales se extienden hasta los valores extremos. En el caso que estos valores estén por sobre 1.5 veces la distancia entre el primer y tercer cuartil, estos serán representados por puntos (siendo considerados outlyers). En la figura \@ref(fig:boxplot), sólo *Iris virginica* presenta un outlayer en cuanto a las medidas del largo del sépalo.
 
-Los boxplots, como todos los gráficos pueden ser personalizados usando otros argumentos, los cuales son detallados en la sección \@ref(argumentos), pero en los ejemplos que mostraremos en esta sección los iremos introduciendo de a poco. Si quisieramos por ejemplo que el color de las cajas del *boxplot* fuera deacuerdo a la especie, cambiamos el llenado (**fill**) de la caja, como vemos en el siguiente ejemplo y figura \@ref(fig:boxplot2)
+Los boxplots, como todos los gráficos pueden ser personalizados usando otros argumentos, los que mostraremos en esta sección los iremos introduciendo de a poco. Si quisieramos por ejemplo que el color de las cajas del *boxplot* fueran dea cuerdo a la especie, cambiamos el llenado (**fill**) de la caja, como vemos en el siguiente ejemplo y figura \@ref(fig:boxplot2)
 
 ```{r boxplot2, fig.cap='Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_boxplot(aes(fill = Species))
@@ -62,15 +60,15 @@ Dos cosas a notar en este ejemplo, por un lado la leyenda se genera de forma aut
 
 #### geom_jitter
 
-Utilizando la misma base de datos, podemos crear un gráfico del tipo *jitter*, en este caso hay un punto por cada observación, lo cual puede ayudar a entender mejor los datos que tenemos.
+Utilizando la misma base de datos, podemos crear un gráfico del tipo *jitter*. En este caso hay un punto por cada observación, lo cual puede ayudar a entender mejor los datos que tenemos.
 
 ```{r jitter, fig.cap='jitter plot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de los puntos representan la especie', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_jitter(aes(color = Species))
 ```
 
-En la figura \@ref(fig:jitter) vemos los mismos datos, que en la figura \@ref(fig:boxplot), el agregar el `color = Species` dentro del `aes` nos permite que el color de cada punto este determinado por la especie a la que pertenece.
+En la figura \@ref(fig:jitter) vemos los mismos datos que en la figura \@ref(fig:boxplot), el agregar el `color = Species` dentro del `aes` nos permite que el color de cada punto este determinado por la especie a la que pertenece.
 
-#### Otros geom categoricos
+#### Otros geom categóricos
 
 Otros geom categóricos que podemos explorar con esta base de datos son:
 
@@ -80,7 +78,7 @@ Otros geom categóricos que podemos explorar con esta base de datos son:
 
 ## Combinando geoms
 
-Uno puede combinar geoms para formar un grafico combinado, por ejemplo podriamos generar un grafico con un boxplot y un jitter plot como vemos en la figura \@ref(fig:boxjitter)
+Uno puede escribir varios geoms para formar un gráfico combinado. Por ejemplo, podríamos generar un gráfico con un boxplot y un jitter plot, como vemos en la figura \@ref(fig:boxjitter)
 
 ```{r boxjitter, fig.cap='Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris.', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_boxplot() + geom_jitter(aes(color = Species))
@@ -88,13 +86,13 @@ ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_boxplot() + geom_jitter(
 
 ### El orden importa
 
-Si bien se pueden combinar los geom, el orden de estos importa, ya que *ggplot2* genera las figuras por capas, esto es ilustrado en la figura  \@ref(fig:jitterbox), en la cual al crear primero el jitter y luego el boxplot, las cajas del boxplot tapan los puntos, a diferencia de la figura \@ref(fig:boxjitter)
+Si bien se pueden combinar los geom, el orden de estos importa, ya que *ggplot2* genera las figuras por capas. Esto es ilustrado en la figura  \@ref(fig:jitterbox), en la cual al crear primero el jitter y luego el boxplot, las cajas del boxplot tapan los puntos, a diferencia de la figura \@ref(fig:boxjitter)
 
 ```{r jitterbox, fig.cap='Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris, en este caso al llamar al jitter antes del boxplot, las cajas tapan los puntos.', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_jitter(aes(color = Species)) + geom_boxplot()
 ```
 
-### Una variable categórica una continua
+### Dos variables continuas
 
 Algunos de los geoms que podemos usar para dos variables continuas son:
 
@@ -104,11 +102,11 @@ Algunos de los geoms que podemos usar para dos variables continuas son:
 * geom_hex
 * geom_rug
 
-Ahora veremos algunas de ellas:
+Ahora veremos algunos de ellos:
 
 #### geom_point
 
-Este geom es el que nos permite hacer un gráfico de dispersión en R. Para esto tenemos que poner como x e y en ggplot variables continuas y agragar la función `geom_point` como vemos en el siguiente código y en la figura \@ref(fig:scatter).
+Este geom es el que nos permite hacer un gráfico de dispersión en R. Para esto tenemos que poner variables continuas en x e y en ggplot y agregar la función `geom_point`, como vemos en el siguiente código y en la figura \@ref(fig:scatter).
 
 
 ```{r scatter, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
@@ -116,7 +114,7 @@ data("ChickWeight")
 ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point()
 ```
 
-Si quisieramos que el color de cada punto estuviera separado por peso, podríamos agregarle `aes(color = Diet)` a geom_point, pero deberíamos transformar Diet en factor, ya sea antes de usar ggplot o dentro de ggplot tal como vemos en el siguiente código y en la figura \@ref(fig:scatterColor).
+Si quisieramos que el color de cada punto estuviera separado por dieta, podríamos agregarle `aes(color = Diet)` a geom_point. Sin embargo, deberíamos transformar Diet en factor, ya sea antes de usar ggplot o dentro de ggplot tal como vemos en el siguiente código y en la figura \@ref(fig:scatterColor).
 
 ```{r scatterColor, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 data("ChickWeight")
@@ -126,23 +124,23 @@ ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Di
 #### geom_smooth y stat_smooth
 
 ##### geom_smooth
-Estas funciones nos permiten generar lineas de tendencias con intervalos de confianza para estas lineas, así si quisieramos ver lineas de tendencias para nuestro scatterplot, dependiendo de la dieta, usaríamos el siguiente código el cual nos da la figura \@ref(fig:scatterLoess).
+Estas funciones nos permiten generar líneas de tendencias con intervalos de confianza. Así si quisieramos ver líneas de tendencias para nuestro scatterplot, dependiendo de la dieta, usaríamos el siguiente código, el cual nos da la figura \@ref(fig:scatterLoess).
 
-```{r scatterLoess, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en el método loess', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+```{r scatterLoess, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en el método loess', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Diet))) + geom_smooth(aes(fill = factor(Diet)))
 ```
 
-Por defeccto, la función `geom_smooth` generará una tendencia basada en *loess*, lo cual es una correlación local. En general, es mejor hacer una linea de tendencia basado en modelos que uno puede explicar mejor como un modelo lineal. Para esto, cambiamos el argumento method a lm como en el siguiente código y la figura \@ref(fig:scatterLM).
+Por defecto, la función `geom_smooth` generará una tendencia basada en *loess*, lo cual es una correlación local. En general, es mejor hacer una línea de tendencia basado en modelos que uno puede explicar mejor como un modelo lineal. Para esto, cambiamos el argumento method a lm como en el siguiente código y la figura \@ref(fig:scatterLM).
 
-```{r scatterLM, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+```{r scatterLM, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en modelos lineales', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Diet))) + geom_smooth(aes(fill = factor(Diet)), method = "lm")
 ```
 
 ##### stat_smooth
 
-La función `stat_smooth` es más flexible que `geom_smooth`. La gran diferencia es que nos permite incluir una formula para expresar la relación entre $x$ e $y$, por ejemplo, si pensaramos que en el caso de la base de datos `ChickWeight` la relación entre el peso y el tiempo se expresa mejor con una ecuación cuadrática (ver ecuacación \@ref(eq:quad)) generaríamos el siguiente código que genera la figura \@ref(fig:scatterQuad).
+La función `stat_smooth` es más flexible que `geom_smooth`. La gran diferencia es que nos permite incluir una fórmula para expresar la relación entre $x$ e $y$. Por ejemplo, si pensaramos que en el caso de la base de datos `ChickWeight` la relación entre el peso y el tiempo se expresa mejor con una ecuación cuadrática (ver ecuación \@ref(eq:quad)) tendríamos el siguiente código que genera la figura \@ref(fig:scatterQuad).
 
-```{r scatterQuad, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales con una relación cuadrática', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+```{r scatterQuad, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en modelos lineales con una relación cuadrática', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
 ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Diet))) + stat_smooth(aes(fill = factor(Diet)), method = "lm", formula = y ~ x + I(x^2))
 ```
 
@@ -151,5 +149,22 @@ ggplot(ChickWeight, aes(x = Time, y= weight)) + geom_point(aes(color = factor(Di
   (\#eq:quad)
 \end{equation} 
 
+### Combinando varios gráficos con facet_wrap
 
-## Argumentos {#argumentos}
+Algunas veces, en particular si tenemos muchas variables categóricas, no es recomendable generar una línea o punto de color distinto para cada variable. Por ejemplo, si seguimos con el crecimiento de los pollos de la base de datos `ChickWeight`, vemos que la variable *Chick* representa cada pollo. Dado que hay varios pollos por dieta se vuelve confuso y poco informativo como se ve en la figura \@ref(fig:Pollos) generada con el siguiente código.
+
+```{r Pollos, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta y con líneas para cada pollo individual.', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+ggplot(ChickWeight, aes(x = Time, y = weight)) + geom_point(aes(color = Diet)) + geom_line(aes(color= Diet, group = Chick))
+```
+
+Para aclarar este enredo, es mejor el generar un gráfico para cada dieta, y es ahí donde entra la función `facet_wrap`. Esta función nos permite generar el gráfico deseado al agregar como argumento dentro de la función el simbolo `~` seguido del nombre de la variable a utilizar para separar los gráficos, tal como en la figura \@ref(fig:MasPollos) y su código correspondiente.
+
+```{r MasPollos, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores y gráficos distintos según el tipo de dieta y con líneas para cada pollo individual.', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+ggplot(ChickWeight, aes(x = Time, y = weight)) + geom_point(aes(color = Diet)) + geom_line(aes(color= Diet, group = Chick)) + facet_wrap( ~ Diet)
+```
+
+Esta función siempre tendrá los mismos ejes y escala para todos los gráficos. Además, intentará siempre dejar la disposición de los gráficos de la forma más cuadrada posible, pero esto puede ser modificado agregando el argumento *ncol* y un número de columnas, así como vemos en la figura \@ref(fig:Columnas) y su código correspondiente.
+
+```{r Columnas, fig.cap='Gráfico en el cual vemos el peso de pollos en el tiempo, con colores y gráficos distintos según el tipo de dieta y con líneas para cada pollo individual.', out.width='80%', fig.asp=.75, fig.align='center', echo = TRUE, cache = TRUE}
+ggplot(ChickWeight, aes(x = Time, y = weight)) + geom_point(aes(color = Diet)) + geom_line(aes(color= Diet, group = Chick)) + facet_wrap( ~ Diet, ncol = 3)
+```

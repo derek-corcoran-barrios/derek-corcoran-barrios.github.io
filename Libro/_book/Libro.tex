@@ -1831,7 +1831,7 @@ Para este capítulo necesitas tener instalado el paquete
 \emph{tidyverse}.
 
 En este capítulo se explicará qué es el paquete \emph{ggplot2}
-\citep{Wickhamggplot} y como podemos utilizarlo para visualizar datos.
+\citep{Wickhamggplot} y cómo utilizarlo para visualizar datos.
 
 Dado que este libro es un apoyo para el curso BIO4022, esta clase puede
 también ser seguida en este
@@ -1871,33 +1871,32 @@ figura \ref{fig:ejemplo1-ggplot}:
 \end{figure}
 
 En este caso general, lo primero que ponemos después de ggplot es el
-data.frame desde el cuál graficaremos algo, en el ejemplo de la figura
+data.frame desde el cual graficaremos algo. En el ejemplo de la figura
 \ref{fig:ejemplo1-ggplot} usamos la base de datos \emph{diamonds} del
-paquete \emph{ggplot2} \citep{Wickhamggplot}. Luego dentro de
+paquete \emph{ggplot2} \citep{Wickhamggplot}, luego dentro de
 \texttt{aes} ponemos las columnas que graficaremos como \emph{x} y/o
-\emph{y}, en nuestro ejemplo dentro de aes ponemos como eje \emph{x} los
-kilates de los diamantes (caret) y como \emph{y} el precio de los mismos
-(price). La necesidad de poner \texttt{aes} en ggplot2 (algo que no
-había sido necesario cuando usamos \emph{dplyr} o \emph{tidyr}).
+\emph{y}. En nuestro ejemplo dentro de aes ponemos como eje \emph{x} los
+quilates de los diamantes (caret) y como \emph{y} el precio de los
+mismos (price). Ojo que existe la necesidad de poner \texttt{aes} en
+ggplot2 (algo que no había sido necesario cuando usamos \emph{dplyr} o
+\emph{tidyr}).
 
 \hypertarget{por-que-usamos-aes-y}{%
 \section{Por que usamos aes() y +}\label{por-que-usamos-aes-y}}
 
 Al ser el primer paquete creado en el tidyverse, \emph{ggplot2} tiene un
-par de convenciones distintas, por un lado cada vez que usamos el nombre
-de una columna que esta en un data frame usamos debemos usarlo dentro de
-la función \texttt{aes}
-
-Además, cuando se creo el paquete \emph{ggplot2} no existia el pipeline
-(\texttt{\%\textgreater{}\%}), por lo que se utilizaba el signo
-\texttt{+} con la misma función
+par de convenciones distintas. Por un lado, cada vez que usamos el
+nombre de una columna que está en un data frame debemos usarlo dentro de
+la función \texttt{aes}. Además, cuando se creó el paquete
+\emph{ggplot2} no existia el pipeline (\texttt{\%\textgreater{}\%}), por
+lo que se utilizaba el signo \texttt{+} con la misma función.
 
 \hypertarget{geom_algo}{%
 \section{geom\_algo}\label{geom_algo}}
 
-Luego de especificar una base de datos, esto viene seguido de un
-\texttt{geom\_algo}, esto nos indicará que tipo de gráfico usaremos,
-estos pueden ser combinados como veremos en ejemplos futuros
+Luego de especificar una base de datos, se debe continuar con un
+\texttt{geom\_algo}, esto nos indicará que tipo de gráfico usaremos. Los
+gráficos pueden ser combinados como veremos en ejemplos futuros.
 
 \hypertarget{una-variable-categorica-una-continua}{%
 \subsection{Una variable categórica una
@@ -1910,7 +1909,7 @@ variable categórica y una continua
 \subsubsection{geom\_boxplot}\label{geom_boxplot}}
 
 En la figura \ref{fig:boxplot}, generado a partir del código a
-continuacón con la base de datos iris presente en \texttt{R}
+continuación con la base de datos iris presente en \texttt{R}
 \citep{anderson1935irises}.
 
 \begin{Shaded}
@@ -1929,21 +1928,20 @@ continuacón con la base de datos iris presente en \texttt{R}
 \caption{Boxplot que representa los largos del sépalo de tres especies del género Iris}\label{fig:boxplot}
 \end{figure}
 
-Los boxplots muestran una linea gruesa central (la mediana), una caja,
-que delimita el primer y tercer cuartil, y los bigotes, los cuales se
-extienden hasta los valores extremos. A menos que estos esten por sobre
-1.5 veces la distance entre el primer y tercer cuartil, en cuyo caso se
-consideran outlyers, y estos son representados por puntos. En la figura
-\ref{fig:boxplot}, solo \emph{Iris virginica} presenta un outlayer en
-cuanto a las medidas del largo del sepalo.
+Los boxplots muestran una línea gruesa central (la mediana), una caja,
+que delimita el primer y tercer cuartil y los bigotes, los cuales se
+extienden hasta los valores extremos. En el caso que estos valores estén
+por sobre 1.5 veces la distancia entre el primer y tercer cuartil, estos
+serán representados por puntos (siendo considerados outlyers). En la
+figura \ref{fig:boxplot}, sólo \emph{Iris virginica} presenta un
+outlayer en cuanto a las medidas del largo del sépalo.
 
 Los boxplots, como todos los gráficos pueden ser personalizados usando
-otros argumentos, los cuales son detallados en la sección
-\ref{argumentos}, pero en los ejemplos que mostraremos en esta sección
-los iremos introduciendo de a poco. Si quisieramos por ejemplo que el
-color de las cajas del \emph{boxplot} fuera deacuerdo a la especie,
-cambiamos el llenado (\textbf{fill}) de la caja, como vemos en el
-siguiente ejemplo y figura \ref{fig:boxplot2}
+otros argumentos, los que mostraremos en esta sección los iremos
+introduciendo de a poco. Si quisieramos por ejemplo que el color de las
+cajas del \emph{boxplot} fueran dea cuerdo a la especie, cambiamos el
+llenado (\textbf{fill}) de la caja, como vemos en el siguiente ejemplo y
+figura \ref{fig:boxplot2}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1971,7 +1969,7 @@ ser referenciadas.
 \subsubsection{geom\_jitter}\label{geom_jitter}}
 
 Utilizando la misma base de datos, podemos crear un gráfico del tipo
-\emph{jitter}, en este caso hay un punto por cada observación, lo cual
+\emph{jitter}. En este caso hay un punto por cada observación, lo cual
 puede ayudar a entender mejor los datos que tenemos.
 
 \begin{Shaded}
@@ -1989,13 +1987,13 @@ puede ayudar a entender mejor los datos que tenemos.
 \caption{jitter plot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de los puntos representan la especie}\label{fig:jitter}
 \end{figure}
 
-En la figura \ref{fig:jitter} vemos los mismos datos, que en la figura
+En la figura \ref{fig:jitter} vemos los mismos datos que en la figura
 \ref{fig:boxplot}, el agregar el \texttt{color\ =\ Species} dentro del
 \texttt{aes} nos permite que el color de cada punto este determinado por
 la especie a la que pertenece.
 
 \hypertarget{otros-geom-categoricos}{%
-\subsubsection{Otros geom categoricos}\label{otros-geom-categoricos}}
+\subsubsection{Otros geom categóricos}\label{otros-geom-categoricos}}
 
 Otros geom categóricos que podemos explorar con esta base de datos son:
 
@@ -2012,9 +2010,9 @@ Otros geom categóricos que podemos explorar con esta base de datos son:
 \hypertarget{combinando-geoms}{%
 \section{Combinando geoms}\label{combinando-geoms}}
 
-Uno puede combinar geoms para formar un grafico combinado, por ejemplo
-podriamos generar un grafico con un boxplot y un jitter plot como vemos
-en la figura \ref{fig:boxjitter}
+Uno puede escribir varios geoms para formar un gráfico combinado. Por
+ejemplo, podríamos generar un gráfico con un boxplot y un jitter plot,
+como vemos en la figura \ref{fig:boxjitter}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2036,7 +2034,7 @@ en la figura \ref{fig:boxjitter}
 \subsection{El orden importa}\label{el-orden-importa}}
 
 Si bien se pueden combinar los geom, el orden de estos importa, ya que
-\emph{ggplot2} genera las figuras por capas, esto es ilustrado en la
+\emph{ggplot2} genera las figuras por capas. Esto es ilustrado en la
 figura \ref{fig:jitterbox}, en la cual al crear primero el jitter y
 luego el boxplot, las cajas del boxplot tapan los puntos, a diferencia
 de la figura \ref{fig:boxjitter}
@@ -2057,9 +2055,8 @@ de la figura \ref{fig:boxjitter}
 \caption{Boxplot y jitter plot combinados que representa los largos del sépalo de tres especies del género Iris, en este caso al llamar al jitter antes del boxplot, las cajas tapan los puntos.}\label{fig:jitterbox}
 \end{figure}
 
-\hypertarget{una-variable-categorica-una-continua-1}{%
-\subsection{Una variable categórica una
-continua}\label{una-variable-categorica-una-continua-1}}
+\hypertarget{dos-variables-continuas}{%
+\subsection{Dos variables continuas}\label{dos-variables-continuas}}
 
 Algunos de los geoms que podemos usar para dos variables continuas son:
 
@@ -2077,14 +2074,14 @@ Algunos de los geoms que podemos usar para dos variables continuas son:
   geom\_rug
 \end{itemize}
 
-Ahora veremos algunas de ellas:
+Ahora veremos algunos de ellos:
 
 \hypertarget{geom_point}{%
 \subsubsection{geom\_point}\label{geom_point}}
 
 Este geom es el que nos permite hacer un gráfico de dispersión en R.
-Para esto tenemos que poner como x e y en ggplot variables continuas y
-agragar la función \texttt{geom\_point} como vemos en el siguiente
+Para esto tenemos que poner variables continuas en x e y en ggplot y
+agregar la función \texttt{geom\_point}, como vemos en el siguiente
 código y en la figura \ref{fig:scatter}.
 
 \begin{Shaded}
@@ -2103,11 +2100,11 @@ código y en la figura \ref{fig:scatter}.
 \caption{Gráfico en el cual vemos el peso de pollos en el tiempo}\label{fig:scatter}
 \end{figure}
 
-Si quisieramos que el color de cada punto estuviera separado por peso,
-podríamos agregarle \texttt{aes(color\ =\ Diet)} a geom\_point, pero
-deberíamos transformar Diet en factor, ya sea antes de usar ggplot o
-dentro de ggplot tal como vemos en el siguiente código y en la figura
-\ref{fig:scatterColor}.
+Si quisieramos que el color de cada punto estuviera separado por dieta,
+podríamos agregarle \texttt{aes(color\ =\ Diet)} a geom\_point. Sin
+embargo, deberíamos transformar Diet en factor, ya sea antes de usar
+ggplot o dentro de ggplot tal como vemos en el siguiente código y en la
+figura \ref{fig:scatterColor}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2132,10 +2129,10 @@ stat\_smooth}\label{geom_smooth-y-stat_smooth}}
 \hypertarget{geom_smooth}{%
 \paragraph{geom\_smooth}\label{geom_smooth}}
 
-Estas funciones nos permiten generar lineas de tendencias con intervalos
-de confianza para estas lineas, así si quisieramos ver lineas de
-tendencias para nuestro scatterplot, dependiendo de la dieta, usaríamos
-el siguiente código el cual nos da la figura \ref{fig:scatterLoess}.
+Estas funciones nos permiten generar líneas de tendencias con intervalos
+de confianza. Así si quisieramos ver líneas de tendencias para nuestro
+scatterplot, dependiendo de la dieta, usaríamos el siguiente código, el
+cual nos da la figura \ref{fig:scatterLoess}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2154,12 +2151,12 @@ el siguiente código el cual nos da la figura \ref{fig:scatterLoess}.
 
 }
 
-\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en el método loess}\label{fig:scatterLoess}
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en el método loess}\label{fig:scatterLoess}
 \end{figure}
 
-Por defeccto, la función \texttt{geom\_smooth} generará una tendencia
+Por defecto, la función \texttt{geom\_smooth} generará una tendencia
 basada en \emph{loess}, lo cual es una correlación local. En general, es
-mejor hacer una linea de tendencia basado en modelos que uno puede
+mejor hacer una línea de tendencia basado en modelos que uno puede
 explicar mejor como un modelo lineal. Para esto, cambiamos el argumento
 method a lm como en el siguiente código y la figura \ref{fig:scatterLM}.
 
@@ -2176,7 +2173,7 @@ method a lm como en el siguiente código y la figura \ref{fig:scatterLM}.
 
 }
 
-\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales}\label{fig:scatterLM}
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en modelos lineales}\label{fig:scatterLM}
 \end{figure}
 
 \hypertarget{stat_smooth}{%
@@ -2184,11 +2181,11 @@ method a lm como en el siguiente código y la figura \ref{fig:scatterLM}.
 
 La función \texttt{stat\_smooth} es más flexible que
 \texttt{geom\_smooth}. La gran diferencia es que nos permite incluir una
-formula para expresar la relación entre \(x\) e \(y\), por ejemplo, si
+fórmula para expresar la relación entre \(x\) e \(y\). Por ejemplo, si
 pensaramos que en el caso de la base de datos \texttt{ChickWeight} la
 relación entre el peso y el tiempo se expresa mejor con una ecuación
-cuadrática (ver ecuacación \eqref{eq:quad}) generaríamos el siguiente
-código que genera la figura \ref{fig:scatterQuad}.
+cuadrática (ver ecuación \eqref{eq:quad}) tendríamos el siguiente código
+que genera la figura \ref{fig:scatterQuad}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2204,7 +2201,7 @@ código que genera la figura \ref{fig:scatterQuad}.
 
 }
 
-\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales}\label{fig:scatterQuad}
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en modelos lineales con una relación cuadrática}\label{fig:scatterQuad}
 \end{figure}
 
 \begin{equation} 
@@ -2212,8 +2209,79 @@ código que genera la figura \ref{fig:scatterQuad}.
   \label{eq:quad}
 \end{equation}
 
-\hypertarget{argumentos}{%
-\section{Argumentos}\label{argumentos}}
+\hypertarget{combinando-varios-graficos-con-facet_wrap}{%
+\subsection{Combinando varios gráficos con
+facet\_wrap}\label{combinando-varios-graficos-con-facet_wrap}}
+
+Algunas veces, en particular si tenemos muchas variables categóricas, no
+es recomendable generar una línea o punto de color distinto para cada
+variable. Por ejemplo, si seguimos con el crecimiento de los pollos de
+la base de datos \texttt{ChickWeight}, vemos que la variable
+\emph{Chick} representa cada pollo. Dado que hay varios pollos por dieta
+se vuelve confuso y poco informativo como se ve en la figura
+\ref{fig:Pollos} generada con el siguiente código.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(ChickWeight, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Time, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Diet)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Diet, }\DataTypeTok{group =}\NormalTok{ Chick))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/Pollos-1} 
+
+}
+
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta y con líneas para cada pollo individual.}\label{fig:Pollos}
+\end{figure}
+
+Para aclarar este enredo, es mejor el generar un gráfico para cada
+dieta, y es ahí donde entra la función \texttt{facet\_wrap}. Esta
+función nos permite generar el gráfico deseado al agregar como argumento
+dentro de la función el simbolo \texttt{\textasciitilde{}} seguido del
+nombre de la variable a utilizar para separar los gráficos, tal como en
+la figura \ref{fig:MasPollos} y su código correspondiente.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(ChickWeight, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Time, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Diet)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Diet, }\DataTypeTok{group =}\NormalTok{ Chick)) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{Diet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/MasPollos-1} 
+
+}
+
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores y gráficos distintos según el tipo de dieta y con líneas para cada pollo individual.}\label{fig:MasPollos}
+\end{figure}
+
+Esta función siempre tendrá los mismos ejes y escala para todos los
+gráficos. Además, intentará siempre dejar la disposición de los gráficos
+de la forma más cuadrada posible, pero esto puede ser modificado
+agregando el argumento \emph{ncol} y un número de columnas, así como
+vemos en la figura \ref{fig:Columnas} y su código correspondiente.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(ChickWeight, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Time, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Diet)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Diet, }\DataTypeTok{group =}\NormalTok{ Chick)) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{Diet, }
+    \DataTypeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/Columnas-1} 
+
+}
+
+\caption{Gráfico en el cual vemos el peso de pollos en el tiempo, con colores y gráficos distintos según el tipo de dieta y con líneas para cada pollo individual.}\label{fig:Columnas}
+\end{figure}
 
 \hypertarget{modelos}{%
 \chapter{Modelos en R}\label{modelos}}

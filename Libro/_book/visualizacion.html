@@ -199,9 +199,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="visualizacion.html"><a href="visualizacion.html#combinando-geoms"><i class="fa fa-check"></i><b>4.5</b> Combinando geoms</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="visualizacion.html"><a href="visualizacion.html#el-orden-importa"><i class="fa fa-check"></i><b>4.5.1</b> El orden importa</a></li>
-<li class="chapter" data-level="4.5.2" data-path="visualizacion.html"><a href="visualizacion.html#una-variable-categorica-una-continua-1"><i class="fa fa-check"></i><b>4.5.2</b> Una variable categórica una continua</a></li>
+<li class="chapter" data-level="4.5.2" data-path="visualizacion.html"><a href="visualizacion.html#dos-variables-continuas"><i class="fa fa-check"></i><b>4.5.2</b> Dos variables continuas</a></li>
+<li class="chapter" data-level="4.5.3" data-path="visualizacion.html"><a href="visualizacion.html#combinando-varios-graficos-con-facet_wrap"><i class="fa fa-check"></i><b>4.5.3</b> Combinando varios gráficos con facet_wrap</a></li>
 </ul></li>
-<li class="chapter" data-level="4.6" data-path="visualizacion.html"><a href="visualizacion.html#argumentos"><i class="fa fa-check"></i><b>4.6</b> Argumentos</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a></li>
 <li class="chapter" data-level="6" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>6</b> Loops (purrr) y bibliografía (rticles)</a></li>
@@ -245,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="paquetes-necesarios-para-este-capitulo-3" class="section level2">
 <h2><span class="header-section-number">4.1</span> Paquetes necesarios para este capítulo</h2>
 <p>Para este capítulo necesitas tener instalado el paquete <em>tidyverse</em>.</p>
-<p>En este capítulo se explicará qué es el paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-Wickhamggplot">2016</a>)</span> y como podemos utilizarlo para visualizar datos.</p>
+<p>En este capítulo se explicará qué es el paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-Wickhamggplot">2016</a>)</span> y cómo utilizarlo para visualizar datos.</p>
 <p>Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este <a href="https://derek-corcoran-barrios.github.io/Clase4/Clase4Visualizacion">link</a>. El video de la clase se encontrará disponible en este [link]</p>
 </div>
 <div id="el-esqueleto" class="section level2">
@@ -263,22 +263,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Figura 4.1: Gráfico en el cual gráficamos los quilates de diamantes versus su precio, con el corte del diamante representado por el color
 </p>
 </div>
-<p>En este caso general, lo primero que ponemos después de ggplot es el data.frame desde el cuál graficaremos algo, en el ejemplo de la figura <a href="visualizacion.html#fig:ejemplo1-ggplot">4.1</a> usamos la base de datos <em>diamonds</em> del paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-Wickhamggplot">2016</a>)</span>. Luego dentro de <code>aes</code> ponemos las columnas que graficaremos como <em>x</em> y/o <em>y</em>, en nuestro ejemplo dentro de aes ponemos como eje <em>x</em> los kilates de los diamantes (caret) y como <em>y</em> el precio de los mismos (price). La necesidad de poner <code>aes</code> en ggplot2 (algo que no había sido necesario cuando usamos <em>dplyr</em> o <em>tidyr</em>).</p>
+<p>En este caso general, lo primero que ponemos después de ggplot es el data.frame desde el cual graficaremos algo. En el ejemplo de la figura <a href="visualizacion.html#fig:ejemplo1-ggplot">4.1</a> usamos la base de datos <em>diamonds</em> del paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-Wickhamggplot">2016</a>)</span>, luego dentro de <code>aes</code> ponemos las columnas que graficaremos como <em>x</em> y/o <em>y</em>. En nuestro ejemplo dentro de aes ponemos como eje <em>x</em> los quilates de los diamantes (caret) y como <em>y</em> el precio de los mismos (price). Ojo que existe la necesidad de poner <code>aes</code> en ggplot2 (algo que no había sido necesario cuando usamos <em>dplyr</em> o <em>tidyr</em>).</p>
 </div>
 <div id="por-que-usamos-aes-y" class="section level2">
 <h2><span class="header-section-number">4.3</span> Por que usamos aes() y +</h2>
-<p>Al ser el primer paquete creado en el tidyverse, <em>ggplot2</em> tiene un par de convenciones distintas, por un lado cada vez que usamos el nombre de una columna que esta en un data frame usamos debemos usarlo dentro de la función <code>aes</code></p>
-<p>Además, cuando se creo el paquete <em>ggplot2</em> no existia el pipeline (<code>%&gt;%</code>), por lo que se utilizaba el signo <code>+</code> con la misma función</p>
+<p>Al ser el primer paquete creado en el tidyverse, <em>ggplot2</em> tiene un par de convenciones distintas. Por un lado, cada vez que usamos el nombre de una columna que está en un data frame debemos usarlo dentro de la función <code>aes</code>. Además, cuando se creó el paquete <em>ggplot2</em> no existia el pipeline (<code>%&gt;%</code>), por lo que se utilizaba el signo <code>+</code> con la misma función.</p>
 </div>
 <div id="geom_algo" class="section level2">
 <h2><span class="header-section-number">4.4</span> geom_algo</h2>
-<p>Luego de especificar una base de datos, esto viene seguido de un <code>geom_algo</code>, esto nos indicará que tipo de gráfico usaremos, estos pueden ser combinados como veremos en ejemplos futuros</p>
+<p>Luego de especificar una base de datos, se debe continuar con un <code>geom_algo</code>, esto nos indicará que tipo de gráfico usaremos. Los gráficos pueden ser combinados como veremos en ejemplos futuros.</p>
 <div id="una-variable-categorica-una-continua" class="section level3">
 <h3><span class="header-section-number">4.4.1</span> Una variable categórica una continua</h3>
 <p>Primero veremos algunos de los <em>geom</em> que podemos utilizar con una variable categórica y una continua</p>
 <div id="geom_boxplot" class="section level4">
 <h4><span class="header-section-number">4.4.1.1</span> geom_boxplot</h4>
-<p>En la figura <a href="visualizacion.html#fig:boxplot">4.2</a>, generado a partir del código a continuacón con la base de datos iris presente en <code>R</code> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span>.</p>
+<p>En la figura <a href="visualizacion.html#fig:boxplot">4.2</a>, generado a partir del código a continuación con la base de datos iris presente en <code>R</code> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span>.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</a>
 <a class="sourceLine" id="cb31-2" data-line-number="2"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:boxplot"></span>
@@ -287,8 +286,8 @@ Figura 4.1: Gráfico en el cual gráficamos los quilates de diamantes versus su 
 Figura 4.2: Boxplot que representa los largos del sépalo de tres especies del género Iris
 </p>
 </div>
-<p>Los boxplots muestran una linea gruesa central (la mediana), una caja, que delimita el primer y tercer cuartil, y los bigotes, los cuales se extienden hasta los valores extremos. A menos que estos esten por sobre 1.5 veces la distance entre el primer y tercer cuartil, en cuyo caso se consideran outlyers, y estos son representados por puntos. En la figura <a href="visualizacion.html#fig:boxplot">4.2</a>, solo <em>Iris virginica</em> presenta un outlayer en cuanto a las medidas del largo del sepalo.</p>
-<p>Los boxplots, como todos los gráficos pueden ser personalizados usando otros argumentos, los cuales son detallados en la sección <a href="visualizacion.html#argumentos">4.6</a>, pero en los ejemplos que mostraremos en esta sección los iremos introduciendo de a poco. Si quisieramos por ejemplo que el color de las cajas del <em>boxplot</em> fuera deacuerdo a la especie, cambiamos el llenado (<strong>fill</strong>) de la caja, como vemos en el siguiente ejemplo y figura <a href="visualizacion.html#fig:boxplot2">4.3</a></p>
+<p>Los boxplots muestran una línea gruesa central (la mediana), una caja, que delimita el primer y tercer cuartil y los bigotes, los cuales se extienden hasta los valores extremos. En el caso que estos valores estén por sobre 1.5 veces la distancia entre el primer y tercer cuartil, estos serán representados por puntos (siendo considerados outlyers). En la figura <a href="visualizacion.html#fig:boxplot">4.2</a>, sólo <em>Iris virginica</em> presenta un outlayer en cuanto a las medidas del largo del sépalo.</p>
+<p>Los boxplots, como todos los gráficos pueden ser personalizados usando otros argumentos, los que mostraremos en esta sección los iremos introduciendo de a poco. Si quisieramos por ejemplo que el color de las cajas del <em>boxplot</em> fueran dea cuerdo a la especie, cambiamos el llenado (<strong>fill</strong>) de la caja, como vemos en el siguiente ejemplo y figura <a href="visualizacion.html#fig:boxplot2">4.3</a></p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> Species))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:boxplot2"></span>
 <img src="Libro_files/figure-html/boxplot2-1.png" alt="Boxplot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de la caja representa la especie" width="80%" />
@@ -300,7 +299,7 @@ Figura 4.3: Boxplot que representa los largos del sépalo de tres especies del g
 </div>
 <div id="geom_jitter" class="section level4">
 <h4><span class="header-section-number">4.4.1.2</span> geom_jitter</h4>
-<p>Utilizando la misma base de datos, podemos crear un gráfico del tipo <em>jitter</em>, en este caso hay un punto por cada observación, lo cual puede ayudar a entender mejor los datos que tenemos.</p>
+<p>Utilizando la misma base de datos, podemos crear un gráfico del tipo <em>jitter</em>. En este caso hay un punto por cada observación, lo cual puede ayudar a entender mejor los datos que tenemos.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:jitter"></span>
 <img src="Libro_files/figure-html/jitter-1.png" alt="jitter plot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de los puntos representan la especie" width="80%" />
@@ -308,10 +307,10 @@ Figura 4.3: Boxplot que representa los largos del sépalo de tres especies del g
 Figura 4.4: jitter plot que representa los largos del sépalo de tres especies del género Iris, en este caso el color de los puntos representan la especie
 </p>
 </div>
-<p>En la figura <a href="visualizacion.html#fig:jitter">4.4</a> vemos los mismos datos, que en la figura <a href="visualizacion.html#fig:boxplot">4.2</a>, el agregar el <code>color = Species</code> dentro del <code>aes</code> nos permite que el color de cada punto este determinado por la especie a la que pertenece.</p>
+<p>En la figura <a href="visualizacion.html#fig:jitter">4.4</a> vemos los mismos datos que en la figura <a href="visualizacion.html#fig:boxplot">4.2</a>, el agregar el <code>color = Species</code> dentro del <code>aes</code> nos permite que el color de cada punto este determinado por la especie a la que pertenece.</p>
 </div>
 <div id="otros-geom-categoricos" class="section level4">
-<h4><span class="header-section-number">4.4.1.3</span> Otros geom categoricos</h4>
+<h4><span class="header-section-number">4.4.1.3</span> Otros geom categóricos</h4>
 <p>Otros geom categóricos que podemos explorar con esta base de datos son:</p>
 <ul>
 <li>geom_violin</li>
@@ -323,7 +322,7 @@ Figura 4.4: jitter plot que representa los largos del sépalo de tres especies d
 </div>
 <div id="combinando-geoms" class="section level2">
 <h2><span class="header-section-number">4.5</span> Combinando geoms</h2>
-<p>Uno puede combinar geoms para formar un grafico combinado, por ejemplo podriamos generar un grafico con un boxplot y un jitter plot como vemos en la figura <a href="visualizacion.html#fig:boxjitter">4.5</a></p>
+<p>Uno puede escribir varios geoms para formar un gráfico combinado. Por ejemplo, podríamos generar un gráfico con un boxplot y un jitter plot, como vemos en la figura <a href="visualizacion.html#fig:boxjitter">4.5</a></p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb34-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:boxjitter"></span>
@@ -334,7 +333,7 @@ Figura 4.5: Boxplot y jitter plot combinados que representa los largos del sépa
 </div>
 <div id="el-orden-importa" class="section level3">
 <h3><span class="header-section-number">4.5.1</span> El orden importa</h3>
-<p>Si bien se pueden combinar los geom, el orden de estos importa, ya que <em>ggplot2</em> genera las figuras por capas, esto es ilustrado en la figura <a href="visualizacion.html#fig:jitterbox">4.6</a>, en la cual al crear primero el jitter y luego el boxplot, las cajas del boxplot tapan los puntos, a diferencia de la figura <a href="visualizacion.html#fig:boxjitter">4.5</a></p>
+<p>Si bien se pueden combinar los geom, el orden de estos importa, ya que <em>ggplot2</em> genera las figuras por capas. Esto es ilustrado en la figura <a href="visualizacion.html#fig:jitterbox">4.6</a>, en la cual al crear primero el jitter y luego el boxplot, las cajas del boxplot tapan los puntos, a diferencia de la figura <a href="visualizacion.html#fig:boxjitter">4.5</a></p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb35-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:jitterbox"></span>
@@ -344,8 +343,8 @@ Figura 4.6: Boxplot y jitter plot combinados que representa los largos del sépa
 </p>
 </div>
 </div>
-<div id="una-variable-categorica-una-continua-1" class="section level3">
-<h3><span class="header-section-number">4.5.2</span> Una variable categórica una continua</h3>
+<div id="dos-variables-continuas" class="section level3">
+<h3><span class="header-section-number">4.5.2</span> Dos variables continuas</h3>
 <p>Algunos de los geoms que podemos usar para dos variables continuas son:</p>
 <ul>
 <li>geom_point</li>
@@ -354,10 +353,10 @@ Figura 4.6: Boxplot y jitter plot combinados que representa los largos del sépa
 <li>geom_hex</li>
 <li>geom_rug</li>
 </ul>
-<p>Ahora veremos algunas de ellas:</p>
+<p>Ahora veremos algunos de ellos:</p>
 <div id="geom_point" class="section level4">
 <h4><span class="header-section-number">4.5.2.1</span> geom_point</h4>
-<p>Este geom es el que nos permite hacer un gráfico de dispersión en R. Para esto tenemos que poner como x e y en ggplot variables continuas y agragar la función <code>geom_point</code> como vemos en el siguiente código y en la figura <a href="visualizacion.html#fig:scatter">4.7</a>.</p>
+<p>Este geom es el que nos permite hacer un gráfico de dispersión en R. Para esto tenemos que poner variables continuas en x e y en ggplot y agregar la función <code>geom_point</code>, como vemos en el siguiente código y en la figura <a href="visualizacion.html#fig:scatter">4.7</a>.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;ChickWeight&quot;</span>)</a>
 <a class="sourceLine" id="cb36-2" data-line-number="2"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:scatter"></span>
@@ -366,7 +365,7 @@ Figura 4.6: Boxplot y jitter plot combinados que representa los largos del sépa
 Figura 4.7: Gráfico en el cual vemos el peso de pollos en el tiempo
 </p>
 </div>
-<p>Si quisieramos que el color de cada punto estuviera separado por peso, podríamos agregarle <code>aes(color = Diet)</code> a geom_point, pero deberíamos transformar Diet en factor, ya sea antes de usar ggplot o dentro de ggplot tal como vemos en el siguiente código y en la figura <a href="visualizacion.html#fig:scatterColor">4.8</a>.</p>
+<p>Si quisieramos que el color de cada punto estuviera separado por dieta, podríamos agregarle <code>aes(color = Diet)</code> a geom_point. Sin embargo, deberíamos transformar Diet en factor, ya sea antes de usar ggplot o dentro de ggplot tal como vemos en el siguiente código y en la figura <a href="visualizacion.html#fig:scatterColor">4.8</a>.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;ChickWeight&quot;</span>)</a>
 <a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">factor</span>(Diet)))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:scatterColor"></span>
@@ -380,36 +379,36 @@ Figura 4.8: Gráfico en el cual vemos el peso de pollos en el tiempo, con colore
 <h4><span class="header-section-number">4.5.2.2</span> geom_smooth y stat_smooth</h4>
 <div id="geom_smooth" class="section level5">
 <h5><span class="header-section-number">4.5.2.2.1</span> geom_smooth</h5>
-<p>Estas funciones nos permiten generar lineas de tendencias con intervalos de confianza para estas lineas, así si quisieramos ver lineas de tendencias para nuestro scatterplot, dependiendo de la dieta, usaríamos el siguiente código el cual nos da la figura <a href="visualizacion.html#fig:scatterLoess">4.9</a>.</p>
+<p>Estas funciones nos permiten generar líneas de tendencias con intervalos de confianza. Así si quisieramos ver líneas de tendencias para nuestro scatterplot, dependiendo de la dieta, usaríamos el siguiente código, el cual nos da la figura <a href="visualizacion.html#fig:scatterLoess">4.9</a>.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">factor</span>(Diet))) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb38-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">factor</span>(Diet)))</a></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:scatterLoess"></span>
-<img src="Libro_files/figure-html/scatterLoess-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en el método loess" width="80%" />
+<img src="Libro_files/figure-html/scatterLoess-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en el método loess" width="80%" />
 <p class="caption">
-Figura 4.9: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en el método loess
+Figura 4.9: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en el método loess
 </p>
 </div>
-<p>Por defeccto, la función <code>geom_smooth</code> generará una tendencia basada en <em>loess</em>, lo cual es una correlación local. En general, es mejor hacer una linea de tendencia basado en modelos que uno puede explicar mejor como un modelo lineal. Para esto, cambiamos el argumento method a lm como en el siguiente código y la figura <a href="visualizacion.html#fig:scatterLM">4.10</a>.</p>
+<p>Por defecto, la función <code>geom_smooth</code> generará una tendencia basada en <em>loess</em>, lo cual es una correlación local. En general, es mejor hacer una línea de tendencia basado en modelos que uno puede explicar mejor como un modelo lineal. Para esto, cambiamos el argumento method a lm como en el siguiente código y la figura <a href="visualizacion.html#fig:scatterLM">4.10</a>.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">factor</span>(Diet))) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">factor</span>(Diet)), <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:scatterLM"></span>
-<img src="Libro_files/figure-html/scatterLM-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales" width="80%" />
+<img src="Libro_files/figure-html/scatterLM-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en modelos lineales" width="80%" />
 <p class="caption">
-Figura 4.10: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales
+Figura 4.10: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en modelos lineales
 </p>
 </div>
 </div>
 <div id="stat_smooth" class="section level5">
 <h5><span class="header-section-number">4.5.2.2.2</span> stat_smooth</h5>
-<p>La función <code>stat_smooth</code> es más flexible que <code>geom_smooth</code>. La gran diferencia es que nos permite incluir una formula para expresar la relación entre <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span>, por ejemplo, si pensaramos que en el caso de la base de datos <code>ChickWeight</code> la relación entre el peso y el tiempo se expresa mejor con una ecuación cuadrática (ver ecuacación <a href="visualizacion.html#eq:quad">(4.1)</a>) generaríamos el siguiente código que genera la figura <a href="visualizacion.html#fig:scatterQuad">4.11</a>.</p>
+<p>La función <code>stat_smooth</code> es más flexible que <code>geom_smooth</code>. La gran diferencia es que nos permite incluir una fórmula para expresar la relación entre <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span>. Por ejemplo, si pensaramos que en el caso de la base de datos <code>ChickWeight</code> la relación entre el peso y el tiempo se expresa mejor con una ecuación cuadrática (ver ecuación <a href="visualizacion.html#eq:quad">(4.1)</a>) tendríamos el siguiente código que genera la figura <a href="visualizacion.html#fig:scatterQuad">4.11</a>.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">factor</span>(Diet))) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">    </span><span class="kw">stat_smooth</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">factor</span>(Diet)), <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb41-3" data-line-number="3"><span class="st">        </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>))</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:scatterQuad"></span>
-<img src="Libro_files/figure-html/scatterQuad-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales con una relación cuadrática" width="80%" />
+<img src="Libro_files/figure-html/scatterQuad-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en modelos lineales con una relación cuadrática" width="80%" />
 <p class="caption">
-Figura 4.11: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con lineas de tendencia e intervalos de confianza basados en modelos lineales con una relación cuadrática
+Figura 4.11: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta, con líneas de tendencia e intervalos de confianza basados en modelos lineales con una relación cuadrática
 </p>
 </div>
 <p><span class="math display" id="eq:quad">\[\begin{equation} 
@@ -419,10 +418,38 @@ Figura 4.11: Gráfico en el cual vemos el peso de pollos en el tiempo, con color
 </div>
 </div>
 </div>
+<div id="combinando-varios-graficos-con-facet_wrap" class="section level3">
+<h3><span class="header-section-number">4.5.3</span> Combinando varios gráficos con facet_wrap</h3>
+<p>Algunas veces, en particular si tenemos muchas variables categóricas, no es recomendable generar una línea o punto de color distinto para cada variable. Por ejemplo, si seguimos con el crecimiento de los pollos de la base de datos <code>ChickWeight</code>, vemos que la variable <em>Chick</em> representa cada pollo. Dado que hay varios pollos por dieta se vuelve confuso y poco informativo como se ve en la figura <a href="visualizacion.html#fig:Pollos">4.12</a> generada con el siguiente código.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Diet)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Diet, <span class="dt">group =</span> Chick))</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:Pollos"></span>
+<img src="Libro_files/figure-html/Pollos-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta y con líneas para cada pollo individual." width="80%" />
+<p class="caption">
+Figura 4.12: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores distintos según el tipo de dieta y con líneas para cada pollo individual.
+</p>
 </div>
-<div id="argumentos" class="section level2">
-<h2><span class="header-section-number">4.6</span> Argumentos</h2>
+<p>Para aclarar este enredo, es mejor el generar un gráfico para cada dieta, y es ahí donde entra la función <code>facet_wrap</code>. Esta función nos permite generar el gráfico deseado al agregar como argumento dentro de la función el simbolo <code>~</code> seguido del nombre de la variable a utilizar para separar los gráficos, tal como en la figura <a href="visualizacion.html#fig:MasPollos">4.13</a> y su código correspondiente.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Diet)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Diet, <span class="dt">group =</span> Chick)) <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Diet)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:MasPollos"></span>
+<img src="Libro_files/figure-html/MasPollos-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores y gráficos distintos según el tipo de dieta y con líneas para cada pollo individual." width="80%" />
+<p class="caption">
+Figura 4.13: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores y gráficos distintos según el tipo de dieta y con líneas para cada pollo individual.
+</p>
+</div>
+<p>Esta función siempre tendrá los mismos ejes y escala para todos los gráficos. Además, intentará siempre dejar la disposición de los gráficos de la forma más cuadrada posible, pero esto puede ser modificado agregando el argumento <em>ncol</em> y un número de columnas, así como vemos en la figura <a href="visualizacion.html#fig:Columnas">4.14</a> y su código correspondiente.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">ggplot</span>(ChickWeight, <span class="kw">aes</span>(<span class="dt">x =</span> Time, <span class="dt">y =</span> weight)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Diet)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Diet, <span class="dt">group =</span> Chick)) <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Diet, </a>
+<a class="sourceLine" id="cb44-3" data-line-number="3">    <span class="dt">ncol =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:Columnas"></span>
+<img src="Libro_files/figure-html/Columnas-1.png" alt="Gráfico en el cual vemos el peso de pollos en el tiempo, con colores y gráficos distintos según el tipo de dieta y con líneas para cada pollo individual." width="80%" />
+<p class="caption">
+Figura 4.14: Gráfico en el cual vemos el peso de pollos en el tiempo, con colores y gráficos distintos según el tipo de dieta y con líneas para cada pollo individual.
+</p>
+</div>
 
+</div>
 </div>
 </div>
 <h3> Referencias</h3>
