@@ -1,0 +1,16 @@
+base
+knitr
+MuMIn
+kableExtra
+epitools
+ggplot2
+dplyr
+bindrcpp
+broom
+gridExtra
+lattice
+caret
+plotrix
+TeachingDemos
+plotmo
+earth

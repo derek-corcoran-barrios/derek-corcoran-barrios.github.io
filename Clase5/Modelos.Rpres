@@ -1,0 +1,328 @@
+<style>
+.reveal h1, .reveal h2, .reveal h3 {
+  word-wrap: normal;
+  -moz-hyphens: none;
+}
+</style>
+
+<style>
+.small-code pre code {
+  font-size: 1em;
+}
+</style>
+
+Clase 5 Modelos
+========================================================
+author: Derek Corcoran
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+autosize: true
+transition: rotate
+
+<STYLE TYPE="text/css">
+<!--
+  td{
+    font-family: Arial; 
+    font-size: 4pt;
+    padding:0px;
+    cellpadding="0";
+    cellspacing="0"
+  }
+  th {
+    font-family: Arial; 
+    font-size: 4pt;
+    height: 20px;
+    font-weight: bold;
+    text-align: right;
+    background-color: #ccccff;
+  }
+  table { 
+    border-spacing: 0px;
+    border-collapse: collapse;
+  }
+--->
+</STYLE>
+
+
+
+Modelo lineal simple
+========================================================
+class: small-code
+```{r, eval =FALSE}
+library(tidyverse)
+TempHum <- readRDS("TempHum.rds")
+Pun <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas")
+Lineal <- lm(TempMedia ~ mes, data = Pun)
+Cuad <- lm(TempMedia ~ mes + I(mes^2), data = Pun)
+stargazer::stargazer(Lineal, Cuad, type = "html",  single.row = TRUE, model.names = TRUE, model.numbers = FALSE)
+```
+
+***
+```{r, results="asis", echo =FALSE}
+library(dplyr)
+TempHum <- readRDS("TempHum.rds")
+Pun <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas")
+Lineal <- lm(TempMedia ~ mes, data = Pun)
+Cuad <- lm(TempMedia ~ mes + I(mes^2), data = Pun)
+stargazer::stargazer(Lineal, Cuad, type = "html",  single.row = TRUE)
+```
+
+Sacando más de los modelos con Broom
+============================
+class: small-code
+```{r}
+library(broom)
+data("mtcars")
+Eficiencia <- lm(mpg ~ wt , data = mtcars)
+tidy(Eficiencia)
+glance(Eficiencia)
+```
+
+Sacando más de los modelos con Broom
+============================
+class: small-code
+
+```{r, echo=FALSE}
+knitr::include_graphics("Lineal.png")
+```
+
+```{r}
+tidy(Eficiencia)
+```
+
+Sacando más de los modelos con Broom
+============================
+class: small-code
+
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_smooth(method = "lm")
+```
+
+
+Sacando más de los modelos con Broom
+============================
+class: small-code
+
+```{r}
+MasDatos <- augment(Eficiencia)
+knitr::kable(head(MasDatos, 10))
+```
+
+Sacando más de los modelos con Broom
+============================
+class: small-code
+
+```{r}
+library(ggplot2)
+ggplot(MasDatos, aes(x = wt, y = mpg)) + geom_point(aes(color = "blue")) + geom_point(aes(color = "red",y = .fitted)) + scale_color_manual(name = "Residuales", values = c("blue", "red"), labels = c("Observado", "Predicho")) + geom_segment(aes(xend = wt, yend = .fitted))
+```
+
+
+Sacando más de los modelos con Broom
+============================
+class: small-code
+
+```{r}
+hist(MasDatos$.resid)
+```
+
+***
+
+```{r}
+shapiro.test(MasDatos$.resid)
+```
+
+* Para mas sobre supuestos de test básicos de estadística, [este link](https://cran.r-project.org/doc/contrib/Martinez-RforBiologistv1.1.pdf)
+
+Modelo lineal generalizado
+========================================================
+incremental:true
+* Se agrega el argumento **family =**
+* gaussian (variable independiente continua)
+* binomial (variable independiente 0 o 1)
+* poissson (variable independiente cuentas 1, 2 ,3 ,4 ,5)
+* gamma (variable independiente continua solo positiva)
+
+
+Modelo lineal generalizado (familia: binomial)
+========================================================
+class: small-code
+
+```{r, results= "asis"}
+data("Titanic")
+library(epitools)
+Titanic2 <- expand.table(Titanic)
+Titanic2$Survived <- ifelse(Titanic2$Survived == "Yes", 1, 0)
+knitr::kable(head(Titanic2))
+```
+
+Modelo lineal generalizado (familia: binomial)
+========================================================
+class: small-code
+
+```{r}
+library(ggplot2)
+ggplot(Titanic2, aes(x = Class, y = Survived)) + geom_violin(aes(fill = Sex)) 
+```
+
+Modelo lineal generalizado (familia: binomial)
+========================================================
+class: small-code
+```{r, results="asis", cache = TRUE}
+ModeloTitanic <- glm(Survived ~.,family=binomial() ,data = Titanic2)
+stargazer::stargazer(ModeloTitanic, type = "html",  single.row = TRUE)
+```
+
+Selección de modelos
+=======================
+class: small-code
+incremental:true
+
+```{r}
+data("mtcars")
+Eficiencia <- glm(mpg ~. , data = mtcars)
+```
+* Se parte del modelo general (Muchos predictores) 
+* ~. Explicado por todas las otras variables
+* Paquete MuMIn calcula AICc (o [AIC](http://izt.ciens.ucv.ve/ecologia/Archivos/ECO_POB%202014/ECOPO2_2014/Aho%20et%20al%202014.pdf) o [BIC](https://faculty.washington.edu/skalski/classes/QERM597/papers_xtra/Burnham%20and%20Anderson.pdf)) para cada modelo
+* Se ordena desde el menor IC al mayor IC
+* En general reportamos un delta AIC de 2
+
+Selección de modelos
+=======================
+class: small-code
+```{r, cache = TRUE}
+library(MuMIn)
+library(kableExtra)
+library(knitr)
+options(na.action = "na.fail")
+Select <- dredge(Eficiencia)
+Select <-subset(Select, delta <= 2)
+Mejor <- get.models(Select, subset = 1)[[1]]
+Select <-as.data.frame(Select)
+Select <- Select[,colSums(is.na(Select))<nrow(Select)]
+kable(Select, digits = 2)
+```
+
+Selección de modelos (binomial)
+========================================================
+class: small-code
+```{r}
+library(MuMIn)
+options(na.action = "na.fail")
+select <- dredge(ModeloTitanic)
+select <-subset(select, delta <= 20)
+knitr::kable(select)
+```
+
+Selección de modelos (Entendiendo relaciones)
+========================================================
+class: small-code
+```{r, cache = TRUE}
+library(MuMIn)
+options(na.action = "na.fail")
+select <- dredge(glm(TempMedia ~ mes + I(mes^2) + I(mes^3) + I(mes^4) + I(mes^5), data = Pun))
+select <-subset(select, delta <= 2)
+knitr::kable(select)
+```
+
+Selección de modelos (Entendiendo relaciones)
+========================================================
+class: small-code
+
+```{r}
+library(broom)
+mejor <-glm(TempMedia ~ mes + I(mes^2) + I(mes^3) + I(mes^4), data = Pun)
+MasDatos <-augment(mejor)
+
+masomenos <- glm(TempMedia ~ mes + I(mes^2), data = Pun)
+MasoMenosDatos <-augment(masomenos)
+
+library(ggplot2)
+
+MejorGraph <- ggplot(MasDatos, aes(x = mes, y = TempMedia)) + geom_point(color = "blue") + geom_line(aes(y = .fitted), color = "red")
+
+MasMenosGraph <- ggplot(MasoMenosDatos, aes(x = mes, y = TempMedia)) + geom_point(color = "blue") + geom_line(aes(y = .fitted), color = "red")
+```
+
+Selección de modelos (Entendiendo relaciones)
+========================================================
+class: small-code
+
+```{r}
+library(gridExtra)
+grid.arrange(MejorGraph, MasMenosGraph, ncol = 1)
+```
+
+
+Expandiendo los modelos que puedo usar paquete caret
+===========================================
+incremental:true
+
+* Paquete [caret](http://topepo.github.io/caret/index.html), 238 tipos de modelos distintos 
+* Si quieren aprender mucho más acá hay un [tutorial](https://www.youtube.com/watch?v=7Jbb2ItbTC4&t=3s)
+* En lo más básico solo una función *train*
+* Curso de de machine learning en R?
+
+función train
+===================
+class: small-code
+
+* Sirve para cualquier modelo, solo hay que cambiar method
+```{r}
+library(caret)
+Eficiencia <- train(mpg ~ wt, method = "lm", data = mtcars)
+glance(Eficiencia$finalModel)
+```
+***
+```{r}
+library(caret)
+Eficiencia2 <- train(mpg ~ wt, method = "glm", data = mtcars)
+glance(Eficiencia2$finalModel)
+```
+
+función train
+===================
+class: small-code
+
+```{r, cache = TRUE}
+library(caret)
+Eficiencia3 <- train(mpg ~ wt, method = "bagEarth", data = mtcars)
+Eficiencia3$results
+```
+
+función train (clasificación)
+===================
+class: small-code
+
+```{r, eval = FALSE}
+library(caret)
+Especies <- train(Species ~. , method = "glm", data = iris)
+```
+
+función train (clasificación)
+===================
+class: small-code
+
+```{r}
+library(caret)
+Especies <- train(Species ~. , method = "rpart", data = iris)
+Especies$results
+```
+
+función train (clasificación)
+===================
+class: small-code
+```{r}
+library(rattle)
+library(rpart.plot)
+rpart.plot(Especies$finalModel)
+```
+
+Para la próxima clase
+=====================
+incremental:true
+
+* Loops normales y con purrr (instalar *purrr*)
+* Plantillas de Journals para trabajar desde r (Instalar *rticles*)
+* Hay que poder knitear a pdf (intentarlo sino instalar [Miketex](https://miktex.org/) instalación completa o lo que les pida su RStudio)

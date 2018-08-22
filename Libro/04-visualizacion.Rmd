@@ -6,7 +6,9 @@ Para este capítulo necesitas tener instalado el paquete *tidyverse*.
 
 En este capítulo se explicará qué es el paquete *ggplot2* [@Wickhamggplot] y cómo utilizarlo para visualizar datos.
 
-Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase4/Clase4Visualizacion). El video de la clase se encontrará disponible en este [link]
+Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase4/Clase4Visualizacion). El video de la clase se encontrará disponible en este [link](https://youtu.be/YKEiqSDz-c8)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YKEiqSDz-c8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## El esqueleto
 
