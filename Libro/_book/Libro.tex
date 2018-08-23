@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-08-22}
+    \date{2018-08-23}
 
 \usepackage{booktabs}
 
@@ -250,6 +250,9 @@ presentación y/o un documento interactivo reproducible.
   Capítulo \ref{visualizacion} \emph{Visualización de datos} visualizar
   datos vs.~visualizar modelos. Insertar gráficos con leyenda en un
   documento Rmd
+\item
+  Capítulo \ref{modelos} \emph{Modelos en R} Aprender a generar modelos
+  en R, desde ANOVA a GLM.
 \item
   Capítulo \ref{loops} \emph{Loops}. Generación de funciones propias en
   R y loops
@@ -435,23 +438,6 @@ El resultado se puedde ver en la tabla \ref{tab:SummaryPetaltab}, en el
 cuál se obtienen los promedios y desviaciones estándar de los largos de
 los pétalos. Es importante notar que al usar summarize, todas las otras
 variables desapareceran de la tabla.
-
-\begin{verbatim}
-## 
-## Attaching package: 'dplyr'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-\end{verbatim}
 
 \begin{table}
 
@@ -2304,7 +2290,335 @@ vemos en la figura \ref{fig:Columnas} y su código correspondiente.
 \hypertarget{modelos}{%
 \chapter{Modelos en R}\label{modelos}}
 
-We have finished a nice book.
+\hypertarget{paquetes-necesarios-para-este-capitulo-4}{%
+\section{Paquetes necesarios para este
+capítulo}\label{paquetes-necesarios-para-este-capitulo-4}}
+
+Para este capítulo necesitas tener instalado el paquete
+\emph{tidyverse}, \emph{broom} y \emph{MuMIn}.
+
+En este capítulo se explicará como generar modelos en R, el como obtener
+información y tablas a partir de los modelos con el paquete \emph{Broom}
+\citep{Robinson2018} y una leve introducción a la selección de modelos
+con el paquete \emph{MuMIn} \citep{Barton2018}
+
+Dado que este libro es un apoyo para el curso BIO4022, esta clase puede
+también ser seguida en este
+\href{https://derek-corcoran-barrios.github.io/Clase5/Modelos}{link}. El
+video de la clase se encontrará disponible en este {[}link{]}.
+
+\hypertarget{modelos-estadisticos}{%
+\section{Modelos estadísticos}\label{modelos-estadisticos}}
+
+Un modelo estadístico intenta explicar las causas de un suceso basado en
+un muestreo de la población total. El supuesto es que si la muestra que
+obtenemos de la población es representativa de esta, podremos inferir
+las causas de la variación de la población midiendo variables
+explicativas. En general tenemos una variable respuesta (fenómeno que
+queremos explicar), y una o varias variables explicativas que generarían
+deterministamente parte de la variabilidad en la variable respuesta.
+
+\hypertarget{ejemplo}{%
+\subsection{Ejemplo}\label{ejemplo}}
+
+Tomemos el ejemplo de la base de datos \emph{CO2} presente en R
+\citep{potvin1990statistical}. Supongamos que nos interesa saber que
+factores afectan la captación de \(CO_2\) en las plantas.
+
+\begin{table}
+
+\caption{\label{tab:TablaCo2}Primeras 20 variables de la base de datos CO2.}
+\centering
+\begin{tabular}[t]{lllrr}
+\toprule
+Plant & Type & Treatment & conc & uptake\\
+\midrule
+Qn1 & Quebec & nonchilled & 95 & 16.0\\
+Qn1 & Quebec & nonchilled & 175 & 30.4\\
+Qn1 & Quebec & nonchilled & 250 & 34.8\\
+Qn1 & Quebec & nonchilled & 350 & 37.2\\
+Qn1 & Quebec & nonchilled & 500 & 35.3\\
+\addlinespace
+Qn1 & Quebec & nonchilled & 675 & 39.2\\
+Qn1 & Quebec & nonchilled & 1000 & 39.7\\
+Qn2 & Quebec & nonchilled & 95 & 13.6\\
+Qn2 & Quebec & nonchilled & 175 & 27.3\\
+Qn2 & Quebec & nonchilled & 250 & 37.1\\
+\addlinespace
+Qn2 & Quebec & nonchilled & 350 & 41.8\\
+Qn2 & Quebec & nonchilled & 500 & 40.6\\
+Qn2 & Quebec & nonchilled & 675 & 41.4\\
+Qn2 & Quebec & nonchilled & 1000 & 44.3\\
+Qn3 & Quebec & nonchilled & 95 & 16.2\\
+\addlinespace
+Qn3 & Quebec & nonchilled & 175 & 32.4\\
+Qn3 & Quebec & nonchilled & 250 & 40.3\\
+Qn3 & Quebec & nonchilled & 350 & 42.1\\
+Qn3 & Quebec & nonchilled & 500 & 42.9\\
+Qn3 & Quebec & nonchilled & 675 & 43.9\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+En la tabla \ref{tab:TablaCo2} vemos las primeras 20 observaciones de
+esta base de datos. Vemos que dentro de los factores que tenemos para
+explicar la captación de \(CO_2\) estan:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Type:} Subespecie de la planta (Missisipi o Quebec)
+\item
+  \emph{Treatment:} Tratamiento de la plnata, enfriado (chilled) o no
+  enfriado (nonchilled)
+\item
+  \emph{conc:} Concentración ambiental de \(CO_2\), en mL/L.
+\end{itemize}
+
+Una posible explicación que nos permitiría intentar explicar este
+fenómeno, es que las plantas de distintas subespecies, tendrán distinta
+captación de \(CO_2\), lo cual exlploramos en el gráfico
+\ref{fig:Subespecie}:
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/Subespecie-1} 
+
+}
+
+\caption{Captación de CO2 por plantas dependiente de su subespecie}\label{fig:Subespecie}
+\end{figure}
+
+Vemos que se observa una tendencia a que las plantas con origen en
+Quebec capten más \(CO_2\) que las que estan en el Mississippi, pero
+¿Podemos decir efectivamente que ambas poblaciónes tienen medias
+distintas medias? Es ahí donde entran los modelos.
+
+\hypertarget{representando-un-modelo-en-r}{%
+\subsection{Representando un modelo en
+R}\label{representando-un-modelo-en-r}}
+
+En R la mayoría de los modelos se representan con el siguiente codigo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{alguna_funcion}\NormalTok{(Y }\OperatorTok{~}\StringTok{ }\NormalTok{X1 }\OperatorTok{+}\StringTok{ }\NormalTok{X2 }\OperatorTok{+}\StringTok{ }\NormalTok{... }\OperatorTok{+}\StringTok{ }\NormalTok{Xn, }\DataTypeTok{data =}\NormalTok{ data.frame)}
+\end{Highlighting}
+\end{Shaded}
+
+En este modelo, tenemos la variable respuesta \emph{Y}, la cual puede
+estar explcada por una o multiples variables explicativas \emph{X}, es
+por esto que el simbolo \texttt{\textasciitilde{}} se lee explicado por,
+donde lo que esta a su izquerada es la variable respuesta y a la derecha
+la variable explicativa. Los datos se encuentran en un data frame y
+finalmente usaremos alguna función, que identificará algún modelo.
+Algunas de estas funciones las encontramos en la tabla \ref{tab:Modelos}
+
+\begin{table}
+
+\caption{\label{tab:Modelos}Algunos modelos que podemos generar en R}
+\centering
+\begin{tabular}[t]{ll}
+\toprule
+Modelos & Funcion\\
+\midrule
+Prueba de t & t.test()\\
+ANOVA & aov()\\
+Modelo lineal simple & lm()\\
+modelo lineal generalizado & glm()\\
+Modelo aditivo & gam()\\
+\addlinespace
+Modelo no lineal & nls()\\
+modelos lineales mixtos & lmer()\\
+Boosted regression trees & gbm()\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{volvamos-al-ejemplo-de-las-plantas}{%
+\subsection{Volvamos al ejemplo de las
+plantas}\label{volvamos-al-ejemplo-de-las-plantas}}
+
+Para este ejemplo usaremos un modelo lineal simple, para esto siguiendo
+la tabla \ref{tab:Modelos} usaremos la función \texttt{lm}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Fit1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(uptake }\OperatorTok{~}\StringTok{ }\NormalTok{Type, }\DataTypeTok{data =}\NormalTok{ CO2)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{usando-broom-para-sacarle-mas-a-tu-modelo}{%
+\subsubsection{usando broom para sacarle más a tu
+modelo}\label{usando-broom-para-sacarle-mas-a-tu-modelo}}
+
+El paquete broom \citep{Robinson2018} es un paquete adyacente al
+tidyverse (por lo que debes cargarlo aparte del tidyverse), el cual nos
+permite tomar información de modelos generados en formato tidy. Hoy
+veremos 3 funciones de \emph{broom}, estas son \texttt{glance},
+\texttt{tidy} y \texttt{augment}.
+
+\hypertarget{glance}{%
+\paragraph{glance}\label{glance}}
+
+la función glance, nos entregará información general del modelo, como el
+valor de p, el \(R^2\), log-likelihood, grados de libertad, y/o otros
+parametros dependiendo del modelo a utilizar. Esta información nos es
+entregada en un formato de data frame, como vemos en el código siguiente
+y en la tabla \ref{tab:glance}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(broom)}
+\KeywordTok{glance}\NormalTok{(Fit1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:glance}Información del modelo fi1 entregada por la función glance}
+\centering
+\begin{tabular}[t]{rrrrrrrrrrr}
+\toprule
+r.squared & adj.r.squared & sigma & statistic & p.value & df & logLik & AIC & BIC & deviance & df.residual\\
+\midrule
+0.346713 & 0.3387461 & 8.794012 & 43.5191 & 0 & 2 & -300.8007 & 607.6014 & 614.8939 & 6341.441 & 82\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{tidy}{%
+\paragraph{tidy}\label{tidy}}
+
+la función tidy, nos entregará información sobre los parametros del
+modelo, esto es el intercepto, la pendiente y/o interacciones, como
+vemos en el código siguiente y en la tabla \ref{tab:tidy}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tidy}\NormalTok{(Fit1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:tidy}Información del modelo fi1 entregada por la función glance}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+term & estimate & std.error & statistic & p.value\\
+\midrule
+(Intercept) & 33.54286 & 1.356945 & 24.719384 & 0\\
+TypeMississippi & -12.65952 & 1.919011 & -6.596901 & 0\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{augment}{%
+\paragraph{augment}\label{augment}}
+
+la función augment, nos entregará para cada observación de nuestro
+modelo, varios parametros importantes como el valor predicho, los
+residuales, el distancia de cook entre otros, esto nos sirve
+principalmente para estudiar los supuestos de nuestro modelo. A
+continuación vemos el uso de la función \texttt{augment} y 20 de sus
+observaciones en la tabla \ref{tab:augment}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{augment}\NormalTok{(Fit1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:augment}Información del modelo fi1 entregada por la función augment}
+\centering
+\begin{tabular}[t]{rlrrrrrrr}
+\toprule
+uptake & Type & .fitted & .se.fit & .resid & .hat & .sigma & .cooksd & .std.resid\\
+\midrule
+10.6 & Mississippi & 20.88333 & 1.356945 & -10.283333 & 0.0238095 & 8.772231 & 0.0170823 & -1.1835308\\
+28.5 & Mississippi & 20.88333 & 1.356945 & 7.616667 & 0.0238095 & 8.806572 & 0.0093715 & 0.8766185\\
+10.6 & Mississippi & 20.88333 & 1.356945 & -10.283333 & 0.0238095 & 8.772231 & 0.0170823 & -1.1835308\\
+32.4 & Quebec & 33.54286 & 1.356945 & -1.142857 & 0.0238095 & 8.847196 & 0.0002110 & -0.1315339\\
+27.9 & Mississippi & 20.88333 & 1.356945 & 7.016667 & 0.0238095 & 8.812874 & 0.0079531 & 0.8075632\\
+\addlinespace
+17.9 & Mississippi & 20.88333 & 1.356945 & -2.983333 & 0.0238095 & 8.841767 & 0.0014377 & -0.3433582\\
+35.3 & Quebec & 33.54286 & 1.356945 & 1.757143 & 0.0238095 & 8.845923 & 0.0004988 & 0.2022333\\
+19.2 & Mississippi & 20.88333 & 1.356945 & -1.683333 & 0.0238095 & 8.846104 & 0.0004577 & -0.1937384\\
+38.1 & Quebec & 33.54286 & 1.356945 & 4.557143 & 0.0238095 & 8.833275 & 0.0033548 & 0.5244913\\
+14.9 & Mississippi & 20.88333 & 1.356945 & -5.983333 & 0.0238095 & 8.822508 & 0.0057831 & -0.6886346\\
+\addlinespace
+38.6 & Quebec & 33.54286 & 1.356945 & 5.057143 & 0.0238095 & 8.829833 & 0.0041313 & 0.5820374\\
+30.3 & Quebec & 33.54286 & 1.356945 & -3.242857 & 0.0238095 & 8.840611 & 0.0016988 & -0.3732274\\
+31.8 & Mississippi & 20.88333 & 1.356945 & 10.916667 & 0.0238095 & 8.762547 & 0.0192512 & 1.2564225\\
+13.7 & Mississippi & 20.88333 & 1.356945 & -7.183333 & 0.0238095 & 8.811176 & 0.0083355 & -0.8267452\\
+16.0 & Quebec & 33.54286 & 1.356945 & -17.542857 & 0.0238095 & 8.625388 & 0.0497139 & -2.0190449\\
+\addlinespace
+27.3 & Quebec & 33.54286 & 1.356945 & -6.242857 & 0.0238095 & 8.820233 & 0.0062957 & -0.7185038\\
+12.0 & Mississippi & 20.88333 & 1.356945 & -8.883333 & 0.0238095 & 8.791552 & 0.0127476 & -1.0224018\\
+41.4 & Quebec & 33.54286 & 1.356945 & 7.857143 & 0.0238095 & 8.803900 & 0.0099726 & 0.9042954\\
+13.6 & Quebec & 33.54286 & 1.356945 & -19.942857 & 0.0238095 & 8.559179 & 0.0642469 & -2.2952661\\
+7.7 & Mississippi & 20.88333 & 1.356945 & -13.183333 & 0.0238095 & 8.723037 & 0.0280755 & -1.5172980\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\hypertarget{seleccion-de-modelos-usando-broom-y-el-aic}{%
+\subsubsection{Selección de modelos usando broom y el
+AIC}\label{seleccion-de-modelos-usando-broom-y-el-aic}}
+
+El AIC, o Criterio de informacion de Akaike \citep{aho2014model}, es una
+medida de cuanta información nos entrega un modelo dada su complejidad.
+Esta última medida a partir del número de parámetros que tiene. Cuanto
+más bajo sea el AIC, mejor comparativamente es un modelo, y en general,
+un modelo que sea dos unidades de AIC menor que otro modelo, será
+considerado un modelo que es significativamente mejor que otro.
+
+La formula del criterio de selección de Akaike es la que vemos en la
+ecuación \eqref{eq:AIC}.
+
+\begin{equation} 
+  AIC = 2 K - 2 \ln{(\hat{L})}
+  \label{eq:AIC}
+\end{equation}
+
+Donde \(K\) es el número de parametros, lo cual podemos ver con tidy, si
+vemos la tabla \ref{tab:tidy}, vemos que el modelo \emph{Fit1} tiene 2
+parametros, esto es \(K\) es igual a 2.
+
+El log-likelihood del modelo (\(\ln{(\hat{L})}\)) es el ajuste que este
+tiene a los datos. Cuanto más positivo es este valor mejor se ajusta el
+modelo a los datos, y cuanto mas negativo es, menos se ajusta a los
+datos, en nuestro modelo, usando glance, podemos ver que el valor del
+log-likelyhood del modelo es de -300.8 (ver tabla \ref{tab:tidy}).
+
+Por lo tanto remplazando la ecuación \eqref{eq:AIC}, obtenemos 605.6, que
+es un valor muy cercano a los 608, que aparecen en el glance del modelo
+(tabla \ref{tab:tidy}).
+
+\hypertarget{modelos-candidatos}{%
+\paragraph{Modelos candidatos}\label{modelos-candidatos}}
+
+Veamos la figura \ref{fig:CO2Mods}. para pensar cuales podrían ser
+modelos interesantes a explorar.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(CO2, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ conc, }\DataTypeTok{y =}\NormalTok{ uptake)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Type, }
+    \DataTypeTok{shape =}\NormalTok{ Treatment), }\DataTypeTok{size =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{Libro_files/figure-latex/CO2Mods-1} 
+
+}
+
+\caption{Gráfico exploratorio para generar modelos de la base de datos CO2}\label{fig:CO2Mods}
+\end{figure}
 
 \hypertarget{loops}{%
 \chapter{Loops (purrr) y bibliografía (rticles)}\label{loops}}

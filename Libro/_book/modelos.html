@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-22">
+<meta name="date" content="2018-08-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -203,7 +203,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.5.3" data-path="visualizacion.html"><a href="visualizacion.html#combinando-varios-graficos-con-facet_wrap"><i class="fa fa-check"></i><b>4.5.3</b> Combinando varios gráficos con facet_wrap</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a></li>
+<li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos.html"><a href="modelos.html#paquetes-necesarios-para-este-capitulo-4"><i class="fa fa-check"></i><b>5.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="5.2" data-path="modelos.html"><a href="modelos.html#modelos-estadisticos"><i class="fa fa-check"></i><b>5.2</b> Modelos estadísticos</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="modelos.html"><a href="modelos.html#ejemplo"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="5.2.2" data-path="modelos.html"><a href="modelos.html#representando-un-modelo-en-r"><i class="fa fa-check"></i><b>5.2.2</b> Representando un modelo en R</a></li>
+<li class="chapter" data-level="5.2.3" data-path="modelos.html"><a href="modelos.html#volvamos-al-ejemplo-de-las-plantas"><i class="fa fa-check"></i><b>5.2.3</b> Volvamos al ejemplo de las plantas</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>6</b> Loops (purrr) y bibliografía (rticles)</a></li>
 <li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
@@ -242,8 +249,601 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="modelos" class="section level1">
 <h1><span class="header-section-number">Capítulo 5</span> Modelos en R</h1>
-<p>We have finished a nice book.</p>
+<div id="paquetes-necesarios-para-este-capitulo-4" class="section level2">
+<h2><span class="header-section-number">5.1</span> Paquetes necesarios para este capítulo</h2>
+<p>Para este capítulo necesitas tener instalado el paquete <em>tidyverse</em>, <em>broom</em> y <em>MuMIn</em>.</p>
+<p>En este capítulo se explicará como generar modelos en R, el como obtener información y tablas a partir de los modelos con el paquete <em>Broom</em> <span class="citation">(Robinson and Hayes <a href="#ref-Robinson2018">2018</a>)</span> y una leve introducción a la selección de modelos con el paquete <em>MuMIn</em> <span class="citation">(Barton <a href="#ref-Barton2018">2018</a>)</span></p>
+<p>Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este <a href="https://derek-corcoran-barrios.github.io/Clase5/Modelos">link</a>. El video de la clase se encontrará disponible en este [link].</p>
+</div>
+<div id="modelos-estadisticos" class="section level2">
+<h2><span class="header-section-number">5.2</span> Modelos estadísticos</h2>
+<p>Un modelo estadístico intenta explicar las causas de un suceso basado en un muestreo de la población total. El supuesto es que si la muestra que obtenemos de la población es representativa de esta, podremos inferir las causas de la variación de la población midiendo variables explicativas. En general tenemos una variable respuesta (fenómeno que queremos explicar), y una o varias variables explicativas que generarían deterministamente parte de la variabilidad en la variable respuesta.</p>
+<div id="ejemplo" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Ejemplo</h3>
+<p>Tomemos el ejemplo de la base de datos <em>CO2</em> presente en R <span class="citation">(Potvin, Lechowicz, and Tardif <a href="#ref-potvin1990statistical">1990</a>)</span>. Supongamos que nos interesa saber que factores afectan la captación de <span class="math inline">\(CO_2\)</span> en las plantas.</p>
+<table>
+<caption><span id="tab:TablaCo2">Tabla 5.1: </span>Primeras 20 variables de la base de datos CO2.</caption>
+<thead>
+<tr class="header">
+<th align="left">Plant</th>
+<th align="left">Type</th>
+<th align="left">Treatment</th>
+<th align="right">conc</th>
+<th align="right">uptake</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Qn1</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">95</td>
+<td align="right">16.0</td>
+</tr>
+<tr class="even">
+<td align="left">Qn1</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">175</td>
+<td align="right">30.4</td>
+</tr>
+<tr class="odd">
+<td align="left">Qn1</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">250</td>
+<td align="right">34.8</td>
+</tr>
+<tr class="even">
+<td align="left">Qn1</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">350</td>
+<td align="right">37.2</td>
+</tr>
+<tr class="odd">
+<td align="left">Qn1</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">500</td>
+<td align="right">35.3</td>
+</tr>
+<tr class="even">
+<td align="left">Qn1</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">675</td>
+<td align="right">39.2</td>
+</tr>
+<tr class="odd">
+<td align="left">Qn1</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">1000</td>
+<td align="right">39.7</td>
+</tr>
+<tr class="even">
+<td align="left">Qn2</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">95</td>
+<td align="right">13.6</td>
+</tr>
+<tr class="odd">
+<td align="left">Qn2</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">175</td>
+<td align="right">27.3</td>
+</tr>
+<tr class="even">
+<td align="left">Qn2</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">250</td>
+<td align="right">37.1</td>
+</tr>
+<tr class="odd">
+<td align="left">Qn2</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">350</td>
+<td align="right">41.8</td>
+</tr>
+<tr class="even">
+<td align="left">Qn2</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">500</td>
+<td align="right">40.6</td>
+</tr>
+<tr class="odd">
+<td align="left">Qn2</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">675</td>
+<td align="right">41.4</td>
+</tr>
+<tr class="even">
+<td align="left">Qn2</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">1000</td>
+<td align="right">44.3</td>
+</tr>
+<tr class="odd">
+<td align="left">Qn3</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">95</td>
+<td align="right">16.2</td>
+</tr>
+<tr class="even">
+<td align="left">Qn3</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">175</td>
+<td align="right">32.4</td>
+</tr>
+<tr class="odd">
+<td align="left">Qn3</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">250</td>
+<td align="right">40.3</td>
+</tr>
+<tr class="even">
+<td align="left">Qn3</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">350</td>
+<td align="right">42.1</td>
+</tr>
+<tr class="odd">
+<td align="left">Qn3</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">500</td>
+<td align="right">42.9</td>
+</tr>
+<tr class="even">
+<td align="left">Qn3</td>
+<td align="left">Quebec</td>
+<td align="left">nonchilled</td>
+<td align="right">675</td>
+<td align="right">43.9</td>
+</tr>
+</tbody>
+</table>
+<p>En la tabla <a href="modelos.html#tab:TablaCo2">5.1</a> vemos las primeras 20 observaciones de esta base de datos. Vemos que dentro de los factores que tenemos para explicar la captación de <span class="math inline">\(CO_2\)</span> estan:</p>
+<ul>
+<li><em>Type:</em> Subespecie de la planta (Missisipi o Quebec)</li>
+<li><em>Treatment:</em> Tratamiento de la plnata, enfriado (chilled) o no enfriado (nonchilled)</li>
+<li><em>conc:</em> Concentración ambiental de <span class="math inline">\(CO_2\)</span>, en mL/L.</li>
+</ul>
+<p>Una posible explicación que nos permitiría intentar explicar este fenómeno, es que las plantas de distintas subespecies, tendrán distinta captación de <span class="math inline">\(CO_2\)</span>, lo cual exlploramos en el gráfico <a href="modelos.html#fig:Subespecie">5.1</a>:</p>
+<div class="figure" style="text-align: center"><span id="fig:Subespecie"></span>
+<img src="Libro_files/figure-html/Subespecie-1.png" alt="Captación de CO2 por plantas dependiente de su subespecie" width="80%" />
+<p class="caption">
+Figura 5.1: Captación de CO2 por plantas dependiente de su subespecie
+</p>
+</div>
+<p>Vemos que se observa una tendencia a que las plantas con origen en Quebec capten más <span class="math inline">\(CO_2\)</span> que las que estan en el Mississippi, pero ¿Podemos decir efectivamente que ambas poblaciónes tienen medias distintas medias? Es ahí donde entran los modelos.</p>
+</div>
+<div id="representando-un-modelo-en-r" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Representando un modelo en R</h3>
+<p>En R la mayoría de los modelos se representan con el siguiente codigo:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">alguna_funcion</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2 <span class="op">+</span><span class="st"> </span>... <span class="op">+</span><span class="st"> </span>Xn, <span class="dt">data =</span> data.frame)</a></code></pre></div>
+<p>En este modelo, tenemos la variable respuesta <em>Y</em>, la cual puede estar explcada por una o multiples variables explicativas <em>X</em>, es por esto que el simbolo <code>~</code> se lee explicado por, donde lo que esta a su izquerada es la variable respuesta y a la derecha la variable explicativa. Los datos se encuentran en un data frame y finalmente usaremos alguna función, que identificará algún modelo. Algunas de estas funciones las encontramos en la tabla <a href="modelos.html#tab:Modelos">5.2</a></p>
+<table>
+<caption><span id="tab:Modelos">Tabla 5.2: </span>Algunos modelos que podemos generar en R</caption>
+<thead>
+<tr class="header">
+<th align="left">Modelos</th>
+<th align="left">Funcion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Prueba de t</td>
+<td align="left">t.test()</td>
+</tr>
+<tr class="even">
+<td align="left">ANOVA</td>
+<td align="left">aov()</td>
+</tr>
+<tr class="odd">
+<td align="left">Modelo lineal simple</td>
+<td align="left">lm()</td>
+</tr>
+<tr class="even">
+<td align="left">modelo lineal generalizado</td>
+<td align="left">glm()</td>
+</tr>
+<tr class="odd">
+<td align="left">Modelo aditivo</td>
+<td align="left">gam()</td>
+</tr>
+<tr class="even">
+<td align="left">Modelo no lineal</td>
+<td align="left">nls()</td>
+</tr>
+<tr class="odd">
+<td align="left">modelos lineales mixtos</td>
+<td align="left">lmer()</td>
+</tr>
+<tr class="even">
+<td align="left">Boosted regression trees</td>
+<td align="left">gbm()</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="volvamos-al-ejemplo-de-las-plantas" class="section level3">
+<h3><span class="header-section-number">5.2.3</span> Volvamos al ejemplo de las plantas</h3>
+<p>Para este ejemplo usaremos un modelo lineal simple, para esto siguiendo la tabla <a href="modelos.html#tab:Modelos">5.2</a> usaremos la función <code>lm</code>:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">Fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>Type, <span class="dt">data =</span> CO2)</a></code></pre></div>
+<div id="usando-broom-para-sacarle-mas-a-tu-modelo" class="section level4">
+<h4><span class="header-section-number">5.2.3.1</span> usando broom para sacarle más a tu modelo</h4>
+<p>El paquete broom <span class="citation">(Robinson and Hayes <a href="#ref-Robinson2018">2018</a>)</span> es un paquete adyacente al tidyverse (por lo que debes cargarlo aparte del tidyverse), el cual nos permite tomar información de modelos generados en formato tidy. Hoy veremos 3 funciones de <em>broom</em>, estas son <code>glance</code>, <code>tidy</code> y <code>augment</code>.</p>
+<div id="glance" class="section level5">
+<h5><span class="header-section-number">5.2.3.1.1</span> glance</h5>
+<p>la función glance, nos entregará información general del modelo, como el valor de p, el <span class="math inline">\(R^2\)</span>, log-likelihood, grados de libertad, y/o otros parametros dependiendo del modelo a utilizar. Esta información nos es entregada en un formato de data frame, como vemos en el código siguiente y en la tabla <a href="modelos.html#tab:glance">5.3</a></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="kw">glance</span>(Fit1)</a></code></pre></div>
+<table>
+<caption><span id="tab:glance">Tabla 5.3: </span>Información del modelo fi1 entregada por la función glance</caption>
+<thead>
+<tr class="header">
+<th align="right">r.squared</th>
+<th align="right">adj.r.squared</th>
+<th align="right">sigma</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+<th align="right">df</th>
+<th align="right">logLik</th>
+<th align="right">AIC</th>
+<th align="right">BIC</th>
+<th align="right">deviance</th>
+<th align="right">df.residual</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.346713</td>
+<td align="right">0.3387461</td>
+<td align="right">8.794012</td>
+<td align="right">43.5191</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">-300.8007</td>
+<td align="right">607.6014</td>
+<td align="right">614.8939</td>
+<td align="right">6341.441</td>
+<td align="right">82</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tidy" class="section level5">
+<h5><span class="header-section-number">5.2.3.1.2</span> tidy</h5>
+<p>la función tidy, nos entregará información sobre los parametros del modelo, esto es el intercepto, la pendiente y/o interacciones, como vemos en el código siguiente y en la tabla <a href="modelos.html#tab:tidy">5.4</a></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">tidy</span>(Fit1)</a></code></pre></div>
+<table>
+<caption><span id="tab:tidy">Tabla 5.4: </span>Información del modelo fi1 entregada por la función glance</caption>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">24.719384</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">TypeMississippi</td>
+<td align="right">-12.65952</td>
+<td align="right">1.919011</td>
+<td align="right">-6.596901</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="augment" class="section level5">
+<h5><span class="header-section-number">5.2.3.1.3</span> augment</h5>
+<p>la función augment, nos entregará para cada observación de nuestro modelo, varios parametros importantes como el valor predicho, los residuales, el distancia de cook entre otros, esto nos sirve principalmente para estudiar los supuestos de nuestro modelo. A continuación vemos el uso de la función <code>augment</code> y 20 de sus observaciones en la tabla <a href="modelos.html#tab:augment">5.5</a></p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">augment</span>(Fit1)</a></code></pre></div>
+<table>
+<caption><span id="tab:augment">Tabla 5.5: </span>Información del modelo fi1 entregada por la función augment</caption>
+<thead>
+<tr class="header">
+<th align="right">uptake</th>
+<th align="left">Type</th>
+<th align="right">.fitted</th>
+<th align="right">.se.fit</th>
+<th align="right">.resid</th>
+<th align="right">.hat</th>
+<th align="right">.sigma</th>
+<th align="right">.cooksd</th>
+<th align="right">.std.resid</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">27.3</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">-6.242857</td>
+<td align="right">0.0238095</td>
+<td align="right">8.820233</td>
+<td align="right">0.0062957</td>
+<td align="right">-0.7185038</td>
+</tr>
+<tr class="even">
+<td align="right">39.2</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">5.657143</td>
+<td align="right">0.0238095</td>
+<td align="right">8.825228</td>
+<td align="right">0.0051698</td>
+<td align="right">0.6510927</td>
+</tr>
+<tr class="odd">
+<td align="right">21.9</td>
+<td align="left">Mississippi</td>
+<td align="right">20.88333</td>
+<td align="right">1.356945</td>
+<td align="right">1.016667</td>
+<td align="right">0.0238095</td>
+<td align="right">8.847391</td>
+<td align="right">0.0001670</td>
+<td align="right">0.1170103</td>
+</tr>
+<tr class="even">
+<td align="right">42.1</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">8.557143</td>
+<td align="right">0.0238095</td>
+<td align="right">8.795643</td>
+<td align="right">0.0118286</td>
+<td align="right">0.9848599</td>
+</tr>
+<tr class="odd">
+<td align="right">31.8</td>
+<td align="left">Mississippi</td>
+<td align="right">20.88333</td>
+<td align="right">1.356945</td>
+<td align="right">10.916667</td>
+<td align="right">0.0238095</td>
+<td align="right">8.762547</td>
+<td align="right">0.0192512</td>
+<td align="right">1.2564225</td>
+</tr>
+<tr class="even">
+<td align="right">37.1</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">3.557143</td>
+<td align="right">0.0238095</td>
+<td align="right">8.839082</td>
+<td align="right">0.0020440</td>
+<td align="right">0.4093992</td>
+</tr>
+<tr class="odd">
+<td align="right">21.0</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">-12.542857</td>
+<td align="right">0.0238095</td>
+<td align="right">8.734974</td>
+<td align="right">0.0254138</td>
+<td align="right">-1.4435842</td>
+</tr>
+<tr class="even">
+<td align="right">27.9</td>
+<td align="left">Mississippi</td>
+<td align="right">20.88333</td>
+<td align="right">1.356945</td>
+<td align="right">7.016667</td>
+<td align="right">0.0238095</td>
+<td align="right">8.812874</td>
+<td align="right">0.0079531</td>
+<td align="right">0.8075632</td>
+</tr>
+<tr class="odd">
+<td align="right">30.0</td>
+<td align="left">Mississippi</td>
+<td align="right">20.88333</td>
+<td align="right">1.356945</td>
+<td align="right">9.116667</td>
+<td align="right">0.0238095</td>
+<td align="right">8.788531</td>
+<td align="right">0.0134261</td>
+<td align="right">1.0492567</td>
+</tr>
+<tr class="even">
+<td align="right">32.4</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">-1.142857</td>
+<td align="right">0.0238095</td>
+<td align="right">8.847196</td>
+<td align="right">0.0002110</td>
+<td align="right">-0.1315339</td>
+</tr>
+<tr class="odd">
+<td align="right">44.3</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">10.757143</td>
+<td align="right">0.0238095</td>
+<td align="right">8.765042</td>
+<td align="right">0.0186927</td>
+<td align="right">1.2380626</td>
+</tr>
+<tr class="even">
+<td align="right">41.8</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">8.257143</td>
+<td align="right">0.0238095</td>
+<td align="right">8.799269</td>
+<td align="right">0.0110138</td>
+<td align="right">0.9503322</td>
+</tr>
+<tr class="odd">
+<td align="right">30.3</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">-3.242857</td>
+<td align="right">0.0238095</td>
+<td align="right">8.840611</td>
+<td align="right">0.0016988</td>
+<td align="right">-0.3732274</td>
+</tr>
+<tr class="even">
+<td align="right">30.6</td>
+<td align="left">Mississippi</td>
+<td align="right">20.88333</td>
+<td align="right">1.356945</td>
+<td align="right">9.716667</td>
+<td align="right">0.0238095</td>
+<td align="right">8.780397</td>
+<td align="right">0.0152515</td>
+<td align="right">1.1183119</td>
+</tr>
+<tr class="odd">
+<td align="right">17.9</td>
+<td align="left">Mississippi</td>
+<td align="right">20.88333</td>
+<td align="right">1.356945</td>
+<td align="right">-2.983333</td>
+<td align="right">0.0238095</td>
+<td align="right">8.841767</td>
+<td align="right">0.0014377</td>
+<td align="right">-0.3433582</td>
+</tr>
+<tr class="even">
+<td align="right">28.5</td>
+<td align="left">Mississippi</td>
+<td align="right">20.88333</td>
+<td align="right">1.356945</td>
+<td align="right">7.616667</td>
+<td align="right">0.0238095</td>
+<td align="right">8.806572</td>
+<td align="right">0.0093715</td>
+<td align="right">0.8766185</td>
+</tr>
+<tr class="odd">
+<td align="right">13.6</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">-19.942857</td>
+<td align="right">0.0238095</td>
+<td align="right">8.559179</td>
+<td align="right">0.0642469</td>
+<td align="right">-2.2952661</td>
+</tr>
+<tr class="even">
+<td align="right">42.4</td>
+<td align="left">Quebec</td>
+<td align="right">33.54286</td>
+<td align="right">1.356945</td>
+<td align="right">8.857143</td>
+<td align="right">0.0238095</td>
+<td align="right">8.791887</td>
+<td align="right">0.0126726</td>
+<td align="right">1.0193875</td>
+</tr>
+<tr class="odd">
+<td align="right">12.0</td>
+<td align="left">Mississippi</td>
+<td align="right">20.88333</td>
+<td align="right">1.356945</td>
+<td align="right">-8.883333</td>
+<td align="right">0.0238095</td>
+<td align="right">8.791552</td>
+<td align="right">0.0127476</td>
+<td align="right">-1.0224018</td>
+</tr>
+<tr class="even">
+<td align="right">32.4</td>
+<td align="left">Mississippi</td>
+<td align="right">20.88333</td>
+<td align="right">1.356945</td>
+<td align="right">11.516667</td>
+<td align="right">0.0238095</td>
+<td align="right">8.752828</td>
+<td align="right">0.0214255</td>
+<td align="right">1.3254778</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="seleccion-de-modelos-usando-broom-y-el-aic" class="section level4">
+<h4><span class="header-section-number">5.2.3.2</span> Selección de modelos usando broom y el AIC</h4>
+<p>El AIC, o Criterio de informacion de Akaike <span class="citation">(Aho, Derryberry, and Peterson <a href="#ref-aho2014model">2014</a>)</span>, es una medida de cuanta información nos entrega un modelo dada su complejidad. Esta última medida a partir del número de parámetros que tiene. Cuanto más bajo sea el AIC, mejor comparativamente es un modelo, y en general, un modelo que sea dos unidades de AIC menor que otro modelo, será considerado un modelo que es significativamente mejor que otro.</p>
+<p>La formula del criterio de selección de Akaike es la que vemos en la ecuación <a href="modelos.html#eq:AIC">(5.1)</a>.</p>
+<p><span class="math display" id="eq:AIC">\[\begin{equation} 
+  AIC = 2 K - 2 \ln{(\hat{L})}
+  \tag{5.1}
+\end{equation}\]</span></p>
+<p>Donde <span class="math inline">\(K\)</span> es el número de parametros, lo cual podemos ver con tidy, si vemos la tabla <a href="modelos.html#tab:tidy">5.4</a>, vemos que el modelo <em>Fit1</em> tiene 2 parametros, esto es <span class="math inline">\(K\)</span> es igual a 2.</p>
+<p>El log-likelihood del modelo (<span class="math inline">\(\ln{(\hat{L})}\)</span>) es el ajuste que este tiene a los datos. Cuanto más positivo es este valor mejor se ajusta el modelo a los datos, y cuanto mas negativo es, menos se ajusta a los datos, en nuestro modelo, usando glance, podemos ver que el valor del log-likelyhood del modelo es de -300.8 (ver tabla <a href="modelos.html#tab:tidy">5.4</a>).</p>
+<p>Por lo tanto remplazando la ecuación <a href="modelos.html#eq:AIC">(5.1)</a>, obtenemos 605.6, que es un valor muy cercano a los 608, que aparecen en el glance del modelo (tabla <a href="modelos.html#tab:tidy">5.4</a>).</p>
+<div id="modelos-candidatos" class="section level5">
+<h5><span class="header-section-number">5.2.3.2.1</span> Modelos candidatos</h5>
+<p>Veamos la figura <a href="modelos.html#fig:CO2Mods">5.2</a>. para pensar cuales podrían ser modelos interesantes a explorar.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">ggplot</span>(CO2, <span class="kw">aes</span>(<span class="dt">x =</span> conc, <span class="dt">y =</span> uptake)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Type, </a>
+<a class="sourceLine" id="cb53-2" data-line-number="2">    <span class="dt">shape =</span> Treatment), <span class="dt">size =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:CO2Mods"></span>
+<img src="Libro_files/figure-html/CO2Mods-1.png" alt="Gráfico exploratorio para generar modelos de la base de datos CO2" width="80%" />
+<p class="caption">
+Figura 5.2: Gráfico exploratorio para generar modelos de la base de datos CO2
+</p>
+</div>
 
+</div>
+</div>
+</div>
+</div>
+</div>
+<h3> Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-Robinson2018">
+<p>Robinson, David, and Alex Hayes. 2018. <em>Broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom" class="uri">https://CRAN.R-project.org/package=broom</a>.</p>
+</div>
+<div id="ref-Barton2018">
+<p>Barton, Kamil. 2018. <em>MuMIn: Multi-Model Inference</em>. <a href="https://CRAN.R-project.org/package=MuMIn" class="uri">https://CRAN.R-project.org/package=MuMIn</a>.</p>
+</div>
+<div id="ref-potvin1990statistical">
+<p>Potvin, Catherine, Martin J Lechowicz, and Serge Tardif. 1990. “The Statistical Analysis of Ecophysiological Response Curves Obtained from Experiments Involving Repeated Measures.” <em>Ecology</em> 71 (4). Wiley Online Library: 1389–1400.</p>
+</div>
+<div id="ref-aho2014model">
+<p>Aho, Ken, DeWayne Derryberry, and Teri Peterson. 2014. “Model Selection for Ecologists: The Worldviews of Aic and Bic.” <em>Ecology</em> 95 (3). Wiley Online Library: 631–36.</p>
+</div>
 </div>
             </section>
 

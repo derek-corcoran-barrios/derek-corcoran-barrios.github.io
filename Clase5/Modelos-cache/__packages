@@ -14,3 +14,10 @@ plotrix
 TeachingDemos
 plotmo
 earth
+tidyverse
+tibble
+tidyr
+readr
+purrr
+stringr
+forcats

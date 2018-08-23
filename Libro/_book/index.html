@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-22">
+<meta name="date" content="2018-08-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -203,7 +203,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.5.3" data-path="visualizacion.html"><a href="visualizacion.html#combinando-varios-graficos-con-facet_wrap"><i class="fa fa-check"></i><b>4.5.3</b> Combinando varios gráficos con facet_wrap</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a></li>
+<li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos.html"><a href="modelos.html#paquetes-necesarios-para-este-capitulo-4"><i class="fa fa-check"></i><b>5.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="5.2" data-path="modelos.html"><a href="modelos.html#modelos-estadisticos"><i class="fa fa-check"></i><b>5.2</b> Modelos estadísticos</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="modelos.html"><a href="modelos.html#ejemplo"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="5.2.2" data-path="modelos.html"><a href="modelos.html#representando-un-modelo-en-r"><i class="fa fa-check"></i><b>5.2.2</b> Representando un modelo en R</a></li>
+<li class="chapter" data-level="5.2.3" data-path="modelos.html"><a href="modelos.html#volvamos-al-ejemplo-de-las-plantas"><i class="fa fa-check"></i><b>5.2.3</b> Volvamos al ejemplo de las plantas</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>6</b> Loops (purrr) y bibliografía (rticles)</a></li>
 <li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
@@ -243,7 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">BIO 4022. Manipulación de datos e investigación reproducible en R</h1>
 <h4 class="author"><em>Derek Corcoran</em></h4>
-<h4 class="date"><em>2018-08-22</em></h4>
+<h4 class="date"><em>2018-08-23</em></h4>
 </div>
 <div id="requerimientos" class="section level1 unnumbered">
 <h1>Requerimientos</h1>
@@ -285,10 +292,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="contenidos" class="section level2">
 <h2><span class="header-section-number">0.4</span> Contenidos</h2>
 <ul>
-<li><p>Capítulo <a href="tidydata.html#tidydata">1</a> <em>Tidy Data</em>: En este capítulo se aprenderá a cómo optimizar una de base de datos, sobre la limpieza y transformación de bases de datos, qué es una base de datos <em>tidy</em> y cómo manipular estas bases de datos con el paquete <em>dplyr</em> <span class="citation">(Wickham et al. <a href="#ref-R-dplyr">2018</a>)</span>.</p></li>
+<li><p>Capítulo <a href="tidydata.html#tidydata">1</a> <em>Tidy Data</em>: En este capítulo se aprenderá a cómo optimizar una de base de datos, sobre la limpieza y transformación de bases de datos, qué es una base de datos <em>tidy</em> y cómo manipular estas bases de datos con el paquete <em>dplyr</em> <span class="citation">(<span class="citeproc-not-found" data-reference-id="R-dplyr"><strong>???</strong></span>)</span>.</p></li>
 <li><p>Capítulo <a href="reproducible.html#reproducible">2</a> <em>Investigación reproducible</em>: En este capítulo se trabajará en la confección de un documento que combine códigos de <code>R</code> y texto para generar documentos reproducibles utilizando el paquete <em>rmarkdown</em> <span class="citation">(Allaire et al. <a href="#ref-Allaire2018">2018</a>)</span>. Además, se verá cómo al usar RStudio se pueden guardar los proyectos en un repositorio de github.</p></li>
 <li><p>Capítulo <a href="tidyverso.html#tidyverso">3</a> <em>El tidyverso</em> y el concepto de pipeline:En este capítulo se aprenderá sobre la limpieza de datos complejos.</p></li>
 <li><p>Capítulo <a href="visualizacion.html#visualizacion">4</a> <em>Visualización de datos</em> visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd</p></li>
+<li><p>Capítulo <a href="modelos.html#modelos">5</a> <em>Modelos en R</em> Aprender a generar modelos en R, desde ANOVA a GLM.</p></li>
 <li><p>Capítulo <a href="loops.html#loops">6</a> <em>Loops</em>. Generación de funciones propias en R y loops</p></li>
 </ul>
 <ol start="6" style="list-style-type: decimal">
@@ -330,9 +338,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="ref-Kross2017">
 <p>Kross, Sean, Nick Carchedi, Bill Bauer, and Gina Grdina. 2017. <em>Swirl: Learn R, in R</em>. <a href="https://CRAN.R-project.org/package=swirl" class="uri">https://CRAN.R-project.org/package=swirl</a>.</p>
-</div>
-<div id="ref-R-dplyr">
-<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2018. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a>.</p>
 </div>
 <div id="ref-Allaire2018">
 <p>Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, and Winston Chang. 2018. <em>Rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown" class="uri">https://CRAN.R-project.org/package=rmarkdown</a>.</p>

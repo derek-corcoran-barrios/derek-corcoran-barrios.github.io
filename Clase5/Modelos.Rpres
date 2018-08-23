@@ -43,105 +43,200 @@ transition: rotate
 </STYLE>
 
 
+¿Qué es un modelo?
+=================
+incremental:true
 
-Modelo lineal simple
-========================================================
-class: small-code
-```{r, eval =FALSE}
-library(tidyverse)
-TempHum <- readRDS("TempHum.rds")
-Pun <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas")
-Lineal <- lm(TempMedia ~ mes, data = Pun)
-Cuad <- lm(TempMedia ~ mes + I(mes^2), data = Pun)
-stargazer::stargazer(Lineal, Cuad, type = "html",  single.row = TRUE, model.names = TRUE, model.numbers = FALSE)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
 ```
 
-***
-```{r, results="asis", echo =FALSE}
-library(dplyr)
-TempHum <- readRDS("TempHum.rds")
-Pun <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas")
-Lineal <- lm(TempMedia ~ mes, data = Pun)
-Cuad <- lm(TempMedia ~ mes + I(mes^2), data = Pun)
-stargazer::stargazer(Lineal, Cuad, type = "html",  single.row = TRUE)
+
+* Un modelo es una versión simplificada de la realidad que nos permite hacer inferencias o prediccións sobre una población
+* Un modelo es un resumen adecuado de la realidad
+* Un modelo es una simplificación or aproximación a la realidad y por ende no reflejará toda la realidad (Burnham y Anderson)
+* Todos los modelos estan equivocados, algunos son útiles (George Box)
+
+Veamos un ejemplo
+================
+
+* ¿Cuánto $CO_2$ captan las plantas?
+
+```{r, echo = FALSE, cache = TRUE}
+data("CO2")
+knitr::kable((CO2 %>% sample_n(20)), row.names = FALSE)
 ```
 
-Sacando más de los modelos con Broom
-============================
-class: small-code
+¿Será la subespecie?
+================
+
 ```{r}
-library(broom)
-data("mtcars")
-Eficiencia <- lm(mpg ~ wt , data = mtcars)
-tidy(Eficiencia)
-glance(Eficiencia)
+ggplot(CO2, aes(x = Type, y=uptake)) + geom_boxplot() + geom_jitter(aes(color = Type)) + theme_classic()
 ```
 
-Sacando más de los modelos con Broom
-============================
-class: small-code
+¿Como lo determinamos?
+
+Formula de un modelo
+=====================
+
+```{r, echo = TRUE, eval=FALSE}
+alguna_funcion(Y ~ X1 + X2 + ... + Xn, data = data.frame)
+```
+
+* **Y:** Variable respuesta (Captación de $CO_2$)
+* **`~`:** Explicado por
+* **$X_n$:** Variable explicativa n (Subespecie, tratamiento, etc.)
+* **data.frame:*** Base de datos (CO2)
+* **alguna_funcion:** El modelo a testear (nuestra simplificación de la realidad)
+
+Algunos modelos en R
+====================
+
+```{r Modelos, echo = FALSE}
+Modelos <- data.frame(Modelos = c("Prueba de t" ,"ANOVA", "Modelo lineal simple", "modelo lineal generalizado", "Modelo aditivo", "Modelo no lineal", "modelos lineales mixtos", "Boosted regression trees"), Funcion = c("t.test()", "aov()", "lm()", "glm()", "gam()", "nls()", "lmer()", "gbm()"))
+
+knitr::kable(Modelos, row.names = FALSE)
+```
+
+¿Cual usamos para estudiar lo de la planta?
+==============
+
+```{r, echo = TRUE}
+Fit1 <- lm(uptake ~ Type, data = CO2)
+```
+
+* por este ejercicio usaremos un modelo lineal simple
+
+Usando broom para sacarle mas a tu modelo (glance)
+==============
+
+* Para ver datos generales del modelo
+
+```{r, eval = FALSE}
+library(broom)
+glance(Fit1)
+```
 
 ```{r, echo=FALSE}
-knitr::include_graphics("Lineal.png")
+library(broom)
+knitr::kable(glance(Fit1))
 ```
 
-```{r}
-tidy(Eficiencia)
+Usando broom para sacarle mas a tu modelo (tidy)
+==============
+
+* Para ver parametros del modelo
+
+```{r, eval = FALSE}
+tidy(Fit1)
 ```
 
-Sacando más de los modelos con Broom
-============================
+```{r, echo=FALSE}
+knitr::kable(tidy(Fit1))
+```
+
+
+Usando broom para sacarle mas a tu modelo (augment)
+==============
+
+* Para ver predicciones y residuales del modelo
+
+```{r, eval = FALSE}
+augment(Fit1)
+```
+
+```{r, echo=FALSE}
+knitr::kable(augment(Fit1))
+```
+
+Selección de modelos
+=======================
 class: small-code
+incremental:true
 
-```{r}
-library(ggplot2)
-ggplot(mtcars, aes(x = wt, y = mpg)) + geom_smooth(method = "lm")
-```
+* Basado en criterios de información
+* Trabajaremos con AIC
+* $K$ número de parámetros
+* $\ln{(\hat{L})}$ ajuste, mas positivo mejor, mas negativo es malo
 
+$$AIC = 2 K - 2 \ln{(\hat{L})}$$
 
-Sacando más de los modelos con Broom
-============================
+Modelos candidatos
+=======================
 class: small-code
+incremental:true
 
-```{r}
-MasDatos <- augment(Eficiencia)
-knitr::kable(head(MasDatos, 10))
+```{r, echo = FALSE}
+ggplot(CO2, aes(x = conc, y = uptake)) + geom_point(aes(color = Type, shape = Treatment), size = 2)
 ```
 
-Sacando más de los modelos con Broom
-============================
+
+Modelos candidatos
+=======================
 class: small-code
+incremental:true
 
-```{r}
-library(ggplot2)
-ggplot(MasDatos, aes(x = wt, y = mpg)) + geom_point(aes(color = "blue")) + geom_point(aes(color = "red",y = .fitted)) + scale_color_manual(name = "Residuales", values = c("blue", "red"), labels = c("Observado", "Predicho")) + geom_segment(aes(xend = wt, yend = .fitted))
+```{r, echo = TRUE}
+Fit1 <- lm(uptake ~ Type, data = CO2)
+Fit2 <- lm(uptake ~ Treatment, data = CO2)
+Fit3 <- lm(uptake ~ conc, data = CO2)
+Fit4 <- lm(uptake ~ Type + Treatment + conc, data = CO2)
 ```
 
-
-Sacando más de los modelos con Broom
-============================
+Selección de modelos con broom
+=======================
 class: small-code
+incremental:true
 
-```{r}
-hist(MasDatos$.resid)
+```{r, echo = TRUE}
+Modelo1 <- glance(Fit1) %>% dplyr::select(r.squared, AIC) %>% mutate(Modelo = "Fit1")
+Modelo2 <- glance(Fit2) %>% dplyr::select(r.squared, AIC) %>% mutate(Modelo = "Fit2")
+Modelo3 <- glance(Fit3) %>% dplyr::select(r.squared, AIC) %>% mutate(Modelo = "Fit3")
+Modelo4 <- glance(Fit3) %>% dplyr::select(r.squared, AIC) %>% mutate(Modelo = "Fit3")
+
+Modelos <- bind_rows(Modelo1, Modelo2, Modelo3, Modelo4) %>% arrange(AIC) %>% mutate(DeltaAIC = AIC-min(AIC))
 ```
 
-***
+Selección de modelos con broom
+=======================
+class: small-code
+incremental:true
 
 ```{r}
-shapiro.test(MasDatos$.resid)
+knitr::kable(Modelos)
 ```
 
-* Para mas sobre supuestos de test básicos de estadística, [este link](https://cran.r-project.org/doc/contrib/Martinez-RforBiologistv1.1.pdf)
+Selección de modelos en una variable (forma)
+=======
+```{r}
+TempHum <- readRDS("TempHum.rds")
+PA <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas")
 
-Modelo lineal generalizado
+```
+
+
+
+GLMs
+===========
+
+Distribuciones
+=========================
+
+```{r}
+knitr::include_graphics("Distributions.jpeg", dpi = 300)
+```
+
+
+Estructura de error
 ========================================================
 incremental:true
-* Se agrega el argumento **family =**
-* gaussian (variable independiente continua)
-* binomial (variable independiente 0 o 1)
-* poissson (variable independiente cuentas 1, 2 ,3 ,4 ,5)
-* gamma (variable independiente continua solo positiva)
+* **family =**
+* gaussian (variable dependiente continua)
+* binomial (variable dependiente 0 o 1)
+* poisson (variable dependiente cuentas 1, 2 ,3 ,4 ,5)
+* gamma (variable dependiente continua solo positiva)
 
 
 Modelo lineal generalizado (familia: binomial)
@@ -149,11 +244,9 @@ Modelo lineal generalizado (familia: binomial)
 class: small-code
 
 ```{r, results= "asis"}
-data("Titanic")
-library(epitools)
-Titanic2 <- expand.table(Titanic)
-Titanic2$Survived <- ifelse(Titanic2$Survived == "Yes", 1, 0)
-knitr::kable(head(Titanic2))
+library(tidyverse)
+train <- read_csv("train.csv") %>% filter(Embarked == "S")
+knitr::kable(head(train[,-c(1,4,7,8,9)]), format = "html")
 ```
 
 Modelo lineal generalizado (familia: binomial)
@@ -161,99 +254,133 @@ Modelo lineal generalizado (familia: binomial)
 class: small-code
 
 ```{r}
-library(ggplot2)
-ggplot(Titanic2, aes(x = Class, y = Survived)) + geom_violin(aes(fill = Sex)) 
+FitBin <- glm(Survived ~ Fare + Sex, data = train)
+
+DF <- expand.grid(Fare = seq(from = min(train$Fare), to = max(train$Fare), length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
+
+
+DF$Prediction <- predict(FitBin, DF, se.fit = TRUE)$fit
+DF$SE <- predict(FitBin, DF, se.fit = TRUE)$se.fit
+
+ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
+
 ```
+
+
+Modelo lineal generalizado (familia: binomial)
+========================================================
+
+```{r}
+knitr::kable(broom::tidy(FitBin))
+```
+
+```{r}
+knitr::kable(broom::glance(FitBin))
+```
+
+$R^2$: `r DescTools::PseudoR2(FitBin, "Nagelkerke")`
+
 
 Modelo lineal generalizado (familia: binomial)
 ========================================================
 class: small-code
-```{r, results="asis", cache = TRUE}
-ModeloTitanic <- glm(Survived ~.,family=binomial() ,data = Titanic2)
-stargazer::stargazer(ModeloTitanic, type = "html",  single.row = TRUE)
+
+```{r}
+FitBin <- glm(Survived ~ Fare + Sex, data = train)
+
+DF <- expand.grid(Fare = seq(from = -200, to = 1000, length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
+
+
+DF$Prediction <- predict(FitBin, DF, se.fit = TRUE)$fit
+DF$SE <- predict(FitBin, DF, se.fit = TRUE)$se.fit
+
+ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic() + geom_hline(yintercept = c(0,1), lty = 2 , color = "red")
+
 ```
 
-Selección de modelos
-=======================
+
+
+
+Modelo lineal generalizado (familia: binomial)
+========================================================
 class: small-code
+
+```{r, results="asis", cache = TRUE}
+FitBin2 <- glm(Survived ~ Fare*Sex, data = train, family = binomial())
+##1
+DF <- expand.grid(Fare = seq(from = min(train$Fare), to = max(train$Fare), length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
+
+DF$Prediction <- predict(FitBin2, DF, se.fit = TRUE, type = "response")$fit
+DF$SE <- predict(FitBin2, DF, se.fit = TRUE,"response")$se.fit
+
+
+ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
+```
+
+Modelo lineal generalizado (familia: binomial)
+========================================================
+
+```{r}
+knitr::kable(broom::tidy(FitBin2))
+```
+
+```{r}
+knitr::kable(broom::glance(FitBin2))
+```
+
+$R^2$: `r DescTools::PseudoR2(FitBin2, "Nagelkerke")`
+
+Modelo lineal generalizado (familia: binomial)
+========================================================
+class: small-code
+
+```{r, results="asis", cache = TRUE}
+FitBin2 <- glm(Survived ~ Fare*Sex, data = train, family = binomial())
+##1
+DF <- expand.grid(Fare = seq(from = -200, to = 1000, length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
+
+DF$Prediction <- predict(FitBin2, DF, se.fit = TRUE, type = "response")$fit
+DF$SE <- predict(FitBin2, DF, se.fit = TRUE,"response")$se.fit
+
+
+ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
+```
+
+Función link
+=========== 
 incremental:true
 
-```{r}
-data("mtcars")
-Eficiencia <- glm(mpg ~. , data = mtcars)
-```
-* Se parte del modelo general (Muchos predictores) 
-* ~. Explicado por todas las otras variables
-* Paquete MuMIn calcula AICc (o [AIC](http://izt.ciens.ucv.ve/ecologia/Archivos/ECO_POB%202014/ECOPO2_2014/Aho%20et%20al%202014.pdf) o [BIC](https://faculty.washington.edu/skalski/classes/QERM597/papers_xtra/Burnham%20and%20Anderson.pdf)) para cada modelo
-* Se ordena desde el menor IC al mayor IC
-* En general reportamos un delta AIC de 2
+* Actua sobre $Y$
+* family Gaussian, link = identidad
+* family Gamma, link = inverso
+* family poisson, link  = log
+* family binomial, link = logit
 
-Selección de modelos
-=======================
-class: small-code
-```{r, cache = TRUE}
-library(MuMIn)
-library(kableExtra)
-library(knitr)
-options(na.action = "na.fail")
-Select <- dredge(Eficiencia)
-Select <-subset(Select, delta <= 2)
-Mejor <- get.models(Select, subset = 1)[[1]]
-Select <-as.data.frame(Select)
-Select <- Select[,colSums(is.na(Select))<nrow(Select)]
-kable(Select, digits = 2)
-```
+$$Logit = log{\frac{p}{1-p}}$$
 
-Selección de modelos (binomial)
-========================================================
-class: small-code
-```{r}
-library(MuMIn)
-options(na.action = "na.fail")
-select <- dredge(ModeloTitanic)
-select <-subset(select, delta <= 20)
-knitr::kable(select)
-```
-
-Selección de modelos (Entendiendo relaciones)
-========================================================
-class: small-code
-```{r, cache = TRUE}
-library(MuMIn)
-options(na.action = "na.fail")
-select <- dredge(glm(TempMedia ~ mes + I(mes^2) + I(mes^3) + I(mes^4) + I(mes^5), data = Pun))
-select <-subset(select, delta <= 2)
-knitr::kable(select)
-```
-
-Selección de modelos (Entendiendo relaciones)
-========================================================
-class: small-code
+Función link
+=========== 
 
 ```{r}
-library(broom)
-mejor <-glm(TempMedia ~ mes + I(mes^2) + I(mes^3) + I(mes^4), data = Pun)
-MasDatos <-augment(mejor)
-
-masomenos <- glm(TempMedia ~ mes + I(mes^2), data = Pun)
-MasoMenosDatos <-augment(masomenos)
-
-library(ggplot2)
-
-MejorGraph <- ggplot(MasDatos, aes(x = mes, y = TempMedia)) + geom_point(color = "blue") + geom_line(aes(y = .fitted), color = "red")
-
-MasMenosGraph <- ggplot(MasoMenosDatos, aes(x = mes, y = TempMedia)) + geom_point(color = "blue") + geom_line(aes(y = .fitted), color = "red")
+x = c(-1, -0.8, 0.1, 0.2, 0.5, 0.8, 1, 2, 2.3)
+link = data.frame(Valor = x, Identidad = x, Inverso = 1/x, Log = log(x), logit = log(x/(1-x)))
+knitr::kable(link)
 ```
 
-Selección de modelos (Entendiendo relaciones)
-========================================================
-class: small-code
+Función link
+=========== 
 
 ```{r}
-library(gridExtra)
-grid.arrange(MejorGraph, MasMenosGraph, ncol = 1)
+x = seq(from = -4, to = 4, by = 0.2)
+link = data.frame(Valor = x, Identidad = x, Inverso = 1/x, Log = log(x), logit = log(x/(1-x)))
+link2 <- link %>% gather(key = link, value = transformacion, -Valor)
+ggplot(link2, aes(x = Valor, y = transformacion)) + geom_line(aes(color = link)) + geom_point(aes(color = link)) + theme_classic() + geom_vline(xintercept = c(0,1), lty = 2 , color = "red")
 ```
 
+Ajuste
+===========
+
+Pseudo $R^2$
 
 Expandiendo los modelos que puedo usar paquete caret
 ===========================================
@@ -323,6 +450,6 @@ Para la próxima clase
 =====================
 incremental:true
 
-* Loops normales y con purrr (instalar *purrr*)
+* Loops normales y con purrr
 * Plantillas de Journals para trabajar desde r (Instalar *rticles*)
-* Hay que poder knitear a pdf (intentarlo sino instalar [Miketex](https://miktex.org/) instalación completa o lo que les pida su RStudio)
+* Hay que poder knitear a pdf instalar *tinytex*

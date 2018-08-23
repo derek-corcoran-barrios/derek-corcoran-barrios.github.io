@@ -74,6 +74,8 @@ Este curso está enfocado en entregar principios básicos de investigación repr
 
 + Capítulo \@ref(visualizacion) *Visualización de datos* visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
 
++ Capítulo \@ref(modelos) *Modelos en R* Aprender a generar modelos en R, desde ANOVA a GLM.
+
 + Capítulo \@ref(loops) *Loops*. Generación de funciones propias en R y loops
 
 6. Escritura de manuscritos en R, transformación de documentos Rmd en un manuscrito

@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-22">
+<meta name="date" content="2018-08-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -203,7 +203,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.5.3" data-path="visualizacion.html"><a href="visualizacion.html#combinando-varios-graficos-con-facet_wrap"><i class="fa fa-check"></i><b>4.5.3</b> Combinando varios gráficos con facet_wrap</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a></li>
+<li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos.html"><a href="modelos.html#paquetes-necesarios-para-este-capitulo-4"><i class="fa fa-check"></i><b>5.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="5.2" data-path="modelos.html"><a href="modelos.html#modelos-estadisticos"><i class="fa fa-check"></i><b>5.2</b> Modelos estadísticos</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="modelos.html"><a href="modelos.html#ejemplo"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="5.2.2" data-path="modelos.html"><a href="modelos.html#representando-un-modelo-en-r"><i class="fa fa-check"></i><b>5.2.2</b> Representando un modelo en R</a></li>
+<li class="chapter" data-level="5.2.3" data-path="modelos.html"><a href="modelos.html#volvamos-al-ejemplo-de-las-plantas"><i class="fa fa-check"></i><b>5.2.3</b> Volvamos al ejemplo de las plantas</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>6</b> Loops (purrr) y bibliografía (rticles)</a></li>
 <li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
@@ -388,13 +395,13 @@ Figura 2.13: El objetivo de Rmarkdown es el unir código de r con texto y datos 
 <div id="subtitulo-4" class="section level5 unnumbered">
 <h5>subtítulo 4</h5>
 <p>se vería de la siguiente manera en el código</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">## subtitulo 1</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">### subtítulo 2</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5">#### subtítulo 3</a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb18-7" data-line-number="7">##### subtítulo 4</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">## subtitulo 1</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">### subtítulo 2</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">#### subtítulo 3</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb21-7" data-line-number="7">##### subtítulo 4</a></code></pre></div>
 </div>
 </div>
 <div id="chunks" class="section level4">
@@ -407,10 +414,10 @@ Figura 2.14: Al apretar el botón insert chunk, aparecera un espacio en el cuál
 </p>
 </div>
 <p>Al apretar este botón aparecera un espacio, ahí se puede agregar un código como el que aparece a continuación, y ver a continuación los resultados.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb19-1" data-line-number="1">```{r}</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">library(tidyverse)</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">iris %&gt;% group_by(Species) %&gt;% summarize(Petal.Length = mean(Petal.length))</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4">```</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb22-1" data-line-number="1">```{r}</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">library(tidyverse)</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">iris %&gt;% group_by(Species) %&gt;% summarize(Petal.Length = mean(Petal.length))</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">```</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   Species    Petal.Length
 ##   &lt;fct&gt;             &lt;dbl&gt;
@@ -432,7 +439,7 @@ Figura 2.14: Al apretar el botón insert chunk, aparecera un espacio en el cuál
 <div id="inline-code" class="section level4">
 <h4><span class="header-section-number">2.4.1.3</span> inline code</h4>
 <p>Los <em>inline codes</em> son útiles para agregar algún valor en el texto, como por ejemplo el valor de p o la media. Para usarlo, se debe poner un backtick (comilla simple hacia atrás), r, el código en cuestion y otro backtick como se ve a continuación <code>`r R_código`</code>. No podemos poner cualquier cosa en un <em>inline code</em>, ya que sólo puede generar vectores, lo cuál muchas veces requiere de mucha creatividad para lograr lo que queremos. Por ejemplo si se quisiera poner el promedio del largo del sépalo de la base da dato <code>iris</code> en un <em>inline code</em> pondríamos <code>`r mean(iris$Sepal.Length)`</code>, lo cual resultaría en 5.8433333. Como en un texto se vería extraño un número con 7 cifras significativas, querríamos usar ademas la función <code>round</code>, para que tenga 2 cifras significativas, para eso ponemos el siguiente inline code <code>`r round(mean(iris$Sepal.Length),2)`</code> que da como resultado 5.84. Esto se puede complejizar más aún si se quiere trabajar con una tabla resumen. Por ejemplo, si quisieramos listar el promedio del tamaño de sépalo usaríamos <code>summarize</code> de <em>dplyr</em>, pero esto nos daría como resultado un data.frame, el cual no aparece si intentamos hacer un inline code. Partamos por ver como se vería el código donde obtuvieramos la media del tamaño del sépalo.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(Sepal.Length))</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(Sepal.Length))</a></code></pre></div>
 <p>El resultado de ese código lo veríamos <a href="reproducible.html#tab:SummarySepaltab">2.1</a></p>
 <table>
 <caption><span id="tab:SummarySepaltab">Tabla 2.1: </span>Resumen del promedio del largo de sépalo de las flores del genero Iris.</caption>
@@ -470,9 +477,9 @@ Figura 2.14: Al apretar el botón insert chunk, aparecera un espacio en el cuál
 <div id="tablas-en-rmarkdown" class="section level4">
 <h4><span class="header-section-number">2.4.2.2</span> Tablas en Rmarkdown</h4>
 <p>La función más típica para generar tablas en un archivo <em>rmd</em> es <code>kable</code> del paquete <em>knitr</em>, que en su forma más simple se incluye un dataframe como único argumento. Además de esto, podemos agregar algunos parámetros como <em>caption</em>, que nos permite poner un título a la tabla o <em>row.names</em>, que si se pone como se ve en el código (FALSE) no mostrará en la tabla los nombres de las filas, tal como se ve en la tabla <a href="reproducible.html#tab:SummaryMeans">2.2</a>.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">kable</span>(DF, <span class="dt">caption =</span> <span class="st">&quot;Promedio por especie de todas las variables de la base de datos iris.&quot;</span>, </a>
-<a class="sourceLine" id="cb22-3" data-line-number="3">    <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw">kable</span>(DF, <span class="dt">caption =</span> <span class="st">&quot;Promedio por especie de todas las variables de la base de datos iris.&quot;</span>, </a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">    <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <table>
 <caption><span id="tab:SummaryMeans">Tabla 2.2: </span>Promedio por especie de todas las variables de la base de datos iris.</caption>
 <thead>

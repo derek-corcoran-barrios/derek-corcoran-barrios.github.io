@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-22">
+<meta name="date" content="2018-08-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -203,7 +203,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.5.3" data-path="visualizacion.html"><a href="visualizacion.html#combinando-varios-graficos-con-facet_wrap"><i class="fa fa-check"></i><b>4.5.3</b> Combinando varios gráficos con facet_wrap</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a></li>
+<li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos.html"><a href="modelos.html#paquetes-necesarios-para-este-capitulo-4"><i class="fa fa-check"></i><b>5.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="5.2" data-path="modelos.html"><a href="modelos.html#modelos-estadisticos"><i class="fa fa-check"></i><b>5.2</b> Modelos estadísticos</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="modelos.html"><a href="modelos.html#ejemplo"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo</a></li>
+<li class="chapter" data-level="5.2.2" data-path="modelos.html"><a href="modelos.html#representando-un-modelo-en-r"><i class="fa fa-check"></i><b>5.2.2</b> Representando un modelo en R</a></li>
+<li class="chapter" data-level="5.2.3" data-path="modelos.html"><a href="modelos.html#volvamos-al-ejemplo-de-las-plantas"><i class="fa fa-check"></i><b>5.2.3</b> Volvamos al ejemplo de las plantas</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>6</b> Loops (purrr) y bibliografía (rticles)</a></li>
 <li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
@@ -413,9 +420,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ejemplo-de-los-censos" class="section level4">
 <h4><span class="header-section-number">3.3.1.1</span> Ejemplo de los censos</h4>
 <p>Supongamos que un estudiante de biología va a realizar un censo en un parque nacional por tres días y genera la siguiente tabla (el código a continuación es el que permite generar el data frame obervado en la tabla <a href="tidyverso.html#tab:Censo">3.3</a>)</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">df_cuentas &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dia =</span> <span class="kw">c</span>(<span class="st">&quot;Lunes&quot;</span>, <span class="st">&quot;Martes&quot;</span>, <span class="st">&quot;Miercoles&quot;</span>), </a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">    <span class="dt">Lobo =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">Liebre =</span> <span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>), <span class="dt">Zorro =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, </a>
-<a class="sourceLine" id="cb23-3" data-line-number="3">        <span class="dv">4</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">df_cuentas &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dia =</span> <span class="kw">c</span>(<span class="st">&quot;Lunes&quot;</span>, <span class="st">&quot;Martes&quot;</span>, <span class="st">&quot;Miercoles&quot;</span>), </a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">    <span class="dt">Lobo =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">Liebre =</span> <span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>), <span class="dt">Zorro =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, </a>
+<a class="sourceLine" id="cb26-3" data-line-number="3">        <span class="dv">4</span>))</a></code></pre></div>
 <table>
 <caption><span id="tab:Censo">Tabla 3.3: </span>Abundancia detectada por especie en tres días de muestreo</caption>
 <thead>
@@ -448,8 +455,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Claramente esta base de datos no es tidy, ya que deberíamos tener una columna para la variable día, otra para especie y por último una para la abundancia de cada especie en cadad día. Antes de mostrar como realizaríamos esto con <code>gather</code>, veamos sus efectos para entenderlo mejor. La forma más básica de usar esta función sería el solo darle un nombre a la columna <em>key</em> (que tendrá el nombre de las columnas) y otro a <em>value</em>, que tendría el valor de las celdas. Veamos que ocurre si hacermos eso en el siguiente código y tabla <a href="tidyverso.html#tab:Larga1">3.4</a>.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb24-2" data-line-number="2">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Columnas, <span class="dt">value =</span> Valores)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Columnas, <span class="dt">value =</span> Valores)</a></code></pre></div>
 <table>
 <caption><span id="tab:Larga1">Tabla 3.4: </span>Abundancia detectada por especie en tres días de muestreo</caption>
 <thead>
@@ -510,8 +517,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Como vemos en la tabla <a href="tidyverso.html#tab:Larga1">3.4</a>, en la columna llamada <em>Columnas</em>, tenemos sólo los nombres de las columnas de la tabla <a href="tidyverso.html#tab:Censo">3.3</a>, y en la columna <em>Valores</em>, tenemos los valores encontrados en la tabla <a href="tidyverso.html#tab:Censo">3.3</a>. Sin embargo, para tener las tres columnas que desearíamos tener (día, especie y abundancia), necesitamos que la variable día no participe de este “<em>alargamiento</em>”, para esto lo que haríamos sería los siguiente:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Columnas, <span class="dt">value =</span> Valores, </a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">    <span class="op">-</span>dia)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Columnas, <span class="dt">value =</span> Valores, </a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">    <span class="op">-</span>dia)</a></code></pre></div>
 <p>Al agregar <code>-día</code> como tercer argumento quitamos esa variable del día en el “<em>alargamiento</em>”, en ese caso obtenemos la tabla <a href="tidyverso.html#tab:Larga2">3.5</a>. Ahora sólo falta arreglar los nombres.</p>
 <table>
 <caption><span id="tab:Larga2">Tabla 3.5: </span>Abundancia detectada por especie en tres días de muestreo</caption>
@@ -571,8 +578,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Para cambiar los nombres de las columnas que nos faltan, sólo cambiamos los valores de los argumentos <code>key</code> y <code>value</code> como se ve a continuación y en la tabla <a href="tidyverso.html#tab:Larga3">3.6</a>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Especie, <span class="dt">value =</span> Abundancia, </a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">    <span class="op">-</span>dia)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Especie, <span class="dt">value =</span> Abundancia, </a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">    <span class="op">-</span>dia)</a></code></pre></div>
 <table>
 <caption><span id="tab:Larga3">Tabla 3.6: </span>Abundancia detectada por especie en tres días de muestreo</caption>
 <thead>
@@ -638,7 +645,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="continuacion-ejemplo-de-censos" class="section level4">
 <h4><span class="header-section-number">3.3.2.1</span> Continuación ejemplo de censos</h4>
 <p>Volvamos al ejemplo de los censos donde quedamos, en nuestro último ejercicio creamos el data frame <em>DF_largo</em> que vemos en la tabla <a href="tidyverso.html#tab:Larga3">3.6</a>. Veremos algunos ejemplos de como podemos cambiar este data frame en una tabla ancha:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">DF_ancho &lt;-<span class="st"> </span>DF_largo <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(<span class="dt">key =</span> dia, <span class="dt">value =</span> Abundancia)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">DF_ancho &lt;-<span class="st"> </span>DF_largo <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(<span class="dt">key =</span> dia, <span class="dt">value =</span> Abundancia)</a></code></pre></div>
 <p>Con el código anterior generamos la <a href="tidyverso.html#tab:Ancha1">3.7</a>, la cuál es distinta a la original en la tabla <a href="tidyverso.html#tab:Censo">3.3</a>), en esta los días quedaron como nombres de columnas, y las especies pasaron a ser una variable.</p>
 <table>
 <caption><span id="tab:Ancha1">Tabla 3.7: </span>Abundancia detectada por especie en tres días de muestreo</caption>
@@ -715,9 +722,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ejercicio-1-2" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> Ejercicio 1</h3>
 <p>Utilizando el siguiente código usando el paquete dismo bajaras la base de datos del <em>GBIF</em> (Global Biodiversity Information Facility) de presencias conocidas del huemul (<em>Hippocamelus bisulcus</em>):</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">library</span>(dismo)</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">Huemul &lt;-<span class="st"> </span><span class="kw">gbif</span>(<span class="st">&quot;Hippocamelus&quot;</span>, <span class="st">&quot;bisulcus&quot;</span>, <span class="dt">down =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="kw">colnames</span>(Huemul)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">library</span>(dismo)</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2">Huemul &lt;-<span class="st"> </span><span class="kw">gbif</span>(<span class="st">&quot;Hippocamelus&quot;</span>, <span class="st">&quot;bisulcus&quot;</span>, <span class="dt">down =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="kw">colnames</span>(Huemul)</a></code></pre></div>
 <p>Tomando la base de datos generada:</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Quedarse con solo las observaciones que tienen coordenadas geograficas</p></li>
