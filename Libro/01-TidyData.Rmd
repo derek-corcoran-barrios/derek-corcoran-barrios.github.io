@@ -274,6 +274,108 @@ knitr::kable(DF, booktabs = TRUE,
   caption = 'Promedio de largo de pétalo y ancho de pétalo para las especies del genero Iris', row.names = FALSE)
 ```
 
+### Joins
+
+Los ejemplos a continuación se basan en el código generado por Garrick Aden-Buie en su repositorio de animaciones de verbos del tidyverse [@AdenBuie2018].
+El paquete *dplyr*, tiene una serie de funciones de apellido join: `anti_join`, `full_join`, `inner_join`, `left_join`, `right_join` y `semi_join`, en general no son tan fáciles de entender a primera vista, por lo que se trabajará con dos tablas muy simples (Tabla \@ref(tab:DosTablas)), las cuales tienen dos columnas cada una
+
+```{r DosTablas, echo = FALSE, cache=TRUE}
+knitr::kable(
+  list(data_frame(
+  id = 1:3,
+  x = paste0("x", 1:3)
+),
+  data_frame(
+    id = (1:4)[-3],
+    y = paste0("y", (1:4)[-3])
+)),
+  caption = 'Dos tablas para unir.', booktabs = TRUE
+)
+```
+
+## left join
+
+Como vemos en la figura \@ref(fig:leftjoin)
+
+```{r leftjoin, warning=FALSE, message=FALSE, echo = FALSE, fig.cap="animación de left join entre las tablas x e y"}
+library(gganimate)
+
+x <- data_frame(
+  id = 1:3,
+  x = paste0("x", 1:3)
+)
+
+y <- data_frame(
+  id = (1:4)[-3],
+  y = paste0("y", (1:4)[-3])
+)
+
+proc_data <- function(x, .id = "x") {
+  colors <- scales::brewer_pal(type = "qual", "Set1")(max(x$id))
+  x %>%
+    mutate(.y = -row_number()) %>%
+    tidyr::gather("label", "value", -.y) %>%
+    mutate(value = as.character(value)) %>%
+    group_by(.y) %>%
+    mutate(
+      .x = 1:n(),
+      .id = .id,
+      color = ifelse(label == "id", value, max(x$id) + 1),
+      color = colors[as.integer(color)],
+      color = ifelse(is.na(color), "#d0d0d0", color),
+      color = ifelse(is.na(value), "#ffffff", color)
+    )
+}
+
+plot_data <- function(x, title = "") {
+  ggplot(x) +
+    aes(.x, .y, fill = color, label = value) +
+    geom_tile(color = "white", size = 3) +
+    geom_text(aes(x = .x), hjust = 0.5, size = 12, family = "Fira Sans", color = "white") +
+    scale_fill_identity() +
+    coord_equal() +
+    ggtitle(title) +
+    theme_void() +
+    theme(plot.title = element_text(family = "Fira Mono", hjust = 0.5, size = 24)) +
+    guides(fill = FALSE)
+}
+
+animate_plot <- function(x) {
+  x +
+    transition_states(frame, transition_length = 2, state_length = 1) +
+    enter_fade() +
+    exit_fade() +
+    ease_aes("sine-in-out")
+}
+# Left Join ----
+initial_dfs <- proc_data(x, "x") %>%
+  bind_rows(mutate(proc_data(y, "y"), .x = .x + 3)) %>%
+  mutate(frame = 1)
+
+joined_dfs <- left_join(x, y, "id") %>%
+  proc_data("x") %>%
+  mutate(frame = 2, .x = .x + 1)
+
+extra_blocks <- inner_join(x, y, "id") %>%
+  dplyr::select(id) %>%
+  proc_data("y") %>%
+  mutate(frame = 2, .x = .x + 1)
+
+lj <- initial_dfs %>%
+  bind_rows(joined_dfs) %>%
+  bind_rows(extra_blocks) %>%
+  mutate(color = ifelse(is.na(value), "#ffffff", color)) %>%
+  plot_data("left_join(x, y)") %>%
+  animate_plot()
+
+lj
+
+
+```
+
+
+Entonces
+
 ### Ejercicios
 
 #### Ejercicio 1
