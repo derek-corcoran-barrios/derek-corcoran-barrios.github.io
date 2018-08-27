@@ -1,0 +1,133 @@
+---
+title: "Loops y Bibliografía"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    incremental: true
+---
+
+<style>
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, tidy = TRUE)
+library(tidyverse)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Empecemos con un ejercicio {.smaller .build}
+
+* Tomemos la base de datos de calidad de aire de Madrid
+* Leeamos el año 2017
+* Limitemonos a las estaciones de Cuatro Caminos, El Pardo, Escuelas Aguirre, Moratalaz y Tres Olivos 
+* Agreguemos una columna con el año y una con el mes
+* Calculemos los promedios de $NO_2$ para cada mes
+* Eliminemos las columnas innecesarias para estudiar el efecto del $NO_2$ en Madrid
+
+## Empecemos con un ejercicio (cont) {.smaller .build}
+
+* Leemos los datos
+
+```{r, eval=FALSE}
+library(tidyverse)
+library(lubridate)
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv")
+```
+
+* Limitemonos a las estaciones de Cuatro Caminos, El Pardo, Escuelas Aguirre, Moratalaz y Tres Olivos 
+
+```{r, eval=FALSE}
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038))
+```
+
+* Agreguemos aparte el mes, el año y el nombre de la estación
+
+```{r, eval=FALSE}
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  
+```
+
+
+## Empecemos con un ejercicio (cont 2) {.smaller .build}
+
+* Agrupamos sacamos el promedio por mes y sacamos las columnas sobrantes al mismo tiempo
+
+```{r, cache=TRUE}
+library(lubridate)
+stations <- read_csv("stations.csv") %>% rename(station = id)
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  %>% group_by(month, name, year)  %>% summarise(NO_2 = mean(NO_2, na.rm = TRUE))
+```
+
+```{r, echo=FALSE, results='asis'}
+library(kableExtra)
+knitr::kable(Madrid2017)  %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
+  scroll_box(width = "100%", height = "200px")
+```
+
+## Empecemos con un ejercicio (cont 4) {.smaller .build}
+
+* Hay algunos que se salen del año, pero son pocos
+
+```{r, cache=TRUE}
+library(lubridate)
+stations <- read_csv("stations.csv") %>% rename(station = id)
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  %>% group_by(month, name, year)  %>% summarise(NO_2 = mean(NO_2, na.rm = TRUE), n = n()) %>% filter(n > 500)
+```
+
+```{r, echo=FALSE, results='asis'}
+library(kableExtra)
+knitr::kable(Madrid2017)  %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
+  scroll_box(width = "100%", height = "200px")
+```
+
+## Empecemos con un ejercicio (cont 5) {.smaller .build}
+
+```{r, echo = TRUE}
+ggplot(Madrid2017, aes(x = month, y = NO_2)) + geom_smooth(aes(fill = name)) + geom_point(aes(color = name)) + theme_classic() 
+```
+
+## Empecemos con un ejercicio (cont 6) {.smaller .build}
+
+```{r, echo = TRUE}
+ggplot(Madrid2017, aes(x = month, y = NO_2)) + stat_smooth(method = "lm", formula = y ~ I(x^2) + x, alpha = 0.5,aes(fill = name)) + geom_point(aes(color = name)) + theme_classic()
+```
+
+## ¿Como lo hacemos con todos los archivos de la carpeta csvs_per_year
+
+ya tenemos una receta
+
+## ¿Qué es un loop? {.smaller .build}
+
+### Para Cada x has y {.columns-2 .smaller}
+
+<div style="float: left; width: 40%;">
+* Creamos la receta
+* Copiar y pegar
+* for loops
+* familia apply
+* purrr!!!!!
+</div>
+
+<div style="float: right; width: 60%;">
+
+```{r, echo = FALSE, fig.height= 40}
+knitr::include_graphics("purrr.jpg")
+```
+
+</div>
+
+## map(.x , .f) {.smaller .build}
+
+* para cada elemento de .x, has .f
+* .x = puede ser un vector o lista
+* .f = usualmente una función
+* Siempre entrega una lista
+
+```{r}
+library(purrr)
+x <- c(1,2,3,4,5,6,7,8,9,10)
+map(.x =x, .f = sqrt)
+```

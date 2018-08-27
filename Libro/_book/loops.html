@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-24">
+<meta name="date" content="2018-08-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -214,7 +214,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2.3" data-path="modelos.html"><a href="modelos.html#volvamos-al-ejemplo-de-las-plantas"><i class="fa fa-check"></i><b>5.2.3</b> Volvamos al ejemplo de las plantas</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>6</b> Loops (purrr) y bibliografía (rticles)</a></li>
+<li class="chapter" data-level="6" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>6</b> Loops (purrr) y bibliografía (rticles)</a><ul>
+<li class="chapter" data-level="6.1" data-path="loops.html"><a href="loops.html#paquetes-necesarios-para-este-capitulo-5"><i class="fa fa-check"></i><b>6.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="6.2" data-path="loops.html"><a href="loops.html#generando-una-receta"><i class="fa fa-check"></i><b>6.2</b> Generando una receta</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="loops.html"><a href="loops.html#dioxido-de-nitrogeno-en-madrid"><i class="fa fa-check"></i><b>6.2.1</b> Dioxido de nitrógeno en Madrid</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
 <li class="chapter" data-level="8.1" data-path="soluciones.html"><a href="soluciones.html#capitulo-1"><i class="fa fa-check"></i><b>8.1</b> Capítulo 1</a><ul>
@@ -252,7 +257,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="loops" class="section level1">
 <h1><span class="header-section-number">Capítulo 6</span> Loops (purrr) y bibliografía (rticles)</h1>
+<div id="paquetes-necesarios-para-este-capitulo-5" class="section level2">
+<h2><span class="header-section-number">6.1</span> Paquetes necesarios para este capítulo</h2>
+<p>Para este capítulo necesitas tener instalado el paquete <em>tidyverse</em>.</p>
+<p>Probablemente uno de los puntos que marca la diferencia entre ser un usuario de un lenguaje de programación y un alguién que realmente programa. Es el momento en que una persona aprende a hacer loops. Los loops son una acción repetitiva en la cual una misma acción es realizada por el computador ahorrandonos mucho tiempo de escribir código y muchas veces tiempo de computación tambien.</p>
+<p>Existen varias formas de como realizar loops en R, los <em>for</em> loops, la familia de los <em>apply</em> y más recientemente el uso del paquete <em>purrr</em> <span class="citation">(Henry and Wickham <a href="#ref-HenryPurrr">2018</a>)</span> presente en el <em>tidyverse</em>. En este capítulo nos enfocaremos principalmente en el uso de este paquete, pero también explicaremos levemente el caso de los for loops.</p>
+<p>Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este <a href="https://derek-corcoran-barrios.github.io/Clase6/Clase6Loopsybibliografia">link</a>. El video de la clase se encontrará disponible en este [link].</p>
+</div>
+<div id="generando-una-receta" class="section level2">
+<h2><span class="header-section-number">6.2</span> Generando una receta</h2>
+<p>Como hacer un loop, es una repetición de un código multiples veces, generalmente lo que más nos combiene es generar la receta tomando en cuenta el primer elemento y luego repetirlo en un loop.</p>
+<div id="dioxido-de-nitrogeno-en-madrid" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Dioxido de nitrógeno en Madrid</h3>
+<p>Supongamos que queremos estudiar la concentración de dióxido de Nitrógeno en madrid en distintas estaciones, la base de datos puede ser encontrada en el siguiente <a href="https://www.kaggle.com/decide-soluciones/air-quality-madrid">link</a></p>
 
+</div>
+</div>
+</div>
+<h3> Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-HenryPurrr">
+<p>Henry, Lionel, and Hadley Wickham. 2018. <em>Purrr: Functional Programming Tools</em>. <a href="https://CRAN.R-project.org/package=purrr" class="uri">https://CRAN.R-project.org/package=purrr</a>.</p>
+</div>
 </div>
             </section>
 

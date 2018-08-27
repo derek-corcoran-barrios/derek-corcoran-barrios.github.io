@@ -1,2 +1,19 @@
 # Loops (purrr) y bibliografía (rticles) {#loops}
 
+## Paquetes necesarios para este capítulo
+
+Para este capítulo necesitas tener instalado el paquete *tidyverse*.
+
+Probablemente uno de los puntos que marca la diferencia entre ser un usuario de un lenguaje de programación y un alguién que realmente programa. Es el momento en que una persona aprende a hacer loops. Los loops son una acción repetitiva en la cual una misma acción es realizada por el computador ahorrandonos mucho tiempo de escribir código y muchas veces tiempo de computación tambien. 
+
+Existen varias formas de como realizar loops en R, los *for* loops, la familia de los *apply* y más recientemente el uso del paquete *purrr* [@HenryPurrr] presente en el *tidyverse*. En este capítulo nos enfocaremos principalmente en el uso de este paquete, pero también explicaremos levemente el caso de los for loops.
+
+Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase6/Clase6Loopsybibliografia). El video de la clase se encontrará disponible en este [link].
+
+## Generando una receta
+
+Como hacer un loop, es una repetición de un código multiples veces, generalmente lo que más nos combiene es generar la receta tomando en cuenta el primer elemento y luego repetirlo en un loop.
+
+### Dioxido de nitrógeno en Madrid
+
+Supongamos que queremos estudiar la concentración de dióxido de Nitrógeno en madrid en distintas estaciones, la base de datos puede ser encontrada en el siguiente [link](https://www.kaggle.com/decide-soluciones/air-quality-madrid)
