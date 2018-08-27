@@ -7,9 +7,6 @@ output:
     incremental: true
 ---
 
-<style>
-.forceBreak { -webkit-column-break-after: always; break-after: column; }
-</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, tidy = TRUE)
@@ -131,3 +128,75 @@ library(purrr)
 x <- c(1,2,3,4,5,6,7,8,9,10)
 map(.x =x, .f = sqrt)
 ```
+
+## Volvamos a la receta basica {.smaller .build}
+
+```{r, eval=FALSE}
+library(lubridate)
+stations <- read_csv("stations.csv") %>% rename(station = id)
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  %>% group_by(month, name, year)  %>% summarise(NO_2 = mean(NO_2, na.rm = TRUE), n = n()) %>% filter(n > 500)
+```
+
+* Vamos a la primera parte
+
+```{r, eval=FALSE}
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv")
+```
+
+* ¿Que queremos?
+
+```{r, eval=FALSE}
+Madrid <- map(.x = Archivos, .f = read_csv)
+```
+
+* Necesitamos un vector o lista *Archivos* que contenga todos los archivos que vamos a leer
+
+## Si solo existiera una función que leyera todos los archivos de una carpeta {.smaller .build}
+
+```{r, echo=FALSE}
+knitr::include_graphics("Dexter_thinking.jpg")
+```
+
+```{r, cache=TRUE}
+Archivos <- list.files("csvs_per_year", full.names = TRUE)
+Archivos
+```
+
+## Empezemos nuestro loop {.smaller .build}
+
+```{r, cache=TRUE}
+Madrid <- map(Archivos, read_csv)
+```
+
+* Si le agregamos argumentos a una función agregamos un ~ antes de la función y un .x en vez de los datos
+
+```{r, cache=TRUE}
+library(lubridate)
+Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 28079008,28079058, 28079060, 28079038)))
+```
+
+* A partir de esto podemos avanzar mucho
+
+```{r, cache=TRUE}
+Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 28079008,28079058, 28079060, 28079038))) %>%  map(~mutate(.x, month = month(date), year = year(date))) %>% map(~left_join(.x, stations)) %>% map(~group_by(.x, month, name, year))  %>% map(~summarise(.x, NO_2 = mean(NO_2, na.rm = TRUE), n = n())) %>% map(~filter(.x,n > 500))
+```
+
+## Para finalizar el ejercicio
+
+* Tenemos una lista con 114 data frames
+* Necesitamos guardarlo en uno
+* funcion *reduce* de purrr
+
+```{r, eval=FALSE}
+library(purrr)
+x <- c(1,2,3,4,5,6,7,8,9,10)
+map(.x =x, .f = sqrt)
+```
+
+```{r}
+library(purrr)
+x <- c(1,2,3,4,5,6,7,8,9,10)
+map(.x =x, .f = sqrt) %>% reduce(c)
+```
+
+* Para unir varios data frame *rbind*

@@ -269,8 +269,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Como hacer un loop, es una repetición de un código multiples veces, generalmente lo que más nos combiene es generar la receta tomando en cuenta el primer elemento y luego repetirlo en un loop.</p>
 <div id="dioxido-de-nitrogeno-en-madrid" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> Dioxido de nitrógeno en Madrid</h3>
-<p>Supongamos que queremos estudiar la concentración de dióxido de Nitrógeno en madrid en distintas estaciones, la base de datos puede ser encontrada en el siguiente <a href="https://www.kaggle.com/decide-soluciones/air-quality-madrid">link</a></p>
+<p>Supongamos que queremos estudiar la concentración de dióxido de Nitrógeno en madrid en distintas estaciones, la base de datos puede ser encontrada en el siguiente <a href="https://www.kaggle.com/decide-soluciones/air-quality-madrid">link</a>. Dentro de esta base de datos tenemos una carpeta con la calidad de aire de estaciones en Madrid, con un archivo para cada año. Supongamos que se quiere hacer lo siguiente, limitandose a las estaciones de Cuatro Caminos, El Pardo, Escuelas Aguirre, Moratalaz y Tres Olivos, calcular los promedios de <span class="math inline">\(NO_2\)</span> para cada mes y cada año en estas estaciones.</p>
+<div id="generando-la-receta" class="section level4">
+<h4><span class="header-section-number">6.2.1.1</span> Generando la receta</h4>
+<p>Esto lo podemos hacer con un loop, pero antes generemos <em>la receta</em> tomando en cuenta solo el 2017.</p>
+<p>Para esto hacemos lo siguiente:</p>
+<ul>
+<li>Tomemos la base de datos de calidad de aire de Madrid</li>
+<li>Leeamos el año 2017</li>
+<li>Limitemonos a las estaciones de Cuatro Caminos, El Pardo, Escuelas Aguirre, Moratalaz y Tres Olivos</li>
+<li>Agreguemos una columna con el año y una con el mes</li>
+<li>Calculemos los promedios de <span class="math inline">\(NO_2\)</span> para cada mes</li>
+<li>Eliminemos las columnas innecesarias para estudiar el efecto del <span class="math inline">\(NO_2\)</span> en Madrid</li>
+</ul>
+<p>Vamos paso a paso</p>
+<div id="leyendo-la-base-de-datos" class="section level5">
+<h5><span class="header-section-number">6.2.1.1.1</span> leyendo la base de datos</h5>
+<p>El primer paso es leer la base de datos, para esto usamos el <em>tidyverse</em> y cargamos además <em>lubridate</em> por si tenemos que trabajar con las fechas. En la tabla <a href="#tab:Madrid2017a"><strong>??</strong></a> vemos los resultados del código a continuación.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb51-3" data-line-number="3">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>)</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   date = col_datetime(format = &quot;&quot;),
+##   BEN = col_double(),
+##   CH4 = col_character(),
+##   CO = col_double(),
+##   EBE = col_double(),
+##   NMHC = col_double(),
+##   NO = col_double(),
+##   NO_2 = col_double(),
+##   NOx = col_character(),
+##   O_3 = col_double(),
+##   PM10 = col_double(),
+##   PM25 = col_double(),
+##   SO_2 = col_double(),
+##   TCH = col_double(),
+##   TOL = col_double(),
+##   station = col_integer()
+## )</code></pre>
 
+</div>
+<div id="limitemonos-a-las-estaciones-seleccionadas" class="section level5">
+<h5><span class="header-section-number">6.2.1.1.2</span> Limitemonos a las estaciones seleccionadas</h5>
+<p>Revisando el archivo</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>))</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   date = col_datetime(format = &quot;&quot;),
+##   BEN = col_double(),
+##   CH4 = col_character(),
+##   CO = col_double(),
+##   EBE = col_double(),
+##   NMHC = col_double(),
+##   NO = col_double(),
+##   NO_2 = col_double(),
+##   NOx = col_character(),
+##   O_3 = col_double(),
+##   PM10 = col_double(),
+##   PM25 = col_double(),
+##   SO_2 = col_double(),
+##   TCH = col_double(),
+##   TOL = col_double(),
+##   station = col_integer()
+## )</code></pre>
+
+
+</div>
+</div>
 </div>
 </div>
 </div>

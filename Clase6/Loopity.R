@@ -25,14 +25,14 @@ for(i in 1:(length(Years)-1)){
 ?animate
 library(ggplot2)
 library(gganimate)
-Madrid2 <- filter(Madrid, year < 2018)
+Madrid2 <- filter(Madrid, year < 2018 & year > 2001)
 ggplot(Madrid2,aes(x = month, y = NO_2)) + stat_smooth(method = "lm", formula = y ~ x + I(x^2), alpha = 0.5,aes(fill = name)) + geom_point() + 
   # Here comes the gganimate code
   transition_states(
     year, state_length = 2, transition_length = 1) +
   enter_fade() + 
   exit_shrink() +
-  ease_aes('linear') + labs(title = 'Year: {round(frame_states,0)}', x = 'Month', y = 'NO_2')
+  ease_aes('linear') + labs(title = 'Year: {closest_state}', x = 'Month', y = 'NO_2')
 
 
 ggplot(Madrid2,aes(x = month, y = NO_2)) + stat_smooth(method = "lm", formula = y ~ x + I(x^2), alpha = 0.5,aes(fill = name)) + geom_point() + 

@@ -297,7 +297,7 @@ knitr::kable(
 
 Como vemos en la figura \@ref(fig:leftjoin)
 
-```{r leftjoin, warning=FALSE, message=FALSE, echo = FALSE, fig.cap="animación de left join entre las tablas x e y"}
+```{r leftjoin, warning=FALSE, message=FALSE, echo = FALSE, fig.cap="animación de left join entre las tablas x e y, cache = TRUE"}
 library(gganimate)
 
 x <- data_frame(

@@ -16,4 +16,53 @@ Como hacer un loop, es una repetición de un código multiples veces, generalmen
 
 ### Dioxido de nitrógeno en Madrid
 
-Supongamos que queremos estudiar la concentración de dióxido de Nitrógeno en madrid en distintas estaciones, la base de datos puede ser encontrada en el siguiente [link](https://www.kaggle.com/decide-soluciones/air-quality-madrid)
+Supongamos que queremos estudiar la concentración de dióxido de Nitrógeno en madrid en distintas estaciones, la base de datos puede ser encontrada en el siguiente [link](https://www.kaggle.com/decide-soluciones/air-quality-madrid). Dentro de esta base de datos tenemos una carpeta con la calidad de aire de estaciones en Madrid, con un archivo para cada año. Supongamos que se quiere hacer lo siguiente, limitandose a las estaciones de Cuatro Caminos, El Pardo, Escuelas Aguirre, Moratalaz y Tres Olivos, calcular los promedios de $NO_2$ para cada mes y cada año en estas estaciones.
+
+#### Generando la receta
+
+Esto lo podemos hacer con un loop, pero antes generemos *la receta* tomando en cuenta solo el 2017.
+
+Para esto hacemos lo siguiente:
+
+* Tomemos la base de datos de calidad de aire de Madrid
+* Leeamos el año 2017
+* Limitemonos a las estaciones de Cuatro Caminos, El Pardo, Escuelas Aguirre, Moratalaz y Tres Olivos 
+* Agreguemos una columna con el año y una con el mes
+* Calculemos los promedios de $NO_2$ para cada mes
+* Eliminemos las columnas innecesarias para estudiar el efecto del $NO_2$ en Madrid
+
+Vamos paso a paso
+
+##### leyendo la base de datos
+
+El primer paso es leer la base de datos, para esto usamos el *tidyverse* y cargamos además *lubridate* por si tenemos que trabajar con las fechas. En la tabla \@ref(tab:Madrid2017a) vemos los resultados del código a continuación.
+
+```{r, cache=TRUE}
+library(tidyverse)
+library(lubridate)
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv")
+```
+
+
+```{r Madrid2017a, echo = FALSE}
+knitr::kable(
+  Madrid2017[1:20,], booktabs = TRUE,
+  caption = 'Los primeros 20 datos de calidad de aire del 2017 en Madrid para todas las estaciones.', row.names = FALSE
+)
+```
+
+##### Limitemonos a las estaciones seleccionadas
+
+Revisando el archivo *stations.csv*, podemos ver que el código de estaciones que estudiaremos son 28079036, 28079008,28079058, 28079060 y 28079038, por lo que lo ponemos en un filter. El resultado de esto lo podemos ver en la tabla \@ref(tab:Madrid2017a)
+
+```{r, cache=TRUE}
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038))
+```
+
+```{r Madrid2017b, echo = FALSE}
+library(kableExtra)
+knitr::kable(
+  Madrid2017[1:20,], booktabs = TRUE,
+  caption = 'Los primeros 20 datos de calidad de aire del 2017 en Madrid después de filtrar según estación.', row.names = FALSE
+)
+```
