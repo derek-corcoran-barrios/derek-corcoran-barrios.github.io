@@ -37,7 +37,7 @@ Vamos paso a paso
 
 El primer paso es leer la base de datos, para esto usamos el *tidyverse* y cargamos además *lubridate* por si tenemos que trabajar con las fechas. En la tabla \@ref(tab:Madrid2017a) vemos los resultados del código a continuación.
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, message=FALSE}
 library(tidyverse)
 library(lubridate)
 Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv")
@@ -53,9 +53,9 @@ knitr::kable(
 
 ##### Limitemonos a las estaciones seleccionadas
 
-Revisando el archivo *stations.csv*, podemos ver que el código de estaciones que estudiaremos son 28079036, 28079008,28079058, 28079060 y 28079038, por lo que lo ponemos en un filter. El resultado de esto lo podemos ver en la tabla \@ref(tab:Madrid2017a)
+Revisando el archivo *stations.csv*, podemos ver que el código de estaciones que estudiaremos son 28079036, 28079008,28079058, 28079060 y 28079038, por lo que lo ponemos en un filter. El resultado de esto lo podemos ver en la tabla \@ref(tab:Madrid2017b)
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, cache=TRUE, message=FALSE}
 Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038))
 ```
 
@@ -64,5 +64,119 @@ library(kableExtra)
 knitr::kable(
   Madrid2017[1:20,], booktabs = TRUE,
   caption = 'Los primeros 20 datos de calidad de aire del 2017 en Madrid después de filtrar según estación.', row.names = FALSE
+)
+```
+
+##### Agreguemos aparte el mes, el año y el nombre de la estación
+
+Usando `mutate` y las funciones `month`y `year` de lubridate podemos agregar el més y el año para cada observación, además usando `left_joint`, podemos agreagar el nombre de las estaciones usando la base de datos *stations.csv*. El resultado de esto lo podemos ver en la tabla \@ref(tab:Madrid2017c)
+
+```{r, cache=TRUE, cache=TRUE, message=FALSE}
+stations <- read_csv("stations.csv") %>% rename(station = id)
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  
+```
+
+```{r Madrid2017c, echo = FALSE}
+library(kableExtra)
+knitr::kable(
+  Madrid2017[1:20,], booktabs = TRUE,
+  caption = 'Los primeros 20 datos de calidad de aire del 2017 en Madrid después de filtrar según estación, con mes, año y nombre.', row.names = FALSE
+)
+```
+
+
+Finalmente, agrupamos sacamos el promedio por mes y sacamos las columnas sobrantes al mismo tiempo, como vemos en la tabla \@ref(tab:Madrid2017d)
+
+
+```{r, cache=TRUE}
+library(lubridate)
+stations <- read_csv("stations.csv") %>% rename(station = id)
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  %>% group_by(month, name, year)  %>% summarise(NO_2 = mean(NO_2, na.rm = TRUE))
+```
+
+```{r Madrid2017d, echo = FALSE}
+library(kableExtra)
+knitr::kable(
+  Madrid2017[1:20,], booktabs = TRUE,
+  caption = 'Los primeros 20 datos de calidad de aire del 2017 en Madrid después de filtrar según estación, con mes, año y nombre.', row.names = FALSE
+)
+```
+
+##### Últimos detalles
+
+Vemos que hay algunos valores del 2018, esto parece raro, ya que leimos los archivos del 2017. Al revisar mas con `summarize`, vemos que en realidad son tan solo unas pocas observaciones las que generan esta anomalía debido a algunas medidas del 1 de enero del 2018.
+
+Para eliminarlas agregamos el siguiente código.
+
+```{r, cache=TRUE, echo = TRUE}
+library(lubridate)
+stations <- read_csv("stations.csv") %>% rename(station = id)
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  %>% group_by(month, name, year)  %>% summarise(NO_2 = mean(NO_2, na.rm = TRUE), n = n()) %>% filter(n > 500)
+```
+
+Esto nos dá al fin la receta final que usaremos en el loop.
+
+## Empezando el loop
+
+En este capíulo usaremos principalmente la función `map` del paquete *purrr* para generar loops, en esta función los dos argumentos generales que necesitamos es un vector o lista (*argumento .x*) de los elementos que pasarán por una función, y una funcion (*argumento .f*) que se aplicará a toda esta lista. Es importante establecer que el resultado de map siempre será una lista.
+
+### Volvamos a nuestra receta
+
+Veamos el código que usamos para el año 2017 
+
+```{r, eval = FALSE, echo = TRUE}
+library(lubridate)
+stations <- read_csv("stations.csv") %>% rename(station = id)
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008, 28079058, 28079060, 28079038)) %>% mutate(month = month(date), year = year(date)) %>% left_join(stations) %>% group_by(month, name, year) %>% summarise(NO_2 = mean(NO_2, na.rm = TRUE), n = n()) %>% filter(n > 500)
+```
+
+La primera parte del código es la lectura del archivo
+
+```{r, echo = TRUE, eval = FALSE}
+Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv")
+```
+
+Para hacer esto por todos los archivos de la base de datos requeriríamos de una lista o vector con los nombres de cada uno de los archivos. ¡Si solo hubiera una función en R que nos permitiera leer los archivos de una carpeta! La función `list.files` hace eso.
+
+Entonces el código que vemos abajo genera un vector con todos los nombres de los archivos que queremos incorporar:
+
+```{r, echo = TRUE}
+Archivos <- list.files("csvs_per_year", full.names = TRUE)
+Archivos
+```
+
+Entonces poner dentro de map, un vector con el nombre de los archivos (*Archivos*), y una función para leer los archivos (*read_csv*). Esto es el siguiente código 
+
+```{r, eval = FALSE, echo = TRUE}
+Madrid <- map(Archivos, read_csv)
+```
+
+Genera una lista donde cada elemento es un data frame de un año de mediciones.
+
+Cuando se agregan otras funciones mas complejas en un loop usando map. Como por ejemplo `filter`, ponemos un simbolo `~` dentro de map, y un `.x` dentro de filter para representar a cada dataframe que usaremos.
+
+```{r, eval = FALSE, echo = TRUE}
+Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 28079008,28079058, 28079060, 28079038)))
+```
+
+De esta forma podemos seguir la receta creada anteriormente sin ningún problema.
+
+```{r, eval = FALSE, echo = TRUE}
+Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 28079008,28079058, 28079060, 28079038))) %>%  map(~mutate(.x, month = month(date), year = year(date))) %>% map(~left_join(.x, stations)) %>% map(~group_by(.x, month, name, year))  %>% map(~summarise(.x, NO_2 = mean(NO_2, na.rm = TRUE), n = n())) %>% map(~filter(.x,n > 500))
+```
+
+Pero en este momento tenemos una lista con 17 data frames, en vez de un gran data frame con todos los datos. Para esto debenos unir esta lista usando la función `reduce`, lo cual nos genera el siguiente código y la tabla \@ref(tab:Madrid2017e)
+
+
+```{r, cache=TRUE, message= FALSE}
+library(lubridate)
+Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 28079008,28079058, 28079060, 28079038))) %>%  map(~mutate(.x, month = month(date), year = year(date))) %>% map(~left_join(.x, stations)) %>% map(~group_by(.x, month, name, year))  %>% map(~summarise(.x, NO_2 = mean(NO_2, na.rm = TRUE), n = n())) %>% map(~filter(.x,n > 500)) %>%reduce(bind_rows)
+```
+
+```{r Madrid2017e, echo = FALSE}
+library(kableExtra)
+knitr::kable(
+  Madrid2017[1:20,], booktabs = TRUE,
+  caption = 'Los primeros 20 datos de calidad de aire del todos los años en Madrid después de filtrar según estación, con mes, año y nombre.', row.names = FALSE
 )
 ```

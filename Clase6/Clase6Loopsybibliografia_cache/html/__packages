@@ -11,3 +11,7 @@ forcats
 lubridate
 bindrcpp
 kableExtra
+sp
+raster
+animation
+gganimate

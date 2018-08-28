@@ -181,22 +181,168 @@ Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 2
 Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 28079008,28079058, 28079060, 28079038))) %>%  map(~mutate(.x, month = month(date), year = year(date))) %>% map(~left_join(.x, stations)) %>% map(~group_by(.x, month, name, year))  %>% map(~summarise(.x, NO_2 = mean(NO_2, na.rm = TRUE), n = n())) %>% map(~filter(.x,n > 500))
 ```
 
-## Para finalizar el ejercicio
+## Para finalizar el ejercicio {.smaller .build}
 
-* Tenemos una lista con 114 data frames
+* Tenemos una lista con 17 data frames
 * Necesitamos guardarlo en uno
 * funcion *reduce* de purrr
 
 ```{r, eval=FALSE}
-library(purrr)
 x <- c(1,2,3,4,5,6,7,8,9,10)
 map(.x =x, .f = sqrt)
 ```
 
 ```{r}
-library(purrr)
 x <- c(1,2,3,4,5,6,7,8,9,10)
 map(.x =x, .f = sqrt) %>% reduce(c)
 ```
 
-* Para unir varios data frame *rbind*
+* Para unir varios data frame *bind_rows*
+
+## Para finalizar el ejercicio {.smaller .build}
+
+```{r, cache=TRUE, echo = TRUE}
+library(lubridate)
+Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 28079008,28079058, 28079060, 28079038))) %>%  map(~mutate(.x, month = month(date), year = year(date))) %>% map(~left_join(.x, stations)) %>% map(~group_by(.x, month, name, year))  %>% map(~summarise(.x, NO_2 = mean(NO_2, na.rm = TRUE), n = n())) %>% map(~filter(.x,n > 500)) %>%reduce(bind_rows)
+```
+
+```{r}
+library(kableExtra)
+knitr::kable(Madrid)  %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
+  scroll_box(width = "100%", height = "200px")
+```
+
+
+## Para finalizar el ejercicio {.smaller .build}
+
+
+```{r, echo= FALSE, message=FALSE, fig.width= 13}
+library(gganimate)
+Madrid2 <- filter(Madrid, year < 2018 & year > 2001)
+ggplot(Madrid2,aes(x = month, y = NO_2)) + stat_smooth(method = "lm", formula = y ~ x + I(x^2), alpha = 0.5,aes(fill = name)) + geom_point() + 
+  # Here comes the gganimate code
+  transition_states(
+    year, state_length = 2, transition_length = 1) +
+  enter_fade() + 
+  exit_shrink() +
+  ease_aes('linear') + labs(title = 'Year: {closest_state}', x = 'Month', y = 'NO_2')
+
+```
+
+
+
+## for loops {.smaller .build}
+
+* for(i in 1:n){funcion, remplazando cada elemento por una i}
+* Por ejemplo para graficar
+
+```{r}
+library(raster)
+bio.stack <- readRDS("bio.stack.rds")
+plot(bio.stack)
+```
+
+## for loops {.smaller .build}
+
+```{r}
+brks <- round(seq(floor(cellStats(bio.stack[[1]], stat = "min", na.rm = TRUE)), ceiling(cellStats(bio.stack[[8]], stat = "max", na.rm = TRUE)), length.out = 10), 0)
+nb <- length(brks)-1 
+colors <- rev(heat.colors(nb))
+plot(bio.stack, col = colors, breaks = brks)
+```
+
+## for loops {.smaller .build}
+
+<div style="float: left; width: 50%;">
+
+```{r}
+plot(bio.stack[[1]], col = colors, breaks = brks)
+```
+
+<div style="float: right; width: 50%;">
+
+```{r}
+years <- as.character(seq(2000, 2070, by = 10))
+plot(bio.stack[[1]], col = colors, breaks = brks, main = paste("Mean temperature", years[1]))
+```
+
+## for loops {.smaller .build}
+
+
+```{r, cache= TRUE, message=FALSE, results='hide'}
+library(animation)
+saveGIF(
+for(i in 1:8){
+  plot(bio.stack[[i]], col = colors, breaks = brks, main = paste("Mean temperature", years[i]))
+}
+,movie.name = "Mean_temp.gif", img.name = "Rplot", convert = "convert", clean = TRUE)
+```
+
+```{r, echo = FALSE}
+knitr::include_graphics("Mean_temp.gif")
+```
+
+
+## rticles {.smaller .build} 
+
+<div style="float: left; width: 50%;">
+
+```{r, echo=FALSE}
+knitr::include_graphics("Rticles.png")
+```
+
+<div style="float: right; width: 50%;">
+
+```{r, echo=FALSE}
+knitr::include_graphics("rticles2.png")
+```
+
+## rticles {.smaller .build} 
+
+<div style="float: left; width: 50%;">
+
+```{r, echo=FALSE}
+knitr::include_graphics("Citation1.png")
+```
+
+```{r, echo=FALSE}
+knitr::include_graphics("Citation2.png")
+```
+
+<div style="float: left; width: 50%;">
+
+
+```{r, echo=FALSE}
+knitr::include_graphics("Citation3.png")
+```
+
+## rticles {.smaller .build} 
+
+```{r, echo=FALSE}
+knitr::include_graphics("Citation4.png")
+```
+
+## rticles {.smaller .build} 
+
+```{r, echo=FALSE}
+knitr::include_graphics("Citation5.png")
+```
+
+## Bibliofrafía en Rmd {.build} 
+
+```{r, echo=FALSE}
+knitr::include_graphics("Citation6.png")
+```
+
+para más informacion revisar [acá](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html).
+
+## Bibliofrafía en Rmd {.build} 
+
+* Una presentación en Rmd
+* Debe tener
+    + chunks
+    + inline codes
+    + figuras
+    + Modelos
+    + Jueves 6 de Septiembre
