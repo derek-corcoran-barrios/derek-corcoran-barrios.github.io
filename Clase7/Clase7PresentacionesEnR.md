@@ -37,6 +37,14 @@ Se escribe igual que Rmarkdown
 ==========
 incremental:true
 
+* ## es para pasar de una a otra diapo
+* {.smaller} texto mas pequeño
+* {.build} empezando de a poco
+
+Se escribe igual que Rmarkdown
+==========
+incremental:true
+
 * === es para pasar de una a otra diapo
 * incremental:true justo debajo de los ==== es para que *bullets* pasen progresivamente
 * El titulo de la diapo va justo sobre los ====
