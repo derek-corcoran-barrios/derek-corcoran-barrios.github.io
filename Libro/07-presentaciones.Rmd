@@ -1,1 +1,9 @@
 # Presentaciones en R {#presentacion}
+
+## Paquetes necesarios para este capítulo
+
+Para este capítulo necesitas tener instalado el paquete *rmarkdown*.
+
+En este capítulo aprenderemos dos formas distintas de hacer presentaciones en R
+
+Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase6/Clase6Loopsybibliografia). El video de la clase se encontrará disponible en este [link].

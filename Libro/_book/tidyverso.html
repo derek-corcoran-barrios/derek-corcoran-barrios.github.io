@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-27">
+<meta name="date" content="2018-08-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -219,8 +219,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="loops.html"><a href="loops.html#generando-una-receta"><i class="fa fa-check"></i><b>6.2</b> Generando una receta</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="loops.html"><a href="loops.html#dioxido-de-nitrogeno-en-madrid"><i class="fa fa-check"></i><b>6.2.1</b> Dioxido de nitrógeno en Madrid</a></li>
 </ul></li>
+<li class="chapter" data-level="6.3" data-path="loops.html"><a href="loops.html#empezando-el-loop"><i class="fa fa-check"></i><b>6.3</b> Empezando el loop</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="loops.html"><a href="loops.html#volvamos-a-nuestra-receta"><i class="fa fa-check"></i><b>6.3.1</b> Volvamos a nuestra receta</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a><ul>
+<li class="chapter" data-level="7.1" data-path="presentacion.html"><a href="presentacion.html#paquetes-necesarios-para-este-capitulo-6"><i class="fa fa-check"></i><b>7.1</b> Paquetes necesarios para este capítulo</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
 <li class="chapter" data-level="8.1" data-path="soluciones.html"><a href="soluciones.html#capitulo-1"><i class="fa fa-check"></i><b>8.1</b> Capítulo 1</a><ul>
 <li class="chapter" data-level="8.1.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-3"><i class="fa fa-check"></i><b>8.1.1</b> Ejercicio 1</a></li>
@@ -310,9 +315,236 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tidyr-1" class="section level2">
 <h2><span class="header-section-number">3.3</span> tidyr</h2>
 <p>Este paquete como ya fue explicado en la sección anterior, solo posee dos funciones: <code>gather</code> y <code>spread</code>. Estas funciones sirven para pasar de tablas anchas a largas y viceversa, pero ¿qué significa que la misma información sea presentada en una tabla larga o en una tabla ancha?</p>
-<p>Tomemos por ejemplo dos tablas. En la tabla <a href="#tab:TablaAncha"><strong>??</strong></a> vemos una tabla ancha y en la tabla <a href="#tab:TablaLarga"><strong>??</strong></a> una tabla larga.</p>
-
-
+<p>Tomemos por ejemplo dos tablas. En la tabla <a href="tidyverso.html#tab:TablaAncha">3.1</a> vemos una tabla ancha y en la tabla <a href="tidyverso.html#tab:TablaLarga">3.2</a> una tabla larga.</p>
+<table>
+<caption>
+<span id="tab:TablaAncha">Tabla 3.1: </span>Tabla ancha.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Sepal.Length
+</th>
+<th style="text-align:right;">
+Sepal.Width
+</th>
+<th style="text-align:right;">
+Petal.Length
+</th>
+<th style="text-align:right;">
+Petal.Width
+</th>
+<th style="text-align:left;">
+Species
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:right;">
+3.3
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>
+<span id="tab:TablaLarga">Tabla 3.2: </span>Tabla larga.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:left;">
+Atributos_florales
+</th>
+<th style="text-align:right;">
+Medidas
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:left;">
+Sepal.Length
+</td>
+<td style="text-align:right;">
+5.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:left;">
+Sepal.Length
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:left;">
+Sepal.Length
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:left;">
+Sepal.Width
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:left;">
+Sepal.Width
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:left;">
+Sepal.Width
+</td>
+<td style="text-align:right;">
+3.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:left;">
+Petal.Length
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:left;">
+Petal.Length
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:left;">
+Petal.Length
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:left;">
+Petal.Width
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:left;">
+Petal.Width
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:left;">
+Petal.Width
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+</tr>
+</tbody>
+</table>
 <div id="dato" class="section level4">
 <h4><span class="header-section-number">3.3.0.1</span> DATO</h4>
 <p>Usualmente las tablas anchas son mejores para ser mostradas ya que se distinguen más facilmente las variables trabajadas, mientras que las tablas largas son mejores para programar y hacer análisis.</p>
@@ -322,24 +554,436 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Esta función nos permite pasar de una tabla ancha a una larga. En muchos casos esto es necesario para generar una base de datos <em>tidy</em>, y en otras ocaciones es importante para generación de gráficos que necesitamos tal como veremos en el capítulo <a href="visualizacion.html#visualizacion">4</a>. En esta función partimos con un data frame y luego tenemos 3 argumentos: en el primero <code>key</code>, ponemos el nombre de la variable que va a llevar como observaciones los nombres de las columnas; luego en el argumento <em>value</em>, ponemos el nombre de la columna que llevará los valores de cada columna al transformarse en una columna larga; Por último hay un argumento (sin nombre), en el cual ponemos las columas que queremos que sean “<em>alargadas</em>”, o con un signo negativo, las que no queremos que sean parte de esta transformación. Todo esto quedará más claro en el siguiente ejemplo.</p>
 <div id="ejemplo-de-los-censos" class="section level4">
 <h4><span class="header-section-number">3.3.1.1</span> Ejemplo de los censos</h4>
-<p>Supongamos que un estudiante de biología va a realizar un censo en un parque nacional por tres días y genera la siguiente tabla (el código a continuación es el que permite generar el data frame obervado en la tabla <a href="#tab:Censo"><strong>??</strong></a>)</p>
+<p>Supongamos que un estudiante de biología va a realizar un censo en un parque nacional por tres días y genera la siguiente tabla (el código a continuación es el que permite generar el data frame obervado en la tabla <a href="tidyverso.html#tab:Censo">3.3</a>)</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">df_cuentas &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dia =</span> <span class="kw">c</span>(<span class="st">&quot;Lunes&quot;</span>, <span class="st">&quot;Martes&quot;</span>, <span class="st">&quot;Miercoles&quot;</span>), </a>
 <a class="sourceLine" id="cb23-2" data-line-number="2">    <span class="dt">Lobo =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">Liebre =</span> <span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>), <span class="dt">Zorro =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, </a>
 <a class="sourceLine" id="cb23-3" data-line-number="3">        <span class="dv">4</span>))</a></code></pre></div>
-
-<p>Claramente esta base de datos no es tidy, ya que deberíamos tener una columna para la variable día, otra para especie y por último una para la abundancia de cada especie en cadad día. Antes de mostrar como realizaríamos esto con <code>gather</code>, veamos sus efectos para entenderlo mejor. La forma más básica de usar esta función sería el solo darle un nombre a la columna <em>key</em> (que tendrá el nombre de las columnas) y otro a <em>value</em>, que tendría el valor de las celdas. Veamos que ocurre si hacermos eso en el siguiente código y tabla <a href="#tab:Larga1"><strong>??</strong></a>.</p>
+<table>
+<caption>
+<span id="tab:Censo">Tabla 3.3: </span>Abundancia detectada por especie en tres días de muestreo
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+dia
+</th>
+<th style="text-align:right;">
+Lobo
+</th>
+<th style="text-align:right;">
+Liebre
+</th>
+<th style="text-align:right;">
+Zorro
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<p>Claramente esta base de datos no es tidy, ya que deberíamos tener una columna para la variable día, otra para especie y por último una para la abundancia de cada especie en cadad día. Antes de mostrar como realizaríamos esto con <code>gather</code>, veamos sus efectos para entenderlo mejor. La forma más básica de usar esta función sería el solo darle un nombre a la columna <em>key</em> (que tendrá el nombre de las columnas) y otro a <em>value</em>, que tendría el valor de las celdas. Veamos que ocurre si hacermos eso en el siguiente código y tabla <a href="tidyverso.html#tab:Larga1">3.4</a>.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
 <a class="sourceLine" id="cb24-2" data-line-number="2">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Columnas, <span class="dt">value =</span> Valores)</a></code></pre></div>
-
-<p>Como vemos en la tabla <a href="#tab:Larga1"><strong>??</strong></a>, en la columna llamada <em>Columnas</em>, tenemos sólo los nombres de las columnas de la tabla <a href="#tab:Censo"><strong>??</strong></a>, y en la columna <em>Valores</em>, tenemos los valores encontrados en la tabla <a href="#tab:Censo"><strong>??</strong></a>. Sin embargo, para tener las tres columnas que desearíamos tener (día, especie y abundancia), necesitamos que la variable día no participe de este “<em>alargamiento</em>”, para esto lo que haríamos sería los siguiente:</p>
+<table>
+<caption>
+<span id="tab:Larga1">Tabla 3.4: </span>Abundancia detectada por especie en tres días de muestreo
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Columnas
+</th>
+<th style="text-align:left;">
+Valores
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+dia
+</td>
+<td style="text-align:left;">
+Lunes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+dia
+</td>
+<td style="text-align:left;">
+Martes
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+dia
+</td>
+<td style="text-align:left;">
+Miercoles
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:left;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:left;">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:left;">
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<p>Como vemos en la tabla <a href="tidyverso.html#tab:Larga1">3.4</a>, en la columna llamada <em>Columnas</em>, tenemos sólo los nombres de las columnas de la tabla <a href="tidyverso.html#tab:Censo">3.3</a>, y en la columna <em>Valores</em>, tenemos los valores encontrados en la tabla <a href="tidyverso.html#tab:Censo">3.3</a>. Sin embargo, para tener las tres columnas que desearíamos tener (día, especie y abundancia), necesitamos que la variable día no participe de este “<em>alargamiento</em>”, para esto lo que haríamos sería los siguiente:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Columnas, <span class="dt">value =</span> Valores, </a>
 <a class="sourceLine" id="cb25-2" data-line-number="2">    <span class="op">-</span>dia)</a></code></pre></div>
-<p>Al agregar <code>-día</code> como tercer argumento quitamos esa variable del día en el “<em>alargamiento</em>”, en ese caso obtenemos la tabla <a href="#tab:Larga2"><strong>??</strong></a>. Ahora sólo falta arreglar los nombres.</p>
-
-<p>Para cambiar los nombres de las columnas que nos faltan, sólo cambiamos los valores de los argumentos <code>key</code> y <code>value</code> como se ve a continuación y en la tabla <a href="#tab:Larga3"><strong>??</strong></a>.</p>
+<p>Al agregar <code>-día</code> como tercer argumento quitamos esa variable del día en el “<em>alargamiento</em>”, en ese caso obtenemos la tabla <a href="tidyverso.html#tab:Larga2">3.5</a>. Ahora sólo falta arreglar los nombres.</p>
+<table>
+<caption>
+<span id="tab:Larga2">Tabla 3.5: </span>Abundancia detectada por especie en tres días de muestreo
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+dia
+</th>
+<th style="text-align:left;">
+Columnas
+</th>
+<th style="text-align:right;">
+Valores
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<p>Para cambiar los nombres de las columnas que nos faltan, sólo cambiamos los valores de los argumentos <code>key</code> y <code>value</code> como se ve a continuación y en la tabla <a href="tidyverso.html#tab:Larga3">3.6</a>.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Especie, <span class="dt">value =</span> Abundancia, </a>
 <a class="sourceLine" id="cb26-2" data-line-number="2">    <span class="op">-</span>dia)</a></code></pre></div>
-
+<table>
+<caption>
+<span id="tab:Larga3">Tabla 3.6: </span>Abundancia detectada por especie en tres días de muestreo
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+dia
+</th>
+<th style="text-align:left;">
+Especie
+</th>
+<th style="text-align:right;">
+Abundancia
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="spread" class="section level3">
@@ -347,12 +991,140 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><code>spread</code> es la función inversa a <code>gather</code>, esto es, toma una tabla de datos en formato ancho y la trnasforma en una base de datos de formato largo. Esta función tiene dos argumentos básicos. <em>key</em> que es el nombre de la variable que pasará a ser nombres de columna y <em>value</em>, que es el nombre de la columna con los valores que llenarán estas columnas.</p>
 <div id="continuacion-ejemplo-de-censos" class="section level4">
 <h4><span class="header-section-number">3.3.2.1</span> Continuación ejemplo de censos</h4>
-<p>Volvamos al ejemplo de los censos donde quedamos, en nuestro último ejercicio creamos el data frame <em>DF_largo</em> que vemos en la tabla <a href="#tab:Larga3"><strong>??</strong></a>. Veremos algunos ejemplos de como podemos cambiar este data frame en una tabla ancha:</p>
+<p>Volvamos al ejemplo de los censos donde quedamos, en nuestro último ejercicio creamos el data frame <em>DF_largo</em> que vemos en la tabla <a href="tidyverso.html#tab:Larga3">3.6</a>. Veremos algunos ejemplos de como podemos cambiar este data frame en una tabla ancha:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">DF_ancho &lt;-<span class="st"> </span>DF_largo <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(<span class="dt">key =</span> dia, <span class="dt">value =</span> Abundancia)</a></code></pre></div>
-<p>Con el código anterior generamos la <a href="#tab:Ancha1"><strong>??</strong></a>, la cuál es distinta a la original en la tabla <a href="#tab:Censo"><strong>??</strong></a>), en esta los días quedaron como nombres de columnas, y las especies pasaron a ser una variable.</p>
-
-<p>En la tabla <a href="#tab:Ops"><strong>??</strong></a> se ven todas las opciones de como generar una tabla ancha en base a el data frame <em>DF_largo</em>, pruebe opciones hasta entender la función, algunas de estas opciones darán errores.</p>
-
+<p>Con el código anterior generamos la <a href="tidyverso.html#tab:Ancha1">3.7</a>, la cuál es distinta a la original en la tabla <a href="tidyverso.html#tab:Censo">3.3</a>), en esta los días quedaron como nombres de columnas, y las especies pasaron a ser una variable.</p>
+<table>
+<caption>
+<span id="tab:Ancha1">Tabla 3.7: </span>Abundancia detectada por especie en tres días de muestreo
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Especie
+</th>
+<th style="text-align:right;">
+Lunes
+</th>
+<th style="text-align:right;">
+Martes
+</th>
+<th style="text-align:right;">
+Miercoles
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<p>En la tabla <a href="tidyverso.html#tab:Ops">3.8</a> se ven todas las opciones de como generar una tabla ancha en base a el data frame <em>DF_largo</em>, pruebe opciones hasta entender la función, algunas de estas opciones darán errores.</p>
+<table>
+<caption>
+<span id="tab:Ops">Tabla 3.8: </span>Todas las opciones a probar para generar una tabla ancha
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Key
+</th>
+<th style="text-align:left;">
+Value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Especie
+</td>
+<td style="text-align:left;">
+dia
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Abundancia
+</td>
+<td style="text-align:left;">
+dia
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+dia
+</td>
+<td style="text-align:left;">
+Especie
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Abundancia
+</td>
+<td style="text-align:left;">
+Especie
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+dia
+</td>
+<td style="text-align:left;">
+Abundancia
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Especie
+</td>
+<td style="text-align:left;">
+Abundancia
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>

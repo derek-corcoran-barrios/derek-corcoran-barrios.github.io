@@ -14,7 +14,7 @@
 Clase 7 Presentaciones En R
 ========================================================
 author: Derek Corcoran
-date: "26/10, 2017"
+date: "30/08, 2018"
 autosize: true
 transition: rotate
 
@@ -483,26 +483,12 @@ Evaluación Final
 ======
 incremental:true
 
-Evaluación 2 (31 de Octubre)
+Evaluación final (Viernes 14 de Septiembre)
 
-* Transformar Rpubs de html a PDF
-* Debe tener
-    + Al menos un chunk
-    + Al menos un inline code
-    + Al menos una tabla con leyenda (por favor no mas de una hoja!)
-    + Al menos una figura con leyenda
-    + Al menos una cita y su bibliografía
-
-***
-
-Evaluación Final
-
-* Una presentación en Rpubs
-* Máximo 5 minutos
-* Debe ser entretenida y tener:
-    + Al menos un chunk
-    + Al menos un inline code
-    + Al menos una figura
-    + Para el martes 31 de Octubre
-    + Mínimo 3 diapositivas
-    
+* Informe en PDF
+* Debe tener 
+    + Introducción
+    + Métodos
+    + Resultados
+    + Conclusiones
+    + Bibliografía

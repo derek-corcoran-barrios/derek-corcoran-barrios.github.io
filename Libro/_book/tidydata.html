@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-27">
+<meta name="date" content="2018-08-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -219,8 +219,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="loops.html"><a href="loops.html#generando-una-receta"><i class="fa fa-check"></i><b>6.2</b> Generando una receta</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="loops.html"><a href="loops.html#dioxido-de-nitrogeno-en-madrid"><i class="fa fa-check"></i><b>6.2.1</b> Dioxido de nitrógeno en Madrid</a></li>
 </ul></li>
+<li class="chapter" data-level="6.3" data-path="loops.html"><a href="loops.html#empezando-el-loop"><i class="fa fa-check"></i><b>6.3</b> Empezando el loop</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="loops.html"><a href="loops.html#volvamos-a-nuestra-receta"><i class="fa fa-check"></i><b>6.3.1</b> Volvamos a nuestra receta</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a><ul>
+<li class="chapter" data-level="7.1" data-path="presentacion.html"><a href="presentacion.html#paquetes-necesarios-para-este-capitulo-6"><i class="fa fa-check"></i><b>7.1</b> Paquetes necesarios para este capítulo</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
 <li class="chapter" data-level="8.1" data-path="soluciones.html"><a href="soluciones.html#capitulo-1"><i class="fa fa-check"></i><b>8.1</b> Capítulo 1</a><ul>
 <li class="chapter" data-level="8.1.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-3"><i class="fa fa-check"></i><b>8.1.1</b> Ejercicio 1</a></li>
@@ -288,39 +293,623 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="summarize" class="section level3">
 <h3><span class="header-section-number">1.3.1</span> summarize</h3>
-<p>La función <code>summarize</code> toma los datos de un data frame y los resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, se continúa del nombre que queremos darle a una variable resumen, seguida del signo = y luego la fórmula a aplicar a una o mas columnas. COmo un ejemplo se utilizará la base de datos <code>iris</code> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span> que viene en <code>R</code> y de las cual podemos ver parte de sus datos en la tabla <a href="#tab:iris"><strong>??</strong></a></p>
-
+<p>La función <code>summarize</code> toma los datos de un data frame y los resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, se continúa del nombre que queremos darle a una variable resumen, seguida del signo = y luego la fórmula a aplicar a una o mas columnas. COmo un ejemplo se utilizará la base de datos <code>iris</code> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span> que viene en <code>R</code> y de las cual podemos ver parte de sus datos en la tabla <a href="tidydata.html#tab:iris">1.1</a></p>
+<table>
+<caption>
+<span id="tab:iris">Tabla 1.1: </span>una tabla con 10 filas de la base de datos iris.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Sepal.Length
+</th>
+<th style="text-align:right;">
+Sepal.Width
+</th>
+<th style="text-align:right;">
+Petal.Length
+</th>
+<th style="text-align:right;">
+Petal.Width
+</th>
+<th style="text-align:left;">
+Species
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+5.8
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4.7
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:right;">
+3.8
+</td>
+<td style="text-align:right;">
+1.9
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5.2
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6.4
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5.5
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6.5
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+5.8
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6.1
+</td>
+<td style="text-align:right;">
+2.6
+</td>
+<td style="text-align:right;">
+5.6
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5.9
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:right;">
+1.8
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+</tr>
+</tbody>
+</table>
 <p>Si quisieramos resumir esa tabla y generar un par de variables que fueran la media y la desviación estándar del largo del pétalo, lo haríamos con el siguiente código:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">Summary.Petal &lt;-<span class="st"> </span><span class="kw">summarize</span>(iris, <span class="dt">Mean.Petal.Length =</span> <span class="kw">mean</span>(Petal.Length), </a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="dt">SD.Petal.Length =</span> <span class="kw">sd</span>(Petal.Length))</a></code></pre></div>
-<p>El resultado se puedde ver en la tabla <a href="#tab:SummaryPetaltab"><strong>??</strong></a>, en el cuál se obtienen los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar que al usar summarize, todas las otras variables desapareceran de la tabla.</p>
-
+<p>El resultado se puedde ver en la tabla <a href="tidydata.html#tab:SummaryPetaltab">1.2</a>, en el cuál se obtienen los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar que al usar summarize, todas las otras variables desapareceran de la tabla.</p>
+<table>
+<caption>
+<span id="tab:SummaryPetaltab">Tabla 1.2: </span>Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Mean.Petal.Length
+</th>
+<th style="text-align:right;">
+SD.Petal.Length
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+3.758
+</td>
+<td style="text-align:right;">
+1.765298
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="group_by" class="section level3">
 <h3><span class="header-section-number">1.3.2</span> group_by</h3>
 <p>La función <code>group_by</code> por si sola no genera cambios visibles en las bases de datos. Sin embargo, al ser utilizada en conjunto con <code>summarize</code> permite resumir una variable agrupada (usualmente) basada en una o más variables categóricas.</p>
-<p>Se puede ver que para el ejemplo con el caso de las plantas del género <em>Iris</em>, el resumen que se obtiene en el caso de la tabla <a href="#tab:SummaryPetaltab"><strong>??</strong></a> no es tan útil considerando que tenemos tres especies presentes. Si se quiere ver el promedio del largo del pétalo por especie, se debe ocupar la función <code>group_by</code> de la siguiente forma:</p>
+<p>Se puede ver que para el ejemplo con el caso de las plantas del género <em>Iris</em>, el resumen que se obtiene en el caso de la tabla <a href="tidydata.html#tab:SummaryPetaltab">1.2</a> no es tan útil considerando que tenemos tres especies presentes. Si se quiere ver el promedio del largo del pétalo por especie, se debe ocupar la función <code>group_by</code> de la siguiente forma:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">BySpecies &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">Summary.Byspecies &lt;-<span class="st"> </span><span class="kw">summarize</span>(BySpecies, <span class="dt">Mean.Petal.Length =</span> <span class="kw">mean</span>(Petal.Length), </a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="dt">SD.Petal.Length =</span> <span class="kw">sd</span>(Petal.Length))</a></code></pre></div>
-<p>Esto dá como resultado la tabla <a href="#tab:SummaryBySpecies"><strong>??</strong></a>, con la cuál se puede ver que <em>Iris setosa</em> tiene pétalos mucho más cortos que las otras dos especies del mismo género.</p>
-
+<p>Esto dá como resultado la tabla <a href="tidydata.html#tab:SummaryBySpecies">1.3</a>, con la cuál se puede ver que <em>Iris setosa</em> tiene pétalos mucho más cortos que las otras dos especies del mismo género.</p>
+<table>
+<caption>
+<span id="tab:SummaryBySpecies">Tabla 1.3: </span>Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+Mean.Petal.Length
+</th>
+<th style="text-align:right;">
+SD.Petal.Length
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+1.462
+</td>
+<td style="text-align:right;">
+0.1736640
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+4.260
+</td>
+<td style="text-align:right;">
+0.4699110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+5.552
+</td>
+<td style="text-align:right;">
+0.5518947
+</td>
+</tr>
+</tbody>
+</table>
 <div id="group_by-en-mas-de-una-variable" class="section level4">
 <h4><span class="header-section-number">1.3.2.1</span> group_by en más de una variable</h4>
 <p>Se puede usar la función <code>group_by</code> en más de una variable, y esto generaría un resumen anidado. Como ejemplo se usará la base de datos <code>mtcars</code> presente en R <span class="citation">(Henderson and Velleman <a href="#ref-henderson1981building">1981</a>)</span>. Esta base de datos presenta una variable llamada <em>mpg</em> (miles per gallon) y una medida de eficiencia de combustible. Se resumirá la información en base a la variable <em>am</em> (que se refiere al tipo de transmisión, donde 0 es automático y 1 es manual) y al número de cilindros del motor. Para eso se utilizará el siguiente código:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(mtcars, cyl, am)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">Eficiencia &lt;-<span class="st"> </span><span class="kw">summarize</span>(Grouped, <span class="dt">Eficiencia =</span> <span class="kw">mean</span>(mpg))</a></code></pre></div>
-<p>Como puede verse en la tabla <a href="#tab:Eficienciatab"><strong>??</strong></a>, en todos los casos los autos con cambios manuales tienen mejor eficiencia de combustible. Se podría probar el cambiar el orden de las variables con las cuales agrupar y observar los distintos resultados que se pueden obtener.</p>
-
+<p>Como puede verse en la tabla <a href="tidydata.html#tab:Eficienciatab">1.4</a>, en todos los casos los autos con cambios manuales tienen mejor eficiencia de combustible. Se podría probar el cambiar el orden de las variables con las cuales agrupar y observar los distintos resultados que se pueden obtener.</p>
+<table>
+<caption>
+<span id="tab:Eficienciatab">Tabla 1.4: </span>Millas por galón promedio en vehiculos automáticos (am = 0) y manuales (am = 1), con los distintos tipos de cilindros
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+cyl
+</th>
+<th style="text-align:right;">
+am
+</th>
+<th style="text-align:right;">
+Eficiencia
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+22.90000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+28.07500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+19.12500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+20.56667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+15.05000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+15.40000
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="mutate" class="section level3">
 <h3><span class="header-section-number">1.3.3</span> mutate</h3>
 <p>Esta función tiene como objetivo crear variables nuevas basadas en otras variables. Es muy facil de usar, como argumento se usa el nombre de la variable nueva que se quiere crear y se realiza una operación con variables que ya estan ahí. Por ejemplo, si se continúa el trabajo con la base de datos <em>Iris</em>, al crear una nueva variable que sea la razón entre el largo del pétalo y el del sépalo, resulta lo siguiente:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">DF &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris, <span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length)</a></code></pre></div>
-<p>El resultado de esta operación es la tabla <a href="#tab:Mutate"><strong>??</strong></a>. Siempre la variable que se acaba de crear aparecerá al final del data frame.</p>
-
+<p>El resultado de esta operación es la tabla <a href="tidydata.html#tab:Mutate">1.5</a>. Siempre la variable que se acaba de crear aparecerá al final del data frame.</p>
+<table>
+<caption>
+<span id="tab:Mutate">Tabla 1.5: </span>Tabla con diez de las observaciones de la nueva base de datos con la variable nueva creada con mutate
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Sepal.Length
+</th>
+<th style="text-align:right;">
+Sepal.Width
+</th>
+<th style="text-align:right;">
+Petal.Length
+</th>
+<th style="text-align:right;">
+Petal.Width
+</th>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+Petal.Sepal.Ratio
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+5.8
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+0.21
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4.7
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+0.34
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:right;">
+3.8
+</td>
+<td style="text-align:right;">
+1.9
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+0.37
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5.2
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+0.75
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6.4
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+0.67
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5.5
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+0.73
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6.5
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+5.8
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0.89
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0.83
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6.1
+</td>
+<td style="text-align:right;">
+2.6
+</td>
+<td style="text-align:right;">
+5.6
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0.92
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5.9
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:right;">
+1.8
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0.86
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="pipeline" class="section level3">
 <h3><span class="header-section-number">1.3.4</span> Pipeline (%&gt;%)</h3>
@@ -347,30 +936,265 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">Summary.Byspecies &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">    </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">MEAN =</span> <span class="kw">mean</span>(Petal.Sepal.Ratio), </a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">    <span class="dt">SD =</span> <span class="kw">sd</span>(Petal.Sepal.Ratio))</a></code></pre></div>
-<p>Estos tres códigos son correctos (tabla <a href="#tab:Pipe"><strong>??</strong></a>), pero definitivamente el uso del pipeline da el código más conciso y fácil de interpretar sin pasos intermedios.</p>
-
+<p>Estos tres códigos son correctos (tabla <a href="tidydata.html#tab:Pipe">1.6</a>), pero definitivamente el uso del pipeline da el código más conciso y fácil de interpretar sin pasos intermedios.</p>
+<table>
+<caption>
+<span id="tab:Pipe">Tabla 1.6: </span>Razón pétalo sépalo promedio para las tres especies de Iris
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+MEAN
+</th>
+<th style="text-align:right;">
+SD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+0.2927557
+</td>
+<td style="text-align:right;">
+0.0347958
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+0.7177285
+</td>
+<td style="text-align:right;">
+0.0536255
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0.8437495
+</td>
+<td style="text-align:right;">
+0.0438064
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="filter" class="section level3">
 <h3><span class="header-section-number">1.3.5</span> filter</h3>
-<p>Esta función permite seleccionar filas que cumplen con ciertas condiciones, como tener un valor mayor a un umbral o pertenecer a cierta clase Los símbolos más típicos a usar en este caso son los que se ven en la tabla <a href="#tab:Logicas"><strong>??</strong></a>.</p>
-
+<p>Esta función permite seleccionar filas que cumplen con ciertas condiciones, como tener un valor mayor a un umbral o pertenecer a cierta clase Los símbolos más típicos a usar en este caso son los que se ven en la tabla <a href="tidydata.html#tab:Logicas">1.7</a>.</p>
+<table>
+<caption>
+<span id="tab:Logicas">Tabla 1.7: </span>Símbolos lógicos de R y su significado
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+simbolo
+</th>
+<th style="text-align:left;">
+significado
+</th>
+<th style="text-align:left;">
+simbolo_cont
+</th>
+<th style="text-align:left;">
+significado_cont
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+&gt;
+</td>
+<td style="text-align:left;">
+Mayor que
+</td>
+<td style="text-align:left;">
+!=
+</td>
+<td style="text-align:left;">
+distinto a
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&lt;
+</td>
+<td style="text-align:left;">
+Menor que
+</td>
+<td style="text-align:left;">
+%in%
+</td>
+<td style="text-align:left;">
+dentro del grupo
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+==
+</td>
+<td style="text-align:left;">
+Igual a
+</td>
+<td style="text-align:left;">
+is.na
+</td>
+<td style="text-align:left;">
+es NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&gt;=
+</td>
+<td style="text-align:left;">
+mayor o igual a
+</td>
+<td style="text-align:left;">
+!is.na
+</td>
+<td style="text-align:left;">
+no es NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&lt;=
+</td>
+<td style="text-align:left;">
+menor o igual a
+</td>
+<td style="text-align:left;">
+| &amp;
+</td>
+<td style="text-align:left;">
+o, y
+</td>
+</tr>
+</tbody>
+</table>
 <p>Por ejemplo si se quiere estudiar las características florales de las plantas del género <em>Iris</em>, pero no tomar en cuenta a la especie <em>Iris versicolor</em> se deberá usar el siguiente código:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">    </span><span class="kw">summarise_all</span>(mean)</a></code></pre></div>
-<p>De esta forma se obtiene como resultado la tabla <a href="#tab:MenosVersicolor"><strong>??</strong></a>. En este caso se introduce la función <code>summarize_all</code> de <code>summarize</code>, la cual aplica la función que se le da como argumento a todas las variables de la base de datos.</p>
-
+<p>De esta forma se obtiene como resultado la tabla <a href="tidydata.html#tab:MenosVersicolor">1.8</a>. En este caso se introduce la función <code>summarize_all</code> de <code>summarize</code>, la cual aplica la función que se le da como argumento a todas las variables de la base de datos.</p>
+<table>
+<caption>
+<span id="tab:MenosVersicolor">Tabla 1.8: </span>Resumen de la media de todas las características florales de las especies Iris setosa e Iris virginica
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+Sepal.Length
+</th>
+<th style="text-align:right;">
+Sepal.Width
+</th>
+<th style="text-align:right;">
+Petal.Length
+</th>
+<th style="text-align:right;">
+Petal.Width
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+5.006
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+1.462
+</td>
+<td style="text-align:right;">
+0.246
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+6.588
+</td>
+<td style="text-align:right;">
+2.974
+</td>
+<td style="text-align:right;">
+5.552
+</td>
+<td style="text-align:right;">
+2.026
+</td>
+</tr>
+</tbody>
+</table>
 <p>Por otro lado si se quiere estudiar cuántas plantas de cada especie tienen un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5 se deberá usar el siguiente código:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Petal.Length <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span>Sepal.Length <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">    </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">N =</span> <span class="kw">n</span>())</a></code></pre></div>
-<p>En la tabla tabla <a href="#tab:Numero"><strong>??</strong></a> se ve que con este filtro desaparecen de la base de datos todas las plantas de <em>Iris setosa</em> y que todas menos una planta de <em>Iris virginica</em> tienen ambas características.</p>
-
+<p>En la tabla tabla <a href="tidydata.html#tab:Numero">1.9</a> se ve que con este filtro desaparecen de la base de datos todas las plantas de <em>Iris setosa</em> y que todas menos una planta de <em>Iris virginica</em> tienen ambas características.</p>
+<table>
+<caption>
+<span id="tab:Numero">Tabla 1.9: </span>Número de plantas de cada especie con un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5 centímetros
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+N
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+39
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+49
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="select" class="section level3">
 <h3><span class="header-section-number">1.3.6</span> select</h3>
 <p>Esta función permite seleccionar las variables a utilizar dado que en muchos casos nos encontraremos con bases de datos con demasiadas variables y por lo tanto, se querrá reducirlas para solo trabajar en una tabla con las variables necesarias.</p>
-<p>Con select hay varias formas de trabajar, por un lado se puede escribir las variables que se utilizarán, o restar las que no. En ese sentido estos cuatro códigos dan exactamente el mismo resultado. Esto se puede ver en la tabla <a href="#tab:Selected"><strong>??</strong></a></p>
+<p>Con select hay varias formas de trabajar, por un lado se puede escribir las variables que se utilizarán, o restar las que no. En ese sentido estos cuatro códigos dan exactamente el mismo resultado. Esto se puede ver en la tabla <a href="tidydata.html#tab:Selected">1.10</a></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Petal.Length, Petal.Width) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">    </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Sepal.Length, <span class="op">-</span>Sepal.Width) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -379,15 +1203,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">    </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">contains</span>(<span class="st">&quot;Sepal&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">    </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
-
+<table>
+<caption>
+<span id="tab:Selected">Tabla 1.10: </span>Promedio de largo de pétalo y ancho de pétalo para las especies del genero Iris
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+Petal.Length
+</th>
+<th style="text-align:right;">
+Petal.Width
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+1.462
+</td>
+<td style="text-align:right;">
+0.246
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+4.260
+</td>
+<td style="text-align:right;">
+1.326
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+5.552
+</td>
+<td style="text-align:right;">
+2.026
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="joins" class="section level3">
 <h3><span class="header-section-number">1.3.7</span> Joins</h3>
 <p>Los ejemplos a continuación se basan en el código generado por Garrick Aden-Buie en su repositorio de animaciones de verbos del tidyverse <span class="citation">(Aden-Buie <a href="#ref-AdenBuie2018">2018</a>)</span>.
-El paquete <em>dplyr</em>, tiene una serie de funciones de apellido join: <code>anti_join</code>, <code>full_join</code>, <code>inner_join</code>, <code>left_join</code>, <code>right_join</code> y <code>semi_join</code>, en general no son tan fáciles de entender a primera vista, por lo que se trabajará con dos tablas muy simples (Tabla <a href="tidydata.html#tab:DosTablas">1.1</a>), las cuales tienen dos columnas cada una</p>
+El paquete <em>dplyr</em>, tiene una serie de funciones de apellido join: <code>anti_join</code>, <code>full_join</code>, <code>inner_join</code>, <code>left_join</code>, <code>right_join</code> y <code>semi_join</code>, en general no son tan fáciles de entender a primera vista, por lo que se trabajará con dos tablas muy simples (Tabla <a href="tidydata.html#tab:DosTablas">1.11</a>), las cuales tienen dos columnas cada una</p>
 <table class="kable_wrapper">
 <caption>
-<span id="tab:DosTablas">Tabla 1.1: </span>Dos tablas para unir.
+<span id="tab:DosTablas">Tabla 1.11: </span>Dos tablas para unir.
 </caption>
 <tbody>
 <tr>

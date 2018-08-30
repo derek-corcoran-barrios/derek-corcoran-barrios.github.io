@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-27">
+<meta name="date" content="2018-08-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -219,8 +219,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="loops.html"><a href="loops.html#generando-una-receta"><i class="fa fa-check"></i><b>6.2</b> Generando una receta</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="loops.html"><a href="loops.html#dioxido-de-nitrogeno-en-madrid"><i class="fa fa-check"></i><b>6.2.1</b> Dioxido de nitrógeno en Madrid</a></li>
 </ul></li>
+<li class="chapter" data-level="6.3" data-path="loops.html"><a href="loops.html#empezando-el-loop"><i class="fa fa-check"></i><b>6.3</b> Empezando el loop</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="loops.html"><a href="loops.html#volvamos-a-nuestra-receta"><i class="fa fa-check"></i><b>6.3.1</b> Volvamos a nuestra receta</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a><ul>
+<li class="chapter" data-level="7.1" data-path="presentacion.html"><a href="presentacion.html#paquetes-necesarios-para-este-capitulo-6"><i class="fa fa-check"></i><b>7.1</b> Paquetes necesarios para este capítulo</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
 <li class="chapter" data-level="8.1" data-path="soluciones.html"><a href="soluciones.html#capitulo-1"><i class="fa fa-check"></i><b>8.1</b> Capítulo 1</a><ul>
 <li class="chapter" data-level="8.1.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-3"><i class="fa fa-check"></i><b>8.1.1</b> Ejercicio 1</a></li>
@@ -269,8 +274,373 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ejemplo" class="section level3">
 <h3><span class="header-section-number">5.2.1</span> Ejemplo</h3>
 <p>Tomemos el ejemplo de la base de datos <em>CO2</em> presente en R <span class="citation">(Potvin, Lechowicz, and Tardif <a href="#ref-potvin1990statistical">1990</a>)</span>. Supongamos que nos interesa saber que factores afectan la captación de <span class="math inline">\(CO_2\)</span> en las plantas.</p>
-
-<p>En la tabla <a href="#tab:TablaCo2"><strong>??</strong></a> vemos las primeras 20 observaciones de esta base de datos. Vemos que dentro de los factores que tenemos para explicar la captación de <span class="math inline">\(CO_2\)</span> estan:</p>
+<table>
+<caption>
+<span id="tab:TablaCo2">Tabla 5.1: </span>Primeras 20 variables de la base de datos CO2.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Plant
+</th>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:left;">
+Treatment
+</th>
+<th style="text-align:right;">
+conc
+</th>
+<th style="text-align:right;">
+uptake
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+16.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+30.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+34.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+37.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+35.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+39.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+39.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+13.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+27.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+37.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+41.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+40.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+41.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+44.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+16.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+32.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+40.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+42.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+42.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+43.9
+</td>
+</tr>
+</tbody>
+</table>
+<p>En la tabla <a href="modelos.html#tab:TablaCo2">5.1</a> vemos las primeras 20 observaciones de esta base de datos. Vemos que dentro de los factores que tenemos para explicar la captación de <span class="math inline">\(CO_2\)</span> estan:</p>
 <ul>
 <li><em>Type:</em> Subespecie de la planta (Missisipi o Quebec)</li>
 <li><em>Treatment:</em> Tratamiento de la plnata, enfriado (chilled) o no enfriado (nonchilled)</li>
@@ -289,34 +659,868 @@ Figura 5.1: Captación de CO2 por plantas dependiente de su subespecie
 <h3><span class="header-section-number">5.2.2</span> Representando un modelo en R</h3>
 <p>En R la mayoría de los modelos se representan con el siguiente codigo:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">alguna_funcion</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2 <span class="op">+</span><span class="st"> </span>... <span class="op">+</span><span class="st"> </span>Xn, <span class="dt">data =</span> data.frame)</a></code></pre></div>
-<p>En este modelo, tenemos la variable respuesta <em>Y</em>, la cual puede estar explcada por una o multiples variables explicativas <em>X</em>, es por esto que el simbolo <code>~</code> se lee explicado por, donde lo que esta a su izquerada es la variable respuesta y a la derecha la variable explicativa. Los datos se encuentran en un data frame y finalmente usaremos alguna función, que identificará algún modelo. Algunas de estas funciones las encontramos en la tabla <a href="#tab:Modelos"><strong>??</strong></a></p>
-
+<p>En este modelo, tenemos la variable respuesta <em>Y</em>, la cual puede estar explcada por una o multiples variables explicativas <em>X</em>, es por esto que el simbolo <code>~</code> se lee explicado por, donde lo que esta a su izquerada es la variable respuesta y a la derecha la variable explicativa. Los datos se encuentran en un data frame y finalmente usaremos alguna función, que identificará algún modelo. Algunas de estas funciones las encontramos en la tabla <a href="modelos.html#tab:Modelos">5.2</a></p>
+<table>
+<caption>
+<span id="tab:Modelos">Tabla 5.2: </span>Algunos modelos que podemos generar en R
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Modelos
+</th>
+<th style="text-align:left;">
+Funcion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Prueba de t
+</td>
+<td style="text-align:left;">
+t.test()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ANOVA
+</td>
+<td style="text-align:left;">
+aov()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Modelo lineal simple
+</td>
+<td style="text-align:left;">
+lm()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+modelo lineal generalizado
+</td>
+<td style="text-align:left;">
+glm()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Modelo aditivo
+</td>
+<td style="text-align:left;">
+gam()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Modelo no lineal
+</td>
+<td style="text-align:left;">
+nls()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+modelos lineales mixtos
+</td>
+<td style="text-align:left;">
+lmer()
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Boosted regression trees
+</td>
+<td style="text-align:left;">
+gbm()
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="volvamos-al-ejemplo-de-las-plantas" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Volvamos al ejemplo de las plantas</h3>
-<p>Para este ejemplo usaremos un modelo lineal simple, para esto siguiendo la tabla <a href="#tab:Modelos"><strong>??</strong></a> usaremos la función <code>lm</code>:</p>
+<p>Para este ejemplo usaremos un modelo lineal simple, para esto siguiendo la tabla <a href="modelos.html#tab:Modelos">5.2</a> usaremos la función <code>lm</code>:</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">Fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>Type, <span class="dt">data =</span> CO2)</a></code></pre></div>
 <div id="usando-broom-para-sacarle-mas-a-tu-modelo" class="section level4">
 <h4><span class="header-section-number">5.2.3.1</span> usando broom para sacarle más a tu modelo</h4>
 <p>El paquete broom <span class="citation">(Robinson and Hayes <a href="#ref-Robinson2018">2018</a>)</span> es un paquete adyacente al tidyverse (por lo que debes cargarlo aparte del tidyverse), el cual nos permite tomar información de modelos generados en formato tidy. Hoy veremos 3 funciones de <em>broom</em>, estas son <code>glance</code>, <code>tidy</code> y <code>augment</code>.</p>
 <div id="glance" class="section level5">
 <h5><span class="header-section-number">5.2.3.1.1</span> glance</h5>
-<p>la función glance, nos entregará información general del modelo, como el valor de p, el <span class="math inline">\(R^2\)</span>, log-likelihood, grados de libertad, y/o otros parametros dependiendo del modelo a utilizar. Esta información nos es entregada en un formato de data frame, como vemos en el código siguiente y en la tabla <a href="#tab:glance"><strong>??</strong></a></p>
+<p>la función glance, nos entregará información general del modelo, como el valor de p, el <span class="math inline">\(R^2\)</span>, log-likelihood, grados de libertad, y/o otros parametros dependiendo del modelo a utilizar. Esta información nos es entregada en un formato de data frame, como vemos en el código siguiente y en la tabla <a href="modelos.html#tab:glance">5.3</a></p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
 <a class="sourceLine" id="cb47-2" data-line-number="2"><span class="kw">glance</span>(Fit1)</a></code></pre></div>
-
+<table>
+<caption>
+<span id="tab:glance">Tabla 5.3: </span>Información del modelo fi1 entregada por la función glance
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+r.squared
+</th>
+<th style="text-align:right;">
+adj.r.squared
+</th>
+<th style="text-align:right;">
+sigma
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+deviance
+</th>
+<th style="text-align:right;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.346713
+</td>
+<td style="text-align:right;">
+0.3387461
+</td>
+<td style="text-align:right;">
+8.794012
+</td>
+<td style="text-align:right;">
+43.5191
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-300.8007
+</td>
+<td style="text-align:right;">
+607.6014
+</td>
+<td style="text-align:right;">
+614.8939
+</td>
+<td style="text-align:right;">
+6341.441
+</td>
+<td style="text-align:right;">
+82
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="tidy" class="section level5">
 <h5><span class="header-section-number">5.2.3.1.2</span> tidy</h5>
-<p>la función tidy, nos entregará información sobre los parametros del modelo, esto es el intercepto, la pendiente y/o interacciones, como vemos en el código siguiente y en la tabla <a href="#tab:tidy"><strong>??</strong></a></p>
+<p>la función tidy, nos entregará información sobre los parametros del modelo, esto es el intercepto, la pendiente y/o interacciones, como vemos en el código siguiente y en la tabla <a href="modelos.html#tab:tidy">5.4</a></p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">tidy</span>(Fit1)</a></code></pre></div>
-
+<table>
+<caption>
+<span id="tab:tidy">Tabla 5.4: </span>Información del modelo fi1 entregada por la función glance
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+24.719384
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TypeMississippi
+</td>
+<td style="text-align:right;">
+-12.65952
+</td>
+<td style="text-align:right;">
+1.919011
+</td>
+<td style="text-align:right;">
+-6.596901
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="augment" class="section level5">
 <h5><span class="header-section-number">5.2.3.1.3</span> augment</h5>
-<p>la función augment, nos entregará para cada observación de nuestro modelo, varios parametros importantes como el valor predicho, los residuales, el distancia de cook entre otros, esto nos sirve principalmente para estudiar los supuestos de nuestro modelo. A continuación vemos el uso de la función <code>augment</code> y 20 de sus observaciones en la tabla <a href="#tab:augment"><strong>??</strong></a></p>
+<p>la función augment, nos entregará para cada observación de nuestro modelo, varios parametros importantes como el valor predicho, los residuales, el distancia de cook entre otros, esto nos sirve principalmente para estudiar los supuestos de nuestro modelo. A continuación vemos el uso de la función <code>augment</code> y 20 de sus observaciones en la tabla <a href="modelos.html#tab:augment">5.5</a></p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">augment</span>(Fit1)</a></code></pre></div>
-
+<table>
+<caption>
+<span id="tab:augment">Tabla 5.5: </span>Información del modelo fi1 entregada por la función augment
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+uptake
+</th>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:right;">
+.fitted
+</th>
+<th style="text-align:right;">
+.se.fit
+</th>
+<th style="text-align:right;">
+.resid
+</th>
+<th style="text-align:right;">
+.hat
+</th>
+<th style="text-align:right;">
+.sigma
+</th>
+<th style="text-align:right;">
+.cooksd
+</th>
+<th style="text-align:right;">
+.std.resid
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+27.3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-6.242857
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.820233
+</td>
+<td style="text-align:right;">
+0.0062957
+</td>
+<td style="text-align:right;">
+-0.7185038
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+39.2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+5.657143
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.825228
+</td>
+<td style="text-align:right;">
+0.0051698
+</td>
+<td style="text-align:right;">
+0.6510927
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+21.9
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+1.016667
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.847391
+</td>
+<td style="text-align:right;">
+0.0001670
+</td>
+<td style="text-align:right;">
+0.1170103
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+42.1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+8.557143
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.795643
+</td>
+<td style="text-align:right;">
+0.0118286
+</td>
+<td style="text-align:right;">
+0.9848599
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+31.8
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+10.916667
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.762547
+</td>
+<td style="text-align:right;">
+0.0192512
+</td>
+<td style="text-align:right;">
+1.2564225
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+37.1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+3.557143
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.839082
+</td>
+<td style="text-align:right;">
+0.0020440
+</td>
+<td style="text-align:right;">
+0.4093992
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-12.542857
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.734974
+</td>
+<td style="text-align:right;">
+0.0254138
+</td>
+<td style="text-align:right;">
+-1.4435842
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+27.9
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+7.016667
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.812874
+</td>
+<td style="text-align:right;">
+0.0079531
+</td>
+<td style="text-align:right;">
+0.8075632
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.0
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+9.116667
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.788531
+</td>
+<td style="text-align:right;">
+0.0134261
+</td>
+<td style="text-align:right;">
+1.0492567
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+32.4
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-1.142857
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.847196
+</td>
+<td style="text-align:right;">
+0.0002110
+</td>
+<td style="text-align:right;">
+-0.1315339
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+44.3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+10.757143
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.765042
+</td>
+<td style="text-align:right;">
+0.0186927
+</td>
+<td style="text-align:right;">
+1.2380626
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+41.8
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+8.257143
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.799269
+</td>
+<td style="text-align:right;">
+0.0110138
+</td>
+<td style="text-align:right;">
+0.9503322
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-3.242857
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.840611
+</td>
+<td style="text-align:right;">
+0.0016988
+</td>
+<td style="text-align:right;">
+-0.3732274
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.6
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+9.716667
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.780397
+</td>
+<td style="text-align:right;">
+0.0152515
+</td>
+<td style="text-align:right;">
+1.1183119
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+17.9
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-2.983333
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.841767
+</td>
+<td style="text-align:right;">
+0.0014377
+</td>
+<td style="text-align:right;">
+-0.3433582
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+28.5
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+7.616667
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.806572
+</td>
+<td style="text-align:right;">
+0.0093715
+</td>
+<td style="text-align:right;">
+0.8766185
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13.6
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-19.942857
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.559179
+</td>
+<td style="text-align:right;">
+0.0642469
+</td>
+<td style="text-align:right;">
+-2.2952661
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+42.4
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+8.857143
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.791887
+</td>
+<td style="text-align:right;">
+0.0126726
+</td>
+<td style="text-align:right;">
+1.0193875
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-8.883333
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.791552
+</td>
+<td style="text-align:right;">
+0.0127476
+</td>
+<td style="text-align:right;">
+-1.0224018
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+32.4
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+11.516667
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.752828
+</td>
+<td style="text-align:right;">
+0.0214255
+</td>
+<td style="text-align:right;">
+1.3254778
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="seleccion-de-modelos-usando-broom-y-el-aic" class="section level4">
@@ -327,9 +1531,9 @@ Figura 5.1: Captación de CO2 por plantas dependiente de su subespecie
   AIC = 2 K - 2 \ln{(\hat{L})}
   \tag{5.1}
 \end{equation}\]</span></p>
-<p>Donde <span class="math inline">\(K\)</span> es el número de parametros, lo cual podemos ver con tidy, si vemos la tabla <a href="#tab:tidy"><strong>??</strong></a>, vemos que el modelo <em>Fit1</em> tiene 2 parametros, esto es <span class="math inline">\(K\)</span> es igual a 2.</p>
-<p>El log-likelihood del modelo (<span class="math inline">\(\ln{(\hat{L})}\)</span>) es el ajuste que este tiene a los datos. Cuanto más positivo es este valor mejor se ajusta el modelo a los datos, y cuanto mas negativo es, menos se ajusta a los datos, en nuestro modelo, usando glance, podemos ver que el valor del log-likelyhood del modelo es de -300.8 (ver tabla <a href="#tab:tidy"><strong>??</strong></a>).</p>
-<p>Por lo tanto remplazando la ecuación <a href="modelos.html#eq:AIC">(5.1)</a>, obtenemos 605.6, que es un valor muy cercano a los 608, que aparecen en el glance del modelo (tabla <a href="#tab:tidy"><strong>??</strong></a>).</p>
+<p>Donde <span class="math inline">\(K\)</span> es el número de parametros, lo cual podemos ver con tidy, si vemos la tabla <a href="modelos.html#tab:tidy">5.4</a>, vemos que el modelo <em>Fit1</em> tiene 2 parametros, esto es <span class="math inline">\(K\)</span> es igual a 2.</p>
+<p>El log-likelihood del modelo (<span class="math inline">\(\ln{(\hat{L})}\)</span>) es el ajuste que este tiene a los datos. Cuanto más positivo es este valor mejor se ajusta el modelo a los datos, y cuanto mas negativo es, menos se ajusta a los datos, en nuestro modelo, usando glance, podemos ver que el valor del log-likelyhood del modelo es de -300.8 (ver tabla <a href="modelos.html#tab:tidy">5.4</a>).</p>
+<p>Por lo tanto remplazando la ecuación <a href="modelos.html#eq:AIC">(5.1)</a>, obtenemos 605.6, que es un valor muy cercano a los 608, que aparecen en el glance del modelo (tabla <a href="modelos.html#tab:tidy">5.4</a>).</p>
 <div id="modelos-candidatos" class="section level5">
 <h5><span class="header-section-number">5.2.3.2.1</span> Modelos candidatos</h5>
 <p>Veamos la figura <a href="modelos.html#fig:CO2Mods">5.2</a>. para pensar cuales podrían ser modelos interesantes a explorar.</p>
