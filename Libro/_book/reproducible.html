@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-08-30">
+<meta name="date" content="2018-09-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -453,48 +453,8 @@ Figura 2.14: Al apretar el botón insert chunk, aparecera un espacio en el cuál
 <h4><span class="header-section-number">2.4.1.3</span> inline code</h4>
 <p>Los <em>inline codes</em> son útiles para agregar algún valor en el texto, como por ejemplo el valor de p o la media. Para usarlo, se debe poner un backtick (comilla simple hacia atrás), r, el código en cuestion y otro backtick como se ve a continuación <code>`r R_código`</code>. No podemos poner cualquier cosa en un <em>inline code</em>, ya que sólo puede generar vectores, lo cuál muchas veces requiere de mucha creatividad para lograr lo que queremos. Por ejemplo si se quisiera poner el promedio del largo del sépalo de la base da dato <code>iris</code> en un <em>inline code</em> pondríamos <code>`r mean(iris$Sepal.Length)`</code>, lo cual resultaría en 5.8433333. Como en un texto se vería extraño un número con 7 cifras significativas, querríamos usar ademas la función <code>round</code>, para que tenga 2 cifras significativas, para eso ponemos el siguiente inline code <code>`r round(mean(iris$Sepal.Length),2)`</code> que da como resultado 5.84. Esto se puede complejizar más aún si se quiere trabajar con una tabla resumen. Por ejemplo, si quisieramos listar el promedio del tamaño de sépalo usaríamos <code>summarize</code> de <em>dplyr</em>, pero esto nos daría como resultado un data.frame, el cual no aparece si intentamos hacer un inline code. Partamos por ver como se vería el código donde obtuvieramos la media del tamaño del sépalo.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">Mean =</span> <span class="kw">mean</span>(Sepal.Length))</a></code></pre></div>
-<p>El resultado de ese código lo veríamos <a href="reproducible.html#tab:SummarySepaltab">2.1</a></p>
-<table>
-<caption>
-<span id="tab:SummarySepaltab">Tabla 2.1: </span>Resumen del promedio del largo de sépalo de las flores del genero Iris.
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-Species
-</th>
-<th style="text-align:right;">
-Mean
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-setosa
-</td>
-<td style="text-align:right;">
-5.006
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-versicolor
-</td>
-<td style="text-align:right;">
-5.936
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-virginica
-</td>
-<td style="text-align:right;">
-6.588
-</td>
-</tr>
-</tbody>
-</table>
+<p>El resultado de ese código lo veríamos <a href="#tab:SummarySepaltab"><strong>??</strong></a></p>
+
 <p>Para sacar de este data frame el vector de la media podríamos subsetearlo con el signo <code>$</code>. Entonces si queremos sacar como vector la columna <em>Mean</em> del data frame que creamos, haríamos lo siguiente <code>`r (iris %&gt;% group_by(Species) %&gt;% summarize(Mean = mean(Sepal.Length)))$Mean`</code>. Esto daría como resultado 5.006, 5.936, 6.588.</p>
 </div>
 </div>
@@ -507,87 +467,11 @@ virginica
 </div>
 <div id="tablas-en-rmarkdown" class="section level4">
 <h4><span class="header-section-number">2.4.2.2</span> Tablas en Rmarkdown</h4>
-<p>La función más típica para generar tablas en un archivo <em>rmd</em> es <code>kable</code> del paquete <em>knitr</em>, que en su forma más simple se incluye un dataframe como único argumento. Además de esto, podemos agregar algunos parámetros como <em>caption</em>, que nos permite poner un título a la tabla o <em>row.names</em>, que si se pone como se ve en el código (FALSE) no mostrará en la tabla los nombres de las filas, tal como se ve en la tabla <a href="reproducible.html#tab:SummaryMeans">2.2</a>.</p>
+<p>La función más típica para generar tablas en un archivo <em>rmd</em> es <code>kable</code> del paquete <em>knitr</em>, que en su forma más simple se incluye un dataframe como único argumento. Además de esto, podemos agregar algunos parámetros como <em>caption</em>, que nos permite poner un título a la tabla o <em>row.names</em>, que si se pone como se ve en el código (FALSE) no mostrará en la tabla los nombres de las filas, tal como se ve en la tabla <a href="#tab:SummaryMeans"><strong>??</strong></a>.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">kable</span>(DF, <span class="dt">caption =</span> <span class="st">&quot;Promedio por especie de todas las variables de la base de datos iris.&quot;</span>, </a>
 <a class="sourceLine" id="cb22-3" data-line-number="3">    <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<table>
-<caption>
-<span id="tab:SummaryMeans">Tabla 2.2: </span>Promedio por especie de todas las variables de la base de datos iris.
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-Species
-</th>
-<th style="text-align:right;">
-Sepal.Length
-</th>
-<th style="text-align:right;">
-Sepal.Width
-</th>
-<th style="text-align:right;">
-Petal.Length
-</th>
-<th style="text-align:right;">
-Petal.Width
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-setosa
-</td>
-<td style="text-align:right;">
-5.006
-</td>
-<td style="text-align:right;">
-3.428
-</td>
-<td style="text-align:right;">
-1.462
-</td>
-<td style="text-align:right;">
-0.246
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-versicolor
-</td>
-<td style="text-align:right;">
-5.936
-</td>
-<td style="text-align:right;">
-2.770
-</td>
-<td style="text-align:right;">
-4.260
-</td>
-<td style="text-align:right;">
-1.326
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-virginica
-</td>
-<td style="text-align:right;">
-6.588
-</td>
-<td style="text-align:right;">
-2.974
-</td>
-<td style="text-align:right;">
-5.552
-</td>
-<td style="text-align:right;">
-2.026
-</td>
-</tr>
-</tbody>
-</table>
+
 
 </div>
 </div>
