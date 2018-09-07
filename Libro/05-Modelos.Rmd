@@ -6,7 +6,9 @@ Para este capítulo necesitas tener instalado el paquete *tidyverse*, *broom* y 
 
 En este capítulo se explicará como generar modelos en R, el como obtener información y tablas a partir de los modelos con el paquete *Broom* [@Robinson2018] y una leve introducción a la selección de modelos con el paquete *MuMIn* [@Barton2018]
 
-Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase5/Modelos). El video de la clase se encontrará disponible en este [link].
+Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase5/Modelos). El video de la clase se encontrará disponible en este [link](https://www.youtube.com/watch?v=rsRPVwd1_8k&feature=youtu.be).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rsRPVwd1_8k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## Modelos estadísticos
 
