@@ -300,6 +300,9 @@ Como vemos en la figura \@ref(fig:leftjoin)
 ```{r leftjoin, warning=FALSE, message=FALSE, echo = FALSE, fig.cap="animación de left join entre las tablas x e y, cache = TRUE"}
 library(gganimate)
 
+
+
+if ("html_document" %in% rmarkdown::all_output_formats(knitr::current_input())){
 x <- data_frame(
   id = 1:3,
   x = paste0("x", 1:3)
@@ -369,7 +372,7 @@ lj <- initial_dfs %>%
   animate_plot()
 
 lj
-
+}
 
 ```
 

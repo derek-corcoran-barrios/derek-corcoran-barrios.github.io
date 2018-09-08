@@ -8,7 +8,7 @@ Probablemente uno de los puntos que marca la diferencia entre ser un usuario de 
 
 Existen varias formas de como realizar loops en R, los *for* loops, la familia de los *apply* y más recientemente el uso del paquete *purrr* [@HenryPurrr] presente en el *tidyverse*. En este capítulo nos enfocaremos principalmente en el uso de este paquete, pero también explicaremos levemente el caso de los for loops.
 
-Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase6/Clase6Loopsybibliografia). El video de la clase se encontrará disponible en este [link].
+Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase6/Clase6Loopsybibliografia). El video de la clase se encontrará disponible en este [link]( https://youtu.be/Oz_egH-sXZg).
 
 ## Generando una receta
 
