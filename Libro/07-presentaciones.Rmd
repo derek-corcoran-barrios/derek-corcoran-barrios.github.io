@@ -8,4 +8,5 @@ En este capítulo aprenderemos dos formas distintas de hacer presentaciones en R
 
 Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase7/Clase7PresentacionesEnR). El video de la clase se encontrará disponible en este [link](https://youtu.be/fgX-FV7fuxA).
 
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/fgX-FV7fuxA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>

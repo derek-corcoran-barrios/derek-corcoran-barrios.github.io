@@ -10,6 +10,8 @@ Existen varias formas de como realizar loops en R, los *for* loops, la familia d
 
 Dado que este libro es un apoyo para el curso BIO4022, esta clase puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase6/Clase6Loopsybibliografia). El video de la clase se encontrará disponible en este [link]( https://youtu.be/Oz_egH-sXZg).
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Oz_egH-sXZg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
 ## Generando una receta
 
 Como hacer un loop, es una repetición de un código multiples veces, generalmente lo que más nos combiene es generar la receta tomando en cuenta el primer elemento y luego repetirlo en un loop.
