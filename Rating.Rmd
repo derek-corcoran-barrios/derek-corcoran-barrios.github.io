@@ -4,16 +4,16 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache = FALSE)
 ```
  
 These are the rankings for teams based on our spatial-based algorithm as of `r format(Sys.time(), '%d %B, %Y')`
 
 ```{r, results='hide'}
-library(SpatialBall)
+library(SpatialBall2)
 library(dplyr)
-Season2018 <- readRDS("Season2018.rds")
-Rank <- SpatialRating(Seasondata = Season2018)
+Season2019 <- readRDS("Season2019.rds")
+Rank <- SpatialBall2::SpatialRating(Seasondata = Season2019)
 Rank <- Rank %>% mutate_if(is.numeric, funs(round(., 3)))
 ```
 

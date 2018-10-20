@@ -1,10 +1,10 @@
 ---
-title: "NBA Projections 2018 season"
+title: "NBA Projections 2019 season"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE)
 ```
 
 
@@ -16,132 +16,132 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(rjson, grid, gridExtra, png, RCurl, ggplot2, jpeg, hexbin, sp, knitr, dplyr, lubridate, purrr)
 
 by_team <- readRDS("by_team.rds")
-Season2018 <- readRDS("Season2018.rds")
-startScrape <- format((max(Season2018$GAME_DATE)), '%m/%d/%Y')
+Season2019 <- readRDS("Season2019.rds")
+startScrape <- format((max(Season2019$GAME_DATE)), '%m/%d/%Y')
 
 teamID <- by_team$team_id
 teamName <- by_team$team_city
-Season2018b <- list()
+Season2019b <- list()
 
 
-shotURLtotal <- paste("http://stats.nba.com/stats/shotchartdetail?CFID=33&CFPARAMS=2017-18&ContextFilter=&ContextMeasure=FGA&DateFrom=", startScrape ,"&DateTo=&GameID=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerID=0&PlusMinus=N&Position=&Rank=N&RookieYear=&Season=2017-18&SeasonSegment=&SeasonType=Regular+Season&TeamID=0&VsConference=&VsDivision=&mode=Advanced&showDetails=0&showShots=1&showZones=0&PlayerPosition=", sep = "")
+shotURLtotal <- paste("http://stats.nba.com/stats/shotchartdetail?CFID=33&CFPARAMS=2018-19&ContextFilter=&ContextMeasure=FGA&DateFrom=", startScrape ,"&DateTo=&GameID=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerID=0&PlusMinus=N&Position=&Rank=N&RookieYear=&Season=2018-19&SeasonSegment=&SeasonType=Regular+Season&TeamID=0&VsConference=&VsDivision=&mode=Advanced&showDetails=0&showShots=1&showZones=0&PlayerPosition=", sep = "")
 
 # import from JSON
-Season2018b <- fromJSON(file = shotURLtotal, method="C")
-Names <- Season2018b$resultSets[[1]][[2]]
+Season2019b <- fromJSON(file = shotURLtotal, method="C")
+Names <- Season2019b$resultSets[[1]][[2]]
 # unlist shot data, save into a data frame
-Season2018b <- data.frame(matrix(unlist(Season2018b$resultSets[[1]][[3]]), ncol = 24, byrow = TRUE))
+Season2019b <- data.frame(matrix(unlist(Season2019b$resultSets[[1]][[3]]), ncol = 24, byrow = TRUE))
 
-colnames(Season2018b) <- Names
+colnames(Season2019b) <- Names
 
 
 # covert x and y coordinates into numeric
-Season2018b$LOC_X <- as.numeric(as.character(Season2018b$LOC_X))
-Season2018b$LOC_Y <- as.numeric(as.character(Season2018b$LOC_Y))
+Season2019b$LOC_X <- as.numeric(as.character(Season2019b$LOC_X))
+Season2019b$LOC_Y <- as.numeric(as.character(Season2019b$LOC_Y))
 
 
-Season2018b$TEAM_NAME <- gsub("Detroit Pistons", "Det", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Atlanta Hawks", "Atl", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Chicago Bulls", "Chi", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Boston Celtics", "Bos", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Cleveland Cavaliers", "Cle", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("New Orleans Pelicans", "NO", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Golden State Warriors", "GSW", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Orlando Magic", "ORL", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Washington Wizards", "Was", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Philadelphia 76ers", "Phi", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Brooklyn Nets", "Bkn", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Utah Jazz", "Uta", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Miami Heat", "Mia", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Charlotte Hornets", "Cha", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Toronto Raptors", "Tor", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Indiana Pacers", "Ind", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Houston Rockets", "Hou", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Denver Nuggets", "Den", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Memphis Grizzlies", "Mem", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("New York Knicks", "NY", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Milwaukee Bucks", "Mil", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Oklahoma City Thunder", "Okc", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("San Antonio Spurs", "Sas", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Dallas Mavericks", "Dal", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Phoenix Suns", "Pho", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Portland Trail Blazers", "Por", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("LA Clippers", "Lac", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Sacramento Kings", "Sac", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Los Angeles Lakers", "Lal", Season2018b$TEAM_NAME)
-Season2018b$TEAM_NAME <- gsub("Minnesota Timberwolves", "Min", Season2018b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Detroit Pistons", "Det", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Atlanta Hawks", "Atl", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Chicago Bulls", "Chi", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Boston Celtics", "Bos", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Cleveland Cavaliers", "Cle", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("New Orleans Pelicans", "NO", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Golden State Warriors", "GSW", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Orlando Magic", "ORL", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Washington Wizards", "Was", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Philadelphia 76ers", "Phi", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Brooklyn Nets", "Bkn", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Utah Jazz", "Uta", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Miami Heat", "Mia", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Charlotte Hornets", "Cha", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Toronto Raptors", "Tor", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Indiana Pacers", "Ind", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Houston Rockets", "Hou", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Denver Nuggets", "Den", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Memphis Grizzlies", "Mem", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("New York Knicks", "NY", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Milwaukee Bucks", "Mil", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Oklahoma City Thunder", "Okc", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("San Antonio Spurs", "Sas", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Dallas Mavericks", "Dal", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Phoenix Suns", "Pho", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Portland Trail Blazers", "Por", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("LA Clippers", "Lac", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Sacramento Kings", "Sac", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Los Angeles Lakers", "Lal", Season2019b$TEAM_NAME)
+Season2019b$TEAM_NAME <- gsub("Minnesota Timberwolves", "Min", Season2019b$TEAM_NAME)
 
 
 ####HOME VISITOR
 
 
-Season2018b$HTM <- gsub("DET", "Det", Season2018b$HTM)
-Season2018b$HTM <- gsub("ATL", "Atl", Season2018b$HTM)
-Season2018b$HTM <- gsub("CHI", "Chi", Season2018b$HTM)
-Season2018b$HTM <- gsub("BOS", "Bos", Season2018b$HTM)
-Season2018b$HTM <- gsub("CLE", "Cle", Season2018b$HTM)
-Season2018b$HTM <- gsub("NOP", "NO", Season2018b$HTM)
-Season2018b$HTM <- gsub("GSW", "GSW", Season2018b$HTM)
-Season2018b$HTM <- gsub("ORL", "ORL", Season2018b$HTM)
-Season2018b$HTM <- gsub("WAS", "Was", Season2018b$HTM)
-Season2018b$HTM <- gsub("PHI", "Phi", Season2018b$HTM)
-Season2018b$HTM <- gsub("BKN", "Bkn", Season2018b$HTM)
-Season2018b$HTM <- gsub("UTA", "Uta", Season2018b$HTM)
-Season2018b$HTM <- gsub("MIA", "Mia", Season2018b$HTM)
-Season2018b$HTM <- gsub("CHA", "Cha", Season2018b$HTM)
-Season2018b$HTM <- gsub("TOR", "Tor", Season2018b$HTM)
-Season2018b$HTM <- gsub("IND", "Ind", Season2018b$HTM)
-Season2018b$HTM <- gsub("HOU", "Hou", Season2018b$HTM)
-Season2018b$HTM <- gsub("DEN", "Den", Season2018b$HTM)
-Season2018b$HTM <- gsub("MEM", "Mem", Season2018b$HTM)
-Season2018b$HTM <- gsub("NYK", "NY", Season2018b$HTM)
-Season2018b$HTM <- gsub("MIL", "Mil", Season2018b$HTM)
-Season2018b$HTM <- gsub("OKC", "Okc", Season2018b$HTM)
-Season2018b$HTM <- gsub("SAS", "Sas", Season2018b$HTM)
-Season2018b$HTM <- gsub("DAL", "Dal", Season2018b$HTM)
-Season2018b$HTM <- gsub("PHX", "Pho", Season2018b$HTM)
-Season2018b$HTM <- gsub("POR", "Por", Season2018b$HTM)
-Season2018b$HTM <- gsub("LAC", "Lac", Season2018b$HTM)
-Season2018b$HTM <- gsub("SAC", "Sac", Season2018b$HTM)
-Season2018b$HTM <- gsub("LAL", "Lal", Season2018b$HTM)
-Season2018b$HTM <- gsub("MIN", "Min", Season2018b$HTM)
+Season2019b$HTM <- gsub("DET", "Det", Season2019b$HTM)
+Season2019b$HTM <- gsub("ATL", "Atl", Season2019b$HTM)
+Season2019b$HTM <- gsub("CHI", "Chi", Season2019b$HTM)
+Season2019b$HTM <- gsub("BOS", "Bos", Season2019b$HTM)
+Season2019b$HTM <- gsub("CLE", "Cle", Season2019b$HTM)
+Season2019b$HTM <- gsub("NOP", "NO", Season2019b$HTM)
+Season2019b$HTM <- gsub("GSW", "GSW", Season2019b$HTM)
+Season2019b$HTM <- gsub("ORL", "ORL", Season2019b$HTM)
+Season2019b$HTM <- gsub("WAS", "Was", Season2019b$HTM)
+Season2019b$HTM <- gsub("PHI", "Phi", Season2019b$HTM)
+Season2019b$HTM <- gsub("BKN", "Bkn", Season2019b$HTM)
+Season2019b$HTM <- gsub("UTA", "Uta", Season2019b$HTM)
+Season2019b$HTM <- gsub("MIA", "Mia", Season2019b$HTM)
+Season2019b$HTM <- gsub("CHA", "Cha", Season2019b$HTM)
+Season2019b$HTM <- gsub("TOR", "Tor", Season2019b$HTM)
+Season2019b$HTM <- gsub("IND", "Ind", Season2019b$HTM)
+Season2019b$HTM <- gsub("HOU", "Hou", Season2019b$HTM)
+Season2019b$HTM <- gsub("DEN", "Den", Season2019b$HTM)
+Season2019b$HTM <- gsub("MEM", "Mem", Season2019b$HTM)
+Season2019b$HTM <- gsub("NYK", "NY", Season2019b$HTM)
+Season2019b$HTM <- gsub("MIL", "Mil", Season2019b$HTM)
+Season2019b$HTM <- gsub("OKC", "Okc", Season2019b$HTM)
+Season2019b$HTM <- gsub("SAS", "Sas", Season2019b$HTM)
+Season2019b$HTM <- gsub("DAL", "Dal", Season2019b$HTM)
+Season2019b$HTM <- gsub("PHX", "Pho", Season2019b$HTM)
+Season2019b$HTM <- gsub("POR", "Por", Season2019b$HTM)
+Season2019b$HTM <- gsub("LAC", "Lac", Season2019b$HTM)
+Season2019b$HTM <- gsub("SAC", "Sac", Season2019b$HTM)
+Season2019b$HTM <- gsub("LAL", "Lal", Season2019b$HTM)
+Season2019b$HTM <- gsub("MIN", "Min", Season2019b$HTM)
 
 ###Visitor
 
 
-Season2018b$VTM <- gsub("DET", "Det", Season2018b$VTM)
-Season2018b$VTM <- gsub("ATL", "Atl", Season2018b$VTM)
-Season2018b$VTM <- gsub("CHI", "Chi", Season2018b$VTM)
-Season2018b$VTM <- gsub("BOS", "Bos", Season2018b$VTM)
-Season2018b$VTM <- gsub("CLE", "Cle", Season2018b$VTM)
-Season2018b$VTM <- gsub("NOP", "NO", Season2018b$VTM)
-Season2018b$VTM <- gsub("GSW", "GSW", Season2018b$VTM)
-Season2018b$VTM <- gsub("ORL", "ORL", Season2018b$VTM)
-Season2018b$VTM <- gsub("WAS", "Was", Season2018b$VTM)
-Season2018b$VTM <- gsub("PHI", "Phi", Season2018b$VTM)
-Season2018b$VTM <- gsub("BKN", "Bkn", Season2018b$VTM)
-Season2018b$VTM <- gsub("UTA", "Uta", Season2018b$VTM)
-Season2018b$VTM <- gsub("MIA", "Mia", Season2018b$VTM)
-Season2018b$VTM <- gsub("CHA", "Cha", Season2018b$VTM)
-Season2018b$VTM <- gsub("TOR", "Tor", Season2018b$VTM)
-Season2018b$VTM <- gsub("IND", "Ind", Season2018b$VTM)
-Season2018b$VTM <- gsub("HOU", "Hou", Season2018b$VTM)
-Season2018b$VTM <- gsub("DEN", "Den", Season2018b$VTM)
-Season2018b$VTM <- gsub("MEM", "Mem", Season2018b$VTM)
-Season2018b$VTM <- gsub("NYK", "NY", Season2018b$VTM)
-Season2018b$VTM <- gsub("MIL", "Mil", Season2018b$VTM)
-Season2018b$VTM <- gsub("OKC", "Okc", Season2018b$VTM)
-Season2018b$VTM <- gsub("SAS", "Sas", Season2018b$VTM)
-Season2018b$VTM <- gsub("DAL", "Dal", Season2018b$VTM)
-Season2018b$VTM <- gsub("PHX", "Pho", Season2018b$VTM)
-Season2018b$VTM <- gsub("POR", "Por", Season2018b$VTM)
-Season2018b$VTM <- gsub("LAC", "Lac", Season2018b$VTM)
-Season2018b$VTM <- gsub("SAC", "Sac", Season2018b$VTM)
-Season2018b$VTM <- gsub("LAL", "Lal", Season2018b$VTM)
-Season2018b$VTM <- gsub("MIN", "Min", Season2018b$VTM)
-Season2018b$GAME_DATE <- ymd(Season2018b$GAME_DATE)
+Season2019b$VTM <- gsub("DET", "Det", Season2019b$VTM)
+Season2019b$VTM <- gsub("ATL", "Atl", Season2019b$VTM)
+Season2019b$VTM <- gsub("CHI", "Chi", Season2019b$VTM)
+Season2019b$VTM <- gsub("BOS", "Bos", Season2019b$VTM)
+Season2019b$VTM <- gsub("CLE", "Cle", Season2019b$VTM)
+Season2019b$VTM <- gsub("NOP", "NO", Season2019b$VTM)
+Season2019b$VTM <- gsub("GSW", "GSW", Season2019b$VTM)
+Season2019b$VTM <- gsub("ORL", "ORL", Season2019b$VTM)
+Season2019b$VTM <- gsub("WAS", "Was", Season2019b$VTM)
+Season2019b$VTM <- gsub("PHI", "Phi", Season2019b$VTM)
+Season2019b$VTM <- gsub("BKN", "Bkn", Season2019b$VTM)
+Season2019b$VTM <- gsub("UTA", "Uta", Season2019b$VTM)
+Season2019b$VTM <- gsub("MIA", "Mia", Season2019b$VTM)
+Season2019b$VTM <- gsub("CHA", "Cha", Season2019b$VTM)
+Season2019b$VTM <- gsub("TOR", "Tor", Season2019b$VTM)
+Season2019b$VTM <- gsub("IND", "Ind", Season2019b$VTM)
+Season2019b$VTM <- gsub("HOU", "Hou", Season2019b$VTM)
+Season2019b$VTM <- gsub("DEN", "Den", Season2019b$VTM)
+Season2019b$VTM <- gsub("MEM", "Mem", Season2019b$VTM)
+Season2019b$VTM <- gsub("NYK", "NY", Season2019b$VTM)
+Season2019b$VTM <- gsub("MIL", "Mil", Season2019b$VTM)
+Season2019b$VTM <- gsub("OKC", "Okc", Season2019b$VTM)
+Season2019b$VTM <- gsub("SAS", "Sas", Season2019b$VTM)
+Season2019b$VTM <- gsub("DAL", "Dal", Season2019b$VTM)
+Season2019b$VTM <- gsub("PHX", "Pho", Season2019b$VTM)
+Season2019b$VTM <- gsub("POR", "Por", Season2019b$VTM)
+Season2019b$VTM <- gsub("LAC", "Lac", Season2019b$VTM)
+Season2019b$VTM <- gsub("SAC", "Sac", Season2019b$VTM)
+Season2019b$VTM <- gsub("LAL", "Lal", Season2019b$VTM)
+Season2019b$VTM <- gsub("MIN", "Min", Season2019b$VTM)
+Season2019b$GAME_DATE <- ymd(Season2019b$GAME_DATE)
 
-Season2018 <- full_join(Season2018, Season2018b)
+Season2019 <- full_join(Season2019, Season2019b)
 
 ```
 
@@ -152,7 +152,7 @@ pacman::p_load(XML, lubridate, rvest, dplyr)
 #Gather data
 
 Months <- c("october", "november", "december", "january", "february", "march", "april")
-Years <- c(2018)
+Years <- c(2019)
 URLs <- list()
 for(i in 1:length(Years)){
   URLs[[i]] <- paste("http://www.basketball-reference.com/leagues/NBA_", Years[i],"_games-", Months,".html", sep = "")
@@ -175,7 +175,7 @@ schedule[,4] <- as.numeric(as.character(schedule[,4]))
 schedule[,6] <- as.numeric(as.character(schedule[,6]))
 
 
-schedule$Season <- 2018
+schedule$Season <- 2019
 
 
 schedule[,3] <- gsub("Detroit Pistons", "Det", schedule[,3])
@@ -260,7 +260,7 @@ future_games <- schedule[schedule$Date >= Sys.Date(),]
 
 results <- list()
 for(i in 1:nrow(future_games)){
-  results[[i]] <- Get_Apps(HomeTeam = future_games$HTM[i], VisitorTeam = future_games$VTM[i], Seasondata = Season2018)
+  results[[i]] <- Get_Apps(HomeTeam = future_games$HTM[i], VisitorTeam = future_games$VTM[i], Seasondata = Season2019)
   message(paste("simulating", i ,"of", nrow(future_games)))
 }
 
@@ -302,7 +302,7 @@ AddedStand <- merge.data.frame(AddedStand_W, AddedStand_L, all = TRUE)
 
 #####Standing scraper
 
-Standings <- "http://www.basketball-reference.com/leagues/NBA_2018.html"
+Standings <- "http://www.basketball-reference.com/leagues/NBA_2019.html"
 
 Standings <- read_html(Standings)%>% html_table(fill=TRUE)%>% .[1:2]
 
@@ -416,5 +416,5 @@ DT::datatable(dplyr::filter(future_games[,c(1,2,4,9,11,10)], Date == Sys.Date())
 ))
 #write.csv(x = dplyr::filter(future_games, Date == Sys.Date()), file =   paste("Future_games", Sys.Date(),".csv", sep = ""))
 #saveRDS(dplyr::filter(future_games, Date == Sys.Date()),  paste("Future_games", Sys.Date(),".rds", sep = ""))
-saveRDS(Season2018, "Season2018.rds")
+saveRDS(Season2019, "Season2019.rds")
 ```

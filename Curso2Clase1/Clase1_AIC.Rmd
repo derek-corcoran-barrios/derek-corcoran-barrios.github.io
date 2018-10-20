@@ -1,0 +1,236 @@
+---
+title: "Criterios de información"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, tidy = TRUE)
+library(tidyverse)
+library(kableExtra)
+library(broom)
+library(MuMIn)
+library(caret)
+options("kableExtra.html.bsTable" = T)
+```
+
+# Curso BIO4318 Modelos Multivariados y Machine learning
+
+## Evaluación {.build}
+
+* Evaluación 1: Informe de selección de modelos 35%
+* Evaluación 2: Informe de selección de modelos e inferencia estadística 35%
+* Discusión de artículos: 5%
+* Evaluación 3: Hackathon 25%
+
+# Predecir vs Explicar
+
+## Modelos estadísticos
+
+* Usados ampliamente para explicar fenómenos
+  - LM, GLM, NLM
+* Se asume que un alto poder explicativo $\approx$ poder predictivo
+* ¿Como medimos el poder explicativo de un modelo?
+    + $R^2$
+* ¿Como medimos el poder predictivo de un modelo?
+    + $R^2$ en una nueva base de datos
+
+## Ejemplo
+
+¿Podemos explicar o predecir la eficiencia de combustible (*mpg*) a partir de los caballos de fuerza (*hp*) de un Vehículo?
+
+```{r}
+ggplot(mtcars, aes(x = hp, y = mpg)) + geom_point() + theme_classic()
+```
+
+* ¿Hipótesis?
+
+## Primer paso separar en base de datos de entrenamiento y de testeo
+
+* Para ver poder predictivo no podemos usar la misma base de datos
+
+```{r, echo=TRUE}
+set.seed(2018)
+index <- sample(1:nrow(mtcars), size = round(nrow(mtcars)/2))
+
+Train <- mtcars[index,]
+
+Test <- mtcars[-index,]
+```
+
+Modelo que quiero usar
+
+$$mpg = \beta_1 hp + \beta_2 hp^2 + c$$
+
+```{r, echo = TRUE}
+Modelo <- lm(mpg ~ hp + I(hp^2), data = Train)
+```
+
+
+## Explicación vs Predicción {.small}
+
+```{r, echo=TRUE, eval = FALSE}
+glance(Modelo)
+```
+
+```{r}
+kable(glance(Modelo) %>% select(r.squared, p.value, df))  %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+```{r, echo=TRUE}
+Train$Pred <- predict(Modelo, Train)
+```
+
+```{r}
+kable(Train %>% dplyr::select(hp, mpg,  Pred) %>% mutate(resid = Pred - mpg))  %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+
+## Explicación vs Predicción (continuado)
+
+```{r}
+ggplot(Train, aes(x = hp, y = mpg)) + geom_point() + geom_line(aes(y = Pred), color = "red", lty = 2) + theme_classic()
+```
+
+## Predicción {.small}
+
+
+```{r, echo=TRUE}
+library(caret)
+Test$Pred <- predict(Modelo, Test)
+postResample(pred = Test$Pred, obs = Test$mpg)
+```
+
+```{r}
+kable(Test %>% dplyr::select(hp, mpg,  Pred) %>% mutate(resid = Pred - mpg))  %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Predicción (cont) {.small}
+
+
+```{r}
+ggplot(Test, aes(x = hp, y = mpg)) + geom_point() + geom_line(aes(y = Pred), color = "red", lty = 2) + theme_classic()
+```
+
+## Que pasa al complejizar el modelo
+
+$$mpg = \beta_1 hp + \beta_2 hp^2 + ... + \beta_12 hp^{12}  c$$
+
+```{r}
+knitr::include_graphics("Explicativo.gif")
+```
+
+## Sobreajuste
+
+```{r}
+knitr::include_graphics("Predictivo.gif")
+```
+
+## Quiero predecir y no explicar
+
+* Texto predictivo del celular
+* Auto-corrector
+* Efectos de cambio climático
+* Detección de caras en redes sociales
+* A veces el modelo equivocado puede predecir mejor
+* Como selecciono el modelo con mayor poder predictivo?
+    + Maximizo el $R^2$ de la base de datos de prueba (*Test*)
+
+
+## Quiero explicar y no predecir
+
+* Pruebas a hipótesis causales
+* ¿Que causa el cambio climático?
+* Como funciona:
+  + Generación de hipótesis (plural)
+  + Generación de modelos para cada hipótesis
+  + Interpretación de resultados en base a modelos e hipótesis
+  + Recomendaciones?
+
+## Explicación o Predicción?
+
+```{r}
+knitr::include_graphics("Both.jpg", dpi = 80)
+```
+
+## AIC
+
+* Balancea explicación y predicción
+* Castiga el uso de muchos parámetros
+* Menor AIC, mejor modelo
+
+$$AIC = 2k  - \ln(L)$$
+
+* Corregido
+
+$$AICc = AIC + \frac{2k^2 + 2k}{n-k-1}$$
+
+* Usualmente una diferencia de 2 en AIC, se considera "Significativa" 
+
+## Calculo de AICc en R
+
+* Función `AICc` en MuMIn
+
+```{r, echo = TRUE}
+library(MuMIn)
+Modelo <- lm(mpg ~ hp + I(hp^2), data = Train)
+AICc(Modelo)
+```
+
+* MuMIn tiene otros criterios de informacion:
+    + BIC
+    + CAIFC
+    + DIC
+    + QAIC
+    
+## AICc
+    
+```{r, cache=TRUE}
+library(MuMIn)
+library(tidyverse)
+library(gridExtra)
+
+Fit1 <- glm(mpg ~., data = mtcars)
+options(na.action = "na.fail")
+dd <- dredge(Fit1, extra = "R^2")
+dd <- as.data.frame(dd) 
+colnames(dd) <- make.names(colnames(dd))
+SUMM <- dd %>% group_by(df) %>% summarize(RSq = max(R.2), AICc = min(AICc))
+
+dfAICmin <- filter(SUMM, AICc == min(AICc))$df
+
+G2 <- ggplot(SUMM, aes(x = df, y = AICc)) + geom_line() + theme_classic() + geom_vline(xintercept =dfAICmin, col = "red")
+
+G1 <- ggplot(SUMM, aes(x = df, y = RSq)) + geom_line() + theme_classic() + geom_hline(yintercept = 1, lty = 2) + geom_vline(xintercept =dfAICmin, col = "red")
+
+grid.arrange(G1, G2, ncol = 2)
+```
+
+## Ejercicio
+
+Tomando la base de datos `mtcars` explora la relacion entre AICc, $R^2$ Exploratorio y $R^2$ Predictivo.
+
+Para eso genera un data frame con las siguientes columnas:
+
+* AICc
+* K
+* $R^2$ Exploratorio
+* $R^2$ Predictivo
+* Id modelo
+* Hasta 11:30
+
+# Discusión artículo
+
+## Mensaje final
+
+```{r, echo = FALSE}
+DF <- data.frame(Predicción = c("Asociación", "Datos", "Futura", "Maximizar predicción"), Explicación = c("Causalidad", "Teoria", "Retrospectiva", "Minimizar sesgo"))
+
+rownames(DF) <- c("Relación x e y", "Relación función modelos", "Visión", "Varianza")
+kable(DF) %>% kable_styling()
+```
+
+
