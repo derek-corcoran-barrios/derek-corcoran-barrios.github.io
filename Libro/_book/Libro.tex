@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-09-08}
+    \date{2018-11-28}
 
 \usepackage{booktabs}
 
@@ -399,28 +399,117 @@ columnas. COmo un ejemplo se utilizará la base de datos \texttt{iris}
 \citep{anderson1935irises} que viene en \texttt{R} y de las cual podemos
 ver parte de sus datos en la tabla \ref{tab:iris}
 
-\begin{table}
+\label{tab:iris}una tabla con 10 filas de la base de datos iris.
 
-\caption{\label{tab:iris}una tabla con 10 filas de la base de datos iris.}
-\centering
-\begin{tabular}[t]{rrrrl}
-\toprule
-Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
-\midrule
-5.8 & 4.0 & 1.2 & 0.2 & setosa\\
-4.7 & 3.2 & 1.6 & 0.2 & setosa\\
-5.1 & 3.8 & 1.9 & 0.4 & setosa\\
-5.2 & 2.7 & 3.9 & 1.4 & versicolor\\
-6.4 & 2.9 & 4.3 & 1.3 & versicolor\\
-\addlinespace
-5.5 & 2.5 & 4.0 & 1.3 & versicolor\\
-6.5 & 3.0 & 5.8 & 2.2 & virginica\\
-6.0 & 2.2 & 5.0 & 1.5 & virginica\\
-6.1 & 2.6 & 5.6 & 1.4 & virginica\\
-5.9 & 3.0 & 5.1 & 1.8 & virginica\\
-\bottomrule
-\end{tabular}
-\end{table}
+Sepal.Length
+
+Sepal.Width
+
+Petal.Length
+
+Petal.Width
+
+Species
+
+5.8
+
+4.0
+
+1.2
+
+0.2
+
+setosa
+
+4.7
+
+3.2
+
+1.6
+
+0.2
+
+setosa
+
+5.1
+
+3.8
+
+1.9
+
+0.4
+
+setosa
+
+5.2
+
+2.7
+
+3.9
+
+1.4
+
+versicolor
+
+6.4
+
+2.9
+
+4.3
+
+1.3
+
+versicolor
+
+5.5
+
+2.5
+
+4.0
+
+1.3
+
+versicolor
+
+6.5
+
+3.0
+
+5.8
+
+2.2
+
+virginica
+
+6.0
+
+2.2
+
+5.0
+
+1.5
+
+virginica
+
+6.1
+
+2.6
+
+5.6
+
+1.4
+
+virginica
+
+5.9
+
+3.0
+
+5.1
+
+1.8
+
+virginica
 
 Si quisieramos resumir esa tabla y generar un par de variables que
 fueran la media y la desviación estándar del largo del pétalo, lo
@@ -439,18 +528,16 @@ cuál se obtienen los promedios y desviaciones estándar de los largos de
 los pétalos. Es importante notar que al usar summarize, todas las otras
 variables desapareceran de la tabla.
 
-\begin{table}
+\label{tab:SummaryPetaltab}Resumen del promedio y desviación estándar del
+largo de pétalo de las flores del generi Iris.
 
-\caption{\label{tab:SummaryPetaltab}Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.}
-\centering
-\begin{tabular}[t]{rr}
-\toprule
-Mean.Petal.Length & SD.Petal.Length\\
-\midrule
-3.758 & 1.765298\\
-\bottomrule
-\end{tabular}
-\end{table}
+Mean.Petal.Length
+
+SD.Petal.Length
+
+3.758
+
+1.765298
 
 \hypertarget{group_by}{%
 \subsection{group\_by}\label{group_by}}
@@ -479,20 +566,32 @@ Esto dá como resultado la tabla \ref{tab:SummaryBySpecies}, con la cuál
 se puede ver que \emph{Iris setosa} tiene pétalos mucho más cortos que
 las otras dos especies del mismo género.
 
-\begin{table}
+\label{tab:SummaryBySpecies}Resumen del promedio y desviación estándar del
+largo de pétalo de las flores del generi Iris.
 
-\caption{\label{tab:SummaryBySpecies}Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.}
-\centering
-\begin{tabular}[t]{lrr}
-\toprule
-Species & Mean.Petal.Length & SD.Petal.Length\\
-\midrule
-setosa & 1.462 & 0.1736640\\
-versicolor & 4.260 & 0.4699110\\
-virginica & 5.552 & 0.5518947\\
-\bottomrule
-\end{tabular}
-\end{table}
+Species
+
+Mean.Petal.Length
+
+SD.Petal.Length
+
+setosa
+
+1.462
+
+0.1736640
+
+versicolor
+
+4.260
+
+0.4699110
+
+virginica
+
+5.552
+
+0.5518947
 
 \hypertarget{group_by-en-mas-de-una-variable}{%
 \subsubsection{group\_by en más de una
@@ -519,23 +618,50 @@ los autos con cambios manuales tienen mejor eficiencia de combustible.
 Se podría probar el cambiar el orden de las variables con las cuales
 agrupar y observar los distintos resultados que se pueden obtener.
 
-\begin{table}
+\label{tab:Eficienciatab}Millas por galón promedio en vehiculos automáticos
+(am = 0) y manuales (am = 1), con los distintos tipos de cilindros
 
-\caption{\label{tab:Eficienciatab}Millas por galón promedio en vehiculos automáticos (am = 0) y manuales (am = 1), con los distintos tipos de cilindros}
-\centering
-\begin{tabular}[t]{rrr}
-\toprule
-cyl & am & Eficiencia\\
-\midrule
-4 & 0 & 22.90000\\
-4 & 1 & 28.07500\\
-6 & 0 & 19.12500\\
-6 & 1 & 20.56667\\
-8 & 0 & 15.05000\\
-8 & 1 & 15.40000\\
-\bottomrule
-\end{tabular}
-\end{table}
+cyl
+
+am
+
+Eficiencia
+
+4
+
+0
+
+22.90000
+
+4
+
+1
+
+28.07500
+
+6
+
+0
+
+19.12500
+
+6
+
+1
+
+20.56667
+
+8
+
+0
+
+15.05000
+
+8
+
+1
+
+15.40000
 
 \hypertarget{mutate}{%
 \subsection{mutate}\label{mutate}}
@@ -556,28 +682,140 @@ razón entre el largo del pétalo y el del sépalo, resulta lo siguiente:
 El resultado de esta operación es la tabla \ref{tab:Mutate}. Siempre la
 variable que se acaba de crear aparecerá al final del data frame.
 
-\begin{table}
+\label{tab:Mutate}Tabla con diez de las observaciones de la nueva base de
+datos con la variable nueva creada con mutate
 
-\caption{\label{tab:Mutate}Tabla con diez de las observaciones de la nueva base de datos con la variable nueva creada con mutate}
-\centering
-\begin{tabular}[t]{rrrrlr}
-\toprule
-Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species & Petal.Sepal.Ratio\\
-\midrule
-5.8 & 4.0 & 1.2 & 0.2 & setosa & 0.21\\
-4.7 & 3.2 & 1.6 & 0.2 & setosa & 0.34\\
-5.1 & 3.8 & 1.9 & 0.4 & setosa & 0.37\\
-5.2 & 2.7 & 3.9 & 1.4 & versicolor & 0.75\\
-6.4 & 2.9 & 4.3 & 1.3 & versicolor & 0.67\\
-\addlinespace
-5.5 & 2.5 & 4.0 & 1.3 & versicolor & 0.73\\
-6.5 & 3.0 & 5.8 & 2.2 & virginica & 0.89\\
-6.0 & 2.2 & 5.0 & 1.5 & virginica & 0.83\\
-6.1 & 2.6 & 5.6 & 1.4 & virginica & 0.92\\
-5.9 & 3.0 & 5.1 & 1.8 & virginica & 0.86\\
-\bottomrule
-\end{tabular}
-\end{table}
+Sepal.Length
+
+Sepal.Width
+
+Petal.Length
+
+Petal.Width
+
+Species
+
+Petal.Sepal.Ratio
+
+5.8
+
+4.0
+
+1.2
+
+0.2
+
+setosa
+
+0.21
+
+4.7
+
+3.2
+
+1.6
+
+0.2
+
+setosa
+
+0.34
+
+5.1
+
+3.8
+
+1.9
+
+0.4
+
+setosa
+
+0.37
+
+5.2
+
+2.7
+
+3.9
+
+1.4
+
+versicolor
+
+0.75
+
+6.4
+
+2.9
+
+4.3
+
+1.3
+
+versicolor
+
+0.67
+
+5.5
+
+2.5
+
+4.0
+
+1.3
+
+versicolor
+
+0.73
+
+6.5
+
+3.0
+
+5.8
+
+2.2
+
+virginica
+
+0.89
+
+6.0
+
+2.2
+
+5.0
+
+1.5
+
+virginica
+
+0.83
+
+6.1
+
+2.6
+
+5.6
+
+1.4
+
+virginica
+
+0.92
+
+5.9
+
+3.0
+
+5.1
+
+1.8
+
+virginica
+
+0.86
 
 \hypertarget{pipeline}{%
 \subsection{Pipeline (\%\textgreater{}\%)}\label{pipeline}}
@@ -663,20 +901,31 @@ Estos tres códigos son correctos (tabla \ref{tab:Pipe}), pero
 definitivamente el uso del pipeline da el código más conciso y fácil de
 interpretar sin pasos intermedios.
 
-\begin{table}
+\label{tab:Pipe}Razón pétalo sépalo promedio para las tres especies de Iris
 
-\caption{\label{tab:Pipe}Razón pétalo sépalo promedio para las tres especies de Iris}
-\centering
-\begin{tabular}[t]{lrr}
-\toprule
-Species & MEAN & SD\\
-\midrule
-setosa & 0.2927557 & 0.0347958\\
-versicolor & 0.7177285 & 0.0536255\\
-virginica & 0.8437495 & 0.0438064\\
-\bottomrule
-\end{tabular}
-\end{table}
+Species
+
+MEAN
+
+SD
+
+setosa
+
+0.2927557
+
+0.0347958
+
+versicolor
+
+0.7177285
+
+0.0536255
+
+virginica
+
+0.8437495
+
+0.0438064
 
 \hypertarget{filter}{%
 \subsection{filter}\label{filter}}
@@ -686,22 +935,55 @@ condiciones, como tener un valor mayor a un umbral o pertenecer a cierta
 clase Los símbolos más típicos a usar en este caso son los que se ven en
 la tabla \ref{tab:Logicas}.
 
-\begin{table}
+\label{tab:Logicas}Símbolos lógicos de R y su significado
 
-\caption{\label{tab:Logicas}Símbolos lógicos de R y su significado}
-\centering
-\begin{tabular}[t]{llll}
-\toprule
-simbolo & significado & simbolo\_cont & significado\_cont\\
-\midrule
-> & Mayor que & != & distinto a\\
-< & Menor que & \%in\% & dentro del grupo\\
-== & Igual a & is.na & es NA\\
->= & mayor o igual a & !is.na & no es NA\\
-<= & menor o igual a & | \& & o, y\\
-\bottomrule
-\end{tabular}
-\end{table}
+simbolo
+
+significado
+
+simbolo\_cont
+
+significado\_cont
+
+\textgreater{}
+
+Mayor que
+
+!=
+
+distinto a
+
+\textless{}
+
+Menor que
+
+\%in\%
+
+dentro del grupo
+
+==
+
+Igual a
+
+is.na
+
+es NA
+
+\textgreater{}=
+
+mayor o igual a
+
+!is.na
+
+no es NA
+
+\textless{}=
+
+menor o igual a
+
+\textbar{} \&
+
+o, y
 
 Por ejemplo si se quiere estudiar las características florales de las
 plantas del género \emph{Iris}, pero no tomar en cuenta a la especie
@@ -720,19 +1002,38 @@ De esta forma se obtiene como resultado la tabla
 \texttt{summarize\_all} de \texttt{summarize}, la cual aplica la función
 que se le da como argumento a todas las variables de la base de datos.
 
-\begin{table}
+\label{tab:MenosVersicolor}Resumen de la media de todas las características
+florales de las especies Iris setosa e Iris virginica
 
-\caption{\label{tab:MenosVersicolor}Resumen de la media de todas las características florales de las especies Iris setosa e Iris virginica}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-Species & Sepal.Length & Sepal.Width & Petal.Length & Petal.Width\\
-\midrule
-setosa & 5.006 & 3.428 & 1.462 & 0.246\\
-virginica & 6.588 & 2.974 & 5.552 & 2.026\\
-\bottomrule
-\end{tabular}
-\end{table}
+Species
+
+Sepal.Length
+
+Sepal.Width
+
+Petal.Length
+
+Petal.Width
+
+setosa
+
+5.006
+
+3.428
+
+1.462
+
+0.246
+
+virginica
+
+6.588
+
+2.974
+
+5.552
+
+2.026
 
 Por otro lado si se quiere estudiar cuántas plantas de cada especie
 tienen un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5 se
@@ -749,19 +1050,20 @@ En la tabla tabla \ref{tab:Numero} se ve que con este filtro desaparecen
 de la base de datos todas las plantas de \emph{Iris setosa} y que todas
 menos una planta de \emph{Iris virginica} tienen ambas características.
 
-\begin{table}
+\label{tab:Numero}Número de plantas de cada especie con un largo de pétalo
+mayor a 4 y un largo de sépalo mayor a 5 centímetros
 
-\caption{\label{tab:Numero}Número de plantas de cada especie con un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5 centímetros}
-\centering
-\begin{tabular}[t]{lr}
-\toprule
-Species & N\\
-\midrule
-versicolor & 39\\
-virginica & 49\\
-\bottomrule
-\end{tabular}
-\end{table}
+Species
+
+N
+
+versicolor
+
+39
+
+virginica
+
+49
 
 \hypertarget{select}{%
 \subsection{select}\label{select}}
@@ -804,20 +1106,32 @@ ver en la tabla \ref{tab:Selected}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:Selected}Promedio de largo de pétalo y ancho de pétalo para las
+especies del genero Iris
 
-\caption{\label{tab:Selected}Promedio de largo de pétalo y ancho de pétalo para las especies del genero Iris}
-\centering
-\begin{tabular}[t]{lrr}
-\toprule
-Species & Petal.Length & Petal.Width\\
-\midrule
-setosa & 1.462 & 0.246\\
-versicolor & 4.260 & 1.326\\
-virginica & 5.552 & 2.026\\
-\bottomrule
-\end{tabular}
-\end{table}
+Species
+
+Petal.Length
+
+Petal.Width
+
+setosa
+
+1.462
+
+0.246
+
+versicolor
+
+4.260
+
+1.326
+
+virginica
+
+5.552
+
+2.026
 
 \hypertarget{joins}{%
 \subsection{Joins}\label{joins}}
@@ -1309,20 +1623,24 @@ vería el código donde obtuvieramos la media del tamaño del sépalo.
 
 El resultado de ese código lo veríamos \ref{tab:SummarySepaltab}
 
-\begin{table}
+\label{tab:SummarySepaltab}Resumen del promedio del largo de sépalo de las
+flores del genero Iris.
 
-\caption{\label{tab:SummarySepaltab}Resumen del promedio del largo de sépalo de las flores del genero Iris.}
-\centering
-\begin{tabular}[t]{lr}
-\toprule
-Species & Mean\\
-\midrule
-setosa & 5.006\\
-versicolor & 5.936\\
-virginica & 6.588\\
-\bottomrule
-\end{tabular}
-\end{table}
+Species
+
+Mean
+
+setosa
+
+5.006
+
+versicolor
+
+5.936
+
+virginica
+
+6.588
 
 Para sacar de este data frame el vector de la media podríamos
 subsetearlo con el signo \texttt{\$}. Entonces si queremos sacar como
@@ -1362,20 +1680,48 @@ como se ve en la tabla \ref{tab:SummaryMeans}.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:SummaryMeans}Promedio por especie de todas las variables de la
+base de datos iris.
 
-\caption{\label{tab:SummaryMeans}Promedio por especie de todas las variables de la base de datos iris.}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-Species & Sepal.Length & Sepal.Width & Petal.Length & Petal.Width\\
-\midrule
-setosa & 5.006 & 3.428 & 1.462 & 0.246\\
-versicolor & 5.936 & 2.770 & 4.260 & 1.326\\
-virginica & 6.588 & 2.974 & 5.552 & 2.026\\
-\bottomrule
-\end{tabular}
-\end{table}
+Species
+
+Sepal.Length
+
+Sepal.Width
+
+Petal.Length
+
+Petal.Width
+
+setosa
+
+5.006
+
+3.428
+
+1.462
+
+0.246
+
+versicolor
+
+5.936
+
+2.770
+
+4.260
+
+1.326
+
+virginica
+
+6.588
+
+2.974
+
+5.552
+
+2.026
 
 \hypertarget{tidyverso}{%
 \chapter{El Tidyverso y tidyr}\label{tidyverso}}
@@ -1518,46 +1864,127 @@ tabla ancha?
 Tomemos por ejemplo dos tablas. En la tabla \ref{tab:TablaAncha} vemos
 una tabla ancha y en la tabla \ref{tab:TablaLarga} una tabla larga.
 
-\begin{table}
+\label{tab:TablaAncha}Tabla ancha.
 
-\caption{\label{tab:TablaAncha}Tabla ancha.}
-\centering
-\begin{tabular}[t]{rrrrl}
-\toprule
-Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
-\midrule
-5.1 & 3.5 & 1.4 & 0.2 & setosa\\
-7.0 & 3.2 & 4.7 & 1.4 & versicolor\\
-6.3 & 3.3 & 6.0 & 2.5 & virginica\\
-\bottomrule
-\end{tabular}
-\end{table}
+Sepal.Length
 
-\begin{table}
+Sepal.Width
 
-\caption{\label{tab:TablaLarga}Tabla larga.}
-\centering
-\begin{tabular}[t]{llr}
-\toprule
-Species & Atributos\_florales & Medidas\\
-\midrule
-setosa & Sepal.Length & 5.1\\
-versicolor & Sepal.Length & 7.0\\
-virginica & Sepal.Length & 6.3\\
-setosa & Sepal.Width & 3.5\\
-versicolor & Sepal.Width & 3.2\\
-\addlinespace
-virginica & Sepal.Width & 3.3\\
-setosa & Petal.Length & 1.4\\
-versicolor & Petal.Length & 4.7\\
-virginica & Petal.Length & 6.0\\
-setosa & Petal.Width & 0.2\\
-\addlinespace
-versicolor & Petal.Width & 1.4\\
-virginica & Petal.Width & 2.5\\
-\bottomrule
-\end{tabular}
-\end{table}
+Petal.Length
+
+Petal.Width
+
+Species
+
+5.1
+
+3.5
+
+1.4
+
+0.2
+
+setosa
+
+7.0
+
+3.2
+
+4.7
+
+1.4
+
+versicolor
+
+6.3
+
+3.3
+
+6.0
+
+2.5
+
+virginica
+
+\label{tab:TablaLarga}Tabla larga.
+
+Species
+
+Atributos\_florales
+
+Medidas
+
+setosa
+
+Sepal.Length
+
+5.1
+
+versicolor
+
+Sepal.Length
+
+7.0
+
+virginica
+
+Sepal.Length
+
+6.3
+
+setosa
+
+Sepal.Width
+
+3.5
+
+versicolor
+
+Sepal.Width
+
+3.2
+
+virginica
+
+Sepal.Width
+
+3.3
+
+setosa
+
+Petal.Length
+
+1.4
+
+versicolor
+
+Petal.Length
+
+4.7
+
+virginica
+
+Petal.Length
+
+6.0
+
+setosa
+
+Petal.Width
+
+0.2
+
+versicolor
+
+Petal.Width
+
+1.4
+
+virginica
+
+Petal.Width
+
+2.5
 
 \hypertarget{dato}{%
 \subsubsection{DATO}\label{dato}}
@@ -1599,20 +2026,39 @@ tabla \ref{tab:Censo})
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:Censo}Abundancia detectada por especie en tres días de muestreo
 
-\caption{\label{tab:Censo}Abundancia detectada por especie en tres días de muestreo}
-\centering
-\begin{tabular}[t]{lrrr}
-\toprule
-dia & Lobo & Liebre & Zorro\\
-\midrule
-Lunes & 2 & 20 & 4\\
-Martes & 1 & 25 & 4\\
-Miercoles & 3 & 30 & 4\\
-\bottomrule
-\end{tabular}
-\end{table}
+dia
+
+Lobo
+
+Liebre
+
+Zorro
+
+Lunes
+
+2
+
+20
+
+4
+
+Martes
+
+1
+
+25
+
+4
+
+Miercoles
+
+3
+
+30
+
+4
 
 Claramente esta base de datos no es tidy, ya que deberíamos tener una
 columna para la variable día, otra para especie y por último una para la
@@ -1631,31 +2077,59 @@ Veamos que ocurre si hacermos eso en el siguiente código y tabla
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:Larga1}Abundancia detectada por especie en tres días de muestreo
 
-\caption{\label{tab:Larga1}Abundancia detectada por especie en tres días de muestreo}
-\centering
-\begin{tabular}[t]{ll}
-\toprule
-Columnas & Valores\\
-\midrule
-dia & Lunes\\
-dia & Martes\\
-dia & Miercoles\\
-Lobo & 2\\
-Lobo & 1\\
-\addlinespace
-Lobo & 3\\
-Liebre & 20\\
-Liebre & 25\\
-Liebre & 30\\
-Zorro & 4\\
-\addlinespace
-Zorro & 4\\
-Zorro & 4\\
-\bottomrule
-\end{tabular}
-\end{table}
+Columnas
+
+Valores
+
+dia
+
+Lunes
+
+dia
+
+Martes
+
+dia
+
+Miercoles
+
+Lobo
+
+2
+
+Lobo
+
+1
+
+Lobo
+
+3
+
+Liebre
+
+20
+
+Liebre
+
+25
+
+Liebre
+
+30
+
+Zorro
+
+4
+
+Zorro
+
+4
+
+Zorro
+
+4
 
 Como vemos en la tabla \ref{tab:Larga1}, en la columna llamada
 \emph{Columnas}, tenemos sólo los nombres de las columnas de la tabla
@@ -1676,27 +2150,67 @@ Al agregar \texttt{-día} como tercer argumento quitamos esa variable del
 día en el ``\emph{alargamiento}'', en ese caso obtenemos la tabla
 \ref{tab:Larga2}. Ahora sólo falta arreglar los nombres.
 
-\begin{table}
+\label{tab:Larga2}Abundancia detectada por especie en tres días de muestreo
 
-\caption{\label{tab:Larga2}Abundancia detectada por especie en tres días de muestreo}
-\centering
-\begin{tabular}[t]{llr}
-\toprule
-dia & Columnas & Valores\\
-\midrule
-Lunes & Lobo & 2\\
-Martes & Lobo & 1\\
-Miercoles & Lobo & 3\\
-Lunes & Liebre & 20\\
-Martes & Liebre & 25\\
-\addlinespace
-Miercoles & Liebre & 30\\
-Lunes & Zorro & 4\\
-Martes & Zorro & 4\\
-Miercoles & Zorro & 4\\
-\bottomrule
-\end{tabular}
-\end{table}
+dia
+
+Columnas
+
+Valores
+
+Lunes
+
+Lobo
+
+2
+
+Martes
+
+Lobo
+
+1
+
+Miercoles
+
+Lobo
+
+3
+
+Lunes
+
+Liebre
+
+20
+
+Martes
+
+Liebre
+
+25
+
+Miercoles
+
+Liebre
+
+30
+
+Lunes
+
+Zorro
+
+4
+
+Martes
+
+Zorro
+
+4
+
+Miercoles
+
+Zorro
+
+4
 
 Para cambiar los nombres de las columnas que nos faltan, sólo cambiamos
 los valores de los argumentos \texttt{key} y \texttt{value} como se ve a
@@ -1709,27 +2223,67 @@ continuación y en la tabla \ref{tab:Larga3}.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:Larga3}Abundancia detectada por especie en tres días de muestreo
 
-\caption{\label{tab:Larga3}Abundancia detectada por especie en tres días de muestreo}
-\centering
-\begin{tabular}[t]{llr}
-\toprule
-dia & Especie & Abundancia\\
-\midrule
-Lunes & Lobo & 2\\
-Martes & Lobo & 1\\
-Miercoles & Lobo & 3\\
-Lunes & Liebre & 20\\
-Martes & Liebre & 25\\
-\addlinespace
-Miercoles & Liebre & 30\\
-Lunes & Zorro & 4\\
-Martes & Zorro & 4\\
-Miercoles & Zorro & 4\\
-\bottomrule
-\end{tabular}
-\end{table}
+dia
+
+Especie
+
+Abundancia
+
+Lunes
+
+Lobo
+
+2
+
+Martes
+
+Lobo
+
+1
+
+Miercoles
+
+Lobo
+
+3
+
+Lunes
+
+Liebre
+
+20
+
+Martes
+
+Liebre
+
+25
+
+Miercoles
+
+Liebre
+
+30
+
+Lunes
+
+Zorro
+
+4
+
+Martes
+
+Zorro
+
+4
+
+Miercoles
+
+Zorro
+
+4
 
 \hypertarget{spread}{%
 \subsection{spread}\label{spread}}
@@ -1761,42 +2315,73 @@ distinta a la original en la tabla \ref{tab:Censo}), en esta los días
 quedaron como nombres de columnas, y las especies pasaron a ser una
 variable.
 
-\begin{table}
+\label{tab:Ancha1}Abundancia detectada por especie en tres días de muestreo
 
-\caption{\label{tab:Ancha1}Abundancia detectada por especie en tres días de muestreo}
-\centering
-\begin{tabular}[t]{lrrr}
-\toprule
-Especie & Lunes & Martes & Miercoles\\
-\midrule
-Liebre & 20 & 25 & 30\\
-Lobo & 2 & 1 & 3\\
-Zorro & 4 & 4 & 4\\
-\bottomrule
-\end{tabular}
-\end{table}
+Especie
+
+Lunes
+
+Martes
+
+Miercoles
+
+Liebre
+
+20
+
+25
+
+30
+
+Lobo
+
+2
+
+1
+
+3
+
+Zorro
+
+4
+
+4
+
+4
 
 En la tabla \ref{tab:Ops} se ven todas las opciones de como generar una
 tabla ancha en base a el data frame \emph{DF\_largo}, pruebe opciones
 hasta entender la función, algunas de estas opciones darán errores.
 
-\begin{table}
+\label{tab:Ops}Todas las opciones a probar para generar una tabla ancha
 
-\caption{\label{tab:Ops}Todas las opciones a probar para generar una tabla ancha}
-\centering
-\begin{tabular}[t]{ll}
-\toprule
-Key & Value\\
-\midrule
-Especie & dia\\
-Abundancia & dia\\
-dia & Especie\\
-Abundancia & Especie\\
-dia & Abundancia\\
-Especie & Abundancia\\
-\bottomrule
-\end{tabular}
-\end{table}
+Key
+
+Value
+
+Especie
+
+dia
+
+Abundancia
+
+dia
+
+dia
+
+Especie
+
+Abundancia
+
+Especie
+
+dia
+
+Abundancia
+
+Especie
+
+Abundancia
 
 \hypertarget{ejercicios-2}{%
 \section{Ejercicios}\label{ejercicios-2}}
@@ -2370,40 +2955,217 @@ Tomemos el ejemplo de la base de datos \emph{CO2} presente en R
 \citep{potvin1990statistical}. Supongamos que nos interesa saber que
 factores afectan la captación de \(CO_2\) en las plantas.
 
-\begin{table}
+\label{tab:TablaCo2}Primeras 20 variables de la base de datos CO2.
 
-\caption{\label{tab:TablaCo2}Primeras 20 variables de la base de datos CO2.}
-\centering
-\begin{tabular}[t]{lllrr}
-\toprule
-Plant & Type & Treatment & conc & uptake\\
-\midrule
-Qn1 & Quebec & nonchilled & 95 & 16.0\\
-Qn1 & Quebec & nonchilled & 175 & 30.4\\
-Qn1 & Quebec & nonchilled & 250 & 34.8\\
-Qn1 & Quebec & nonchilled & 350 & 37.2\\
-Qn1 & Quebec & nonchilled & 500 & 35.3\\
-\addlinespace
-Qn1 & Quebec & nonchilled & 675 & 39.2\\
-Qn1 & Quebec & nonchilled & 1000 & 39.7\\
-Qn2 & Quebec & nonchilled & 95 & 13.6\\
-Qn2 & Quebec & nonchilled & 175 & 27.3\\
-Qn2 & Quebec & nonchilled & 250 & 37.1\\
-\addlinespace
-Qn2 & Quebec & nonchilled & 350 & 41.8\\
-Qn2 & Quebec & nonchilled & 500 & 40.6\\
-Qn2 & Quebec & nonchilled & 675 & 41.4\\
-Qn2 & Quebec & nonchilled & 1000 & 44.3\\
-Qn3 & Quebec & nonchilled & 95 & 16.2\\
-\addlinespace
-Qn3 & Quebec & nonchilled & 175 & 32.4\\
-Qn3 & Quebec & nonchilled & 250 & 40.3\\
-Qn3 & Quebec & nonchilled & 350 & 42.1\\
-Qn3 & Quebec & nonchilled & 500 & 42.9\\
-Qn3 & Quebec & nonchilled & 675 & 43.9\\
-\bottomrule
-\end{tabular}
-\end{table}
+Plant
+
+Type
+
+Treatment
+
+conc
+
+uptake
+
+Qn1
+
+Quebec
+
+nonchilled
+
+95
+
+16.0
+
+Qn1
+
+Quebec
+
+nonchilled
+
+175
+
+30.4
+
+Qn1
+
+Quebec
+
+nonchilled
+
+250
+
+34.8
+
+Qn1
+
+Quebec
+
+nonchilled
+
+350
+
+37.2
+
+Qn1
+
+Quebec
+
+nonchilled
+
+500
+
+35.3
+
+Qn1
+
+Quebec
+
+nonchilled
+
+675
+
+39.2
+
+Qn1
+
+Quebec
+
+nonchilled
+
+1000
+
+39.7
+
+Qn2
+
+Quebec
+
+nonchilled
+
+95
+
+13.6
+
+Qn2
+
+Quebec
+
+nonchilled
+
+175
+
+27.3
+
+Qn2
+
+Quebec
+
+nonchilled
+
+250
+
+37.1
+
+Qn2
+
+Quebec
+
+nonchilled
+
+350
+
+41.8
+
+Qn2
+
+Quebec
+
+nonchilled
+
+500
+
+40.6
+
+Qn2
+
+Quebec
+
+nonchilled
+
+675
+
+41.4
+
+Qn2
+
+Quebec
+
+nonchilled
+
+1000
+
+44.3
+
+Qn3
+
+Quebec
+
+nonchilled
+
+95
+
+16.2
+
+Qn3
+
+Quebec
+
+nonchilled
+
+175
+
+32.4
+
+Qn3
+
+Quebec
+
+nonchilled
+
+250
+
+40.3
+
+Qn3
+
+Quebec
+
+nonchilled
+
+350
+
+42.1
+
+Qn3
+
+Quebec
+
+nonchilled
+
+500
+
+42.9
+
+Qn3
+
+Quebec
+
+nonchilled
+
+675
+
+43.9
 
 En la tabla \ref{tab:TablaCo2} vemos las primeras 20 observaciones de
 esta base de datos. Vemos que dentro de los factores que tenemos para
@@ -2459,26 +3221,43 @@ la variable explicativa. Los datos se encuentran en un data frame y
 finalmente usaremos alguna función, que identificará algún modelo.
 Algunas de estas funciones las encontramos en la tabla \ref{tab:Modelos}
 
-\begin{table}
+\label{tab:Modelos}Algunos modelos que podemos generar en R
 
-\caption{\label{tab:Modelos}Algunos modelos que podemos generar en R}
-\centering
-\begin{tabular}[t]{ll}
-\toprule
-Modelos & Funcion\\
-\midrule
-Prueba de t & t.test()\\
-ANOVA & aov()\\
-Modelo lineal simple & lm()\\
-modelo lineal generalizado & glm()\\
-Modelo aditivo & gam()\\
-\addlinespace
-Modelo no lineal & nls()\\
-modelos lineales mixtos & lmer()\\
-Boosted regression trees & gbm()\\
-\bottomrule
-\end{tabular}
-\end{table}
+Modelos
+
+Funcion
+
+Prueba de t
+
+t.test()
+
+ANOVA
+
+aov()
+
+Modelo lineal simple
+
+lm()
+
+modelo lineal generalizado
+
+glm()
+
+Modelo aditivo
+
+gam()
+
+Modelo no lineal
+
+nls()
+
+modelos lineales mixtos
+
+lmer()
+
+Boosted regression trees
+
+gbm()
 
 \hypertarget{volvamos-al-ejemplo-de-las-plantas}{%
 \subsection{Volvamos al ejemplo de las
@@ -2519,18 +3298,51 @@ y en la tabla \ref{tab:glance}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:glance}Información del modelo fi1 entregada por la función glance
 
-\caption{\label{tab:glance}Información del modelo fi1 entregada por la función glance}
-\centering
-\begin{tabular}[t]{rrrrrrrrrrr}
-\toprule
-r.squared & adj.r.squared & sigma & statistic & p.value & df & logLik & AIC & BIC & deviance & df.residual\\
-\midrule
-0.346713 & 0.3387461 & 8.794012 & 43.5191 & 0 & 2 & -300.8007 & 607.6014 & 614.8939 & 6341.441 & 82\\
-\bottomrule
-\end{tabular}
-\end{table}
+r.squared
+
+adj.r.squared
+
+sigma
+
+statistic
+
+p.value
+
+df
+
+logLik
+
+AIC
+
+BIC
+
+deviance
+
+df.residual
+
+0.346713
+
+0.3387461
+
+8.794012
+
+43.5191
+
+0
+
+2
+
+-300.8007
+
+607.6014
+
+614.8939
+
+6341.441
+
+82
 
 \hypertarget{tidy}{%
 \paragraph{tidy}\label{tidy}}
@@ -2545,19 +3357,37 @@ vemos en el código siguiente y en la tabla \ref{tab:tidy}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:tidy}Información del modelo fi1 entregada por la función glance
 
-\caption{\label{tab:tidy}Información del modelo fi1 entregada por la función glance}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-term & estimate & std.error & statistic & p.value\\
-\midrule
-(Intercept) & 33.54286 & 1.356945 & 24.719384 & 0\\
-TypeMississippi & -12.65952 & 1.919011 & -6.596901 & 0\\
-\bottomrule
-\end{tabular}
-\end{table}
+term
+
+estimate
+
+std.error
+
+statistic
+
+p.value
+
+(Intercept)
+
+33.54286
+
+1.356945
+
+24.719384
+
+0
+
+TypeMississippi
+
+-12.65952
+
+1.919011
+
+-6.596901
+
+0
 
 \hypertarget{augment}{%
 \paragraph{augment}\label{augment}}
@@ -2575,40 +3405,386 @@ observaciones en la tabla \ref{tab:augment}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:augment}Información del modelo fi1 entregada por la función
+augment
 
-\caption{\label{tab:augment}Información del modelo fi1 entregada por la función augment}
-\centering
-\begin{tabular}[t]{rlrrrrrrr}
-\toprule
-uptake & Type & .fitted & .se.fit & .resid & .hat & .sigma & .cooksd & .std.resid\\
-\midrule
-10.6 & Mississippi & 20.88333 & 1.356945 & -10.283333 & 0.0238095 & 8.772231 & 0.0170823 & -1.1835308\\
-28.5 & Mississippi & 20.88333 & 1.356945 & 7.616667 & 0.0238095 & 8.806572 & 0.0093715 & 0.8766185\\
-10.6 & Mississippi & 20.88333 & 1.356945 & -10.283333 & 0.0238095 & 8.772231 & 0.0170823 & -1.1835308\\
-32.4 & Quebec & 33.54286 & 1.356945 & -1.142857 & 0.0238095 & 8.847196 & 0.0002110 & -0.1315339\\
-27.9 & Mississippi & 20.88333 & 1.356945 & 7.016667 & 0.0238095 & 8.812874 & 0.0079531 & 0.8075632\\
-\addlinespace
-17.9 & Mississippi & 20.88333 & 1.356945 & -2.983333 & 0.0238095 & 8.841767 & 0.0014377 & -0.3433582\\
-35.3 & Quebec & 33.54286 & 1.356945 & 1.757143 & 0.0238095 & 8.845923 & 0.0004988 & 0.2022333\\
-19.2 & Mississippi & 20.88333 & 1.356945 & -1.683333 & 0.0238095 & 8.846104 & 0.0004577 & -0.1937384\\
-38.1 & Quebec & 33.54286 & 1.356945 & 4.557143 & 0.0238095 & 8.833275 & 0.0033548 & 0.5244913\\
-14.9 & Mississippi & 20.88333 & 1.356945 & -5.983333 & 0.0238095 & 8.822508 & 0.0057831 & -0.6886346\\
-\addlinespace
-38.6 & Quebec & 33.54286 & 1.356945 & 5.057143 & 0.0238095 & 8.829833 & 0.0041313 & 0.5820374\\
-30.3 & Quebec & 33.54286 & 1.356945 & -3.242857 & 0.0238095 & 8.840611 & 0.0016988 & -0.3732274\\
-31.8 & Mississippi & 20.88333 & 1.356945 & 10.916667 & 0.0238095 & 8.762547 & 0.0192512 & 1.2564225\\
-13.7 & Mississippi & 20.88333 & 1.356945 & -7.183333 & 0.0238095 & 8.811176 & 0.0083355 & -0.8267452\\
-16.0 & Quebec & 33.54286 & 1.356945 & -17.542857 & 0.0238095 & 8.625388 & 0.0497139 & -2.0190449\\
-\addlinespace
-27.3 & Quebec & 33.54286 & 1.356945 & -6.242857 & 0.0238095 & 8.820233 & 0.0062957 & -0.7185038\\
-12.0 & Mississippi & 20.88333 & 1.356945 & -8.883333 & 0.0238095 & 8.791552 & 0.0127476 & -1.0224018\\
-41.4 & Quebec & 33.54286 & 1.356945 & 7.857143 & 0.0238095 & 8.803900 & 0.0099726 & 0.9042954\\
-13.6 & Quebec & 33.54286 & 1.356945 & -19.942857 & 0.0238095 & 8.559179 & 0.0642469 & -2.2952661\\
-7.7 & Mississippi & 20.88333 & 1.356945 & -13.183333 & 0.0238095 & 8.723037 & 0.0280755 & -1.5172980\\
-\bottomrule
-\end{tabular}
-\end{table}
+uptake
+
+Type
+
+.fitted
+
+.se.fit
+
+.resid
+
+.hat
+
+.sigma
+
+.cooksd
+
+.std.resid
+
+10.6
+
+Mississippi
+
+20.88333
+
+1.356945
+
+-10.283333
+
+0.0238095
+
+8.772231
+
+0.0170823
+
+-1.1835308
+
+28.5
+
+Mississippi
+
+20.88333
+
+1.356945
+
+7.616667
+
+0.0238095
+
+8.806572
+
+0.0093715
+
+0.8766185
+
+10.6
+
+Mississippi
+
+20.88333
+
+1.356945
+
+-10.283333
+
+0.0238095
+
+8.772231
+
+0.0170823
+
+-1.1835308
+
+32.4
+
+Quebec
+
+33.54286
+
+1.356945
+
+-1.142857
+
+0.0238095
+
+8.847196
+
+0.0002110
+
+-0.1315339
+
+27.9
+
+Mississippi
+
+20.88333
+
+1.356945
+
+7.016667
+
+0.0238095
+
+8.812874
+
+0.0079531
+
+0.8075632
+
+17.9
+
+Mississippi
+
+20.88333
+
+1.356945
+
+-2.983333
+
+0.0238095
+
+8.841767
+
+0.0014377
+
+-0.3433582
+
+35.3
+
+Quebec
+
+33.54286
+
+1.356945
+
+1.757143
+
+0.0238095
+
+8.845923
+
+0.0004988
+
+0.2022333
+
+19.2
+
+Mississippi
+
+20.88333
+
+1.356945
+
+-1.683333
+
+0.0238095
+
+8.846104
+
+0.0004577
+
+-0.1937384
+
+38.1
+
+Quebec
+
+33.54286
+
+1.356945
+
+4.557143
+
+0.0238095
+
+8.833275
+
+0.0033548
+
+0.5244913
+
+14.9
+
+Mississippi
+
+20.88333
+
+1.356945
+
+-5.983333
+
+0.0238095
+
+8.822508
+
+0.0057831
+
+-0.6886346
+
+38.6
+
+Quebec
+
+33.54286
+
+1.356945
+
+5.057143
+
+0.0238095
+
+8.829833
+
+0.0041313
+
+0.5820374
+
+30.3
+
+Quebec
+
+33.54286
+
+1.356945
+
+-3.242857
+
+0.0238095
+
+8.840611
+
+0.0016988
+
+-0.3732274
+
+31.8
+
+Mississippi
+
+20.88333
+
+1.356945
+
+10.916667
+
+0.0238095
+
+8.762547
+
+0.0192512
+
+1.2564225
+
+13.7
+
+Mississippi
+
+20.88333
+
+1.356945
+
+-7.183333
+
+0.0238095
+
+8.811176
+
+0.0083355
+
+-0.8267452
+
+16.0
+
+Quebec
+
+33.54286
+
+1.356945
+
+-17.542857
+
+0.0238095
+
+8.625388
+
+0.0497139
+
+-2.0190449
+
+27.3
+
+Quebec
+
+33.54286
+
+1.356945
+
+-6.242857
+
+0.0238095
+
+8.820233
+
+0.0062957
+
+-0.7185038
+
+12.0
+
+Mississippi
+
+20.88333
+
+1.356945
+
+-8.883333
+
+0.0238095
+
+8.791552
+
+0.0127476
+
+-1.0224018
+
+41.4
+
+Quebec
+
+33.54286
+
+1.356945
+
+7.857143
+
+0.0238095
+
+8.803900
+
+0.0099726
+
+0.9042954
+
+13.6
+
+Quebec
+
+33.54286
+
+1.356945
+
+-19.942857
+
+0.0238095
+
+8.559179
+
+0.0642469
+
+-2.2952661
+
+7.7
+
+Mississippi
+
+20.88333
+
+1.356945
+
+-13.183333
+
+0.0238095
+
+8.723037
+
+0.0280755
+
+-1.5172980
 
 \hypertarget{seleccion-de-modelos-usando-broom-y-el-aic}{%
 \subsubsection{Selección de modelos usando broom y el
@@ -2759,40 +3935,680 @@ resultados del código a continuación.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:Madrid2017a}Los primeros 20 datos de calidad de aire del 2017 en
+Madrid para todas las estaciones.
 
-\caption{\label{tab:Madrid2017a}Los primeros 20 datos de calidad de aire del 2017 en Madrid para todas las estaciones.}
-\centering
-\begin{tabular}[t]{lrlrrrrrlrrrrrrr}
-\toprule
-date & BEN & CH4 & CO & EBE & NMHC & NO & NO\_2 & NOx & O\_3 & PM10 & PM25 & SO\_2 & TCH & TOL & station\\
-\midrule
-2017-06-01 01:00:00 & NA & NA & 0.3 & NA & NA & 4 & 38 & NA & NA & NA & NA & 5 & NA & NA & 28079004\\
-2017-06-01 01:00:00 & 0.6 & NA & 0.3 & 0.4 & 0.08 & 3 & 39 & NA & 71 & 22 & 9 & 7 & 1.40 & 2.9 & 28079008\\
-2017-06-01 01:00:00 & 0.2 & NA & NA & 0.1 & NA & 1 & 14 & NA & NA & NA & NA & NA & NA & 0.9 & 28079011\\
-2017-06-01 01:00:00 & NA & NA & 0.2 & NA & NA & 1 & 9 & NA & 91 & NA & NA & NA & NA & NA & 28079016\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 1 & 19 & NA & 69 & NA & NA & 2 & NA & NA & 28079017\\
-\addlinespace
-2017-06-01 01:00:00 & 0.1 & NA & 0.3 & 0.2 & NA & 1 & 26 & NA & 70 & 26 & NA & 1 & NA & 0.3 & 28079018\\
-2017-06-01 01:00:00 & 0.3 & NA & 0.2 & 0.1 & 0.17 & 1 & 19 & NA & 79 & 23 & 9 & 3 & 0.86 & 1.8 & 28079024\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 1 & 9 & NA & 87 & NA & NA & NA & NA & NA & 28079027\\
-2017-06-01 01:00:00 & NA & NA & 0.3 & NA & NA & 3 & 30 & NA & 70 & NA & NA & NA & NA & NA & 28079035\\
-2017-06-01 01:00:00 & NA & NA & 0.1 & NA & NA & 1 & 15 & NA & NA & 22 & NA & 10 & NA & NA & 28079036\\
-\addlinespace
-2017-06-01 01:00:00 & 0.7 & NA & NA & 1.0 & NA & 1 & 25 & NA & NA & 21 & 10 & 2 & NA & 3.5 & 28079038\\
-2017-06-01 01:00:00 & NA & NA & 0.2 & NA & NA & 1 & 21 & NA & 75 & NA & NA & NA & NA & NA & 28079039\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 2 & 17 & NA & NA & 24 & NA & 9 & NA & NA & 28079040\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 1 & 22 & NA & NA & 23 & 15 & NA & NA & NA & 28079047\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 2 & 30 & NA & NA & 17 & 9 & NA & NA & NA & 28079048\\
-\addlinespace
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 1 & 12 & NA & 74 & NA & NA & NA & NA & NA & 28079049\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 2 & 15 & NA & NA & 16 & 12 & NA & NA & NA & 28079050\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 3 & 12 & NA & 84 & NA & NA & NA & NA & NA & 28079054\\
-2017-06-01 01:00:00 & 0.2 & NA & NA & 0.6 & 0.08 & 1 & 12 & NA & NA & 15 & NA & NA & 1.16 & 1.5 & 28079055\\
-2017-06-01 01:00:00 & NA & NA & 0.1 & NA & NA & 9 & 47 & NA & 59 & NA & NA & NA & NA & NA & 28079056\\
-\bottomrule
-\end{tabular}
-\end{table}
+date
+
+BEN
+
+CH4
+
+CO
+
+EBE
+
+NMHC
+
+NO
+
+NO\_2
+
+NOx
+
+O\_3
+
+PM10
+
+PM25
+
+SO\_2
+
+TCH
+
+TOL
+
+station
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+0.3
+
+NA
+
+NA
+
+4
+
+38
+
+NA
+
+NA
+
+NA
+
+NA
+
+5
+
+NA
+
+NA
+
+28079004
+
+2017-06-01 01:00:00
+
+0.6
+
+NA
+
+0.3
+
+0.4
+
+0.08
+
+3
+
+39
+
+NA
+
+71
+
+22
+
+9
+
+7
+
+1.40
+
+2.9
+
+28079008
+
+2017-06-01 01:00:00
+
+0.2
+
+NA
+
+NA
+
+0.1
+
+NA
+
+1
+
+14
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+0.9
+
+28079011
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+0.2
+
+NA
+
+NA
+
+1
+
+9
+
+NA
+
+91
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079016
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+19
+
+NA
+
+69
+
+NA
+
+NA
+
+2
+
+NA
+
+NA
+
+28079017
+
+2017-06-01 01:00:00
+
+0.1
+
+NA
+
+0.3
+
+0.2
+
+NA
+
+1
+
+26
+
+NA
+
+70
+
+26
+
+NA
+
+1
+
+NA
+
+0.3
+
+28079018
+
+2017-06-01 01:00:00
+
+0.3
+
+NA
+
+0.2
+
+0.1
+
+0.17
+
+1
+
+19
+
+NA
+
+79
+
+23
+
+9
+
+3
+
+0.86
+
+1.8
+
+28079024
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+9
+
+NA
+
+87
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079027
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+0.3
+
+NA
+
+NA
+
+3
+
+30
+
+NA
+
+70
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079035
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+0.1
+
+NA
+
+NA
+
+1
+
+15
+
+NA
+
+NA
+
+22
+
+NA
+
+10
+
+NA
+
+NA
+
+28079036
+
+2017-06-01 01:00:00
+
+0.7
+
+NA
+
+NA
+
+1.0
+
+NA
+
+1
+
+25
+
+NA
+
+NA
+
+21
+
+10
+
+2
+
+NA
+
+3.5
+
+28079038
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+0.2
+
+NA
+
+NA
+
+1
+
+21
+
+NA
+
+75
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079039
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+2
+
+17
+
+NA
+
+NA
+
+24
+
+NA
+
+9
+
+NA
+
+NA
+
+28079040
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+22
+
+NA
+
+NA
+
+23
+
+15
+
+NA
+
+NA
+
+NA
+
+28079047
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+2
+
+30
+
+NA
+
+NA
+
+17
+
+9
+
+NA
+
+NA
+
+NA
+
+28079048
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+12
+
+NA
+
+74
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079049
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+2
+
+15
+
+NA
+
+NA
+
+16
+
+12
+
+NA
+
+NA
+
+NA
+
+28079050
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+3
+
+12
+
+NA
+
+84
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079054
+
+2017-06-01 01:00:00
+
+0.2
+
+NA
+
+NA
+
+0.6
+
+0.08
+
+1
+
+12
+
+NA
+
+NA
+
+15
+
+NA
+
+NA
+
+1.16
+
+1.5
+
+28079055
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+0.1
+
+NA
+
+NA
+
+9
+
+47
+
+NA
+
+59
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079056
 
 \hypertarget{limitemonos-a-las-estaciones-seleccionadas}{%
 \paragraph{Limitemonos a las estaciones
@@ -2810,40 +4626,680 @@ podemos ver en la tabla \ref{tab:Madrid2017b}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:Madrid2017b}Los primeros 20 datos de calidad de aire del 2017 en
+Madrid después de filtrar según estación.
 
-\caption{\label{tab:Madrid2017b}Los primeros 20 datos de calidad de aire del 2017 en Madrid después de filtrar según estación.}
-\centering
-\begin{tabular}[t]{lrlrrrrrlrrrrrrr}
-\toprule
-date & BEN & CH4 & CO & EBE & NMHC & NO & NO\_2 & NOx & O\_3 & PM10 & PM25 & SO\_2 & TCH & TOL & station\\
-\midrule
-2017-06-01 01:00:00 & 0.6 & NA & 0.3 & 0.4 & 0.08 & 3 & 39 & NA & 71 & 22 & 9 & 7 & 1.40 & 2.9 & 28079008\\
-2017-06-01 01:00:00 & NA & NA & 0.1 & NA & NA & 1 & 15 & NA & NA & 22 & NA & 10 & NA & NA & 28079036\\
-2017-06-01 01:00:00 & 0.7 & NA & NA & 1.0 & NA & 1 & 25 & NA & NA & 21 & 10 & 2 & NA & 3.5 & 28079038\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 1 & 10 & NA & 66 & NA & NA & NA & NA & NA & 28079058\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 1 & 26 & NA & 79 & 86 & NA & NA & NA & NA & 28079060\\
-\addlinespace
-2017-06-01 02:00:00 & 0.3 & NA & 0.3 & 0.2 & 0.07 & 2 & 27 & NA & 72 & 16 & 7 & 7 & 1.40 & 2.3 & 28079008\\
-2017-06-01 02:00:00 & NA & NA & 0.1 & NA & NA & 1 & 13 & NA & NA & 17 & NA & 10 & NA & NA & 28079036\\
-2017-06-01 02:00:00 & 0.2 & NA & NA & 0.5 & NA & 9 & 20 & NA & NA & 13 & 4 & 2 & NA & 1.3 & 28079038\\
-2017-06-01 02:00:00 & NA & NA & NA & NA & NA & 1 & 11 & NA & 68 & NA & NA & NA & NA & NA & 28079058\\
-2017-06-01 02:00:00 & NA & NA & NA & NA & NA & 1 & 9 & NA & 90 & 62 & NA & NA & NA & NA & 28079060\\
-\addlinespace
-2017-06-01 03:00:00 & 0.3 & NA & 0.3 & 0.2 & 0.08 & 2 & 25 & NA & 73 & 14 & 7 & 7 & 1.40 & 2.0 & 28079008\\
-2017-06-01 03:00:00 & NA & NA & 0.1 & NA & NA & 1 & 11 & NA & NA & 18 & NA & 10 & NA & NA & 28079036\\
-2017-06-01 03:00:00 & 0.1 & NA & NA & 0.4 & NA & 6 & 20 & NA & NA & 11 & 6 & 2 & NA & 1.8 & 28079038\\
-2017-06-01 03:00:00 & NA & NA & NA & NA & NA & 1 & 6 & NA & 68 & NA & NA & NA & NA & NA & 28079058\\
-2017-06-01 03:00:00 & NA & NA & NA & NA & NA & 1 & 8 & NA & 86 & 19 & NA & NA & NA & NA & 28079060\\
-\addlinespace
-2017-06-01 04:00:00 & 0.3 & NA & 0.2 & 0.2 & 0.08 & 2 & 22 & NA & 75 & 15 & 10 & 6 & 1.41 & 1.4 & 28079008\\
-2017-06-01 04:00:00 & NA & NA & 0.1 & NA & NA & 1 & 14 & NA & NA & 12 & NA & 10 & NA & NA & 28079036\\
-2017-06-01 04:00:00 & 0.2 & NA & NA & 0.5 & NA & 1 & 12 & NA & NA & 10 & 6 & 2 & NA & 1.7 & 28079038\\
-2017-06-01 04:00:00 & NA & NA & NA & NA & NA & 1 & 6 & NA & 60 & NA & NA & NA & NA & NA & 28079058\\
-2017-06-01 04:00:00 & NA & NA & NA & NA & NA & 1 & 11 & NA & 75 & 8 & NA & NA & NA & NA & 28079060\\
-\bottomrule
-\end{tabular}
-\end{table}
+date
+
+BEN
+
+CH4
+
+CO
+
+EBE
+
+NMHC
+
+NO
+
+NO\_2
+
+NOx
+
+O\_3
+
+PM10
+
+PM25
+
+SO\_2
+
+TCH
+
+TOL
+
+station
+
+2017-06-01 01:00:00
+
+0.6
+
+NA
+
+0.3
+
+0.4
+
+0.08
+
+3
+
+39
+
+NA
+
+71
+
+22
+
+9
+
+7
+
+1.40
+
+2.9
+
+28079008
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+0.1
+
+NA
+
+NA
+
+1
+
+15
+
+NA
+
+NA
+
+22
+
+NA
+
+10
+
+NA
+
+NA
+
+28079036
+
+2017-06-01 01:00:00
+
+0.7
+
+NA
+
+NA
+
+1.0
+
+NA
+
+1
+
+25
+
+NA
+
+NA
+
+21
+
+10
+
+2
+
+NA
+
+3.5
+
+28079038
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+10
+
+NA
+
+66
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079058
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+26
+
+NA
+
+79
+
+86
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079060
+
+2017-06-01 02:00:00
+
+0.3
+
+NA
+
+0.3
+
+0.2
+
+0.07
+
+2
+
+27
+
+NA
+
+72
+
+16
+
+7
+
+7
+
+1.40
+
+2.3
+
+28079008
+
+2017-06-01 02:00:00
+
+NA
+
+NA
+
+0.1
+
+NA
+
+NA
+
+1
+
+13
+
+NA
+
+NA
+
+17
+
+NA
+
+10
+
+NA
+
+NA
+
+28079036
+
+2017-06-01 02:00:00
+
+0.2
+
+NA
+
+NA
+
+0.5
+
+NA
+
+9
+
+20
+
+NA
+
+NA
+
+13
+
+4
+
+2
+
+NA
+
+1.3
+
+28079038
+
+2017-06-01 02:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+11
+
+NA
+
+68
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079058
+
+2017-06-01 02:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+9
+
+NA
+
+90
+
+62
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079060
+
+2017-06-01 03:00:00
+
+0.3
+
+NA
+
+0.3
+
+0.2
+
+0.08
+
+2
+
+25
+
+NA
+
+73
+
+14
+
+7
+
+7
+
+1.40
+
+2.0
+
+28079008
+
+2017-06-01 03:00:00
+
+NA
+
+NA
+
+0.1
+
+NA
+
+NA
+
+1
+
+11
+
+NA
+
+NA
+
+18
+
+NA
+
+10
+
+NA
+
+NA
+
+28079036
+
+2017-06-01 03:00:00
+
+0.1
+
+NA
+
+NA
+
+0.4
+
+NA
+
+6
+
+20
+
+NA
+
+NA
+
+11
+
+6
+
+2
+
+NA
+
+1.8
+
+28079038
+
+2017-06-01 03:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+6
+
+NA
+
+68
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079058
+
+2017-06-01 03:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+8
+
+NA
+
+86
+
+19
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079060
+
+2017-06-01 04:00:00
+
+0.3
+
+NA
+
+0.2
+
+0.2
+
+0.08
+
+2
+
+22
+
+NA
+
+75
+
+15
+
+10
+
+6
+
+1.41
+
+1.4
+
+28079008
+
+2017-06-01 04:00:00
+
+NA
+
+NA
+
+0.1
+
+NA
+
+NA
+
+1
+
+14
+
+NA
+
+NA
+
+12
+
+NA
+
+10
+
+NA
+
+NA
+
+28079036
+
+2017-06-01 04:00:00
+
+0.2
+
+NA
+
+NA
+
+0.5
+
+NA
+
+1
+
+12
+
+NA
+
+NA
+
+10
+
+6
+
+2
+
+NA
+
+1.7
+
+28079038
+
+2017-06-01 04:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+6
+
+NA
+
+60
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079058
+
+2017-06-01 04:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+11
+
+NA
+
+75
+
+8
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079060
 
 \hypertarget{agreguemos-aparte-el-mes-el-ano-y-el-nombre-de-la-estacion}{%
 \paragraph{Agreguemos aparte el mes, el año y el nombre de la
@@ -2864,40 +5320,974 @@ esto lo podemos ver en la tabla \ref{tab:Madrid2017c}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:Madrid2017c}Los primeros 20 datos de calidad de aire del 2017 en
+Madrid después de filtrar según estación, con mes, año y nombre.
 
-\caption{\label{tab:Madrid2017c}Los primeros 20 datos de calidad de aire del 2017 en Madrid después de filtrar según estación, con mes, año y nombre.}
-\centering
-\begin{tabular}[t]{lrlrrrrrlrrrrrrrrrllrrr}
-\toprule
-date & BEN & CH4 & CO & EBE & NMHC & NO & NO\_2 & NOx & O\_3 & PM10 & PM25 & SO\_2 & TCH & TOL & station & month & year & name & address & lon & lat & elevation\\
-\midrule
-2017-06-01 01:00:00 & 0.6 & NA & 0.3 & 0.4 & 0.08 & 3 & 39 & NA & 71 & 22 & 9 & 7 & 1.40 & 2.9 & 28079008 & 6 & 2017 & Escuelas Aguirre & Entre C/ Alcalá y C/ O’ Donell & -3.682319 & 40.42156 & 670\\
-2017-06-01 01:00:00 & NA & NA & 0.1 & NA & NA & 1 & 15 & NA & NA & 22 & NA & 10 & NA & NA & 28079036 & 6 & 2017 & Moratalaz & Avd. Moratalaz  esq. Camino de los Vinateros & -3.645306 & 40.40795 & 685\\
-2017-06-01 01:00:00 & 0.7 & NA & NA & 1.0 & NA & 1 & 25 & NA & NA & 21 & 10 & 2 & NA & 3.5 & 28079038 & 6 & 2017 & Cuatro Caminos & Avda. Pablo Iglesias esq. C/ Marqués de Lema & -3.707128 & 40.44554 & 698\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 1 & 10 & NA & 66 & NA & NA & NA & NA & NA & 28079058 & 6 & 2017 & El Pardo & Avda. La Guardia & -3.774611 & 40.51806 & 615\\
-2017-06-01 01:00:00 & NA & NA & NA & NA & NA & 1 & 26 & NA & 79 & 86 & NA & NA & NA & NA & 28079060 & 6 & 2017 & Tres Olivos & Plaza Tres Olivos & -3.689761 & 40.50059 & 715\\
-\addlinespace
-2017-06-01 02:00:00 & 0.3 & NA & 0.3 & 0.2 & 0.07 & 2 & 27 & NA & 72 & 16 & 7 & 7 & 1.40 & 2.3 & 28079008 & 6 & 2017 & Escuelas Aguirre & Entre C/ Alcalá y C/ O’ Donell & -3.682319 & 40.42156 & 670\\
-2017-06-01 02:00:00 & NA & NA & 0.1 & NA & NA & 1 & 13 & NA & NA & 17 & NA & 10 & NA & NA & 28079036 & 6 & 2017 & Moratalaz & Avd. Moratalaz  esq. Camino de los Vinateros & -3.645306 & 40.40795 & 685\\
-2017-06-01 02:00:00 & 0.2 & NA & NA & 0.5 & NA & 9 & 20 & NA & NA & 13 & 4 & 2 & NA & 1.3 & 28079038 & 6 & 2017 & Cuatro Caminos & Avda. Pablo Iglesias esq. C/ Marqués de Lema & -3.707128 & 40.44554 & 698\\
-2017-06-01 02:00:00 & NA & NA & NA & NA & NA & 1 & 11 & NA & 68 & NA & NA & NA & NA & NA & 28079058 & 6 & 2017 & El Pardo & Avda. La Guardia & -3.774611 & 40.51806 & 615\\
-2017-06-01 02:00:00 & NA & NA & NA & NA & NA & 1 & 9 & NA & 90 & 62 & NA & NA & NA & NA & 28079060 & 6 & 2017 & Tres Olivos & Plaza Tres Olivos & -3.689761 & 40.50059 & 715\\
-\addlinespace
-2017-06-01 03:00:00 & 0.3 & NA & 0.3 & 0.2 & 0.08 & 2 & 25 & NA & 73 & 14 & 7 & 7 & 1.40 & 2.0 & 28079008 & 6 & 2017 & Escuelas Aguirre & Entre C/ Alcalá y C/ O’ Donell & -3.682319 & 40.42156 & 670\\
-2017-06-01 03:00:00 & NA & NA & 0.1 & NA & NA & 1 & 11 & NA & NA & 18 & NA & 10 & NA & NA & 28079036 & 6 & 2017 & Moratalaz & Avd. Moratalaz  esq. Camino de los Vinateros & -3.645306 & 40.40795 & 685\\
-2017-06-01 03:00:00 & 0.1 & NA & NA & 0.4 & NA & 6 & 20 & NA & NA & 11 & 6 & 2 & NA & 1.8 & 28079038 & 6 & 2017 & Cuatro Caminos & Avda. Pablo Iglesias esq. C/ Marqués de Lema & -3.707128 & 40.44554 & 698\\
-2017-06-01 03:00:00 & NA & NA & NA & NA & NA & 1 & 6 & NA & 68 & NA & NA & NA & NA & NA & 28079058 & 6 & 2017 & El Pardo & Avda. La Guardia & -3.774611 & 40.51806 & 615\\
-2017-06-01 03:00:00 & NA & NA & NA & NA & NA & 1 & 8 & NA & 86 & 19 & NA & NA & NA & NA & 28079060 & 6 & 2017 & Tres Olivos & Plaza Tres Olivos & -3.689761 & 40.50059 & 715\\
-\addlinespace
-2017-06-01 04:00:00 & 0.3 & NA & 0.2 & 0.2 & 0.08 & 2 & 22 & NA & 75 & 15 & 10 & 6 & 1.41 & 1.4 & 28079008 & 6 & 2017 & Escuelas Aguirre & Entre C/ Alcalá y C/ O’ Donell & -3.682319 & 40.42156 & 670\\
-2017-06-01 04:00:00 & NA & NA & 0.1 & NA & NA & 1 & 14 & NA & NA & 12 & NA & 10 & NA & NA & 28079036 & 6 & 2017 & Moratalaz & Avd. Moratalaz  esq. Camino de los Vinateros & -3.645306 & 40.40795 & 685\\
-2017-06-01 04:00:00 & 0.2 & NA & NA & 0.5 & NA & 1 & 12 & NA & NA & 10 & 6 & 2 & NA & 1.7 & 28079038 & 6 & 2017 & Cuatro Caminos & Avda. Pablo Iglesias esq. C/ Marqués de Lema & -3.707128 & 40.44554 & 698\\
-2017-06-01 04:00:00 & NA & NA & NA & NA & NA & 1 & 6 & NA & 60 & NA & NA & NA & NA & NA & 28079058 & 6 & 2017 & El Pardo & Avda. La Guardia & -3.774611 & 40.51806 & 615\\
-2017-06-01 04:00:00 & NA & NA & NA & NA & NA & 1 & 11 & NA & 75 & 8 & NA & NA & NA & NA & 28079060 & 6 & 2017 & Tres Olivos & Plaza Tres Olivos & -3.689761 & 40.50059 & 715\\
-\bottomrule
-\end{tabular}
-\end{table}
+date
+
+BEN
+
+CH4
+
+CO
+
+EBE
+
+NMHC
+
+NO
+
+NO\_2
+
+NOx
+
+O\_3
+
+PM10
+
+PM25
+
+SO\_2
+
+TCH
+
+TOL
+
+station
+
+month
+
+year
+
+name
+
+address
+
+lon
+
+lat
+
+elevation
+
+2017-06-01 01:00:00
+
+0.6
+
+NA
+
+0.3
+
+0.4
+
+0.08
+
+3
+
+39
+
+NA
+
+71
+
+22
+
+9
+
+7
+
+1.40
+
+2.9
+
+28079008
+
+6
+
+2017
+
+Escuelas Aguirre
+
+Entre C/ Alcalá y C/ O' Donell
+
+-3.682319
+
+40.42156
+
+670
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+0.1
+
+NA
+
+NA
+
+1
+
+15
+
+NA
+
+NA
+
+22
+
+NA
+
+10
+
+NA
+
+NA
+
+28079036
+
+6
+
+2017
+
+Moratalaz
+
+Avd. Moratalaz esq. Camino de los Vinateros
+
+-3.645306
+
+40.40795
+
+685
+
+2017-06-01 01:00:00
+
+0.7
+
+NA
+
+NA
+
+1.0
+
+NA
+
+1
+
+25
+
+NA
+
+NA
+
+21
+
+10
+
+2
+
+NA
+
+3.5
+
+28079038
+
+6
+
+2017
+
+Cuatro Caminos
+
+Avda. Pablo Iglesias esq. C/ Marqués de Lema
+
+-3.707128
+
+40.44554
+
+698
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+10
+
+NA
+
+66
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079058
+
+6
+
+2017
+
+El Pardo
+
+Avda. La Guardia
+
+-3.774611
+
+40.51806
+
+615
+
+2017-06-01 01:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+26
+
+NA
+
+79
+
+86
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079060
+
+6
+
+2017
+
+Tres Olivos
+
+Plaza Tres Olivos
+
+-3.689761
+
+40.50059
+
+715
+
+2017-06-01 02:00:00
+
+0.3
+
+NA
+
+0.3
+
+0.2
+
+0.07
+
+2
+
+27
+
+NA
+
+72
+
+16
+
+7
+
+7
+
+1.40
+
+2.3
+
+28079008
+
+6
+
+2017
+
+Escuelas Aguirre
+
+Entre C/ Alcalá y C/ O' Donell
+
+-3.682319
+
+40.42156
+
+670
+
+2017-06-01 02:00:00
+
+NA
+
+NA
+
+0.1
+
+NA
+
+NA
+
+1
+
+13
+
+NA
+
+NA
+
+17
+
+NA
+
+10
+
+NA
+
+NA
+
+28079036
+
+6
+
+2017
+
+Moratalaz
+
+Avd. Moratalaz esq. Camino de los Vinateros
+
+-3.645306
+
+40.40795
+
+685
+
+2017-06-01 02:00:00
+
+0.2
+
+NA
+
+NA
+
+0.5
+
+NA
+
+9
+
+20
+
+NA
+
+NA
+
+13
+
+4
+
+2
+
+NA
+
+1.3
+
+28079038
+
+6
+
+2017
+
+Cuatro Caminos
+
+Avda. Pablo Iglesias esq. C/ Marqués de Lema
+
+-3.707128
+
+40.44554
+
+698
+
+2017-06-01 02:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+11
+
+NA
+
+68
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079058
+
+6
+
+2017
+
+El Pardo
+
+Avda. La Guardia
+
+-3.774611
+
+40.51806
+
+615
+
+2017-06-01 02:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+9
+
+NA
+
+90
+
+62
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079060
+
+6
+
+2017
+
+Tres Olivos
+
+Plaza Tres Olivos
+
+-3.689761
+
+40.50059
+
+715
+
+2017-06-01 03:00:00
+
+0.3
+
+NA
+
+0.3
+
+0.2
+
+0.08
+
+2
+
+25
+
+NA
+
+73
+
+14
+
+7
+
+7
+
+1.40
+
+2.0
+
+28079008
+
+6
+
+2017
+
+Escuelas Aguirre
+
+Entre C/ Alcalá y C/ O' Donell
+
+-3.682319
+
+40.42156
+
+670
+
+2017-06-01 03:00:00
+
+NA
+
+NA
+
+0.1
+
+NA
+
+NA
+
+1
+
+11
+
+NA
+
+NA
+
+18
+
+NA
+
+10
+
+NA
+
+NA
+
+28079036
+
+6
+
+2017
+
+Moratalaz
+
+Avd. Moratalaz esq. Camino de los Vinateros
+
+-3.645306
+
+40.40795
+
+685
+
+2017-06-01 03:00:00
+
+0.1
+
+NA
+
+NA
+
+0.4
+
+NA
+
+6
+
+20
+
+NA
+
+NA
+
+11
+
+6
+
+2
+
+NA
+
+1.8
+
+28079038
+
+6
+
+2017
+
+Cuatro Caminos
+
+Avda. Pablo Iglesias esq. C/ Marqués de Lema
+
+-3.707128
+
+40.44554
+
+698
+
+2017-06-01 03:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+6
+
+NA
+
+68
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079058
+
+6
+
+2017
+
+El Pardo
+
+Avda. La Guardia
+
+-3.774611
+
+40.51806
+
+615
+
+2017-06-01 03:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+8
+
+NA
+
+86
+
+19
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079060
+
+6
+
+2017
+
+Tres Olivos
+
+Plaza Tres Olivos
+
+-3.689761
+
+40.50059
+
+715
+
+2017-06-01 04:00:00
+
+0.3
+
+NA
+
+0.2
+
+0.2
+
+0.08
+
+2
+
+22
+
+NA
+
+75
+
+15
+
+10
+
+6
+
+1.41
+
+1.4
+
+28079008
+
+6
+
+2017
+
+Escuelas Aguirre
+
+Entre C/ Alcalá y C/ O' Donell
+
+-3.682319
+
+40.42156
+
+670
+
+2017-06-01 04:00:00
+
+NA
+
+NA
+
+0.1
+
+NA
+
+NA
+
+1
+
+14
+
+NA
+
+NA
+
+12
+
+NA
+
+10
+
+NA
+
+NA
+
+28079036
+
+6
+
+2017
+
+Moratalaz
+
+Avd. Moratalaz esq. Camino de los Vinateros
+
+-3.645306
+
+40.40795
+
+685
+
+2017-06-01 04:00:00
+
+0.2
+
+NA
+
+NA
+
+0.5
+
+NA
+
+1
+
+12
+
+NA
+
+NA
+
+10
+
+6
+
+2
+
+NA
+
+1.7
+
+28079038
+
+6
+
+2017
+
+Cuatro Caminos
+
+Avda. Pablo Iglesias esq. C/ Marqués de Lema
+
+-3.707128
+
+40.44554
+
+698
+
+2017-06-01 04:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+6
+
+NA
+
+60
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079058
+
+6
+
+2017
+
+El Pardo
+
+Avda. La Guardia
+
+-3.774611
+
+40.51806
+
+615
+
+2017-06-01 04:00:00
+
+NA
+
+NA
+
+NA
+
+NA
+
+NA
+
+1
+
+11
+
+NA
+
+75
+
+8
+
+NA
+
+NA
+
+NA
+
+NA
+
+28079060
+
+6
+
+2017
+
+Tres Olivos
+
+Plaza Tres Olivos
+
+-3.689761
+
+40.50059
+
+715
 
 Finalmente, agrupamos sacamos el promedio por mes y sacamos las columnas
 sobrantes al mismo tiempo, como vemos en la tabla \ref{tab:Madrid2017d}
@@ -2957,40 +6347,176 @@ sobrantes al mismo tiempo, como vemos en la tabla \ref{tab:Madrid2017d}
 ## Joining, by = "station"
 \end{verbatim}
 
-\begin{table}
+\label{tab:Madrid2017d}Los primeros 20 datos de calidad de aire del 2017 en
+Madrid después de filtrar según estación, con mes, año y nombre.
 
-\caption{\label{tab:Madrid2017d}Los primeros 20 datos de calidad de aire del 2017 en Madrid después de filtrar según estación, con mes, año y nombre.}
-\centering
-\begin{tabular}[t]{rlrr}
-\toprule
-month & name & year & NO\_2\\
-\midrule
-1 & Cuatro Caminos & 2017 & 59.88124\\
-1 & Cuatro Caminos & 2018 & 5.00000\\
-1 & El Pardo & 2017 & 27.89892\\
-1 & El Pardo & 2018 & 1.00000\\
-1 & Escuelas Aguirre & 2017 & 69.43666\\
-\addlinespace
-1 & Escuelas Aguirre & 2018 & 20.00000\\
-1 & Moratalaz & 2017 & 54.17004\\
-1 & Moratalaz & 2018 & 10.00000\\
-1 & Tres Olivos & 2017 & 55.28706\\
-1 & Tres Olivos & 2018 & 5.00000\\
-\addlinespace
-2 & Cuatro Caminos & 2017 & 46.01045\\
-2 & El Pardo & 2017 & 17.18955\\
-2 & Escuelas Aguirre & 2017 & 59.89686\\
-2 & Moratalaz & 2017 & 44.19581\\
-2 & Tres Olivos & 2017 & 39.38209\\
-\addlinespace
-3 & Cuatro Caminos & 2017 & 43.71833\\
-3 & El Pardo & 2017 & 15.07962\\
-3 & Escuelas Aguirre & 2017 & 61.74798\\
-3 & Moratalaz & 2017 & 43.01353\\
-3 & Tres Olivos & 2017 & 36.68329\\
-\bottomrule
-\end{tabular}
-\end{table}
+month
+
+name
+
+year
+
+NO\_2
+
+1
+
+Cuatro Caminos
+
+2017
+
+59.88124
+
+1
+
+Cuatro Caminos
+
+2018
+
+5.00000
+
+1
+
+El Pardo
+
+2017
+
+27.89892
+
+1
+
+El Pardo
+
+2018
+
+1.00000
+
+1
+
+Escuelas Aguirre
+
+2017
+
+69.43666
+
+1
+
+Escuelas Aguirre
+
+2018
+
+20.00000
+
+1
+
+Moratalaz
+
+2017
+
+54.17004
+
+1
+
+Moratalaz
+
+2018
+
+10.00000
+
+1
+
+Tres Olivos
+
+2017
+
+55.28706
+
+1
+
+Tres Olivos
+
+2018
+
+5.00000
+
+2
+
+Cuatro Caminos
+
+2017
+
+46.01045
+
+2
+
+El Pardo
+
+2017
+
+17.18955
+
+2
+
+Escuelas Aguirre
+
+2017
+
+59.89686
+
+2
+
+Moratalaz
+
+2017
+
+44.19581
+
+2
+
+Tres Olivos
+
+2017
+
+39.38209
+
+3
+
+Cuatro Caminos
+
+2017
+
+43.71833
+
+3
+
+El Pardo
+
+2017
+
+15.07962
+
+3
+
+Escuelas Aguirre
+
+2017
+
+61.74798
+
+3
+
+Moratalaz
+
+2017
+
+43.01353
+
+3
+
+Tres Olivos
+
+2017
+
+36.68329
 
 \hypertarget{ultimos-detalles}{%
 \paragraph{Últimos detalles}\label{ultimos-detalles}}
@@ -3177,40 +6703,219 @@ código y la tabla \ref{tab:Madrid2017e}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:Madrid2017e}Los primeros 20 datos de calidad de aire del todos
+los años en Madrid después de filtrar según estación, con mes, año y
+nombre.
 
-\caption{\label{tab:Madrid2017e}Los primeros 20 datos de calidad de aire del todos los años en Madrid después de filtrar según estación, con mes, año y nombre.}
-\centering
-\begin{tabular}[t]{rlrrr}
-\toprule
-month & name & year & NO\_2 & n\\
-\midrule
-1 & Cuatro Caminos & 2017 & 59.88124 & 743\\
-1 & El Pardo & 2017 & 27.89892 & 743\\
-1 & Escuelas Aguirre & 2017 & 69.43666 & 743\\
-1 & Moratalaz & 2017 & 54.17004 & 743\\
-1 & Tres Olivos & 2017 & 55.28706 & 743\\
-\addlinespace
-2 & Cuatro Caminos & 2017 & 46.01045 & 672\\
-2 & El Pardo & 2017 & 17.18955 & 672\\
-2 & Escuelas Aguirre & 2017 & 59.89686 & 672\\
-2 & Moratalaz & 2017 & 44.19581 & 672\\
-2 & Tres Olivos & 2017 & 39.38209 & 672\\
-\addlinespace
-3 & Cuatro Caminos & 2017 & 43.71833 & 744\\
-3 & El Pardo & 2017 & 15.07962 & 744\\
-3 & Escuelas Aguirre & 2017 & 61.74798 & 744\\
-3 & Moratalaz & 2017 & 43.01353 & 744\\
-3 & Tres Olivos & 2017 & 36.68329 & 744\\
-\addlinespace
-4 & Cuatro Caminos & 2017 & 34.35139 & 720\\
-4 & El Pardo & 2017 & 11.48122 & 720\\
-4 & Escuelas Aguirre & 2017 & 51.56485 & 720\\
-4 & Moratalaz & 2017 & 30.07232 & 720\\
-4 & Tres Olivos & 2017 & 25.51253 & 720\\
-\bottomrule
-\end{tabular}
-\end{table}
+month
+
+name
+
+year
+
+NO\_2
+
+n
+
+1
+
+Cuatro Caminos
+
+2017
+
+59.88124
+
+743
+
+1
+
+El Pardo
+
+2017
+
+27.89892
+
+743
+
+1
+
+Escuelas Aguirre
+
+2017
+
+69.43666
+
+743
+
+1
+
+Moratalaz
+
+2017
+
+54.17004
+
+743
+
+1
+
+Tres Olivos
+
+2017
+
+55.28706
+
+743
+
+2
+
+Cuatro Caminos
+
+2017
+
+46.01045
+
+672
+
+2
+
+El Pardo
+
+2017
+
+17.18955
+
+672
+
+2
+
+Escuelas Aguirre
+
+2017
+
+59.89686
+
+672
+
+2
+
+Moratalaz
+
+2017
+
+44.19581
+
+672
+
+2
+
+Tres Olivos
+
+2017
+
+39.38209
+
+672
+
+3
+
+Cuatro Caminos
+
+2017
+
+43.71833
+
+744
+
+3
+
+El Pardo
+
+2017
+
+15.07962
+
+744
+
+3
+
+Escuelas Aguirre
+
+2017
+
+61.74798
+
+744
+
+3
+
+Moratalaz
+
+2017
+
+43.01353
+
+744
+
+3
+
+Tres Olivos
+
+2017
+
+36.68329
+
+744
+
+4
+
+Cuatro Caminos
+
+2017
+
+34.35139
+
+720
+
+4
+
+El Pardo
+
+2017
+
+11.48122
+
+720
+
+4
+
+Escuelas Aguirre
+
+2017
+
+51.56485
+
+720
+
+4
+
+Moratalaz
+
+2017
+
+30.07232
+
+720
+
+4
+
+Tres Olivos
+
+2017
+
+25.51253
+
+720
 
 \hypertarget{presentacion}{%
 \chapter{Presentaciones en R}\label{presentacion}}
@@ -3307,63 +7012,167 @@ Una posible solución a este problema sería:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tabular}{r|r|l}
-\hline
-lon & lat & basisOfRecord\\
-\hline
--72.97587 & -51.18353 & HUMAN\_OBSERVATION\\
-\hline
--72.93940 & -49.37483 & HUMAN\_OBSERVATION\\
-\hline
--72.97712 & -51.01511 & HUMAN\_OBSERVATION\\
-\hline
--71.87026 & -46.08686 & HUMAN\_OBSERVATION\\
-\hline
--72.43751 & -47.20485 & HUMAN\_OBSERVATION\\
-\hline
--73.01456 & -51.03635 & HUMAN\_OBSERVATION\\
-\hline
--73.03190 & -51.17531 & HUMAN\_OBSERVATION\\
-\hline
--72.72944 & -46.25602 & HUMAN\_OBSERVATION\\
-\hline
--71.31538 & -41.30110 & PRESERVED\_SPECIMEN\\
-\hline
--71.31538 & -41.30110 & PRESERVED\_SPECIMEN\\
-\hline
--71.71667 & -44.86667 & PRESERVED\_SPECIMEN\\
-\hline
--71.71667 & -44.86667 & PRESERVED\_SPECIMEN\\
-\hline
--71.30989 & -40.81978 & PRESERVED\_SPECIMEN\\
-\hline
--71.31538 & -41.30110 & PRESERVED\_SPECIMEN\\
-\hline
--73.02467 & -50.46476 & PRESERVED\_SPECIMEN\\
-\hline
--71.33186 & -41.26523 & PRESERVED\_SPECIMEN\\
-\hline
--73.01764 & -50.46747 & PRESERVED\_SPECIMEN\\
-\hline
--71.70000 & -45.26667 & PRESERVED\_SPECIMEN\\
-\hline
--71.70000 & -45.26667 & PRESERVED\_SPECIMEN\\
-\hline
--71.70000 & -45.26667 & PRESERVED\_SPECIMEN\\
-\hline
--72.08000 & -47.25000 & PRESERVED\_SPECIMEN\\
-\hline
--72.00000 & -41.50000 & PRESERVED\_SPECIMEN\\
-\hline
--71.36714 & -41.13574 & PRESERVED\_SPECIMEN\\
-\hline
--71.71094 & -42.75692 & HUMAN\_OBSERVATION\\
-\hline
--71.64718 & -40.22605 & PRESERVED\_SPECIMEN\\
-\hline
--67.88534 & -43.99376 & PRESERVED\_SPECIMEN\\
-\hline
-\end{tabular}
+lon
+
+lat
+
+basisOfRecord
+
+-72.97587
+
+-51.18353
+
+HUMAN\_OBSERVATION
+
+-72.93940
+
+-49.37483
+
+HUMAN\_OBSERVATION
+
+-72.97712
+
+-51.01511
+
+HUMAN\_OBSERVATION
+
+-71.87026
+
+-46.08686
+
+HUMAN\_OBSERVATION
+
+-72.43751
+
+-47.20485
+
+HUMAN\_OBSERVATION
+
+-73.01456
+
+-51.03635
+
+HUMAN\_OBSERVATION
+
+-73.03190
+
+-51.17531
+
+HUMAN\_OBSERVATION
+
+-72.72944
+
+-46.25602
+
+HUMAN\_OBSERVATION
+
+-71.31538
+
+-41.30110
+
+PRESERVED\_SPECIMEN
+
+-71.31538
+
+-41.30110
+
+PRESERVED\_SPECIMEN
+
+-71.71667
+
+-44.86667
+
+PRESERVED\_SPECIMEN
+
+-71.71667
+
+-44.86667
+
+PRESERVED\_SPECIMEN
+
+-71.30989
+
+-40.81978
+
+PRESERVED\_SPECIMEN
+
+-71.31538
+
+-41.30110
+
+PRESERVED\_SPECIMEN
+
+-73.02467
+
+-50.46476
+
+PRESERVED\_SPECIMEN
+
+-71.33186
+
+-41.26523
+
+PRESERVED\_SPECIMEN
+
+-73.01764
+
+-50.46747
+
+PRESERVED\_SPECIMEN
+
+-71.70000
+
+-45.26667
+
+PRESERVED\_SPECIMEN
+
+-71.70000
+
+-45.26667
+
+PRESERVED\_SPECIMEN
+
+-71.70000
+
+-45.26667
+
+PRESERVED\_SPECIMEN
+
+-72.08000
+
+-47.25000
+
+PRESERVED\_SPECIMEN
+
+-72.00000
+
+-41.50000
+
+PRESERVED\_SPECIMEN
+
+-71.36714
+
+-41.13574
+
+PRESERVED\_SPECIMEN
+
+-71.71094
+
+-42.75692
+
+HUMAN\_OBSERVATION
+
+-71.64718
+
+-40.22605
+
+PRESERVED\_SPECIMEN
+
+-67.88534
+
+-43.99376
+
+PRESERVED\_SPECIMEN
 
 \hypertarget{b}{%
 \subsubsection{b}\label{b}}
@@ -3374,15 +7183,17 @@ lon & lat & basisOfRecord\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{tabular}{l|r}
-\hline
-basisOfRecord & N\\
-\hline
-HUMAN\_OBSERVATION & 103\\
-\hline
-PRESERVED\_SPECIMEN & 65\\
-\hline
-\end{tabular}
+basisOfRecord
+
+N
+
+HUMAN\_OBSERVATION
+
+103
+
+PRESERVED\_SPECIMEN
+
+65
 
 \hypertarget{ejercicio-2-3}{%
 \subsection{Ejercicio 2}\label{ejercicio-2-3}}
@@ -3531,40 +7342,218 @@ En el siguiente código unimos las dos bases de datos, vemos las primeras
 ## Joining, by = c("Mes", "Year", "Ciudad_localidad")
 \end{verbatim}
 
-\begin{table}
+\label{tab:TempHum}Las primeras 20 observaciones de temperatura y humedad
+unidas
 
-\caption{\label{tab:TempHum}Las primeras 20 observaciones de temperatura y humedad unidas}
-\centering
-\begin{tabular}[t]{rrrlr}
-\toprule
-Mes & Year & TempMedia & Ciudad\_localidad & HumMedia\\
-\midrule
-1 & 1981 & 22.0 & Arica & NA\\
-2 & 1981 & 22.2 & Arica & NA\\
-3 & 1981 & 22.1 & Arica & NA\\
-4 & 1981 & 20.3 & Arica & NA\\
-5 & 1981 & 18.2 & Arica & NA\\
-\addlinespace
-6 & 1981 & 17.0 & Arica & NA\\
-7 & 1981 & 15.0 & Arica & NA\\
-8 & 1981 & 16.0 & Arica & NA\\
-9 & 1981 & 16.6 & Arica & NA\\
-10 & 1981 & 15.9 & Arica & NA\\
-\addlinespace
-11 & 1981 & 19.1 & Arica & NA\\
-12 & 1981 & 21.1 & Arica & NA\\
-1 & 1981 & 19.7 & Iquique & NA\\
-2 & 1981 & 21.1 & Iquique & NA\\
-3 & 1981 & 20.9 & Iquique & NA\\
-\addlinespace
-4 & 1981 & 19.9 & Iquique & NA\\
-5 & 1981 & 17.6 & Iquique & NA\\
-6 & 1981 & 15.9 & Iquique & NA\\
-7 & 1981 & 14.6 & Iquique & NA\\
-8 & 1981 & 15.6 & Iquique & NA\\
-\bottomrule
-\end{tabular}
-\end{table}
+Mes
+
+Year
+
+TempMedia
+
+Ciudad\_localidad
+
+HumMedia
+
+1
+
+1981
+
+22.0
+
+Arica
+
+NA
+
+2
+
+1981
+
+22.2
+
+Arica
+
+NA
+
+3
+
+1981
+
+22.1
+
+Arica
+
+NA
+
+4
+
+1981
+
+20.3
+
+Arica
+
+NA
+
+5
+
+1981
+
+18.2
+
+Arica
+
+NA
+
+6
+
+1981
+
+17.0
+
+Arica
+
+NA
+
+7
+
+1981
+
+15.0
+
+Arica
+
+NA
+
+8
+
+1981
+
+16.0
+
+Arica
+
+NA
+
+9
+
+1981
+
+16.6
+
+Arica
+
+NA
+
+10
+
+1981
+
+15.9
+
+Arica
+
+NA
+
+11
+
+1981
+
+19.1
+
+Arica
+
+NA
+
+12
+
+1981
+
+21.1
+
+Arica
+
+NA
+
+1
+
+1981
+
+19.7
+
+Iquique
+
+NA
+
+2
+
+1981
+
+21.1
+
+Iquique
+
+NA
+
+3
+
+1981
+
+20.9
+
+Iquique
+
+NA
+
+4
+
+1981
+
+19.9
+
+Iquique
+
+NA
+
+5
+
+1981
+
+17.6
+
+Iquique
+
+NA
+
+6
+
+1981
+
+15.9
+
+Iquique
+
+NA
+
+7
+
+1981
+
+14.6
+
+Iquique
+
+NA
+
+8
+
+1981
+
+15.6
+
+Iquique
+
+NA
 
 Con esto vemos que la humedad media no es medida en los mismos años ni
 en todos los lugares que se mide la temperatura media, pero como ambas
@@ -3586,40 +7575,260 @@ por ciudad y mes, y usar \texttt{summarize\_all} para las funciones
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\label{tab:TempHumMonthly}Las primeras 20 observaciones de temperatura y
+humedad agrupadas por mes y localidad
 
-\caption{\label{tab:TempHumMonthly}Las primeras 20 observaciones de temperatura y humedad agrupadas por mes y localidad}
-\centering
-\begin{tabular}[t]{rlrrrr}
-\toprule
-Mes & Ciudad\_localidad & TempMedia\_mean & HumMedia\_mean & TempMedia\_sd & HumMedia\_sd\\
-\midrule
-1 & Antártica Chilena & 1.388889 & 87.35000 & 0.6319031 & 3.483772\\
-1 & Antofagasta & 20.125000 & 69.70000 & 0.8378118 & 1.589549\\
-1 & Arica & 22.375000 & 62.72500 & 0.9391105 & 2.394960\\
-1 & Balmaceda & 12.358823 & 56.37500 & 1.2200640 & 2.487804\\
-1 & Calama & 17.000000 & 25.00000 & NA & NA\\
-\addlinespace
-1 & Cerrillos & 20.996000 & NaN & 0.7855359 & NaN\\
-1 & Chillán & 19.747059 & 63.05000 & 0.7054916 & 3.750111\\
-1 & Concepción & 16.683333 & 73.75000 & 0.6222080 & 6.727308\\
-1 & Copiapó & 19.604348 & NaN & 0.7449700 & NaN\\
-1 & Coyhaique & 13.980556 & 58.27500 & 1.2537531 & 1.543535\\
-\addlinespace
-1 & Curicó & 20.632353 & 59.65000 & 0.7293503 & 6.310573\\
-1 & Graneros & 21.480000 & NaN & 0.4661330 & NaN\\
-1 & Iquique & 21.791667 & 61.72500 & 1.0332680 & 3.981101\\
-1 & Isla Juan Fernández & 18.513889 & 71.22500 & 0.5111068 & 3.044531\\
-1 & La Serena & 17.311429 & 75.97500 & 0.7275145 & 3.187868\\
-\addlinespace
-1 & Osorno & 15.807407 & 74.10000 & 0.9388725 & 2.265686\\
-1 & Pudahuel & 20.652778 & 47.53333 & 0.7268272 & 5.852635\\
-1 & Puerto Montt & 14.451429 & 78.00000 & 0.7184016 & 2.499333\\
-1 & Punta Arenas & 10.852778 & 62.55000 & 0.7443064 & 3.349129\\
-1 & Quinta Normal & 21.261111 & 53.35000 & 0.5530579 & 6.507688\\
-\bottomrule
-\end{tabular}
-\end{table}
+Mes
+
+Ciudad\_localidad
+
+TempMedia\_mean
+
+HumMedia\_mean
+
+TempMedia\_sd
+
+HumMedia\_sd
+
+1
+
+Antártica Chilena
+
+1.388889
+
+87.35000
+
+0.6319031
+
+3.483772
+
+1
+
+Antofagasta
+
+20.125000
+
+69.70000
+
+0.8378118
+
+1.589549
+
+1
+
+Arica
+
+22.375000
+
+62.72500
+
+0.9391105
+
+2.394960
+
+1
+
+Balmaceda
+
+12.358823
+
+56.37500
+
+1.2200640
+
+2.487804
+
+1
+
+Calama
+
+17.000000
+
+25.00000
+
+NA
+
+NA
+
+1
+
+Cerrillos
+
+20.996000
+
+NaN
+
+0.7855359
+
+NaN
+
+1
+
+Chillán
+
+19.747059
+
+63.05000
+
+0.7054916
+
+3.750111
+
+1
+
+Concepción
+
+16.683333
+
+73.75000
+
+0.6222080
+
+6.727308
+
+1
+
+Copiapó
+
+19.604348
+
+NaN
+
+0.7449700
+
+NaN
+
+1
+
+Coyhaique
+
+13.980556
+
+58.27500
+
+1.2537531
+
+1.543535
+
+1
+
+Curicó
+
+20.632353
+
+59.65000
+
+0.7293503
+
+6.310573
+
+1
+
+Graneros
+
+21.480000
+
+NaN
+
+0.4661330
+
+NaN
+
+1
+
+Iquique
+
+21.791667
+
+61.72500
+
+1.0332680
+
+3.981101
+
+1
+
+Isla Juan Fernández
+
+18.513889
+
+71.22500
+
+0.5111068
+
+3.044531
+
+1
+
+La Serena
+
+17.311429
+
+75.97500
+
+0.7275145
+
+3.187868
+
+1
+
+Osorno
+
+15.807407
+
+74.10000
+
+0.9388725
+
+2.265686
+
+1
+
+Pudahuel
+
+20.652778
+
+47.53333
+
+0.7268272
+
+5.852635
+
+1
+
+Puerto Montt
+
+14.451429
+
+78.00000
+
+0.7184016
+
+2.499333
+
+1
+
+Punta Arenas
+
+10.852778
+
+62.55000
+
+0.7443064
+
+3.349129
+
+1
+
+Quinta Normal
+
+21.261111
+
+53.35000
+
+0.5530579
+
+6.507688
 
 \bibliography{book.bib,packages.bib}
 
