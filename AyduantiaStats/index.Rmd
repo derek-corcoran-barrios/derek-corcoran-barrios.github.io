@@ -1,6 +1,6 @@
 --- 
 title: "Practicos de Bioestadística 2"
-author: "Yihui Xie"
+author: "Derek Corcoran"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -59,6 +59,8 @@ Los prácticos de este curso se enfocan en aprender a realizar de manera prácti
 ## Contenidos
 
 + Capítulo \@ref(Explorando) *Análisis exploratorio y el primer ANOVA*: En este capítulo se aprenderá a cómo explorar, resumir y vizualizar una base de datos utilizando el paquete tidyverse [@WickhamTidy2017], además se realizarán un análisis basico de ANOVA
+
++ Capítulo \@ref(Supuestos) *Supuestos de ANOVA y mínimos cuadrados*
 
 + Capítulo \@ref(Refs) *Referencias*
 

@@ -11,7 +11,7 @@ navbar:
     - text: BIO4022
       href: Libro/_book/index.html
     - text: BIO249c
-      href: AyduantiaStats/_book/index.html.html      
+      href: AyduantiaStats/_book/index.html      
     - text: Hackathon
       href: Hack.html
   - text: Donde vivir

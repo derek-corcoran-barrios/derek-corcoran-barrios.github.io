@@ -1,0 +1,147 @@
+# Supuestos de ANOVA y mínimos cuadrados {#Supuestos}
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+```
+
+## Objetivos de este práctico
+
+- Entender los supuestos de un ANOVA de una via (independencia, aleatoreidad, homocedasticidad y normalidad)
+- Entender el concepto de mínimos cuadrados
+- Saber cuando realizar un ANOVA e interpretar sus resultados
+
+## Actividad 1 Sueño en mamíferos
+
+En esta actividad intentaremos ver si hay diferencias en horas de sueño en mamíferos por Orden o dieta. Los datos fueron extraidos del trabajo de @savage2007quantitative y estan incorporados en la base de datos de *ggplot2* con el nombre de *msleep*, pero estarán en webcursos en formato csv de todas formas. Para la guía los ejemplos se generarán en base a la base de datos *InsectSprays* que está en *R* y que fue extraída de @beall1942transformation, en la cual se testean la efectividad de insecticidas en Spray en la abundancia de insectos en plantaciones. Y en la base de datos *iris* que ya fue entregada, en la que se miden distintas caracteristicas florales de especies del genero *Iris* [@anderson1935irises].
+
+### Homogeneidad de varianza
+
+#### Inspección visual
+
+Lo primero que intentaremos explorar de forma visual y a partir de tests si es que hay homogeneidad de varianza, para esto usaremos boxplots, y jitter plots (Figura \@ref(fig:Visual)), lo cual ya hemos hecho anteriormente:
+
+```{r, echo=TRUE, eval = FALSE}
+ggplot(InsectSprays, aes(x = spray, y = count)) + geom_boxplot() + geom_jitter(aes(color = spray)) 
+```
+
+```{r Visual, echo=FALSE, fig.cap= "Cuenta de insectos según tipo de insecticida"}
+ggplot(InsectSprays, aes(x = spray, y = count)) + geom_boxplot() + geom_jitter(aes(color = spray)) 
+```
+
+
+Para explorar visualmente si existe homogeneidad de varianza, se compraran las cajas y bigotes de los boxplots y se espera que tengan (Mas o menos distintos tamaños).
+
+#### Test de Bartlett
+
+Para realizar un test de homogeneidad de varianza se realiza el test de bartlett [@bartlett1937properties], en este se usa nuestra conocida formula *y ~ x*, esto es, y explicado por x junto a la función *bartlett.test*. Para nuestro caso usariamos:
+
+```{r}
+bartlett.test(count ~ spray, data = InsectSprays)
+```
+
+Como en este caso, no el valor de p es menor a 0.05, decimos que no hay homogeneidad de varianza, por lo que no podemos hacer el test.
+
+### Normalidad de los residuales
+
+En el caso de la base de datos *iris*, demostraremos inmediatamente que si hay homogeneidad de varianza en el ancho del sépalo (Figura \@ref(fig:IrisBox)):
+
+```{r IrisBox, echo=FALSE, fig.cap= "Ancho de sépalo según especie del género Iris"}
+ggplot(iris, aes(x = Species, y = Sepal.Width)) + geom_boxplot() + geom_jitter(aes(color = Species)) 
+```
+
+```{r, echo = FALSE}
+bartlett.test(Sepal.Width ~ Species, data = iris)
+```
+
+Debido a ello, podemos testar si los residuales tienen una distribución normalidad de los residuales, para esto lo primero que debemos hacer es un ANOVA, como fue explicado en el práctico anterior y guardar este objeto con un nombre:
+
+```{r}
+ANOVA.Iris <- aov(Sepal.Width ~ Species, data = iris)
+```
+
+#### Extracción de los residuales del modelo
+
+Para exter los residuales, podemos hacerlo de dos formas, si solo queremos un vector de sus valores, podemos extraelo desde el modelo mimso utlizando *$residuals*. Si queremos guardarlo en un dataframe mas completo podemos utilizar la función *augment* del paquete *broom*.
+
+```{r}
+Residuales <- ANOVA.Iris$residuals
+library(broom)
+Resultados <- augment(ANOVA.Iris)
+```
+
+La segunda opción nos entregará más información que podremos utilizar más tarde, pero ambas sirven para testear normalidad, la siguiente tabla muestra las primeras 6 observaciones generadas por la función *augment*, donde *resid*, son los residuales (Ver tabla \@ref(tab:TabResid).
+
+```{r TabResid, echo =FALSE}
+knitr::kable(head(Resultados), caption= "primeras 6 observaciones del dataframe resultante de augment", digits = 3)
+```
+
+#### Inspección visual de los residuales
+
+Existen dos formas de visualizar los residuales para determinar si la distribución de estos es o no es normal, histogramas y el qqplot. 
+
+##### Histograma
+
+Los histogramas nos darán una representación visual para tratar de entender si la distribución es normal, para esto, solo necesitamos usar el comando *hist*, seguido del vector de los residuales, este es el comando para hacer el histograma (Figura \@ref(fig:histogram)) con cualquiera de las dos bases de datos, el resultado debiera ser el mismo:
+
+```{r, echo=TRUE, eval=FALSE}
+hist(Residuales)
+hist(Resultados$.resid)
+```
+
+```{r histogram, echo=FALSE, fig.cap= "Histograma de los resiudales del modelo ANOVA"}
+hist(Residuales)
+```
+
+##### QQplot
+
+El qq plot es otra forma visual de establecer si los residuales son o no son normales, para esto, lo esperado es que la gráfica resultante sea una diagonal lo mas recta posible, para esto usaremos la función *qqnorm*, con nuestros residuales, denuevo, podemos usar cualquiera de las dos versiones de nuestros datos:
+
+```{r, echo=TRUE, eval=FALSE}
+qqnorm(Residuales)
+qqnorm(Resultados$.resid)
+```
+
+```{r, echo=FALSE, fig.cap= "qqplot de los resiudales del modelo ANOVA"}
+qqnorm(Residuales)
+```
+
+#### Test de Shapiro para determinar normalidad
+
+La forma más sencilla de determinar normalidad es usando el test de Shapiro-Wilk de normalidad [@royston1995remark]. Al igual que el test de Bartlett, si el valor de p es menor a 0.05, determinamos que la distribución de los datos no son normales, la función en *R* para este test es *shapiro.test*, y al igual que en los casos anteriores de *hist* y *qqpot*, solo necesitamos de usar un vector de residuales para ver el resultado del test. En nuestro caso:
+
+```{r, echo=TRUE, eval=FALSE}
+shapiro.test(Residuales)
+shapiro.test(Resultados$.resid)
+```
+
+```{r, echo=FALSE, fig.cap= "qqplot de los resiudales del modelo ANOVA"}
+shapiro.test(Residuales)
+```
+
+Ya que el valor de p es menor a 0.05, podemos decir que la distribución de nuestros residuales es normal, y por lo tanto el test cumple con los supuestos, y esto hace que sea valido el ANOVA, por lo que podemos ver nuestros resultados. La homogeneidad de Varianza es mas importante que la normalidad de residuales para estos casos, para ejemplos de lo que se debe hacer si se viola la normalidad ver @lix1996consequences
+
+## Actividad 2 Suma de cuadrados
+
+Tanto los ANOVAS como las regresiones lineales se basan en minimizar la suma de cuadrados, es la suma de los cuadrados de los errores o residuales.
+
+### ¿Que es el error? ¿Por qué al cuadrado??
+
+
+```{r, echo = FALSE, fig.cap= "Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado"}
+testy <- augment(lm(mpg ~ wt, data =mtcars))
+ggplot(testy, aes(x = wt, y = mpg)) + geom_point() + geom_smooth(method="lm") + geom_segment(aes(xend = wt, yend = .fitted)) + theme_classic()
+```
+
+En la figura y en la formula vemos ejemplificado que es el error, también conocido como residual, este es simplemente el valor observado
+
+$$Observado - Predicho$$
+
+El objetivo de todo modelo es el de minimizar estos errores, al ajustar el mejor modelo posible.
+
+Los errores seimpre se calculan al cuadrado, discutiremos por que en clase
+
+$$\sum_{i=1}^{n} (Observado - Predicho)^2$$
+
+
+## Referencias
