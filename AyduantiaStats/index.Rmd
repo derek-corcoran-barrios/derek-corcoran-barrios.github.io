@@ -1,0 +1,83 @@
+--- 
+title: "Practicos de Bioestadística 2"
+author: "Yihui Xie"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R"
+---
+
+# Requerimientos {-}
+
+Para comenzar el trabajo se necesita la última versión de R y RStudio [@R-base].También se requiere de los paquetes *pacman*, *rmarkdown*, *tidyverse* y *tinytex*. Si no se ha usado R o RStudio anteriormente, el siguiente video muestra cómo instalar ambos programas y los paquetes necesarios para este curso en el siguiente [link](https://youtu.be/RtkCAKXsVbw).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RtkCAKXsVbw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+El código para la instalación de esos paquetes es el siguiente:
+
+```{r eval=FALSE}
+install.packages("pacman", "rmarkdown", "tidyverse", "tinytex")
+```
+
+
+En caso de necesitar ayuda para la instalación, contactarse con el instructor del curso.
+
+## Antes de comenzar
+
+Si nunca se ha trabajado con `R` antes de este curso, una buena herramienta es provista por el paquete [Swirl](http://swirlstats.com/students.html) [@Kross2017]. Si deseas estar más preparado para el curso, realizá los primeros 7 modulos del programa *R Programming: The basics of programming in R* que incluye:
+
+* Basic Building Blocks
+* Workspace and Files
+* Sequences of Numbers
+* Vectors
+* Missing Values
+* Subsetting Vectors
+* Matrices and Data Frames
+
+
+El siguiente link muestra un video explicativo de cómo usar el paquete swirl [Video](https://youtu.be/w6L7Ye18yPE)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/w6L7Ye18yPE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Descripción del práctico
+
+Los prácticos de este curso se enfocan en aprender a realizar de manera práctica los conceptos enseñados en el cuso, pero además, usando herramientas interactivas y/o programáticas, el profundizar el entendimiento de ciertos conceptos teóricos y filosóficos del curso.
+
+##  Objetivos del práctico
+
+1. Aprender el uso de R como ambiente estadístico de limpieza, exploración, visualización de datos.
+
+2. Conocer y aplicar de manera aplicada los conceptos enseñados en el curso de Bioestadistica 2.
+
+3. Aprender buenas prácticas de recolección y estandarización de bases de datos, con la finalidad de optimizar el análisis de datos y la revisión de éstas por pares.
+
+4. Realizar análisis críticos de la naturaleza de los datos al realizar análisis exploratorios, que permitirán determinar la mejor forma de comprobar hipótesis asociadas a estas bases de datos.
+
+## Contenidos
+
++ Capítulo \@ref(Explorando) *Análisis exploratorio y el primer ANOVA*: En este capítulo se aprenderá a cómo explorar, resumir y vizualizar una base de datos utilizando el paquete tidyverse [@WickhamTidy2017], además se realizarán un análisis basico de ANOVA
+
++ Capítulo \@ref(Refs) *Referencias*
+
+## Metodología
+
+Clases prácticas donde cada estudiante trabajará con datos entregados para desarrollar análisi de datos. Además, se deberán generar informes, en base al trabajo con sus datos.
+
+##  Evaluación
+
+* Evaluación 1: Informe exploratorio de base de datos 25%
+* Evaluación 2: Presentación 25%
+* Evaluación 3: Informe final 50%
+
+
+## Libros de consulta
+
+Los principios de este curso están explicados en los siguientes libros gratuitos.
+
+* Gandrud, Christopher. Reproducible Research with R and R Studio. CRC Press, 2013. Available for free in the following
+[link](https://englianhu.files.wordpress.com/2016/01/reproducible-research-with-r-and-studio-2nd-edition.pdf)
+* Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. Implementing reproducible research. CRC Press, 2014. Available for free in the following [link](http://web.stanford.edu/~vcs/papers/ijclp-STODDEN-2009.pdf)
+

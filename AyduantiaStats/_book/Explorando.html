@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Práctico 1 Exploración de datos y tu primer ANOVA | Practicos de Bioestadística 2</title>
+  <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Práctico 1 Exploración de datos y tu primer ANOVA | Practicos de Bioestadística 2" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Práctico 1 Exploración de datos y tu primer ANOVA | Practicos de Bioestadística 2" />
+  
+  <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  
+
+<meta name="author" content="Yihui Xie">
+
+
+<meta name="date" content="2019-03-08">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="Refs.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Practicos de Biestadistica 2 </a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Requerimientos</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#antes-de-comenzar"><i class="fa fa-check"></i><b>0.1</b> Antes de comenzar</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#descripcion-del-practico"><i class="fa fa-check"></i><b>0.2</b> Descripción del práctico</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#objetivos-del-practico"><i class="fa fa-check"></i><b>0.3</b> Objetivos del práctico</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#contenidos"><i class="fa fa-check"></i><b>0.4</b> Contenidos</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#metodologia"><i class="fa fa-check"></i><b>0.5</b> Metodología</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#evaluacion"><i class="fa fa-check"></i><b>0.6</b> Evaluación</a></li>
+<li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#libros-de-consulta"><i class="fa fa-check"></i><b>0.7</b> Libros de consulta</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="Explorando.html"><a href="Explorando.html"><i class="fa fa-check"></i><b>1</b> Exploración de datos y tu primer ANOVA</a><ul>
+<li class="chapter" data-level="1.1" data-path="Explorando.html"><a href="Explorando.html#actividad-1-educacion-en-chile"><i class="fa fa-check"></i><b>1.1</b> Actividad 1 Educación en Chile</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="Explorando.html"><a href="Explorando.html#tablas-resumen-de-los-datos"><i class="fa fa-check"></i><b>1.1.1</b> Tablas resumen de los datos:</a></li>
+<li class="chapter" data-level="1.1.2" data-path="Explorando.html"><a href="Explorando.html#visualizacion-de-datos-con-ggplot2-tidyverse"><i class="fa fa-check"></i><b>1.1.2</b> Visualización de datos con ggplot2 (tidyverse)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="Explorando.html"><a href="Explorando.html#actividad-2-captacion-de-co2-en-plantas"><i class="fa fa-check"></i><b>1.2</b> Actividad 2 Captación de CO2 en plantas</a></li>
+<li class="chapter" data-level="1.3" data-path="Explorando.html"><a href="Explorando.html#actividad-3-mi-primer-anova"><i class="fa fa-check"></i><b>1.3</b> Actividad 3 Mi primer ANOVA</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="Explorando.html"><a href="Explorando.html#ejercicio"><i class="fa fa-check"></i><b>1.3.1</b> Ejercicio</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>2</b> Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Practicos de Bioestadística 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Explorando" class="section level1">
+<h1><span class="header-section-number">Práctico 1</span> Exploración de datos y tu primer ANOVA</h1>
+<div id="actividad-1-educacion-en-chile" class="section level2">
+<h2><span class="header-section-number">1.1</span> Actividad 1 Educación en Chile</h2>
+<p>En esta actividad exploraremos los resultados de la PSU en Chile para el año 2017. Pueden encontrar la base de datos original en <a href="https://es.datachile.io/geo/chile#education">Data Chile</a>.</p>
+<p>Trataremos de determinar, usando el puntaje de la PSU como medida, si existen brechas en la educación chilena por tipo de institución. Para ello, primero trabajaremos realizando análisis exploratorios en base a gráficos y tablas resumen usando funciones del paquete <em>tidyverse</em> <span class="citation">(Wickham <a href="#ref-WickhamTidy2017">2017</a>)</span> en R.</p>
+<p>La base de datos <em>EducacionChile.csv</em> se encuentra disponible en webcursos o en <a href="https://es.datachile.io/geo/chile#education" class="uri">https://es.datachile.io/geo/chile#education</a>.</p>
+<div id="tablas-resumen-de-los-datos" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> Tablas resumen de los datos:</h3>
+<p>Lo primero que deben hacer es generar una tabla resumen usando el <em>tidyverse</em> usando las funciones <em>group_by</em> para agrupar por variables y <em>summarize</em> para resumir los datos, dentro de summarize podemos usar variables como:</p>
+<ul>
+<li><strong>mean()</strong> promedio</li>
+<li><strong>sd()</strong> desviacion estándar</li>
+<li><strong>n()</strong> número de muestras</li>
+</ul>
+<p>a modo de ejemplo vemos la tabla <a href="Explorando.html#tab:MediaIris">1.1</a> mostrando la media y número de muestras con la base de datos iris:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)
+Table &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">Promedio =</span> <span class="kw">mean</span>(Petal.Length), <span class="dt">N =</span> <span class="kw">n</span>())</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(Table)</code></pre>
+<table>
+<caption><span id="tab:MediaIris">Tabla 1.1: </span>Resumen con la media y número de muestras del largo de pétalo de las flores de tres especies del género Iris</caption>
+<thead>
+<tr class="header">
+<th align="left">Species</th>
+<th align="right">Promedio</th>
+<th align="right">N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">setosa</td>
+<td align="right">1.462</td>
+<td align="right">50</td>
+</tr>
+<tr class="even">
+<td align="left">versicolor</td>
+<td align="right">4.260</td>
+<td align="right">50</td>
+</tr>
+<tr class="odd">
+<td align="left">virginica</td>
+<td align="right">5.552</td>
+<td align="right">50</td>
+</tr>
+</tbody>
+</table>
+<p>Basado en el resumen ¿Qué podemos decir de estos datos de educación en Chile?</p>
+</div>
+<div id="visualizacion-de-datos-con-ggplot2-tidyverse" class="section level3">
+<h3><span class="header-section-number">1.1.2</span> Visualización de datos con ggplot2 (tidyverse)</h3>
+<p>El paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-WickhamGG2016">2016</a>)</span> es una poderosa herramienta para gráficar datos. Si desean ahondar en el uso de este paquete, pueden ver el siguiente link <a href="http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/" class="uri">http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/</a>. En este caso, aprenderemos a graficar <em>boxplots</em> y <em>jitterplots</em>, dos opciones para visualizar una variable categórica versus una cuantitativa.</p>
+<div id="uso-del-ggplot2" class="section level4">
+<h4><span class="header-section-number">1.1.2.1</span> Uso del ggplot2</h4>
+<p>Su función principal es <em>ggplot</em>, luego de cada función usaremos el símbolo <strong>+</strong> como usabamos el pipeline (%&gt;%).</p>
+<p>Primero usamos la función ggplot para determinar la base de datos y variables, acá las variables siempre van dentro de la función aes</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(MiBaseDeDatos, <span class="kw">aes</span>(<span class="dt">x =</span> VariableX, <span class="dt">y =</span> VariableY)) </code></pre>
+<p>Luego agregamos el tipo de gráfico que queremos para nuestra figura usando el <strong>+</strong> como pipeline</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(MiBaseDeDatos, <span class="kw">aes</span>(<span class="dt">x =</span> VariableX, <span class="dt">y =</span> VariableY)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre>
+</div>
+<div id="ejemplo-usando-la-base-de-datos-iris" class="section level4">
+<h4><span class="header-section-number">1.1.2.2</span> Ejemplo usando la base de datos iris</h4>
+<div id="boxplot" class="section level5">
+<h5><span class="header-section-number">1.1.2.2.1</span> Boxplot</h5>
+<p>El siguiente código muestra como graficar un boxplot para la base de datos iris, la cual esta en R. En este caso graficaremos el largo del pétalo para cada especie (Figura <a href="Explorando.html#fig:BoxplotIris">1.1</a>).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)
+<span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre>
+<div class="figure"><span id="fig:BoxplotIris"></span>
+<img src="AyduantiaStats_files/figure-html/BoxplotIris-1.png" alt="Box plot del largo de petalo de tres especies del género Iris" width="672" />
+<p class="caption">
+Figura 1.1: Box plot del largo de petalo de tres especies del género Iris
+</p>
+</div>
+<p>En los Box Plots tenemos 4 visualizaciones:</p>
+<ul>
+<li>Mediana (linea grueza)</li>
+<li>Caja (Cuantiles 25% y 75%)</li>
+<li>Bigotes (intervalo de confianza del 95%)</li>
+<li>Puntos Outlayers</li>
+</ul>
+<p>Realice un boxplot de los datos de la educación de Chile, ¿Qué nos dice esto de los datos?</p>
+</div>
+<div id="jitter-plot" class="section level5">
+<h5><span class="header-section-number">1.1.2.2.2</span> Jitter plot</h5>
+<p>El jitter plot suma un punto por cada observación, lo cual nos permite entender un poco más la naturaleza de los datos. En general se le agrega a un box plot para tener mayor claridad en los datos (Figura <a href="Explorando.html#fig:JitterIris">1.2</a>).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)
+<span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</code></pre>
+<div class="figure"><span id="fig:JitterIris"></span>
+<img src="AyduantiaStats_files/figure-html/JitterIris-1.png" alt="Box plot y jitter plot juntos para el largo de petalo de tres especies del género Iris" width="672" />
+<p class="caption">
+Figura 1.2: Box plot y jitter plot juntos para el largo de petalo de tres especies del género Iris
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="actividad-2-captacion-de-co2-en-plantas" class="section level2">
+<h2><span class="header-section-number">1.2</span> Actividad 2 Captación de CO2 en plantas</h2>
+<p>Utilizaremos base de datos <span class="math inline">\(CO_2\)</span> <span class="citation">(Potvin, Lechowicz, and Tardif <a href="#ref-potvin1990statistical">1990</a>)</span> enviada al curso. Esta base de datos, tambien presente en R, tiene las siguientes variables</p>
+<ul>
+<li><strong>Plant</strong>: Identidad de cada planta</li>
+<li><strong>Type</strong>: Variedad de la planta (subespecie Quebec o Mississippi)</li>
+<li><strong>Treatment</strong>: Tratamiento de la planta, algunas fueron enfriadas la noche anterior (Chilled)</li>
+<li><strong>conc</strong>: Concentración ambiental de <span class="math inline">\(CO_2\)</span></li>
+<li><strong>Uptake</strong>: Captación de <span class="math inline">\(CO_2\)</span> para cada planta en cada día</li>
+</ul>
+<p>¿Hay diferencias entre la captación de <span class="math inline">\(CO_2\)</span> en plantas tratadas y no tratadas?</p>
+<ul>
+<li>Genere tablas resumenes que le permitan explorar esta pregunta
+<ul>
+<li>¿Existen variables que puedan confundir el resultado? ¿como trataría los datos para lidiar con esto?</li>
+</ul></li>
+<li>Genere gráficos exploratorios para contestar esta pregunta</li>
+</ul>
+</div>
+<div id="actividad-3-mi-primer-anova" class="section level2">
+<h2><span class="header-section-number">1.3</span> Actividad 3 Mi primer ANOVA</h2>
+<p>En <em>R</em> todos los modelos tienen la siguiente estructura <strong>Funcion(y ~ x1 + x2 + … + xn, data = MisDatos)</strong>, donde la <strong>Funcion</strong> dice el modelo que queremos realizar (por ejemplo ANOVA, regresión lineal, modelos mixtos, etc.), <strong>y</strong> es la variable que queremos explicar, <strong>x1</strong> a <strong>xn</strong> son las variables explicativas, <strong>~</strong> es un simbolo que debe ser leído como explicado por y finalmente <strong>data</strong> es la base de datos que queremos utlizar, en un ANOVA (análisis de varianza), la función en cuestion es aov.</p>
+<p>En el siguiente código vemos si el largo del pétalo de las flores del género <em>Iris</em>, pueden ser explicados por la especie a la que estas plantas pertenecen, por lo que generamos un modelo llamado <em>Primer.Anova</em> con la función <strong>aov</strong>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">Primer.Anova &lt;-<span class="st"> </span><span class="kw">aov</span>(Petal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris)</code></pre>
+<p>Para acceder a la tabla de resultados utilizamos la función <strong>summary</strong></p>
+<pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## Species       2  437.1  218.55    1180 &lt;2e-16 ***
+## Residuals   147   27.2    0.19                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Si establecemos el valor de alfa en 0.05 y al ver en la tabla que el valor de p es menor a alfa, rechazamos la hipótesis nula de que las medias son iguales, y decidimos que la media del largo de pétalo es distinta entre las especies.</p>
+<div id="ejercicio" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Ejercicio</h3>
+<p>Determine si para la base de datos <strong>CO2</strong> la captación de <span class="math inline">\(CO_2\)</span> es distinto entre platnas con tratamiento de enfriamiento y sin enfriamiento.</p>
+
+</div>
+</div>
+</div>
+<h3> Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-WickhamTidy2017">
+<p>Wickham, Hadley. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</p>
+</div>
+<div id="ref-WickhamGG2016">
+<p>Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="http://ggplot2.org" class="uri">http://ggplot2.org</a>.</p>
+</div>
+<div id="ref-potvin1990statistical">
+<p>Potvin, Catherine, Martin J Lechowicz, and Serge Tardif. 1990. “The Statistical Analysis of Ecophysiological Response Curves Obtained from Experiments Involving Repeated Measures.” <em>Ecology</em> 71 (4). Wiley Online Library: 1389–1400.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Refs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["AyduantiaStats.pdf", "AyduantiaStats.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

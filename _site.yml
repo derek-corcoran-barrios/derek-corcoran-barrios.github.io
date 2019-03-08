@@ -8,10 +8,10 @@ navbar:
     icon: fa-gear
     menu:
     - text: Cursos
-    - text: Curso de R
-      href: CursoR.html
     - text: BIO4022
       href: Libro/_book/index.html
+    - text: BIO249c
+      href: AyduantiaStats/_book/index.html.html      
     - text: Hackathon
       href: Hack.html
   - text: Donde vivir
