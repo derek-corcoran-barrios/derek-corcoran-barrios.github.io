@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="Explorando.html">
-<link rel="next" href="Refs.html">
+<link rel="next" href="Poder.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -48,6 +48,7 @@
 
 
 
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -162,7 +163,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="Supuestos.html"><a href="Supuestos.html#referencias"><i class="fa fa-check"></i><b>2.4</b> Referencias</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>3</b> Referencias</a></li>
+<li class="chapter" data-level="3" data-path="Poder.html"><a href="Poder.html"><i class="fa fa-check"></i><b>3</b> Análisis de poder y primera tarea</a><ul>
+<li class="chapter" data-level="3.1" data-path="Poder.html"><a href="Poder.html#obejtivos-del-practico"><i class="fa fa-check"></i><b>3.1</b> Obejtivos del práctico</a></li>
+<li class="chapter" data-level="3.2" data-path="Poder.html"><a href="Poder.html#matriz-de-confusion"><i class="fa fa-check"></i><b>3.2</b> Matriz de confusión</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="Poder.html"><a href="Poder.html#poder-y-matriz-de-confusion"><i class="fa fa-check"></i><b>3.2.1</b> Poder y matriz de confusión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Poder.html"><a href="Poder.html#calculo-de-poder-en-r"><i class="fa fa-check"></i><b>3.3</b> Calculo de poder en R</a></li>
+<li class="chapter" data-level="3.4" data-path="Poder.html"><a href="Poder.html#tarea"><i class="fa fa-check"></i><b>3.4</b> Tarea</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="Poder.html"><a href="Poder.html#el-problema"><i class="fa fa-check"></i><b>3.4.1</b> El problema</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>4</b> Referencias</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -241,86 +252,214 @@ Figura 2.2: Ancho de sépalo según especie del género Iris
 <p>Para exter los residuales, podemos hacerlo de dos formas, si solo queremos un vector de sus valores, podemos extraelo desde el modelo mimso utlizando <em>$residuals</em>. Si queremos guardarlo en un dataframe mas completo podemos utilizar la función <em>augment</em> del paquete <em>broom</em>.</p>
 <p>La segunda opción nos entregará más información que podremos utilizar más tarde, pero ambas sirven para testear normalidad, la siguiente tabla muestra las primeras 6 observaciones generadas por la función <em>augment</em>, donde <em>resid</em>, son los residuales (Ver tabla <a href="Supuestos.html#tab:TabResid">2.1</a>.</p>
 <table>
-<caption><span id="tab:TabResid">Tabla 2.1: </span>primeras 6 observaciones del dataframe resultante de augment</caption>
+<caption>
+<span id="tab:TabResid">Tabla 2.1: </span>primeras 6 observaciones del dataframe resultante de augment
+</caption>
 <thead>
-<tr class="header">
-<th align="right">Sepal.Width</th>
-<th align="left">Species</th>
-<th align="right">.fitted</th>
-<th align="right">.se.fit</th>
-<th align="right">.resid</th>
-<th align="right">.hat</th>
-<th align="right">.sigma</th>
-<th align="right">.cooksd</th>
-<th align="right">.std.resid</th>
+<tr>
+<th style="text-align:right;">
+Sepal.Width
+</th>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+.fitted
+</th>
+<th style="text-align:right;">
+.se.fit
+</th>
+<th style="text-align:right;">
+.resid
+</th>
+<th style="text-align:right;">
+.hat
+</th>
+<th style="text-align:right;">
+.sigma
+</th>
+<th style="text-align:right;">
+.cooksd
+</th>
+<th style="text-align:right;">
+.std.resid
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">3.5</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">0.072</td>
-<td align="right">0.02</td>
-<td align="right">0.341</td>
-<td align="right">0.000</td>
-<td align="right">0.214</td>
+<tr>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+0.072
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.341
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.214
+</td>
 </tr>
-<tr class="even">
-<td align="right">3.0</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">-0.428</td>
-<td align="right">0.02</td>
-<td align="right">0.339</td>
-<td align="right">0.011</td>
-<td align="right">-1.273</td>
+<tr>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+-0.428
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.339
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+-1.273
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3.2</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">-0.228</td>
-<td align="right">0.02</td>
-<td align="right">0.340</td>
-<td align="right">0.003</td>
-<td align="right">-0.678</td>
+<tr>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+-0.228
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.340
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+<td style="text-align:right;">
+-0.678
+</td>
 </tr>
-<tr class="even">
-<td align="right">3.1</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">-0.328</td>
-<td align="right">0.02</td>
-<td align="right">0.340</td>
-<td align="right">0.006</td>
-<td align="right">-0.975</td>
+<tr>
+<td style="text-align:right;">
+3.1
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+-0.328
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.340
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+-0.975
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3.6</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">0.172</td>
-<td align="right">0.02</td>
-<td align="right">0.341</td>
-<td align="right">0.002</td>
-<td align="right">0.511</td>
+<tr>
+<td style="text-align:right;">
+3.6
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+0.172
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.341
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+<td style="text-align:right;">
+0.511
+</td>
 </tr>
-<tr class="even">
-<td align="right">3.9</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">0.472</td>
-<td align="right">0.02</td>
-<td align="right">0.339</td>
-<td align="right">0.013</td>
-<td align="right">1.404</td>
+<tr>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+0.472
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.339
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+<td style="text-align:right;">
+1.404
+</td>
 </tr>
 </tbody>
 </table>
@@ -417,7 +556,7 @@ Figura 2.5: Errores de una regresión lineal ejemplificados con la linea entre e
         </div>
       </div>
 <a href="Explorando.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="Refs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="Poder.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

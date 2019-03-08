@@ -62,6 +62,8 @@ Los prácticos de este curso se enfocan en aprender a realizar de manera prácti
 
 + Capítulo \@ref(Supuestos) *Supuestos de ANOVA y mínimos cuadrados*
 
++ Capítulo \@ref(Poder) *Análisis de poder y primera tarea*
+
 + Capítulo \@ref(Refs) *Referencias*
 
 ## Metodología
