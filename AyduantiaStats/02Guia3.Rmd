@@ -143,5 +143,9 @@ Los errores seimpre se calculan al cuadrado, discutiremos por que en clase
 
 $$\sum_{i=1}^{n} (Observado - Predicho)^2$$
 
+```{r}
+knitr::include_app("http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/", height = "800px")
+```
+
 
 ## Referencias

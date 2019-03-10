@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-03-08">
+<meta name="date" content="2019-03-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -48,7 +48,6 @@
 
 
 
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -150,6 +149,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="Explorando.html"><a href="Explorando.html#actividad-2-captacion-de-co2-en-plantas"><i class="fa fa-check"></i><b>1.2</b> Actividad 2 Captación de CO2 en plantas</a></li>
 <li class="chapter" data-level="1.3" data-path="Explorando.html"><a href="Explorando.html#actividad-3-mi-primer-anova"><i class="fa fa-check"></i><b>1.3</b> Actividad 3 Mi primer ANOVA</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="Explorando.html"><a href="Explorando.html#ejercicio"><i class="fa fa-check"></i><b>1.3.1</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.3.2" data-path="Explorando.html"><a href="Explorando.html#simulador-de-anova"><i class="fa fa-check"></i><b>1.3.2</b> Simulador de ANOVA</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Supuestos.html"><a href="Supuestos.html"><i class="fa fa-check"></i><b>2</b> Supuestos de ANOVA y mínimos cuadrados</a><ul>
@@ -214,55 +214,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Table &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">Promedio =</span> <span class="kw">mean</span>(Petal.Length), <span class="dt">N =</span> <span class="kw">n</span>())</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(Table)</code></pre>
 <table>
-<caption>
-<span id="tab:MediaIris">Tabla 1.1: </span>Resumen con la media y número de muestras del largo de pétalo de las flores de tres especies del género Iris
-</caption>
+<caption><span id="tab:MediaIris">Tabla 1.1: </span>Resumen con la media y número de muestras del largo de pétalo de las flores de tres especies del género Iris</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-Species
-</th>
-<th style="text-align:right;">
-Promedio
-</th>
-<th style="text-align:right;">
-N
-</th>
+<tr class="header">
+<th align="left">Species</th>
+<th align="right">Promedio</th>
+<th align="right">N</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-setosa
-</td>
-<td style="text-align:right;">
-1.462
-</td>
-<td style="text-align:right;">
-50
-</td>
+<tr class="odd">
+<td align="left">setosa</td>
+<td align="right">1.462</td>
+<td align="right">50</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-versicolor
-</td>
-<td style="text-align:right;">
-4.260
-</td>
-<td style="text-align:right;">
-50
-</td>
+<tr class="even">
+<td align="left">versicolor</td>
+<td align="right">4.260</td>
+<td align="right">50</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-virginica
-</td>
-<td style="text-align:right;">
-5.552
-</td>
-<td style="text-align:right;">
-50
-</td>
+<tr class="odd">
+<td align="left">virginica</td>
+<td align="right">5.552</td>
+<td align="right">50</td>
 </tr>
 </tbody>
 </table>
@@ -350,6 +324,11 @@ Figura 1.2: Box plot y jitter plot juntos para el largo de petalo de tres especi
 <div id="ejercicio" class="section level3">
 <h3><span class="header-section-number">1.3.1</span> Ejercicio</h3>
 <p>Determine si para la base de datos <strong>CO2</strong> la captación de <span class="math inline">\(CO_2\)</span> es distinto entre platnas con tratamiento de enfriamiento y sin enfriamiento.</p>
+</div>
+<div id="simulador-de-anova" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> Simulador de ANOVA</h3>
+<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny2/?showcase=0" width="672" height="1500px">
+</iframe>
 
 </div>
 </div>

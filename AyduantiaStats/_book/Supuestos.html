@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-03-08">
+<meta name="date" content="2019-03-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -48,7 +48,6 @@
 
 
 
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -150,6 +149,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="Explorando.html"><a href="Explorando.html#actividad-2-captacion-de-co2-en-plantas"><i class="fa fa-check"></i><b>1.2</b> Actividad 2 Captación de CO2 en plantas</a></li>
 <li class="chapter" data-level="1.3" data-path="Explorando.html"><a href="Explorando.html#actividad-3-mi-primer-anova"><i class="fa fa-check"></i><b>1.3</b> Actividad 3 Mi primer ANOVA</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="Explorando.html"><a href="Explorando.html#ejercicio"><i class="fa fa-check"></i><b>1.3.1</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.3.2" data-path="Explorando.html"><a href="Explorando.html#simulador-de-anova"><i class="fa fa-check"></i><b>1.3.2</b> Simulador de ANOVA</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Supuestos.html"><a href="Supuestos.html"><i class="fa fa-check"></i><b>2</b> Supuestos de ANOVA y mínimos cuadrados</a><ul>
@@ -252,214 +252,86 @@ Figura 2.2: Ancho de sépalo según especie del género Iris
 <p>Para exter los residuales, podemos hacerlo de dos formas, si solo queremos un vector de sus valores, podemos extraelo desde el modelo mimso utlizando <em>$residuals</em>. Si queremos guardarlo en un dataframe mas completo podemos utilizar la función <em>augment</em> del paquete <em>broom</em>.</p>
 <p>La segunda opción nos entregará más información que podremos utilizar más tarde, pero ambas sirven para testear normalidad, la siguiente tabla muestra las primeras 6 observaciones generadas por la función <em>augment</em>, donde <em>resid</em>, son los residuales (Ver tabla <a href="Supuestos.html#tab:TabResid">2.1</a>.</p>
 <table>
-<caption>
-<span id="tab:TabResid">Tabla 2.1: </span>primeras 6 observaciones del dataframe resultante de augment
-</caption>
+<caption><span id="tab:TabResid">Tabla 2.1: </span>primeras 6 observaciones del dataframe resultante de augment</caption>
 <thead>
-<tr>
-<th style="text-align:right;">
-Sepal.Width
-</th>
-<th style="text-align:left;">
-Species
-</th>
-<th style="text-align:right;">
-.fitted
-</th>
-<th style="text-align:right;">
-.se.fit
-</th>
-<th style="text-align:right;">
-.resid
-</th>
-<th style="text-align:right;">
-.hat
-</th>
-<th style="text-align:right;">
-.sigma
-</th>
-<th style="text-align:right;">
-.cooksd
-</th>
-<th style="text-align:right;">
-.std.resid
-</th>
+<tr class="header">
+<th align="right">Sepal.Width</th>
+<th align="left">Species</th>
+<th align="right">.fitted</th>
+<th align="right">.se.fit</th>
+<th align="right">.resid</th>
+<th align="right">.hat</th>
+<th align="right">.sigma</th>
+<th align="right">.cooksd</th>
+<th align="right">.std.resid</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-3.5
-</td>
-<td style="text-align:left;">
-setosa
-</td>
-<td style="text-align:right;">
-3.428
-</td>
-<td style="text-align:right;">
-0.048
-</td>
-<td style="text-align:right;">
-0.072
-</td>
-<td style="text-align:right;">
-0.02
-</td>
-<td style="text-align:right;">
-0.341
-</td>
-<td style="text-align:right;">
-0.000
-</td>
-<td style="text-align:right;">
-0.214
-</td>
+<tr class="odd">
+<td align="right">3.5</td>
+<td align="left">setosa</td>
+<td align="right">3.428</td>
+<td align="right">0.048</td>
+<td align="right">0.072</td>
+<td align="right">0.02</td>
+<td align="right">0.341</td>
+<td align="right">0.000</td>
+<td align="right">0.214</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3.0
-</td>
-<td style="text-align:left;">
-setosa
-</td>
-<td style="text-align:right;">
-3.428
-</td>
-<td style="text-align:right;">
-0.048
-</td>
-<td style="text-align:right;">
--0.428
-</td>
-<td style="text-align:right;">
-0.02
-</td>
-<td style="text-align:right;">
-0.339
-</td>
-<td style="text-align:right;">
-0.011
-</td>
-<td style="text-align:right;">
--1.273
-</td>
+<tr class="even">
+<td align="right">3.0</td>
+<td align="left">setosa</td>
+<td align="right">3.428</td>
+<td align="right">0.048</td>
+<td align="right">-0.428</td>
+<td align="right">0.02</td>
+<td align="right">0.339</td>
+<td align="right">0.011</td>
+<td align="right">-1.273</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3.2
-</td>
-<td style="text-align:left;">
-setosa
-</td>
-<td style="text-align:right;">
-3.428
-</td>
-<td style="text-align:right;">
-0.048
-</td>
-<td style="text-align:right;">
--0.228
-</td>
-<td style="text-align:right;">
-0.02
-</td>
-<td style="text-align:right;">
-0.340
-</td>
-<td style="text-align:right;">
-0.003
-</td>
-<td style="text-align:right;">
--0.678
-</td>
+<tr class="odd">
+<td align="right">3.2</td>
+<td align="left">setosa</td>
+<td align="right">3.428</td>
+<td align="right">0.048</td>
+<td align="right">-0.228</td>
+<td align="right">0.02</td>
+<td align="right">0.340</td>
+<td align="right">0.003</td>
+<td align="right">-0.678</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3.1
-</td>
-<td style="text-align:left;">
-setosa
-</td>
-<td style="text-align:right;">
-3.428
-</td>
-<td style="text-align:right;">
-0.048
-</td>
-<td style="text-align:right;">
--0.328
-</td>
-<td style="text-align:right;">
-0.02
-</td>
-<td style="text-align:right;">
-0.340
-</td>
-<td style="text-align:right;">
-0.006
-</td>
-<td style="text-align:right;">
--0.975
-</td>
+<tr class="even">
+<td align="right">3.1</td>
+<td align="left">setosa</td>
+<td align="right">3.428</td>
+<td align="right">0.048</td>
+<td align="right">-0.328</td>
+<td align="right">0.02</td>
+<td align="right">0.340</td>
+<td align="right">0.006</td>
+<td align="right">-0.975</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3.6
-</td>
-<td style="text-align:left;">
-setosa
-</td>
-<td style="text-align:right;">
-3.428
-</td>
-<td style="text-align:right;">
-0.048
-</td>
-<td style="text-align:right;">
-0.172
-</td>
-<td style="text-align:right;">
-0.02
-</td>
-<td style="text-align:right;">
-0.341
-</td>
-<td style="text-align:right;">
-0.002
-</td>
-<td style="text-align:right;">
-0.511
-</td>
+<tr class="odd">
+<td align="right">3.6</td>
+<td align="left">setosa</td>
+<td align="right">3.428</td>
+<td align="right">0.048</td>
+<td align="right">0.172</td>
+<td align="right">0.02</td>
+<td align="right">0.341</td>
+<td align="right">0.002</td>
+<td align="right">0.511</td>
 </tr>
-<tr>
-<td style="text-align:right;">
-3.9
-</td>
-<td style="text-align:left;">
-setosa
-</td>
-<td style="text-align:right;">
-3.428
-</td>
-<td style="text-align:right;">
-0.048
-</td>
-<td style="text-align:right;">
-0.472
-</td>
-<td style="text-align:right;">
-0.02
-</td>
-<td style="text-align:right;">
-0.339
-</td>
-<td style="text-align:right;">
-0.013
-</td>
-<td style="text-align:right;">
-1.404
-</td>
+<tr class="even">
+<td align="right">3.9</td>
+<td align="left">setosa</td>
+<td align="right">3.428</td>
+<td align="right">0.048</td>
+<td align="right">0.472</td>
+<td align="right">0.02</td>
+<td align="right">0.339</td>
+<td align="right">0.013</td>
+<td align="right">1.404</td>
 </tr>
 </tbody>
 </table>
@@ -484,8 +356,8 @@ Figura 2.3: Histograma de los resiudales del modelo ANOVA
 <p>El qq plot es otra forma visual de establecer si los residuales son o no son normales, para esto, lo esperado es que la gráfica resultante sea una diagonal lo mas recta posible, para esto usaremos la función <em>qqnorm</em>, con nuestros residuales, denuevo, podemos usar cualquiera de las dos versiones de nuestros datos:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(Residuales)
 <span class="kw">qqnorm</span>(Resultados<span class="op">$</span>.resid)</code></pre>
-<div class="figure"><span id="fig:unnamed-chunk-18"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-18-1.png" alt="qqplot de los resiudales del modelo ANOVA" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-19"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-19-1.png" alt="qqplot de los resiudales del modelo ANOVA" width="672" />
 <p class="caption">
 Figura 2.4: qqplot de los resiudales del modelo ANOVA
 </p>
@@ -511,8 +383,8 @@ Figura 2.4: qqplot de los resiudales del modelo ANOVA
 <p>Tanto los ANOVAS como las regresiones lineales se basan en minimizar la suma de cuadrados, es la suma de los cuadrados de los errores o residuales.</p>
 <div id="que-es-el-error-por-que-al-cuadrado" class="section level3">
 <h3><span class="header-section-number">2.3.1</span> ¿Que es el error? ¿Por qué al cuadrado??</h3>
-<div class="figure"><span id="fig:unnamed-chunk-21"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-21-1.png" alt="Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-22"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-22-1.png" alt="Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado" width="672" />
 <p class="caption">
 Figura 2.5: Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado
 </p>
@@ -522,6 +394,8 @@ Figura 2.5: Errores de una regresión lineal ejemplificados con la linea entre e
 <p>El objetivo de todo modelo es el de minimizar estos errores, al ajustar el mejor modelo posible.</p>
 <p>Los errores seimpre se calculan al cuadrado, discutiremos por que en clase</p>
 <p><span class="math display">\[\sum_{i=1}^{n} (Observado - Predicho)^2\]</span></p>
+<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/?showcase=0" width="672" height="800px">
+</iframe>
 </div>
 </div>
 <div id="referencias" class="section level2">

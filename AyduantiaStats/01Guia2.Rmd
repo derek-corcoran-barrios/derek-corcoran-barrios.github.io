@@ -137,3 +137,9 @@ Si establecemos el valor de alfa en 0.05 y al ver en la tabla que el valor de p 
 
 Determine si para la base de datos **CO2** la captación de $CO_2$ es distinto entre platnas con tratamiento de enfriamiento y sin enfriamiento.
 
+
+### Simulador de ANOVA
+
+```{r}
+knitr::include_app("http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny2/", height = "1500px")
+```

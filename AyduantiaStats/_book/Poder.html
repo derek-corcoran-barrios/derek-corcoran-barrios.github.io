@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-03-08">
+<meta name="date" content="2019-03-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -48,7 +48,6 @@
 
 
 
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -150,6 +149,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="Explorando.html"><a href="Explorando.html#actividad-2-captacion-de-co2-en-plantas"><i class="fa fa-check"></i><b>1.2</b> Actividad 2 Captación de CO2 en plantas</a></li>
 <li class="chapter" data-level="1.3" data-path="Explorando.html"><a href="Explorando.html#actividad-3-mi-primer-anova"><i class="fa fa-check"></i><b>1.3</b> Actividad 3 Mi primer ANOVA</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="Explorando.html"><a href="Explorando.html#ejercicio"><i class="fa fa-check"></i><b>1.3.1</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.3.2" data-path="Explorando.html"><a href="Explorando.html#simulador-de-anova"><i class="fa fa-check"></i><b>1.3.2</b> Simulador de ANOVA</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Supuestos.html"><a href="Supuestos.html"><i class="fa fa-check"></i><b>2</b> Supuestos de ANOVA y mínimos cuadrados</a><ul>
@@ -205,84 +205,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="matriz-de-confusion" class="section level2">
 <h2><span class="header-section-number">3.2</span> Matriz de confusión</h2>
-<p>La matriz de confusión es una herramienta de toma de desiciones, en el caso especial de la toma de desiciones tenemos la siguiente matriz de confusión</p>
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>
-<span id="tab:unnamed-chunk-23">Tabla 3.1: </span>Tabla de confusión de errores
-</caption>
+<p>La matriz de confusión es una herramienta de toma de desiciones, en el caso especial de la toma de desiciones tenemos la siguiente matriz de confusión (Tabla <a href="Poder.html#tab:errores">3.1</a>)</p>
+<table>
+<caption><span id="tab:errores">Tabla 3.1: </span>Tabla de confusión de errores</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Hipótesis nula cierta
-</th>
-<th style="text-align:left;">
-Hipótesis alternativa cierta
-</th>
+<tr class="header">
+<th></th>
+<th align="left">Hipótesis nula cierta</th>
+<th align="left">Hipótesis alternativa cierta</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Acepto hipótesis nula
-</td>
-<td style="text-align:left;">
-No hay error
-</td>
-<td style="text-align:left;">
-Error tipo 2
-</td>
+<tr class="odd">
+<td>Acepto hipótesis nula</td>
+<td align="left">No hay error</td>
+<td align="left">Error tipo 2</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Acepto hipótesis alternativa
-</td>
-<td style="text-align:left;">
-Error tipo 1
-</td>
-<td style="text-align:left;">
-No hay error
-</td>
+<tr class="even">
+<td>Acepto hipótesis alternativa</td>
+<td align="left">Error tipo 1</td>
+<td align="left">No hay error</td>
 </tr>
 </tbody>
 </table>
-<p>Esto puede ser facilmente ejemplificado con el problema de una alarma de humo, en este caso cuando la alarma suena y no hay fuego y suena la alarma tenemos un error de tipo 1, en cambio si hay fuego y la alarma no suena tenemos un error de tipo 2</p>
-<table class="table" style="font-size: 40px; margin-left: auto; margin-right: auto;">
+<p>Esto puede ser facilmente ejemplificado con el problema de una alarma de humo (tabla<a href="Poder.html#tab:Confucion">3.2</a>), en este caso cuando la alarma suena y no hay fuego y suena la alarma tenemos un error de tipo 1, en cambio si hay fuego y la alarma no suena tenemos un error de tipo 2</p>
+<table>
+<caption><span id="tab:Confucion">Tabla 3.2: </span>Matriz de confusión de una alarma de incendio</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-No hay fuego
-</th>
-<th style="text-align:left;">
-Hay fuego
-</th>
+<tr class="header">
+<th></th>
+<th align="left">No hay fuego</th>
+<th align="left">Hay fuego</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-No suena alarma
-</td>
-<td style="text-align:left;">
-No hay error
-</td>
-<td style="text-align:left;">
-Error tipo 2
-</td>
+<tr class="odd">
+<td>No suena alarma</td>
+<td align="left">No hay error</td>
+<td align="left">Error tipo 2</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Suena alarma
-</td>
-<td style="text-align:left;">
-Error tipo 1
-</td>
-<td style="text-align:left;">
-No hay error
-</td>
+<tr class="even">
+<td>Suena alarma</td>
+<td align="left">Error tipo 1</td>
+<td align="left">No hay error</td>
 </tr>
 </tbody>
 </table>
@@ -305,7 +270,7 @@ No hay error
 </div>
 <div id="calculo-de-poder-en-r" class="section level2">
 <h2><span class="header-section-number">3.3</span> Calculo de poder en R</h2>
-<p>Para hacer calculos de poder en ANOVAS de una y dos vías en <em>R</em>, utilizamos el paquete <em>pwr2</em>. En este paquete podemos utilizar la función <em>pwr.1way</em> para determinar el poder de un ANOVA de una vía, los argumentos de esta funcion son:</p>
+<p>Para hacer calculos de poder en ANOVAS de una y dos vías en <em>R</em>, utilizamos el paquete <em>pwr2</em> <span class="citation">(Lu, Liu, and Koestler <a href="#ref-Pengcheng2017">2017</a>)</span>. En este paquete podemos utilizar la función <em>pwr.1way</em> para determinar el poder de un ANOVA de una vía, los argumentos de esta funcion son:</p>
 <ul>
 <li><em>K</em>: El número de grupos a testear</li>
 <li><em>n</em>: Número de individuos por grupo</li>
@@ -322,78 +287,40 @@ No hay error
 <h3><span class="header-section-number">3.4.1</span> El problema</h3>
 <p>Una compañía que genera pesticidas descarga parte de sus desechos a un río. La ONG <strong>RioSano</strong>, dice que ha notado una alza en la mortalidad de los patos cortacorriente (<em>Merganneta armata</em>) del río.</p>
 <p>Ante esto la empresa contrata un científico, el cual hace una estimación de la mortalidad de patos en 10 zonas del río en que descargan sus desechos, y lo compara con otros dos ríos no contaminados. Este científico dice que no hay diferencias significativas en la mortalidad de los patos de los ríos con desechos y sin desechos con una confianza del 95%. Para esto muestra como evidencia la figura 1 y tabla 3 e incluso hace públicos sus datos en el archivo <em>MuestraPatos.csv</em>.</p>
-<div class="figure"><span id="fig:unnamed-chunk-25"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-25-1.png" alt="Mortalidades calculadas en 10 zonas de tres ríos" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-27"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-27-1.png" alt="Mortalidades calculadas en 10 zonas de tres ríos" width="672" />
 <p class="caption">
 Figura 3.1: Mortalidades calculadas en 10 zonas de tres ríos
 </p>
 </div>
 <table>
-<caption>
-<span id="tab:unnamed-chunk-26">Tabla 3.2: </span>Tabla de ANOVA de una vía de la mortalidad de patos de los tres ríos
-</caption>
+<caption><span id="tab:unnamed-chunk-28">Tabla 3.3: </span>Tabla de ANOVA de una vía de la mortalidad de patos de los tres ríos</caption>
 <thead>
-<tr>
-<th style="text-align:left;">
-term
-</th>
-<th style="text-align:right;">
-df
-</th>
-<th style="text-align:right;">
-sumsq
-</th>
-<th style="text-align:right;">
-meansq
-</th>
-<th style="text-align:right;">
-statistic
-</th>
-<th style="text-align:right;">
-p.value
-</th>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">df</th>
+<th align="right">sumsq</th>
+<th align="right">meansq</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-rio
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-301.2531
-</td>
-<td style="text-align:right;">
-150.62656
-</td>
-<td style="text-align:right;">
-2.359899
-</td>
-<td style="text-align:right;">
-0.1136188
-</td>
+<tr class="odd">
+<td align="left">rio</td>
+<td align="right">2</td>
+<td align="right">301.2531</td>
+<td align="right">150.62656</td>
+<td align="right">2.359899</td>
+<td align="right">0.1136188</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Residuals
-</td>
-<td style="text-align:right;">
-27
-</td>
-<td style="text-align:right;">
-1723.3436
-</td>
-<td style="text-align:right;">
-63.82754
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
+<tr class="even">
+<td align="left">Residuals</td>
+<td align="right">27</td>
+<td align="right">1723.3436</td>
+<td align="right">63.82754</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
@@ -413,6 +340,12 @@ NA
 <p>Genere un informe para la ONG <em>RioSano</em> incorporando estos 5 puntos e incluya una introducción, metodología, resultados, discusión-conclusión y bibliografía, envíe el script de como generó los resultados</p>
 
 </div>
+</div>
+</div>
+<h3> Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-Pengcheng2017">
+<p>Lu, Pengcheng, Junhao Liu, and Devin Koestler. 2017. <em>Pwr2: Power and Sample Size Analysis for One-Way and Two-Way Anova Models</em>. <a href="https://CRAN.R-project.org/package=pwr2" class="uri">https://CRAN.R-project.org/package=pwr2</a>.</p>
 </div>
 </div>
             </section>

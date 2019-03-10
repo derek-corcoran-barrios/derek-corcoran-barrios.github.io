@@ -11,26 +11,33 @@ suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
 
 ## Matriz de confusión
 
-La matriz de confusión es una herramienta de toma de desiciones, en el caso especial de la toma de desiciones tenemos la siguiente matriz de confusión
+La matriz de confusión es una herramienta de toma de desiciones, en el caso especial de la toma de desiciones tenemos la siguiente matriz de confusión (Tabla \@ref(tab:errores))
 
 ```{r}
-library(kableExtra)
 library(knitr)
 Coso <- data.frame(Hipotesis.Nula = c("No hay error", "Error tipo 1"), Hipostesis.alternativa =c("Error tipo 2", "No hay error"))
 colnames(Coso) <- c("Hipótesis nula cierta", "Hipótesis alternativa cierta")
 rownames(Coso) <- c("Acepto hipótesis nula", "Acepto hipótesis alternativa")
-kable(Coso, caption = "Tabla de confusión de errores") %>% kable_styling()
 
 ```
 
-Esto puede ser facilmente ejemplificado con el problema de una alarma de humo, en este caso cuando la alarma suena y no hay fuego y suena la alarma tenemos un error de tipo 1, en cambio si hay fuego y la alarma no suena tenemos un error de tipo 2
+```{r errores}
+kable(Coso, caption = "Tabla de confusión de errores")
 
-```{r, echo=FALSE}
-library(kableExtra)
+```
+
+
+Esto puede ser facilmente ejemplificado con el problema de una alarma de humo (tabla\@ref(tab:Confucion)), en este caso cuando la alarma suena y no hay fuego y suena la alarma tenemos un error de tipo 1, en cambio si hay fuego y la alarma no suena tenemos un error de tipo 2
+
+```{r}
 Coso <- data.frame(No.fuego = c("No hay error", "Error tipo 1"), Fuego =c("Error tipo 2", "No hay error"))
 colnames(Coso) <- c("No hay fuego", "Hay fuego")
 rownames(Coso) <- c("No suena alarma", "Suena alarma")
-kable(Coso) %>% kable_styling(font_size = 40)
+```
+
+
+```{r Confucion, echo=FALSE}
+kable(Coso, booktabs = TRUE, caption = "Matriz de confusión de una alarma de incendio")
 ```
 
 ### Poder y matriz de confusión
@@ -45,7 +52,7 @@ kable(Coso) %>% kable_styling(font_size = 40)
 
 ## Calculo de poder en R
 
-Para hacer calculos de poder en ANOVAS de una y dos vías en *R*, utilizamos el paquete *pwr2*. En este paquete podemos utilizar la función *pwr.1way* para determinar el poder de un ANOVA de una vía, los argumentos de esta funcion son:
+Para hacer calculos de poder en ANOVAS de una y dos vías en *R*, utilizamos el paquete *pwr2* [@Pengcheng2017]. En este paquete podemos utilizar la función *pwr.1way* para determinar el poder de un ANOVA de una vía, los argumentos de esta funcion son:
 
 * *K*: El número de grupos a testear
 * *n*: Número de individuos por grupo
