@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Práctico 4 Prueba t de Student | Practicos de Bioestadística 2</title>
+  <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Práctico 4 Prueba t de Student | Practicos de Bioestadística 2" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Práctico 4 Prueba t de Student | Practicos de Bioestadística 2" />
+  
+  <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  
+
+<meta name="author" content="Derek Corcoran">
+
+
+<meta name="date" content="2019-03-10">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="Poder.html">
+<link rel="next" href="Refs.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Practicos de Biestadistica 2 </a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Requerimientos</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#antes-de-comenzar"><i class="fa fa-check"></i><b>0.1</b> Antes de comenzar</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#descripcion-del-practico"><i class="fa fa-check"></i><b>0.2</b> Descripción del práctico</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#objetivos-del-practico"><i class="fa fa-check"></i><b>0.3</b> Objetivos del práctico</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#contenidos"><i class="fa fa-check"></i><b>0.4</b> Contenidos</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#metodologia"><i class="fa fa-check"></i><b>0.5</b> Metodología</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#evaluacion"><i class="fa fa-check"></i><b>0.6</b> Evaluación</a></li>
+<li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#libros-de-consulta"><i class="fa fa-check"></i><b>0.7</b> Libros de consulta</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="Explorando.html"><a href="Explorando.html"><i class="fa fa-check"></i><b>1</b> Exploración de datos y tu primer ANOVA</a><ul>
+<li class="chapter" data-level="1.1" data-path="Explorando.html"><a href="Explorando.html#actividad-1-educacion-en-chile"><i class="fa fa-check"></i><b>1.1</b> Actividad 1 Educación en Chile</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="Explorando.html"><a href="Explorando.html#tablas-resumen-de-los-datos"><i class="fa fa-check"></i><b>1.1.1</b> Tablas resumen de los datos:</a></li>
+<li class="chapter" data-level="1.1.2" data-path="Explorando.html"><a href="Explorando.html#visualizacion-de-datos-con-ggplot2-tidyverse"><i class="fa fa-check"></i><b>1.1.2</b> Visualización de datos con ggplot2 (tidyverse)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="Explorando.html"><a href="Explorando.html#actividad-2-captacion-de-co2-en-plantas"><i class="fa fa-check"></i><b>1.2</b> Actividad 2 Captación de CO2 en plantas</a></li>
+<li class="chapter" data-level="1.3" data-path="Explorando.html"><a href="Explorando.html#actividad-3-mi-primer-anova"><i class="fa fa-check"></i><b>1.3</b> Actividad 3 Mi primer ANOVA</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="Explorando.html"><a href="Explorando.html#ejercicio"><i class="fa fa-check"></i><b>1.3.1</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.3.2" data-path="Explorando.html"><a href="Explorando.html#simulador-de-anova"><i class="fa fa-check"></i><b>1.3.2</b> Simulador de ANOVA</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Supuestos.html"><a href="Supuestos.html"><i class="fa fa-check"></i><b>2</b> Supuestos de ANOVA y mínimos cuadrados</a><ul>
+<li class="chapter" data-level="2.1" data-path="Supuestos.html"><a href="Supuestos.html#objetivos-de-este-practico"><i class="fa fa-check"></i><b>2.1</b> Objetivos de este práctico</a></li>
+<li class="chapter" data-level="2.2" data-path="Supuestos.html"><a href="Supuestos.html#actividad-1-sueno-en-mamiferos"><i class="fa fa-check"></i><b>2.2</b> Actividad 1 Sueño en mamíferos</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="Supuestos.html"><a href="Supuestos.html#homogeneidad-de-varianza"><i class="fa fa-check"></i><b>2.2.1</b> Homogeneidad de varianza</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Supuestos.html"><a href="Supuestos.html#normalidad-de-los-residuales"><i class="fa fa-check"></i><b>2.2.2</b> Normalidad de los residuales</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="Supuestos.html"><a href="Supuestos.html#actividad-2-suma-de-cuadrados"><i class="fa fa-check"></i><b>2.3</b> Actividad 2 Suma de cuadrados</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="Supuestos.html"><a href="Supuestos.html#que-es-el-error-por-que-al-cuadrado"><i class="fa fa-check"></i><b>2.3.1</b> ¿Que es el error? ¿Por qué al cuadrado??</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="Supuestos.html"><a href="Supuestos.html#referencias"><i class="fa fa-check"></i><b>2.4</b> Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Poder.html"><a href="Poder.html"><i class="fa fa-check"></i><b>3</b> Análisis de poder y primera tarea</a><ul>
+<li class="chapter" data-level="3.1" data-path="Poder.html"><a href="Poder.html#obejtivos-del-practico"><i class="fa fa-check"></i><b>3.1</b> Obejtivos del práctico</a></li>
+<li class="chapter" data-level="3.2" data-path="Poder.html"><a href="Poder.html#matriz-de-confusion"><i class="fa fa-check"></i><b>3.2</b> Matriz de confusión</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="Poder.html"><a href="Poder.html#poder-y-matriz-de-confusion"><i class="fa fa-check"></i><b>3.2.1</b> Poder y matriz de confusión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Poder.html"><a href="Poder.html#calculo-de-poder-en-r"><i class="fa fa-check"></i><b>3.3</b> Calculo de poder en R</a></li>
+<li class="chapter" data-level="3.4" data-path="Poder.html"><a href="Poder.html#tarea"><i class="fa fa-check"></i><b>3.4</b> Tarea</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="Poder.html"><a href="Poder.html#el-problema"><i class="fa fa-check"></i><b>3.4.1</b> El problema</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="t-student.html"><a href="t-student.html"><i class="fa fa-check"></i><b>4</b> Prueba t de Student</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="t-student.html"><a href="t-student.html#pruebas-de-una-muestra"><i class="fa fa-check"></i><b>4.0.1</b> Pruebas de una muestra</a></li>
+<li class="chapter" data-level="4.0.2" data-path="t-student.html"><a href="t-student.html#pruebas-de-dos-muestras"><i class="fa fa-check"></i><b>4.0.2</b> Pruebas de dos muestras</a></li>
+<li class="chapter" data-level="4.1" data-path="t-student.html"><a href="t-student.html#supuestos-de-la-prueba-de-t-y-alternativas"><i class="fa fa-check"></i><b>4.1</b> Supuestos de la prueba de t y alternativas</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="t-student.html"><a href="t-student.html#prueba-de-una-muestra"><i class="fa fa-check"></i><b>4.1.1</b> Prueba de una muestra</a></li>
+<li class="chapter" data-level="4.1.2" data-path="t-student.html"><a href="t-student.html#prueba-de-dos-muestras"><i class="fa fa-check"></i><b>4.1.2</b> Prueba de dos muestras</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="t-student.html"><a href="t-student.html#bibliografia"><i class="fa fa-check"></i><b>4.2</b> Bibliografía</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>5</b> Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Practicos de Bioestadística 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="t-student" class="section level1">
+<h1><span class="header-section-number">Práctico 4</span> Prueba t de Student</h1>
+<p>Puedes encontrar una version inteactiva de esta guía <a href="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/">aquí</a>.</p>
+<p>La prueba t de student fue desarrollada por Gosset cuando trabajaba para la cervezería Guinness <span class="citation">(Student <a href="#ref-student1908probable">1908</a>)</span>. Esta prueba permite comparar las medias de una muestra con la media teórica de una población, o comparar dos poblaciones. Una de las características de la prueba de student, es que permite la alternativa de ver si dos medias son diferentes o, si uno busca más confianza determinar si una media es mayor, o menor que otra. Para la prueba t de Student, se determina un valor de t, usando la siguiente formula:</p>
+<p><span class="math display">\[t = \frac{(\bar{x} - \mu)/(\frac{\sigma}{\sqrt{n}})}{s}\]</span>
+El estadístico <span class="math inline">\(t\)</span> posee un valor de p asociado dependiendo de los grados de libertad de la prueba.</p>
+<div id="pruebas-de-una-muestra" class="section level3">
+<h3><span class="header-section-number">4.0.1</span> Pruebas de una muestra</h3>
+<p>Las pruebas de una muestra nos permiten poner a prueba si la media de una población son distintas a una media teórica. Como ejemplo veremos el caso de las erupciones del géiser <em>Old Faithful</em>, localizado en el Parque Nacional Yellowstone. Un guardaparque del lugar dice que este géiser erupta cada 1 hora. Por suerte <em>R</em> posee una base de datos de <span class="citation">Azzalini and Bowman (<a href="#ref-azzalini1990look">1990</a>)</span> llamada <em>faithfull</em>, la cual utilizaremos para determinar si esto es cierto o no usando la función <code>t.test</code>. Esta base de datos tiene dos columnas <em>eruptions</em>, que muestra la duración en minutos de cada erupción y <em>waiting</em> que presenta la espera en minutos entre erupciones.</p>
+<p>Cuando usamos esta función con una muestra necesitamos llenar 2 argumentos:</p>
+<ul>
+<li><strong>x:</strong> Un vector con los valores numéricos de a poner a prueba</li>
+<li><strong>mu:</strong> La media teórica a poner a prueba</li>
+<li><strong>alternative:</strong> Puede ser “two.sided”, “less” o “greater”, dependiendo de si uno quiere probar que la muestra posee una media distinta, menor o mayor que la media teórica.</li>
+</ul>
+<p>En este caso haríamos lo siguiente</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;faithful&quot;</span>)
+<span class="kw">t.test</span>(<span class="dt">x =</span> faithful<span class="op">$</span>waiting, <span class="dt">mu =</span> <span class="dv">60</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</code></pre>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  faithful$waiting
+## t = 13.22, df = 271, p-value &lt; 2.2e-16
+## alternative hypothesis: true mean is not equal to 60
+## 95 percent confidence interval:
+##  69.27418 72.51994
+## sample estimates:
+## mean of x 
+##  70.89706</code></pre>
+<p>En este caso el valor de p nos dice que la media es diferente a 60.</p>
+<div id="ejercicio-1" class="section level4">
+<h4><span class="header-section-number">4.0.1.1</span> Ejercicio 1</h4>
+<p>La base de datos <em>airquality</em> (incorporada como ejemplo en <strong>R</strong>), muestra entre otras variables las partículas de ozono en Nueva York, cada día de Mayo a Septiembre de 1973 entre las 13:00 y las 15:00 <span class="citation">(Chambers et al. <a href="#ref-chambers35graphical">1983</a>)</span>. Supongamos que ustedes estan a cargo de una agencia ambiental, y están estudiando en que meses deben reducir la actividad vehicular de Nueva York. Para esto planean disminuir a la mitad los pasajes del metro de Nueva York todos los meses que en promedio tengan sobre 55 ppb. Para esto deben comprobar estadisticamente que el mes en que harán esto tiene promedios sobre 55.</p>
+</div>
+</div>
+<div id="pruebas-de-dos-muestras" class="section level3">
+<h3><span class="header-section-number">4.0.2</span> Pruebas de dos muestras</h3>
+<p>Las pruebas de dos muestras nos permiten ver si hay diferencias significativas entre las medias de dos muestras. En la base de datos <code>mtcars</code>, hay una columna que determina si los vehículos son de cambios manuales o automáticos. En este caso 0 significa automático y 1 significa manual. En la figura 1 podemos ver una inspección gráfica de las posibles diferencias.</p>
+<div class="figure"><span id="fig:unnamed-chunk-32"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-32-1.png" alt="Comparación de eficiencia entre vehiculos automaticos y manuales" width="672" />
+<p class="caption">
+Figura 4.1: Comparación de eficiencia entre vehiculos automaticos y manuales
+</p>
+</div>
+<p>Para hacer la comparación debemos agregar el argumento <code>var.equal</code> el cual en este caso asumiremos que es verdad, ya que en la próxima sección veremos los supuestos de la prueba t y las consecuencias de las violaciones de estos supuestos. En este caso podemos usar el simbolo <code>~</code> a ser leido como explicado por para la prueba t de dos muestras.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(mpg <span class="op">~</span><span class="st"> </span>am, <span class="dt">data =</span> mtcars, <span class="dt">var.equal =</span><span class="ot">TRUE</span>)</code></pre>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  mpg by am
+## t = -4.1061, df = 30, p-value = 0.000285
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -10.84837  -3.64151
+## sample estimates:
+## mean in group 0 mean in group 1 
+##        17.14737        24.39231</code></pre>
+<p>En este caso se determinaría que los vehiculos manuales (am = 1), son más eficientes que sus contrapartes automáticas.</p>
+<div id="ejercicio-2" class="section level4">
+<h4><span class="header-section-number">4.0.2.1</span> Ejercicio 2</h4>
+<p>Para el siguiente ejercicio usaremos la base de datos <code>BeerDark</code> disponible en webcursos o en el siguiente <a href="https://archive.org/download/BeerDark/BeerDark.csv">link</a>. Esta base de datos posee 7 columnas, pero usaremos solo 4 de ellas:</p>
+<ul>
+<li><strong>Estilo:</strong> Separa las cervezas entre Porters y Stouts</li>
+<li><strong>Grado_Alcoholico:</strong> El grado alcoholico de las cervezas</li>
+<li><strong>Amargor:</strong> Valor IBU (International Bittering Units), a mayor valor más amarga la cerveza</li>
+<li><strong>Color:</strong> A mayor valor más oscura la cerveza.</li>
+</ul>
+<p>Determinar si las cervezas Porter y Stouts son distintas en grado alcoholico, amargor y/o color.</p>
+</div>
+</div>
+<div id="supuestos-de-la-prueba-de-t-y-alternativas" class="section level2">
+<h2><span class="header-section-number">4.1</span> Supuestos de la prueba de t y alternativas</h2>
+<p>Los supuestos de la t de student son las siguientes <span class="citation">(Boneau <a href="#ref-boneau1960effects">1960</a>)</span></p>
+<ul>
+<li>Independencia de las observaciones</li>
+<li>Distribución normal de los datos en cada grupo</li>
+<li>Homogeneidad de varianza</li>
+</ul>
+<div id="prueba-de-una-muestra" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Prueba de una muestra</h3>
+<p>Como siempre la independencia de las muestras es algo que solo puede determinarse en base a el diseño del muestreo, y por otro lado, al haber solo una muestra, la homogeneidad de varianza no es un problema, en este caso solo podemos ver si la distribución es normal. Volviendo a nuestro ejemplo de una muestra, con la base de datos <code>faithfull</code>, veamos en base a un histograma (figura 2), qqplot (figura 3) y test de shapiro, si los datos son normales o no:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(faithful<span class="op">$</span>waiting, <span class="dt">xlab =</span> <span class="st">&quot;Minutos de espera entre erupciones&quot;</span>)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-34"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-34-1.png" alt="Histograma de los minutos de espera de el géiser Old Fiathful" width="672" />
+<p class="caption">
+Figura 4.2: Histograma de los minutos de espera de el géiser Old Fiathful
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(faithful<span class="op">$</span>waiting)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-35"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-35-1.png" alt="QQplot de los minutos de espera de el géiser Old Fiathful" width="672" />
+<p class="caption">
+Figura 4.3: QQplot de los minutos de espera de el géiser Old Fiathful
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(faithful<span class="op">$</span>waiting)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  faithful$waiting
+## W = 0.92215, p-value = 1.015e-10</code></pre>
+<p>Como vemos en la figura 2, los datos no se ven normales, incluso se ven bimodales, lo cual significa que tiene 2 picos, en este caso uno al rededor de los 52 minutos y otro al rededor de los 85 minutos de espera (recordemos que la función <code>hist</code>, automáticamente usa el algoritmo de <span class="citation">Sturges (<a href="#ref-sturges1926choice">1926</a>)</span>, para determinar como dividir los datos y obtener el mejor histograma). Nuestras sospechas de no normalidad son confirmadas al ver el qqplot, que no sigue para nada la diagonal, y es reafirmado por el test de shapiro, cuyo valor mucho menor a 0.05, nos dice que la distribución no es normal. Dado esto, debemos apelar a un test de distribución libre como el de <em>Mann-Whitney</em>, la cual se realiza con la función <code>wilcox.test</code>, de la misma forma que es utilizada la función <code>t.test</code>, por lo tanto para nuestro ejemplo usamos:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;faithful&quot;</span>)
+<span class="kw">wilcox.test</span>(<span class="dt">x =</span> faithful<span class="op">$</span>waiting, <span class="dt">mu =</span> <span class="dv">60</span>, <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</code></pre>
+<pre><code>## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  faithful$waiting
+## V = 31048, p-value &lt; 2.2e-16
+## alternative hypothesis: true location is not equal to 60</code></pre>
+<p>Que en este caso nos lleva a la misma conclusión que nuestro ejemplo anterior.</p>
+</div>
+<div id="prueba-de-dos-muestras" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Prueba de dos muestras</h3>
+<p>Para una prueba de dos muestras, podemos testear tanto la homogeneidad de varianza como la normalidad, para ver las dos cosas al mismo tiempo podemos usar un gráfico de violín (figura 4). En este caso, las distribuciones no se ven muy diferentes a la normalidad, pero las varianzas se ven un tanto distintas, podemos seguir explorando esto visualmente usando la función <code>hist</code> previamente generando dos data frames, uno para autos automatico y otro para manuales.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)
+mt &lt;-<span class="st"> </span>mtcars
+mt<span class="op">$</span>am &lt;-<span class="st"> </span><span class="kw">ifelse</span>(mtcars<span class="op">$</span>am  <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;automatico&quot;</span>, <span class="st">&quot;manual&quot;</span>)
+mt &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mt)
+<span class="kw">ggplot</span>(mt, <span class="kw">aes</span>(<span class="dt">x =</span> am, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_violin</span>()</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-38"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-38-1.png" alt="Comparación de distribuciones y varianzas de los vehiculos automáticos " width="672" />
+<p class="caption">
+Figura 4.4: Comparación de distribuciones y varianzas de los vehiculos automáticos
+</p>
+</div>
+<p>En este caso, las distribuciones no se ven muy diferentes a la normalidad, pero las varianzas se ven un tanto distintas, podemos seguir explorando esto separando los datos en vehiculos automáticos y manuales para hacer histogramas, en este caso es importante que los ejes sean iguales, para eso en el histograma usaremos los parametros ylim y xlim.</p>
+<pre class="sourceCode r"><code class="sourceCode r">manuales &lt;-<span class="st"> </span>mt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(am <span class="op">==</span><span class="st"> &quot;manual&quot;</span>)
+<span class="kw">hist</span>(manuales<span class="op">$</span>mpg, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">35</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-39"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-39-1.png" alt="Histograma de vehiculos manuales" width="672" />
+<p class="caption">
+Figura 4.5: Histograma de vehiculos manuales
+</p>
+</div>
+<pre class="sourceCode r"><code class="sourceCode r">autos &lt;-<span class="st"> </span>mt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(am <span class="op">==</span><span class="st"> &quot;automatico&quot;</span>)
+<span class="kw">hist</span>(autos<span class="op">$</span>mpg, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">35</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-40"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-40-1.png" alt="Histograma de vehiculos automáticos" width="672" />
+<p class="caption">
+Figura 4.6: Histograma de vehiculos automáticos
+</p>
+</div>
+<p>Como vemos, los vehículos manuales no parecen tener distribución normal como se ve en la figura 5, esto podemos comprobarlo con el qqlot de los mismos datos (figura 5)</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(manuales<span class="op">$</span>mpg)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-41"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-41-1.png" alt="QQplot de eficiencia de vehiculos con cambios manuales" width="672" />
+<p class="caption">
+Figura 4.7: QQplot de eficiencia de vehiculos con cambios manuales
+</p>
+</div>
+<div id="ejercicio-3" class="section level4">
+<h4><span class="header-section-number">4.1.2.1</span> Ejercicio 3</h4>
+<p>Como siempre la independencia de las muestras es algo que solo puede determinarse en base a el diseño del muestreo, y por otro lado, al haber solo una muestra, la homogeneidad de varianza no es un problema, en este caso solo podemos ver si la distribución es normal. Volviendo a nuestro ejercicio de una muestra, con la base de datos <code>airquality</code>, evalue basado en histograma, qqplot y test de shapiro si se debe reevaluar la hipótesis para los meses de julio y agosto</p>
+<p>Para una prueba de dos muestras, podemos testear tanto la homogeneidad de varianza como la normalidad, para ver las dos cosas al mismo tiempo podemos usar un gráfico de violín <code>geom_violin</code> en <em>ggplot2</em>, lo cual puede seguir siendo explorando esto visualmente usando la función <code>hist</code> generando dos data frames, uno por cada clase de datos.</p>
+<p>Evalúe si es necesario revaluar la hipotesis de que el amargor es distinto entre ambos estilos de cerveza</p>
+<p>&lt;iframe src=“<a href="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/%22style=%22border" class="uri">http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/&quot;style=&quot;border</a>: 0; position:absolute; top:5%; left:0; right:0; bottom:0; width:100%; height:95%”&quot;&gt;
+</iframe></p>
+</div>
+</div>
+</div>
+<div id="bibliografia" class="section level2">
+<h2><span class="header-section-number">4.2</span> Bibliografía</h2>
+
+</div>
+</div>
+<h3> Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-student1908probable">
+<p>Student. 1908. “The Probable Error of a Mean.” <em>Biometrika</em>. JSTOR, 1–25.</p>
+</div>
+<div id="ref-azzalini1990look">
+<p>Azzalini, Adelchi, and Adrian W Bowman. 1990. “A Look at Some Data on the Old Faithful Geyser.” <em>Applied Statistics</em>. JSTOR, 357–65.</p>
+</div>
+<div id="ref-chambers35graphical">
+<p>Chambers, John M, William S Cleveland, Beat Kleiner, and Paul A Tukey. 1983. “Graphical Methods for Data Analysis. 1983.” <em>Wadsworth, Belmont, CA</em> 35.</p>
+</div>
+<div id="ref-boneau1960effects">
+<p>Boneau, C Alan. 1960. “The Effects of Violations of Assumptions Underlying the T Test.” <em>Psychological Bulletin</em> 57 (1). American Psychological Association: 49.</p>
+</div>
+<div id="ref-sturges1926choice">
+<p>Sturges, Herbert A. 1926. “The Choice of a Class Interval.” <em>Journal of the American Statistical Association</em> 21 (153): 65–66.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Poder.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Refs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["AyduantiaStats.pdf", "AyduantiaStats.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

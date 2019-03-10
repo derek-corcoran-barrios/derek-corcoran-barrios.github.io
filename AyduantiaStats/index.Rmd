@@ -66,6 +66,8 @@ Los prácticos de este curso se enfocan en aprender a realizar de manera prácti
 
 + Capítulo \@ref(Refs) *Referencias*
 
++ Capítulo \@ref(t-student) *T de student*
+
 ## Metodología
 
 Clases prácticas donde cada estudiante trabajará con datos entregados para desarrollar análisi de datos. Además, se deberán generar informes, en base al trabajo con sus datos.

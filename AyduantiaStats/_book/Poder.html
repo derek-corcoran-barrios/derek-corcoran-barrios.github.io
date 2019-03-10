@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="Supuestos.html">
-<link rel="next" href="Refs.html">
+<link rel="next" href="t-student.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -173,7 +173,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.1" data-path="Poder.html"><a href="Poder.html#el-problema"><i class="fa fa-check"></i><b>3.4.1</b> El problema</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>4</b> Referencias</a></li>
+<li class="chapter" data-level="4" data-path="t-student.html"><a href="t-student.html"><i class="fa fa-check"></i><b>4</b> Prueba t de Student</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="t-student.html"><a href="t-student.html#pruebas-de-una-muestra"><i class="fa fa-check"></i><b>4.0.1</b> Pruebas de una muestra</a></li>
+<li class="chapter" data-level="4.0.2" data-path="t-student.html"><a href="t-student.html#pruebas-de-dos-muestras"><i class="fa fa-check"></i><b>4.0.2</b> Pruebas de dos muestras</a></li>
+<li class="chapter" data-level="4.1" data-path="t-student.html"><a href="t-student.html#supuestos-de-la-prueba-de-t-y-alternativas"><i class="fa fa-check"></i><b>4.1</b> Supuestos de la prueba de t y alternativas</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="t-student.html"><a href="t-student.html#prueba-de-una-muestra"><i class="fa fa-check"></i><b>4.1.1</b> Prueba de una muestra</a></li>
+<li class="chapter" data-level="4.1.2" data-path="t-student.html"><a href="t-student.html#prueba-de-dos-muestras"><i class="fa fa-check"></i><b>4.1.2</b> Prueba de dos muestras</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="t-student.html"><a href="t-student.html#bibliografia"><i class="fa fa-check"></i><b>4.2</b> Bibliografía</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>5</b> Referencias</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -278,8 +287,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><em>Delta</em>: Valor mínimo a detectar</li>
 <li><em>Sigma</em>: Desviación estandar de la muestra</li>
 </ul>
-<p>Para calculos precisos de n necesarios para muestras usar la siguiente app
-<a href="https://derek-corcoran.shinyapps.io/MinimosCuadrados/" class="uri">https://derek-corcoran.shinyapps.io/MinimosCuadrados/</a></p>
+<p>Para calculos precisos de n necesarios para muestras usar la siguiente app</p>
+<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny3/?showcase=0" width="672" height="450px">
+</iframe>
 </div>
 <div id="tarea" class="section level2">
 <h2><span class="header-section-number">3.4</span> Tarea</h2>
@@ -287,14 +297,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.4.1</span> El problema</h3>
 <p>Una compañía que genera pesticidas descarga parte de sus desechos a un río. La ONG <strong>RioSano</strong>, dice que ha notado una alza en la mortalidad de los patos cortacorriente (<em>Merganneta armata</em>) del río.</p>
 <p>Ante esto la empresa contrata un científico, el cual hace una estimación de la mortalidad de patos en 10 zonas del río en que descargan sus desechos, y lo compara con otros dos ríos no contaminados. Este científico dice que no hay diferencias significativas en la mortalidad de los patos de los ríos con desechos y sin desechos con una confianza del 95%. Para esto muestra como evidencia la figura 1 y tabla 3 e incluso hace públicos sus datos en el archivo <em>MuestraPatos.csv</em>.</p>
-<div class="figure"><span id="fig:unnamed-chunk-27"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-27-1.png" alt="Mortalidades calculadas en 10 zonas de tres ríos" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-28"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-28-1.png" alt="Mortalidades calculadas en 10 zonas de tres ríos" width="672" />
 <p class="caption">
 Figura 3.1: Mortalidades calculadas en 10 zonas de tres ríos
 </p>
 </div>
 <table>
-<caption><span id="tab:unnamed-chunk-28">Tabla 3.3: </span>Tabla de ANOVA de una vía de la mortalidad de patos de los tres ríos</caption>
+<caption><span id="tab:unnamed-chunk-29">Tabla 3.3: </span>Tabla de ANOVA de una vía de la mortalidad de patos de los tres ríos</caption>
 <thead>
 <tr class="header">
 <th align="left">term</th>
@@ -354,7 +364,7 @@ Figura 3.1: Mortalidades calculadas en 10 zonas de tres ríos
         </div>
       </div>
 <a href="Supuestos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="Refs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="t-student.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

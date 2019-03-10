@@ -61,7 +61,10 @@ Para hacer calculos de poder en ANOVAS de una y dos vías en *R*, utilizamos el 
 * *Sigma*: Desviación estandar de la muestra
 
 Para calculos precisos de n necesarios para muestras usar la siguiente app
-https://derek-corcoran.shinyapps.io/MinimosCuadrados/
+
+```{r}
+knitr::include_app("http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny3/", height = "450px")
+```
 
 ## Tarea
 
