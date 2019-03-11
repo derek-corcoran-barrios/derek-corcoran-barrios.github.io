@@ -79,6 +79,10 @@ Clases prácticas donde cada estudiante trabajará con datos entregados para des
 * Evaluación 3: Informe final 50%
 
 
+## Presentación de introducción
+
+Para la introducción de los prácticos seguiremos un a presentación que se encuentra en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase1/Clase1.html)
+
 ## Libros de consulta
 
 Los principios de este curso están explicados en los siguientes libros gratuitos.

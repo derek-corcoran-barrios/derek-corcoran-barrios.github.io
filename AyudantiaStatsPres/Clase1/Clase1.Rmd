@@ -17,6 +17,8 @@ library(kableExtra)
 options("kableExtra.html.bsTable" = T)
 ```
 
+# Introducción a R
+
 ## En esta Clase {.build}
 
 - R y Rstudio
@@ -41,6 +43,8 @@ options("kableExtra.html.bsTable" = T)
   + Stackoverflow, siempre ver la reputación de los autores
 - Aprendiendo R desde R con [Swirl](http://swirlstats.com/students.html)
 
+# Estructuras de datos en R
+
 ## Estructura de datos {.build}
 
 <div style="float: left; width: 40%;">
@@ -58,7 +62,7 @@ knitr::include_graphics("Data.png")
 </div>
 
 
-## Vector
+## Vector {.build}
 
 <div style="float: left; width: 40%;">
 * Secuencia lineal de datos
@@ -76,3 +80,287 @@ knitr::include_graphics("Vector.jpg")
 ```
 
 </div>
+
+## Data Frame {.build}
+
+<div style="float: left; width: 40%;">
+
+* Una tabla, cada columna un tipo de datos (Numérico, lógico, etc)
+* Cada columna un vector
+* Ejemplo data(iris)
+* Para subsetear data.frame[filas,columnas]
+* Ejemplos iris[,3], iris[,"Petal.Length"], iris[2:5,c(1,5)], iris$Petal.Length
+
+</div>
+
+<div style="float: right; width: 60%;">
+
+```{r, echo = FALSE}
+knitr::include_graphics("DataFrame.jpg")
+```
+
+</div>
+
+# Tidy data
+
+## Tidy Data {.build}
+
+```{r, echo=FALSE}
+knitr::include_graphics("tidy.png")
+```
+
+
+* Cada columna una variable
+* Cada fila una observación
+
+## untidy data {.build}
+
+```{r, echo=FALSE, message = FALSE, warning = FALSE,fig.width=8,fig.height=4.5,dpi=300,out.width="960px",out.height="700px"}
+library(knitr)
+include_graphics("UntidyONU.png")
+```
+
+## untidy data {.build}
+
+```{r, out.width = "800px", echo=FALSE}
+knitr::include_graphics("untidy.jpg")
+```
+
+# Tidyverse
+
+## tidyverse {.build}
+
+Paquete con pocas funciones [muy poderosas](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), trabajaremos con
+
+
+- *summarize*
+- *group_by*
+- *filter* 
+- *%>%* pipeline
+
+## summarize y group_by {.build}
+
+- *summarize* resume una variable
+- *Group_by* reune observaciones según una variable
+- Usadas en conjunto muy poderosas
+
+```{r}
+library(tidyverse)
+
+MEAN <- summarize(iris, MEAN.PETAL = mean(Petal.Length))
+```
+
+```{r, echo = FALSE}
+kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+
+## summarize y group_by (continuado) {.build}
+
+```{r}
+MEAN <- group_by(iris, Species)
+MEAN <- summarize(MEAN, MEAN.PETAL = mean(Petal.Length))
+kable(MEAN)
+```
+
+## Pipeline (%>%) {.build}
+
+- Ahorra líneas, se parte con un data.frame
+- Se agregan funciones de dplyr hasta llegar al resultado deseado
+
+```{r}
+MEAN <- iris %>% group_by(Species) %>% summarize(MEAN.PETAL = mean(Petal.Length))
+kable(MEAN)
+```
+
+## Pipeline (%>%) otro ejemplo {.build}
+
+
+```{r}
+MEAN <- iris %>% group_by(Species) %>% summarize_all(mean)
+kable(MEAN)
+```
+
+## Filter {.build}
+
+- Selecciona según una o más variables
+
+```{r, echo=FALSE}
+DF <- data.frame(simbolo = c("<", ">", "==", ">=", "<="), significado = c("Menor que", "Mayor que","Igual a", "mayor o igual a", "menor o igual a"), simbolo_cont = c("!=","%in%", "is.na", "!is.na", "| &"), significado_cont = c("distinto a", "dentro del grupo", "es NA", "no es NA", "o, y"))
+kable (DF)
+```
+
+## Ejemplos de filter agregando a lo anterior {.build .small}
+
+```{r}
+data("iris")
+DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(funs(mean, sd))
+kable(DF)
+```
+
+
+## Select
+
+<div style="float: left; width: 40%;">
+
+* Selecciona columnas dentro de un data.frame
+
+```{r}
+data(nasa)
+Nasa2 <- as.data.frame(nasa)
+Temp <- Nasa2 %>% filter(year != 1995) %>% group_by(year) %>% select(contains("temp")) %>% summarize_all(mean)
+```
+
+</div>
+
+<div style="float: right; width: 60%;">
+```{r}
+kable(Temp)
+```
+
+```{r, echo=FALSE, eval=FALSE}
+library(readr)
+library(ggplot2)
+classic_rock <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/classic-rock/classic-rock-song-list.csv")
+colnames(classic_rock)<- make.names(colnames(classic_rock))
+ggplot(classic_rock, aes(x = Release.Year)) + geom_histogram()  + xlim(c(1950, 2010))
+```
+
+</div>
+
+# Ejercicios {.build}
+
+* Usando la base de datos *storm* del paquete *tidyverse*, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
+    + solución:
+    + storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
+
+# ggplot2
+
+## Visualización de datos (ggplot2) {.build, .small}
+
+<div style="float: left; width: 40%;">
+
+* Paquete de visualización de datos de tidy data.
+* ggplot(data.frame, aes(nombres de columna)).
+* + geom_algo(argumentos, aes(columnas)).
+* + theme_algo() estilo.
+* Personalización de ejes y leyendas.
+* Dos [links](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/) para aprender [mas](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf).
+
+```{r, eval=FALSE}
+library(ggplot2)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
+```
+
+</div>
+
+<div style="float: right; width: 60%;">
+
+```{r, echo=FALSE}
+library(ggplot2)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
+```
+</div>
+
+## Argumentos para geoms {.build}
+
+* **color**: color de líneas o puntos 
+* **alpha**: transparencia, de 0 (transparente) a 1 (sólido)
+* **size**: tamaño de puntos
+* **pch**: típo de punto
+* **fill**: color dentro de un área (barras, intervalos)
+
+## color {.build .small}
+
+```{r}
+library(ggplot2)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
+```
+
+alpha
+=================
+class: small-code
+
+```{r}
+library(ggplot2)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut), alpha = 0.1) + theme_classic()
+```
+
+size
+=================
+class: small-code
+
+```{r}
+library(ggplot2)
+data("mtcars")
+ggplot(mtcars, aes(x = wt, y=mpg)) + geom_point(aes(size = hp)) + theme_classic()
+```
+
+shape
+=================
+class: small-code
+
+```{r}
+library(ggplot2)
+data("diamonds")
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(shape = cut)) + theme_classic()
+```
+
+fill
+=================
+class: small-code
+
+```{r}
+library(dplyr)
+d2 <- diamonds %>% filter(clarity == "I1" | clarity == "IF")
+ggplot(d2, aes(x = cut, y=price)) + geom_boxplot(aes(fill = clarity)) + theme_classic()
+```
+
+
+Una variable categórica una continua
+===========
+
+* geom_boxplot
+* geom_jitter
+* geom_violin
+* geom_bar
+
+geom_jitter
+==================
+class: small-code
+
+```{r}
+data("iris")
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species))
+```
+
+geom_violin
+================
+class: small-code
+
+```{r}
+data("iris")
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_violin(fill = "red")
+```
+
+Se pueden combinar
+============
+class: small-code
+
+```{r}
+data("iris")
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_violin() + geom_jitter(aes(color = Species))
+```
+
+Pero el orden importa
+============
+class: small-code
+
+```{r}
+data("iris")
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species)) + geom_violin()
+```
