@@ -1,0 +1,78 @@
+---
+title: "Práctico 1 Introducción a R"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    logo: puc_logo.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE)
+library(tidyverse)
+library(broom)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+## En esta Clase {.build}
+
+- R y Rstudio
+  + Paneles y como importar datos
+  + Que son los paquetes (y a cuales creerles)
+  + aprendiendo R desde R
+- Estructuras de datos
+  + Vectores, data frames y otros
+- Como filtrar y resumir datos
+- Gráficos
+  + histográmas
+  + boxplots
+  + violin plots
+
+
+## R y RStudio {.build}
+
+- Programa escrito por estadísticos
+- RStudio (IDE para R, Python, C++, etc) facilita su uso
+- extensión en base a [paquetes](https://cran.r-project.org/web/packages/available_packages_by_name.html)
+  + Los mejores publicados en [Journal of Statistical Software](https://www.jstatsoft.org/index), Methods in Ecology and Evolution u otro journal
+  + Stackoverflow, siempre ver la reputación de los autores
+- Aprendiendo R desde R con [Swirl](http://swirlstats.com/students.html)
+
+## Estructura de datos {.build}
+
+<div style="float: left; width: 40%;">
+- Vector: Un conjunto lineal de datos (secuencia génica, serie de tiempo)
+- Matrix: Una tabla con solo números
+- Data Frame: Una tabla donde cada columna tiene un tipo de datos (estándar dorado)
+- List: Aqui podemos meter lo que queramos
+</div>
+
+<div style="float: right; width: 60%;">
+
+```{r, echo=FALSE}
+knitr::include_graphics("Data.png")
+```
+</div>
+
+
+## Vector
+
+<div style="float: left; width: 40%;">
+* Secuencia lineal de datos
+* Pueden ser de muchos tipos (numéricos, de carácteres, lógicos, etc.)
+* Ejemplo data(uspop)
+* para crear uno c(1,4,6,7,8)
+* para subsetear un vector se pone el índice entre []
+* uspop[4], uspop[2:10], uspop[c(3,5,8)]
+</div>
+
+<div style="float: right; width: 60%;">
+
+```{r, echo=FALSE}
+knitr::include_graphics("Vector.jpg")
+```
+
+</div>
