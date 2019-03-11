@@ -27,7 +27,7 @@ En caso de necesitar ayuda para la instalación, contactarse con el instructor d
 
 ## Antes de comenzar
 
-Si nunca se ha trabajado con `R` antes de este curso, una buena herramienta es provista por el paquete [Swirl](http://swirlstats.com/students.html) [@Kross2017]. Si deseas estar más preparado para el curso, realizá los primeros 7 modulos del programa *R Programming: The basics of programming in R* que incluye:
+Si nunca se ha trabajado con `R` antes de este curso, una buena herramienta es provista por el paquete [Swirl](http://swirlstats.com/students.html) [@Kross2017]. Si deseas estar más preparado para el curso, realiza los primeros 7 módulos del programa *R Programming: The basics of programming in R* que incluye:
 
 * Basic Building Blocks
 * Workspace and Files
@@ -50,7 +50,7 @@ Los prácticos de este curso se enfocan en aprender a realizar de manera prácti
 
 1. Aprender el uso de R como ambiente estadístico de limpieza, exploración, visualización de datos.
 
-2. Conocer y aplicar de manera aplicada los conceptos enseñados en el curso de Bioestadistica 2.
+2. Conocer y aplicar de manera aplicada los conceptos enseñados en el curso de Bioestadística 2.
 
 3. Aprender buenas prácticas de recolección y estandarización de bases de datos, con la finalidad de optimizar el análisis de datos y la revisión de éstas por pares.
 
@@ -58,7 +58,7 @@ Los prácticos de este curso se enfocan en aprender a realizar de manera prácti
 
 ## Contenidos
 
-+ Capítulo \@ref(Explorando) *Análisis exploratorio y el primer ANOVA*: En este capítulo se aprenderá a cómo explorar, resumir y vizualizar una base de datos utilizando el paquete tidyverse [@WickhamTidy2017], además se realizarán un análisis basico de ANOVA
++ Capítulo \@ref(Explorando) *Análisis exploratorio y el primer ANOVA*: En este capítulo se aprenderá a cómo explorar, resumir y visualizar una base de datos utilizando el paquete tidyverse [@WickhamTidy2017], además se realizarán un análisis básico de ANOVA
 
 + Capítulo \@ref(Supuestos) *Supuestos de ANOVA y mínimos cuadrados*
 
@@ -70,7 +70,7 @@ Los prácticos de este curso se enfocan en aprender a realizar de manera prácti
 
 ## Metodología
 
-Clases prácticas donde cada estudiante trabajará con datos entregados para desarrollar análisi de datos. Además, se deberán generar informes, en base al trabajo con sus datos.
+Clases prácticas donde cada estudiante trabajará con datos entregados para desarrollar análisis de datos. Además, se deberán generar informes, en base al trabajo con sus datos.
 
 ##  Evaluación
 

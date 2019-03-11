@@ -205,13 +205,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="t-student" class="section level1">
 <h1><span class="header-section-number">Práctico 4</span> Prueba t de Student</h1>
-<p>Puedes encontrar una version inteactiva de esta guía <a href="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/">aquí</a>.</p>
-<p>La prueba t de student fue desarrollada por Gosset cuando trabajaba para la cervezería Guinness <span class="citation">(Student <a href="#ref-student1908probable">1908</a>)</span>. Esta prueba permite comparar las medias de una muestra con la media teórica de una población, o comparar dos poblaciones. Una de las características de la prueba de student, es que permite la alternativa de ver si dos medias son diferentes o, si uno busca más confianza determinar si una media es mayor, o menor que otra. Para la prueba t de Student, se determina un valor de t, usando la siguiente formula:</p>
-<p><span class="math display">\[t = \frac{(\bar{x} - \mu)/(\frac{\sigma}{\sqrt{n}})}{s}\]</span>
-El estadístico <span class="math inline">\(t\)</span> posee un valor de p asociado dependiendo de los grados de libertad de la prueba.</p>
+<p>Puedes encontrar una versión interactiva de esta guía <a href="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/">aquí</a>.</p>
+<p>La prueba t de student fue desarrollada por Gosset cuando trabajaba para la cervecería Guinness <span class="citation">(Student <a href="#ref-student1908probable">1908</a>)</span>. Esta prueba permite comparar las medias de una muestra con la media teórica de una población, o comparar dos poblaciones. Una de las características de la prueba de student, es que permite la alternativa de ver si dos medias son diferentes o, si uno busca más confianza determinar si una media es mayor, o menor que otra. Para la prueba t de Student, se determina un valor de t, usando la siguiente formula (ecuación <a href="t-student.html#eq:tStud">(4.1)</a>):</p>
+<p><span class="math display" id="eq:tStud">\[\begin{equation} 
+  t = \frac{(\bar{x} - \mu)/(\frac{\sigma}{\sqrt{n}})}{s}
+  \tag{4.1}
+\end{equation}\]</span></p>
+<p>El estadístico <span class="math inline">\(t\)</span> posee un valor de p asociado dependiendo de los grados de libertad de la prueba.</p>
 <div id="pruebas-de-una-muestra" class="section level3">
 <h3><span class="header-section-number">4.0.1</span> Pruebas de una muestra</h3>
-<p>Las pruebas de una muestra nos permiten poner a prueba si la media de una población son distintas a una media teórica. Como ejemplo veremos el caso de las erupciones del géiser <em>Old Faithful</em>, localizado en el Parque Nacional Yellowstone. Un guardaparque del lugar dice que este géiser erupta cada 1 hora. Por suerte <em>R</em> posee una base de datos de <span class="citation">Azzalini and Bowman (<a href="#ref-azzalini1990look">1990</a>)</span> llamada <em>faithfull</em>, la cual utilizaremos para determinar si esto es cierto o no usando la función <code>t.test</code>. Esta base de datos tiene dos columnas <em>eruptions</em>, que muestra la duración en minutos de cada erupción y <em>waiting</em> que presenta la espera en minutos entre erupciones.</p>
+<p>Las pruebas de una muestra nos permiten poner a prueba si la media de una población son distintas a una media teórica. Como ejemplo veremos el caso de las erupciones del géiser <em>Old Faithful</em>, localizado en el Parque Nacional Yellowstone. Un guarda-parque del lugar dice que este géiser erupta cada 1 hora. Por suerte <em>R</em> posee una base de datos de <span class="citation">Azzalini and Bowman (<a href="#ref-azzalini1990look">1990</a>)</span> llamada <em>faithfull</em>, la cual utilizaremos para determinar si esto es cierto o no usando la función <code>t.test</code>. Esta base de datos tiene dos columnas <em>eruptions</em>, que muestra la duración en minutos de cada erupción y <em>waiting</em> que presenta la espera en minutos entre erupciones.</p>
 <p>Cuando usamos esta función con una muestra necesitamos llenar 2 argumentos:</p>
 <ul>
 <li><strong>x:</strong> Un vector con los valores numéricos de a poner a prueba</li>
@@ -235,19 +238,19 @@ El estadístico <span class="math inline">\(t\)</span> posee un valor de p asoci
 <p>En este caso el valor de p nos dice que la media es diferente a 60.</p>
 <div id="ejercicio-1" class="section level4">
 <h4><span class="header-section-number">4.0.1.1</span> Ejercicio 1</h4>
-<p>La base de datos <em>airquality</em> (incorporada como ejemplo en <strong>R</strong>), muestra entre otras variables las partículas de ozono en Nueva York, cada día de Mayo a Septiembre de 1973 entre las 13:00 y las 15:00 <span class="citation">(Chambers et al. <a href="#ref-chambers35graphical">1983</a>)</span>. Supongamos que ustedes estan a cargo de una agencia ambiental, y están estudiando en que meses deben reducir la actividad vehicular de Nueva York. Para esto planean disminuir a la mitad los pasajes del metro de Nueva York todos los meses que en promedio tengan sobre 55 ppb. Para esto deben comprobar estadisticamente que el mes en que harán esto tiene promedios sobre 55.</p>
+<p>La base de datos <em>airquality</em> (incorporada como ejemplo en <strong>R</strong>), muestra entre otras variables las partículas de ozono en Nueva York, cada día de Mayo a Septiembre de 1973 entre las 13:00 y las 15:00 <span class="citation">(Chambers et al. <a href="#ref-chambers35graphical">1983</a>)</span>. Supongamos que ustedes están a cargo de una agencia ambiental, y están estudiando en que meses deben reducir la actividad vehicular de Nueva York. Para esto planean disminuir a la mitad los pasajes del metro de Nueva York todos los meses que en promedio tengan sobre 55 ppb. Para esto deben comprobar estadisticamente que el mes en que harán esto tiene promedios sobre 55.</p>
 </div>
 </div>
 <div id="pruebas-de-dos-muestras" class="section level3">
 <h3><span class="header-section-number">4.0.2</span> Pruebas de dos muestras</h3>
-<p>Las pruebas de dos muestras nos permiten ver si hay diferencias significativas entre las medias de dos muestras. En la base de datos <code>mtcars</code>, hay una columna que determina si los vehículos son de cambios manuales o automáticos. En este caso 0 significa automático y 1 significa manual. En la figura 1 podemos ver una inspección gráfica de las posibles diferencias.</p>
-<div class="figure"><span id="fig:unnamed-chunk-32"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-32-1.png" alt="Comparación de eficiencia entre vehiculos automaticos y manuales" width="672" />
+<p>Las pruebas de dos muestras nos permiten ver si hay diferencias significativas entre las medias de dos muestras. En la base de datos <code>mtcars</code>, hay una columna que determina si los vehículos son de cambios manuales o automáticos. En este caso 0 significa automático y 1 significa manual. En la figura <a href="t-student.html#fig:autom">4.1</a> podemos ver una inspección gráfica de las posibles diferencias.</p>
+<div class="figure"><span id="fig:autom"></span>
+<img src="AyduantiaStats_files/figure-html/autom-1.png" alt="Comparación de eficiencia entre vehiculos automaticos y manuales" width="672" />
 <p class="caption">
 Figura 4.1: Comparación de eficiencia entre vehiculos automaticos y manuales
 </p>
 </div>
-<p>Para hacer la comparación debemos agregar el argumento <code>var.equal</code> el cual en este caso asumiremos que es verdad, ya que en la próxima sección veremos los supuestos de la prueba t y las consecuencias de las violaciones de estos supuestos. En este caso podemos usar el simbolo <code>~</code> a ser leido como explicado por para la prueba t de dos muestras.</p>
+<p>Para hacer la comparación debemos agregar el argumento <code>var.equal</code> el cual en este caso asumiremos que es verdad, ya que en la próxima sección veremos los supuestos de la prueba t y las consecuencias de las violaciones de estos supuestos. En este caso podemos usar el símbolo <code>~</code> a ser leído como explicado por para la prueba t de dos muestras.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(mpg <span class="op">~</span><span class="st"> </span>am, <span class="dt">data =</span> mtcars, <span class="dt">var.equal =</span><span class="ot">TRUE</span>)</code></pre>
 <pre><code>## 
 ##  Two Sample t-test
@@ -260,17 +263,17 @@ Figura 4.1: Comparación de eficiencia entre vehiculos automaticos y manuales
 ## sample estimates:
 ## mean in group 0 mean in group 1 
 ##        17.14737        24.39231</code></pre>
-<p>En este caso se determinaría que los vehiculos manuales (am = 1), son más eficientes que sus contrapartes automáticas.</p>
+<p>En este caso se determinaría que los vehículos manuales (am = 1), son más eficientes que sus contra-partes automáticas.</p>
 <div id="ejercicio-2" class="section level4">
 <h4><span class="header-section-number">4.0.2.1</span> Ejercicio 2</h4>
 <p>Para el siguiente ejercicio usaremos la base de datos <code>BeerDark</code> disponible en webcursos o en el siguiente <a href="https://archive.org/download/BeerDark/BeerDark.csv">link</a>. Esta base de datos posee 7 columnas, pero usaremos solo 4 de ellas:</p>
 <ul>
 <li><strong>Estilo:</strong> Separa las cervezas entre Porters y Stouts</li>
-<li><strong>Grado_Alcoholico:</strong> El grado alcoholico de las cervezas</li>
+<li><strong>Grado_Alcoholico:</strong> El grado alcohólico de las cervezas</li>
 <li><strong>Amargor:</strong> Valor IBU (International Bittering Units), a mayor valor más amarga la cerveza</li>
 <li><strong>Color:</strong> A mayor valor más oscura la cerveza.</li>
 </ul>
-<p>Determinar si las cervezas Porter y Stouts son distintas en grado alcoholico, amargor y/o color.</p>
+<p>Determinar si las cervezas Porter y Stouts son distintas en grado alcohólico, amargor y/o color.</p>
 </div>
 </div>
 <div id="supuestos-de-la-prueba-de-t-y-alternativas" class="section level2">
@@ -283,17 +286,17 @@ Figura 4.1: Comparación de eficiencia entre vehiculos automaticos y manuales
 </ul>
 <div id="prueba-de-una-muestra" class="section level3">
 <h3><span class="header-section-number">4.1.1</span> Prueba de una muestra</h3>
-<p>Como siempre la independencia de las muestras es algo que solo puede determinarse en base a el diseño del muestreo, y por otro lado, al haber solo una muestra, la homogeneidad de varianza no es un problema, en este caso solo podemos ver si la distribución es normal. Volviendo a nuestro ejemplo de una muestra, con la base de datos <code>faithfull</code>, veamos en base a un histograma (figura 2), qqplot (figura 3) y test de shapiro, si los datos son normales o no:</p>
+<p>Como siempre la independencia de las muestras es algo que solo puede determinarse en base a el diseño del muestreo, y por otro lado, al haber solo una muestra, la homogeneidad de varianza no es un problema, en este caso solo podemos ver si la distribución es normal. Volviendo a nuestro ejemplo de una muestra, con la base de datos <code>faithfull</code>, veamos en base a un histograma (figura <a href="t-student.html#fig:Hist">4.2</a>), qqplot (figura <a href="t-student.html#fig:QQ">4.3</a>) y test de shapiro, si los datos son normales o no:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(faithful<span class="op">$</span>waiting, <span class="dt">xlab =</span> <span class="st">&quot;Minutos de espera entre erupciones&quot;</span>)</code></pre>
-<div class="figure"><span id="fig:unnamed-chunk-34"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-34-1.png" alt="Histograma de los minutos de espera de el géiser Old Fiathful" width="672" />
+<div class="figure"><span id="fig:Hist"></span>
+<img src="AyduantiaStats_files/figure-html/Hist-1.png" alt="Histograma de los minutos de espera de el géiser Old Fiathful" width="672" />
 <p class="caption">
 Figura 4.2: Histograma de los minutos de espera de el géiser Old Fiathful
 </p>
 </div>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(faithful<span class="op">$</span>waiting)</code></pre>
-<div class="figure"><span id="fig:unnamed-chunk-35"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-35-1.png" alt="QQplot de los minutos de espera de el géiser Old Fiathful" width="672" />
+<div class="figure"><span id="fig:QQ"></span>
+<img src="AyduantiaStats_files/figure-html/QQ-1.png" alt="QQplot de los minutos de espera de el géiser Old Fiathful" width="672" />
 <p class="caption">
 Figura 4.3: QQplot de los minutos de espera de el géiser Old Fiathful
 </p>
@@ -317,50 +320,46 @@ Figura 4.3: QQplot de los minutos de espera de el géiser Old Fiathful
 </div>
 <div id="prueba-de-dos-muestras" class="section level3">
 <h3><span class="header-section-number">4.1.2</span> Prueba de dos muestras</h3>
-<p>Para una prueba de dos muestras, podemos testear tanto la homogeneidad de varianza como la normalidad, para ver las dos cosas al mismo tiempo podemos usar un gráfico de violín (figura 4). En este caso, las distribuciones no se ven muy diferentes a la normalidad, pero las varianzas se ven un tanto distintas, podemos seguir explorando esto visualmente usando la función <code>hist</code> previamente generando dos data frames, uno para autos automatico y otro para manuales.</p>
+<p>Para una prueba de dos muestras, podemos testear tanto la homogeneidad de varianza como la normalidad, para ver las dos cosas al mismo tiempo podemos usar un gráfico de violín (figura <a href="t-student.html#fig:Violin">4.4</a>). En este caso, las distribuciones no se ven muy diferentes a la normalidad, pero las varianzas se ven un tanto distintas, podemos seguir explorando esto visualmente usando la función <code>hist</code> previamente generando dos data frames, uno para autos automático y otro para manuales.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)
 mt &lt;-<span class="st"> </span>mtcars
 mt<span class="op">$</span>am &lt;-<span class="st"> </span><span class="kw">ifelse</span>(mtcars<span class="op">$</span>am  <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;automatico&quot;</span>, <span class="st">&quot;manual&quot;</span>)
-mt &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mt)
-<span class="kw">ggplot</span>(mt, <span class="kw">aes</span>(<span class="dt">x =</span> am, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_violin</span>()</code></pre>
-<div class="figure"><span id="fig:unnamed-chunk-38"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-38-1.png" alt="Comparación de distribuciones y varianzas de los vehiculos automáticos " width="672" />
+mt &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(mt)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(mt, <span class="kw">aes</span>(<span class="dt">x =</span> am, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_violin</span>()</code></pre>
+<div class="figure"><span id="fig:Violin"></span>
+<img src="AyduantiaStats_files/figure-html/Violin-1.png" alt="Comparación de distribuciones y varianzas de los vehiculos automáticos " width="672" />
 <p class="caption">
 Figura 4.4: Comparación de distribuciones y varianzas de los vehiculos automáticos
 </p>
 </div>
-<p>En este caso, las distribuciones no se ven muy diferentes a la normalidad, pero las varianzas se ven un tanto distintas, podemos seguir explorando esto separando los datos en vehiculos automáticos y manuales para hacer histogramas, en este caso es importante que los ejes sean iguales, para eso en el histograma usaremos los parametros ylim y xlim.</p>
-<pre class="sourceCode r"><code class="sourceCode r">manuales &lt;-<span class="st"> </span>mt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(am <span class="op">==</span><span class="st"> &quot;manual&quot;</span>)
-<span class="kw">hist</span>(manuales<span class="op">$</span>mpg, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">35</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))</code></pre>
-<div class="figure"><span id="fig:unnamed-chunk-39"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-39-1.png" alt="Histograma de vehiculos manuales" width="672" />
+<p>En este caso, las distribuciones no se ven muy diferentes a la normalidad, pero las varianzas se ven un tanto distintas, podemos seguir explorando esto separando los datos en vehículos automáticos y manuales para hacer histogramas, en este caso es importante que los ejes sean iguales, para eso en el histograma usaremos los parámetros ylim y xlim.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(manuales<span class="op">$</span>mpg, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">35</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))</code></pre>
+<div class="figure"><span id="fig:Manual"></span>
+<img src="AyduantiaStats_files/figure-html/Manual-1.png" alt="Histograma de vehiculos manuales" width="672" />
 <p class="caption">
 Figura 4.5: Histograma de vehiculos manuales
 </p>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r">autos &lt;-<span class="st"> </span>mt <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(am <span class="op">==</span><span class="st"> &quot;automatico&quot;</span>)
-<span class="kw">hist</span>(autos<span class="op">$</span>mpg, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">35</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))</code></pre>
-<div class="figure"><span id="fig:unnamed-chunk-40"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-40-1.png" alt="Histograma de vehiculos automáticos" width="672" />
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(autos<span class="op">$</span>mpg, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">35</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))</code></pre>
+<div class="figure"><span id="fig:Auto"></span>
+<img src="AyduantiaStats_files/figure-html/Auto-1.png" alt="Histograma de vehiculos automáticos" width="672" />
 <p class="caption">
 Figura 4.6: Histograma de vehiculos automáticos
 </p>
 </div>
-<p>Como vemos, los vehículos manuales no parecen tener distribución normal como se ve en la figura 5, esto podemos comprobarlo con el qqlot de los mismos datos (figura 5)</p>
+<p>Como vemos, los vehículos manuales no parecen tener distribución normal como se ve en la figura <a href="t-student.html#fig:Manual">4.5</a>, esto podemos comprobarlo con el qqlot de los mismos datos (figura <a href="t-student.html#fig:qqManual">4.7</a>)</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(manuales<span class="op">$</span>mpg)</code></pre>
-<div class="figure"><span id="fig:unnamed-chunk-41"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-41-1.png" alt="QQplot de eficiencia de vehiculos con cambios manuales" width="672" />
+<div class="figure"><span id="fig:qqManual"></span>
+<img src="AyduantiaStats_files/figure-html/qqManual-1.png" alt="QQplot de eficiencia de vehiculos con cambios manuales" width="672" />
 <p class="caption">
 Figura 4.7: QQplot de eficiencia de vehiculos con cambios manuales
 </p>
 </div>
 <div id="ejercicio-3" class="section level4">
 <h4><span class="header-section-number">4.1.2.1</span> Ejercicio 3</h4>
-<p>Como siempre la independencia de las muestras es algo que solo puede determinarse en base a el diseño del muestreo, y por otro lado, al haber solo una muestra, la homogeneidad de varianza no es un problema, en este caso solo podemos ver si la distribución es normal. Volviendo a nuestro ejercicio de una muestra, con la base de datos <code>airquality</code>, evalue basado en histograma, qqplot y test de shapiro si se debe reevaluar la hipótesis para los meses de julio y agosto</p>
+<p>Como siempre la independencia de las muestras es algo que solo puede determinarse en base a el diseño del muestreo, y por otro lado, al haber solo una muestra, la homogeneidad de varianza no es un problema, en este caso solo podemos ver si la distribución es normal. Volviendo a nuestro ejercicio de una muestra, con la base de datos <code>airquality</code>, evalúe basado en histograma, qqplot y test de shapiro si se debe revaluar la hipótesis para los meses de julio y agosto</p>
 <p>Para una prueba de dos muestras, podemos testear tanto la homogeneidad de varianza como la normalidad, para ver las dos cosas al mismo tiempo podemos usar un gráfico de violín <code>geom_violin</code> en <em>ggplot2</em>, lo cual puede seguir siendo explorando esto visualmente usando la función <code>hist</code> generando dos data frames, uno por cada clase de datos.</p>
-<p>Evalúe si es necesario revaluar la hipotesis de que el amargor es distinto entre ambos estilos de cerveza</p>
-<p>&lt;iframe src=“<a href="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/%22style=%22border" class="uri">http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/&quot;style=&quot;border</a>: 0; position:absolute; top:5%; left:0; right:0; bottom:0; width:100%; height:95%”&quot;&gt;
-</iframe></p>
+<p>Evalúe si es necesario revaluar la hipótesis de que el amargor es distinto entre ambos estilos de cerveza</p>
 </div>
 </div>
 </div>

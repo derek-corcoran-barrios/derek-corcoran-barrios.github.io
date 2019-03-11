@@ -215,7 +215,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Lo primero que deben hacer es generar una tabla resumen usando el <em>tidyverse</em> usando las funciones <em>group_by</em> para agrupar por variables y <em>summarize</em> para resumir los datos, dentro de summarize podemos usar variables como:</p>
 <ul>
 <li><strong>mean()</strong> promedio</li>
-<li><strong>sd()</strong> desviacion estándar</li>
+<li><strong>sd()</strong> desviación estándar</li>
 <li><strong>n()</strong> número de muestras</li>
 </ul>
 <p>a modo de ejemplo vemos la tabla <a href="Explorando.html#tab:MediaIris">1.1</a> mostrando la media y número de muestras con la base de datos iris:</p>
@@ -253,10 +253,10 @@ Table &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Speci
 </div>
 <div id="visualizacion-de-datos-con-ggplot2-tidyverse" class="section level3">
 <h3><span class="header-section-number">1.1.2</span> Visualización de datos con ggplot2 (tidyverse)</h3>
-<p>El paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-WickhamGG2016">2016</a>)</span> es una poderosa herramienta para gráficar datos. Si desean ahondar en el uso de este paquete, pueden ver el siguiente link <a href="http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/" class="uri">http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/</a>. En este caso, aprenderemos a graficar <em>boxplots</em> y <em>jitterplots</em>, dos opciones para visualizar una variable categórica versus una cuantitativa.</p>
+<p>El paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-WickhamGG2016">2016</a>)</span> es una poderosa herramienta para graficar datos. Si desean ahondar en el uso de este paquete, pueden ver el siguiente link <a href="http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/" class="uri">http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/</a>. En este caso, aprenderemos a graficar <em>boxplots</em> y <em>jitterplots</em>, dos opciones para visualizar una variable categórica versus una cuantitativa.</p>
 <div id="uso-del-ggplot2" class="section level4">
 <h4><span class="header-section-number">1.1.2.1</span> Uso del ggplot2</h4>
-<p>Su función principal es <em>ggplot</em>, luego de cada función usaremos el símbolo <strong>+</strong> como usabamos el pipeline (%&gt;%).</p>
+<p>Su función principal es <em>ggplot</em>, luego de cada función usaremos el símbolo <strong>+</strong> como usábamos el pipeline (%&gt;%).</p>
 <p>Primero usamos la función ggplot para determinar la base de datos y variables, acá las variables siempre van dentro de la función aes</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(MiBaseDeDatos, <span class="kw">aes</span>(<span class="dt">x =</span> VariableX, <span class="dt">y =</span> VariableY)) </code></pre>
 <p>Luego agregamos el tipo de gráfico que queremos para nuestra figura usando el <strong>+</strong> como pipeline</p>
@@ -277,7 +277,7 @@ Figura 1.1: Box plot del largo de petalo de tres especies del género Iris
 </div>
 <p>En los Box Plots tenemos 4 visualizaciones:</p>
 <ul>
-<li>Mediana (linea grueza)</li>
+<li>Mediana (linea gruesa)</li>
 <li>Caja (Cuantiles 25% y 75%)</li>
 <li>Bigotes (intervalo de confianza del 95%)</li>
 <li>Puntos Outlayers</li>
@@ -301,7 +301,7 @@ Figura 1.2: Box plot y jitter plot juntos para el largo de petalo de tres especi
 </div>
 <div id="actividad-2-captacion-de-co2-en-plantas" class="section level2">
 <h2><span class="header-section-number">1.2</span> Actividad 2 Captación de CO2 en plantas</h2>
-<p>Utilizaremos base de datos <span class="math inline">\(CO_2\)</span> <span class="citation">(Potvin, Lechowicz, and Tardif <a href="#ref-potvin1990statistical">1990</a>)</span> enviada al curso. Esta base de datos, tambien presente en R, tiene las siguientes variables</p>
+<p>Utilizaremos base de datos <span class="math inline">\(CO_2\)</span> <span class="citation">(Potvin, Lechowicz, and Tardif <a href="#ref-potvin1990statistical">1990</a>)</span> enviada al curso. Esta base de datos, también presente en R, tiene las siguientes variables</p>
 <ul>
 <li><strong>Plant</strong>: Identidad de cada planta</li>
 <li><strong>Type</strong>: Variedad de la planta (subespecie Quebec o Mississippi)</li>
@@ -320,7 +320,7 @@ Figura 1.2: Box plot y jitter plot juntos para el largo de petalo de tres especi
 </div>
 <div id="actividad-3-mi-primer-anova" class="section level2">
 <h2><span class="header-section-number">1.3</span> Actividad 3 Mi primer ANOVA</h2>
-<p>En <em>R</em> todos los modelos tienen la siguiente estructura <strong>Funcion(y ~ x1 + x2 + … + xn, data = MisDatos)</strong>, donde la <strong>Funcion</strong> dice el modelo que queremos realizar (por ejemplo ANOVA, regresión lineal, modelos mixtos, etc.), <strong>y</strong> es la variable que queremos explicar, <strong>x1</strong> a <strong>xn</strong> son las variables explicativas, <strong>~</strong> es un simbolo que debe ser leído como explicado por y finalmente <strong>data</strong> es la base de datos que queremos utlizar, en un ANOVA (análisis de varianza), la función en cuestion es aov.</p>
+<p>En <em>R</em> todos los modelos tienen la siguiente estructura <strong>Funcion(y ~ x1 + x2 + … + xn, data = MisDatos)</strong>, donde la <strong>Funcion</strong> dice el modelo que queremos realizar (por ejemplo ANOVA, regresión lineal, modelos mixtos, etc.), <strong>y</strong> es la variable que queremos explicar, <strong>x1</strong> a <strong>xn</strong> son las variables explicativas, <strong>~</strong> es un símbolo que debe ser leído como explicado por y finalmente <strong>data</strong> es la base de datos que queremos utilizar, en un ANOVA (análisis de varianza), la función en cuestión es aov.</p>
 <p>En el siguiente código vemos si el largo del pétalo de las flores del género <em>Iris</em>, pueden ser explicados por la especie a la que estas plantas pertenecen, por lo que generamos un modelo llamado <em>Primer.Anova</em> con la función <strong>aov</strong>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">Primer.Anova &lt;-<span class="st"> </span><span class="kw">aov</span>(Petal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris)</code></pre>
 <p>Para acceder a la tabla de resultados utilizamos la función <strong>summary</strong></p>
@@ -332,7 +332,7 @@ Figura 1.2: Box plot y jitter plot juntos para el largo de petalo de tres especi
 <p>Si establecemos el valor de alfa en 0.05 y al ver en la tabla que el valor de p es menor a alfa, rechazamos la hipótesis nula de que las medias son iguales, y decidimos que la media del largo de pétalo es distinta entre las especies.</p>
 <div id="ejercicio" class="section level3">
 <h3><span class="header-section-number">1.3.1</span> Ejercicio</h3>
-<p>Determine si para la base de datos <strong>CO2</strong> la captación de <span class="math inline">\(CO_2\)</span> es distinto entre platnas con tratamiento de enfriamiento y sin enfriamiento.</p>
+<p>Determine si para la base de datos <strong>CO2</strong> la captación de <span class="math inline">\(CO_2\)</span> es distinto entre plantas con tratamiento de enfriamiento y sin enfriamiento.</p>
 </div>
 <div id="simulador-de-anova" class="section level3">
 <h3><span class="header-section-number">1.3.2</span> Simulador de ANOVA</h3>

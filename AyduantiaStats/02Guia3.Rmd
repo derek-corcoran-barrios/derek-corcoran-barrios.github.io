@@ -7,13 +7,13 @@ suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
 
 ## Objetivos de este práctico
 
-- Entender los supuestos de un ANOVA de una via (independencia, aleatoreidad, homocedasticidad y normalidad)
+- Entender los supuestos de un ANOVA de una vía (independencia, aleatoriedad, homocedasticidad y normalidad)
 - Entender el concepto de mínimos cuadrados
 - Saber cuando realizar un ANOVA e interpretar sus resultados
 
 ## Actividad 1 Sueño en mamíferos
 
-En esta actividad intentaremos ver si hay diferencias en horas de sueño en mamíferos por Orden o dieta. Los datos fueron extraidos del trabajo de @savage2007quantitative y estan incorporados en la base de datos de *ggplot2* con el nombre de *msleep*, pero estarán en webcursos en formato csv de todas formas. Para la guía los ejemplos se generarán en base a la base de datos *InsectSprays* que está en *R* y que fue extraída de @beall1942transformation, en la cual se testean la efectividad de insecticidas en Spray en la abundancia de insectos en plantaciones. Y en la base de datos *iris* que ya fue entregada, en la que se miden distintas caracteristicas florales de especies del genero *Iris* [@anderson1935irises].
+En esta actividad intentaremos ver si hay diferencias en horas de sueño en mamíferos por Orden o dieta. Los datos fueron extraídos del trabajo de @savage2007quantitative y están incorporados en la base de datos de *ggplot2* con el nombre de *msleep*, pero estarán en webcursos en formato csv de todas formas. Para la guía los ejemplos se generarán en base a la base de datos *InsectSprays* que está en *R* y que fue extraída de @beall1942transformation, en la cual se testean la efectividad de insecticidas en Spray en la abundancia de insectos en plantaciones. Y en la base de datos *iris* que ya fue entregada, en la que se miden distintas características florales de especies del genero *Iris* [@anderson1935irises].
 
 ### Homogeneidad de varianza
 
@@ -34,7 +34,7 @@ Para explorar visualmente si existe homogeneidad de varianza, se compraran las c
 
 #### Test de Bartlett
 
-Para realizar un test de homogeneidad de varianza se realiza el test de bartlett [@bartlett1937properties], en este se usa nuestra conocida formula *y ~ x*, esto es, y explicado por x junto a la función *bartlett.test*. Para nuestro caso usariamos:
+Para realizar un test de homogeneidad de varianza se realiza el test de bartlett [@bartlett1937properties], en este se usa nuestra conocida formula *y ~ x*, esto es, y explicado por x junto a la función *bartlett.test*. Para nuestro caso usaríamos:
 
 ```{r}
 bartlett.test(count ~ spray, data = InsectSprays)
@@ -62,7 +62,7 @@ ANOVA.Iris <- aov(Sepal.Width ~ Species, data = iris)
 
 #### Extracción de los residuales del modelo
 
-Para exter los residuales, podemos hacerlo de dos formas, si solo queremos un vector de sus valores, podemos extraelo desde el modelo mimso utlizando *$residuals*. Si queremos guardarlo en un dataframe mas completo podemos utilizar la función *augment* del paquete *broom*.
+Para extraer los residuales, podemos hacerlo de dos formas, si solo queremos un vector de sus valores, podemos extraerlo desde el modelo mismo utilizando *$residuals*. Si queremos guardarlo en un dataframe mas completo podemos utilizar la función *augment* del paquete *broom*.
 
 ```{r}
 Residuales <- ANOVA.Iris$residuals
@@ -95,7 +95,7 @@ hist(Residuales)
 
 ##### QQplot
 
-El qq plot es otra forma visual de establecer si los residuales son o no son normales, para esto, lo esperado es que la gráfica resultante sea una diagonal lo mas recta posible, para esto usaremos la función *qqnorm*, con nuestros residuales, denuevo, podemos usar cualquiera de las dos versiones de nuestros datos:
+El qq plot es otra forma visual de establecer si los residuales son o no son normales, para esto, lo esperado es que la gráfica resultante sea una diagonal lo mas recta posible, para esto usaremos la función *qqnorm*, con nuestros residuales, de nuevo, podemos usar cualquiera de las dos versiones de nuestros datos:
 
 ```{r, echo=TRUE, eval=FALSE}
 qqnorm(Residuales)
@@ -139,7 +139,7 @@ $$Observado - Predicho$$
 
 El objetivo de todo modelo es el de minimizar estos errores, al ajustar el mejor modelo posible.
 
-Los errores seimpre se calculan al cuadrado, discutiremos por que en clase
+Los errores siempre se calculan al cuadrado, discutiremos por que en clase
 
 $$\sum_{i=1}^{n} (Observado - Predicho)^2$$
 

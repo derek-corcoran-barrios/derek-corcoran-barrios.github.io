@@ -5,16 +5,20 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
 ```
 
-Puedes encontrar una version inteactiva de esta guía [aquí](http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/).
+Puedes encontrar una versión interactiva de esta guía [aquí](http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/).
 
-La prueba t de student fue desarrollada por Gosset cuando trabajaba para la cervezería Guinness [@student1908probable]. Esta prueba permite comparar las medias de una muestra con la media teórica de una población, o comparar dos poblaciones. Una de las características de la prueba de student, es que permite la alternativa de ver si dos medias son diferentes o, si uno busca más confianza determinar si una media es mayor, o menor que otra. Para la prueba t de Student, se determina un valor de t, usando la siguiente formula:
+La prueba t de student fue desarrollada por Gosset cuando trabajaba para la cervecería Guinness [@student1908probable]. Esta prueba permite comparar las medias de una muestra con la media teórica de una población, o comparar dos poblaciones. Una de las características de la prueba de student, es que permite la alternativa de ver si dos medias son diferentes o, si uno busca más confianza determinar si una media es mayor, o menor que otra. Para la prueba t de Student, se determina un valor de t, usando la siguiente formula (ecuación \@ref(eq:tStud)):
 
-$$t = \frac{(\bar{x} - \mu)/(\frac{\sigma}{\sqrt{n}})}{s}$$
+\begin{equation} 
+  t = \frac{(\bar{x} - \mu)/(\frac{\sigma}{\sqrt{n}})}{s}
+  (\#eq:tStud)
+\end{equation} 
+
 El estadístico $t$ posee un valor de p asociado dependiendo de los grados de libertad de la prueba.
 
 ### Pruebas de una muestra
 
-Las pruebas de una muestra nos permiten poner a prueba si la media de una población son distintas a una media teórica. Como ejemplo veremos el caso de las erupciones del géiser *Old Faithful*, localizado en el Parque Nacional Yellowstone. Un guardaparque del lugar dice que este géiser erupta cada 1 hora. Por suerte *R* posee una base de datos de @azzalini1990look llamada *faithfull*, la cual utilizaremos para determinar si esto es cierto o no usando la función `t.test`. Esta base de datos tiene dos columnas *eruptions*, que muestra la duración en minutos de cada erupción y *waiting* que presenta la espera en minutos entre erupciones.
+Las pruebas de una muestra nos permiten poner a prueba si la media de una población son distintas a una media teórica. Como ejemplo veremos el caso de las erupciones del géiser *Old Faithful*, localizado en el Parque Nacional Yellowstone. Un guarda-parque del lugar dice que este géiser erupta cada 1 hora. Por suerte *R* posee una base de datos de @azzalini1990look llamada *faithfull*, la cual utilizaremos para determinar si esto es cierto o no usando la función `t.test`. Esta base de datos tiene dos columnas *eruptions*, que muestra la duración en minutos de cada erupción y *waiting* que presenta la espera en minutos entre erupciones.
 
 Cuando usamos esta función con una muestra necesitamos llenar 2 argumentos:
 
@@ -33,13 +37,13 @@ En este caso el valor de p nos dice que la media es diferente a 60.
 
 #### Ejercicio 1
 
-La base de datos *airquality* (incorporada como ejemplo en **R**), muestra entre otras variables las partículas de ozono en Nueva York, cada día de Mayo a Septiembre de 1973 entre las 13:00 y las 15:00 [@chambers35graphical]. Supongamos que ustedes estan a cargo de una agencia ambiental, y están estudiando en que meses deben reducir la actividad vehicular de Nueva York. Para esto planean disminuir a la mitad los pasajes del metro de Nueva York todos los meses que en promedio tengan sobre 55 ppb. Para esto deben comprobar estadisticamente que el mes en que harán esto tiene promedios sobre 55.
+La base de datos *airquality* (incorporada como ejemplo en **R**), muestra entre otras variables las partículas de ozono en Nueva York, cada día de Mayo a Septiembre de 1973 entre las 13:00 y las 15:00 [@chambers35graphical]. Supongamos que ustedes están a cargo de una agencia ambiental, y están estudiando en que meses deben reducir la actividad vehicular de Nueva York. Para esto planean disminuir a la mitad los pasajes del metro de Nueva York todos los meses que en promedio tengan sobre 55 ppb. Para esto deben comprobar estadisticamente que el mes en que harán esto tiene promedios sobre 55.
 
 ### Pruebas de dos muestras
 
-Las pruebas de dos muestras nos permiten ver si hay diferencias significativas entre las medias de dos muestras. En la base de datos `mtcars`, hay una columna que determina si los vehículos son de cambios manuales o automáticos. En este caso 0 significa automático y 1 significa manual. En la figura 1 podemos ver una inspección gráfica de las posibles diferencias.
+Las pruebas de dos muestras nos permiten ver si hay diferencias significativas entre las medias de dos muestras. En la base de datos `mtcars`, hay una columna que determina si los vehículos son de cambios manuales o automáticos. En este caso 0 significa automático y 1 significa manual. En la figura \@ref(fig:autom) podemos ver una inspección gráfica de las posibles diferencias.
 
-```{r, fig.cap="Comparación de eficiencia entre vehiculos automaticos y manuales"}
+```{r autom, fig.cap="Comparación de eficiencia entre vehiculos automaticos y manuales"}
 data("mtcars")
 mt <- mtcars
 mt$am <- ifelse(mtcars$am  == 0, "automatico", "manual")
@@ -47,24 +51,24 @@ mt <- as.data.frame(mt)
 ggplot(mt, aes(x = am, y = mpg)) + geom_boxplot() + geom_jitter(aes(color = am))
 ```
 
-Para hacer la comparación debemos agregar el argumento `var.equal` el cual en este caso asumiremos que es verdad, ya que en la próxima sección veremos los supuestos de la prueba t y las consecuencias de las violaciones de estos supuestos. En este caso podemos usar el simbolo `~` a ser leido como explicado por para la prueba t de dos muestras.
+Para hacer la comparación debemos agregar el argumento `var.equal` el cual en este caso asumiremos que es verdad, ya que en la próxima sección veremos los supuestos de la prueba t y las consecuencias de las violaciones de estos supuestos. En este caso podemos usar el símbolo `~` a ser leído como explicado por para la prueba t de dos muestras.
 
 ```{r, echo=TRUE}
 t.test(mpg ~ am, data = mtcars, var.equal =TRUE)
 ```
 
-En este caso se determinaría que los vehiculos manuales (am = 1), son más eficientes que sus contrapartes automáticas.
+En este caso se determinaría que los vehículos manuales (am = 1), son más eficientes que sus contra-partes automáticas.
 
 #### Ejercicio 2
 
 Para el siguiente ejercicio usaremos la base de datos `BeerDark` disponible en webcursos o en el siguiente [link](https://archive.org/download/BeerDark/BeerDark.csv). Esta base de datos posee 7 columnas, pero usaremos solo 4 de ellas:
 
 * **Estilo:** Separa las cervezas entre Porters y Stouts
-* **Grado_Alcoholico:** El grado alcoholico de las cervezas
+* **Grado_Alcoholico:** El grado alcohólico de las cervezas
 * **Amargor:** Valor IBU (International Bittering Units), a mayor valor más amarga la cerveza
 * **Color:** A mayor valor más oscura la cerveza.
 
-Determinar si las cervezas Porter y Stouts son distintas en grado alcoholico, amargor y/o color. 
+Determinar si las cervezas Porter y Stouts son distintas en grado alcohólico, amargor y/o color. 
 
 ## Supuestos de la prueba de t y alternativas
 
@@ -76,13 +80,13 @@ Los supuestos de la t de student son las siguientes [@boneau1960effects]
 
 ### Prueba de una muestra
 
-Como siempre la independencia de las muestras es algo que solo puede determinarse en base a el diseño del muestreo, y por otro lado, al haber solo una muestra, la homogeneidad de varianza no es un problema, en este caso solo podemos ver si la distribución es normal. Volviendo a nuestro ejemplo de una muestra, con la base de datos `faithfull`, veamos en base a un histograma (figura 2), qqplot (figura 3) y test de shapiro, si los datos son normales o no:
+Como siempre la independencia de las muestras es algo que solo puede determinarse en base a el diseño del muestreo, y por otro lado, al haber solo una muestra, la homogeneidad de varianza no es un problema, en este caso solo podemos ver si la distribución es normal. Volviendo a nuestro ejemplo de una muestra, con la base de datos `faithfull`, veamos en base a un histograma (figura \@ref(fig:Hist)), qqplot (figura \@ref(fig:QQ)) y test de shapiro, si los datos son normales o no:
 
-```{r, echo = TRUE, fig.cap= "Histograma de los minutos de espera de el géiser Old Fiathful"}
+```{r Hist, echo = TRUE, fig.cap= "Histograma de los minutos de espera de el géiser Old Fiathful"}
 hist(faithful$waiting, xlab = "Minutos de espera entre erupciones")
 ```
 
-```{r, echo = TRUE, fig.cap= "QQplot de los minutos de espera de el géiser Old Fiathful"}
+```{r QQ, echo = TRUE, fig.cap= "QQplot de los minutos de espera de el géiser Old Fiathful"}
 qqnorm(faithful$waiting)
 ```
 
@@ -102,45 +106,52 @@ Que en este caso nos lleva a la misma conclusión que nuestro ejemplo anterior.
 
 ### Prueba de dos muestras
 
-Para una prueba de dos muestras, podemos testear tanto la homogeneidad de varianza como la normalidad, para ver las dos cosas al mismo tiempo podemos usar un gráfico de violín (figura 4). En este caso, las distribuciones no se ven muy diferentes a la normalidad, pero las varianzas se ven un tanto distintas, podemos seguir explorando esto visualmente usando la función `hist` previamente generando dos data frames, uno para autos automatico y otro para manuales. 
+Para una prueba de dos muestras, podemos testear tanto la homogeneidad de varianza como la normalidad, para ver las dos cosas al mismo tiempo podemos usar un gráfico de violín (figura \@ref(fig:Violin)). En este caso, las distribuciones no se ven muy diferentes a la normalidad, pero las varianzas se ven un tanto distintas, podemos seguir explorando esto visualmente usando la función `hist` previamente generando dos data frames, uno para autos automático y otro para manuales. 
 
-```{r, echo = TRUE, fig.cap="Comparación de distribuciones y varianzas de los vehiculos automáticos "}
+```{r, echo = TRUE}
 data("mtcars")
 mt <- mtcars
 mt$am <- ifelse(mtcars$am  == 0, "automatico", "manual")
 mt <- as.data.frame(mt)
+```
+
+
+```{r Violin, echo = TRUE, fig.cap="Comparación de distribuciones y varianzas de los vehiculos automáticos "}
 ggplot(mt, aes(x = am, y = mpg)) + geom_violin()
 ```
 
-En este caso, las distribuciones no se ven muy diferentes a la normalidad, pero las varianzas se ven un tanto distintas, podemos seguir explorando esto separando los datos en vehiculos automáticos y manuales para hacer histogramas, en este caso es importante que los ejes sean iguales, para eso en el histograma usaremos los parametros ylim y xlim.
+En este caso, las distribuciones no se ven muy diferentes a la normalidad, pero las varianzas se ven un tanto distintas, podemos seguir explorando esto separando los datos en vehículos automáticos y manuales para hacer histogramas, en este caso es importante que los ejes sean iguales, para eso en el histograma usaremos los parámetros ylim y xlim.
 
-```{r, echo = TRUE, fig.cap="Histograma de vehiculos manuales"}
+```{r}
 manuales <- mt %>% filter(am == "manual")
+```
+
+
+```{r Manual, echo = TRUE, fig.cap="Histograma de vehiculos manuales"}
 hist(manuales$mpg, xlim = c(10,35), ylim = c(0,5))
 ```
 
-```{r, echo = TRUE, fig.cap="Histograma de vehiculos automáticos"}
+```{r}
 autos <- mt %>% filter(am == "automatico")
+```
+
+
+```{r Auto, echo = TRUE, fig.cap="Histograma de vehiculos automáticos"}
 hist(autos$mpg, xlim = c(10,35), ylim = c(0,5))
 ```
 
-Como vemos, los vehículos manuales no parecen tener distribución normal como se ve en la figura 5, esto podemos comprobarlo con el qqlot de los mismos datos (figura 5)
+Como vemos, los vehículos manuales no parecen tener distribución normal como se ve en la figura \@ref(fig:Manual), esto podemos comprobarlo con el qqlot de los mismos datos (figura \@ref(fig:qqManual))
 
-```{r, echo = TRUE, fig.cap= "QQplot de eficiencia de vehiculos con cambios manuales"}
+```{r qqManual, echo = TRUE, fig.cap= "QQplot de eficiencia de vehiculos con cambios manuales"}
 qqnorm(manuales$mpg)
 ```
 
 #### Ejercicio 3
 
-Como siempre la independencia de las muestras es algo que solo puede determinarse en base a el diseño del muestreo, y por otro lado, al haber solo una muestra, la homogeneidad de varianza no es un problema, en este caso solo podemos ver si la distribución es normal. Volviendo a nuestro ejercicio de una muestra, con la base de datos `airquality`, evalue basado en histograma, qqplot y test de shapiro si se debe reevaluar la hipótesis para los meses de julio y agosto
+Como siempre la independencia de las muestras es algo que solo puede determinarse en base a el diseño del muestreo, y por otro lado, al haber solo una muestra, la homogeneidad de varianza no es un problema, en este caso solo podemos ver si la distribución es normal. Volviendo a nuestro ejercicio de una muestra, con la base de datos `airquality`, evalúe basado en histograma, qqplot y test de shapiro si se debe revaluar la hipótesis para los meses de julio y agosto
 
 Para una prueba de dos muestras, podemos testear tanto la homogeneidad de varianza como la normalidad, para ver las dos cosas al mismo tiempo podemos usar un gráfico de violín `geom_violin` en *ggplot2*, lo cual puede seguir siendo explorando esto visualmente usando la función `hist` generando dos data frames, uno por cada clase de datos.
 
-Evalúe si es necesario revaluar la hipotesis de que el amargor es distinto entre ambos estilos de cerveza
-
-
-<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/"style="border: 0; position:absolute; top:5%; left:0; right:0; bottom:0; width:100%; height:95%"">
-</iframe>
-
+Evalúe si es necesario revaluar la hipótesis de que el amargor es distinto entre ambos estilos de cerveza
 
 ## Bibliografía

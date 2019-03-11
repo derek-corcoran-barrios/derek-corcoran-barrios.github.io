@@ -208,14 +208,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="objetivos-de-este-practico" class="section level2">
 <h2><span class="header-section-number">2.1</span> Objetivos de este práctico</h2>
 <ul>
-<li>Entender los supuestos de un ANOVA de una via (independencia, aleatoreidad, homocedasticidad y normalidad)</li>
+<li>Entender los supuestos de un ANOVA de una vía (independencia, aleatoriedad, homocedasticidad y normalidad)</li>
 <li>Entender el concepto de mínimos cuadrados</li>
 <li>Saber cuando realizar un ANOVA e interpretar sus resultados</li>
 </ul>
 </div>
 <div id="actividad-1-sueno-en-mamiferos" class="section level2">
 <h2><span class="header-section-number">2.2</span> Actividad 1 Sueño en mamíferos</h2>
-<p>En esta actividad intentaremos ver si hay diferencias en horas de sueño en mamíferos por Orden o dieta. Los datos fueron extraidos del trabajo de <span class="citation">Savage and West (<a href="#ref-savage2007quantitative">2007</a>)</span> y estan incorporados en la base de datos de <em>ggplot2</em> con el nombre de <em>msleep</em>, pero estarán en webcursos en formato csv de todas formas. Para la guía los ejemplos se generarán en base a la base de datos <em>InsectSprays</em> que está en <em>R</em> y que fue extraída de <span class="citation">Beall (<a href="#ref-beall1942transformation">1942</a>)</span>, en la cual se testean la efectividad de insecticidas en Spray en la abundancia de insectos en plantaciones. Y en la base de datos <em>iris</em> que ya fue entregada, en la que se miden distintas caracteristicas florales de especies del genero <em>Iris</em> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span>.</p>
+<p>En esta actividad intentaremos ver si hay diferencias en horas de sueño en mamíferos por Orden o dieta. Los datos fueron extraídos del trabajo de <span class="citation">Savage and West (<a href="#ref-savage2007quantitative">2007</a>)</span> y están incorporados en la base de datos de <em>ggplot2</em> con el nombre de <em>msleep</em>, pero estarán en webcursos en formato csv de todas formas. Para la guía los ejemplos se generarán en base a la base de datos <em>InsectSprays</em> que está en <em>R</em> y que fue extraída de <span class="citation">Beall (<a href="#ref-beall1942transformation">1942</a>)</span>, en la cual se testean la efectividad de insecticidas en Spray en la abundancia de insectos en plantaciones. Y en la base de datos <em>iris</em> que ya fue entregada, en la que se miden distintas características florales de especies del genero <em>Iris</em> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span>.</p>
 <div id="homogeneidad-de-varianza" class="section level3">
 <h3><span class="header-section-number">2.2.1</span> Homogeneidad de varianza</h3>
 <div id="inspeccion-visual" class="section level4">
@@ -232,7 +232,7 @@ Figura 2.1: Cuenta de insectos según tipo de insecticida
 </div>
 <div id="test-de-bartlett" class="section level4">
 <h4><span class="header-section-number">2.2.1.2</span> Test de Bartlett</h4>
-<p>Para realizar un test de homogeneidad de varianza se realiza el test de bartlett <span class="citation">(Bartlett <a href="#ref-bartlett1937properties">1937</a>)</span>, en este se usa nuestra conocida formula <em>y ~ x</em>, esto es, y explicado por x junto a la función <em>bartlett.test</em>. Para nuestro caso usariamos:</p>
+<p>Para realizar un test de homogeneidad de varianza se realiza el test de bartlett <span class="citation">(Bartlett <a href="#ref-bartlett1937properties">1937</a>)</span>, en este se usa nuestra conocida formula <em>y ~ x</em>, esto es, y explicado por x junto a la función <em>bartlett.test</em>. Para nuestro caso usaríamos:</p>
 <pre><code>## 
 ##  Bartlett test of homogeneity of variances
 ## 
@@ -258,7 +258,7 @@ Figura 2.2: Ancho de sépalo según especie del género Iris
 <p>Debido a ello, podemos testar si los residuales tienen una distribución normalidad de los residuales, para esto lo primero que debemos hacer es un ANOVA, como fue explicado en el práctico anterior y guardar este objeto con un nombre:</p>
 <div id="extraccion-de-los-residuales-del-modelo" class="section level4">
 <h4><span class="header-section-number">2.2.2.1</span> Extracción de los residuales del modelo</h4>
-<p>Para exter los residuales, podemos hacerlo de dos formas, si solo queremos un vector de sus valores, podemos extraelo desde el modelo mimso utlizando <em>$residuals</em>. Si queremos guardarlo en un dataframe mas completo podemos utilizar la función <em>augment</em> del paquete <em>broom</em>.</p>
+<p>Para extraer los residuales, podemos hacerlo de dos formas, si solo queremos un vector de sus valores, podemos extraerlo desde el modelo mismo utilizando <em>$residuals</em>. Si queremos guardarlo en un dataframe mas completo podemos utilizar la función <em>augment</em> del paquete <em>broom</em>.</p>
 <p>La segunda opción nos entregará más información que podremos utilizar más tarde, pero ambas sirven para testear normalidad, la siguiente tabla muestra las primeras 6 observaciones generadas por la función <em>augment</em>, donde <em>resid</em>, son los residuales (Ver tabla <a href="Supuestos.html#tab:TabResid">2.1</a>.</p>
 <table>
 <caption><span id="tab:TabResid">Tabla 2.1: </span>primeras 6 observaciones del dataframe resultante de augment</caption>
@@ -362,7 +362,7 @@ Figura 2.3: Histograma de los resiudales del modelo ANOVA
 </div>
 <div id="qqplot" class="section level5">
 <h5><span class="header-section-number">2.2.2.2.2</span> QQplot</h5>
-<p>El qq plot es otra forma visual de establecer si los residuales son o no son normales, para esto, lo esperado es que la gráfica resultante sea una diagonal lo mas recta posible, para esto usaremos la función <em>qqnorm</em>, con nuestros residuales, denuevo, podemos usar cualquiera de las dos versiones de nuestros datos:</p>
+<p>El qq plot es otra forma visual de establecer si los residuales son o no son normales, para esto, lo esperado es que la gráfica resultante sea una diagonal lo mas recta posible, para esto usaremos la función <em>qqnorm</em>, con nuestros residuales, de nuevo, podemos usar cualquiera de las dos versiones de nuestros datos:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(Residuales)
 <span class="kw">qqnorm</span>(Resultados<span class="op">$</span>.resid)</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-19"></span>
@@ -401,7 +401,7 @@ Figura 2.5: Errores de una regresión lineal ejemplificados con la linea entre e
 <p>En la figura y en la formula vemos ejemplificado que es el error, también conocido como residual, este es simplemente el valor observado</p>
 <p><span class="math display">\[Observado - Predicho\]</span></p>
 <p>El objetivo de todo modelo es el de minimizar estos errores, al ajustar el mejor modelo posible.</p>
-<p>Los errores seimpre se calculan al cuadrado, discutiremos por que en clase</p>
+<p>Los errores siempre se calculan al cuadrado, discutiremos por que en clase</p>
 <p><span class="math display">\[\sum_{i=1}^{n} (Observado - Predicho)^2\]</span></p>
 <iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/?showcase=0" width="672" height="800px">
 </iframe>

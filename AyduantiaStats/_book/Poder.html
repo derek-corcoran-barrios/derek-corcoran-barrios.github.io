@@ -209,12 +209,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.1</span> Obejtivos del práctico</h2>
 <ul>
 <li>Entender cálculos de poder en base a matriz de confusión</li>
-<li>Primera tarea de prácico</li>
+<li>Primera tarea de práctico</li>
 </ul>
 </div>
 <div id="matriz-de-confusion" class="section level2">
 <h2><span class="header-section-number">3.2</span> Matriz de confusión</h2>
-<p>La matriz de confusión es una herramienta de toma de desiciones, en el caso especial de la toma de desiciones tenemos la siguiente matriz de confusión (Tabla <a href="Poder.html#tab:errores">3.1</a>)</p>
+<p>La matriz de confusión es una herramienta de toma de decisiones, en el caso especial de la toma de decisiones tenemos la siguiente matriz de confusión (Tabla <a href="Poder.html#tab:errores">3.1</a>)</p>
 <table>
 <caption><span id="tab:errores">Tabla 3.1: </span>Tabla de confusión de errores</caption>
 <thead>
@@ -237,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>Esto puede ser facilmente ejemplificado con el problema de una alarma de humo (tabla<a href="Poder.html#tab:Confucion">3.2</a>), en este caso cuando la alarma suena y no hay fuego y suena la alarma tenemos un error de tipo 1, en cambio si hay fuego y la alarma no suena tenemos un error de tipo 2</p>
+<p>Esto puede ser fácilmente ejemplificado con el problema de una alarma de humo (tabla<a href="Poder.html#tab:Confucion">3.2</a>), en este caso cuando la alarma suena y no hay fuego y suena la alarma tenemos un error de tipo 1, en cambio si hay fuego y la alarma no suena tenemos un error de tipo 2</p>
 <table>
 <caption><span id="tab:Confucion">Tabla 3.2: </span>Matriz de confusión de una alarma de incendio</caption>
 <thead>
@@ -279,15 +279,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="calculo-de-poder-en-r" class="section level2">
 <h2><span class="header-section-number">3.3</span> Calculo de poder en R</h2>
-<p>Para hacer calculos de poder en ANOVAS de una y dos vías en <em>R</em>, utilizamos el paquete <em>pwr2</em> <span class="citation">(Lu, Liu, and Koestler <a href="#ref-Pengcheng2017">2017</a>)</span>. En este paquete podemos utilizar la función <em>pwr.1way</em> para determinar el poder de un ANOVA de una vía, los argumentos de esta funcion son:</p>
+<p>Para hacer cálculos de poder en ANOVAS de una y dos vías en <em>R</em>, utilizamos el paquete <em>pwr2</em> <span class="citation">(Lu, Liu, and Koestler <a href="#ref-Pengcheng2017">2017</a>)</span>. En este paquete podemos utilizar la función <em>pwr.1way</em> para determinar el poder de un ANOVA de una vía, los argumentos de esta función son:</p>
 <ul>
 <li><em>K</em>: El número de grupos a testear</li>
 <li><em>n</em>: Número de individuos por grupo</li>
 <li><em>Alpha</em>: Nivel de significancia</li>
 <li><em>Delta</em>: Valor mínimo a detectar</li>
-<li><em>Sigma</em>: Desviación estandar de la muestra</li>
+<li><em>Sigma</em>: Desviación estándar de la muestra</li>
 </ul>
-<p>Para calculos precisos de n necesarios para muestras usar la siguiente app</p>
+<p>Para cálculos precisos de n necesarios para muestras usar la siguiente app</p>
 <iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny3/?showcase=0" width="672" height="450px">
 </iframe>
 </div>
@@ -345,7 +345,7 @@ Figura 3.1: Mortalidades calculadas en 10 zonas de tres ríos
 <li>Revise los supuestos del ANOVA para su base de datos tanto gráficamente como con tests y determine si se puede realizar el anova</li>
 <li>Diga si según su diseño hay diferencias significativas en la mortalidad de patos entre los ríos</li>
 </ul></li>
-<li><p>Cada zona a muestrear requiere de un monitoreo exahustivo, que tiene un costo de 500.000 pesos (esto es 1.500.000 de pesos si consideramos los 3 ríos). La ONG <em>RioSano</em> consiguió 20.000.000 de pesos para este estudio. Dadas esas limitaciones, genere un balance de <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> y <span class="math inline">\(n\)</span> dada esa limitación para hacer el mejor estudio posible dadas las consecuencias, justifique su respuesta.</p></li>
+<li><p>Cada zona a muestrear requiere de un monitoreo exhaustivo, que tiene un costo de 500.000 pesos (esto es 1.500.000 de pesos si consideramos los 3 ríos). La ONG <em>RioSano</em> consiguió 20.000.000 de pesos para este estudio. Dadas esas limitaciones, genere un balance de <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> y <span class="math inline">\(n\)</span> dada esa limitación para hacer el mejor estudio posible dadas las consecuencias, justifique su respuesta.</p></li>
 </ol>
 <p>Genere un informe para la ONG <em>RioSano</em> incorporando estos 5 puntos e incluya una introducción, metodología, resultados, discusión-conclusión y bibliografía, envíe el script de como generó los resultados</p>
 
