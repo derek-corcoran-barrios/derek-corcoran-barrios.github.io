@@ -3264,7 +3264,7 @@ table{border-collapse:collapse;border-spacing:0}td,th{padding:0}*{-webkit-box-si
 
 MEAN &lt;- summarize(iris, MEAN.PETAL = mean(Petal.Length))</pre>
 
-<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
 
 <thead>
 
@@ -3299,10 +3299,12 @@ MEAN.PETAL
 </article></slide><slide class=""><hgroup><h2>summarize y group_by (continuado)</h2></hgroup><article  id="summarize-y-group_by-continuado" class="build">
 
 <pre class = 'prettyprint lang-r'>MEAN &lt;- group_by(iris, Species)
-MEAN &lt;- summarize(MEAN, MEAN.PETAL = mean(Petal.Length))
-kable(MEAN)</pre>
+MEAN &lt;- summarize(MEAN, MEAN.PETAL = mean(Petal.Length))</pre>
 
-<table>
+<pre class = 'prettyprint lang-r'>kable(MEAN) %&gt;% kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, 
+    &quot;responsive&quot;))</pre>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
 
 <thead>
 

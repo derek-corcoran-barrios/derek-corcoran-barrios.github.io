@@ -151,7 +151,7 @@ MEAN <- summarize(iris, MEAN.PETAL = mean(Petal.Length))
 ```
 
 ```{r, echo = FALSE}
-kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
 
@@ -160,8 +160,12 @@ kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover"))
 ```{r}
 MEAN <- group_by(iris, Species)
 MEAN <- summarize(MEAN, MEAN.PETAL = mean(Petal.Length))
-kable(MEAN)
 ```
+
+```{r, echo = FALSE}
+kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
 
 ## Pipeline (%>%) {.build}
 
@@ -172,6 +176,11 @@ kable(MEAN)
 MEAN <- iris %>% group_by(Species) %>% summarize(MEAN.PETAL = mean(Petal.Length))
 kable(MEAN)
 ```
+
+```{r, echo=FALSE}
+kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
 
 ## Pipeline (%>%) otro ejemplo {.build}
 
