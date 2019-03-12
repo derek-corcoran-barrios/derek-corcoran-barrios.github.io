@@ -10,7 +10,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
 library(tidyverse)
 library(broom)
 library(kableExtra)
@@ -151,7 +151,7 @@ MEAN <- summarize(iris, MEAN.PETAL = mean(Petal.Length))
 ```
 
 ```{r, echo = FALSE}
-kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
 
@@ -163,7 +163,7 @@ MEAN <- summarize(MEAN, MEAN.PETAL = mean(Petal.Length))
 ```
 
 ```{r, echo = FALSE}
-kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
 
@@ -174,11 +174,10 @@ kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condens
 
 ```{r}
 MEAN <- iris %>% group_by(Species) %>% summarize(MEAN.PETAL = mean(Petal.Length))
-kable(MEAN)
 ```
 
 ```{r, echo=FALSE}
-kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
 
@@ -187,8 +186,12 @@ kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condens
 
 ```{r}
 MEAN <- iris %>% group_by(Species) %>% summarize_all(mean)
-kable(MEAN)
 ```
+
+```{r, echo=FALSE}
+kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
 
 ## Filter {.build}
 
@@ -196,21 +199,30 @@ kable(MEAN)
 
 ```{r, echo=FALSE}
 DF <- data.frame(simbolo = c("<", ">", "==", ">=", "<="), significado = c("Menor que", "Mayor que","Igual a", "mayor o igual a", "menor o igual a"), simbolo_cont = c("!=","%in%", "is.na", "!is.na", "| &"), significado_cont = c("distinto a", "dentro del grupo", "es NA", "no es NA", "o, y"))
-kable (DF)
 ```
+
+```{r, echo = FALSE}
+kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)%>%
+  column_spec(c(1,2,3), border_right = T)
+```
+
 
 ## Ejemplos de filter agregando a lo anterior {.build .small}
 
 ```{r}
 data("iris")
-DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(funs(mean, sd))
-kable(DF)
+DF <- iris %>% filter(Species != "versicolor") %>% 
+  group_by(Species) %>% summarise_all(funs(mean, sd))
 ```
+
+```{r, echo = FALSE}
+kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "200px")
+```
+
 
 
 ## Select
 
-<div style="float: left; width: 40%;">
 
 * Selecciona columnas dentro de un data.frame
 
@@ -220,24 +232,16 @@ Nasa2 <- as.data.frame(nasa)
 Temp <- Nasa2 %>% filter(year != 1995) %>% group_by(year) %>% select(contains("temp")) %>% summarize_all(mean)
 ```
 
-</div>
 
-<div style="float: right; width: 60%;">
-```{r}
-kable(Temp)
+```{r, echo = FALSE}
+kable(Temp) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) #%>% scroll_box(width = "900px", height = "200px")
 ```
 
-```{r, echo=FALSE, eval=FALSE}
-library(readr)
-library(ggplot2)
-classic_rock <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/classic-rock/classic-rock-song-list.csv")
-colnames(classic_rock)<- make.names(colnames(classic_rock))
-ggplot(classic_rock, aes(x = Release.Year)) + geom_histogram()  + xlim(c(1950, 2010))
-```
 
-</div>
 
-# Ejercicios {.build}
+# Ejercicios 
+
+## Ejercicios {.build}
 
 * Usando la base de datos *storm* del paquete *tidyverse*, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
     + solución:
@@ -245,9 +249,9 @@ ggplot(classic_rock, aes(x = Release.Year)) + geom_histogram()  + xlim(c(1950, 2
 
 # ggplot2
 
-## Visualización de datos (ggplot2) {.build, .small}
+## Visualización de datos (ggplot2) {.build .smaller}
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 * Paquete de visualización de datos de tidy data.
 * ggplot(data.frame, aes(nombres de columna)).
@@ -256,15 +260,14 @@ ggplot(classic_rock, aes(x = Release.Year)) + geom_histogram()  + xlim(c(1950, 2
 * Personalización de ejes y leyendas.
 * Dos [links](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/) para aprender [mas](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf).
 
-```{r, eval=FALSE}
-library(ggplot2)
+```{r, eval=FALSE, tidy.opts = list(width.cutoff = 20)}
 data("diamonds")
 ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
 ```
 
 </div>
 
-<div style="float: right; width: 60%;">
+<div style="float: right; width: 70%;">
 
 ```{r, echo=FALSE}
 library(ggplot2)
@@ -284,92 +287,66 @@ ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme
 ## color {.build .small}
 
 ```{r}
-library(ggplot2)
-data("diamonds")
 ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
 ```
 
-alpha
-=================
-class: small-code
+## alpha
 
 ```{r}
-library(ggplot2)
-data("diamonds")
 ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut), alpha = 0.1) + theme_classic()
 ```
 
-size
-=================
-class: small-code
+## size {.smaller}
 
-```{r}
-library(ggplot2)
+```{r, tidy.opts = list(width.cutoff = 100)}
 data("mtcars")
 ggplot(mtcars, aes(x = wt, y=mpg)) + geom_point(aes(size = hp)) + theme_classic()
 ```
 
-shape
-=================
-class: small-code
+## shape {.smaller}
 
-```{r}
+```{r, tidy.opts = list(width.cutoff = 100)}
 library(ggplot2)
 data("diamonds")
 ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(shape = cut)) + theme_classic()
 ```
 
-fill
-=================
-class: small-code
+## fill {.smaller}
 
-```{r}
-library(dplyr)
+```{r, tidy.opts = list(width.cutoff = 100)}
 d2 <- diamonds %>% filter(clarity == "I1" | clarity == "IF")
 ggplot(d2, aes(x = cut, y=price)) + geom_boxplot(aes(fill = clarity)) + theme_classic()
 ```
 
 
-Una variable categórica una continua
-===========
+## Una variable categórica una continua
 
 * geom_boxplot
 * geom_jitter
 * geom_violin
 * geom_bar
 
-geom_jitter
-==================
-class: small-code
+## geom_jitter
 
-```{r}
+```{r, tidy.opts = list(width.cutoff = 70)}
 data("iris")
 ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species))
 ```
 
-geom_violin
-================
-class: small-code
+## geom_violin {.smaller}
 
-```{r}
-data("iris")
+```{r, tidy.opts = list(width.cutoff = 100)}
 ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_violin(fill = "red")
 ```
 
-Se pueden combinar
-============
-class: small-code
+## Se pueden combinar {.smaller}
 
-```{r}
-data("iris")
+```{r, tidy.opts = list(width.cutoff = 100)}
 ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_violin() + geom_jitter(aes(color = Species))
 ```
 
-Pero el orden importa
-============
-class: small-code
+## Pero el orden importa {.smaller}
 
-```{r}
-data("iris")
+```{r, tidy.opts = list(width.cutoff = 100)}
 ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species)) + geom_violin()
 ```

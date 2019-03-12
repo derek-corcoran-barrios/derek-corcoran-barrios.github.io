@@ -1,0 +1,92 @@
+[master a07d4ef] <Basketball march 12th
+ 99 files changed, 38 insertions(+), 27 deletions(-)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-10_bf1d3fb984a6fba54eaa746d2a86ddff.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-10_ec389a7878858af1686d4fcf94f79732.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-8_cdb80dd73f9f9fd0e04c1744f22b6086.rdb => unnamed-chunk-10_ec389a7878858af1686d4fcf94f79732.rdb} (100%)
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-10_ec389a7878858af1686d4fcf94f79732.rdx
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-11_55a048e3b568ebd6cd535f7d91fd866e.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-9_226d5ff8b4d2997ff5911ed5b1c748ce.rdb => unnamed-chunk-11_55a048e3b568ebd6cd535f7d91fd866e.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-9_226d5ff8b4d2997ff5911ed5b1c748ce.rdx => unnamed-chunk-11_55a048e3b568ebd6cd535f7d91fd866e.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-11_98f7689e84b0c461b3386771ea47ee14.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-12_01a717bdf02971130e53f7b2e9a8867c.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-11_98f7689e84b0c461b3386771ea47ee14.rdb => unnamed-chunk-12_01a717bdf02971130e53f7b2e9a8867c.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-11_98f7689e84b0c461b3386771ea47ee14.rdx => unnamed-chunk-12_01a717bdf02971130e53f7b2e9a8867c.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-12_349d7c2c09b05631432c36ec67588cac.RData
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-13_215f6853a9468f3a1be1a58d151d6345.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-13_451ea81e4982a3f7c9695f642e3f77fb.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-12_349d7c2c09b05631432c36ec67588cac.rdb => unnamed-chunk-13_451ea81e4982a3f7c9695f642e3f77fb.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-12_349d7c2c09b05631432c36ec67588cac.rdx => unnamed-chunk-13_451ea81e4982a3f7c9695f642e3f77fb.rdx} (100%)
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-14_0705047e39f4732952208e74ca23aeea.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-13_215f6853a9468f3a1be1a58d151d6345.rdb => unnamed-chunk-14_0705047e39f4732952208e74ca23aeea.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-13_215f6853a9468f3a1be1a58d151d6345.rdx => unnamed-chunk-14_0705047e39f4732952208e74ca23aeea.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-14_fb8684dbb0584e8856aec0428301cdfd.RData
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-15_1a796b9d105bf8c74fb4df95320ce881.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-15_ecf1430d9e694f707f16e31af8523e73.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-14_fb8684dbb0584e8856aec0428301cdfd.rdb => unnamed-chunk-15_ecf1430d9e694f707f16e31af8523e73.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-14_fb8684dbb0584e8856aec0428301cdfd.rdx => unnamed-chunk-15_ecf1430d9e694f707f16e31af8523e73.rdx} (100%)
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-16_c54779054fd1d9385b27bfc387428e29.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-27_2d53b27284b6fc4fd7870bc8e619e430.rdb => unnamed-chunk-16_c54779054fd1d9385b27bfc387428e29.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-27_2d53b27284b6fc4fd7870bc8e619e430.rdx => unnamed-chunk-16_c54779054fd1d9385b27bfc387428e29.rdx} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-16_a8bb8a54e3d4f85bca9b6ca7db477ea1.RData => unnamed-chunk-17_cddb23fa804024613a274327c9475382.RData} (96%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-26_1cfb8f3aca2b676b61a128d675e92dbb.rdb => unnamed-chunk-17_cddb23fa804024613a274327c9475382.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-26_1cfb8f3aca2b676b61a128d675e92dbb.rdx => unnamed-chunk-17_cddb23fa804024613a274327c9475382.rdx} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-17_1c546778452277d170a3b0801fb34349.RData => unnamed-chunk-18_bbc034e75ef8cf60303cbf91640d96f8.RData} (97%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-25_c6f28e98a8d9aeef8980a33e7fd69e39.rdb => unnamed-chunk-18_bbc034e75ef8cf60303cbf91640d96f8.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-25_c6f28e98a8d9aeef8980a33e7fd69e39.rdx => unnamed-chunk-18_bbc034e75ef8cf60303cbf91640d96f8.rdx} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-18_c3273f0d80cb741e71c907a1aebf971c.RData => unnamed-chunk-19_192adbaaddb9f055409eddfb91f5abeb.RData} (94%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-18_c3273f0d80cb741e71c907a1aebf971c.rdb => unnamed-chunk-19_192adbaaddb9f055409eddfb91f5abeb.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-18_c3273f0d80cb741e71c907a1aebf971c.rdx => unnamed-chunk-19_192adbaaddb9f055409eddfb91f5abeb.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-20_b6cae5f7489d4d7386b05062706f7bcb.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-19_52132d5bb6c6638bc8c97f335925cf14.RData => unnamed-chunk-20_d6099e3c3b7c5192ccc3c7c6d2c4e805.RData} (91%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-24_c62c51dff9c10bccc655748ff3cb75ab.rdb => unnamed-chunk-20_d6099e3c3b7c5192ccc3c7c6d2c4e805.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-24_c62c51dff9c10bccc655748ff3cb75ab.rdx => unnamed-chunk-20_d6099e3c3b7c5192ccc3c7c6d2c4e805.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-21_1132b973e808209c43b691967b3ce1d2.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-21_e93791bce810aa7ef4865ecd28b97af2.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-22_1e8482487a3d3919a27a160dc66ec8a5.rdb => unnamed-chunk-21_e93791bce810aa7ef4865ecd28b97af2.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-22_1e8482487a3d3919a27a160dc66ec8a5.rdx => unnamed-chunk-21_e93791bce810aa7ef4865ecd28b97af2.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-22_1e8482487a3d3919a27a160dc66ec8a5.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-22_f22b4f89517f6dd981abfaa0be2958da.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-21_1132b973e808209c43b691967b3ce1d2.rdb => unnamed-chunk-22_f22b4f89517f6dd981abfaa0be2958da.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-21_1132b973e808209c43b691967b3ce1d2.rdx => unnamed-chunk-22_f22b4f89517f6dd981abfaa0be2958da.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-23_7b5af0fe9e1956beefa8f32fc8b4ccd2.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-23_adaa62fff69b6a7491639780992f418e.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-20_b6cae5f7489d4d7386b05062706f7bcb.rdb => unnamed-chunk-23_adaa62fff69b6a7491639780992f418e.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-20_b6cae5f7489d4d7386b05062706f7bcb.rdx => unnamed-chunk-23_adaa62fff69b6a7491639780992f418e.rdx} (100%)
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-24_2bf32215f845b48b982ade8f6484e750.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-23_7b5af0fe9e1956beefa8f32fc8b4ccd2.rdb => unnamed-chunk-24_2bf32215f845b48b982ade8f6484e750.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-23_7b5af0fe9e1956beefa8f32fc8b4ccd2.rdx => unnamed-chunk-24_2bf32215f845b48b982ade8f6484e750.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-24_c62c51dff9c10bccc655748ff3cb75ab.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-25_06078ef0b87e66b2542a33c84d45ac87.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-19_52132d5bb6c6638bc8c97f335925cf14.rdb => unnamed-chunk-25_06078ef0b87e66b2542a33c84d45ac87.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-19_52132d5bb6c6638bc8c97f335925cf14.rdx => unnamed-chunk-25_06078ef0b87e66b2542a33c84d45ac87.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-25_c6f28e98a8d9aeef8980a33e7fd69e39.RData
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-26_1cfb8f3aca2b676b61a128d675e92dbb.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-26_474055c843e99251aef3295333518c9f.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-17_1c546778452277d170a3b0801fb34349.rdb => unnamed-chunk-26_474055c843e99251aef3295333518c9f.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-17_1c546778452277d170a3b0801fb34349.rdx => unnamed-chunk-26_474055c843e99251aef3295333518c9f.rdx} (100%)
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-27_1aa816c04ec59bcb97a4899a173663af.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-16_a8bb8a54e3d4f85bca9b6ca7db477ea1.rdb => unnamed-chunk-27_1aa816c04ec59bcb97a4899a173663af.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-16_a8bb8a54e3d4f85bca9b6ca7db477ea1.rdx => unnamed-chunk-27_1aa816c04ec59bcb97a4899a173663af.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-27_2d53b27284b6fc4fd7870bc8e619e430.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-28_1671eeb07877a83e1354fed10248c994.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-15_1a796b9d105bf8c74fb4df95320ce881.rdb => unnamed-chunk-28_1671eeb07877a83e1354fed10248c994.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-15_1a796b9d105bf8c74fb4df95320ce881.rdx => unnamed-chunk-28_1671eeb07877a83e1354fed10248c994.rdx} (100%)
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-8_cdb80dd73f9f9fd0e04c1744f22b6086.RData
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-8_cdb80dd73f9f9fd0e04c1744f22b6086.rdx
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-8_f9265b1ac5081299e8f386dd26ad225f.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-8_f9265b1ac5081299e8f386dd26ad225f.rdb
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-8_f9265b1ac5081299e8f386dd26ad225f.rdx
+ delete mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-9_226d5ff8b4d2997ff5911ed5b1c748ce.RData
+ create mode 100644 AyudantiaStatsPres/Clase1/Clase1_cache/html/unnamed-chunk-9_7baa94b1d87e382991ac238f256d13dc.RData
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-10_bf1d3fb984a6fba54eaa746d2a86ddff.rdb => unnamed-chunk-9_7baa94b1d87e382991ac238f256d13dc.rdb} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_cache/html/{unnamed-chunk-10_bf1d3fb984a6fba54eaa746d2a86ddff.rdx => unnamed-chunk-9_7baa94b1d87e382991ac238f256d13dc.rdx} (100%)
+ rewrite AyudantiaStatsPres/Clase1/Clase1_files/figure-html/unnamed-chunk-20-1.png (95%)
+ copy AyudantiaStatsPres/Clase1/Clase1_files/figure-html/{unnamed-chunk-20-1.png => unnamed-chunk-21-1.png} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_files/figure-html/{unnamed-chunk-21-1.png => unnamed-chunk-22-1.png} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_files/figure-html/{unnamed-chunk-22-1.png => unnamed-chunk-23-1.png} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_files/figure-html/{unnamed-chunk-23-1.png => unnamed-chunk-24-1.png} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_files/figure-html/{unnamed-chunk-24-1.png => unnamed-chunk-25-1.png} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_files/figure-html/{unnamed-chunk-25-1.png => unnamed-chunk-26-1.png} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_files/figure-html/{unnamed-chunk-26-1.png => unnamed-chunk-27-1.png} (100%)
+ rename AyudantiaStatsPres/Clase1/Clase1_files/figure-html/{unnamed-chunk-27-1.png => unnamed-chunk-28-1.png} (100%)
+ rewrite Season2019.rds (71%)
