@@ -5,7 +5,6 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
 ```
 
-
 ## Actividad 1 Educación en Chile
 
 En esta actividad exploraremos los resultados de la PSU en Chile para el año 2017. Pueden encontrar la base de datos original en [Data Chile](https://es.datachile.io/geo/chile#education).
@@ -100,7 +99,6 @@ ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_boxplot() + geom_jitter(
 
 ## Actividad 2 Captación de CO2 en plantas    
 
-
 Utilizaremos base de datos $CO_2$ [@potvin1990statistical] enviada al curso. Esta base de datos, también presente en R, tiene las siguientes variables
 
 * **Plant**: Identidad de cada planta
@@ -116,6 +114,10 @@ Utilizaremos base de datos $CO_2$ [@potvin1990statistical] enviada al curso. Est
 * Genere gráficos exploratorios para contestar esta pregunta
 
 ## Actividad 3 Mi primer ANOVA
+
+### antes de empezar a entender el ANOVA
+
+### Como hacer un ANOVA en R
 
 En *R* todos los modelos tienen la siguiente estructura **Funcion(y ~ x1 + x2 + ... + xn, data = MisDatos)**, donde la **Funcion** dice el modelo que queremos realizar (por ejemplo ANOVA, regresión lineal, modelos mixtos, etc.), **y** es la variable que queremos explicar, **x1** a **xn** son las variables explicativas, **~** es un símbolo que debe ser leído como explicado por y finalmente **data** es la base de datos que queremos utilizar, en un ANOVA (análisis de varianza), la función en cuestión es aov. 
 
@@ -137,8 +139,7 @@ Si establecemos el valor de alfa en 0.05 y al ver en la tabla que el valor de p 
 
 Determine si para la base de datos **CO2** la captación de $CO_2$ es distinto entre plantas con tratamiento de enfriamiento y sin enfriamiento.
 
-
-### Simulador de ANOVA
+#### Simulador de ANOVA
 
 ```{r}
 knitr::include_app("http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny2/", height = "1500px")

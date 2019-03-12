@@ -74,20 +74,18 @@ Clases prácticas donde cada estudiante trabajará con datos entregados para des
 
 ##  Evaluación
 
-* Evaluación 1: Informe exploratorio de base de datos 25%
-* Evaluación 2: Presentación 25%
-* Evaluación 3: Informe final 50%
+El trabajo práctico de este ramo es un 20% de la nota final del curso, y es obligatorio ir a todos los trabajos prácticos para pasar el ramo.
+
+Durante los primeros 15 minutos se tomará un control. Pasado ese período, no se acepta la entrega de controles, recibiendo calificación 1. La ausencia a los trabajos prácticos puede ser causal de reprobación del curso. Ademas de los controles habrán trabajos de investigación.
+ 
+La nota final de los practicos se evaluará de la siguiente forma:
+ 
+* Tests de entrada: 60%
+* Trabajos: 40%
 
 
 ## Presentación de introducción
 
 Para la introducción de los prácticos seguiremos un a presentación que se encuentra en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase1/Clase1.html)
 
-## Libros de consulta
-
-Los principios de este curso están explicados en los siguientes libros gratuitos.
-
-* Gandrud, Christopher. Reproducible Research with R and R Studio. CRC Press, 2013. Available for free in the following
-[link](https://englianhu.files.wordpress.com/2016/01/reproducible-research-with-r-and-studio-2nd-edition.pdf)
-* Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. Implementing reproducible research. CRC Press, 2014. Available for free in the following [link](http://web.stanford.edu/~vcs/papers/ijclp-STODDEN-2009.pdf)
 

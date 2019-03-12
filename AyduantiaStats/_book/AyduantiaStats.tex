@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-03-11}
+    \date{2019-03-12}
 
 \usepackage{booktabs}
 
@@ -221,34 +221,24 @@ Clases prácticas donde cada estudiante trabajará con datos entregados para des
 \hypertarget{evaluacion}{%
 \section{Evaluación}\label{evaluacion}}
 
+El trabajo práctico de este ramo es un 20\% de la nota final del curso, y es obligatorio ir a todos los trabajos prácticos para pasar el ramo.
+
+Durante los primeros 15 minutos se tomará un control. Pasado ese período, no se acepta la entrega de controles, recibiendo calificación 1. La ausencia a los trabajos prácticos puede ser causal de reprobación del curso. Ademas de los controles habrán trabajos de investigación.
+
+La nota final de los practicos se evaluará de la siguiente forma:
+
 \begin{itemize}
 \tightlist
 \item
-  Evaluación 1: Informe exploratorio de base de datos 25\%
+  Tests de entrada: 60\%
 \item
-  Evaluación 2: Presentación 25\%
-\item
-  Evaluación 3: Informe final 50\%
+  Trabajos: 40\%
 \end{itemize}
 
 \hypertarget{presentacion-de-introduccion}{%
 \section{Presentación de introducción}\label{presentacion-de-introduccion}}
 
 Para la introducción de los prácticos seguiremos un a presentación que se encuentra en este \href{http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase1/Clase1.html}{link}
-
-\hypertarget{libros-de-consulta}{%
-\section{Libros de consulta}\label{libros-de-consulta}}
-
-Los principios de este curso están explicados en los siguientes libros gratuitos.
-
-\begin{itemize}
-\tightlist
-\item
-  Gandrud, Christopher. Reproducible Research with R and R Studio. CRC Press, 2013. Available for free in the following
-  \href{https://englianhu.files.wordpress.com/2016/01/reproducible-research-with-r-and-studio-2nd-edition.pdf}{link}
-\item
-  Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. Implementing reproducible research. CRC Press, 2014. Available for free in the following \href{http://web.stanford.edu/~vcs/papers/ijclp-STODDEN-2009.pdf}{link}
-\end{itemize}
 
 \hypertarget{Explorando}{%
 \chapter{Exploración de datos y tu primer ANOVA}\label{Explorando}}
@@ -292,11 +282,11 @@ a modo de ejemplo vemos la tabla \ref{tab:MediaIris} mostrando la media y númer
 \end{Highlighting}
 \end{Shaded}
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:MediaIris}Resumen con la media y número de muestras del largo de pétalo de las flores de tres especies del género Iris}
 \centering
-\begin{tabular}[t]{lrr}
+\begin{tabular}{lrr}
 \toprule
 Species & Promedio & N\\
 \midrule
@@ -428,6 +418,17 @@ Utilizaremos base de datos \(CO_2\) \citep{potvin1990statistical} enviada al cur
 \hypertarget{actividad-3-mi-primer-anova}{%
 \section{Actividad 3 Mi primer ANOVA}\label{actividad-3-mi-primer-anova}}
 
+\hypertarget{antes-de-empezar-a-entender-el-anova}{%
+\subsection{antes de empezar a entender el ANOVA}\label{antes-de-empezar-a-entender-el-anova}}
+
+\hypertarget{simulador-de-anova}{%
+\subsubsection{Simulador de ANOVA}\label{simulador-de-anova}}
+
+\href{http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny2/}{\includegraphics{AyduantiaStats_files/figure-latex/unnamed-chunk-8-1.pdf}}
+
+\hypertarget{como-hacer-un-anova-en-r}{%
+\subsection{Como hacer un ANOVA en R}\label{como-hacer-un-anova-en-r}}
+
 En \emph{R} todos los modelos tienen la siguiente estructura \textbf{Funcion(y \textasciitilde{} x1 + x2 + \ldots{} + xn, data = MisDatos)}, donde la \textbf{Funcion} dice el modelo que queremos realizar (por ejemplo ANOVA, regresión lineal, modelos mixtos, etc.), \textbf{y} es la variable que queremos explicar, \textbf{x1} a \textbf{xn} son las variables explicativas, \textbf{\textasciitilde{}} es un símbolo que debe ser leído como explicado por y finalmente \textbf{data} es la base de datos que queremos utilizar, en un ANOVA (análisis de varianza), la función en cuestión es aov.
 
 En el siguiente código vemos si el largo del pétalo de las flores del género \emph{Iris}, pueden ser explicados por la especie a la que estas plantas pertenecen, por lo que generamos un modelo llamado \emph{Primer.Anova} con la función \textbf{aov}.
@@ -454,11 +455,6 @@ Si establecemos el valor de alfa en 0.05 y al ver en la tabla que el valor de p 
 \subsection{Ejercicio}\label{ejercicio}}
 
 Determine si para la base de datos \textbf{CO2} la captación de \(CO_2\) es distinto entre plantas con tratamiento de enfriamiento y sin enfriamiento.
-
-\hypertarget{simulador-de-anova}{%
-\subsection{Simulador de ANOVA}\label{simulador-de-anova}}
-
-\href{http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny2/}{\includegraphics{AyduantiaStats_files/figure-latex/unnamed-chunk-10-1.pdf}}
 
 \hypertarget{Supuestos}{%
 \chapter{Supuestos de ANOVA y mínimos cuadrados}\label{Supuestos}}
@@ -546,11 +542,11 @@ Para extraer los residuales, podemos hacerlo de dos formas, si solo queremos un 
 
 La segunda opción nos entregará más información que podremos utilizar más tarde, pero ambas sirven para testear normalidad, la siguiente tabla muestra las primeras 6 observaciones generadas por la función \emph{augment}, donde \emph{resid}, son los residuales (Ver tabla \ref{tab:TabResid}.
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:TabResid}primeras 6 observaciones del dataframe resultante de augment}
 \centering
-\begin{tabular}[t]{r|l|r|r|r|r|r|r|r}
+\begin{tabular}{r|l|r|r|r|r|r|r|r}
 \hline
 Sepal.Width & Species & .fitted & .se.fit & .resid & .hat & .sigma & .cooksd & .std.resid\\
 \hline
@@ -680,11 +676,11 @@ Los errores siempre se calculan al cuadrado, discutiremos por que en clase
 
 La matriz de confusión es una herramienta de toma de decisiones, en el caso especial de la toma de decisiones tenemos la siguiente matriz de confusión (Tabla \ref{tab:errores})
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:errores}Tabla de confusión de errores}
 \centering
-\begin{tabular}[t]{l|l|l}
+\begin{tabular}{l|l|l}
 \hline
   & Hipótesis nula cierta & Hipótesis alternativa cierta\\
 \hline
@@ -697,11 +693,11 @@ Acepto hipótesis alternativa & Error tipo 1 & No hay error\\
 
 Esto puede ser fácilmente ejemplificado con el problema de una alarma de humo (tabla\ref{tab:Confucion}), en este caso cuando la alarma suena y no hay fuego y suena la alarma tenemos un error de tipo 1, en cambio si hay fuego y la alarma no suena tenemos un error de tipo 2
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:Confucion}Matriz de confusión de una alarma de incendio}
 \centering
-\begin{tabular}[t]{lll}
+\begin{tabular}{lll}
 \toprule
   & No hay fuego & Hay fuego\\
 \midrule
@@ -779,11 +775,11 @@ Ante esto la empresa contrata un científico, el cual hace una estimación de la
 \caption{\label{fig:unnamed-chunk-28}Mortalidades calculadas en 10 zonas de tres ríos}
 \end{figure}
 
-\begin{table}
+\begin{table}[t]
 
 \caption{\label{tab:unnamed-chunk-29}Tabla de ANOVA de una vía de la mortalidad de patos de los tres ríos}
 \centering
-\begin{tabular}[t]{l|r|r|r|r|r}
+\begin{tabular}{l|r|r|r|r|r}
 \hline
 term & df & sumsq & meansq & statistic & p.value\\
 \hline

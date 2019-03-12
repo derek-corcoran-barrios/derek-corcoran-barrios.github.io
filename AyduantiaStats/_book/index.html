@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-03-11">
+<meta name="date" content="2019-03-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -140,7 +140,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#metodologia"><i class="fa fa-check"></i><b>0.5</b> Metodología</a></li>
 <li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#evaluacion"><i class="fa fa-check"></i><b>0.6</b> Evaluación</a></li>
 <li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#presentacion-de-introduccion"><i class="fa fa-check"></i><b>0.7</b> Presentación de introducción</a></li>
-<li class="chapter" data-level="0.8" data-path="index.html"><a href="index.html#libros-de-consulta"><i class="fa fa-check"></i><b>0.8</b> Libros de consulta</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="Explorando.html"><a href="Explorando.html"><i class="fa fa-check"></i><b>1</b> Exploración de datos y tu primer ANOVA</a><ul>
 <li class="chapter" data-level="1.1" data-path="Explorando.html"><a href="Explorando.html#actividad-1-educacion-en-chile"><i class="fa fa-check"></i><b>1.1</b> Actividad 1 Educación en Chile</a><ul>
@@ -149,8 +148,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="Explorando.html"><a href="Explorando.html#actividad-2-captacion-de-co2-en-plantas"><i class="fa fa-check"></i><b>1.2</b> Actividad 2 Captación de CO2 en plantas</a></li>
 <li class="chapter" data-level="1.3" data-path="Explorando.html"><a href="Explorando.html#actividad-3-mi-primer-anova"><i class="fa fa-check"></i><b>1.3</b> Actividad 3 Mi primer ANOVA</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="Explorando.html"><a href="Explorando.html#ejercicio"><i class="fa fa-check"></i><b>1.3.1</b> Ejercicio</a></li>
-<li class="chapter" data-level="1.3.2" data-path="Explorando.html"><a href="Explorando.html#simulador-de-anova"><i class="fa fa-check"></i><b>1.3.2</b> Simulador de ANOVA</a></li>
+<li class="chapter" data-level="1.3.1" data-path="Explorando.html"><a href="Explorando.html#antes-de-empezar-a-entender-el-anova"><i class="fa fa-check"></i><b>1.3.1</b> antes de empezar a entender el ANOVA</a></li>
+<li class="chapter" data-level="1.3.2" data-path="Explorando.html"><a href="Explorando.html#como-hacer-un-anova-en-r"><i class="fa fa-check"></i><b>1.3.2</b> Como hacer un ANOVA en R</a></li>
+<li class="chapter" data-level="1.3.3" data-path="Explorando.html"><a href="Explorando.html#ejercicio"><i class="fa fa-check"></i><b>1.3.3</b> Ejercicio</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Supuestos.html"><a href="Supuestos.html"><i class="fa fa-check"></i><b>2</b> Supuestos de ANOVA y mínimos cuadrados</a><ul>
@@ -207,7 +207,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Practicos de Bioestadística 2</h1>
 <p class="author"><em>Derek Corcoran</em></p>
-<p class="date"><em>2019-03-11</em></p>
+<p class="date"><em>2019-03-12</em></p>
 </div>
 <div id="requerimientos" class="section level1 unnumbered">
 <h1>Requerimientos</h1>
@@ -262,24 +262,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="evaluacion" class="section level2">
 <h2><span class="header-section-number">0.6</span> Evaluación</h2>
+<p>El trabajo práctico de este ramo es un 20% de la nota final del curso, y es obligatorio ir a todos los trabajos prácticos para pasar el ramo.</p>
+<p>Durante los primeros 15 minutos se tomará un control. Pasado ese período, no se acepta la entrega de controles, recibiendo calificación 1. La ausencia a los trabajos prácticos puede ser causal de reprobación del curso. Ademas de los controles habrán trabajos de investigación.</p>
+<p>La nota final de los practicos se evaluará de la siguiente forma:</p>
 <ul>
-<li>Evaluación 1: Informe exploratorio de base de datos 25%</li>
-<li>Evaluación 2: Presentación 25%</li>
-<li>Evaluación 3: Informe final 50%</li>
+<li>Tests de entrada: 60%</li>
+<li>Trabajos: 40%</li>
 </ul>
 </div>
 <div id="presentacion-de-introduccion" class="section level2">
 <h2><span class="header-section-number">0.7</span> Presentación de introducción</h2>
 <p>Para la introducción de los prácticos seguiremos un a presentación que se encuentra en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase1/Clase1.html">link</a></p>
-</div>
-<div id="libros-de-consulta" class="section level2">
-<h2><span class="header-section-number">0.8</span> Libros de consulta</h2>
-<p>Los principios de este curso están explicados en los siguientes libros gratuitos.</p>
-<ul>
-<li>Gandrud, Christopher. Reproducible Research with R and R Studio. CRC Press, 2013. Available for free in the following
-<a href="https://englianhu.files.wordpress.com/2016/01/reproducible-research-with-r-and-studio-2nd-edition.pdf">link</a></li>
-<li>Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. Implementing reproducible research. CRC Press, 2014. Available for free in the following <a href="http://web.stanford.edu/~vcs/papers/ijclp-STODDEN-2009.pdf">link</a></li>
-</ul>
 
 </div>
 </div>
