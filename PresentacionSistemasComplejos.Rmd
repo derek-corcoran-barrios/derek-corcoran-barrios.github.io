@@ -1,0 +1,292 @@
+---
+title: "Conservation and the complexity of climate change"
+author:
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    logo: puc_logo.jpg
+    widescreen: yes
+runtime: shiny
+---
+
+# The problem
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r, cache = FALSE}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(knitr, rmarkdown, tidyverse, kableExtra, raster, plotly,leaflet, sp, sf, rgdal, fasterize, maps, maptools, rworldxtra, DescTools, ggrepel, png, jpeg)
+```
+
+## How do we plan conservation for the future {.build}
+
+* Protected areas
+
+```{r, cache = TRUE}
+knitr::include_graphics("CHL.png", dpi = 150)
+```
+
+## Are protected areas protecting species {.build}
+
+* GAP Species
+
+```{r}
+knitr::include_graphics("GapAbstract.png", dpi = 100)
+```
+
+## Are protected areas protecting species {.build}
+
+```{r}
+knitr::include_graphics("GapPatagonia.png", dpi = 100)
+```
+
+
+# Preferencias climáticas de una especie (Sebastian)
+
+## Donde esta nuestro habitat
+
+<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/WhereToLive/"style="border: 0; position:absolute; top:5%; left:0; right:0; bottom:0; width:100%; height:95%"></iframe>
+
+
+## El clima esta cambiando...
+
+
+```{r}
+knitr::include_graphics("Temp.gif")
+```
+
+## Y las especies?
+
+```{r}
+knitr::include_graphics("GuanacoBin.gif")
+```
+
+# Prediciendo como cambiará el clima
+
+## Escenarios
+
+```{r}
+Escenarios <- read_rds("Escenarios.rds")
+ggplot(Escenarios, aes(x = Year, y = Temperatura)) + geom_line(aes(color = Escenario)) + theme_classic() + xlab("Año")
+```
+
+
+## Dispersión de modelos
+
+```{r}
+#include_graphics("newplot.png", dpi = 150)
+bin <- read_csv("binaria.csv") %>% mutate(Type = case_when(GCM == "ENSEMBLE" ~ "ENSEMBLE",
+                                                                                         GCM == "BASELINE" ~ "BASELINE",
+                                                                                         GCM %in% c("giss_e2_r", "mri_cgcm3", "giss_e2_r_cc", "giss_e2_h_cc", "cesm1_cam5", 
+                                                                                                    "nimr_hadgem2_ao", "miroc_miroc5", "mohc_hadgem2_es", "csiro_access1_3", 
+                                                                                                    "bcc_csm1_1_m", "mpi_esm_lr", "cesm1_bgc", "csiro_mk3_6_0", "csiro_access1_0", 
+                                                                                                    "inm_cm4", "ipsl_cm5a_mr", "bnu_esm", "cccma_canesm2", 
+                                                                                                    "ncar_ccsm4", "gfdl_cm3", "mohc_hadgem2_cc", "ncc_noresm1_m", 
+                                                                                                    "ipsl_cm5a_lr", "fio_esm", "miroc_esm_chem", "bcc_csm1_1", "lasg_fgoals_g2", 
+                                                                                                     "gfdl_esm2m", "gfdl_esm2g", "miroc_esm") ~ "GCM"))
+bin <- bin[,c(1:3,6)]
+colnames(bin) <- c("GCM", "bio_1", "bio_12", "Type")
+
+ggplot(bin, aes(x = bio_1, y = bio_12, label = GCM)) + geom_vline(xintercept = filter(bin, GCM == "BASELINE")$bio_1, color = "red",alpha = 0.8,  lty = 2) +  geom_hline(yintercept = filter(bin, GCM == "BASELINE")$bio_12, color = "red",alpha = 0.8, lty = 2) + geom_point(aes(color = Type)) + theme_bw() + theme(legend.title = element_blank(), legend.position = "bottom") + geom_text_repel() + xlab("Temperatrua media anual [°C]") + ylab("Precipitación anual [mm]")
+
+```
+
+```{r}
+plot_delta_pattern5b <- readRDS("plot_delta_pattern5b.rds")
+```
+
+## Cambios en temperatura
+
+```{r, fig.cap= "Cambios en la temperatura desde la actualidad"}
+plot_delta_pattern5b$bio_1
+```
+
+# Donde protejemos a las especies?
+
+## Volvamos a nuestro ejemplo humano
+
+* Supongamos que se donde estará el área futura de un individuo
+
+```{r, cache = TRUE,  fig.align="center"}
+knitr::include_graphics("Distancia.png", dpi = 100)
+```
+
+* ¿Protejemos Punta Arenas y Coyhaique?
+
+## ¿Por donde me voy?
+
+```{r, cache = TRUE,  fig.align="center"}
+knitr::include_graphics("Hielo.jpg", dpi = 120)
+```
+
+## Opción 1
+
+* Vuelo
+
+```{r, cache = TRUE,  fig.align="center"}
+knitr::include_graphics("Avion.png", dpi = 130)
+```
+
+## Opción 2
+
+* Camino
+
+```{r, cache = TRUE,  fig.align="center"}
+knitr::include_graphics("Caminando.png", dpi = 130)
+```
+
+# Debo tomar en cuenta ruta y velocidad
+
+## Landscape te persigue
+
+* Escenario 2.5 es más lento, tengo 24 horas para llegar a punta arenas
+
+## Opción 1
+
+* Vuelo
+
+```{r, cache = TRUE,  fig.align="center"}
+knitr::include_graphics("Avion.png", dpi = 130)
+```
+
+## Opción 2
+
+* Camino
+
+```{r, cache = TRUE,  fig.align="center"}
+knitr::include_graphics("Caminando.png", dpi = 130)
+```
+
+## Opción 3 
+
+* Manejo
+
+```{r, cache = TRUE,  fig.align="center"}
+knitr::include_graphics("Auto.png", dpi = 130)
+```
+
+* Si el escenario es 8.5 tengo 13 horas para llegar
+
+# Como lo hago en realidad
+
+## Grafos y network flow
+
+```{r}
+knitr::include_graphics("GuanacoBin.gif")
+```
+
+## Grafos y network flow
+
+```{r}
+knitr::include_graphics("NetFlow1.png", dpi = 140)
+```
+
+## Grafos y network flow
+
+```{r}
+knitr::include_graphics("Equation.png", dpi = 140)
+```
+
+
+## Grafos y network flow
+
+```{r}
+knitr::include_graphics("NetFlow2.png", dpi = 140)
+```
+
+## Grafos y network flow
+
+```{r}
+knitr::include_graphics("NetFlow3.png", dpi = 140)
+```
+
+## Ejemplo Proteacea {.build}
+
+* 121 species of plants in cape proteacea 
+* Least cost to add areas to the network of protected areas of the cape
+* 8 time slices 2000-2070, decadal slices
+* Potential dispersal 2 kms per decade
+* Goal 200 Chains per species (or maximum if 200 cannot be achieved)
+
+
+## Costo
+
+<div style="float: left; width: 30%;">
+* Naidoo, Robin, and Takuya Iwamura. 2007. 
+crop productivity
+* livestock density 
+* prices
+* Modify it to take into account developed areas and Protected areas
+</div>
+
+
+<div style="float: right; width: 70%;">
+```{r, fig.align='right'}
+knitr::include_graphics("CostPerHect.png", dpi = 100)
+```
+</div>
+
+## Areas protegidas
+
+<div style="float: left; width: 30%;">
+* Protected Areas layer class I and II from World Database on Protected Areas (WDPA)
+* A multiplier 0 if it is protected, and 1 if it is not
+</div>
+
+
+<div style="float: right; width: 70%;">
+```{r, fig.align='right'}
+knitr::include_graphics("Protected.png", dpi = 100)
+```
+</div>
+
+## Land Use
+
+<div style="float: left; width: 50%;">
+```{r, fig.align='left'}
+knitr::include_graphics("Crops.png", dpi = 120)
+```
+</div>
+
+
+<div style="float: right; width: 50%;">
+```{r, fig.align='right'}
+knitr::include_graphics("Urbanization.png", dpi = 120)
+```
+</div>
+
+## Land Use
+
+```{r, fig.align='center'}
+knitr::include_graphics("Undev.png", dpi = 120)
+```
+
+## Modified cost
+
+```{r, fig.align='center'}
+knitr::include_graphics("CostTotal.png", dpi = 120)
+```
+
+## Solutions (linear)
+
+```{r, fig.align='center'}
+knitr::include_graphics("LinearSols2.png", dpi = 120)
+```
+
+## Solutions (Quadratic)
+
+```{r, fig.align='center'}
+knitr::include_graphics("QuadraticSols2.png", dpi = 120)
+```
+
+## Conclusiones {.build}
+
+* Estocastizidad en la dispersión
+    + Tipos de dispersión
+    + determinista/estocastico (viento)
+* Quadratic gives more options than linear for network flow
+* Lower values give us alternative routes for species
+* It keeps track of migration routes and optimizes best of both worlds
+* Unique in being able to add species later on

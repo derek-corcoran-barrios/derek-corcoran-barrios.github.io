@@ -117,6 +117,20 @@ Utilizaremos base de datos $CO_2$ [@potvin1990statistical] enviada al curso. Est
 
 ### antes de empezar a entender el ANOVA
 
+El ANOVA compara medias entre grupos, lo principal es la comparación entre los cuadrados de los residuales intergrupos, y los residuales intragrupos, los primeros son los cuadrados de la diferencia entre las medias de todas las observaciones ($\tilde{x}_t$) y las medias de cada grupo $\tilde{x}_g$ al cuadrado multiplicado por el número de observaciones totales (ver ecuación \@ref(eq:intergrups)), cambia las medias del simlador de anova a continuacion y selecciona los errores intergrupos y ve como cambian
+
+\begin{equation} 
+  \textrm{Errores_inter_factor} = n \times \sum{(\tilde{x}_t - \tilde{x}_g)^2}
+  (\#eq:intergrups)
+\end{equation} 
+
+#### Simulador de ANOVA
+
+```{r}
+knitr::include_app("http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny2/", height = "1500px")
+```
+
+
 ### Como hacer un ANOVA en R
 
 En *R* todos los modelos tienen la siguiente estructura **Funcion(y ~ x1 + x2 + ... + xn, data = MisDatos)**, donde la **Funcion** dice el modelo que queremos realizar (por ejemplo ANOVA, regresión lineal, modelos mixtos, etc.), **y** es la variable que queremos explicar, **x1** a **xn** son las variables explicativas, **~** es un símbolo que debe ser leído como explicado por y finalmente **data** es la base de datos que queremos utilizar, en un ANOVA (análisis de varianza), la función en cuestión es aov. 
@@ -139,13 +153,4 @@ Si establecemos el valor de alfa en 0.05 y al ver en la tabla que el valor de p 
 
 Determine si para la base de datos **CO2** la captación de $CO_2$ es distinto entre plantas con tratamiento de enfriamiento y sin enfriamiento.
 
-#### Simulador de ANOVA
-
-```{r}
-knitr::include_app("http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny2/", height = "1500px")
-```
-
-<iframe width="560" height="1500" src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/?showcase=0" frameborder="0"</iframe>
-
-<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/?showcase=0"border: 0; position:absolute; top:5%; left:0; right:0; bottom:0; width:100%; height:95%"">
 
