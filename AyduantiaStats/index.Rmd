@@ -88,4 +88,6 @@ La nota final de los practicos se evaluará de la siguiente forma:
 
 Para la introducción de los prácticos seguiremos un a presentación que se encuentra en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase1/Clase1.html)
 
+Si no has conseguido instalar `R`, puedes seguir el práctico usando la siguiente [guía interactiva](http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo1/)
+
 
