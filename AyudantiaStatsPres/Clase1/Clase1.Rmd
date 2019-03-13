@@ -29,7 +29,7 @@ options("kableExtra.html.bsTable" = T)
   + Vectores, data frames y otros
 - Como filtrar y resumir datos
 - Gráficos
-  + histográmas
+  + histogramas
   + boxplots
   + violin plots
 
@@ -51,7 +51,7 @@ options("kableExtra.html.bsTable" = T)
 - Vector: Un conjunto lineal de datos (secuencia génica, serie de tiempo)
 - Matrix: Una tabla con solo números
 - Data Frame: Una tabla donde cada columna tiene un tipo de datos (estándar dorado)
-- List: Aqui podemos meter lo que queramos
+- List: Aquí podemos meter lo que queramos
 </div>
 
 <div style="float: right; width: 60%;">
@@ -66,7 +66,7 @@ knitr::include_graphics("Data.png")
 
 <div style="float: left; width: 40%;">
 * Secuencia lineal de datos
-* Pueden ser de muchos tipos (numéricos, de carácteres, lógicos, etc.)
+* Pueden ser de muchos tipos (numéricos, de caracteres, lógicos, etc.)
 * Ejemplo data(uspop)
 * para crear uno c(1,4,6,7,8)
 * para subsetear un vector se pone el índice entre []
@@ -247,106 +247,8 @@ kable(Temp) %>% kable_styling(bootstrap_options = c("striped", "hover", "condens
     + solución:
     + storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
 
-# ggplot2
+# Kahoot
 
-## Visualización de datos (ggplot2) {.build .smaller}
+## ¿Quien aprendrió mas de estadística?
 
-<div style="float: left; width: 30%;">
-
-* Paquete de visualización de datos de tidy data.
-* ggplot(data.frame, aes(nombres de columna)).
-* + geom_algo(argumentos, aes(columnas)).
-* + theme_algo() estilo.
-* Personalización de ejes y leyendas.
-* Dos [links](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/) para aprender [mas](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf).
-
-```{r, eval=FALSE, tidy.opts = list(width.cutoff = 20)}
-data("diamonds")
-ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
-```
-
-</div>
-
-<div style="float: right; width: 70%;">
-
-```{r, echo=FALSE}
-library(ggplot2)
-data("diamonds")
-ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
-```
-</div>
-
-## Argumentos para geoms {.build}
-
-* **color**: color de líneas o puntos 
-* **alpha**: transparencia, de 0 (transparente) a 1 (sólido)
-* **size**: tamaño de puntos
-* **pch**: típo de punto
-* **fill**: color dentro de un área (barras, intervalos)
-
-## color {.build .small}
-
-```{r}
-ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
-```
-
-## alpha
-
-```{r}
-ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut), alpha = 0.1) + theme_classic()
-```
-
-## size {.smaller}
-
-```{r, tidy.opts = list(width.cutoff = 100)}
-data("mtcars")
-ggplot(mtcars, aes(x = wt, y=mpg)) + geom_point(aes(size = hp)) + theme_classic()
-```
-
-## shape {.smaller}
-
-```{r, tidy.opts = list(width.cutoff = 100)}
-library(ggplot2)
-data("diamonds")
-ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(shape = cut)) + theme_classic()
-```
-
-## fill {.smaller}
-
-```{r, tidy.opts = list(width.cutoff = 100)}
-d2 <- diamonds %>% filter(clarity == "I1" | clarity == "IF")
-ggplot(d2, aes(x = cut, y=price)) + geom_boxplot(aes(fill = clarity)) + theme_classic()
-```
-
-
-## Una variable categórica una continua
-
-* geom_boxplot
-* geom_jitter
-* geom_violin
-* geom_bar
-
-## geom_jitter
-
-```{r, tidy.opts = list(width.cutoff = 70)}
-data("iris")
-ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species))
-```
-
-## geom_violin {.smaller}
-
-```{r, tidy.opts = list(width.cutoff = 100)}
-ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_violin(fill = "red")
-```
-
-## Se pueden combinar {.smaller}
-
-```{r, tidy.opts = list(width.cutoff = 100)}
-ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_violin() + geom_jitter(aes(color = Species))
-```
-
-## Pero el orden importa {.smaller}
-
-```{r, tidy.opts = list(width.cutoff = 100)}
-ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species)) + geom_violin()
-```
+Clickea en ese [link](https://kahoot.it/) para jugar
