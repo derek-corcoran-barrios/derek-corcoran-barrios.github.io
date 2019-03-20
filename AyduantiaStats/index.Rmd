@@ -90,4 +90,8 @@ Para la introducción de los prácticos seguiremos un a presentación que se enc
 
 Si no has conseguido instalar `R`, puedes seguir el práctico usando la siguiente [guía interactiva](http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo1/)
 
+Puedes ver la clase de nuevo en el siguiente video o clickeando en este [link](https://youtu.be/VVqUmAcYvVY)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VVqUmAcYvVY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 

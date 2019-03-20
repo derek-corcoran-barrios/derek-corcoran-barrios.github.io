@@ -1,0 +1,224 @@
+---
+title: "Práctico 2 Análisis exploratorio y el primer anova"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    logo: puc_logo.jpg
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
+library(tidyverse)
+library(broom)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+
+## Actividad 1 Educación en Chile {.build}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+```
+
+* Pueden encontrar la base de datos original en [Data Chile](https://es.datachile.io/geo/chile#education)
+* Trataremos de determinar si existen brechas en la Eduacación Chilena por tipo de institución
+* Para ello, primero trabajaremos realizando análisis exploratorios
+  + Gráficos
+  * Tablas resumen
+* En la próxima tabla veremos la versión cruda de los datos
+* Lo primero que deben hacer es generar una tabla resumen usando el tidyverse (group_by, summarize)
+* Recuerden: **mean()** promedio; **sd()** desviacion estándar, **n()** número de muestras
+
+## Educación en Chile {.build}
+
+```{r}
+EducacionChile <- read_csv("EducacionChile.csv")
+```
+
+```{r, echo = FALSE}
+knitr::kable(EducacionChile, caption = "Datos PSU Chile", digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
+
+```
+
+
+## Resumiendo los datos de Chile {.build .small}
+
+
+```{r, echo=TRUE}
+EducacionChileResumen <- group_by(EducacionChile, Administration) %>% summarise(PromedioPSU = mean(Average.PSU), SD.PSU = sd(Average.PSU), N = n())
+```
+
+```{r, echo=FALSE}
+knitr::kable(EducacionChileResumen, caption = "Promedios totales PSU", digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+¿Qué podemos decir de estos datos?
+
+## Visualización de datos con ggplot2 (tidyverse) {.build}
+
+
+* Función para graficar ggplot
+* Usaremos el simbolo **+** como usabamos el pipeline
+* Aprenderemos dos tipos de gráficos
+  + Box plots
+  + jitter plots
+
+## Visualización de datos con ggplot2 (tidyverse) {.build .small}
+
+* Primero usamos la función ggplot para determinar la base de datos y variables, las variables siempre van dentro de la función aes
+
+```{r, eval=FALSE, echo=TRUE}
+ggplot(MiBaseDeDatos, aes(x = VariableX, y = VariableY)) 
+```
+
+* Luego agregamos el tipo de gráfico que queremos para nuestra figura usando el **+** como pipeline
+
+```{r, eval=FALSE, echo=TRUE}
+ggplot(MiBaseDeDatos, aes(x = VariableX, y = VariableY)) + geom_boxplot()
+```
+
+## Visualización de datos con ggplot2 {.build .small}
+
+<div style="float: left; width: 40%;">
+
+```{r, echo=TRUE}
+ggplot(EducacionChile, aes(x = Administration, y = Average.PSU)) + geom_boxplot()
+```
+
+</div>
+
+<div style="float: right; width: 60%;">
+
+* Box plot
+    + Mediana (linea grueza)
+    + Caja (Cuantiles 25% y 75%)
+    + Bigotes (intervalo de confianza del 95%)
+    + Puntos Outlayers
+* ¿Qué nos dice esto de los datos?
+
+## Visualización de datos con ggplot2 {.build .small}
+
+<div style="float: left; width: 40%;">
+
+```{r, echo=TRUE}
+ggplot(EducacionChile, aes(x = Administration, y = Average.PSU)) + geom_boxplot() + geom_jitter()
+```
+
+</div>
+
+<div style="float: right; width: 60%;">
+
+* Jitter plot
+    + agrega puntos de cada observación
+
+</div>
+
+## Actividad 2 Captación de CO2 en plantas {.build}
+
+Utilizaremos base de datos $CO_2$ enviada al curso, en esta base de datos
+
+* **Plant**: Identidad de cada planta
+* **Type**: Variedad de la planta (subespecie Quebec o Mississippi)
+* **Treatment**: Tratamiento de la planta, algunas fueron enfriadas la noche anterior (Chilled)
+* **conc**: Concentración ambiental de $CO_2$
+* **Uptake**: Captación de $CO_2$ para cada planta en cada día
+
+## Captación de CO2 en plantas {.build}
+
+¿Hay diferencias entre la captación de $CO_2$ en plantas tratadas y no tratadas?
+
+* Genere tablas resumenes que le permitan explorar esta pregunta
+    + ¿Existen variables que puedan confundir el resultado? ¿como trataría los datos para lidiar con esto?
+* Generar gráficos exploratorios para contestar esta pregunta
+
+
+## Captación de CO2 en plantas (Tablas) {.build .small}
+
+```{r, echo = TRUE}
+data("CO2")
+Co2 <- CO2 %>% group_by(Treatment) %>% summarise(PromedioCO2 = mean(uptake), SD.CO2 = sd(uptake), N = n())
+```
+
+```{r, echo = FALSE}
+knitr::kable(Co2, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+
+## Captación de CO2 en plantas (Tablas) {.build .small}
+
+```{r, echo = TRUE}
+Co2Real <- CO2 %>% group_by(Plant, Type, Treatment, ) %>% summarise(PromedioCO2 = mean(uptake))
+```
+
+```{r, echo=FALSE}
+knitr::kable(Co2Real, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+## Captación de CO2 en plantas (Tablas) {.build .small}
+
+```{r, echo = TRUE}
+Co2Resumen <- Co2Real %>% group_by(Treatment) %>% summarise(SD.CO2 = sd(PromedioCO2), PromedioCO2 = mean(PromedioCO2), N = n())
+```
+
+```{r, echo=FALSE}
+knitr::kable(Co2Resumen, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+## Captación de CO2 en plantas (Tablas) {.build .small}
+
+```{r, echo = TRUE}
+Co2Resumen <- Co2Real %>% group_by(Treatment, Type) %>% summarise(SD.CO2 = sd(PromedioCO2), PromedioCO2 = mean(PromedioCO2), N = n())
+```
+
+```{r, echo=FALSE}
+knitr::kable(Co2Resumen, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+## Captación de CO2 en plantas (Gráficos) {.build .small}
+
+
+```{r, echo=TRUE}
+ggplot(CO2, aes(x = Treatment, y = uptake)) + geom_boxplot() + geom_jitter()
+```
+
+## Captación de CO2 en plantas (Gráficos)
+
+
+```{r, echo=TRUE}
+ggplot(CO2, aes(x = Treatment, y = uptake)) + geom_boxplot(aes(fill = Type)) + geom_jitter(aes(color = Type))
+```
+
+## Captación de CO2 en plantas (Gráficos) {.build .small}
+
+```{r, echo=TRUE}
+ggplot(Co2Real, aes(x = Treatment, y = PromedioCO2)) + geom_boxplot() + geom_jitter()
+```
+
+## Captación de CO2 en plantas (Gráficos) {.build .small}
+
+
+```{r, echo=TRUE}
+ggplot(Co2Real, aes(x = Treatment, y = PromedioCO2)) + geom_boxplot(aes(fill = Type)) + geom_jitter(aes(color = Type))
+```
+
+## Captación de CO2 en plantas (Mi primer ANOVA) {.build .small}
+
+* Funcion *aov(y ~ x, data = MisDatos)*
+* Esto se debe leer como y explicado por x. (siempre leer *~* explicado por)
+
+```{r, echo = TRUE}
+Primer.Anova <- aov(PromedioCO2 ~ Treatment, data = Co2Real)
+summary(Primer.Anova)
+```
+
+## Captación de CO2 en plantas (Mi primer ANOVA) {.build .small}
+
+```{r, echo = TRUE}
+Primer.Anova <- aov(PromedioCO2 ~ Treatment + Type, data = Co2Real)
+summary(Primer.Anova)
+```

@@ -1,0 +1,672 @@
+"ID.Region","Region","ID.Comuna","Comuna","ID.Administration","Administration","Average.PSU","Average.NEM","Number.of.records"
+1,"Tarapacá",5,"Alto Hospicio",1,"Municipal",459.798076923077,5.55105263935892,76
+1,"Tarapacá",5,"Alto Hospicio",2,"Particular Subvencionado",455.553624627607,5.54864697619508,1289
+1,"Tarapacá",58,"Colchane",1,"Municipal",370.166666666667,5.49333333969116,3
+1,"Tarapacá",108,"Huara",1,"Municipal",378.230769230769,5.6226666132609,15
+1,"Tarapacá",113,"Iquique",1,"Municipal",445.324712643678,5.56119629453422,877
+1,"Tarapacá",113,"Iquique",2,"Particular Subvencionado",514.791021671827,5.68002734022278,2568
+1,"Tarapacá",113,"Iquique",3,"Particular Pagado",580.561946902655,5.98723577871555,125
+1,"Tarapacá",113,"Iquique",4,"Corporación de Administración Delegada",432.491228070175,5.36794520730842,75
+1,"Tarapacá",217,"Pica",1,"Municipal",443.55,5.6583333214124,24
+1,"Tarapacá",226,"Pozo Almonte",1,"Municipal",410.491428571429,5.62404761314392,211
+1,"Tarapacá",226,"Pozo Almonte",2,"Particular Subvencionado",373,4.90000009536743,1
+2,"Antofagasta",9,"Antofagasta",1,"Municipal",446.045598313126,5.57645134554991,2365
+2,"Antofagasta",9,"Antofagasta",2,"Particular Subvencionado",520.520961145194,5.60823849180096,2220
+2,"Antofagasta",9,"Antofagasta",3,"Particular Pagado",560.569560047562,5.72439176274329,972
+2,"Antofagasta",19,"Calama",1,"Municipal",471.038382453735,5.44453333896139,1734
+2,"Antofagasta",19,"Calama",2,"Particular Subvencionado",523.328888888889,5.6242818838798,746
+2,"Antofagasta",19,"Calama",3,"Particular Pagado",550.815165876777,5.74579711187454,484
+2,"Antofagasta",165,"María Elena",1,"Municipal",457.383928571429,5.89453127980232,64
+2,"Antofagasta",170,"Mejillones",1,"Municipal",427.715189873418,5.87305265225862,95
+2,"Antofagasta",297,"San Pedro De Atacama",1,"Municipal",460.672413793103,5.5738709357477,32
+2,"Antofagasta",313,"Taltal",1,"Municipal",440.323529411765,5.97574195861816,155
+2,"Antofagasta",321,"Tocopilla",1,"Municipal",392.136,5.4755688627323,167
+2,"Antofagasta",321,"Tocopilla",2,"Particular Subvencionado",508.276595744681,5.6530476297651,105
+3,"Atacama",4,"Alto Del Carmen",1,"Municipal",447.97619047619,5.58347826418669,23
+3,"Atacama",21,"Caldera",1,"Municipal",400.185185185185,5.37085715021406,71
+3,"Atacama",21,"Caldera",2,"Particular Subvencionado",474.60824742268,5.54636364416643,110
+3,"Atacama",39,"Chañaral",1,"Municipal",455.2,5.78559055854016,127
+3,"Atacama",39,"Chañaral",2,"Particular Subvencionado",449.428571428571,5.81055556403266,18
+3,"Atacama",68,"Copiapó",1,"Municipal",449.292019347037,5.38073544604542,986
+3,"Atacama",68,"Copiapó",2,"Particular Subvencionado",519.575596816976,5.5211987727756,1296
+3,"Atacama",68,"Copiapó",3,"Particular Pagado",619.943609022556,6.02069181166355,159
+3,"Atacama",81,"Diego De Almagro",1,"Municipal",475.683333333333,5.78509262314549,108
+3,"Atacama",81,"Diego De Almagro",2,"Particular Subvencionado",497.553719008264,5.73225354140913,142
+3,"Atacama",93,"Freirina",1,"Municipal",434.689655172414,5.84225811496858,32
+3,"Atacama",109,"Huasco",1,"Municipal",429.335714285714,5.78207316631224,82
+3,"Atacama",317,"Tierra Amarilla",1,"Municipal",401.350574712644,5.54599999321832,135
+3,"Atacama",330,"Vallenar",1,"Municipal",429.980810234542,5.61399294293811,567
+3,"Atacama",330,"Vallenar",2,"Particular Subvencionado",541.347280334728,5.79700002670288,261
+3,"Atacama",330,"Vallenar",3,"Particular Pagado",634.893939393939,6.22028571537563,35
+4,"Coquimbo",7,"Andacollo",1,"Municipal",442.383928571429,5.50406254827976,64
+4,"Coquimbo",7,"Andacollo",2,"Particular Subvencionado",461.121621621622,5.64184212684631,38
+4,"Coquimbo",27,"Canela",1,"Municipal",433.271739130435,5.97137253892188,51
+4,"Coquimbo",62,"Combarbalá",1,"Municipal",446.020325203252,5.65496403879399,139
+4,"Coquimbo",62,"Combarbalá",2,"Particular Subvencionado",445.152173913043,5.83038460291349,26
+4,"Coquimbo",69,"Coquimbo",1,"Municipal",457.107095046854,5.47845990441062,937
+4,"Coquimbo",69,"Coquimbo",2,"Particular Subvencionado",489.820646506778,5.55048022009416,2260
+4,"Coquimbo",111,"Illapel",1,"Municipal",433.042857142857,5.56145111619486,318
+4,"Coquimbo",111,"Illapel",2,"Particular Subvencionado",509.861878453039,5.70188776084355,196
+4,"Coquimbo",122,"La Higuera",1,"Municipal",364.5,5.5,1
+4,"Coquimbo",126,"La Serena",1,"Municipal",449.795422031474,5.51826738826731,940
+4,"Coquimbo",126,"La Serena",2,"Particular Subvencionado",522.851174496644,5.60361790650025,3404
+4,"Coquimbo",126,"La Serena",3,"Particular Pagado",590.33606557377,5.86911158029698,485
+4,"Coquimbo",156,"Los Vilos",1,"Municipal",439.314049586777,5.68627586693599,145
+4,"Coquimbo",156,"Los Vilos",2,"Particular Subvencionado",480.765486725664,5.67906250804663,128
+4,"Coquimbo",174,"Monte Patria",1,"Municipal",445.014705882353,5.61181819143374,121
+4,"Coquimbo",174,"Monte Patria",2,"Particular Subvencionado",470.693181818182,5.44686275369981,51
+4,"Coquimbo",192,"Ovalle",1,"Municipal",459.649016641452,5.58054715346402,863
+4,"Coquimbo",192,"Ovalle",2,"Particular Subvencionado",516.906482465462,5.64080111273525,1088
+4,"Coquimbo",192,"Ovalle",3,"Particular Pagado",645.181818181818,6.01276595541771,47
+4,"Coquimbo",192,"Ovalle",4,"Corporación de Administración Delegada",427.072916666667,5.20190476614331,63
+4,"Coquimbo",195,"Paihuano",1,"Municipal",414.722222222222,5.46037041699445,27
+4,"Coquimbo",237,"Punitaqui",1,"Municipal",405,5.41258619571554,58
+4,"Coquimbo",237,"Punitaqui",2,"Particular Subvencionado",507.333333333333,5.42684208719354,19
+4,"Coquimbo",271,"Rio Hurtado",1,"Municipal",403.207317073171,5.44808511531099,47
+4,"Coquimbo",278,"Salamanca",1,"Municipal",445.198529411765,5.64846158027649,78
+4,"Coquimbo",278,"Salamanca",2,"Particular Subvencionado",480.355371900826,5.7113688254991,263
+4,"Coquimbo",334,"Vicuña",1,"Municipal",418.556818181818,5.46046730291064,107
+4,"Coquimbo",334,"Vicuña",2,"Particular Subvencionado",468.541463414634,5.75591093905059,249
+5,"Valparaíso",1,"Algarrobo",1,"Municipal",434.841463414634,5.51122447909141,99
+5,"Valparaíso",1,"Algarrobo",2,"Particular Subvencionado",503.181818181818,5.64800002415975,75
+5,"Valparaíso",16,"Cabildo",1,"Municipal",431.089430894309,5.55867856911251,283
+5,"Valparaíso",16,"Cabildo",2,"Particular Subvencionado",544.259259259259,5.7269491583614,118
+5,"Valparaíso",22,"Calera",1,"Municipal",395.521739130435,5.28181160360143,140
+5,"Valparaíso",22,"Calera",2,"Particular Subvencionado",514.438775510204,5.69106871026163,530
+5,"Valparaíso",22,"Calera",3,"Particular Pagado",552.007936507937,6.17030771695651,65
+5,"Valparaíso",22,"Calera",4,"Corporación de Administración Delegada",451.646551724138,5.27845589553609,136
+5,"Valparaíso",24,"Calle Larga",1,"Municipal",401.888888888889,5.03292685020261,41
+5,"Valparaíso",24,"Calle Larga",2,"Particular Subvencionado",455.06976744186,5.46705881754557,51
+5,"Valparaíso",24,"Calle Larga",3,"Particular Pagado",588.315789473684,6.04000000520186,22
+5,"Valparaíso",30,"Cartagena",1,"Municipal",427.205607476636,5.59365080651783,126
+5,"Valparaíso",30,"Cartagena",2,"Particular Subvencionado",476.791907514451,5.56115789162485,191
+5,"Valparaíso",31,"Casablanca",1,"Municipal",424.200819672131,5.56924813851378,134
+5,"Valparaíso",31,"Casablanca",2,"Particular Subvencionado",486.742990654206,5.67616666952769,243
+5,"Valparaíso",31,"Casablanca",3,"Particular Pagado",575.25,5.625,2
+5,"Valparaíso",33,"Catemu",1,"Municipal",391.345070422535,5.3906666692098,75
+5,"Valparaíso",33,"Catemu",2,"Particular Subvencionado",433.625,5.47555559400528,63
+5,"Valparaíso",63,"Con Cón",1,"Municipal",416.818181818182,5.5600000235994,61
+5,"Valparaíso",63,"Con Cón",2,"Particular Subvencionado",537.333333333333,5.75816129253757,310
+5,"Valparaíso",63,"Con Cón",3,"Particular Pagado",636.407079646018,6.15361536466158,131
+5,"Valparaíso",86,"El Quisco",1,"Municipal",446.833333333333,5.44769231172708,52
+5,"Valparaíso",86,"El Quisco",2,"Particular Subvencionado",495.029411764706,5.59289474236338,38
+5,"Valparaíso",87,"El Tabo",1,"Municipal",433.909090909091,5.54194445080227,36
+5,"Valparaíso",87,"El Tabo",2,"Particular Subvencionado",418.985294117647,5.33660714115415,56
+5,"Valparaíso",103,"Hijuelas",1,"Municipal",424.477011494253,5.55772278096416,102
+5,"Valparaíso",103,"Hijuelas",2,"Particular Subvencionado",503.967105263158,5.81915664098349,83
+5,"Valparaíso",115,"Isla De Pascua",1,"Municipal",411.217391304348,5.47457141195025,71
+5,"Valparaíso",115,"Isla De Pascua",2,"Particular Subvencionado",516.894230769231,5.84272725365379,55
+5,"Valparaíso",116,"Juan Fernandez",1,"Municipal",467.65,5.64363644339822,11
+5,"Valparaíso",118,"La Cruz",1,"Municipal",424.896825396825,5.48534246993392,74
+5,"Valparaíso",118,"La Cruz",2,"Particular Subvencionado",455.822580645161,5.50367645656361,69
+5,"Valparaíso",123,"La Ligua",1,"Municipal",430.180970149254,5.53951140879032,308
+5,"Valparaíso",123,"La Ligua",2,"Particular Subvencionado",519.983928571429,5.73082782101157,304
+5,"Valparaíso",138,"Limache",1,"Municipal",431.224299065421,5.45866668489244,136
+5,"Valparaíso",138,"Limache",2,"Particular Subvencionado",474.08938547486,5.54384977716795,641
+5,"Valparaíso",142,"Llay Llay",1,"Municipal",464.33660130719,5.63635840994774,173
+5,"Valparaíso",142,"Llay Llay",2,"Particular Subvencionado",472.042253521127,5.52189874045457,81
+5,"Valparaíso",151,"Los Andes",1,"Municipal",462.046052631579,5.61768810660992,731
+5,"Valparaíso",151,"Los Andes",2,"Particular Subvencionado",504.654566744731,5.66474684280685,474
+5,"Valparaíso",151,"Los Andes",3,"Particular Pagado",617.382352941176,5.93487016566388,154
+5,"Valparaíso",151,"Los Andes",4,"Corporación de Administración Delegada",464.316037735849,5.52719665870507,239
+5,"Valparaíso",183,"Nogales",1,"Municipal",424.464285714286,5.57653060251353,49
+5,"Valparaíso",183,"Nogales",2,"Particular Subvencionado",446.699134199134,5.57109024291648,267
+5,"Valparaíso",190,"Olmué",1,"Municipal",440.377551020408,5.34898307767965,59
+5,"Valparaíso",190,"Olmué",2,"Particular Subvencionado",455.41975308642,5.53714287936032,91
+5,"Valparaíso",201,"Panquehue",1,"Municipal",422.6,5.56509092504328,55
+5,"Valparaíso",201,"Panquehue",3,"Particular Pagado",620.375,6.11772725798867,22
+5,"Valparaíso",202,"Papudo",1,"Municipal",396,5.50023256346237,43
+5,"Valparaíso",215,"Petorca",1,"Municipal",424.1,5.64219514335074,82
+5,"Valparaíso",215,"Petorca",2,"Particular Subvencionado",467.05,5.93393938469164,33
+5,"Valparaíso",229,"Puchuncaví",1,"Municipal",437.449612403101,5.68121621737609,150
+5,"Valparaíso",242,"Putaendo",1,"Municipal",392.181818181818,5.48210528022365,38
+5,"Valparaíso",242,"Putaendo",2,"Particular Subvencionado",450.074074074074,5.64469697258689,67
+5,"Valparaíso",252,"Quillota",1,"Municipal",434.582512315271,5.50269876065115,481
+5,"Valparaíso",252,"Quillota",2,"Particular Subvencionado",513.136217948718,5.54401942688285,1034
+5,"Valparaíso",252,"Quillota",3,"Particular Pagado",563.545454545455,5.79968326339894,443
+5,"Valparaíso",253,"Quilpué",1,"Municipal",431.609756097561,5.45936526699958,907
+5,"Valparaíso",253,"Quilpué",2,"Particular Subvencionado",512.875843780135,5.58749123602583,2285
+5,"Valparaíso",253,"Quilpué",3,"Particular Pagado",523.442953020134,5.65142857213938,161
+5,"Valparaíso",257,"Quintero",1,"Municipal",397.933333333333,5.42605265399866,116
+5,"Valparaíso",257,"Quintero",2,"Particular Subvencionado",491.861031518625,5.71825317551818,395
+5,"Valparaíso",268,"Rinconada",2,"Particular Subvencionado",485.258620689655,5.41599998474121,30
+5,"Valparaíso",279,"San Antonio",1,"Municipal",446.359452736318,5.61867842905322,457
+5,"Valparaíso",279,"San Antonio",2,"Particular Subvencionado",485.179338842975,5.58703887588986,1417
+5,"Valparaíso",279,"San Antonio",3,"Particular Pagado",457,4.96999979019165,1
+5,"Valparaíso",283,"San Esteban",1,"Municipal",422.571428571429,5.36621620848372,74
+5,"Valparaíso",285,"San Felipe",1,"Municipal",449.964412811388,5.60317003349062,352
+5,"Valparaíso",285,"San Felipe",2,"Particular Subvencionado",501.983041575492,5.73483234796769,1015
+5,"Valparaíso",285,"San Felipe",3,"Particular Pagado",616.064814814815,6.21232560253883,129
+5,"Valparaíso",285,"San Felipe",4,"Corporación de Administración Delegada",479.422907488987,5.5505447647451,257
+5,"Valparaíso",306,"Santa Maria",1,"Municipal",412.435897435897,5.30254548679699,55
+5,"Valparaíso",306,"Santa Maria",2,"Particular Subvencionado",421.146153846154,5.45846153528262,79
+5,"Valparaíso",308,"Santo Domingo",1,"Municipal",488.708333333333,5.68733332951864,106
+5,"Valparaíso",308,"Santo Domingo",2,"Particular Subvencionado",511.322784810127,5.61132534440741,83
+5,"Valparaíso",308,"Santo Domingo",3,"Particular Pagado",580.75,6.10333331425985,3
+5,"Valparaíso",331,"Valparaiso",1,"Municipal",460.585243974133,5.49976494380006,2065
+5,"Valparaíso",331,"Valparaiso",2,"Particular Subvencionado",487.281553398058,5.55252578202127,3329
+5,"Valparaíso",331,"Valparaiso",3,"Particular Pagado",574.34478021978,5.825174126459,403
+5,"Valparaíso",331,"Valparaiso",4,"Corporación de Administración Delegada",472.180995475113,5.55642022975224,258
+5,"Valparaíso",337,"Villa Alemana",1,"Municipal",475.638392857143,5.43857521746593,379
+5,"Valparaíso",337,"Villa Alemana",2,"Particular Subvencionado",527.317893903405,5.61904561661837,1429
+5,"Valparaíso",337,"Villa Alemana",3,"Particular Pagado",587.365853658537,5.9012363763289,278
+5,"Valparaíso",339,"Viña Del Mar",1,"Municipal",446.729403409091,5.442622029416,887
+5,"Valparaíso",339,"Viña Del Mar",2,"Particular Subvencionado",516.346780162842,5.57219946440472,2987
+5,"Valparaíso",339,"Viña Del Mar",3,"Particular Pagado",591.406518624642,5.92011561023171,1571
+5,"Valparaíso",339,"Viña Del Mar",4,"Corporación de Administración Delegada",455.276315789474,5.1711764868568,170
+5,"Valparaíso",344,"Zapallar",1,"Municipal",481.765625,5.45760566415921,71
+5,"Valparaíso",344,"Zapallar",2,"Particular Subvencionado",529.115384615385,5.87258065131403,31
+6,"O'Higgins",40,"Chépica",1,"Municipal",471.652941176471,5.97490742029967,108
+6,"O'Higgins",45,"Chimbarongo",1,"Municipal",470.716049382716,5.93239363203657,189
+6,"O'Higgins",45,"Chimbarongo",2,"Particular Subvencionado",496.218543046358,5.54298345291812,181
+6,"O'Higgins",52,"Codegua",1,"Municipal",415.558823529412,5.60000000443569,86
+6,"O'Higgins",52,"Codegua",2,"Particular Subvencionado",428.382352941176,5.57000001271566,18
+6,"O'Higgins",56,"Coinco",1,"Municipal",423.925925925926,5.56638887193468,36
+6,"O'Higgins",61,"Coltauco",1,"Municipal",413.673076923077,5.48183486221034,109
+6,"O'Higgins",61,"Coltauco",2,"Particular Subvencionado",449.362637362637,5.45871557445701,109
+6,"O'Higgins",82,"Doñihue",1,"Municipal",436.141975308642,5.38789473500168,114
+6,"O'Higgins",82,"Doñihue",2,"Particular Subvencionado",573.575,5.85803276593568,61
+6,"O'Higgins",101,"Graneros",1,"Municipal",414.18125,5.40527270923961,110
+6,"O'Higgins",101,"Graneros",2,"Particular Subvencionado",473.65564738292,5.44906978274501,430
+6,"O'Higgins",133,"Las Cabras",1,"Municipal",430.381118881119,5.6900518224647,193
+6,"O'Higgins",133,"Las Cabras",2,"Particular Subvencionado",553.1,5.74424244177462,99
+6,"O'Higgins",140,"Litueche",1,"Municipal",480.136363636364,5.71274195947955,62
+6,"O'Higgins",146,"Lolol",1,"Municipal",429.142857142857,5.64912282374867,57
+6,"O'Higgins",159,"Machalí",1,"Municipal",418.753012048193,5.43321169901938,137
+6,"O'Higgins",159,"Machalí",2,"Particular Subvencionado",529.301630434783,5.70984731679048,394
+6,"O'Higgins",159,"Machalí",3,"Particular Pagado",602.978260869565,5.8509615613864,208
+6,"O'Higgins",164,"Marchigüe",1,"Municipal",439.375,5.13062506914139,16
+6,"O'Higgins",175,"San Francisco De Mostazal",1,"Municipal",421.227272727273,5.4521052425069,133
+6,"O'Higgins",175,"San Francisco De Mostazal",2,"Particular Subvencionado",435.666666666667,5.23200001716614,10
+6,"O'Higgins",178,"Nancagua",1,"Municipal",420.725806451613,5.56499999883224,98
+6,"O'Higgins",178,"Nancagua",2,"Particular Subvencionado",540.816326530612,5.70980768020336,52
+6,"O'Higgins",180,"Navidad",1,"Municipal",424.215517241379,5.52042253252486,71
+6,"O'Higgins",188,"Olivar",1,"Municipal",421.635869565217,5.33741073523249,112
+6,"O'Higgins",188,"Olivar",2,"Particular Subvencionado",463.560975609756,5.53820004463196,50
+6,"O'Higgins",199,"Palmilla",1,"Municipal",421.794117647059,5.53549022300571,51
+6,"O'Higgins",203,"Paredones",1,"Municipal",426.653846153846,5.59266670015123,45
+6,"O'Higgins",213,"Peralillo",1,"Municipal",445.65,5.71587629908139,97
+6,"O'Higgins",216,"Peumo",1,"Municipal",412.058823529412,5.62955227182872,67
+6,"O'Higgins",216,"Peumo",2,"Particular Subvencionado",445.62,5.62298508544466,67
+6,"O'Higgins",218,"Pichidegua",1,"Municipal",425.243243243243,5.50853658303982,82
+6,"O'Higgins",219,"Pichilemu",1,"Municipal",476.040540540541,5.65697675157887,129
+6,"O'Higgins",219,"Pichilemu",2,"Particular Subvencionado",541.142857142857,6.01095239321391,84
+6,"O'Higgins",223,"Placilla",1,"Municipal",400.55,5.50866667429606,15
+6,"O'Higgins",255,"Quinta De Tilcoco",1,"Municipal",408.62,5.54156251251698,64
+6,"O'Higgins",255,"Quinta De Tilcoco",2,"Particular Subvencionado",500.424050632911,5.7890123202477,81
+6,"O'Higgins",259,"Rancagua",1,"Municipal",494.67162818955,5.60520569378498,1978
+6,"O'Higgins",259,"Rancagua",2,"Particular Subvencionado",489.282028469751,5.56627677314898,1924
+6,"O'Higgins",259,"Rancagua",3,"Particular Pagado",615.888601036269,5.94930268324447,674
+6,"O'Higgins",259,"Rancagua",4,"Corporación de Administración Delegada",477.185779816514,5.36652349369638,746
+6,"O'Higgins",265,"Rengo",1,"Municipal",458.751805054152,5.49060653935695,647
+6,"O'Higgins",265,"Rengo",2,"Particular Subvencionado",550.212068965517,5.78090323171308,311
+6,"O'Higgins",266,"Requinoa",1,"Municipal",401.855769230769,5.55141414777197,99
+6,"O'Higgins",266,"Requinoa",2,"Particular Subvencionado",543.219444444444,5.6381909595662,199
+6,"O'Higgins",286,"San Fernando",1,"Municipal",465.136460554371,5.43969595190641,592
+6,"O'Higgins",286,"San Fernando",2,"Particular Subvencionado",531.304651162791,5.64785715383339,742
+6,"O'Higgins",286,"San Fernando",3,"Particular Pagado",625.240458015267,6.08163268549913,147
+6,"O'Higgins",286,"San Fernando",4,"Corporación de Administración Delegada",457.277456647399,5.5627725146958,422
+6,"O'Higgins",302,"San Vicente",1,"Municipal",450.748138957816,5.49087684288901,480
+6,"O'Higgins",302,"San Vicente",2,"Particular Subvencionado",557.676122931442,5.70760594687219,473
+6,"O'Higgins",304,"Santa Cruz",1,"Municipal",460.079,5.65890053471137,575
+6,"O'Higgins",304,"Santa Cruz",2,"Particular Subvencionado",573.336683417085,5.83682541187658,441
+6,"O'Higgins",304,"Santa Cruz",3,"Particular Pagado",608.78125,6.01971430097307,35
+7,"Maule",34,"Cauquenes",1,"Municipal",460.028322440087,5.70359925922967,542
+7,"Maule",34,"Cauquenes",2,"Particular Subvencionado",494.371052631579,5.8810360410192,222
+7,"Maule",38,"Chanco",1,"Municipal",442.9609375,5.755068491583,73
+7,"Maule",57,"Colbún",1,"Municipal",469.268656716418,5.50595236392248,84
+7,"Maule",57,"Colbún",2,"Particular Subvencionado",404.5,5.34999993443489,16
+7,"Maule",66,"Constitución",1,"Municipal",460.085106382979,5.44472051407239,161
+7,"Maule",66,"Constitución",2,"Particular Subvencionado",560.478,5.82010638798382,283
+7,"Maule",66,"Constitución",3,"Particular Pagado",676.875,6.4006667137146,30
+7,"Maule",66,"Constitución",4,"Corporación de Administración Delegada",456.285123966942,5.46215827859563,140
+7,"Maule",78,"Curepto",1,"Municipal",465.315789473684,5.81850747208097,67
+7,"Maule",79,"Curicó",1,"Municipal",505.903558052434,5.74715839631809,645
+7,"Maule",79,"Curicó",2,"Particular Subvencionado",517.627188183807,5.72603720986508,2099
+7,"Maule",79,"Curicó",3,"Particular Pagado",598.985849056604,5.91881081606891,372
+7,"Maule",79,"Curicó",4,"Corporación de Administración Delegada",457.256013745704,5.51982413224838,398
+7,"Maule",88,"Empedrado",1,"Municipal",426.583333333333,5.48153840578519,13
+7,"Maule",105,"Hualañé",1,"Municipal",491.831967213115,5.93294120536131,136
+7,"Maule",137,"Licantén",1,"Municipal",494.112244897959,5.87931039415557,58
+7,"Maule",139,"Linares",1,"Municipal",486.529567053854,5.55147749196302,1111
+7,"Maule",139,"Linares",2,"Particular Subvencionado",522.080131208997,5.65000000618952,1172
+7,"Maule",139,"Linares",3,"Particular Pagado",624.605263157895,5.98130433455758,23
+7,"Maule",148,"Longaví",1,"Municipal",461.440217391304,5.73139706429313,136
+7,"Maule",148,"Longaví",2,"Particular Subvencionado",482.613636363636,5.68776317019212,76
+7,"Maule",168,"Maule",2,"Particular Subvencionado",486.884615384615,5.81825174985232,143
+7,"Maule",168,"Maule",4,"Corporación de Administración Delegada",423.163265306122,5.45847223202388,72
+7,"Maule",173,"Molina",1,"Municipal",451.177304964539,5.66018073242831,166
+7,"Maule",173,"Molina",2,"Particular Subvencionado",452.746305418719,5.74341564610171,243
+7,"Maule",173,"Molina",4,"Corporación de Administración Delegada",452.445454545455,5.48039473985371,76
+7,"Maule",204,"Parral",1,"Municipal",454.158031088083,5.56630631395288,222
+7,"Maule",204,"Parral",2,"Particular Subvencionado",546.615384615385,5.75616055196899,461
+7,"Maule",206,"Pelarco",1,"Municipal",375.464285714286,5.64561403843395,57
+7,"Maule",207,"Pelluhue",1,"Municipal",479.212962962963,5.78374998910086,56
+7,"Maule",209,"Pencahue",1,"Municipal",396.666666666667,6.01315789473684,19
+7,"Maule",261,"Rauco",1,"Municipal",385.166666666667,5.6877777311537,9
+7,"Maule",267,"Retiro",1,"Municipal",434.132653061225,5.60845134532557,226
+7,"Maule",267,"Retiro",2,"Particular Subvencionado",449.606382978723,5.47963637438687,55
+7,"Maule",270,"Rio Claro",1,"Municipal",405.166666666667,5.27482762830011,29
+7,"Maule",275,"Romeral",1,"Municipal",449.597826086957,5.52983869275739,62
+7,"Maule",275,"Romeral",2,"Particular Subvencionado",428.15,5.70920001983643,25
+7,"Maule",277,"Sagrada Familia",1,"Municipal",430.613636363636,5.5639999798366,35
+7,"Maule",282,"San Clemente",1,"Municipal",430.877551020408,5.44949369792697,79
+7,"Maule",282,"San Clemente",2,"Particular Subvencionado",506.827586206897,5.76186440354687,59
+7,"Maule",289,"San Javier",1,"Municipal",428.951807228916,5.44187290931625,299
+7,"Maule",289,"San Javier",2,"Particular Subvencionado",520.300699300699,5.68445162106586,466
+7,"Maule",311,"Talca",1,"Municipal",499.085746606335,5.69848605229824,2550
+7,"Maule",311,"Talca",2,"Particular Subvencionado",491.717606149341,5.63005824429979,3102
+7,"Maule",311,"Talca",3,"Particular Pagado",615.270149253731,6.19180157165926,383
+7,"Maule",315,"Teno",1,"Municipal",444.396226415094,5.58530122113515,83
+7,"Maule",315,"Teno",2,"Particular Subvencionado",500.159574468085,5.78310863087686,267
+7,"Maule",332,"Vichuquén",1,"Municipal",479.945945945946,5.73243242985493,37
+7,"Maule",336,"Villa Alegre",1,"Municipal",420.98275862069,5.91723403524845,47
+7,"Maule",336,"Villa Alegre",2,"Particular Subvencionado",385.382352941176,5.6419444349077,36
+7,"Maule",341,"Yerbas Buenas",1,"Municipal",410.947368421053,5.48424778575391,113
+7,"Maule",341,"Yerbas Buenas",4,"Corporación de Administración Delegada",456.666666666667,5.42640001296997,50
+8,"Biobío",3,"Alto Bio Bio",1,"Municipal",368.958333333333,5.51481481834694,27
+8,"Biobío",10,"Antuco",1,"Municipal",417.918604651163,5.70591838019235,49
+8,"Biobío",11,"Arauco",1,"Municipal",448.069696969697,5.56288714296236,383
+8,"Biobío",11,"Arauco",2,"Particular Subvencionado",520.76872246696,5.7002880641953,243
+8,"Biobío",11,"Arauco",3,"Particular Pagado",659.863636363636,5.9857143163681,28
+8,"Biobío",15,"Bulnes",1,"Municipal",438.638888888889,5.76883213363425,138
+8,"Biobío",15,"Bulnes",2,"Particular Subvencionado",500,5.74836735092864,196
+8,"Biobío",18,"Cabrero",1,"Municipal",432.040485829959,5.67077966625408,295
+8,"Biobío",18,"Cabrero",2,"Particular Subvencionado",492.837837837838,5.7381395628286,86
+8,"Biobío",28,"Cañete",1,"Municipal",461.08174904943,5.65822150403221,298
+8,"Biobío",28,"Cañete",2,"Particular Subvencionado",494.086890243902,5.74467822584775,406
+8,"Biobío",41,"Chiguayante",1,"Municipal",444.406504065041,5.41409092960936,132
+8,"Biobío",41,"Chiguayante",2,"Particular Subvencionado",519.986881937437,5.53672131640881,1099
+8,"Biobío",41,"Chiguayante",3,"Particular Pagado",624.917098445596,5.90304934283543,224
+8,"Biobío",43,"Chillán",1,"Municipal",458.75415282392,5.72647060666765,359
+8,"Biobío",43,"Chillán",2,"Particular Subvencionado",510.20687376074,5.69671944570975,3417
+8,"Biobío",43,"Chillán",3,"Particular Pagado",601,5.99038460315802,78
+8,"Biobío",43,"Chillán",4,"Corporación de Administración Delegada",460.8268321513,5.62879132928927,969
+8,"Biobío",44,"Chillán Viejo",1,"Municipal",430.611111111111,5.82971428462437,35
+8,"Biobío",44,"Chillán Viejo",2,"Particular Subvencionado",523.964912280702,5.76949151895814,59
+8,"Biobío",49,"Cobquecura",1,"Municipal",408.916666666667,5.87632915038097,79
+8,"Biobío",53,"Coelemu",1,"Municipal",469.439698492462,5.84369565714961,232
+8,"Biobío",53,"Coelemu",2,"Particular Subvencionado",587.55,6.19634145643653,41
+8,"Biobío",55,"Coihueco",1,"Municipal",439.926470588235,5.53127906488818,86
+8,"Biobío",55,"Coihueco",2,"Particular Subvencionado",470.241935483871,5.86583333545261,72
+8,"Biobío",64,"Concepción",1,"Municipal",493.377252252252,5.56892192345722,1993
+8,"Biobío",64,"Concepción",2,"Particular Subvencionado",517.101254206179,5.62543874768495,3651
+8,"Biobío",64,"Concepción",3,"Particular Pagado",564.391891891892,5.75881693482605,1164
+8,"Biobío",64,"Concepción",4,"Corporación de Administración Delegada",459.845391903531,5.62457730873613,1313
+8,"Biobío",67,"Contulmo",1,"Municipal",460.125,5.75518517140989,54
+8,"Biobío",70,"Coronel",1,"Municipal",460.010486177312,5.55884383977539,1168
+8,"Biobío",70,"Coronel",2,"Particular Subvencionado",493.771177117712,5.60119684655164,1013
+8,"Biobío",70,"Coronel",4,"Corporación de Administración Delegada",439.46875,5.45047626041231,21
+8,"Biobío",76,"Curanilahue",1,"Municipal",480.813315926893,5.81312073118866,439
+8,"Biobío",76,"Curanilahue",2,"Particular Subvencionado",483.995901639344,5.69882354315589,136
+8,"Biobío",84,"El Carmen",1,"Municipal",464.512931034483,5.8195555863557,135
+8,"Biobío",91,"Florida",1,"Municipal",446.113636363636,5.50620003223419,100
+8,"Biobío",106,"Hualpén",1,"Municipal",436.634228187919,5.4800555811988,180
+8,"Biobío",106,"Hualpén",2,"Particular Subvencionado",525.543071161049,5.65768422076577,285
+8,"Biobío",107,"Hualqui",1,"Municipal",432.615044247788,5.58246268443207,134
+8,"Biobío",107,"Hualqui",2,"Particular Subvencionado",400.666666666667,5.40142856325422,7
+8,"Biobío",131,"Laja",1,"Municipal",472.214285714286,5.79575759593887,397
+8,"Biobío",131,"Laja",2,"Particular Subvencionado",459.0703125,5.71220781276752,77
+8,"Biobío",131,"Laja",3,"Particular Pagado",690.384615384615,6.32066666285197,15
+8,"Biobío",136,"Lebu",1,"Municipal",480.998344370861,5.76353592767241,363
+8,"Biobío",150,"Los Alamos",1,"Municipal",446.29797979798,5.70595042961688,121
+8,"Biobío",150,"Los Alamos",2,"Particular Subvencionado",433.333333333333,5.53516666094462,60
+8,"Biobío",152,"Los Angeles",1,"Municipal",476.942999234889,5.53975350852016,1503
+8,"Biobío",152,"Los Angeles",2,"Particular Subvencionado",499.664109589041,5.5621106364321,2063
+8,"Biobío",152,"Los Angeles",3,"Particular Pagado",608.198630136986,5.82235294603834,257
+8,"Biobío",152,"Los Angeles",4,"Corporación de Administración Delegada",420.290697674419,5.42517857040678,56
+8,"Biobío",157,"Lota",1,"Municipal",447.564334085779,5.6237858558932,524
+8,"Biobío",157,"Lota",2,"Particular Subvencionado",526.056776556777,5.81636657438861,311
+8,"Biobío",176,"Mulchén",1,"Municipal",459.750896057348,5.50426830169631,328
+8,"Biobío",177,"Nacimiento",1,"Municipal",467.599290780142,5.84548591446353,319
+8,"Biobío",177,"Nacimiento",2,"Particular Subvencionado",514.347305389222,5.81198897282722,181
+8,"Biobío",181,"Negrete",1,"Municipal",418.935483870968,5.62542854036604,35
+8,"Biobío",181,"Negrete",2,"Particular Subvencionado",429.181818181818,5.8039999961853,15
+8,"Biobío",182,"Ninhue",1,"Municipal",480.795454545455,5.97320001602173,25
+8,"Biobío",185,"Ñiquén",1,"Municipal",438.435483870968,5.66051950702419,77
+8,"Biobío",208,"Pemuco",1,"Municipal",458.714285714286,5.60909091652214,78
+8,"Biobío",210,"Penco",1,"Municipal",429.413333333333,5.55931819298051,177
+8,"Biobío",210,"Penco",2,"Particular Subvencionado",534.243055555556,5.73298853293233,87
+8,"Biobío",220,"Pinto",1,"Municipal",464.261363636364,5.81940000534058,50
+8,"Biobío",220,"Pinto",2,"Particular Subvencionado",446.282258064516,5.84117648180793,68
+8,"Biobío",224,"Portezuelo",1,"Municipal",449.391304347826,5.86964288779667,28
+8,"Biobío",224,"Portezuelo",2,"Particular Subvencionado",449.346153846154,5.9160000483195,15
+8,"Biobío",248,"Quilaco",1,"Municipal",405.090909090909,5.38846155313345,13
+8,"Biobío",250,"Quilleco",1,"Municipal",432.801886792453,5.60890624672174,64
+8,"Biobío",250,"Quilleco",2,"Particular Subvencionado",422.5,5.73666667938232,6
+8,"Biobío",251,"Quillón",1,"Municipal",441.48,5.69400001005693,55
+8,"Biobío",258,"Quirihue",1,"Municipal",451.363095238095,5.89176472028096,102
+8,"Biobío",258,"Quirihue",2,"Particular Subvencionado",494.228571428571,5.93736843058938,38
+8,"Biobío",260,"Ranquil",1,"Municipal",467.577777777778,5.66274512047861,51
+8,"Biobío",281,"San Carlos",1,"Municipal",445.703007518797,5.79526645487005,323
+8,"Biobío",281,"San Carlos",2,"Particular Subvencionado",534.234716157205,5.78948104881241,502
+8,"Biobío",284,"San Fabián",1,"Municipal",496.228571428571,5.72055557039049,36
+8,"Biobío",288,"San Ignacio",1,"Municipal",423.6171875,5.90576159243552,153
+8,"Biobío",288,"San Ignacio",2,"Particular Subvencionado",461.25,5.7463635820331,33
+8,"Biobío",294,"San Nicolás",1,"Municipal",525.092307692308,5.85478815992,236
+8,"Biobío",298,"San Pedro De La Paz",1,"Municipal",442.248148148148,5.50670807406029,164
+8,"Biobío",298,"San Pedro De La Paz",2,"Particular Subvencionado",529.247146118722,5.65711202895899,978
+8,"Biobío",298,"San Pedro De La Paz",3,"Particular Pagado",610.465714285714,5.87738916321928,203
+8,"Biobío",301,"San Rosendo",1,"Municipal",456.607142857143,5.710465131804,43
+8,"Biobío",303,"Santa Bárbara",1,"Municipal",439.783950617284,5.66683675804917,98
+8,"Biobío",303,"Santa Bárbara",2,"Particular Subvencionado",444.491803278689,5.56911393056942,79
+8,"Biobío",305,"Santa Juana",1,"Municipal",455.676470588235,5.50513698956738,146
+8,"Biobío",312,"Talcahuano",1,"Municipal",448.448151950719,5.46088184376873,1138
+8,"Biobío",312,"Talcahuano",2,"Particular Subvencionado",529.319192751236,5.64642161850811,1337
+8,"Biobío",312,"Talcahuano",3,"Particular Pagado",631.740310077519,5.99303136386938,287
+8,"Biobío",312,"Talcahuano",4,"Corporación de Administración Delegada",487.28612716763,5.43117348758542,196
+8,"Biobío",320,"Tirua",1,"Municipal",428.423913043478,5.81656720033333,67
+8,"Biobío",323,"Tomé",1,"Municipal",470.366708385482,5.7266178249372,888
+8,"Biobío",323,"Tomé",4,"Corporación de Administración Delegada",463.972440944882,5.61321680028955,143
+8,"Biobío",327,"Trehuaco",1,"Municipal",443.436363636364,5.85484378039837,64
+8,"Biobío",327,"Trehuaco",2,"Particular Subvencionado",360.055555555556,6.00999995072683,12
+8,"Biobío",328,"Tucapel",1,"Municipal",438.518796992481,5.73484076967665,158
+8,"Biobío",342,"Yumbel",1,"Municipal",443.404255319149,5.55402778696131,216
+8,"Biobío",342,"Yumbel",2,"Particular Subvencionado",514.166666666667,5.80666668780215,111
+8,"Biobío",343,"Yungay",1,"Municipal",437.091836734694,5.70196628570557,178
+8,"Biobío",343,"Yungay",2,"Particular Subvencionado",576.227272727273,6.03762886696255,97
+9,"Araucanía",8,"Angol",1,"Municipal",466.285067873303,5.50771085644662,747
+9,"Araucanía",8,"Angol",2,"Particular Subvencionado",519.222891566265,5.68047620812241,295
+9,"Araucanía",8,"Angol",3,"Particular Pagado",655.689655172414,6.22076924641927,39
+9,"Araucanía",8,"Angol",4,"Corporación de Administración Delegada",449.157303370787,5.12355138208264,107
+9,"Araucanía",29,"Carahue",1,"Municipal",457.387254901961,5.59780590846066,237
+9,"Araucanía",29,"Carahue",2,"Particular Subvencionado",433.414634146341,5.53018869543975,53
+9,"Araucanía",46,"Cholchol",2,"Particular Subvencionado",438.517441860465,5.57408450354993,142
+9,"Araucanía",60,"Collipulli",1,"Municipal",439.623456790123,5.54070796797761,113
+9,"Araucanía",60,"Collipulli",2,"Particular Subvencionado",495.24025974026,5.5195348928141,87
+9,"Araucanía",72,"Cunco",1,"Municipal",493.465517241379,5.71634147613029,123
+9,"Araucanía",72,"Cunco",2,"Particular Subvencionado",446.962686567164,5.50748571940831,175
+9,"Araucanía",73,"Curacautín",1,"Municipal",485.619230769231,5.71145696829486,151
+9,"Araucanía",73,"Curacautín",4,"Corporación de Administración Delegada",427.192307692308,5.62804348572441,46
+9,"Araucanía",77,"Curarrehue",1,"Municipal",386.458333333333,5.36596157000615,52
+9,"Araucanía",89,"Ercilla",1,"Municipal",431.166666666667,5.71363631161776,12
+9,"Araucanía",89,"Ercilla",2,"Particular Subvencionado",475.5,5.35699996948242,10
+9,"Araucanía",92,"Freire",1,"Municipal",426.081967213115,5.60369049367451,84
+9,"Araucanía",92,"Freire",2,"Particular Subvencionado",396.78125,5.41423076849717,26
+9,"Araucanía",98,"Galvarino",1,"Municipal",437.067164179104,5.48731184005737,93
+9,"Araucanía",98,"Galvarino",2,"Particular Subvencionado",412.7,5.60466664632161,30
+9,"Araucanía",100,"Gorbea",1,"Municipal",415.066037735849,5.39064102906447,79
+9,"Araucanía",100,"Gorbea",2,"Particular Subvencionado",453.5,5.51800003051758,5
+9,"Araucanía",135,"Lautaro",1,"Municipal",468.827692307692,5.6329104497065,403
+9,"Araucanía",135,"Lautaro",2,"Particular Subvencionado",385.833333333333,5.35043478012085,23
+9,"Araucanía",147,"Loncoche",1,"Municipal",503.325268817204,5.53894009787915,217
+9,"Araucanía",147,"Loncoche",2,"Particular Subvencionado",458.621428571429,5.64168832209203,77
+9,"Araucanía",149,"Lonquimay",1,"Municipal",441.511627906977,5.83857144628252,98
+9,"Araucanía",155,"Los Sauces",1,"Municipal",394.119402985075,5.47912086235298,91
+9,"Araucanía",158,"Lumaco",1,"Municipal",394.483333333333,5.48638297141866,47
+9,"Araucanía",171,"Melipeuco",1,"Municipal",461.416666666667,5.53615383001474,13
+9,"Araucanía",171,"Melipeuco",2,"Particular Subvencionado",408.105263157895,5.88413792643054,29
+9,"Araucanía",184,"Nueva Imperial",1,"Municipal",437.675392670157,5.4732568963952,218
+9,"Araucanía",184,"Nueva Imperial",2,"Particular Subvencionado",465.339928057554,5.5426801370956,353
+9,"Araucanía",184,"Nueva Imperial",4,"Corporación de Administración Delegada",445.008620689655,5.2852777838707,72
+9,"Araucanía",194,"Padre Las Casas",2,"Particular Subvencionado",459.892655367232,5.39546585181732,484
+9,"Araucanía",214,"Perquenco",1,"Municipal",433.143835616438,5.54717391470204,94
+9,"Araucanía",214,"Perquenco",2,"Particular Subvencionado",430.166666666667,5.39875000715256,8
+9,"Araucanía",222,"Pitrufquén",1,"Municipal",475.096774193548,5.73232558993406,172
+9,"Araucanía",222,"Pitrufquén",2,"Particular Subvencionado",473.075934579439,5.63407185739148,501
+9,"Araucanía",230,"Pucón",1,"Municipal",481.456043956044,5.52867347853524,98
+9,"Araucanía",230,"Pucón",2,"Particular Subvencionado",485.913636363636,5.58202847042966,282
+9,"Araucanía",240,"Purén",1,"Municipal",457.080152671756,5.67358976449722,157
+9,"Araucanía",263,"Renaico",1,"Municipal",406.961538461538,5.52040004730225,55
+9,"Araucanía",276,"Saavedra",1,"Municipal",442.979166666667,5.58500001165602,37
+9,"Araucanía",276,"Saavedra",2,"Particular Subvencionado",414.666666666667,5.41851850792214,54
+9,"Araucanía",314,"Temuco",1,"Municipal",503.454349698536,5.50283220199898,1323
+9,"Araucanía",314,"Temuco",2,"Particular Subvencionado",512.665170132325,5.51087399062102,4942
+9,"Araucanía",314,"Temuco",3,"Particular Pagado",604.309178743961,5.87831579409148,476
+9,"Araucanía",314,"Temuco",4,"Corporación de Administración Delegada",445.636363636364,5.38666668453732,111
+9,"Araucanía",316,"Teodoro Schmidt",1,"Municipal",419.081081081081,5.5555102095312,49
+9,"Araucanía",316,"Teodoro Schmidt",2,"Particular Subvencionado",483.375,5.44749999046326,4
+9,"Araucanía",322,"Toltén",1,"Municipal",432.8125,5.67901639469334,61
+9,"Araucanía",322,"Toltén",2,"Particular Subvencionado",407,5.53000020980835,1
+9,"Araucanía",326,"Traiguén",1,"Municipal",444.638554216867,5.66146599435057,191
+9,"Araucanía",326,"Traiguén",2,"Particular Subvencionado",500.543010752688,5.66161018306926,118
+9,"Araucanía",333,"Victoria",1,"Municipal",440.213114754098,5.49455128266261,313
+9,"Araucanía",333,"Victoria",2,"Particular Subvencionado",482.176308539945,5.6034091071649,440
+9,"Araucanía",335,"Vilcún",1,"Municipal",484.686666666667,5.58445652153181,92
+9,"Araucanía",335,"Vilcún",2,"Particular Subvencionado",457.978448275862,5.58181819410035,132
+9,"Araucanía",338,"Villarrica",1,"Municipal",492.137755102041,5.54412743523511,361
+9,"Araucanía",338,"Villarrica",2,"Particular Subvencionado",509.7976011994,5.64308914480337,821
+9,"Araucanía",338,"Villarrica",3,"Particular Pagado",571.891666666667,5.8008955272276,68
+10,"Los Lagos",6,"Ancud",1,"Municipal",522.978494623656,5.76619050389244,210
+10,"Los Lagos",6,"Ancud",2,"Particular Subvencionado",483.611471861472,5.61653704290037,543
+10,"Los Lagos",20,"Calbuco",1,"Municipal",450.692737430168,5.55179372282841,223
+10,"Los Lagos",20,"Calbuco",2,"Particular Subvencionado",499.709090909091,5.64598593241732,142
+10,"Los Lagos",32,"Castro",1,"Municipal",513.381355932203,5.82072974153467,740
+10,"Los Lagos",32,"Castro",2,"Particular Subvencionado",497.962783171521,5.67512627924332,396
+10,"Los Lagos",37,"Chaitén",1,"Municipal",453.589285714286,5.5960000038147,30
+10,"Los Lagos",47,"Chonchi",1,"Municipal",452.954545454545,5.45942858287266,70
+10,"Los Lagos",47,"Chonchi",2,"Particular Subvencionado",453.428571428571,5.73000002758844,112
+10,"Los Lagos",50,"Cochamó",1,"Municipal",426,5.48999998786233,11
+10,"Los Lagos",75,"Curaco De Vélez",1,"Municipal",434.907142857143,5.71535710493724,85
+10,"Los Lagos",80,"Dalcahue",1,"Municipal",420.788461538462,5.5794285774231,35
+10,"Los Lagos",94,"Fresia",1,"Municipal",449.516129032258,5.65077921012779,77
+10,"Los Lagos",94,"Fresia",2,"Particular Subvencionado",417.276209677419,5.46745454614813,276
+10,"Los Lagos",95,"Frutillar",1,"Municipal",457.796511627907,5.38831820054488,220
+10,"Los Lagos",95,"Frutillar",2,"Particular Subvencionado",531.310810810811,5.77634146155381,41
+10,"Los Lagos",95,"Frutillar",3,"Particular Pagado",580.818181818182,5.98249995708466,12
+10,"Los Lagos",96,"Futaleufú",1,"Municipal",469.459459459459,5.71292686462402,41
+10,"Los Lagos",104,"Hualaihué",1,"Municipal",470.479591836735,5.83573768177971,61
+10,"Los Lagos",104,"Hualaihué",2,"Particular Subvencionado",430.6,5.75555562973022,18
+10,"Los Lagos",141,"Llanquihue",1,"Municipal",437.538461538462,5.45430234421131,86
+10,"Los Lagos",141,"Llanquihue",2,"Particular Subvencionado",470.058139534884,5.6345098065395,51
+10,"Los Lagos",154,"Los Muermos",1,"Municipal",432.959459459459,5.52495239348639,106
+10,"Los Lagos",154,"Los Muermos",2,"Particular Subvencionado",457.642276422764,5.46227271629102,132
+10,"Los Lagos",169,"Maullín",1,"Municipal",447.43085106383,5.60772727619518,110
+10,"Los Lagos",169,"Maullín",2,"Particular Subvencionado",404.5,5.55999994277954,5
+10,"Los Lagos",191,"Osorno",1,"Municipal",486.801275239107,5.46569031388012,1074
+10,"Los Lagos",191,"Osorno",2,"Particular Subvencionado",496.037162162162,5.55055158083623,1399
+10,"Los Lagos",191,"Osorno",3,"Particular Pagado",625.294117647059,5.86120787363374,356
+10,"Los Lagos",198,"Palena",1,"Municipal",517,6.00631580854717,19
+10,"Los Lagos",233,"Puerto Montt",1,"Municipal",478.774680073126,5.52448034688328,1429
+10,"Los Lagos",233,"Puerto Montt",2,"Particular Subvencionado",502.529608404967,5.50951190342954,2446
+10,"Los Lagos",233,"Puerto Montt",3,"Particular Pagado",635.244897959184,5.97932625662351,282
+10,"Los Lagos",234,"Puerto Octay",1,"Municipal",441.882352941176,5.44216216577066,37
+10,"Los Lagos",234,"Puerto Octay",2,"Particular Subvencionado",472.352941176471,5.52128206155239,39
+10,"Los Lagos",235,"Puerto Varas",1,"Municipal",439.853658536585,5.52024391453441,207
+10,"Los Lagos",235,"Puerto Varas",2,"Particular Subvencionado",539.187285223368,5.60712460740306,313
+10,"Los Lagos",235,"Puerto Varas",3,"Particular Pagado",632.479166666667,5.95235059175833,251
+10,"Los Lagos",241,"Purranque",1,"Municipal",446.20297029703,5.54654678166341,140
+10,"Los Lagos",241,"Purranque",2,"Particular Subvencionado",508.482558139535,5.55487923921594,208
+10,"Los Lagos",244,"Puyehue",1,"Municipal",423.258620689655,5.78550000190735,40
+10,"Los Lagos",244,"Puyehue",2,"Particular Subvencionado",441.073170731707,5.62980769230769,52
+10,"Los Lagos",245,"Queilén",1,"Municipal",494.681818181818,5.88166668301537,42
+10,"Los Lagos",246,"Quellón",1,"Municipal",448.280898876404,5.5980816276706,245
+10,"Los Lagos",246,"Quellón",2,"Particular Subvencionado",506.630136986301,5.67602274634621,88
+10,"Los Lagos",247,"Quemchi",1,"Municipal",426.48,5.55225807620633,31
+10,"Los Lagos",254,"Quinchao",1,"Municipal",488.83734939759,5.67087913869501,91
+10,"Los Lagos",254,"Quinchao",2,"Particular Subvencionado",500.892857142857,5.66864408072779,59
+10,"Los Lagos",273,"Rio Negro",1,"Municipal",444.158536585366,5.51119047119504,42
+10,"Los Lagos",273,"Rio Negro",2,"Particular Subvencionado",473.9625,5.63599998950958,40
+10,"Los Lagos",273,"Rio Negro",4,"Corporación de Administración Delegada",482.755319148936,5.51550726959671,69
+10,"Los Lagos",292,"San Juan De La Costa",1,"Municipal",411.8125,5.41882357877844,17
+10,"Los Lagos",292,"San Juan De La Costa",2,"Particular Subvencionado",437.884615384615,5.74764703301822,17
+10,"Los Lagos",295,"San Pablo",1,"Municipal",431.532258064516,5.63746836215635,79
+10,"Los Lagos",295,"San Pablo",2,"Particular Subvencionado",399.8,5.46749997138977,8
+11,"Aysén",13,"Aysén",1,"Municipal",422.090909090909,5.31420215647271,188
+11,"Aysén",13,"Aysén",2,"Particular Subvencionado",504.549295774648,5.57992511563533,268
+11,"Aysén",42,"Chile Chico",1,"Municipal",479.907894736842,5.57617023143362,47
+11,"Aysén",48,"Cisnes",1,"Municipal",482.858695652174,5.63957447701312,48
+11,"Aysén",51,"Cochrane",1,"Municipal",503.15,5.54680853701652,47
+11,"Aysén",54,"Coihaique",1,"Municipal",466.852380952381,5.65007813647389,128
+11,"Aysén",54,"Coihaique",2,"Particular Subvencionado",485.746575342466,5.59104418390726,1250
+11,"Aysén",54,"Coihaique",4,"Corporación de Administración Delegada",394.5,5.49904764266241,21
+12,"Magallanes",17,"Cabo De Hornos",1,"Municipal",506.413043478261,5.80440002441406,25
+12,"Magallanes",179,"Natales",1,"Municipal",439.917475728155,5.70537881417708,132
+12,"Magallanes",179,"Natales",2,"Particular Subvencionado",454.346153846154,5.71936974805944,238
+12,"Magallanes",225,"Porvenir",1,"Municipal",462.446428571429,5.7817894684641,96
+12,"Magallanes",225,"Porvenir",2,"Particular Subvencionado",384.218009478673,5.22269565955452,231
+12,"Magallanes",238,"Punta Arenas",1,"Municipal",465.208083832335,5.72107229290238,833
+12,"Magallanes",238,"Punta Arenas",2,"Particular Subvencionado",517.968636911942,5.71418508044302,952
+12,"Magallanes",238,"Punta Arenas",3,"Particular Pagado",566.957236842105,5.90757143565587,353
+13,"Region Metropolitana Santiago",2,"Alhué",1,"Municipal",476.291666666667,6.04378379357828,37
+13,"Region Metropolitana Santiago",14,"Buin",1,"Municipal",428.86937716263,5.51748159953526,682
+13,"Region Metropolitana Santiago",14,"Buin",2,"Particular Subvencionado",495.405315614618,5.68874233778269,658
+13,"Region Metropolitana Santiago",14,"Buin",3,"Particular Pagado",620.185267857143,5.9933463126305,257
+13,"Region Metropolitana Santiago",23,"Calera De Tango",1,"Municipal",409.032894736842,5.56539998531342,100
+13,"Region Metropolitana Santiago",23,"Calera De Tango",2,"Particular Subvencionado",421.286666666667,5.34360467001449,87
+13,"Region Metropolitana Santiago",23,"Calera De Tango",3,"Particular Pagado",607.686486486487,5.95025001525879,200
+13,"Region Metropolitana Santiago",35,"Cerrillos",1,"Municipal",416.710526315789,5.5557143007006,56
+13,"Region Metropolitana Santiago",35,"Cerrillos",2,"Particular Subvencionado",492.8515625,5.37983740885222,863
+13,"Region Metropolitana Santiago",36,"Cerro Navia",1,"Municipal",412.78125,5.39053061738306,249
+13,"Region Metropolitana Santiago",36,"Cerro Navia",2,"Particular Subvencionado",425.963054187192,5.36757813021541,257
+13,"Region Metropolitana Santiago",59,"Colina",1,"Municipal",433.99011299435,5.44989559600635,874
+13,"Region Metropolitana Santiago",59,"Colina",2,"Particular Subvencionado",464.545539033457,5.43630646428754,622
+13,"Region Metropolitana Santiago",59,"Colina",3,"Particular Pagado",624.215189873418,6.11250000929131,547
+13,"Region Metropolitana Santiago",65,"Conchalí",1,"Municipal",465.242914979757,5.30543047702865,303
+13,"Region Metropolitana Santiago",65,"Conchalí",2,"Particular Subvencionado",476.194647201946,5.45635396331104,472
+13,"Region Metropolitana Santiago",74,"Curacaví",1,"Municipal",427.245562130178,5.70177665216669,197
+13,"Region Metropolitana Santiago",74,"Curacaví",2,"Particular Subvencionado",477.658102766798,5.60010602027704,284
+13,"Region Metropolitana Santiago",74,"Curacaví",3,"Particular Pagado",575.5,5.76666669845581,15
+13,"Region Metropolitana Santiago",83,"El Bosque",1,"Municipal",460.55421686747,5.38919581566657,290
+13,"Region Metropolitana Santiago",83,"El Bosque",2,"Particular Subvencionado",498.673240938166,5.44594331301721,2165
+13,"Region Metropolitana Santiago",85,"El Monte",1,"Municipal",428.777777777778,5.60648647514549,38
+13,"Region Metropolitana Santiago",85,"El Monte",2,"Particular Subvencionado",430.494949494949,5.29076390796238,147
+13,"Region Metropolitana Santiago",90,"Estacion Central",1,"Municipal",428.244155844156,5.37199575784606,481
+13,"Region Metropolitana Santiago",90,"Estacion Central",2,"Particular Subvencionado",501.732142857143,5.39948803289777,1217
+13,"Region Metropolitana Santiago",90,"Estacion Central",3,"Particular Pagado",611.147058823529,5.80834586279733,134
+13,"Region Metropolitana Santiago",90,"Estacion Central",4,"Corporación de Administración Delegada",437.335051546392,5.49053571053914,114
+13,"Region Metropolitana Santiago",110,"Huechuraba",1,"Municipal",389.732558139535,5.33549296688026,71
+13,"Region Metropolitana Santiago",110,"Huechuraba",2,"Particular Subvencionado",448.399425287356,5.41171945813554,221
+13,"Region Metropolitana Santiago",110,"Huechuraba",3,"Particular Pagado",599.096816976127,5.88745098721747,410
+13,"Region Metropolitana Santiago",112,"Independencia",1,"Municipal",470.052013422819,5.55754438942001,343
+13,"Region Metropolitana Santiago",112,"Independencia",2,"Particular Subvencionado",469.888782358581,5.49573269980733,1254
+13,"Region Metropolitana Santiago",112,"Independencia",3,"Particular Pagado",600.366071428571,5.6516949362674,59
+13,"Region Metropolitana Santiago",114,"Isla De Maipo",1,"Municipal",440.708633093525,5.31071794950045,196
+13,"Region Metropolitana Santiago",114,"Isla De Maipo",2,"Particular Subvencionado",469.362416107383,5.49658537783274,164
+13,"Region Metropolitana Santiago",117,"La Cisterna",1,"Municipal",469.173374613003,5.36901858504318,379
+13,"Region Metropolitana Santiago",117,"La Cisterna",2,"Particular Subvencionado",478.178101889893,5.46168544357885,2849
+13,"Region Metropolitana Santiago",117,"La Cisterna",3,"Particular Pagado",568.276315789474,5.73857143947056,42
+13,"Region Metropolitana Santiago",117,"La Cisterna",4,"Corporación de Administración Delegada",489.275,5.24443903667171,205
+13,"Region Metropolitana Santiago",120,"La Florida",1,"Municipal",458.35601799775,5.38532517340585,1065
+13,"Region Metropolitana Santiago",120,"La Florida",2,"Particular Subvencionado",515.996554604302,5.52963556406355,5395
+13,"Region Metropolitana Santiago",120,"La Florida",3,"Particular Pagado",584.064080944351,5.79380091355038,665
+13,"Region Metropolitana Santiago",121,"La Granja",1,"Municipal",421.155367231638,5.3503333290418,245
+13,"Region Metropolitana Santiago",121,"La Granja",2,"Particular Subvencionado",485.822886297376,5.53051114676039,765
+13,"Region Metropolitana Santiago",124,"La Pintana",1,"Municipal",404.515463917526,5.44962457747996,296
+13,"Region Metropolitana Santiago",124,"La Pintana",2,"Particular Subvencionado",471.372542134831,5.46982551653893,1666
+13,"Region Metropolitana Santiago",125,"La Reina",1,"Municipal",458.263948497854,5.28037736250919,318
+13,"Region Metropolitana Santiago",125,"La Reina",2,"Particular Subvencionado",542.43059490085,5.60863875593815,385
+13,"Region Metropolitana Santiago",125,"La Reina",3,"Particular Pagado",616.617085862966,5.99575174709605,1305
+13,"Region Metropolitana Santiago",134,"Las Condes",1,"Municipal",517.266578249337,5.59745327111717,432
+13,"Region Metropolitana Santiago",134,"Las Condes",2,"Particular Subvencionado",571.3410041841,5.58880078538935,521
+13,"Region Metropolitana Santiago",134,"Las Condes",3,"Particular Pagado",615.31760715387,5.97010663104487,3697
+13,"Region Metropolitana Santiago",143,"Lo Barnechea",1,"Municipal",432.370056497175,5.39895654139311,231
+13,"Region Metropolitana Santiago",143,"Lo Barnechea",2,"Particular Subvencionado",528.19014084507,5.46907949647145,240
+13,"Region Metropolitana Santiago",143,"Lo Barnechea",3,"Particular Pagado",640.985589519651,6.14177253432957,1367
+13,"Region Metropolitana Santiago",144,"Lo Espejo",1,"Municipal",394.003846153846,5.27990339343675,208
+13,"Region Metropolitana Santiago",144,"Lo Espejo",2,"Particular Subvencionado",469.799126637555,5.51486488290735,261
+13,"Region Metropolitana Santiago",145,"Lo Prado",1,"Municipal",419.166666666667,5.35196508799057,233
+13,"Region Metropolitana Santiago",145,"Lo Prado",2,"Particular Subvencionado",514.712264150943,5.75144144865844,112
+13,"Region Metropolitana Santiago",160,"Macul",1,"Municipal",463.77374301676,5.43318584534974,229
+13,"Region Metropolitana Santiago",160,"Macul",2,"Particular Subvencionado",519.127218934911,5.54793883828407,760
+13,"Region Metropolitana Santiago",160,"Macul",3,"Particular Pagado",593.381656804734,5.71407409698244,189
+13,"Region Metropolitana Santiago",162,"Maipú",1,"Municipal",507.316199376947,5.57711865410647,1124
+13,"Region Metropolitana Santiago",162,"Maipú",2,"Particular Subvencionado",512.84253222138,5.54577123354017,7354
+13,"Region Metropolitana Santiago",162,"Maipú",3,"Particular Pagado",587.525943396226,5.87467812059263,233
+13,"Region Metropolitana Santiago",162,"Maipú",4,"Corporación de Administración Delegada",476.490990990991,5.21048386635319,124
+13,"Region Metropolitana Santiago",166,"Maria Pinto",1,"Municipal",420.5,5.45228917340198,83
+13,"Region Metropolitana Santiago",172,"Melipilla",1,"Municipal",415.220512820513,5.39317125195429,478
+13,"Region Metropolitana Santiago",172,"Melipilla",2,"Particular Subvencionado",478.745327102804,5.57362337078326,1680
+13,"Region Metropolitana Santiago",172,"Melipilla",3,"Particular Pagado",591.289655172414,5.9039490511463,158
+13,"Region Metropolitana Santiago",186,"Ñuñoa",1,"Municipal",559.800223214286,5.50249747987931,993
+13,"Region Metropolitana Santiago",186,"Ñuñoa",2,"Particular Subvencionado",484.246234446627,5.39516340630861,1687
+13,"Region Metropolitana Santiago",186,"Ñuñoa",3,"Particular Pagado",591.0543393276,5.82828491347466,1418
+13,"Region Metropolitana Santiago",186,"Ñuñoa",4,"Corporación de Administración Delegada",457.405674846626,5.40602288433981,789
+13,"Region Metropolitana Santiago",193,"Padre Hurtado",1,"Municipal",389.744897959184,5.36466668446859,60
+13,"Region Metropolitana Santiago",193,"Padre Hurtado",2,"Particular Subvencionado",475.457074721781,5.52810393692402,719
+13,"Region Metropolitana Santiago",197,"Paine",1,"Municipal",429.286290322581,5.51038870289132,286
+13,"Region Metropolitana Santiago",197,"Paine",2,"Particular Subvencionado",504.668466522678,5.66622000026703,501
+13,"Region Metropolitana Santiago",197,"Paine",3,"Particular Pagado",612.147058823529,5.91512818214221,39
+13,"Region Metropolitana Santiago",205,"Pedro Aguirre Cerda",1,"Municipal",414.621621621622,5.40182434545981,153
+13,"Region Metropolitana Santiago",205,"Pedro Aguirre Cerda",2,"Particular Subvencionado",497.434357541899,5.35771795664078,395
+13,"Region Metropolitana Santiago",205,"Pedro Aguirre Cerda",4,"Corporación de Administración Delegada",408.707142857143,5.28191491390796,96
+13,"Region Metropolitana Santiago",211,"Peñaflor",1,"Municipal",439.037037037037,5.41583335399628,96
+13,"Region Metropolitana Santiago",211,"Peñaflor",2,"Particular Subvencionado",472.05160390516,5.52697783729437,859
+13,"Region Metropolitana Santiago",211,"Peñaflor",3,"Particular Pagado",552.210526315789,5.90150001049042,20
+13,"Region Metropolitana Santiago",212,"Peñalolén",1,"Municipal",430.705128205128,5.35050772462723,460
+13,"Region Metropolitana Santiago",212,"Peñalolén",2,"Particular Subvencionado",499.891111111111,5.48605023344902,1320
+13,"Region Metropolitana Santiago",212,"Peñalolén",3,"Particular Pagado",606.621546961326,5.94788270963589,1011
+13,"Region Metropolitana Santiago",221,"Pirque",1,"Municipal",424.791666666667,5.3829577472848,72
+13,"Region Metropolitana Santiago",221,"Pirque",2,"Particular Subvencionado",458.414473684211,5.6049462492748,93
+13,"Region Metropolitana Santiago",221,"Pirque",3,"Particular Pagado",535.337209302326,5.79169812292423,53
+13,"Region Metropolitana Santiago",228,"Providencia",1,"Municipal",591.749357986646,5.77687704037624,2170
+13,"Region Metropolitana Santiago",228,"Providencia",2,"Particular Subvencionado",527.136299435028,5.59699104995337,782
+13,"Region Metropolitana Santiago",228,"Providencia",3,"Particular Pagado",570.1070192783,5.72599649030733,2299
+13,"Region Metropolitana Santiago",231,"Pudahuel",1,"Municipal",428.002336448598,5.42161871889512,280
+13,"Region Metropolitana Santiago",231,"Pudahuel",2,"Particular Subvencionado",464.422821969697,5.51709757238869,1235
+13,"Region Metropolitana Santiago",231,"Pudahuel",3,"Particular Pagado",614.838461538462,5.8144776429703,68
+13,"Region Metropolitana Santiago",232,"Puente Alto",1,"Municipal",456.907550822846,5.41119557529428,1275
+13,"Region Metropolitana Santiago",232,"Puente Alto",2,"Particular Subvencionado",500.200825416602,5.4984313797075,7260
+13,"Region Metropolitana Santiago",232,"Puente Alto",3,"Particular Pagado",582.639442231076,5.83351852982133,273
+13,"Region Metropolitana Santiago",249,"Quilicura",1,"Municipal",405.458333333333,5.38089110591624,207
+13,"Region Metropolitana Santiago",249,"Quilicura",2,"Particular Subvencionado",495.98706491063,5.46727577706004,2404
+13,"Region Metropolitana Santiago",249,"Quilicura",3,"Particular Pagado",605.978260869565,5.76316833023978,101
+13,"Region Metropolitana Santiago",256,"Quinta Normal",1,"Municipal",435.776712328767,5.36230769524207,461
+13,"Region Metropolitana Santiago",256,"Quinta Normal",2,"Particular Subvencionado",493.987660944206,5.52040076528797,1051
+13,"Region Metropolitana Santiago",256,"Quinta Normal",4,"Corporación de Administración Delegada",467.121739130435,5.37149510664098,409
+13,"Region Metropolitana Santiago",262,"Recoleta",1,"Municipal",431.465240641711,5.50013533141842,749
+13,"Region Metropolitana Santiago",262,"Recoleta",2,"Particular Subvencionado",514.492488262911,5.52321667472521,1201
+13,"Region Metropolitana Santiago",262,"Recoleta",3,"Particular Pagado",612.884615384615,5.67062069794227,145
+13,"Region Metropolitana Santiago",262,"Recoleta",4,"Corporación de Administración Delegada",439.34331797235,5.28390200298192,555
+13,"Region Metropolitana Santiago",264,"Renca",1,"Municipal",457.465163934426,5.52616666634878,302
+13,"Region Metropolitana Santiago",264,"Renca",2,"Particular Subvencionado",474.947229551451,5.38745875510708,912
+13,"Region Metropolitana Santiago",264,"Renca",4,"Corporación de Administración Delegada",489.657738095238,5.43843751152356,192
+13,"Region Metropolitana Santiago",280,"San Bernardo",1,"Municipal",429.452407614782,5.39665048832261,1247
+13,"Region Metropolitana Santiago",280,"San Bernardo",2,"Particular Subvencionado",505.240415704388,5.57689457140016,2437
+13,"Region Metropolitana Santiago",280,"San Bernardo",3,"Particular Pagado",572.963054187192,5.70099548408888,222
+13,"Region Metropolitana Santiago",280,"San Bernardo",4,"Corporación de Administración Delegada",453.98031496063,5.39420139624013,288
+13,"Region Metropolitana Santiago",290,"San Joaquín",1,"Municipal",391.512096774194,5.51212499141693,166
+13,"Region Metropolitana Santiago",290,"San Joaquín",2,"Particular Subvencionado",469.023722627737,5.50789810441862,319
+13,"Region Metropolitana Santiago",290,"San Joaquín",4,"Corporación de Administración Delegada",446.950581395349,5.25941705489907,223
+13,"Region Metropolitana Santiago",291,"San José De Maipo",1,"Municipal",407.753424657534,5.33654206267027,107
+13,"Region Metropolitana Santiago",291,"San José De Maipo",2,"Particular Subvencionado",493.51282051282,5.65701152538431,88
+13,"Region Metropolitana Santiago",293,"San Miguel",1,"Municipal",503.012012012012,5.36349367190011,397
+13,"Region Metropolitana Santiago",293,"San Miguel",2,"Particular Subvencionado",494.305044666316,5.50893912324166,2180
+13,"Region Metropolitana Santiago",293,"San Miguel",3,"Particular Pagado",590.687096774193,5.73000000234236,172
+13,"Region Metropolitana Santiago",293,"San Miguel",4,"Corporación de Administración Delegada",453.748287671233,5.51126100310832,686
+13,"Region Metropolitana Santiago",296,"San Pedro",1,"Municipal",426.672131147541,5.48666667938232,66
+13,"Region Metropolitana Santiago",300,"San Ramón",1,"Municipal",398.558394160584,5.3079759080726,418
+13,"Region Metropolitana Santiago",300,"San Ramón",2,"Particular Subvencionado",504.571256038647,5.44644172255003,492
+13,"Region Metropolitana Santiago",300,"San Ramón",4,"Corporación de Administración Delegada",430.625,5.22853212181581,109
+13,"Region Metropolitana Santiago",307,"Santiago",1,"Municipal",558.376745539178,5.6985941635744,5831
+13,"Region Metropolitana Santiago",307,"Santiago",2,"Particular Subvencionado",501.723044231072,5.48363764029724,7206
+13,"Region Metropolitana Santiago",307,"Santiago",3,"Particular Pagado",557.179051663128,5.63682022204555,1574
+13,"Region Metropolitana Santiago",307,"Santiago",4,"Corporación de Administración Delegada",447.888192267503,5.45235956343681,1159
+13,"Region Metropolitana Santiago",310,"Talagante",1,"Municipal",461.233231707317,5.574598940936,377
+13,"Region Metropolitana Santiago",310,"Talagante",2,"Particular Subvencionado",490.780537459283,5.56856618944336,1367
+13,"Region Metropolitana Santiago",310,"Talagante",3,"Particular Pagado",592.5875,6.02071432063454,266
+13,"Region Metropolitana Santiago",318,"Til-Til",1,"Municipal",425.559322033898,5.43435714585441,142
+13,"Region Metropolitana Santiago",318,"Til-Til",2,"Particular Subvencionado",497.257142857143,5.7755263102682,38
+13,"Region Metropolitana Santiago",340,"Vitacura",1,"Municipal",578.15,5.5951711179639,265
+13,"Region Metropolitana Santiago",340,"Vitacura",2,"Particular Subvencionado",562.241935483871,5.77814371999866,170
+13,"Region Metropolitana Santiago",340,"Vitacura",3,"Particular Pagado",631.47095709571,5.99280886800139,1725
+13,"Region Metropolitana Santiago",346,"Lampa",1,"Municipal",407.713333333333,5.56692309990907,195
+13,"Region Metropolitana Santiago",346,"Lampa",2,"Particular Subvencionado",468.134502923977,5.50860915217601,570
+14,"Los Ríos",71,"Corral",1,"Municipal",463.818181818182,5.65317460468837,63
+14,"Los Ríos",97,"Futrono",1,"Municipal",433.722222222222,5.37353847210224,65
+14,"Los Ríos",97,"Futrono",2,"Particular Subvencionado",488.3,5.59094241526739,191
+14,"Los Ríos",127,"La Unión",1,"Municipal",509.488372093023,5.62661766585182,341
+14,"Los Ríos",127,"La Unión",2,"Particular Subvencionado",452.339805825243,5.66879553086951,357
+14,"Los Ríos",127,"La Unión",3,"Particular Pagado",640.765625,5.9874286379133,35
+14,"Los Ríos",128,"Lago Ranco",1,"Municipal",465.538461538462,5.63555558522542,90
+14,"Los Ríos",132,"Lanco",1,"Municipal",468.675572519084,5.552787881909,165
+14,"Los Ríos",132,"Lanco",2,"Particular Subvencionado",441.730769230769,5.64921569824219,102
+14,"Los Ríos",153,"Los Lagos",1,"Municipal",463.751851851852,5.73167743375224,155
+14,"Los Ríos",153,"Los Lagos",2,"Particular Subvencionado",390.223684210526,5.60823528439391,51
+14,"Los Ríos",161,"Máfil",1,"Municipal",412.25,5.67066667344835,45
+14,"Los Ríos",161,"Máfil",2,"Particular Subvencionado",440.253846153846,5.63434212458761,76
+14,"Los Ríos",167,"Mariquina",1,"Municipal",439.535714285714,5.54974361566397,39
+14,"Los Ríos",167,"Mariquina",2,"Particular Subvencionado",532.42,5.58032259303853,217
+14,"Los Ríos",196,"Paillaco",1,"Municipal",483.758620689655,5.88547872736099,189
+14,"Los Ríos",196,"Paillaco",2,"Particular Subvencionado",434.067307692308,5.80298244744016,57
+14,"Los Ríos",200,"Panguipulli",1,"Municipal",513.838235294118,5.81232639650504,288
+14,"Los Ríos",200,"Panguipulli",2,"Particular Subvencionado",434.047892720306,5.65497042723661,338
+14,"Los Ríos",269,"Rio Bueno",1,"Municipal",446.989189189189,5.55143460744544,237
+14,"Los Ríos",269,"Rio Bueno",2,"Particular Subvencionado",479.881909547739,5.71948414000254,253
+14,"Los Ríos",329,"Valdivia",1,"Municipal",479.566979522184,5.5261594267859,1385
+14,"Los Ríos",329,"Valdivia",2,"Particular Subvencionado",509.73678996037,5.58937680673132,1737
+14,"Los Ríos",329,"Valdivia",3,"Particular Pagado",620.390957446809,5.94369669774132,211
+15,"Arica y Parinacota",12,"Arica",1,"Municipal",459.745634016705,5.74906555264898,1553
+15,"Arica y Parinacota",12,"Arica",2,"Particular Subvencionado",475.521950092421,5.63459893402765,2436
+15,"Arica y Parinacota",12,"Arica",3,"Particular Pagado",575.751633986928,5.97076530359229,196
+15,"Arica y Parinacota",243,"Putre",1,"Municipal",419.403846153846,5.38656251877546,64
