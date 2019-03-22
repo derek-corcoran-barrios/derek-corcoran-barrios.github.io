@@ -8,7 +8,7 @@ navbar:
     icon: fa-gear
     menu:
     - text: Cursos
-    - text: BIO4022
+    - text: Curso de R
       href: Libro/_book/index.html
     - text: BIO249c
       href: AyduantiaStats/_book/index.html      
