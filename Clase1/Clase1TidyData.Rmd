@@ -1,51 +1,54 @@
-<style>
-.reveal h1, .reveal h2, .reveal h3 {
-  word-wrap: normal;
-  -moz-hyphens: none;
-}
-</style>
-
-<style>
-.small-code pre code {
-  font-size: 1em;
-}
-</style>
-
-Clase 1 Tidy Data y manipulación de datos
-========================================================
-author: Derek Corcoran
+---
+title: "Clase 1 Tidy Data y manipulación de datos"
+author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
-autosize: true
-transition: rotate
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    logo: logo.png
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
+library(tidyverse)
+library(broom)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
 
 
-Curso Análisis y manipulación de datos en R
-========================================================
+## Curso Análisis y manipulación de datos en R {.build}
 
 Primeros pasos
 
-- ¿Quien no ha usado nunca R? [Swirl](http://swirlstats.com/students.html)
-- Evaluación sencilla (Completar tareas + 1 evaluación)
-- Mucho trabajo personal guiado
-- Pagina donde esta [todo el curso](https://github.com/derek-corcoran-barrios/CursoR)
+* ¿Quien no ha usado nunca R? [Swirl](https://www.youtube.com/watch?v=w6L7Ye18yPE&feature=youtu.be)
+* Evaluación sencilla (Completar tareas + 1 evaluación)
+* Mucho trabajo personal guiado
+* Pagina donde esta [todo el curso](http://www.derek-corcoran-barrios.com/Libro/_book/index.html)
 
-Estructura de datos
-========================================================
-incremental: true
+## Estructura de datos {.build}
+
+<div style="float: left; width: 40%;">
 
 - Vector: Un conjunto lineal de datos (secuencia génica, serie de tiempo)
 - Matrix: Una tabla con solo números
 - Data Frame: Una tabla donde cada columna tiene un tipo de datos (estándar dorado)
 - List: Aqui podemos meter lo que queramos
 
-***
+</div>
 
-![data](Data.png)
+<div style="float: right; width: 60%;">
 
-Vector
-========================================================
-left: 60%
-incremental: true
+```{r, echo = FALSE}
+knitr::include_graphics("Data.png")
+```
+
+</div>
+
+## Vector {.build}
+
+<div style="float: left; width: 40%;">
 
 * Secuencia lineal de datos
 * Pueden ser de muchos tipos (numéricos, de carácteres, lógicos, etc.)
@@ -54,14 +57,20 @@ incremental: true
 * para subsetear un vector se pone el índice entre []
 * uspop[4], uspop[2:10], uspop[c(3,5,8)]
 
-***
+</div>
 
-![Vector](Vector.jpg)
+<div style="float: right; width: 60%;">
 
+```{r, echo = FALSE}
+knitr::include_graphics("Vector.jpg")
+```
 
-Data Frame
-========================================================
-incremental: true
+</div>
+
+## Data Frame {.build}
+
+<div style="float: left; width: 40%;">
+
 * Una tabla, cada columna un tipo de datos (Numérico, lógico, etc)
 * Cada columna un vector
 * Ejemplo data(iris)
@@ -69,58 +78,68 @@ incremental: true
 * Ejemplos iris[,3], iris[,"Petal.Length"], iris[2:5,c(1,5)], iris$Petal.Length
 
 
+</div>
 
-***
+<div style="float: right; width: 60%;">
 
-![DataFrame](DataFrame.jpg)
+```{r, echo = FALSE}
+knitr::include_graphics("DataFrame.jpg")
+```
 
-Tidy Data 
-========================================================
-incremental: true
-![Tidy](tidy.png)
+</div>
+
+## Tidy Data  {.build}
+
+```{r, echo = FALSE}
+knitr::include_graphics("tidy.png")
+```
+
 
 * Cada columna una variable
 * Cada fila una observación
 
-untidy data
-===========
+## untidy data
+
 ```{r, echo=FALSE, message = FALSE, warning = FALSE,fig.width=8,fig.height=4.5,dpi=300,out.width="960px",out.height="700px"}
 library(knitr)
 include_graphics("UntidyONU.png")
 ```
 
-untidy data
-===========
+## untidy data
 
 ```{r, echo=FALSE, message = FALSE, warning = FALSE,fig.width=8,fig.height=3,dpi=300,out.width="960px",out.height="450px"}
 include_graphics("untidy.jpg")
 ```
 
-untidy data
-===========
-class: small-code
+## untidy data {.small .build}
+
+<div style="float: left; width: 40%;">
 
 * Tablas de contingencia
 * Ejemplo data(HairEyeColor)
 
-```{r}
+</div>
+
+<div style="float: right; width: 60%;">
+
+```{r, echo = FALSE}
 data("HairEyeColor")
-HairEyeColor[,,1]
+knitr::kable(HairEyeColor[,,1]) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
-***
+
+</div>
+
 ### Forma tidy
 
 ```{r, echo=FALSE}
 library(epitools)
 library(knitr)
 H <- expand.table(HairEyeColor)
-kable(head(H))
+kable(head(H)) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
-dplyr
-========================================================
-incremental: true
- 
+## dplyr {.build}
+
 * Paquete con pocas funciones [muy poderosas](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) para ordenar datos 
 * Parte del [tidyverse](https://www.tidyverse.org/)
 
@@ -131,15 +150,12 @@ incremental: true
 - *mutate* (Genera variables nuevas)
 - *%>%* pipeline
 
-summarize y group_by
-=================
-class: small-code
-incremental: true
+## summarize y group_by {.build .small}
 
 - *group_by* reune observaciones según una variable
 - *summarize* resume una variable
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo = TRUE}
 library(tidyverse)
 Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 ```
@@ -150,16 +166,12 @@ library(dplyr)
 library(knitr)
 Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 
-kable(Summary.Petal)
+kable(Summary.Petal) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
-summarize y group_by (continuado)
-=================
-class: small-code
-incremental: true
+## summarize y group_by (continuado) {.small .build}
 
 ```{r, eval = FALSE}
-library(tidyverse)
 Summary.Petal <- group_by(iris, Species)
 Summary.Petal <- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 ```
@@ -170,14 +182,11 @@ library(dplyr)
 library(knitr)
 Summary.Petal <- group_by(iris, Species)
 Summary.Petal <- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
-kable(Summary.Petal)
+kable(Summary.Petal) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
-summarize y group_by (continuado)
-=================
-class: small-code
-incremental: true
-
+## summarize y group_by (continuado) {.small .build}
+   
 * Pueden agrupar por más de una variable a la vez
 
 ```{r, eval = FALSE}
@@ -188,19 +197,16 @@ Consumo <- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
 
 
 ```{r, echo = FALSE}
-library(dplyr)
-library(knitr)
+
 data("mtcars")
 Mtcars2 <- group_by(mtcars, am, cyl)
 Consumo <- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
-kable(Consumo)
+kable(Consumo) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
 
 
-mutate
-=======================
-class: small-code
+## mutate {.small}
 
 * Crea variables nuevas
 
@@ -211,13 +217,10 @@ DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
 ```{r, echo = FALSE}
 DF <- mutate(iris, Petal.Sepal.Ratio = round((Petal.Length/Sepal.Length),2))
 
-kable(DF[seq(from = 15, to = 150, length.out = 10),], row.names = FALSE)
+kable(DF[seq(from = 15, to = 150, length.out = 10),], row.names = FALSE) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "200px")
 ```
 
-Pipeline (%>%)
-=================
-class: small-code
-incremental: true
+## Pipeline (%>%) {.small .build}
 
 - Para realizar varias operaciones de forma secuencial 
 - sin recurrir a parentesis anidados 
@@ -240,10 +243,7 @@ x <- c(1,4,6,8)
 x %>% log() %>% sqrt() %>% mean() %>% round(2)
 ```
 
-Pipeline (%>%)
-=================
-class: small-code
-incremental: true
+## Pipeline (%>%) {.small .build}
 
 * Muchos objetos intermedios
 
@@ -258,13 +258,10 @@ Summary.Byspecies <- summarize(BySpecies, MEAN = mean(Petal.Sepal.Ratio), SD = s
 DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
 BySpecies <- group_by(DF, Species)
 Summary.Byspecies <- summarize(BySpecies, MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
-kable(Summary.Byspecies)
+kable(Summary.Byspecies) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
-Pipeline (%>%)
-=================
-class: small-code
-incremental: true
+## Pipeline (%>%) {.small .build}
 
 * Con pipe
 
@@ -275,14 +272,11 @@ Summary.Byspecies <- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.L
 
 ```{r, echo=FALSE}
 Summary.Byspecies <- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length), Species), MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
-kable(Summary.Byspecies)
+kable(Summary.Byspecies) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
 
-
-Pipeline (%>%) otro ejemplo
-==========================
-class: small-code
+## Pipeline (%>%) otro ejemplo
 
 ```{r, eval=FALSE}
 library(tidyverse)
@@ -293,22 +287,19 @@ MEAN <- iris %>% group_by(Species) %>% summarize_all(mean)
 library(dplyr)
 library(knitr)
 MEAN <- iris %>% group_by(Species) %>% summarize_all(mean)
-kable(MEAN)
+kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
-Filter
-=======
-incremental:true
+## Filter {.build}
+
 - Selecciona según una o más variables
 
 ```{r, echo=FALSE}
 DF <- data.frame(simbolo = c(">", "<", "==", ">=", "<="), significado = c("Mayor que", "Menor que", "Igual a", "mayor o igual a", "menor o igual a"), simbolo_cont = c("!=","%in%", "is.na", "!is.na", "| &"), significado_cont = c("distinto a", "dentro del grupo", "es NA", "no es NA", "o, y"))
-kable (DF)
+kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
-Ejemplos de filter agregando a lo anterior
-===============================
-class: small-code
+## Ejemplos de filter agregando a lo anterior {.small}
 
 ```{r, eval = FALSE}
 data("iris")
@@ -319,12 +310,10 @@ DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summari
 library(dplyr)
 data("iris")
 DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(mean)
-kable(DF)
+kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
-Ejemplos de filter
-===============================
-class: small-code
+## Ejemplos de filter {.small}
 
 ```{r, eval = FALSE}
 DF <- iris %>% filter(Petal.Length >= 4 & Sepal.Length >= 5) %>% group_by(Species) %>% summarise(N = n())
@@ -332,13 +321,11 @@ DF <- iris %>% filter(Petal.Length >= 4 & Sepal.Length >= 5) %>% group_by(Specie
 
 ```{r, echo = FALSE}
 DF <- iris %>% filter(Petal.Length >= 4 & Sepal.Length >= 5) %>% group_by(Species) %>% summarise(N = n())
-kable(DF)
+kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
 
-Más de una función
-===============================
-class: small-code
+## Más de una función {.small}
 
 ```{r, eval = FALSE}
 data("iris")
@@ -349,13 +336,12 @@ DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summari
 library(dplyr)
 data("iris")
 DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(funs(mean, sd))
-kable(DF)
+kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
-Select
-=======================
-class: small-code
-incremental: true
+## Select {.small .build}
+
+<div style="float: left; width: 40%;">
 
 * Selecciona columnas dentro de un data.frame, se pueden restar
 
@@ -378,17 +364,18 @@ iris %>% group_by(Species) %>% select(-contains("Sepal")) %>% summarize_all(mean
 ```{r, echo = FALSE}
 DF <- iris %>% group_by(Species) %>% select(-contains("Sepal")) %>% summarize_all(mean)
 ```
+</div>
 
-***
+<div style="float: right; width: 60%;">
+
+
 ```{r, echo = FALSE}
-kable(DF)
+kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
+</div>
 
-Ejercicios
-========================================================
-incremental: true
-class: small-code
+## Ejercicios {.build .small}
 
 * Usando la base de datos *storms* del paquete *dplyr*, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
     + soluciónes:
@@ -404,10 +391,7 @@ storms %>% filter(status == "hurricane" & !is.na(hu_diameter)) %>% select(year, 
 storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(funs(mean), na.rm = TRUE)
 ```
 
-Ejercicios 2
-==================================
-incremental: true
-class: small-code
+## Ejercicios 2 {.build .small}
 
 * La base de datos `mpg` del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (*cty*) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 milla = 1.609 km; 1 galón = 3.78541 litros)
 
@@ -415,18 +399,14 @@ class: small-code
 Solution <- mpg %>% filter(year > 2004 & class == "compact") %>% mutate(kpl = (cty*1.609)/3.78541)
 ```
 
-Bases de datos con que trabajar
-========================================================
+## Bases de datos con que trabajar {.build}
 
 - [Awesome public Datasets](https://github.com/caesar0301/awesome-public-datasets)
 - [Ropensci](https://ropensci.org/packages/#data_access) en base a paquetes de R
 - [cooldatasets](https://www.cooldatasets.com/)
 - [Datos de FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/)
 
-Para la otra clase, es necesario:
-========================================================
-class: small-code
-incremental:true
+## Para la otra clase, es necesario: {.small .build}
 
 
 * Crearse cuenta de [github](https://github.com/)
@@ -434,9 +414,9 @@ incremental:true
 
 
 
-Consejo reproducible 1
-========================================================
-class: small-code
+## Consejo reproducible 1 {.small}
+
+<div style="float: left; width: 40%;">
 
 Usar el paquete pacman (Package manager)
 
@@ -445,9 +425,13 @@ Usar el paquete pacman (Package manager)
 - El código de abajo busca el paquete pacman, si no esta lo instala
 - Luego usa *p_load* sobre los otros paquetes
 
-***
+</div>
+
+<div style="float: right; width: 60%;">
 
 ```{r, echo = TRUE, eval=FALSE}
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, lubridate)
 ```
+
+</div>

@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-03-20">
+<meta name="date" content="2019-03-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -181,7 +181,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Práctico 1</span> Exploración de datos y tu primer ANOVA</h1>
 <div id="paquetes-necesarios-para-este-practico" class="section level2">
 <h2><span class="header-section-number">1.1</span> Paquetes necesarios para este práctico</h2>
-<p>Para este capitulo necesitas tener instalado el paquete tidyverse. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase1/Clase1.html">link</a>. El video de la clase se encuentra disponible en este link.</p>
+<p>Para este capitulo necesitas tener instalado el paquete tidyverse. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase2/Clase2.html">link</a>. El video de la clase se encuentra disponible en este link.</p>
 </div>
 <div id="actividad-1-educacion-en-chile" class="section level2">
 <h2><span class="header-section-number">1.2</span> Actividad 1 Educación en Chile</h2>
@@ -300,10 +300,15 @@ Figura 1.2: Box plot y jitter plot juntos para el largo de petalo de tres especi
 <h2><span class="header-section-number">1.4</span> Actividad 3 Mi primer ANOVA</h2>
 <div id="antes-de-empezar-a-entender-el-anova" class="section level3">
 <h3><span class="header-section-number">1.4.1</span> antes de empezar a entender el ANOVA</h3>
-<p>El ANOVA compara medias entre grupos, lo principal es la comparación entre los cuadrados de los residuales intergrupos, y los residuales intragrupos, los primeros son los cuadrados de la diferencia entre las medias de todas las observaciones (<span class="math inline">\(\tilde{x}_t\)</span>) y las medias de cada grupo <span class="math inline">\(\tilde{x}_g\)</span> al cuadrado multiplicado por el número de observaciones totales (ver ecuación <a href="Explorando.html#eq:intergrups">(1.1)</a>), cambia las medias del simlador de anova a continuacion y selecciona los errores intergrupos y ve como cambian</p>
+<p>El ANOVA compara medias entre grupos, lo principal es la comparación entre los cuadrados de los residuales intergrupos, y los residuales intragrupos, los primeros son los cuadrados de la diferencia entre las medias de todas las observaciones (<span class="math inline">\(\tilde{x}_t\)</span>) y las medias de cada grupo <span class="math inline">\(\tilde{x}_g\)</span> al cuadrado multiplicado por el número de observaciones totales (ver ecuación <a href="Explorando.html#eq:intergrups">(1.1)</a>), cambia las medias del simlador de anova a continuacion y selecciona los errores intergrupos y ve como cambian.</p>
 <span class="math display" id="eq:intergrups">\[\begin{equation} 
   \textrm{Errores_inter_factor} = n \times \sum{(\tilde{x}_t - \tilde{x}_g)^2}
   \tag{1.1}
+\end{equation}\]</span>
+<p>los residuales intra grupos son la diferencia entre cada observación <span class="math inline">\(x_{i,g}\)</span> del grupo <span class="math inline">\(g\)</span> y las medias del grupo respectivo (ver ecuación <a href="Explorando.html#eq:intragrups">(1.2)</a>), cambia las medias del simlador de anova a continuacion y selecciona los errores intragrupos y ve como cambian</p>
+<span class="math display" id="eq:intragrups">\[\begin{equation} 
+  \textrm{Errores_intra_factor} = \sum{(\tilde{x}_g - x_{i,g})^2}
+  \tag{1.2}
 \end{equation}\]</span>
 <div id="simulador-de-anova" class="section level4">
 <h4><span class="header-section-number">1.4.1.1</span> Simulador de ANOVA</h4>

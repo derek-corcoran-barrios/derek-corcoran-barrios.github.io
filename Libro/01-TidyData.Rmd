@@ -11,9 +11,10 @@ opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 
 En este capítulo se explicará qué es una base de datos *tidy* [@wickham2014tidy] y  se aprenderá a usar funciones del paquete *dplyr* [@R-dplyr] para manipular datos.
 
-Dado que este libro es un apoyo para el curso BIO4022, esta clase del curso puede también ser seguida en este [link](https://derek-corcoran-barrios.github.io/Clase1/Clase1TidyData). El video de la clase se encuentra disponible en este [link](https://youtu.be/vQKWd02HB90).
+Dado que este libro es un apoyo para el curso BIO4022, esta clase del curso puede también ser seguida en este [link](https://www.derek-corcoran-barrios.com/Clase1/Clase1TidyData.html). El video de la clase se encuentra disponible en este [link](https://youtu.be/vQKWd02HB90).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vQKWd02HB90" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
 
 ## Tidy data
 
@@ -301,8 +302,6 @@ Como vemos en la figura \@ref(fig:leftjoin)
 library(gganimate)
 
 
-
-if ("html_document" %in% rmarkdown::all_output_formats(knitr::current_input())){
 x <- data_frame(
   id = 1:3,
   x = paste0("x", 1:3)
@@ -372,7 +371,6 @@ lj <- initial_dfs %>%
   animate_plot()
 
 lj
-}
 
 ```
 

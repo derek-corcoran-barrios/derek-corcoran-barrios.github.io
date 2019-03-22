@@ -7,7 +7,7 @@ suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
 
 ## Paquetes necesarios para este práctico
 
-Para este capitulo necesitas tener instalado el paquete tidyverse. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase1/Clase1.html). El video de la clase se encuentra disponible en este link.
+Para este capitulo necesitas tener instalado el paquete tidyverse. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase2/Clase2.html). El video de la clase se encuentra disponible en este link.
 
 ## Actividad 1 Educación en Chile
 
@@ -121,12 +121,20 @@ Utilizaremos base de datos $CO_2$ [@potvin1990statistical] enviada al curso. Est
 
 ### antes de empezar a entender el ANOVA
 
-El ANOVA compara medias entre grupos, lo principal es la comparación entre los cuadrados de los residuales intergrupos, y los residuales intragrupos, los primeros son los cuadrados de la diferencia entre las medias de todas las observaciones ($\tilde{x}_t$) y las medias de cada grupo $\tilde{x}_g$ al cuadrado multiplicado por el número de observaciones totales (ver ecuación \@ref(eq:intergrups)), cambia las medias del simlador de anova a continuacion y selecciona los errores intergrupos y ve como cambian
+El ANOVA compara medias entre grupos, lo principal es la comparación entre los cuadrados de los residuales intergrupos, y los residuales intragrupos, los primeros son los cuadrados de la diferencia entre las medias de todas las observaciones ($\tilde{x}_t$) y las medias de cada grupo $\tilde{x}_g$ al cuadrado multiplicado por el número de observaciones totales (ver ecuación \@ref(eq:intergrups)), cambia las medias del simlador de anova a continuacion y selecciona los errores intergrupos y ve como cambian.
 
 \begin{equation} 
   \textrm{Errores_inter_factor} = n \times \sum{(\tilde{x}_t - \tilde{x}_g)^2}
   (\#eq:intergrups)
 \end{equation} 
+
+los residuales intra grupos son la diferencia entre cada observación $x_{i,g}$ del grupo $g$ y las medias del grupo respectivo (ver ecuación \@ref(eq:intragrups)), cambia las medias del simlador de anova a continuacion y selecciona los errores intragrupos y ve como cambian
+
+\begin{equation} 
+  \textrm{Errores_intra_factor} = \sum{(\tilde{x}_g - x_{i,g})^2}
+  (\#eq:intragrups)
+\end{equation} 
+
 
 #### Simulador de ANOVA
 
