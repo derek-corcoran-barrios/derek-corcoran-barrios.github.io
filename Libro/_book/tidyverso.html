@@ -5,27 +5,27 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>BIO 4022. Manipulación de datos e investigación reproducible en R</title>
-  <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <title>Capítulo 3 El Tidyverso y tidyr | Manipulación de datos e investigación reproducible en R</title>
+  <meta name="description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="BIO 4022. Manipulación de datos e investigación reproducible en R" />
+  <meta property="og:title" content="Capítulo 3 El Tidyverso y tidyr | Manipulación de datos e investigación reproducible en R" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  <meta property="og:description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="BIO 4022. Manipulación de datos e investigación reproducible en R" />
+  <meta name="twitter:title" content="Capítulo 3 El Tidyverso y tidyr | Manipulación de datos e investigación reproducible en R" />
   
-  <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  <meta name="twitter:description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
   
 
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-11-28">
+<meta name="date" content="2019-03-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="visualizacion.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -50,69 +51,41 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -252,7 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BIO 4022. Manipulación de datos e investigación reproducible en R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Manipulación de datos e investigación reproducible en R</a>
           </h1>
         </div>
 
@@ -317,109 +290,231 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Este paquete como ya fue explicado en la sección anterior, solo posee dos funciones: <code>gather</code> y <code>spread</code>. Estas funciones sirven para pasar de tablas anchas a largas y viceversa, pero ¿qué significa que la misma información sea presentada en una tabla larga o en una tabla ancha?</p>
 <p>Tomemos por ejemplo dos tablas. En la tabla <a href="tidyverso.html#tab:TablaAncha">3.1</a> vemos una tabla ancha y en la tabla <a href="tidyverso.html#tab:TablaLarga">3.2</a> una tabla larga.</p>
 <table>
-<caption><span id="tab:TablaAncha">Tabla 3.1: </span>Tabla ancha.</caption>
+<caption>
+<span id="tab:TablaAncha">Tabla 3.1: </span>Tabla ancha.
+</caption>
 <thead>
-<tr class="header">
-<th align="right">Sepal.Length</th>
-<th align="right">Sepal.Width</th>
-<th align="right">Petal.Length</th>
-<th align="right">Petal.Width</th>
-<th align="left">Species</th>
+<tr>
+<th style="text-align:right;">
+Sepal.Length
+</th>
+<th style="text-align:right;">
+Sepal.Width
+</th>
+<th style="text-align:right;">
+Petal.Length
+</th>
+<th style="text-align:right;">
+Petal.Width
+</th>
+<th style="text-align:left;">
+Species
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">5.1</td>
-<td align="right">3.5</td>
-<td align="right">1.4</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
+<tr>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
 </tr>
-<tr class="even">
-<td align="right">7.0</td>
-<td align="right">3.2</td>
-<td align="right">4.7</td>
-<td align="right">1.4</td>
-<td align="left">versicolor</td>
+<tr>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
 </tr>
-<tr class="odd">
-<td align="right">6.3</td>
-<td align="right">3.3</td>
-<td align="right">6.0</td>
-<td align="right">2.5</td>
-<td align="left">virginica</td>
+<tr>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:right;">
+3.3
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:left;">
+virginica
+</td>
 </tr>
 </tbody>
 </table>
 <table>
-<caption><span id="tab:TablaLarga">Tabla 3.2: </span>Tabla larga.</caption>
+<caption>
+<span id="tab:TablaLarga">Tabla 3.2: </span>Tabla larga.
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Species</th>
-<th align="left">Atributos_florales</th>
-<th align="right">Medidas</th>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:left;">
+Atributos_florales
+</th>
+<th style="text-align:right;">
+Medidas
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">setosa</td>
-<td align="left">Sepal.Length</td>
-<td align="right">5.1</td>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:left;">
+Sepal.Length
+</td>
+<td style="text-align:right;">
+5.1
+</td>
 </tr>
-<tr class="even">
-<td align="left">versicolor</td>
-<td align="left">Sepal.Length</td>
-<td align="right">7.0</td>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:left;">
+Sepal.Length
+</td>
+<td style="text-align:right;">
+7.0
+</td>
 </tr>
-<tr class="odd">
-<td align="left">virginica</td>
-<td align="left">Sepal.Length</td>
-<td align="right">6.3</td>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:left;">
+Sepal.Length
+</td>
+<td style="text-align:right;">
+6.3
+</td>
 </tr>
-<tr class="even">
-<td align="left">setosa</td>
-<td align="left">Sepal.Width</td>
-<td align="right">3.5</td>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:left;">
+Sepal.Width
+</td>
+<td style="text-align:right;">
+3.5
+</td>
 </tr>
-<tr class="odd">
-<td align="left">versicolor</td>
-<td align="left">Sepal.Width</td>
-<td align="right">3.2</td>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:left;">
+Sepal.Width
+</td>
+<td style="text-align:right;">
+3.2
+</td>
 </tr>
-<tr class="even">
-<td align="left">virginica</td>
-<td align="left">Sepal.Width</td>
-<td align="right">3.3</td>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:left;">
+Sepal.Width
+</td>
+<td style="text-align:right;">
+3.3
+</td>
 </tr>
-<tr class="odd">
-<td align="left">setosa</td>
-<td align="left">Petal.Length</td>
-<td align="right">1.4</td>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:left;">
+Petal.Length
+</td>
+<td style="text-align:right;">
+1.4
+</td>
 </tr>
-<tr class="even">
-<td align="left">versicolor</td>
-<td align="left">Petal.Length</td>
-<td align="right">4.7</td>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:left;">
+Petal.Length
+</td>
+<td style="text-align:right;">
+4.7
+</td>
 </tr>
-<tr class="odd">
-<td align="left">virginica</td>
-<td align="left">Petal.Length</td>
-<td align="right">6.0</td>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:left;">
+Petal.Length
+</td>
+<td style="text-align:right;">
+6.0
+</td>
 </tr>
-<tr class="even">
-<td align="left">setosa</td>
-<td align="left">Petal.Width</td>
-<td align="right">0.2</td>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:left;">
+Petal.Width
+</td>
+<td style="text-align:right;">
+0.2
+</td>
 </tr>
-<tr class="odd">
-<td align="left">versicolor</td>
-<td align="left">Petal.Width</td>
-<td align="right">1.4</td>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:left;">
+Petal.Width
+</td>
+<td style="text-align:right;">
+1.4
+</td>
 </tr>
-<tr class="even">
-<td align="left">virginica</td>
-<td align="left">Petal.Width</td>
-<td align="right">2.5</td>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:left;">
+Petal.Width
+</td>
+<td style="text-align:right;">
+2.5
+</td>
 </tr>
 </tbody>
 </table>
@@ -433,220 +528,432 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ejemplo-de-los-censos" class="section level4">
 <h4><span class="header-section-number">3.3.1.1</span> Ejemplo de los censos</h4>
 <p>Supongamos que un estudiante de biología va a realizar un censo en un parque nacional por tres días y genera la siguiente tabla (el código a continuación es el que permite generar el data frame obervado en la tabla <a href="tidyverso.html#tab:Censo">3.3</a>)</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">df_cuentas &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dia =</span> <span class="kw">c</span>(<span class="st">&quot;Lunes&quot;</span>, <span class="st">&quot;Martes&quot;</span>, <span class="st">&quot;Miercoles&quot;</span>), </a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">    <span class="dt">Lobo =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">Liebre =</span> <span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>), <span class="dt">Zorro =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, </a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">        <span class="dv">4</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_cuentas &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dia =</span> <span class="kw">c</span>(<span class="st">&quot;Lunes&quot;</span>, <span class="st">&quot;Martes&quot;</span>, <span class="st">&quot;Miercoles&quot;</span>), 
+    <span class="dt">Lobo =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">Liebre =</span> <span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>), <span class="dt">Zorro =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, 
+        <span class="dv">4</span>))</code></pre></div>
 <table>
-<caption><span id="tab:Censo">Tabla 3.3: </span>Abundancia detectada por especie en tres días de muestreo</caption>
+<caption>
+<span id="tab:Censo">Tabla 3.3: </span>Abundancia detectada por especie en tres días de muestreo
+</caption>
 <thead>
-<tr class="header">
-<th align="left">dia</th>
-<th align="right">Lobo</th>
-<th align="right">Liebre</th>
-<th align="right">Zorro</th>
+<tr>
+<th style="text-align:left;">
+dia
+</th>
+<th style="text-align:right;">
+Lobo
+</th>
+<th style="text-align:right;">
+Liebre
+</th>
+<th style="text-align:right;">
+Zorro
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Lunes</td>
-<td align="right">2</td>
-<td align="right">20</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">Martes</td>
-<td align="right">1</td>
-<td align="right">25</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Miercoles</td>
-<td align="right">3</td>
-<td align="right">30</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
 </tbody>
 </table>
 <p>Claramente esta base de datos no es tidy, ya que deberíamos tener una columna para la variable día, otra para especie y por último una para la abundancia de cada especie en cadad día. Antes de mostrar como realizaríamos esto con <code>gather</code>, veamos sus efectos para entenderlo mejor. La forma más básica de usar esta función sería el solo darle un nombre a la columna <em>key</em> (que tendrá el nombre de las columnas) y otro a <em>value</em>, que tendría el valor de las celdas. Veamos que ocurre si hacermos eso en el siguiente código y tabla <a href="tidyverso.html#tab:Larga1">3.4</a>.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Columnas, <span class="dt">value =</span> Valores)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Columnas, <span class="dt">value =</span> Valores)</code></pre></div>
 <table>
-<caption><span id="tab:Larga1">Tabla 3.4: </span>Abundancia detectada por especie en tres días de muestreo</caption>
+<caption>
+<span id="tab:Larga1">Tabla 3.4: </span>Abundancia detectada por especie en tres días de muestreo
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Columnas</th>
-<th align="left">Valores</th>
+<tr>
+<th style="text-align:left;">
+Columnas
+</th>
+<th style="text-align:left;">
+Valores
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">dia</td>
-<td align="left">Lunes</td>
+<tr>
+<td style="text-align:left;">
+dia
+</td>
+<td style="text-align:left;">
+Lunes
+</td>
 </tr>
-<tr class="even">
-<td align="left">dia</td>
-<td align="left">Martes</td>
+<tr>
+<td style="text-align:left;">
+dia
+</td>
+<td style="text-align:left;">
+Martes
+</td>
 </tr>
-<tr class="odd">
-<td align="left">dia</td>
-<td align="left">Miercoles</td>
+<tr>
+<td style="text-align:left;">
+dia
+</td>
+<td style="text-align:left;">
+Miercoles
+</td>
 </tr>
-<tr class="even">
-<td align="left">Lobo</td>
-<td align="left">2</td>
+<tr>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:left;">
+2
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Lobo</td>
-<td align="left">1</td>
+<tr>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:left;">
+1
+</td>
 </tr>
-<tr class="even">
-<td align="left">Lobo</td>
-<td align="left">3</td>
+<tr>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:left;">
+3
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Liebre</td>
-<td align="left">20</td>
+<tr>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:left;">
+20
+</td>
 </tr>
-<tr class="even">
-<td align="left">Liebre</td>
-<td align="left">25</td>
+<tr>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:left;">
+25
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Liebre</td>
-<td align="left">30</td>
+<tr>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:left;">
+30
+</td>
 </tr>
-<tr class="even">
-<td align="left">Zorro</td>
-<td align="left">4</td>
+<tr>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:left;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Zorro</td>
-<td align="left">4</td>
+<tr>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:left;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">Zorro</td>
-<td align="left">4</td>
+<tr>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:left;">
+4
+</td>
 </tr>
 </tbody>
 </table>
 <p>Como vemos en la tabla <a href="tidyverso.html#tab:Larga1">3.4</a>, en la columna llamada <em>Columnas</em>, tenemos sólo los nombres de las columnas de la tabla <a href="tidyverso.html#tab:Censo">3.3</a>, y en la columna <em>Valores</em>, tenemos los valores encontrados en la tabla <a href="tidyverso.html#tab:Censo">3.3</a>. Sin embargo, para tener las tres columnas que desearíamos tener (día, especie y abundancia), necesitamos que la variable día no participe de este “<em>alargamiento</em>”, para esto lo que haríamos sería los siguiente:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Columnas, <span class="dt">value =</span> Valores, </a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">    <span class="op">-</span>dia)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Columnas, <span class="dt">value =</span> Valores, 
+    <span class="op">-</span>dia)</code></pre></div>
 <p>Al agregar <code>-día</code> como tercer argumento quitamos esa variable del día en el “<em>alargamiento</em>”, en ese caso obtenemos la tabla <a href="tidyverso.html#tab:Larga2">3.5</a>. Ahora sólo falta arreglar los nombres.</p>
 <table>
-<caption><span id="tab:Larga2">Tabla 3.5: </span>Abundancia detectada por especie en tres días de muestreo</caption>
+<caption>
+<span id="tab:Larga2">Tabla 3.5: </span>Abundancia detectada por especie en tres días de muestreo
+</caption>
 <thead>
-<tr class="header">
-<th align="left">dia</th>
-<th align="left">Columnas</th>
-<th align="right">Valores</th>
+<tr>
+<th style="text-align:left;">
+dia
+</th>
+<th style="text-align:left;">
+Columnas
+</th>
+<th style="text-align:right;">
+Valores
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Lunes</td>
-<td align="left">Lobo</td>
-<td align="right">2</td>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+2
+</td>
 </tr>
-<tr class="even">
-<td align="left">Martes</td>
-<td align="left">Lobo</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Miercoles</td>
-<td align="left">Lobo</td>
-<td align="right">3</td>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+3
+</td>
 </tr>
-<tr class="even">
-<td align="left">Lunes</td>
-<td align="left">Liebre</td>
-<td align="right">20</td>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+20
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Martes</td>
-<td align="left">Liebre</td>
-<td align="right">25</td>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+25
+</td>
 </tr>
-<tr class="even">
-<td align="left">Miercoles</td>
-<td align="left">Liebre</td>
-<td align="right">30</td>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+30
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Lunes</td>
-<td align="left">Zorro</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">Martes</td>
-<td align="left">Zorro</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Miercoles</td>
-<td align="left">Zorro</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
 </tbody>
 </table>
 <p>Para cambiar los nombres de las columnas que nos faltan, sólo cambiamos los valores de los argumentos <code>key</code> y <code>value</code> como se ve a continuación y en la tabla <a href="tidyverso.html#tab:Larga3">3.6</a>.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Especie, <span class="dt">value =</span> Abundancia, </a>
-<a class="sourceLine" id="cb29-2" data-line-number="2">    <span class="op">-</span>dia)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DF_largo &lt;-<span class="st"> </span>df_cuentas <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="dt">key =</span> Especie, <span class="dt">value =</span> Abundancia, 
+    <span class="op">-</span>dia)</code></pre></div>
 <table>
-<caption><span id="tab:Larga3">Tabla 3.6: </span>Abundancia detectada por especie en tres días de muestreo</caption>
+<caption>
+<span id="tab:Larga3">Tabla 3.6: </span>Abundancia detectada por especie en tres días de muestreo
+</caption>
 <thead>
-<tr class="header">
-<th align="left">dia</th>
-<th align="left">Especie</th>
-<th align="right">Abundancia</th>
+<tr>
+<th style="text-align:left;">
+dia
+</th>
+<th style="text-align:left;">
+Especie
+</th>
+<th style="text-align:right;">
+Abundancia
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Lunes</td>
-<td align="left">Lobo</td>
-<td align="right">2</td>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+2
+</td>
 </tr>
-<tr class="even">
-<td align="left">Martes</td>
-<td align="left">Lobo</td>
-<td align="right">1</td>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+1
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Miercoles</td>
-<td align="left">Lobo</td>
-<td align="right">3</td>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+3
+</td>
 </tr>
-<tr class="even">
-<td align="left">Lunes</td>
-<td align="left">Liebre</td>
-<td align="right">20</td>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+20
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Martes</td>
-<td align="left">Liebre</td>
-<td align="right">25</td>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+25
+</td>
 </tr>
-<tr class="even">
-<td align="left">Miercoles</td>
-<td align="left">Liebre</td>
-<td align="right">30</td>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+30
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Lunes</td>
-<td align="left">Zorro</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+Lunes
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">Martes</td>
-<td align="left">Zorro</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+Martes
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Miercoles</td>
-<td align="left">Zorro</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+Miercoles
+</td>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
 </tbody>
 </table>
@@ -658,72 +965,136 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="continuacion-ejemplo-de-censos" class="section level4">
 <h4><span class="header-section-number">3.3.2.1</span> Continuación ejemplo de censos</h4>
 <p>Volvamos al ejemplo de los censos donde quedamos, en nuestro último ejercicio creamos el data frame <em>DF_largo</em> que vemos en la tabla <a href="tidyverso.html#tab:Larga3">3.6</a>. Veremos algunos ejemplos de como podemos cambiar este data frame en una tabla ancha:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">DF_ancho &lt;-<span class="st"> </span>DF_largo <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(<span class="dt">key =</span> dia, <span class="dt">value =</span> Abundancia)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DF_ancho &lt;-<span class="st"> </span>DF_largo <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(<span class="dt">key =</span> dia, <span class="dt">value =</span> Abundancia)</code></pre></div>
 <p>Con el código anterior generamos la <a href="tidyverso.html#tab:Ancha1">3.7</a>, la cuál es distinta a la original en la tabla <a href="tidyverso.html#tab:Censo">3.3</a>), en esta los días quedaron como nombres de columnas, y las especies pasaron a ser una variable.</p>
 <table>
-<caption><span id="tab:Ancha1">Tabla 3.7: </span>Abundancia detectada por especie en tres días de muestreo</caption>
+<caption>
+<span id="tab:Ancha1">Tabla 3.7: </span>Abundancia detectada por especie en tres días de muestreo
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Especie</th>
-<th align="right">Lunes</th>
-<th align="right">Martes</th>
-<th align="right">Miercoles</th>
+<tr>
+<th style="text-align:left;">
+Especie
+</th>
+<th style="text-align:right;">
+Lunes
+</th>
+<th style="text-align:right;">
+Martes
+</th>
+<th style="text-align:right;">
+Miercoles
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Liebre</td>
-<td align="right">20</td>
-<td align="right">25</td>
-<td align="right">30</td>
+<tr>
+<td style="text-align:left;">
+Liebre
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+30
+</td>
 </tr>
-<tr class="even">
-<td align="left">Lobo</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">3</td>
+<tr>
+<td style="text-align:left;">
+Lobo
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Zorro</td>
-<td align="right">4</td>
-<td align="right">4</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+Zorro
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
 </tbody>
 </table>
 <p>En la tabla <a href="tidyverso.html#tab:Ops">3.8</a> se ven todas las opciones de como generar una tabla ancha en base a el data frame <em>DF_largo</em>, pruebe opciones hasta entender la función, algunas de estas opciones darán errores.</p>
 <table>
-<caption><span id="tab:Ops">Tabla 3.8: </span>Todas las opciones a probar para generar una tabla ancha</caption>
+<caption>
+<span id="tab:Ops">Tabla 3.8: </span>Todas las opciones a probar para generar una tabla ancha
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Key</th>
-<th align="left">Value</th>
+<tr>
+<th style="text-align:left;">
+Key
+</th>
+<th style="text-align:left;">
+Value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Especie</td>
-<td align="left">dia</td>
+<tr>
+<td style="text-align:left;">
+Especie
+</td>
+<td style="text-align:left;">
+dia
+</td>
 </tr>
-<tr class="even">
-<td align="left">Abundancia</td>
-<td align="left">dia</td>
+<tr>
+<td style="text-align:left;">
+Abundancia
+</td>
+<td style="text-align:left;">
+dia
+</td>
 </tr>
-<tr class="odd">
-<td align="left">dia</td>
-<td align="left">Especie</td>
+<tr>
+<td style="text-align:left;">
+dia
+</td>
+<td style="text-align:left;">
+Especie
+</td>
 </tr>
-<tr class="even">
-<td align="left">Abundancia</td>
-<td align="left">Especie</td>
+<tr>
+<td style="text-align:left;">
+Abundancia
+</td>
+<td style="text-align:left;">
+Especie
+</td>
 </tr>
-<tr class="odd">
-<td align="left">dia</td>
-<td align="left">Abundancia</td>
+<tr>
+<td style="text-align:left;">
+dia
+</td>
+<td style="text-align:left;">
+Abundancia
+</td>
 </tr>
-<tr class="even">
-<td align="left">Especie</td>
-<td align="left">Abundancia</td>
+<tr>
+<td style="text-align:left;">
+Especie
+</td>
+<td style="text-align:left;">
+Abundancia
+</td>
 </tr>
 </tbody>
 </table>
@@ -735,9 +1106,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ejercicio-1-2" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> Ejercicio 1</h3>
 <p>Utilizando el siguiente código usando el paquete dismo bajaras la base de datos del <em>GBIF</em> (Global Biodiversity Information Facility) de presencias conocidas del huemul (<em>Hippocamelus bisulcus</em>):</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">library</span>(dismo)</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2">Huemul &lt;-<span class="st"> </span><span class="kw">gbif</span>(<span class="st">&quot;Hippocamelus&quot;</span>, <span class="st">&quot;bisulcus&quot;</span>, <span class="dt">down =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="kw">colnames</span>(Huemul)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dismo)
+Huemul &lt;-<span class="st"> </span><span class="kw">gbif</span>(<span class="st">&quot;Hippocamelus&quot;</span>, <span class="st">&quot;bisulcus&quot;</span>, <span class="dt">down =</span> <span class="ot">TRUE</span>)
+<span class="kw">colnames</span>(Huemul)</code></pre></div>
 <p>Tomando la base de datos generada:</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Quedarse con solo las observaciones que tienen coordenadas geograficas</p></li>
@@ -818,7 +1189,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -828,6 +1199,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -844,8 +1219,8 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

@@ -5,27 +5,27 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>BIO 4022. Manipulación de datos e investigación reproducible en R</title>
-  <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <title>Capítulo 1 Tidy Data y manipulación de datos | Manipulación de datos e investigación reproducible en R</title>
+  <meta name="description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="BIO 4022. Manipulación de datos e investigación reproducible en R" />
+  <meta property="og:title" content="Capítulo 1 Tidy Data y manipulación de datos | Manipulación de datos e investigación reproducible en R" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  <meta property="og:description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="BIO 4022. Manipulación de datos e investigación reproducible en R" />
+  <meta name="twitter:title" content="Capítulo 1 Tidy Data y manipulación de datos | Manipulación de datos e investigación reproducible en R" />
   
-  <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  <meta name="twitter:description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
   
 
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-11-28">
+<meta name="date" content="2019-03-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="reproducible.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -50,69 +51,41 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -252,7 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BIO 4022. Manipulación de datos e investigación reproducible en R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Manipulación de datos e investigación reproducible en R</a>
           </h1>
         </div>
 
@@ -265,8 +238,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="paquetes-necesarios-para-este-capitulo" class="section level2">
 <h2><span class="header-section-number">1.1</span> Paquetes necesarios para este capítulo</h2>
 <p>Para este capitulo necesitas tener instalado el paquete <em>tidyverse</em></p>
-<p>En este capítulo se explicará qué es una base de datos <em>tidy</em> <span class="citation">(Wickham and others <a href="#ref-wickham2014tidy">2014</a>)</span> y se aprenderá a usar funciones del paquete <em>dplyr</em> <span class="citation">(<span class="citeproc-not-found" data-reference-id="R-dplyr"><strong>???</strong></span>)</span> para manipular datos.</p>
-<p>Dado que este libro es un apoyo para el curso BIO4022, esta clase del curso puede también ser seguida en este <a href="https://derek-corcoran-barrios.github.io/Clase1/Clase1TidyData">link</a>. El video de la clase se encuentra disponible en este <a href="https://youtu.be/vQKWd02HB90">link</a>.</p>
+<p>En este capítulo se explicará qué es una base de datos <em>tidy</em> <span class="citation">(Wickham and others <a href="#ref-wickham2014tidy">2014</a>)</span> y se aprenderá a usar funciones del paquete <em>dplyr</em> <span class="citation">(Wickham et al. <a href="#ref-R-dplyr">2019</a>)</span> para manipular datos.</p>
+<p>Dado que este libro es un apoyo para el curso BIO4022, esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/Clase1/Clase1TidyData.html#1">link</a>. El video de la clase se encuentra disponible en este <a href="https://youtu.be/vQKWd02HB90">link</a>.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vQKWd02HB90" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 </div>
@@ -295,114 +268,228 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">1.3.1</span> summarize</h3>
 <p>La función <code>summarize</code> toma los datos de un data frame y los resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, se continúa del nombre que queremos darle a una variable resumen, seguida del signo = y luego la fórmula a aplicar a una o mas columnas. COmo un ejemplo se utilizará la base de datos <code>iris</code> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span> que viene en <code>R</code> y de las cual podemos ver parte de sus datos en la tabla <a href="tidydata.html#tab:iris">1.1</a></p>
 <table>
-<caption><span id="tab:iris">Tabla 1.1: </span>una tabla con 10 filas de la base de datos iris.</caption>
+<caption>
+<span id="tab:iris">Tabla 1.1: </span>una tabla con 10 filas de la base de datos iris.
+</caption>
 <thead>
-<tr class="header">
-<th align="right">Sepal.Length</th>
-<th align="right">Sepal.Width</th>
-<th align="right">Petal.Length</th>
-<th align="right">Petal.Width</th>
-<th align="left">Species</th>
+<tr>
+<th style="text-align:right;">
+Sepal.Length
+</th>
+<th style="text-align:right;">
+Sepal.Width
+</th>
+<th style="text-align:right;">
+Petal.Length
+</th>
+<th style="text-align:right;">
+Petal.Width
+</th>
+<th style="text-align:left;">
+Species
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">5.8</td>
-<td align="right">4.0</td>
-<td align="right">1.2</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
+<tr>
+<td style="text-align:right;">
+5.8
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
 </tr>
-<tr class="even">
-<td align="right">4.7</td>
-<td align="right">3.2</td>
-<td align="right">1.6</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
+<tr>
+<td style="text-align:right;">
+4.7
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
 </tr>
-<tr class="odd">
-<td align="right">5.1</td>
-<td align="right">3.8</td>
-<td align="right">1.9</td>
-<td align="right">0.4</td>
-<td align="left">setosa</td>
+<tr>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:right;">
+3.8
+</td>
+<td style="text-align:right;">
+1.9
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:left;">
+setosa
+</td>
 </tr>
-<tr class="even">
-<td align="right">5.2</td>
-<td align="right">2.7</td>
-<td align="right">3.9</td>
-<td align="right">1.4</td>
-<td align="left">versicolor</td>
+<tr>
+<td style="text-align:right;">
+5.2
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
 </tr>
-<tr class="odd">
-<td align="right">6.4</td>
-<td align="right">2.9</td>
-<td align="right">4.3</td>
-<td align="right">1.3</td>
-<td align="left">versicolor</td>
+<tr>
+<td style="text-align:right;">
+6.4
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
 </tr>
-<tr class="even">
-<td align="right">5.5</td>
-<td align="right">2.5</td>
-<td align="right">4.0</td>
-<td align="right">1.3</td>
-<td align="left">versicolor</td>
+<tr>
+<td style="text-align:right;">
+5.5
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
 </tr>
-<tr class="odd">
-<td align="right">6.5</td>
-<td align="right">3.0</td>
-<td align="right">5.8</td>
-<td align="right">2.2</td>
-<td align="left">virginica</td>
+<tr>
+<td style="text-align:right;">
+6.5
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+5.8
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:left;">
+virginica
+</td>
 </tr>
-<tr class="even">
-<td align="right">6.0</td>
-<td align="right">2.2</td>
-<td align="right">5.0</td>
-<td align="right">1.5</td>
-<td align="left">virginica</td>
+<tr>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+<td style="text-align:left;">
+virginica
+</td>
 </tr>
-<tr class="odd">
-<td align="right">6.1</td>
-<td align="right">2.6</td>
-<td align="right">5.6</td>
-<td align="right">1.4</td>
-<td align="left">virginica</td>
+<tr>
+<td style="text-align:right;">
+6.1
+</td>
+<td style="text-align:right;">
+2.6
+</td>
+<td style="text-align:right;">
+5.6
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:left;">
+virginica
+</td>
 </tr>
-<tr class="even">
-<td align="right">5.9</td>
-<td align="right">3.0</td>
-<td align="right">5.1</td>
-<td align="right">1.8</td>
-<td align="left">virginica</td>
+<tr>
+<td style="text-align:right;">
+5.9
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:right;">
+1.8
+</td>
+<td style="text-align:left;">
+virginica
+</td>
 </tr>
 </tbody>
 </table>
 <p>Si quisieramos resumir esa tabla y generar un par de variables que fueran la media y la desviación estándar del largo del pétalo, lo haríamos con el siguiente código:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">Summary.Petal &lt;-<span class="st"> </span><span class="kw">summarize</span>(iris, <span class="dt">Mean.Petal.Length =</span> <span class="kw">mean</span>(Petal.Length), </a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="dt">SD.Petal.Length =</span> <span class="kw">sd</span>(Petal.Length))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+Summary.Petal &lt;-<span class="st"> </span><span class="kw">summarize</span>(iris, <span class="dt">Mean.Petal.Length =</span> <span class="kw">mean</span>(Petal.Length), 
+    <span class="dt">SD.Petal.Length =</span> <span class="kw">sd</span>(Petal.Length))</code></pre></div>
 <p>El resultado se puedde ver en la tabla <a href="tidydata.html#tab:SummaryPetaltab">1.2</a>, en el cuál se obtienen los promedios y desviaciones estándar de los largos de los pétalos. Es importante notar que al usar summarize, todas las otras variables desapareceran de la tabla.</p>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
 <table>
-<caption><span id="tab:SummaryPetaltab">Tabla 1.2: </span>Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.</caption>
+<caption>
+<span id="tab:SummaryPetaltab">Tabla 1.2: </span>Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.
+</caption>
 <thead>
-<tr class="header">
-<th align="right">Mean.Petal.Length</th>
-<th align="right">SD.Petal.Length</th>
+<tr>
+<th style="text-align:right;">
+Mean.Petal.Length
+</th>
+<th style="text-align:right;">
+SD.Petal.Length
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">3.758</td>
-<td align="right">1.765298</td>
+<tr>
+<td style="text-align:right;">
+3.758
+</td>
+<td style="text-align:right;">
+1.765298
+</td>
 </tr>
 </tbody>
 </table>
@@ -411,82 +498,152 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">1.3.2</span> group_by</h3>
 <p>La función <code>group_by</code> por si sola no genera cambios visibles en las bases de datos. Sin embargo, al ser utilizada en conjunto con <code>summarize</code> permite resumir una variable agrupada (usualmente) basada en una o más variables categóricas.</p>
 <p>Se puede ver que para el ejemplo con el caso de las plantas del género <em>Iris</em>, el resumen que se obtiene en el caso de la tabla <a href="tidydata.html#tab:SummaryPetaltab">1.2</a> no es tan útil considerando que tenemos tres especies presentes. Si se quiere ver el promedio del largo del pétalo por especie, se debe ocupar la función <code>group_by</code> de la siguiente forma:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">BySpecies &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">Summary.Byspecies &lt;-<span class="st"> </span><span class="kw">summarize</span>(BySpecies, <span class="dt">Mean.Petal.Length =</span> <span class="kw">mean</span>(Petal.Length), </a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">    <span class="dt">SD.Petal.Length =</span> <span class="kw">sd</span>(Petal.Length))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BySpecies &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species)
+Summary.Byspecies &lt;-<span class="st"> </span><span class="kw">summarize</span>(BySpecies, <span class="dt">Mean.Petal.Length =</span> <span class="kw">mean</span>(Petal.Length), 
+    <span class="dt">SD.Petal.Length =</span> <span class="kw">sd</span>(Petal.Length))</code></pre></div>
 <p>Esto dá como resultado la tabla <a href="tidydata.html#tab:SummaryBySpecies">1.3</a>, con la cuál se puede ver que <em>Iris setosa</em> tiene pétalos mucho más cortos que las otras dos especies del mismo género.</p>
 <table>
-<caption><span id="tab:SummaryBySpecies">Tabla 1.3: </span>Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.</caption>
+<caption>
+<span id="tab:SummaryBySpecies">Tabla 1.3: </span>Resumen del promedio y desviación estándar del largo de pétalo de las flores del generi Iris.
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Species</th>
-<th align="right">Mean.Petal.Length</th>
-<th align="right">SD.Petal.Length</th>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+Mean.Petal.Length
+</th>
+<th style="text-align:right;">
+SD.Petal.Length
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">setosa</td>
-<td align="right">1.462</td>
-<td align="right">0.1736640</td>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+1.462
+</td>
+<td style="text-align:right;">
+0.1736640
+</td>
 </tr>
-<tr class="even">
-<td align="left">versicolor</td>
-<td align="right">4.260</td>
-<td align="right">0.4699110</td>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+4.260
+</td>
+<td style="text-align:right;">
+0.4699110
+</td>
 </tr>
-<tr class="odd">
-<td align="left">virginica</td>
-<td align="right">5.552</td>
-<td align="right">0.5518947</td>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+5.552
+</td>
+<td style="text-align:right;">
+0.5518947
+</td>
 </tr>
 </tbody>
 </table>
 <div id="group_by-en-mas-de-una-variable" class="section level4">
 <h4><span class="header-section-number">1.3.2.1</span> group_by en más de una variable</h4>
 <p>Se puede usar la función <code>group_by</code> en más de una variable, y esto generaría un resumen anidado. Como ejemplo se usará la base de datos <code>mtcars</code> presente en R <span class="citation">(Henderson and Velleman <a href="#ref-henderson1981building">1981</a>)</span>. Esta base de datos presenta una variable llamada <em>mpg</em> (miles per gallon) y una medida de eficiencia de combustible. Se resumirá la información en base a la variable <em>am</em> (que se refiere al tipo de transmisión, donde 0 es automático y 1 es manual) y al número de cilindros del motor. Para eso se utilizará el siguiente código:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">Grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(mtcars, cyl, am)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">Eficiencia &lt;-<span class="st"> </span><span class="kw">summarize</span>(Grouped, <span class="dt">Eficiencia =</span> <span class="kw">mean</span>(mpg))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(mtcars, cyl, am)
+Eficiencia &lt;-<span class="st"> </span><span class="kw">summarize</span>(Grouped, <span class="dt">Eficiencia =</span> <span class="kw">mean</span>(mpg))</code></pre></div>
 <p>Como puede verse en la tabla <a href="tidydata.html#tab:Eficienciatab">1.4</a>, en todos los casos los autos con cambios manuales tienen mejor eficiencia de combustible. Se podría probar el cambiar el orden de las variables con las cuales agrupar y observar los distintos resultados que se pueden obtener.</p>
 <table>
-<caption><span id="tab:Eficienciatab">Tabla 1.4: </span>Millas por galón promedio en vehiculos automáticos (am = 0) y manuales (am = 1), con los distintos tipos de cilindros</caption>
+<caption>
+<span id="tab:Eficienciatab">Tabla 1.4: </span>Millas por galón promedio en vehiculos automáticos (am = 0) y manuales (am = 1), con los distintos tipos de cilindros
+</caption>
 <thead>
-<tr class="header">
-<th align="right">cyl</th>
-<th align="right">am</th>
-<th align="right">Eficiencia</th>
+<tr>
+<th style="text-align:right;">
+cyl
+</th>
+<th style="text-align:right;">
+am
+</th>
+<th style="text-align:right;">
+Eficiencia
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">4</td>
-<td align="right">0</td>
-<td align="right">22.90000</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+22.90000
+</td>
 </tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">1</td>
-<td align="right">28.07500</td>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+28.07500
+</td>
 </tr>
-<tr class="odd">
-<td align="right">6</td>
-<td align="right">0</td>
-<td align="right">19.12500</td>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+19.12500
+</td>
 </tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="right">1</td>
-<td align="right">20.56667</td>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+20.56667
+</td>
 </tr>
-<tr class="odd">
-<td align="right">8</td>
-<td align="right">0</td>
-<td align="right">15.05000</td>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+15.05000
+</td>
 </tr>
-<tr class="even">
-<td align="right">8</td>
-<td align="right">1</td>
-<td align="right">15.40000</td>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+15.40000
+</td>
 </tr>
 </tbody>
 </table>
@@ -495,100 +652,234 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="mutate" class="section level3">
 <h3><span class="header-section-number">1.3.3</span> mutate</h3>
 <p>Esta función tiene como objetivo crear variables nuevas basadas en otras variables. Es muy facil de usar, como argumento se usa el nombre de la variable nueva que se quiere crear y se realiza una operación con variables que ya estan ahí. Por ejemplo, si se continúa el trabajo con la base de datos <em>Iris</em>, al crear una nueva variable que sea la razón entre el largo del pétalo y el del sépalo, resulta lo siguiente:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">DF &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris, <span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DF &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris, <span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length)</code></pre></div>
 <p>El resultado de esta operación es la tabla <a href="tidydata.html#tab:Mutate">1.5</a>. Siempre la variable que se acaba de crear aparecerá al final del data frame.</p>
 <table>
-<caption><span id="tab:Mutate">Tabla 1.5: </span>Tabla con diez de las observaciones de la nueva base de datos con la variable nueva creada con mutate</caption>
+<caption>
+<span id="tab:Mutate">Tabla 1.5: </span>Tabla con diez de las observaciones de la nueva base de datos con la variable nueva creada con mutate
+</caption>
 <thead>
-<tr class="header">
-<th align="right">Sepal.Length</th>
-<th align="right">Sepal.Width</th>
-<th align="right">Petal.Length</th>
-<th align="right">Petal.Width</th>
-<th align="left">Species</th>
-<th align="right">Petal.Sepal.Ratio</th>
+<tr>
+<th style="text-align:right;">
+Sepal.Length
+</th>
+<th style="text-align:right;">
+Sepal.Width
+</th>
+<th style="text-align:right;">
+Petal.Length
+</th>
+<th style="text-align:right;">
+Petal.Width
+</th>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+Petal.Sepal.Ratio
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">5.8</td>
-<td align="right">4.0</td>
-<td align="right">1.2</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-<td align="right">0.21</td>
+<tr>
+<td style="text-align:right;">
+5.8
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+0.21
+</td>
 </tr>
-<tr class="even">
-<td align="right">4.7</td>
-<td align="right">3.2</td>
-<td align="right">1.6</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-<td align="right">0.34</td>
+<tr>
+<td style="text-align:right;">
+4.7
+</td>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:right;">
+1.6
+</td>
+<td style="text-align:right;">
+0.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+0.34
+</td>
 </tr>
-<tr class="odd">
-<td align="right">5.1</td>
-<td align="right">3.8</td>
-<td align="right">1.9</td>
-<td align="right">0.4</td>
-<td align="left">setosa</td>
-<td align="right">0.37</td>
+<tr>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:right;">
+3.8
+</td>
+<td style="text-align:right;">
+1.9
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+0.37
+</td>
 </tr>
-<tr class="even">
-<td align="right">5.2</td>
-<td align="right">2.7</td>
-<td align="right">3.9</td>
-<td align="right">1.4</td>
-<td align="left">versicolor</td>
-<td align="right">0.75</td>
+<tr>
+<td style="text-align:right;">
+5.2
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+0.75
+</td>
 </tr>
-<tr class="odd">
-<td align="right">6.4</td>
-<td align="right">2.9</td>
-<td align="right">4.3</td>
-<td align="right">1.3</td>
-<td align="left">versicolor</td>
-<td align="right">0.67</td>
+<tr>
+<td style="text-align:right;">
+6.4
+</td>
+<td style="text-align:right;">
+2.9
+</td>
+<td style="text-align:right;">
+4.3
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+0.67
+</td>
 </tr>
-<tr class="even">
-<td align="right">5.5</td>
-<td align="right">2.5</td>
-<td align="right">4.0</td>
-<td align="right">1.3</td>
-<td align="left">versicolor</td>
-<td align="right">0.73</td>
+<tr>
+<td style="text-align:right;">
+5.5
+</td>
+<td style="text-align:right;">
+2.5
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+1.3
+</td>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+0.73
+</td>
 </tr>
-<tr class="odd">
-<td align="right">6.5</td>
-<td align="right">3.0</td>
-<td align="right">5.8</td>
-<td align="right">2.2</td>
-<td align="left">virginica</td>
-<td align="right">0.89</td>
+<tr>
+<td style="text-align:right;">
+6.5
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+5.8
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0.89
+</td>
 </tr>
-<tr class="even">
-<td align="right">6.0</td>
-<td align="right">2.2</td>
-<td align="right">5.0</td>
-<td align="right">1.5</td>
-<td align="left">virginica</td>
-<td align="right">0.83</td>
+<tr>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+2.2
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0.83
+</td>
 </tr>
-<tr class="odd">
-<td align="right">6.1</td>
-<td align="right">2.6</td>
-<td align="right">5.6</td>
-<td align="right">1.4</td>
-<td align="left">virginica</td>
-<td align="right">0.92</td>
+<tr>
+<td style="text-align:right;">
+6.1
+</td>
+<td style="text-align:right;">
+2.6
+</td>
+<td style="text-align:right;">
+5.6
+</td>
+<td style="text-align:right;">
+1.4
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0.92
+</td>
 </tr>
-<tr class="even">
-<td align="right">5.9</td>
-<td align="right">3.0</td>
-<td align="right">5.1</td>
-<td align="right">1.8</td>
-<td align="left">virginica</td>
-<td align="right">0.86</td>
+<tr>
+<td style="text-align:right;">
+5.9
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:right;">
+1.8
+</td>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0.86
+</td>
 </tr>
 </tbody>
 </table>
@@ -597,52 +888,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">1.3.4</span> Pipeline (%&gt;%)</h3>
 <p>El pipeline es un simbolo operatorio <code>%&gt;%</code> que sirve para realizar varias operaciones de forma secuencial sin recurrir a parentesis anidados o a sobrescribir muúltiples bases de datos.</p>
 <p>Para ver como funciona esto como un vector, supongamos que se tiene una variable a la cual se quiere primero obtener su logaritmo, luego su raíz cuadrada y finalmente su promedio con dos cifras significativas. Para realizar esto se debe seguir lo siguiente:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">y &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">mean</span>(<span class="kw">sqrt</span>(<span class="kw">log</span>(x))), <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)
+y &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">mean</span>(<span class="kw">sqrt</span>(<span class="kw">log</span>(x))), <span class="dv">2</span>)</code></pre></div>
 <p>Si se utiliza pipeline, el código sería mucho más ordenado. En ese caso, se partiría por el objeto a procesar y luego cada una de las funciones con sus argumentos si es necesario:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">y &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">log</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)
+y &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">log</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>)</code></pre></div>
 <pre><code>## [1] 0.99</code></pre>
 <p>El código con pipeline es mucho más fácil de interpretar a primera vista ya que se lee de izquierda a derecha y no de adentro hacia afuera. EL uso de pipeli se hace aun más importante cuando se usa con un <em>Data frame</em>, como se ve en el siguiente ejemplo:</p>
 <div id="el-pipeline-en-data-frames" class="section level4">
 <h4><span class="header-section-number">1.3.4.1</span> El pipeline en data frames</h4>
 <p>POr ejemplo se quiere resumir la variable recien creada de la razón entre el sépalo y el petalo. Para hacer esto, si se partiera desde la base de datos original, tomaría varias líneas de código y la creación de múltiples bases de datos intermedias</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">DF &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris, <span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">BySpecies &lt;-<span class="st"> </span><span class="kw">group_by</span>(DF, Species)</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">Summary.Byspecies &lt;-<span class="st"> </span><span class="kw">summarize</span>(BySpecies, <span class="dt">MEAN =</span> <span class="kw">mean</span>(Petal.Sepal.Ratio), </a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">    <span class="dt">SD =</span> <span class="kw">sd</span>(Petal.Sepal.Ratio))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DF &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris, <span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length)
+BySpecies &lt;-<span class="st"> </span><span class="kw">group_by</span>(DF, Species)
+Summary.Byspecies &lt;-<span class="st"> </span><span class="kw">summarize</span>(BySpecies, <span class="dt">MEAN =</span> <span class="kw">mean</span>(Petal.Sepal.Ratio), 
+    <span class="dt">SD =</span> <span class="kw">sd</span>(Petal.Sepal.Ratio))</code></pre></div>
 <p>Otra opción es usar paréntesis anidados, lo que se traduce en el siguiente código:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">Summary.Byspecies &lt;-<span class="st"> </span><span class="kw">summarize</span>(<span class="kw">group_by</span>(<span class="kw">mutate</span>(iris, <span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length), </a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">    Species), <span class="dt">MEAN =</span> <span class="kw">mean</span>(Petal.Sepal.Ratio), <span class="dt">SD =</span> <span class="kw">sd</span>(Petal.Sepal.Ratio))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Summary.Byspecies &lt;-<span class="st"> </span><span class="kw">summarize</span>(<span class="kw">group_by</span>(<span class="kw">mutate</span>(iris, <span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length), 
+    Species), <span class="dt">MEAN =</span> <span class="kw">mean</span>(Petal.Sepal.Ratio), <span class="dt">SD =</span> <span class="kw">sd</span>(Petal.Sepal.Ratio))</code></pre></div>
 <p>Esto se simplifica mucho más al usar el pipeline, lo cual permite partir en un <em>Data Frame</em> y luego usar el pipeline. Esto permite obtener el mismo resultado que en las operaciones anteriores con el siguiente código:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">Summary.Byspecies &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">    </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">MEAN =</span> <span class="kw">mean</span>(Petal.Sepal.Ratio), </a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">    <span class="dt">SD =</span> <span class="kw">sd</span>(Petal.Sepal.Ratio))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Summary.Byspecies &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">MEAN =</span> <span class="kw">mean</span>(Petal.Sepal.Ratio), 
+    <span class="dt">SD =</span> <span class="kw">sd</span>(Petal.Sepal.Ratio))</code></pre></div>
 <p>Estos tres códigos son correctos (tabla <a href="tidydata.html#tab:Pipe">1.6</a>), pero definitivamente el uso del pipeline da el código más conciso y fácil de interpretar sin pasos intermedios.</p>
 <table>
-<caption><span id="tab:Pipe">Tabla 1.6: </span>Razón pétalo sépalo promedio para las tres especies de Iris</caption>
+<caption>
+<span id="tab:Pipe">Tabla 1.6: </span>Razón pétalo sépalo promedio para las tres especies de Iris
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Species</th>
-<th align="right">MEAN</th>
-<th align="right">SD</th>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+MEAN
+</th>
+<th style="text-align:right;">
+SD
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">setosa</td>
-<td align="right">0.2927557</td>
-<td align="right">0.0347958</td>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+0.2927557
+</td>
+<td style="text-align:right;">
+0.0347958
+</td>
 </tr>
-<tr class="even">
-<td align="left">versicolor</td>
-<td align="right">0.7177285</td>
-<td align="right">0.0536255</td>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+0.7177285
+</td>
+<td style="text-align:right;">
+0.0536255
+</td>
 </tr>
-<tr class="odd">
-<td align="left">virginica</td>
-<td align="right">0.8437495</td>
-<td align="right">0.0438064</td>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+0.8437495
+</td>
+<td style="text-align:right;">
+0.0438064
+</td>
 </tr>
 </tbody>
 </table>
@@ -652,101 +969,197 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">1.3.5</span> filter</h3>
 <p>Esta función permite seleccionar filas que cumplen con ciertas condiciones, como tener un valor mayor a un umbral o pertenecer a cierta clase Los símbolos más típicos a usar en este caso son los que se ven en la tabla <a href="tidydata.html#tab:Logicas">1.7</a>.</p>
 <table>
-<caption><span id="tab:Logicas">Tabla 1.7: </span>Símbolos lógicos de R y su significado</caption>
+<caption>
+<span id="tab:Logicas">Tabla 1.7: </span>Símbolos lógicos de R y su significado
+</caption>
 <thead>
-<tr class="header">
-<th align="left">simbolo</th>
-<th align="left">significado</th>
-<th align="left">simbolo_cont</th>
-<th align="left">significado_cont</th>
+<tr>
+<th style="text-align:left;">
+simbolo
+</th>
+<th style="text-align:left;">
+significado
+</th>
+<th style="text-align:left;">
+simbolo_cont
+</th>
+<th style="text-align:left;">
+significado_cont
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">&gt;</td>
-<td align="left">Mayor que</td>
-<td align="left">!=</td>
-<td align="left">distinto a</td>
+<tr>
+<td style="text-align:left;">
+&gt;
+</td>
+<td style="text-align:left;">
+Mayor que
+</td>
+<td style="text-align:left;">
+!=
+</td>
+<td style="text-align:left;">
+distinto a
+</td>
 </tr>
-<tr class="even">
-<td align="left">&lt;</td>
-<td align="left">Menor que</td>
-<td align="left">%in%</td>
-<td align="left">dentro del grupo</td>
+<tr>
+<td style="text-align:left;">
+&lt;
+</td>
+<td style="text-align:left;">
+Menor que
+</td>
+<td style="text-align:left;">
+%in%
+</td>
+<td style="text-align:left;">
+dentro del grupo
+</td>
 </tr>
-<tr class="odd">
-<td align="left">==</td>
-<td align="left">Igual a</td>
-<td align="left">is.na</td>
-<td align="left">es NA</td>
+<tr>
+<td style="text-align:left;">
+==
+</td>
+<td style="text-align:left;">
+Igual a
+</td>
+<td style="text-align:left;">
+is.na
+</td>
+<td style="text-align:left;">
+es NA
+</td>
 </tr>
-<tr class="even">
-<td align="left">&gt;=</td>
-<td align="left">mayor o igual a</td>
-<td align="left">!is.na</td>
-<td align="left">no es NA</td>
+<tr>
+<td style="text-align:left;">
+&gt;=
+</td>
+<td style="text-align:left;">
+mayor o igual a
+</td>
+<td style="text-align:left;">
+!is.na
+</td>
+<td style="text-align:left;">
+no es NA
+</td>
 </tr>
-<tr class="odd">
-<td align="left">&lt;=</td>
-<td align="left">menor o igual a</td>
-<td align="left">| &amp;</td>
-<td align="left">o, y</td>
+<tr>
+<td style="text-align:left;">
+&lt;=
+</td>
+<td style="text-align:left;">
+menor o igual a
+</td>
+<td style="text-align:left;">
+| &amp;
+</td>
+<td style="text-align:left;">
+o, y
+</td>
 </tr>
 </tbody>
 </table>
 <p>Por ejemplo si se quiere estudiar las características florales de las plantas del género <em>Iris</em>, pero no tomar en cuenta a la especie <em>Iris versicolor</em> se deberá usar el siguiente código:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">    </span><span class="kw">summarise_all</span>(mean)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)
+DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Species <span class="op">!=</span><span class="st"> &quot;versicolor&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarise_all</span>(mean)</code></pre></div>
 <p>De esta forma se obtiene como resultado la tabla <a href="tidydata.html#tab:MenosVersicolor">1.8</a>. En este caso se introduce la función <code>summarize_all</code> de <code>summarize</code>, la cual aplica la función que se le da como argumento a todas las variables de la base de datos.</p>
 <table>
-<caption><span id="tab:MenosVersicolor">Tabla 1.8: </span>Resumen de la media de todas las características florales de las especies Iris setosa e Iris virginica</caption>
+<caption>
+<span id="tab:MenosVersicolor">Tabla 1.8: </span>Resumen de la media de todas las características florales de las especies Iris setosa e Iris virginica
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Species</th>
-<th align="right">Sepal.Length</th>
-<th align="right">Sepal.Width</th>
-<th align="right">Petal.Length</th>
-<th align="right">Petal.Width</th>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+Sepal.Length
+</th>
+<th style="text-align:right;">
+Sepal.Width
+</th>
+<th style="text-align:right;">
+Petal.Length
+</th>
+<th style="text-align:right;">
+Petal.Width
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">setosa</td>
-<td align="right">5.006</td>
-<td align="right">3.428</td>
-<td align="right">1.462</td>
-<td align="right">0.246</td>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+5.006
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+1.462
+</td>
+<td style="text-align:right;">
+0.246
+</td>
 </tr>
-<tr class="even">
-<td align="left">virginica</td>
-<td align="right">6.588</td>
-<td align="right">2.974</td>
-<td align="right">5.552</td>
-<td align="right">2.026</td>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+6.588
+</td>
+<td style="text-align:right;">
+2.974
+</td>
+<td style="text-align:right;">
+5.552
+</td>
+<td style="text-align:right;">
+2.026
+</td>
 </tr>
 </tbody>
 </table>
 <p>Por otro lado si se quiere estudiar cuántas plantas de cada especie tienen un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5 se deberá usar el siguiente código:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Petal.Length <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span>Sepal.Length <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">    </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">N =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DF &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Petal.Length <span class="op">&gt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span>Sepal.Length <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">N =</span> <span class="kw">n</span>())</code></pre></div>
 <p>En la tabla tabla <a href="tidydata.html#tab:Numero">1.9</a> se ve que con este filtro desaparecen de la base de datos todas las plantas de <em>Iris setosa</em> y que todas menos una planta de <em>Iris virginica</em> tienen ambas características.</p>
 <table>
-<caption><span id="tab:Numero">Tabla 1.9: </span>Número de plantas de cada especie con un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5 centímetros</caption>
+<caption>
+<span id="tab:Numero">Tabla 1.9: </span>Número de plantas de cada especie con un largo de pétalo mayor a 4 y un largo de sépalo mayor a 5 centímetros
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Species</th>
-<th align="right">N</th>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+N
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">versicolor</td>
-<td align="right">39</td>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+39
+</td>
 </tr>
-<tr class="even">
-<td align="left">virginica</td>
-<td align="right">49</td>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+49
+</td>
 </tr>
 </tbody>
 </table>
@@ -755,46 +1168,71 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">1.3.6</span> select</h3>
 <p>Esta función permite seleccionar las variables a utilizar dado que en muchos casos nos encontraremos con bases de datos con demasiadas variables y por lo tanto, se querrá reducirlas para solo trabajar en una tabla con las variables necesarias.</p>
 <p>Con select hay varias formas de trabajar, por un lado se puede escribir las variables que se utilizarán, o restar las que no. En ese sentido estos cuatro códigos dan exactamente el mismo resultado. Esto se puede ver en la tabla <a href="tidydata.html#tab:Selected">1.10</a></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Petal.Length, Petal.Width) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">    </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Sepal.Length, <span class="op">-</span>Sepal.Width) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">    </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;Petal&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">    </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">contains</span>(<span class="st">&quot;Sepal&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">    </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Petal.Length, Petal.Width) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarize_all</span>(mean)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Sepal.Length, <span class="op">-</span>Sepal.Width) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarize_all</span>(mean)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;Petal&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarize_all</span>(mean)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">contains</span>(<span class="st">&quot;Sepal&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarize_all</span>(mean)</code></pre></div>
 <table>
-<caption><span id="tab:Selected">Tabla 1.10: </span>Promedio de largo de pétalo y ancho de pétalo para las especies del genero Iris</caption>
+<caption>
+<span id="tab:Selected">Tabla 1.10: </span>Promedio de largo de pétalo y ancho de pétalo para las especies del genero Iris
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Species</th>
-<th align="right">Petal.Length</th>
-<th align="right">Petal.Width</th>
+<tr>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+Petal.Length
+</th>
+<th style="text-align:right;">
+Petal.Width
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">setosa</td>
-<td align="right">1.462</td>
-<td align="right">0.246</td>
+<tr>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+1.462
+</td>
+<td style="text-align:right;">
+0.246
+</td>
 </tr>
-<tr class="even">
-<td align="left">versicolor</td>
-<td align="right">4.260</td>
-<td align="right">1.326</td>
+<tr>
+<td style="text-align:left;">
+versicolor
+</td>
+<td style="text-align:right;">
+4.260
+</td>
+<td style="text-align:right;">
+1.326
+</td>
 </tr>
-<tr class="odd">
-<td align="left">virginica</td>
-<td align="right">5.552</td>
-<td align="right">2.026</td>
+<tr>
+<td style="text-align:left;">
+virginica
+</td>
+<td style="text-align:right;">
+5.552
+</td>
+<td style="text-align:right;">
+2.026
+</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div id="joins" class="section level3">
 <h3><span class="header-section-number">1.3.7</span> Joins</h3>
-<p>Los ejemplos a continuación se basan en el código generado por Garrick Aden-Buie en su repositorio de animaciones de verbos del tidyverse <span class="citation">(Aden-Buie <a href="#ref-AdenBuie2018">2018</a>)</span>.
-El paquete <em>dplyr</em>, tiene una serie de funciones de apellido join: <code>anti_join</code>, <code>full_join</code>, <code>inner_join</code>, <code>left_join</code>, <code>right_join</code> y <code>semi_join</code>, en general no son tan fáciles de entender a primera vista, por lo que se trabajará con dos tablas muy simples (Tabla <a href="tidydata.html#tab:DosTablas">1.11</a>), las cuales tienen dos columnas cada una</p>
+<p>Los ejemplos a continuación se basan en el código generado por Garrick Aden-Buie en su repositorio de animaciones de verbos del tidyverse <span class="citation">(Aden-Buie <a href="#ref-AdenBuie2018">2018</a>)</span>. El paquete <em>dplyr</em>, tiene una serie de funciones de apellido join: <code>anti_join</code>, <code>full_join</code>, <code>inner_join</code>, <code>left_join</code>, <code>right_join</code> y <code>semi_join</code>, en general no son tan fáciles de entender a primera vista, por lo que se trabajará con dos tablas muy simples (Tabla <a href="tidydata.html#tab:DosTablas">1.11</a>), las cuales tienen dos columnas cada una</p>
 <table class="kable_wrapper">
 <caption>
 <span id="tab:DosTablas">Tabla 1.11: </span>Dos tablas para unir.
@@ -856,7 +1294,115 @@ El paquete <em>dplyr</em>, tiene una serie de funciones de apellido join: <code>
 </div>
 <div id="left-join" class="section level2">
 <h2><span class="header-section-number">1.4</span> left join</h2>
-<p>Como vemos en la figura <a href="#fig:leftjoin"><strong>??</strong></a></p>
+<p>Como vemos en la figura <a href="tidydata.html#fig:leftjoin">1.1</a></p>
+<pre><code>## 
+Frame 1 (1%)
+Frame 2 (2%)
+Frame 3 (3%)
+Frame 4 (4%)
+Frame 5 (5%)
+Frame 6 (6%)
+Frame 7 (7%)
+Frame 8 (8%)
+Frame 9 (9%)
+Frame 10 (10%)
+Frame 11 (11%)
+Frame 12 (12%)
+Frame 13 (13%)
+Frame 14 (14%)
+Frame 15 (15%)
+Frame 16 (16%)
+Frame 17 (17%)
+Frame 18 (18%)
+Frame 19 (19%)
+Frame 20 (20%)
+Frame 21 (21%)
+Frame 22 (22%)
+Frame 23 (23%)
+Frame 24 (24%)
+Frame 25 (25%)
+Frame 26 (26%)
+Frame 27 (27%)
+Frame 28 (28%)
+Frame 29 (29%)
+Frame 30 (30%)
+Frame 31 (31%)
+Frame 32 (32%)
+Frame 33 (33%)
+Frame 34 (34%)
+Frame 35 (35%)
+Frame 36 (36%)
+Frame 37 (37%)
+Frame 38 (38%)
+Frame 39 (39%)
+Frame 40 (40%)
+Frame 41 (41%)
+Frame 42 (42%)
+Frame 43 (43%)
+Frame 44 (44%)
+Frame 45 (45%)
+Frame 46 (46%)
+Frame 47 (47%)
+Frame 48 (48%)
+Frame 49 (49%)
+Frame 50 (50%)
+Frame 51 (51%)
+Frame 52 (52%)
+Frame 53 (53%)
+Frame 54 (54%)
+Frame 55 (55%)
+Frame 56 (56%)
+Frame 57 (57%)
+Frame 58 (58%)
+Frame 59 (59%)
+Frame 60 (60%)
+Frame 61 (61%)
+Frame 62 (62%)
+Frame 63 (63%)
+Frame 64 (64%)
+Frame 65 (65%)
+Frame 66 (66%)
+Frame 67 (67%)
+Frame 68 (68%)
+Frame 69 (69%)
+Frame 70 (70%)
+Frame 71 (71%)
+Frame 72 (72%)
+Frame 73 (73%)
+Frame 74 (74%)
+Frame 75 (75%)
+Frame 76 (76%)
+Frame 77 (77%)
+Frame 78 (78%)
+Frame 79 (79%)
+Frame 80 (80%)
+Frame 81 (81%)
+Frame 82 (82%)
+Frame 83 (83%)
+Frame 84 (84%)
+Frame 85 (85%)
+Frame 86 (86%)
+Frame 87 (87%)
+Frame 88 (88%)
+Frame 89 (89%)
+Frame 90 (90%)
+Frame 91 (91%)
+Frame 92 (92%)
+Frame 93 (93%)
+Frame 94 (94%)
+Frame 95 (95%)
+Frame 96 (96%)
+Frame 97 (97%)
+Frame 98 (98%)
+Frame 99 (99%)
+Frame 100 (100%)
+## Finalizing encoding... done!</code></pre>
+<div class="figure"><span id="fig:leftjoin"></span>
+<img src="Libro_files/figure-html/leftjoin-1.gif" alt="animación de left join entre las tablas x e y, cache = TRUE"  />
+<p class="caption">
+Figura 1.1: animación de left join entre las tablas x e y, cache = TRUE
+</p>
+</div>
 <p>Entonces</p>
 <div id="ejercicios" class="section level3">
 <h3><span class="header-section-number">1.4.1</span> Ejercicios</h3>
@@ -877,6 +1423,9 @@ El paquete <em>dplyr</em>, tiene una serie de funciones de apellido join: <code>
 <div id="refs" class="references">
 <div id="ref-wickham2014tidy">
 <p>Wickham, Hadley, and others. 2014. “Tidy Data.” <em>Journal of Statistical Software</em> 59 (10). Foundation for Open Access Statistics: 1–23.</p>
+</div>
+<div id="ref-R-dplyr">
+<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2019. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a>.</p>
 </div>
 <div id="ref-leek2015elements">
 <p>Leek, Jeff. 2015. “The Elements of Data Analytic Style.” <em>J. Leek.—Amazon Digital Services, Inc</em>.</p>
@@ -917,7 +1466,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -927,6 +1476,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -943,8 +1496,8 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

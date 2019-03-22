@@ -5,27 +5,27 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>BIO 4022. Manipulación de datos e investigación reproducible en R</title>
-  <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <title>Capítulo 5 Modelos en R | Manipulación de datos e investigación reproducible en R</title>
+  <meta name="description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="BIO 4022. Manipulación de datos e investigación reproducible en R" />
+  <meta property="og:title" content="Capítulo 5 Modelos en R | Manipulación de datos e investigación reproducible en R" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  <meta property="og:description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="BIO 4022. Manipulación de datos e investigación reproducible en R" />
+  <meta name="twitter:title" content="Capítulo 5 Modelos en R | Manipulación de datos e investigación reproducible en R" />
   
-  <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  <meta name="twitter:description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
   
 
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2018-11-28">
+<meta name="date" content="2019-03-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="loops.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -50,69 +51,41 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -252,7 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BIO 4022. Manipulación de datos e investigación reproducible en R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Manipulación de datos e investigación reproducible en R</a>
           </h1>
         </div>
 
@@ -277,156 +250,368 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">5.2.1</span> Ejemplo</h3>
 <p>Tomemos el ejemplo de la base de datos <em>CO2</em> presente en R <span class="citation">(Potvin, Lechowicz, and Tardif <a href="#ref-potvin1990statistical">1990</a>)</span>. Supongamos que nos interesa saber que factores afectan la captación de <span class="math inline">\(CO_2\)</span> en las plantas.</p>
 <table>
-<caption><span id="tab:TablaCo2">Tabla 5.1: </span>Primeras 20 variables de la base de datos CO2.</caption>
+<caption>
+<span id="tab:TablaCo2">Tabla 5.1: </span>Primeras 20 variables de la base de datos CO2.
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Plant</th>
-<th align="left">Type</th>
-<th align="left">Treatment</th>
-<th align="right">conc</th>
-<th align="right">uptake</th>
+<tr>
+<th style="text-align:left;">
+Plant
+</th>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:left;">
+Treatment
+</th>
+<th style="text-align:right;">
+conc
+</th>
+<th style="text-align:right;">
+uptake
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Qn1</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">95</td>
-<td align="right">16.0</td>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+16.0
+</td>
 </tr>
-<tr class="even">
-<td align="left">Qn1</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">175</td>
-<td align="right">30.4</td>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+30.4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Qn1</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">250</td>
-<td align="right">34.8</td>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+34.8
+</td>
 </tr>
-<tr class="even">
-<td align="left">Qn1</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">350</td>
-<td align="right">37.2</td>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+37.2
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Qn1</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">500</td>
-<td align="right">35.3</td>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+35.3
+</td>
 </tr>
-<tr class="even">
-<td align="left">Qn1</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">675</td>
-<td align="right">39.2</td>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+39.2
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Qn1</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">1000</td>
-<td align="right">39.7</td>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+39.7
+</td>
 </tr>
-<tr class="even">
-<td align="left">Qn2</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">95</td>
-<td align="right">13.6</td>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+13.6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Qn2</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">175</td>
-<td align="right">27.3</td>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+27.3
+</td>
 </tr>
-<tr class="even">
-<td align="left">Qn2</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">250</td>
-<td align="right">37.1</td>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+37.1
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Qn2</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">350</td>
-<td align="right">41.8</td>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+41.8
+</td>
 </tr>
-<tr class="even">
-<td align="left">Qn2</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">500</td>
-<td align="right">40.6</td>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+40.6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Qn2</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">675</td>
-<td align="right">41.4</td>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+41.4
+</td>
 </tr>
-<tr class="even">
-<td align="left">Qn2</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">1000</td>
-<td align="right">44.3</td>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+44.3
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Qn3</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">95</td>
-<td align="right">16.2</td>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+16.2
+</td>
 </tr>
-<tr class="even">
-<td align="left">Qn3</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">175</td>
-<td align="right">32.4</td>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+32.4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Qn3</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">250</td>
-<td align="right">40.3</td>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+40.3
+</td>
 </tr>
-<tr class="even">
-<td align="left">Qn3</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">350</td>
-<td align="right">42.1</td>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+42.1
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Qn3</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">500</td>
-<td align="right">42.9</td>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+42.9
+</td>
 </tr>
-<tr class="even">
-<td align="left">Qn3</td>
-<td align="left">Quebec</td>
-<td align="left">nonchilled</td>
-<td align="right">675</td>
-<td align="right">43.9</td>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+43.9
+</td>
 </tr>
 </tbody>
 </table>
@@ -448,48 +633,86 @@ Figura 5.1: Captación de CO2 por plantas dependiente de su subespecie
 <div id="representando-un-modelo-en-r" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> Representando un modelo en R</h3>
 <p>En R la mayoría de los modelos se representan con el siguiente codigo:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">alguna_funcion</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2 <span class="op">+</span><span class="st"> </span>... <span class="op">+</span><span class="st"> </span>Xn, <span class="dt">data =</span> data.frame)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">alguna_funcion</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2 <span class="op">+</span><span class="st"> </span>... <span class="op">+</span><span class="st"> </span>Xn, <span class="dt">data =</span> data.frame)</code></pre></div>
 <p>En este modelo, tenemos la variable respuesta <em>Y</em>, la cual puede estar explcada por una o multiples variables explicativas <em>X</em>, es por esto que el simbolo <code>~</code> se lee explicado por, donde lo que esta a su izquerada es la variable respuesta y a la derecha la variable explicativa. Los datos se encuentran en un data frame y finalmente usaremos alguna función, que identificará algún modelo. Algunas de estas funciones las encontramos en la tabla <a href="modelos.html#tab:Modelos">5.2</a></p>
 <table>
-<caption><span id="tab:Modelos">Tabla 5.2: </span>Algunos modelos que podemos generar en R</caption>
+<caption>
+<span id="tab:Modelos">Tabla 5.2: </span>Algunos modelos que podemos generar en R
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Modelos</th>
-<th align="left">Funcion</th>
+<tr>
+<th style="text-align:left;">
+Modelos
+</th>
+<th style="text-align:left;">
+Funcion
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Prueba de t</td>
-<td align="left">t.test()</td>
+<tr>
+<td style="text-align:left;">
+Prueba de t
+</td>
+<td style="text-align:left;">
+t.test()
+</td>
 </tr>
-<tr class="even">
-<td align="left">ANOVA</td>
-<td align="left">aov()</td>
+<tr>
+<td style="text-align:left;">
+ANOVA
+</td>
+<td style="text-align:left;">
+aov()
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Modelo lineal simple</td>
-<td align="left">lm()</td>
+<tr>
+<td style="text-align:left;">
+Modelo lineal simple
+</td>
+<td style="text-align:left;">
+lm()
+</td>
 </tr>
-<tr class="even">
-<td align="left">modelo lineal generalizado</td>
-<td align="left">glm()</td>
+<tr>
+<td style="text-align:left;">
+modelo lineal generalizado
+</td>
+<td style="text-align:left;">
+glm()
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Modelo aditivo</td>
-<td align="left">gam()</td>
+<tr>
+<td style="text-align:left;">
+Modelo aditivo
+</td>
+<td style="text-align:left;">
+gam()
+</td>
 </tr>
-<tr class="even">
-<td align="left">Modelo no lineal</td>
-<td align="left">nls()</td>
+<tr>
+<td style="text-align:left;">
+Modelo no lineal
+</td>
+<td style="text-align:left;">
+nls()
+</td>
 </tr>
-<tr class="odd">
-<td align="left">modelos lineales mixtos</td>
-<td align="left">lmer()</td>
+<tr>
+<td style="text-align:left;">
+modelos lineales mixtos
+</td>
+<td style="text-align:left;">
+lmer()
+</td>
 </tr>
-<tr class="even">
-<td align="left">Boosted regression trees</td>
-<td align="left">gbm()</td>
+<tr>
+<td style="text-align:left;">
+Boosted regression trees
+</td>
+<td style="text-align:left;">
+gbm()
+</td>
 </tr>
 </tbody>
 </table>
@@ -497,45 +720,91 @@ Figura 5.1: Captación de CO2 por plantas dependiente de su subespecie
 <div id="volvamos-al-ejemplo-de-las-plantas" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Volvamos al ejemplo de las plantas</h3>
 <p>Para este ejemplo usaremos un modelo lineal simple, para esto siguiendo la tabla <a href="modelos.html#tab:Modelos">5.2</a> usaremos la función <code>lm</code>:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">Fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>Type, <span class="dt">data =</span> CO2)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>Type, <span class="dt">data =</span> CO2)</code></pre></div>
 <div id="usando-broom-para-sacarle-mas-a-tu-modelo" class="section level4">
 <h4><span class="header-section-number">5.2.3.1</span> usando broom para sacarle más a tu modelo</h4>
 <p>El paquete broom <span class="citation">(Robinson and Hayes <a href="#ref-Robinson2018">2018</a>)</span> es un paquete adyacente al tidyverse (por lo que debes cargarlo aparte del tidyverse), el cual nos permite tomar información de modelos generados en formato tidy. Hoy veremos 3 funciones de <em>broom</em>, estas son <code>glance</code>, <code>tidy</code> y <code>augment</code>.</p>
 <div id="glance" class="section level5">
 <h5><span class="header-section-number">5.2.3.1.1</span> glance</h5>
 <p>la función glance, nos entregará información general del modelo, como el valor de p, el <span class="math inline">\(R^2\)</span>, log-likelihood, grados de libertad, y/o otros parametros dependiendo del modelo a utilizar. Esta información nos es entregada en un formato de data frame, como vemos en el código siguiente y en la tabla <a href="modelos.html#tab:glance">5.3</a></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
-<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="kw">glance</span>(Fit1)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(broom)
+<span class="kw">glance</span>(Fit1)</code></pre></div>
 <table>
-<caption><span id="tab:glance">Tabla 5.3: </span>Información del modelo fi1 entregada por la función glance</caption>
+<caption>
+<span id="tab:glance">Tabla 5.3: </span>Información del modelo fi1 entregada por la función glance
+</caption>
 <thead>
-<tr class="header">
-<th align="right">r.squared</th>
-<th align="right">adj.r.squared</th>
-<th align="right">sigma</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
-<th align="right">df</th>
-<th align="right">logLik</th>
-<th align="right">AIC</th>
-<th align="right">BIC</th>
-<th align="right">deviance</th>
-<th align="right">df.residual</th>
+<tr>
+<th style="text-align:right;">
+r.squared
+</th>
+<th style="text-align:right;">
+adj.r.squared
+</th>
+<th style="text-align:right;">
+sigma
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+deviance
+</th>
+<th style="text-align:right;">
+df.residual
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">0.346713</td>
-<td align="right">0.3387461</td>
-<td align="right">8.794012</td>
-<td align="right">43.5191</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">-300.8007</td>
-<td align="right">607.6014</td>
-<td align="right">614.8939</td>
-<td align="right">6341.441</td>
-<td align="right">82</td>
+<tr>
+<td style="text-align:right;">
+0.346713
+</td>
+<td style="text-align:right;">
+0.3387461
+</td>
+<td style="text-align:right;">
+8.794012
+</td>
+<td style="text-align:right;">
+43.5191
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-300.8007
+</td>
+<td style="text-align:right;">
+607.6014
+</td>
+<td style="text-align:right;">
+614.8939
+</td>
+<td style="text-align:right;">
+6341.441
+</td>
+<td style="text-align:right;">
+82
+</td>
 </tr>
 </tbody>
 </table>
@@ -543,32 +812,64 @@ Figura 5.1: Captación de CO2 por plantas dependiente de su subespecie
 <div id="tidy" class="section level5">
 <h5><span class="header-section-number">5.2.3.1.2</span> tidy</h5>
 <p>la función tidy, nos entregará información sobre los parametros del modelo, esto es el intercepto, la pendiente y/o interacciones, como vemos en el código siguiente y en la tabla <a href="modelos.html#tab:tidy">5.4</a></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">tidy</span>(Fit1)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tidy</span>(Fit1)</code></pre></div>
 <table>
-<caption><span id="tab:tidy">Tabla 5.4: </span>Información del modelo fi1 entregada por la función glance</caption>
+<caption>
+<span id="tab:tidy">Tabla 5.4: </span>Información del modelo fi1 entregada por la función glance
+</caption>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">std.error</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">24.719384</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+24.719384
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="even">
-<td align="left">TypeMississippi</td>
-<td align="right">-12.65952</td>
-<td align="right">1.919011</td>
-<td align="right">-6.596901</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+TypeMississippi
+</td>
+<td style="text-align:right;">
+-12.65952
+</td>
+<td style="text-align:right;">
+1.919011
+</td>
+<td style="text-align:right;">
+-6.596901
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 </tbody>
 </table>
@@ -576,242 +877,622 @@ Figura 5.1: Captación de CO2 por plantas dependiente de su subespecie
 <div id="augment" class="section level5">
 <h5><span class="header-section-number">5.2.3.1.3</span> augment</h5>
 <p>la función augment, nos entregará para cada observación de nuestro modelo, varios parametros importantes como el valor predicho, los residuales, el distancia de cook entre otros, esto nos sirve principalmente para estudiar los supuestos de nuestro modelo. A continuación vemos el uso de la función <code>augment</code> y 20 de sus observaciones en la tabla <a href="modelos.html#tab:augment">5.5</a></p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">augment</span>(Fit1)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">augment</span>(Fit1)</code></pre></div>
 <table>
-<caption><span id="tab:augment">Tabla 5.5: </span>Información del modelo fi1 entregada por la función augment</caption>
+<caption>
+<span id="tab:augment">Tabla 5.5: </span>Información del modelo fi1 entregada por la función augment
+</caption>
 <thead>
-<tr class="header">
-<th align="right">uptake</th>
-<th align="left">Type</th>
-<th align="right">.fitted</th>
-<th align="right">.se.fit</th>
-<th align="right">.resid</th>
-<th align="right">.hat</th>
-<th align="right">.sigma</th>
-<th align="right">.cooksd</th>
-<th align="right">.std.resid</th>
+<tr>
+<th style="text-align:right;">
+uptake
+</th>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:right;">
+.fitted
+</th>
+<th style="text-align:right;">
+.se.fit
+</th>
+<th style="text-align:right;">
+.resid
+</th>
+<th style="text-align:right;">
+.hat
+</th>
+<th style="text-align:right;">
+.sigma
+</th>
+<th style="text-align:right;">
+.cooksd
+</th>
+<th style="text-align:right;">
+.std.resid
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">37.1</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">3.5571429</td>
-<td align="right">0.0238095</td>
-<td align="right">8.839082</td>
-<td align="right">0.0020440</td>
-<td align="right">0.4093992</td>
+<tr>
+<td style="text-align:right;">
+37.1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+3.5571429
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.839082
+</td>
+<td style="text-align:right;">
+0.0020440
+</td>
+<td style="text-align:right;">
+0.4093992
+</td>
 </tr>
-<tr class="even">
-<td align="right">10.5</td>
-<td align="left">Mississippi</td>
-<td align="right">20.88333</td>
-<td align="right">1.356945</td>
-<td align="right">-10.3833333</td>
-<td align="right">0.0238095</td>
-<td align="right">8.770741</td>
-<td align="right">0.0174161</td>
-<td align="right">-1.1950400</td>
+<tr>
+<td style="text-align:right;">
+10.5
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-10.3833333
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.770741
+</td>
+<td style="text-align:right;">
+0.0174161
+</td>
+<td style="text-align:right;">
+-1.1950400
+</td>
 </tr>
-<tr class="odd">
-<td align="right">34.0</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">0.4571429</td>
-<td align="right">0.0238095</td>
-<td align="right">8.847980</td>
-<td align="right">0.0000338</td>
-<td align="right">0.0526135</td>
+<tr>
+<td style="text-align:right;">
+34.0
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+0.4571429
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.847980
+</td>
+<td style="text-align:right;">
+0.0000338
+</td>
+<td style="text-align:right;">
+0.0526135
+</td>
 </tr>
-<tr class="even">
-<td align="right">38.9</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">5.3571429</td>
-<td align="right">0.0238095</td>
-<td align="right">8.827596</td>
-<td align="right">0.0046360</td>
-<td align="right">0.6165650</td>
+<tr>
+<td style="text-align:right;">
+38.9
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+5.3571429
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.827596
+</td>
+<td style="text-align:right;">
+0.0046360
+</td>
+<td style="text-align:right;">
+0.6165650
+</td>
 </tr>
-<tr class="odd">
-<td align="right">38.8</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">5.2571429</td>
-<td align="right">0.0238095</td>
-<td align="right">8.828356</td>
-<td align="right">0.0044645</td>
-<td align="right">0.6050558</td>
+<tr>
+<td style="text-align:right;">
+38.8
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+5.2571429
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.828356
+</td>
+<td style="text-align:right;">
+0.0044645
+</td>
+<td style="text-align:right;">
+0.6050558
+</td>
 </tr>
-<tr class="even">
-<td align="right">26.2</td>
-<td align="left">Mississippi</td>
-<td align="right">20.88333</td>
-<td align="right">1.356945</td>
-<td align="right">5.3166667</td>
-<td align="right">0.0238095</td>
-<td align="right">8.827905</td>
-<td align="right">0.0045662</td>
-<td align="right">0.6119065</td>
+<tr>
+<td style="text-align:right;">
+26.2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+5.3166667
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.827905
+</td>
+<td style="text-align:right;">
+0.0045662
+</td>
+<td style="text-align:right;">
+0.6119065
+</td>
 </tr>
-<tr class="odd">
-<td align="right">12.0</td>
-<td align="left">Mississippi</td>
-<td align="right">20.88333</td>
-<td align="right">1.356945</td>
-<td align="right">-8.8833333</td>
-<td align="right">0.0238095</td>
-<td align="right">8.791552</td>
-<td align="right">0.0127476</td>
-<td align="right">-1.0224018</td>
+<tr>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-8.8833333
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.791552
+</td>
+<td style="text-align:right;">
+0.0127476
+</td>
+<td style="text-align:right;">
+-1.0224018
+</td>
 </tr>
-<tr class="even">
-<td align="right">19.4</td>
-<td align="left">Mississippi</td>
-<td align="right">20.88333</td>
-<td align="right">1.356945</td>
-<td align="right">-1.4833333</td>
-<td align="right">0.0238095</td>
-<td align="right">8.846557</td>
-<td align="right">0.0003554</td>
-<td align="right">-0.1707200</td>
+<tr>
+<td style="text-align:right;">
+19.4
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-1.4833333
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.846557
+</td>
+<td style="text-align:right;">
+0.0003554
+</td>
+<td style="text-align:right;">
+-0.1707200
+</td>
 </tr>
-<tr class="odd">
-<td align="right">39.2</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">5.6571429</td>
-<td align="right">0.0238095</td>
-<td align="right">8.825228</td>
-<td align="right">0.0051698</td>
-<td align="right">0.6510927</td>
+<tr>
+<td style="text-align:right;">
+39.2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+5.6571429
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.825228
+</td>
+<td style="text-align:right;">
+0.0051698
+</td>
+<td style="text-align:right;">
+0.6510927
+</td>
 </tr>
-<tr class="even">
-<td align="right">30.0</td>
-<td align="left">Mississippi</td>
-<td align="right">20.88333</td>
-<td align="right">1.356945</td>
-<td align="right">9.1166667</td>
-<td align="right">0.0238095</td>
-<td align="right">8.788531</td>
-<td align="right">0.0134261</td>
-<td align="right">1.0492567</td>
+<tr>
+<td style="text-align:right;">
+30.0
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+9.1166667
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.788531
+</td>
+<td style="text-align:right;">
+0.0134261
+</td>
+<td style="text-align:right;">
+1.0492567
+</td>
 </tr>
-<tr class="odd">
-<td align="right">35.0</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">1.4571429</td>
-<td align="right">0.0238095</td>
-<td align="right">8.846612</td>
-<td align="right">0.0003430</td>
-<td align="right">0.1677057</td>
+<tr>
+<td style="text-align:right;">
+35.0
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+1.4571429
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.846612
+</td>
+<td style="text-align:right;">
+0.0003430
+</td>
+<td style="text-align:right;">
+0.1677057
+</td>
 </tr>
-<tr class="even">
-<td align="right">17.9</td>
-<td align="left">Mississippi</td>
-<td align="right">20.88333</td>
-<td align="right">1.356945</td>
-<td align="right">-2.9833333</td>
-<td align="right">0.0238095</td>
-<td align="right">8.841767</td>
-<td align="right">0.0014377</td>
-<td align="right">-0.3433582</td>
+<tr>
+<td style="text-align:right;">
+17.9
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-2.9833333
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.841767
+</td>
+<td style="text-align:right;">
+0.0014377
+</td>
+<td style="text-align:right;">
+-0.3433582
+</td>
 </tr>
-<tr class="odd">
-<td align="right">32.4</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">-1.1428571</td>
-<td align="right">0.0238095</td>
-<td align="right">8.847196</td>
-<td align="right">0.0002110</td>
-<td align="right">-0.1315339</td>
+<tr>
+<td style="text-align:right;">
+32.4
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-1.1428571
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.847196
+</td>
+<td style="text-align:right;">
+0.0002110
+</td>
+<td style="text-align:right;">
+-0.1315339
+</td>
 </tr>
-<tr class="even">
-<td align="right">43.9</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">10.3571429</td>
-<td align="right">0.0238095</td>
-<td align="right">8.771133</td>
-<td align="right">0.0173284</td>
-<td align="right">1.1920257</td>
+<tr>
+<td style="text-align:right;">
+43.9
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+10.3571429
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.771133
+</td>
+<td style="text-align:right;">
+0.0173284
+</td>
+<td style="text-align:right;">
+1.1920257
+</td>
 </tr>
-<tr class="odd">
-<td align="right">34.6</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">1.0571429</td>
-<td align="right">0.0238095</td>
-<td align="right">8.847331</td>
-<td align="right">0.0001805</td>
-<td align="right">0.1216688</td>
+<tr>
+<td style="text-align:right;">
+34.6
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+1.0571429
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.847331
+</td>
+<td style="text-align:right;">
+0.0001805
+</td>
+<td style="text-align:right;">
+0.1216688
+</td>
 </tr>
-<tr class="even">
-<td align="right">9.3</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">-24.2428571</td>
-<td align="right">0.0238095</td>
-<td align="right">8.417641</td>
-<td align="right">0.0949391</td>
-<td align="right">-2.7901623</td>
+<tr>
+<td style="text-align:right;">
+9.3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-24.2428571
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.417641
+</td>
+<td style="text-align:right;">
+0.0949391
+</td>
+<td style="text-align:right;">
+-2.7901623
+</td>
 </tr>
-<tr class="odd">
-<td align="right">30.3</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">-3.2428571</td>
-<td align="right">0.0238095</td>
-<td align="right">8.840611</td>
-<td align="right">0.0016988</td>
-<td align="right">-0.3732274</td>
+<tr>
+<td style="text-align:right;">
+30.3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+-3.2428571
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.840611
+</td>
+<td style="text-align:right;">
+0.0016988
+</td>
+<td style="text-align:right;">
+-0.3732274
+</td>
 </tr>
-<tr class="even">
-<td align="right">40.3</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">6.7571429</td>
-<td align="right">0.0238095</td>
-<td align="right">8.815439</td>
-<td align="right">0.0073757</td>
-<td align="right">0.7776940</td>
+<tr>
+<td style="text-align:right;">
+40.3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+6.7571429
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.815439
+</td>
+<td style="text-align:right;">
+0.0073757
+</td>
+<td style="text-align:right;">
+0.7776940
+</td>
 </tr>
-<tr class="odd">
-<td align="right">42.1</td>
-<td align="left">Quebec</td>
-<td align="right">33.54286</td>
-<td align="right">1.356945</td>
-<td align="right">8.5571429</td>
-<td align="right">0.0238095</td>
-<td align="right">8.795643</td>
-<td align="right">0.0118286</td>
-<td align="right">0.9848599</td>
+<tr>
+<td style="text-align:right;">
+42.1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+8.5571429
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.795643
+</td>
+<td style="text-align:right;">
+0.0118286
+</td>
+<td style="text-align:right;">
+0.9848599
+</td>
 </tr>
-<tr class="even">
-<td align="right">32.4</td>
-<td align="left">Mississippi</td>
-<td align="right">20.88333</td>
-<td align="right">1.356945</td>
-<td align="right">11.5166667</td>
-<td align="right">0.0238095</td>
-<td align="right">8.752828</td>
-<td align="right">0.0214255</td>
-<td align="right">1.3254778</td>
+<tr>
+<td style="text-align:right;">
+32.4
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.356945
+</td>
+<td style="text-align:right;">
+11.5166667
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.752828
+</td>
+<td style="text-align:right;">
+0.0214255
+</td>
+<td style="text-align:right;">
+1.3254778
+</td>
 </tr>
 </tbody>
 </table>
@@ -821,18 +1502,18 @@ Figura 5.1: Captación de CO2 por plantas dependiente de su subespecie
 <h4><span class="header-section-number">5.2.3.2</span> Selección de modelos usando broom y el AIC</h4>
 <p>El AIC, o Criterio de informacion de Akaike <span class="citation">(Aho, Derryberry, and Peterson <a href="#ref-aho2014model">2014</a>)</span>, es una medida de cuanta información nos entrega un modelo dada su complejidad. Esta última medida a partir del número de parámetros que tiene. Cuanto más bajo sea el AIC, mejor comparativamente es un modelo, y en general, un modelo que sea dos unidades de AIC menor que otro modelo, será considerado un modelo que es significativamente mejor que otro.</p>
 <p>La formula del criterio de selección de Akaike es la que vemos en la ecuación <a href="modelos.html#eq:AIC">(5.1)</a>.</p>
-<p><span class="math display" id="eq:AIC">\[\begin{equation} 
+<span class="math display" id="eq:AIC">\[\begin{equation} 
   AIC = 2 K - 2 \ln{(\hat{L})}
   \tag{5.1}
-\end{equation}\]</span></p>
+\end{equation}\]</span>
 <p>Donde <span class="math inline">\(K\)</span> es el número de parametros, lo cual podemos ver con tidy, si vemos la tabla <a href="modelos.html#tab:tidy">5.4</a>, vemos que el modelo <em>Fit1</em> tiene 2 parametros, esto es <span class="math inline">\(K\)</span> es igual a 2.</p>
 <p>El log-likelihood del modelo (<span class="math inline">\(\ln{(\hat{L})}\)</span>) es el ajuste que este tiene a los datos. Cuanto más positivo es este valor mejor se ajusta el modelo a los datos, y cuanto mas negativo es, menos se ajusta a los datos, en nuestro modelo, usando glance, podemos ver que el valor del log-likelyhood del modelo es de -300.8 (ver tabla <a href="modelos.html#tab:tidy">5.4</a>).</p>
 <p>Por lo tanto remplazando la ecuación <a href="modelos.html#eq:AIC">(5.1)</a>, obtenemos 605.6, que es un valor muy cercano a los 608, que aparecen en el glance del modelo (tabla <a href="modelos.html#tab:tidy">5.4</a>).</p>
 <div id="modelos-candidatos" class="section level5">
 <h5><span class="header-section-number">5.2.3.2.1</span> Modelos candidatos</h5>
 <p>Veamos la figura <a href="modelos.html#fig:CO2Mods">5.2</a>. para pensar cuales podrían ser modelos interesantes a explorar.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">ggplot</span>(CO2, <span class="kw">aes</span>(<span class="dt">x =</span> conc, <span class="dt">y =</span> uptake)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Type, </a>
-<a class="sourceLine" id="cb53-2" data-line-number="2">    <span class="dt">shape =</span> Treatment), <span class="dt">size =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(CO2, <span class="kw">aes</span>(<span class="dt">x =</span> conc, <span class="dt">y =</span> uptake)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Type, 
+    <span class="dt">shape =</span> Treatment), <span class="dt">size =</span> <span class="dv">3</span>)</code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:CO2Mods"></span>
 <img src="Libro_files/figure-html/CO2Mods-1.png" alt="Gráfico exploratorio para generar modelos de la base de datos CO2" width="80%" />
 <p class="caption">
@@ -886,7 +1567,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -896,6 +1577,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -912,8 +1597,8 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

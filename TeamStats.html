@@ -22,17 +22,16 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="site_libs/datatables-binding-0.4/datatables.js"></script>
+<script src="site_libs/datatables-binding-0.5/datatables.js"></script>
 <link href="site_libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="site_libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="site_libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
 <link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
-<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -80,9 +79,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -107,6 +104,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -121,7 +121,6 @@ body {
   padding-top: 56px;
   margin-top: -56px;
 }
-
 .section h2 {
   padding-top: 56px;
   margin-top: -56px;
@@ -141,6 +140,43 @@ body {
 .section h6 {
   padding-top: 56px;
   margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -162,19 +198,85 @@ $(document).ready(function () {
 });
 </script>
 
-
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
 <!-- code folding -->
 
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -205,7 +307,7 @@ $(document).ready(function () {
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Cursos</li>
     <li>
-      <a href="Libro/_book/index.html">BIO4022</a>
+      <a href="Libro/_book/index.html">Curso de R</a>
     </li>
     <li>
       <a href="AyduantiaStats/_book/index.html">BIO249c</a>
@@ -292,18 +394,18 @@ $(document).ready(function () {
 </div>
 
 
-<div id="nba-stats-updated-on-2019-03-12" class="section level2">
-<h2>NBA stats updated on 2019-03-12</h2>
+<div id="nba-stats-updated-on-2019-03-22" class="section level2">
+<h2>NBA stats updated on 2019-03-22</h2>
 </div>
 <div id="offensive-team-stats" class="section level2">
 <h2>Offensive team stats</h2>
-<div id="htmlwidget-ce70a717ce2c6652ed43" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ce70a717ce2c6652ed43">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],["Den","Bos","GSW","Hou","Okc","Ind","Mil","Tor","Sac","Was","Det","NO","Por","Sas","Mia","Atl","Min","ORL","Uta","Cha","Mem","Phi","Lal","Pho","Bkn","Lac","Cle","Dal","Chi","NY"],[0.527,0.528,0.556,0.55,0.514,0.519,0.567,0.54,0.504,0.545,0.502,0.536,0.52,0.508,0.509,0.517,0.504,0.505,0.534,0.507,0.507,0.532,0.546,0.521,0.517,0.506,0.48,0.52,0.498,0.476],[0.355,0.365,0.378,0.349,0.345,0.376,0.352,0.352,0.375,0.345,0.349,0.348,0.358,0.399,0.355,0.352,0.351,0.354,0.348,0.352,0.337,0.358,0.333,0.329,0.353,0.384,0.361,0.341,0.353,0.34],[0.65,0.61,0.62,0.49,0.66,0.71,0.58,0.63,0.68,0.63,0.61,0.68,0.66,0.72,0.63,0.6,0.69,0.64,0.6,0.63,0.67,0.65,0.66,0.67,0.6,0.71,0.67,0.58,0.69,0.67],[0.35,0.39,0.38,0.51,0.34,0.29,0.42,0.37,0.32,0.37,0.39,0.32,0.34,0.28,0.37,0.4,0.31,0.36,0.4,0.37,0.33,0.35,0.34,0.33,0.4,0.29,0.33,0.42,0.31,0.33],[1.051,1.035,0.989,1.01,1.052,1.015,0.978,1.003,1.021,0.996,1.04,0.996,1,0.985,1.014,1.004,1.02,1.01,0.977,1.003,1.015,0.96,0.965,0.999,0.968,0.956,1.001,0.966,0.981,1.003],[1.058,1.071,1.12,1.073,1.03,1.064,1.101,1.071,1.045,1.07,1.021,1.063,1.052,1.067,1.035,1.043,1.022,1.029,1.058,1.03,1.013,1.067,1.06,1.024,1.044,1.053,1.001,1.033,1.016,0.974],[1.112,1.108,1.108,1.084,1.084,1.08,1.077,1.074,1.067,1.066,1.062,1.059,1.052,1.051,1.049,1.047,1.042,1.039,1.034,1.033,1.028,1.024,1.023,1.023,1.011,1.007,1.002,0.998,0.997,0.977]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>TEAM_NAME<\/th>\n      <th>ShotPct2Pts<\/th>\n      <th>ShotPct3Pts<\/th>\n      <th>PercentageOf2s<\/th>\n      <th>PercentageOf3s<\/th>\n      <th>PropShot<\/th>\n      <th>PPS<\/th>\n      <th>AdjPPS<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":30,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,25,30,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-28b7e0544f46705069aa" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-28b7e0544f46705069aa">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],["Den","GSW","Bos","Hou","Okc","Tor","Mil","Sac","Ind","Det","Was","NO","Por","Atl","Mia","Sas","Uta","ORL","Min","Cha","Mem","Lal","Phi","Pho","Bkn","Lac","Cle","Dal","Chi","NY"],[0.531,0.555,0.528,0.551,0.51,0.54,0.565,0.508,0.517,0.5,0.546,0.535,0.519,0.517,0.506,0.509,0.536,0.503,0.504,0.505,0.509,0.545,0.531,0.522,0.513,0.502,0.483,0.521,0.498,0.476],[0.358,0.379,0.364,0.35,0.345,0.357,0.351,0.373,0.371,0.35,0.346,0.345,0.36,0.354,0.357,0.399,0.35,0.354,0.347,0.349,0.338,0.331,0.358,0.327,0.353,0.385,0.36,0.34,0.357,0.344],[0.65,0.62,0.61,0.48,0.66,0.62,0.58,0.68,0.71,0.61,0.63,0.68,0.66,0.6,0.63,0.72,0.6,0.64,0.69,0.63,0.66,0.66,0.65,0.67,0.6,0.71,0.67,0.58,0.7,0.67],[0.35,0.38,0.39,0.52,0.34,0.38,0.42,0.32,0.29,0.39,0.37,0.32,0.34,0.4,0.37,0.28,0.4,0.36,0.31,0.37,0.34,0.34,0.35,0.33,0.4,0.29,0.33,0.42,0.3,0.33],[1.049,0.989,1.033,1.007,1.054,1.001,0.977,1.022,1.013,1.042,0.987,0.997,1.004,1.008,1.017,0.983,0.982,1.01,1.017,1.007,1.013,0.969,0.96,0.995,0.969,0.961,1,0.971,0.98,0.998],[1.066,1.12,1.07,1.075,1.025,1.077,1.098,1.049,1.057,1.019,1.072,1.059,1.052,1.045,1.034,1.068,1.063,1.026,1.018,1.024,1.017,1.057,1.066,1.023,1.039,1.048,1.004,1.033,1.018,0.978],[1.118,1.108,1.105,1.083,1.08,1.078,1.073,1.072,1.071,1.062,1.058,1.056,1.056,1.053,1.052,1.05,1.044,1.036,1.035,1.031,1.03,1.024,1.023,1.018,1.007,1.007,1.004,1.003,0.998,0.976]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>TEAM_NAME<\/th>\n      <th>ShotPct2Pts<\/th>\n      <th>ShotPct3Pts<\/th>\n      <th>PercentageOf2s<\/th>\n      <th>PercentageOf3s<\/th>\n      <th>PropShot<\/th>\n      <th>PPS<\/th>\n      <th>AdjPPS<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":30,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,25,30,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="defensive-team-stats" class="section level2">
 <h2>Defensive team stats</h2>
-<div id="htmlwidget-ea8de73967ed48c33543" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ea8de73967ed48c33543">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],["Okc","Bos","Den","Det","Mem","Ind","Mia","ORL","Tor","Mil","Sac","Por","GSW","Min","Uta","Hou","Bkn","Phi","Cha","Lac","NY","NO","Lal","Atl","Sas","Dal","Pho","Was","Chi","Cle"],[0.516,0.515,0.529,0.532,0.502,0.505,0.495,0.507,0.508,0.479,0.533,0.504,0.505,0.515,0.498,0.54,0.514,0.507,0.534,0.51,0.53,0.524,0.511,0.542,0.524,0.524,0.542,0.538,0.533,0.557],[0.35,0.341,0.343,0.341,0.356,0.354,0.365,0.351,0.348,0.359,0.343,0.363,0.352,0.374,0.359,0.342,0.339,0.34,0.354,0.338,0.361,0.363,0.349,0.362,0.364,0.347,0.365,0.368,0.364,0.372],[0.65,0.62,0.62,0.67,0.62,0.63,0.62,0.66,0.66,0.62,0.62,0.67,0.63,0.63,0.68,0.66,0.67,0.68,0.63,0.67,0.64,0.64,0.64,0.62,0.64,0.64,0.66,0.64,0.62,0.64],[0.35,0.38,0.38,0.33,0.38,0.37,0.38,0.34,0.34,0.38,0.38,0.33,0.37,0.37,0.32,0.34,0.33,0.32,0.37,0.33,0.36,0.36,0.36,0.38,0.36,0.36,0.34,0.36,0.38,0.36],[0.95,0.966,0.951,0.961,0.985,0.985,0.986,0.99,0.997,1.023,0.979,1,1.011,0.98,1.023,0.99,1.033,1.042,0.997,1.046,0.997,1.004,1.036,0.996,1.016,1.035,1.001,1.004,1.02,0.999],[1.038,1.027,1.047,1.05,1.028,1.029,1.03,1.027,1.026,1.003,1.052,1.035,1.027,1.064,1.022,1.062,1.024,1.016,1.066,1.018,1.068,1.063,1.031,1.085,1.064,1.045,1.088,1.086,1.076,1.115],[0.986,0.992,0.996,1.009,1.013,1.014,1.016,1.017,1.023,1.026,1.03,1.035,1.038,1.043,1.046,1.051,1.058,1.059,1.063,1.065,1.065,1.067,1.068,1.081,1.081,1.082,1.089,1.09,1.098,1.114]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>DefTeam<\/th>\n      <th>ShotPct2Pts<\/th>\n      <th>ShotPct3Pts<\/th>\n      <th>PercentageOf2s<\/th>\n      <th>PercentageOf3s<\/th>\n      <th>PropShot<\/th>\n      <th>PPS<\/th>\n      <th>AdjPPS<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":30,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,25,30,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e81c8b5e40213cb346f5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e81c8b5e40213cb346f5">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"],["Okc","Bos","Den","Mia","ORL","Det","Tor","Ind","Mem","Mil","Por","Sac","GSW","Uta","Min","Hou","Bkn","Cha","Phi","Lac","NO","Lal","Atl","NY","Sas","Dal","Pho","Chi","Was","Cle"],[0.516,0.515,0.53,0.494,0.507,0.532,0.508,0.507,0.503,0.479,0.501,0.534,0.503,0.497,0.516,0.539,0.513,0.533,0.508,0.51,0.525,0.511,0.542,0.534,0.522,0.527,0.54,0.535,0.536,0.553],[0.351,0.341,0.341,0.36,0.345,0.345,0.343,0.355,0.36,0.357,0.364,0.342,0.348,0.359,0.378,0.342,0.341,0.354,0.339,0.341,0.36,0.352,0.36,0.362,0.363,0.348,0.365,0.363,0.372,0.375],[0.65,0.62,0.62,0.62,0.66,0.67,0.66,0.63,0.61,0.62,0.67,0.62,0.63,0.68,0.63,0.65,0.67,0.63,0.67,0.67,0.64,0.64,0.62,0.64,0.64,0.64,0.66,0.63,0.64,0.64],[0.35,0.38,0.38,0.38,0.34,0.33,0.34,0.37,0.39,0.38,0.33,0.38,0.37,0.32,0.37,0.35,0.33,0.37,0.33,0.33,0.36,0.36,0.38,0.36,0.36,0.36,0.34,0.37,0.36,0.36],[0.949,0.968,0.954,0.983,0.99,0.96,0.999,0.987,0.988,1.024,0.996,0.979,1.011,1.018,0.983,0.993,1.032,0.993,1.042,1.041,1.003,1.032,0.992,1.002,1.017,1.03,1.005,1.02,1.013,1],[1.039,1.027,1.046,1.023,1.021,1.054,1.02,1.033,1.035,1.001,1.032,1.052,1.02,1.021,1.07,1.06,1.025,1.065,1.016,1.021,1.061,1.034,1.082,1.074,1.06,1.05,1.085,1.077,1.088,1.113],[0.986,0.994,0.998,1.006,1.011,1.012,1.019,1.02,1.023,1.025,1.028,1.03,1.031,1.039,1.052,1.053,1.058,1.058,1.059,1.063,1.064,1.067,1.073,1.076,1.078,1.082,1.09,1.099,1.102,1.113]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>DefTeam<\/th>\n      <th>ShotPct2Pts<\/th>\n      <th>ShotPct3Pts<\/th>\n      <th>PercentageOf2s<\/th>\n      <th>PercentageOf3s<\/th>\n      <th>PropShot<\/th>\n      <th>PPS<\/th>\n      <th>AdjPPS<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":30,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,25,30,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 
 <p>Copyright &copy; 2017 Cienciaustral, Inc. <img src="https://ia601308.us.archive.org/13/items/LogoCuadrado3/logo%20cuadrado%203.jpg" height="20" width="20"/> All rights reserved.</p>

@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-03-13">
+<meta name="date" content="2019-03-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -114,15 +114,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#presentacion-de-introduccion"><i class="fa fa-check"></i><b>0.7</b> Presentación de introducción</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="Explorando.html"><a href="Explorando.html"><i class="fa fa-check"></i><b>1</b> Exploración de datos y tu primer ANOVA</a><ul>
-<li class="chapter" data-level="1.1" data-path="Explorando.html"><a href="Explorando.html#actividad-1-educacion-en-chile"><i class="fa fa-check"></i><b>1.1</b> Actividad 1 Educación en Chile</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="Explorando.html"><a href="Explorando.html#tablas-resumen-de-los-datos"><i class="fa fa-check"></i><b>1.1.1</b> Tablas resumen de los datos:</a></li>
-<li class="chapter" data-level="1.1.2" data-path="Explorando.html"><a href="Explorando.html#visualizacion-de-datos-con-ggplot2-tidyverse"><i class="fa fa-check"></i><b>1.1.2</b> Visualización de datos con ggplot2 (tidyverse)</a></li>
+<li class="chapter" data-level="1.1" data-path="Explorando.html"><a href="Explorando.html#paquetes-necesarios-para-este-practico"><i class="fa fa-check"></i><b>1.1</b> Paquetes necesarios para este práctico</a></li>
+<li class="chapter" data-level="1.2" data-path="Explorando.html"><a href="Explorando.html#actividad-1-educacion-en-chile"><i class="fa fa-check"></i><b>1.2</b> Actividad 1 Educación en Chile</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="Explorando.html"><a href="Explorando.html#tablas-resumen-de-los-datos"><i class="fa fa-check"></i><b>1.2.1</b> Tablas resumen de los datos:</a></li>
+<li class="chapter" data-level="1.2.2" data-path="Explorando.html"><a href="Explorando.html#visualizacion-de-datos-con-ggplot2-tidyverse"><i class="fa fa-check"></i><b>1.2.2</b> Visualización de datos con ggplot2 (tidyverse)</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="Explorando.html"><a href="Explorando.html#actividad-2-captacion-de-co2-en-plantas"><i class="fa fa-check"></i><b>1.2</b> Actividad 2 Captación de CO2 en plantas</a></li>
-<li class="chapter" data-level="1.3" data-path="Explorando.html"><a href="Explorando.html#actividad-3-mi-primer-anova"><i class="fa fa-check"></i><b>1.3</b> Actividad 3 Mi primer ANOVA</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="Explorando.html"><a href="Explorando.html#antes-de-empezar-a-entender-el-anova"><i class="fa fa-check"></i><b>1.3.1</b> antes de empezar a entender el ANOVA</a></li>
-<li class="chapter" data-level="1.3.2" data-path="Explorando.html"><a href="Explorando.html#como-hacer-un-anova-en-r"><i class="fa fa-check"></i><b>1.3.2</b> Como hacer un ANOVA en R</a></li>
-<li class="chapter" data-level="1.3.3" data-path="Explorando.html"><a href="Explorando.html#ejercicio"><i class="fa fa-check"></i><b>1.3.3</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.3" data-path="Explorando.html"><a href="Explorando.html#actividad-2-captacion-de-co2-en-plantas"><i class="fa fa-check"></i><b>1.3</b> Actividad 2 Captación de CO2 en plantas</a></li>
+<li class="chapter" data-level="1.4" data-path="Explorando.html"><a href="Explorando.html#actividad-3-mi-primer-anova"><i class="fa fa-check"></i><b>1.4</b> Actividad 3 Mi primer ANOVA</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="Explorando.html"><a href="Explorando.html#antes-de-empezar-a-entender-el-anova"><i class="fa fa-check"></i><b>1.4.1</b> antes de empezar a entender el ANOVA</a></li>
+<li class="chapter" data-level="1.4.2" data-path="Explorando.html"><a href="Explorando.html#como-hacer-un-anova-en-r"><i class="fa fa-check"></i><b>1.4.2</b> Como hacer un ANOVA en R</a></li>
+<li class="chapter" data-level="1.4.3" data-path="Explorando.html"><a href="Explorando.html#ejercicio"><i class="fa fa-check"></i><b>1.4.3</b> Ejercicio</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Supuestos.html"><a href="Supuestos.html"><i class="fa fa-check"></i><b>2</b> Supuestos de ANOVA y mínimos cuadrados</a><ul>
@@ -178,13 +179,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="Explorando" class="section level1">
 <h1><span class="header-section-number">Práctico 1</span> Exploración de datos y tu primer ANOVA</h1>
+<div id="paquetes-necesarios-para-este-practico" class="section level2">
+<h2><span class="header-section-number">1.1</span> Paquetes necesarios para este práctico</h2>
+<p>Para este capitulo necesitas tener instalado el paquete tidyverse. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase2/Clase2.html">link</a>. El video de la clase se encuentra disponible en este link.</p>
+</div>
 <div id="actividad-1-educacion-en-chile" class="section level2">
-<h2><span class="header-section-number">1.1</span> Actividad 1 Educación en Chile</h2>
+<h2><span class="header-section-number">1.2</span> Actividad 1 Educación en Chile</h2>
 <p>En esta actividad exploraremos los resultados de la PSU en Chile para el año 2017. Pueden encontrar la base de datos original en <a href="https://es.datachile.io/geo/chile#education">Data Chile</a>.</p>
 <p>Trataremos de determinar, usando el puntaje de la PSU como medida, si existen brechas en la educación chilena por tipo de institución. Para ello, primero trabajaremos realizando análisis exploratorios en base a gráficos y tablas resumen usando funciones del paquete <em>tidyverse</em> <span class="citation">(Wickham <a href="#ref-WickhamTidy2017">2017</a>)</span> en R.</p>
 <p>La base de datos <em>EducacionChile.csv</em> se encuentra disponible en webcursos o en <a href="https://es.datachile.io/geo/chile#education" class="uri">https://es.datachile.io/geo/chile#education</a>.</p>
 <div id="tablas-resumen-de-los-datos" class="section level3">
-<h3><span class="header-section-number">1.1.1</span> Tablas resumen de los datos:</h3>
+<h3><span class="header-section-number">1.2.1</span> Tablas resumen de los datos:</h3>
 <p>Lo primero que deben hacer es generar una tabla resumen usando el <em>tidyverse</em> usando las funciones <em>group_by</em> para agrupar por variables y <em>summarize</em> para resumir los datos, dentro de summarize podemos usar variables como:</p>
 <ul>
 <li><strong>mean()</strong> promedio</li>
@@ -225,10 +230,10 @@ Table &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Speci
 <p>Basado en el resumen ¿Qué podemos decir de estos datos de educación en Chile?</p>
 </div>
 <div id="visualizacion-de-datos-con-ggplot2-tidyverse" class="section level3">
-<h3><span class="header-section-number">1.1.2</span> Visualización de datos con ggplot2 (tidyverse)</h3>
+<h3><span class="header-section-number">1.2.2</span> Visualización de datos con ggplot2 (tidyverse)</h3>
 <p>El paquete <em>ggplot2</em> <span class="citation">(Wickham <a href="#ref-WickhamGG2016">2016</a>)</span> es una poderosa herramienta para graficar datos. Si desean ahondar en el uso de este paquete, pueden ver el siguiente link <a href="http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/" class="uri">http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/</a>. En este caso, aprenderemos a graficar <em>boxplots</em> y <em>jitterplots</em>, dos opciones para visualizar una variable categórica versus una cuantitativa.</p>
 <div id="uso-del-ggplot2" class="section level4">
-<h4><span class="header-section-number">1.1.2.1</span> Uso del ggplot2</h4>
+<h4><span class="header-section-number">1.2.2.1</span> Uso del ggplot2</h4>
 <p>Su función principal es <em>ggplot</em>, luego de cada función usaremos el símbolo <strong>+</strong> como usábamos el pipeline (%&gt;%).</p>
 <p>Primero usamos la función ggplot para determinar la base de datos y variables, acá las variables siempre van dentro de la función aes</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(MiBaseDeDatos, <span class="kw">aes</span>(<span class="dt">x =</span> VariableX, <span class="dt">y =</span> VariableY)) </code></pre></div>
@@ -236,9 +241,9 @@ Table &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Speci
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(MiBaseDeDatos, <span class="kw">aes</span>(<span class="dt">x =</span> VariableX, <span class="dt">y =</span> VariableY)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
 </div>
 <div id="ejemplo-usando-la-base-de-datos-iris" class="section level4">
-<h4><span class="header-section-number">1.1.2.2</span> Ejemplo usando la base de datos iris</h4>
+<h4><span class="header-section-number">1.2.2.2</span> Ejemplo usando la base de datos iris</h4>
 <div id="boxplot" class="section level5">
-<h5><span class="header-section-number">1.1.2.2.1</span> Boxplot</h5>
+<h5><span class="header-section-number">1.2.2.2.1</span> Boxplot</h5>
 <p>El siguiente código muestra como graficar un boxplot para la base de datos iris, la cual esta en R. En este caso graficaremos el largo del pétalo para cada especie (Figura <a href="Explorando.html#fig:BoxplotIris">1.1</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)
 <span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
@@ -258,7 +263,7 @@ Figura 1.1: Box plot del largo de petalo de tres especies del género Iris
 <p>Realice un boxplot de los datos de la educación de Chile, ¿Qué nos dice esto de los datos?</p>
 </div>
 <div id="jitter-plot" class="section level5">
-<h5><span class="header-section-number">1.1.2.2.2</span> Jitter plot</h5>
+<h5><span class="header-section-number">1.2.2.2.2</span> Jitter plot</h5>
 <p>El jitter plot suma un punto por cada observación, lo cual nos permite entender un poco más la naturaleza de los datos. En general se le agrega a un box plot para tener mayor claridad en los datos (Figura <a href="Explorando.html#fig:JitterIris">1.2</a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;iris&quot;</span>)
 <span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Species))</code></pre></div>
@@ -273,7 +278,7 @@ Figura 1.2: Box plot y jitter plot juntos para el largo de petalo de tres especi
 </div>
 </div>
 <div id="actividad-2-captacion-de-co2-en-plantas" class="section level2">
-<h2><span class="header-section-number">1.2</span> Actividad 2 Captación de CO2 en plantas</h2>
+<h2><span class="header-section-number">1.3</span> Actividad 2 Captación de CO2 en plantas</h2>
 <p>Utilizaremos base de datos <span class="math inline">\(CO_2\)</span> <span class="citation">(Potvin, Lechowicz, and Tardif <a href="#ref-potvin1990statistical">1990</a>)</span> enviada al curso. Esta base de datos, también presente en R, tiene las siguientes variables</p>
 <ul>
 <li><strong>Plant</strong>: Identidad de cada planta</li>
@@ -292,22 +297,27 @@ Figura 1.2: Box plot y jitter plot juntos para el largo de petalo de tres especi
 </ul>
 </div>
 <div id="actividad-3-mi-primer-anova" class="section level2">
-<h2><span class="header-section-number">1.3</span> Actividad 3 Mi primer ANOVA</h2>
+<h2><span class="header-section-number">1.4</span> Actividad 3 Mi primer ANOVA</h2>
 <div id="antes-de-empezar-a-entender-el-anova" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> antes de empezar a entender el ANOVA</h3>
-<p>El ANOVA compara medias entre grupos, lo principal es la comparación entre los cuadrados de los residuales intergrupos, y los residuales intragrupos, los primeros son los cuadrados de la diferencia entre las medias de todas las observaciones (<span class="math inline">\(\tilde{x}_t\)</span>) y las medias de cada grupo <span class="math inline">\(\tilde{x}_g\)</span> al cuadrado multiplicado por el número de observaciones totales (ver ecuación <a href="Explorando.html#eq:intergrups">(1.1)</a>), cambia las medias del simlador de anova a continuacion y selecciona los errores intergrupos y ve como cambian</p>
+<h3><span class="header-section-number">1.4.1</span> antes de empezar a entender el ANOVA</h3>
+<p>El ANOVA compara medias entre grupos, lo principal es la comparación entre los cuadrados de los residuales intergrupos, y los residuales intragrupos, los primeros son los cuadrados de la diferencia entre las medias de todas las observaciones (<span class="math inline">\(\tilde{x}_t\)</span>) y las medias de cada grupo <span class="math inline">\(\tilde{x}_g\)</span> al cuadrado multiplicado por el número de observaciones totales (ver ecuación <a href="Explorando.html#eq:intergrups">(1.1)</a>), cambia las medias del simlador de anova a continuacion y selecciona los errores intergrupos y ve como cambian.</p>
 <span class="math display" id="eq:intergrups">\[\begin{equation} 
   \textrm{Errores_inter_factor} = n \times \sum{(\tilde{x}_t - \tilde{x}_g)^2}
   \tag{1.1}
 \end{equation}\]</span>
+<p>los residuales intra grupos son la diferencia entre cada observación <span class="math inline">\(x_{i,g}\)</span> del grupo <span class="math inline">\(g\)</span> y las medias del grupo respectivo (ver ecuación <a href="Explorando.html#eq:intragrups">(1.2)</a>), cambia las medias del simlador de anova a continuacion y selecciona los errores intragrupos y ve como cambian</p>
+<span class="math display" id="eq:intragrups">\[\begin{equation} 
+  \textrm{Errores_intra_factor} = \sum{(\tilde{x}_g - x_{i,g})^2}
+  \tag{1.2}
+\end{equation}\]</span>
 <div id="simulador-de-anova" class="section level4">
-<h4><span class="header-section-number">1.3.1.1</span> Simulador de ANOVA</h4>
+<h4><span class="header-section-number">1.4.1.1</span> Simulador de ANOVA</h4>
 <iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny2/?showcase=0" width="672" height="1500px">
 </iframe>
 </div>
 </div>
 <div id="como-hacer-un-anova-en-r" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> Como hacer un ANOVA en R</h3>
+<h3><span class="header-section-number">1.4.2</span> Como hacer un ANOVA en R</h3>
 <p>En <em>R</em> todos los modelos tienen la siguiente estructura <strong>Funcion(y ~ x1 + x2 + … + xn, data = MisDatos)</strong>, donde la <strong>Funcion</strong> dice el modelo que queremos realizar (por ejemplo ANOVA, regresión lineal, modelos mixtos, etc.), <strong>y</strong> es la variable que queremos explicar, <strong>x1</strong> a <strong>xn</strong> son las variables explicativas, <strong>~</strong> es un símbolo que debe ser leído como explicado por y finalmente <strong>data</strong> es la base de datos que queremos utilizar, en un ANOVA (análisis de varianza), la función en cuestión es aov.</p>
 <p>En el siguiente código vemos si el largo del pétalo de las flores del género <em>Iris</em>, pueden ser explicados por la especie a la que estas plantas pertenecen, por lo que generamos un modelo llamado <em>Primer.Anova</em> con la función <strong>aov</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Primer.Anova &lt;-<span class="st"> </span><span class="kw">aov</span>(Petal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris)</code></pre></div>
@@ -320,7 +330,7 @@ Figura 1.2: Box plot y jitter plot juntos para el largo de petalo de tres especi
 <p>Si establecemos el valor de alfa en 0.05 y al ver en la tabla que el valor de p es menor a alfa, rechazamos la hipótesis nula de que las medias son iguales, y decidimos que la media del largo de pétalo es distinta entre las especies.</p>
 </div>
 <div id="ejercicio" class="section level3">
-<h3><span class="header-section-number">1.3.3</span> Ejercicio</h3>
+<h3><span class="header-section-number">1.4.3</span> Ejercicio</h3>
 <p>Determine si para la base de datos <strong>CO2</strong> la captación de <span class="math inline">\(CO_2\)</span> es distinto entre plantas con tratamiento de enfriamiento y sin enfriamiento.</p>
 
 </div>
