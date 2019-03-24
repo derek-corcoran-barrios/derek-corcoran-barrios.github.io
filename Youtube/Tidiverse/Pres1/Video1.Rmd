@@ -119,7 +119,7 @@ DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summari
 ```{r, echo = FALSE}
 library(dplyr)
 data("iris")
-DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(funs(mean, sd))
+DF <- iris %>% group_by(Species) %>% summarise_all(funs(mean, sd))
 kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
@@ -185,7 +185,7 @@ kable(Resumen, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "h
 - *select* junto a *starts_with*, *ends_with* o *contains*
 - *mutate* (Genera variables nuevas)
 
-## Filter {.build}
+## filter {.build}
 
 - Selecciona según una o más variables
 
@@ -219,8 +219,37 @@ DF <- iris %>% filter(Petal.Length >= 4 & Sepal.Length >= 5) %>% group_by(Specie
 kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
+## Ejemplos de filter {.small .build}
 
-## mutate {.small}
+* Ejemplo de *msleep*
+  + Problema de NA en variable *vore*
+
+```{r, echo=TRUE}
+data("msleep")
+Resumen <- msleep %>% group_by(vore) %>% summarise_if(is.numeric, funs(mean(., na.rm = TRUE), sd(., na.rm = TRUE)))
+```
+
+
+```{r, echo = FALSE}
+kable(Resumen, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
+```
+
+## Ejemplos de filter {.small .build}
+
+* Ejemplo de *msleep*
+  + Problema de NA en variable *vore*
+
+```{r, echo=TRUE}
+data("msleep")
+Resumen <- msleep %>% filter(!is.na(vore)) %>% group_by(vore) %>% summarise_if(is.numeric, funs(mean(., na.rm = TRUE), sd(., na.rm = TRUE)))
+```
+
+
+```{r, echo = FALSE}
+kable(Resumen, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
+```
+
+## mutate {.small .build}
 
 * Crea variables nuevas
 
@@ -231,7 +260,24 @@ DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
 ```{r, echo = FALSE}
 DF <- mutate(iris, Petal.Sepal.Ratio = round((Petal.Length/Sepal.Length),2))
 
-kable(DF[seq(from = 15, to = 150, length.out = 10),], row.names = FALSE) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
+kable(DF, row.names = FALSE) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
+```
+
+## mutate (cont.) {.small .build}
+
+* Ejemplo de *msleep*
+  + Problema de NA en variable *vore*
+
+```{r, echo=TRUE}
+data("msleep")
+Resumen <- msleep %>% mutate(BrainRatio = (brainwt/bodywt)*100) %>% filter(!is.na(vore)) %>% group_by(vore) %>% summarise(Intelligence = mean(BrainRatio, na.rm = TRUE))
+```
+
+
+```{r, echo = FALSE}
+Resumen <- msleep %>% mutate(BrainRatio = (brainwt/bodywt)*100) %>% filter(!is.na(vore)) %>% group_by(vore) %>% summarise(Intelligence = mean(BrainRatio, na.rm = TRUE))
+
+kable(Resumen, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
 ```
 
 
