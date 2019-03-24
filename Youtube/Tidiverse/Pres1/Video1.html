@@ -95,24 +95,44 @@
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">22/03, 2019</p>
+            <p style="margin-top: 6px; margin-left: -2px;">23/03, 2019</p>
           </hgroup>
   </slide>
 
-<slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>dplyr</h2></hgroup><article  id="dplyr">
+<slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>dplyr 1 (pipeline group_by summarize)</h2></hgroup><article  id="dplyr-1-pipeline-group_by-summarize">
 
-</article></slide><slide class=""><hgroup><h2>dplyr</h2></hgroup><article  id="dplyr-1" class="build">
+</article></slide><slide class=""><hgroup><h2>dplyr</h2></hgroup><article  id="dplyr">
 
 <ul class = 'build'>
 <li>Paquete con pocas funciones <a href='https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf' title=''>muy poderosas</a> para ordenar datos</li>
 <li><p>Parte del <a href='https://www.tidyverse.org/' title=''>tidyverse</a></p></li>
-<li><em>group_by</em> (agrupa datos)</li>
-<li><em>summarize</em> (resume datos agrupados)</li>
+<li><strong>%&gt;%</strong> pipeline</li>
+<li><strong>group_by</strong> (agrupa datos)</li>
+<li><strong>summarize</strong> (resume datos agrupados)</li>
 <li><em>filter</em> (Encuentra filas con ciertas condiciones)</li>
 <li><em>select</em> junto a <em>starts_with</em>, <em>ends_with</em> o <em>contains</em></li>
-<li><em>mutate</em> (Genera variables nuevas)</li>
-<li><p><em>%&gt;%</em> pipeline</p></li>
+<li><p><em>mutate</em> (Genera variables nuevas)</p></li>
 </ul>
+
+</article></slide><slide class=""><hgroup><h2>Pipeline (%&gt;%)</h2></hgroup><article  id="pipeline" class="small build">
+
+<ul class = 'build'>
+<li>Para realizar varias operaciones de forma secuencial</li>
+<li>sin recurrir a parentesis anidados</li>
+<li>sobrescribir multiples bases de datos</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(1, 4, 6, 8)
+y &lt;- round(mean(sqrt(log(x))), 2)</pre>
+
+<ul class = 'build'>
+<li>Que hice ahí?</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(1, 4, 6, 8)
+y &lt;- x %&gt;% log() %&gt;% sqrt() %&gt;% mean() %&gt;% round(2)</pre>
+
+<pre >## [1] 0.99</pre>
 
 </article></slide><slide class=""><hgroup><h2>summarize y group_by</h2></hgroup><article  id="summarize-y-group_by" class="build small">
 
@@ -171,8 +191,7 @@ SD.Petal.Length
 
 </article></slide><slide class=""><hgroup><h2>summarize y group_by (continuado)</h2></hgroup><article  id="summarize-y-group_by-continuado" class="small build">
 
-<pre class = 'prettyprint lang-r'>Summary.Petal &lt;- group_by(iris, Species)
-Summary.Petal &lt;- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length), 
+<pre class = 'prettyprint lang-r'>Summary.Petal &lt;- group_by(iris, Species) %&gt;% summarize(Mean.Petal.Length = mean(Petal.Length), 
     SD.Petal.Length = sd(Petal.Length))</pre>
 
 <table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -282,8 +301,7 @@ virginica
 </ul>
 
 <pre class = 'prettyprint lang-r'>data(&quot;mtcars&quot;)
-Mtcars2 &lt;- group_by(mtcars, am, cyl)
-Consumo &lt;- summarize(Mtcars2, Consumo_promedio = mean(mpg), 
+Mtcars2 &lt;- group_by(mtcars, am, cyl) %&gt;% summarize(Consumo_promedio = mean(mpg), 
     desv = sd(mpg))</pre>
 
 <div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:400px; overflow-x: scroll; width:900px; ">
@@ -494,6 +512,1712 @@ desv
 </tbody>
 
 </table></div>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>dplyr 2 (variaciones de summarize)</h2></hgroup><article  id="dplyr-2-variaciones-de-summarize">
+
+</article></slide><slide class=""><hgroup><h2>summmarize_all</h2></hgroup><article  id="summmarize_all" class="small build">
+
+<ul class = 'build'>
+<li>Resume todas las variables</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data(&quot;iris&quot;)
+DF &lt;- iris %&gt;% filter(Species != &quot;versicolor&quot;) %&gt;% 
+    group_by(Species) %&gt;% summarise_all(funs(mean, 
+    sd))</pre>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Species
+
+</th>
+
+<th style="text-align:right;">
+
+Sepal.Length_mean
+
+</th>
+
+<th style="text-align:right;">
+
+Sepal.Width_mean
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Length_mean
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Width_mean
+
+</th>
+
+<th style="text-align:right;">
+
+Sepal.Length_sd
+
+</th>
+
+<th style="text-align:right;">
+
+Sepal.Width_sd
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Length_sd
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Width_sd
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+setosa
+
+</td>
+
+<td style="text-align:right;">
+
+5.006
+
+</td>
+
+<td style="text-align:right;">
+
+3.428
+
+</td>
+
+<td style="text-align:right;">
+
+1.462
+
+</td>
+
+<td style="text-align:right;">
+
+0.246
+
+</td>
+
+<td style="text-align:right;">
+
+0.3524897
+
+</td>
+
+<td style="text-align:right;">
+
+0.3790644
+
+</td>
+
+<td style="text-align:right;">
+
+0.1736640
+
+</td>
+
+<td style="text-align:right;">
+
+0.1053856
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+virginica
+
+</td>
+
+<td style="text-align:right;">
+
+6.588
+
+</td>
+
+<td style="text-align:right;">
+
+2.974
+
+</td>
+
+<td style="text-align:right;">
+
+5.552
+
+</td>
+
+<td style="text-align:right;">
+
+2.026
+
+</td>
+
+<td style="text-align:right;">
+
+0.6358796
+
+</td>
+
+<td style="text-align:right;">
+
+0.3224966
+
+</td>
+
+<td style="text-align:right;">
+
+0.5518947
+
+</td>
+
+<td style="text-align:right;">
+
+0.2746501
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</article></slide><slide class=""><hgroup><h2>summmarize_if</h2></hgroup><article  id="summmarize_if" class="small build">
+
+<ul class = 'build'>
+<li>Resume todas las variables que cumplen con una caracteristica</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data(&quot;msleep&quot;)
+Resumen &lt;- msleep %&gt;% group_by(vore) %&gt;% summarise_if(is.numeric, 
+    mean)</pre>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+vore
+
+</th>
+
+<th style="text-align:right;">
+
+sleep_total
+
+</th>
+
+<th style="text-align:right;">
+
+sleep_rem
+
+</th>
+
+<th style="text-align:right;">
+
+sleep_cycle
+
+</th>
+
+<th style="text-align:right;">
+
+awake
+
+</th>
+
+<th style="text-align:right;">
+
+brainwt
+
+</th>
+
+<th style="text-align:right;">
+
+bodywt
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+10.19
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+13.81
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+0.86
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+carni
+
+</td>
+
+<td style="text-align:right;">
+
+10.38
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+13.63
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+90.75
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+herbi
+
+</td>
+
+<td style="text-align:right;">
+
+9.51
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+14.49
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+366.88
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+insecti
+
+</td>
+
+<td style="text-align:right;">
+
+14.94
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+9.06
+
+</td>
+
+<td style="text-align:right;">
+
+0.02
+
+</td>
+
+<td style="text-align:right;">
+
+12.92
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+omni
+
+</td>
+
+<td style="text-align:right;">
+
+10.93
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+13.07
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+12.72
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</article></slide><slide class=""><hgroup><h2>summmarize_if continuado</h2></hgroup><article  id="summmarize_if-continuado" class="small build">
+
+<pre class = 'prettyprint lang-r'>data(&quot;msleep&quot;)
+Resumen &lt;- msleep %&gt;% group_by(vore) %&gt;% summarise_if(is.numeric, 
+    funs(mean(., na.rm = TRUE), sd(., na.rm = TRUE)))</pre>
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:400px; overflow-x: scroll; width:900px; ">
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+vore
+
+</th>
+
+<th style="text-align:right;">
+
+sleep_total_mean
+
+</th>
+
+<th style="text-align:right;">
+
+sleep_rem_mean
+
+</th>
+
+<th style="text-align:right;">
+
+sleep_cycle_mean
+
+</th>
+
+<th style="text-align:right;">
+
+awake_mean
+
+</th>
+
+<th style="text-align:right;">
+
+brainwt_mean
+
+</th>
+
+<th style="text-align:right;">
+
+bodywt_mean
+
+</th>
+
+<th style="text-align:right;">
+
+sleep_total_sd
+
+</th>
+
+<th style="text-align:right;">
+
+sleep_rem_sd
+
+</th>
+
+<th style="text-align:right;">
+
+sleep_cycle_sd
+
+</th>
+
+<th style="text-align:right;">
+
+awake_sd
+
+</th>
+
+<th style="text-align:right;">
+
+brainwt_sd
+
+</th>
+
+<th style="text-align:right;">
+
+bodywt_sd
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+10.19
+
+</td>
+
+<td style="text-align:right;">
+
+1.88
+
+</td>
+
+<td style="text-align:right;">
+
+0.18
+
+</td>
+
+<td style="text-align:right;">
+
+13.81
+
+</td>
+
+<td style="text-align:right;">
+
+0.01
+
+</td>
+
+<td style="text-align:right;">
+
+0.86
+
+</td>
+
+<td style="text-align:right;">
+
+3.00
+
+</td>
+
+<td style="text-align:right;">
+
+0.85
+
+</td>
+
+<td style="text-align:right;">
+
+NA
+
+</td>
+
+<td style="text-align:right;">
+
+3.00
+
+</td>
+
+<td style="text-align:right;">
+
+0.01
+
+</td>
+
+<td style="text-align:right;">
+
+1.34
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+carni
+
+</td>
+
+<td style="text-align:right;">
+
+10.38
+
+</td>
+
+<td style="text-align:right;">
+
+2.29
+
+</td>
+
+<td style="text-align:right;">
+
+0.37
+
+</td>
+
+<td style="text-align:right;">
+
+13.63
+
+</td>
+
+<td style="text-align:right;">
+
+0.08
+
+</td>
+
+<td style="text-align:right;">
+
+90.75
+
+</td>
+
+<td style="text-align:right;">
+
+4.67
+
+</td>
+
+<td style="text-align:right;">
+
+1.86
+
+</td>
+
+<td style="text-align:right;">
+
+0.03
+
+</td>
+
+<td style="text-align:right;">
+
+4.68
+
+</td>
+
+<td style="text-align:right;">
+
+0.10
+
+</td>
+
+<td style="text-align:right;">
+
+182.07
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+herbi
+
+</td>
+
+<td style="text-align:right;">
+
+9.51
+
+</td>
+
+<td style="text-align:right;">
+
+1.37
+
+</td>
+
+<td style="text-align:right;">
+
+0.42
+
+</td>
+
+<td style="text-align:right;">
+
+14.49
+
+</td>
+
+<td style="text-align:right;">
+
+0.62
+
+</td>
+
+<td style="text-align:right;">
+
+366.88
+
+</td>
+
+<td style="text-align:right;">
+
+4.88
+
+</td>
+
+<td style="text-align:right;">
+
+0.92
+
+</td>
+
+<td style="text-align:right;">
+
+0.32
+
+</td>
+
+<td style="text-align:right;">
+
+4.88
+
+</td>
+
+<td style="text-align:right;">
+
+1.57
+
+</td>
+
+<td style="text-align:right;">
+
+1244.08
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+insecti
+
+</td>
+
+<td style="text-align:right;">
+
+14.94
+
+</td>
+
+<td style="text-align:right;">
+
+3.52
+
+</td>
+
+<td style="text-align:right;">
+
+0.16
+
+</td>
+
+<td style="text-align:right;">
+
+9.06
+
+</td>
+
+<td style="text-align:right;">
+
+0.02
+
+</td>
+
+<td style="text-align:right;">
+
+12.92
+
+</td>
+
+<td style="text-align:right;">
+
+5.92
+
+</td>
+
+<td style="text-align:right;">
+
+1.93
+
+</td>
+
+<td style="text-align:right;">
+
+0.04
+
+</td>
+
+<td style="text-align:right;">
+
+5.92
+
+</td>
+
+<td style="text-align:right;">
+
+0.03
+
+</td>
+
+<td style="text-align:right;">
+
+26.39
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+omni
+
+</td>
+
+<td style="text-align:right;">
+
+10.93
+
+</td>
+
+<td style="text-align:right;">
+
+1.96
+
+</td>
+
+<td style="text-align:right;">
+
+0.59
+
+</td>
+
+<td style="text-align:right;">
+
+13.07
+
+</td>
+
+<td style="text-align:right;">
+
+0.15
+
+</td>
+
+<td style="text-align:right;">
+
+12.72
+
+</td>
+
+<td style="text-align:right;">
+
+2.95
+
+</td>
+
+<td style="text-align:right;">
+
+1.01
+
+</td>
+
+<td style="text-align:right;">
+
+0.47
+
+</td>
+
+<td style="text-align:right;">
+
+2.95
+
+</td>
+
+<td style="text-align:right;">
+
+0.32
+
+</td>
+
+<td style="text-align:right;">
+
+24.69
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table></div>
+
+</article></slide><slide class=""><hgroup><h2>summarize_at</h2></hgroup><article  id="summarize_at">
+
+<ul class = 'build'>
+<li>Resume columnas especificadas</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>Resumen &lt;- iris %&gt;% group_by(Species) %&gt;% summarize_at(c(&quot;Petal.Length&quot;, 
+    &quot;Petal.Width&quot;), funs(mean, sd))</pre>
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:400px; overflow-x: scroll; width:900px; ">
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Species
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Length_mean
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Width_mean
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Length_sd
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Width_sd
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+setosa
+
+</td>
+
+<td style="text-align:right;">
+
+1.46
+
+</td>
+
+<td style="text-align:right;">
+
+0.25
+
+</td>
+
+<td style="text-align:right;">
+
+0.17
+
+</td>
+
+<td style="text-align:right;">
+
+0.11
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+versicolor
+
+</td>
+
+<td style="text-align:right;">
+
+4.26
+
+</td>
+
+<td style="text-align:right;">
+
+1.33
+
+</td>
+
+<td style="text-align:right;">
+
+0.47
+
+</td>
+
+<td style="text-align:right;">
+
+0.20
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+virginica
+
+</td>
+
+<td style="text-align:right;">
+
+5.55
+
+</td>
+
+<td style="text-align:right;">
+
+2.03
+
+</td>
+
+<td style="text-align:right;">
+
+0.55
+
+</td>
+
+<td style="text-align:right;">
+
+0.27
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table></div>
+
+</article></slide><slide class=""><hgroup><h2>summarize_at (Continuado)</h2></hgroup><article  id="summarize_at-continuado">
+
+<pre class = 'prettyprint lang-r'>Resumen &lt;- iris %&gt;% group_by(Species) %&gt;% summarize_at(vars(contains(&quot;Petal&quot;)), 
+    funs(mean, sd))</pre>
+
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:400px; overflow-x: scroll; width:900px; ">
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Species
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Length_mean
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Width_mean
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Length_sd
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Width_sd
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+setosa
+
+</td>
+
+<td style="text-align:right;">
+
+1.46
+
+</td>
+
+<td style="text-align:right;">
+
+0.25
+
+</td>
+
+<td style="text-align:right;">
+
+0.17
+
+</td>
+
+<td style="text-align:right;">
+
+0.11
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+versicolor
+
+</td>
+
+<td style="text-align:right;">
+
+4.26
+
+</td>
+
+<td style="text-align:right;">
+
+1.33
+
+</td>
+
+<td style="text-align:right;">
+
+0.47
+
+</td>
+
+<td style="text-align:right;">
+
+0.20
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+virginica
+
+</td>
+
+<td style="text-align:right;">
+
+5.55
+
+</td>
+
+<td style="text-align:right;">
+
+2.03
+
+</td>
+
+<td style="text-align:right;">
+
+0.55
+
+</td>
+
+<td style="text-align:right;">
+
+0.27
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table></div>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>dplyr 3 (filter)</h2></hgroup><article  id="dplyr-3-filter">
+
+</article></slide><slide class=""><hgroup><h2>dplyr</h2></hgroup><article  id="dplyr-1">
+
+<ul class = 'build'>
+<li>Paquete con pocas funciones <a href='https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf' title=''>muy poderosas</a> para ordenar datos</li>
+<li><p>Parte del <a href='https://www.tidyverse.org/' title=''>tidyverse</a></p></li>
+<li><em>%&gt;%</em> pipeline</li>
+<li><em>group_by</em> (agrupa datos)</li>
+<li><em>summarize</em> (resume datos agrupados)</li>
+<li><strong>filter</strong> (Encuentra filas con ciertas condiciones)</li>
+<li><em>select</em> junto a <em>starts_with</em>, <em>ends_with</em> o <em>contains</em></li>
+<li><p><em>mutate</em> (Genera variables nuevas)</p></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Filter</h2></hgroup><article  id="filter" class="build">
+
+<ul class = 'build'>
+<li>Selecciona según una o más variables</li>
+</ul>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+simbolo
+
+</th>
+
+<th style="text-align:left;">
+
+significado
+
+</th>
+
+<th style="text-align:left;">
+
+simbolo_cont
+
+</th>
+
+<th style="text-align:left;">
+
+significado_cont
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+&gt;
+
+</td>
+
+<td style="text-align:left;">
+
+Mayor que
+
+</td>
+
+<td style="text-align:left;">
+
+!=
+
+</td>
+
+<td style="text-align:left;">
+
+distinto a
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+&lt;
+
+</td>
+
+<td style="text-align:left;">
+
+Menor que
+
+</td>
+
+<td style="text-align:left;">
+
+%in%
+
+</td>
+
+<td style="text-align:left;">
+
+dentro del grupo
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+==
+
+</td>
+
+<td style="text-align:left;">
+
+Igual a
+
+</td>
+
+<td style="text-align:left;">
+
+is.na
+
+</td>
+
+<td style="text-align:left;">
+
+es NA
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+&gt;=
+
+</td>
+
+<td style="text-align:left;">
+
+mayor o igual a
+
+</td>
+
+<td style="text-align:left;">
+
+!is.na
+
+</td>
+
+<td style="text-align:left;">
+
+no es NA
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+&lt;=
+
+</td>
+
+<td style="text-align:left;">
+
+menor o igual a
+
+</td>
+
+<td style="text-align:left;">
+
+| &amp;
+
+</td>
+
+<td style="text-align:left;">
+
+o, y
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</article></slide><slide class=""><hgroup><h2>Ejemplos de filter agregando a lo anterior</h2></hgroup><article  id="ejemplos-de-filter-agregando-a-lo-anterior" class="small">
+
+<pre class = 'prettyprint lang-r'>data(&quot;iris&quot;)
+DF &lt;- iris %&gt;% filter(Species != &quot;versicolor&quot;) %&gt;% 
+    group_by(Species) %&gt;% summarise_all(mean)</pre>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Species
+
+</th>
+
+<th style="text-align:right;">
+
+Sepal.Length
+
+</th>
+
+<th style="text-align:right;">
+
+Sepal.Width
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Length
+
+</th>
+
+<th style="text-align:right;">
+
+Petal.Width
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+setosa
+
+</td>
+
+<td style="text-align:right;">
+
+5.006
+
+</td>
+
+<td style="text-align:right;">
+
+3.428
+
+</td>
+
+<td style="text-align:right;">
+
+1.462
+
+</td>
+
+<td style="text-align:right;">
+
+0.246
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+virginica
+
+</td>
+
+<td style="text-align:right;">
+
+6.588
+
+</td>
+
+<td style="text-align:right;">
+
+2.974
+
+</td>
+
+<td style="text-align:right;">
+
+5.552
+
+</td>
+
+<td style="text-align:right;">
+
+2.026
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</article></slide><slide class=""><hgroup><h2>Ejemplos de filter</h2></hgroup><article  id="ejemplos-de-filter" class="small">
+
+<pre class = 'prettyprint lang-r'>DF &lt;- iris %&gt;% filter(Petal.Length &gt;= 4 &amp; Sepal.Length &gt;= 
+    5) %&gt;% group_by(Species) %&gt;% summarise(N = n())</pre>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Species
+
+</th>
+
+<th style="text-align:right;">
+
+N
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+versicolor
+
+</td>
+
+<td style="text-align:right;">
+
+39
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+virginica
+
+</td>
+
+<td style="text-align:right;">
+
+49
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 </article></slide><slide class=""><hgroup><h2>mutate</h2></hgroup><article  id="mutate" class="small">
 
@@ -955,964 +2679,6 @@ virginica
 </tbody>
 
 </table></div>
-
-</article></slide><slide class=""><hgroup><h2>Pipeline (%&gt;%)</h2></hgroup><article  id="pipeline" class="small build">
-
-<ul class = 'build'>
-<li>Para realizar varias operaciones de forma secuencial</li>
-<li>sin recurrir a parentesis anidados</li>
-<li>sobrescribir multiples bases de datos</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>x &lt;- c(1, 4, 6, 8)
-y &lt;- round(mean(sqrt(log(x))), 2)</pre>
-
-<ul class = 'build'>
-<li>Que hice ahí?</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>x &lt;- c(1, 4, 6, 8)
-y &lt;- x %&gt;% log() %&gt;% sqrt() %&gt;% mean() %&gt;% round(2)</pre>
-
-<pre >## [1] 0.99</pre>
-
-</article></slide><slide class=""><hgroup><h2>Pipeline (%&gt;%)</h2></hgroup><article  id="pipeline-1" class="small build">
-
-<ul class = 'build'>
-<li>Muchos objetos intermedios</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>DF &lt;- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
-BySpecies &lt;- group_by(DF, Species)
-Summary.Byspecies &lt;- summarize(BySpecies, MEAN = mean(Petal.Sepal.Ratio), 
-    SD = sd(Petal.Sepal.Ratio))</pre>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-Species
-
-</th>
-
-<th style="text-align:right;">
-
-MEAN
-
-</th>
-
-<th style="text-align:right;">
-
-SD
-
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-setosa
-
-</td>
-
-<td style="text-align:right;">
-
-0.2927557
-
-</td>
-
-<td style="text-align:right;">
-
-0.0347958
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-versicolor
-
-</td>
-
-<td style="text-align:right;">
-
-0.7177285
-
-</td>
-
-<td style="text-align:right;">
-
-0.0536255
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-virginica
-
-</td>
-
-<td style="text-align:right;">
-
-0.8437495
-
-</td>
-
-<td style="text-align:right;">
-
-0.0438064
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</article></slide><slide class=""><hgroup><h2>Pipeline (%&gt;%)</h2></hgroup><article  id="pipeline-2" class="small build">
-
-<ul class = 'build'>
-<li>Con pipe</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>Summary.Byspecies &lt;- summarize(group_by(mutate(iris, 
-    Petal.Sepal.Ratio = Petal.Length/Sepal.Length), 
-    Species), MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))</pre>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-Species
-
-</th>
-
-<th style="text-align:right;">
-
-MEAN
-
-</th>
-
-<th style="text-align:right;">
-
-SD
-
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-setosa
-
-</td>
-
-<td style="text-align:right;">
-
-0.2927557
-
-</td>
-
-<td style="text-align:right;">
-
-0.0347958
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-versicolor
-
-</td>
-
-<td style="text-align:right;">
-
-0.7177285
-
-</td>
-
-<td style="text-align:right;">
-
-0.0536255
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-virginica
-
-</td>
-
-<td style="text-align:right;">
-
-0.8437495
-
-</td>
-
-<td style="text-align:right;">
-
-0.0438064
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</article></slide><slide class=""><hgroup><h2>Pipeline (%&gt;%) otro ejemplo</h2></hgroup><article  id="pipeline-otro-ejemplo">
-
-<pre class = 'prettyprint lang-r'>library(tidyverse)
-MEAN &lt;- iris %&gt;% group_by(Species) %&gt;% summarize_all(mean)</pre>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-Species
-
-</th>
-
-<th style="text-align:right;">
-
-Sepal.Length
-
-</th>
-
-<th style="text-align:right;">
-
-Sepal.Width
-
-</th>
-
-<th style="text-align:right;">
-
-Petal.Length
-
-</th>
-
-<th style="text-align:right;">
-
-Petal.Width
-
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-setosa
-
-</td>
-
-<td style="text-align:right;">
-
-5.006
-
-</td>
-
-<td style="text-align:right;">
-
-3.428
-
-</td>
-
-<td style="text-align:right;">
-
-1.462
-
-</td>
-
-<td style="text-align:right;">
-
-0.246
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-versicolor
-
-</td>
-
-<td style="text-align:right;">
-
-5.936
-
-</td>
-
-<td style="text-align:right;">
-
-2.770
-
-</td>
-
-<td style="text-align:right;">
-
-4.260
-
-</td>
-
-<td style="text-align:right;">
-
-1.326
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-virginica
-
-</td>
-
-<td style="text-align:right;">
-
-6.588
-
-</td>
-
-<td style="text-align:right;">
-
-2.974
-
-</td>
-
-<td style="text-align:right;">
-
-5.552
-
-</td>
-
-<td style="text-align:right;">
-
-2.026
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</article></slide><slide class=""><hgroup><h2>Filter</h2></hgroup><article  id="filter" class="build">
-
-<ul class = 'build'>
-<li>Selecciona según una o más variables</li>
-</ul>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-simbolo
-
-</th>
-
-<th style="text-align:left;">
-
-significado
-
-</th>
-
-<th style="text-align:left;">
-
-simbolo_cont
-
-</th>
-
-<th style="text-align:left;">
-
-significado_cont
-
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-&gt;
-
-</td>
-
-<td style="text-align:left;">
-
-Mayor que
-
-</td>
-
-<td style="text-align:left;">
-
-!=
-
-</td>
-
-<td style="text-align:left;">
-
-distinto a
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-&lt;
-
-</td>
-
-<td style="text-align:left;">
-
-Menor que
-
-</td>
-
-<td style="text-align:left;">
-
-%in%
-
-</td>
-
-<td style="text-align:left;">
-
-dentro del grupo
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-==
-
-</td>
-
-<td style="text-align:left;">
-
-Igual a
-
-</td>
-
-<td style="text-align:left;">
-
-is.na
-
-</td>
-
-<td style="text-align:left;">
-
-es NA
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-&gt;=
-
-</td>
-
-<td style="text-align:left;">
-
-mayor o igual a
-
-</td>
-
-<td style="text-align:left;">
-
-!is.na
-
-</td>
-
-<td style="text-align:left;">
-
-no es NA
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-&lt;=
-
-</td>
-
-<td style="text-align:left;">
-
-menor o igual a
-
-</td>
-
-<td style="text-align:left;">
-
-| &amp;
-
-</td>
-
-<td style="text-align:left;">
-
-o, y
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</article></slide><slide class=""><hgroup><h2>Ejemplos de filter agregando a lo anterior</h2></hgroup><article  id="ejemplos-de-filter-agregando-a-lo-anterior" class="small">
-
-<pre class = 'prettyprint lang-r'>data(&quot;iris&quot;)
-DF &lt;- iris %&gt;% filter(Species != &quot;versicolor&quot;) %&gt;% 
-    group_by(Species) %&gt;% summarise_all(mean)</pre>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-Species
-
-</th>
-
-<th style="text-align:right;">
-
-Sepal.Length
-
-</th>
-
-<th style="text-align:right;">
-
-Sepal.Width
-
-</th>
-
-<th style="text-align:right;">
-
-Petal.Length
-
-</th>
-
-<th style="text-align:right;">
-
-Petal.Width
-
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-setosa
-
-</td>
-
-<td style="text-align:right;">
-
-5.006
-
-</td>
-
-<td style="text-align:right;">
-
-3.428
-
-</td>
-
-<td style="text-align:right;">
-
-1.462
-
-</td>
-
-<td style="text-align:right;">
-
-0.246
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-virginica
-
-</td>
-
-<td style="text-align:right;">
-
-6.588
-
-</td>
-
-<td style="text-align:right;">
-
-2.974
-
-</td>
-
-<td style="text-align:right;">
-
-5.552
-
-</td>
-
-<td style="text-align:right;">
-
-2.026
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</article></slide><slide class=""><hgroup><h2>Ejemplos de filter</h2></hgroup><article  id="ejemplos-de-filter" class="small">
-
-<pre class = 'prettyprint lang-r'>DF &lt;- iris %&gt;% filter(Petal.Length &gt;= 4 &amp; Sepal.Length &gt;= 
-    5) %&gt;% group_by(Species) %&gt;% summarise(N = n())</pre>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-Species
-
-</th>
-
-<th style="text-align:right;">
-
-N
-
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-versicolor
-
-</td>
-
-<td style="text-align:right;">
-
-39
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-virginica
-
-</td>
-
-<td style="text-align:right;">
-
-49
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</article></slide><slide class=""><hgroup><h2>Más de una función</h2></hgroup><article  id="mas-de-una-funcion" class="small">
-
-<pre class = 'prettyprint lang-r'>data(&quot;iris&quot;)
-DF &lt;- iris %&gt;% filter(Species != &quot;versicolor&quot;) %&gt;% 
-    group_by(Species) %&gt;% summarise_all(funs(mean, 
-    sd))</pre>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-Species
-
-</th>
-
-<th style="text-align:right;">
-
-Sepal.Length_mean
-
-</th>
-
-<th style="text-align:right;">
-
-Sepal.Width_mean
-
-</th>
-
-<th style="text-align:right;">
-
-Petal.Length_mean
-
-</th>
-
-<th style="text-align:right;">
-
-Petal.Width_mean
-
-</th>
-
-<th style="text-align:right;">
-
-Sepal.Length_sd
-
-</th>
-
-<th style="text-align:right;">
-
-Sepal.Width_sd
-
-</th>
-
-<th style="text-align:right;">
-
-Petal.Length_sd
-
-</th>
-
-<th style="text-align:right;">
-
-Petal.Width_sd
-
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-setosa
-
-</td>
-
-<td style="text-align:right;">
-
-5.006
-
-</td>
-
-<td style="text-align:right;">
-
-3.428
-
-</td>
-
-<td style="text-align:right;">
-
-1.462
-
-</td>
-
-<td style="text-align:right;">
-
-0.246
-
-</td>
-
-<td style="text-align:right;">
-
-0.3524897
-
-</td>
-
-<td style="text-align:right;">
-
-0.3790644
-
-</td>
-
-<td style="text-align:right;">
-
-0.1736640
-
-</td>
-
-<td style="text-align:right;">
-
-0.1053856
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-virginica
-
-</td>
-
-<td style="text-align:right;">
-
-6.588
-
-</td>
-
-<td style="text-align:right;">
-
-2.974
-
-</td>
-
-<td style="text-align:right;">
-
-5.552
-
-</td>
-
-<td style="text-align:right;">
-
-2.026
-
-</td>
-
-<td style="text-align:right;">
-
-0.6358796
-
-</td>
-
-<td style="text-align:right;">
-
-0.3224966
-
-</td>
-
-<td style="text-align:right;">
-
-0.5518947
-
-</td>
-
-<td style="text-align:right;">
-
-0.2746501
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
 
 </article></slide><slide class=""><hgroup><h2>Select</h2></hgroup><article  id="select" class="small build">
 

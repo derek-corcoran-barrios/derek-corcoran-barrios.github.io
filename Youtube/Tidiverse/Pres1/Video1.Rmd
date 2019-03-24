@@ -17,89 +17,19 @@ options("kableExtra.html.bsTable" = T)
 ```
 
 
-# dplyr
+# dplyr 1 (pipeline group_by summarize)
 
-## dplyr {.build}
+## dplyr
 
 * Paquete con pocas funciones [muy poderosas](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) para ordenar datos 
 * Parte del [tidyverse](https://www.tidyverse.org/)
 
-- *group_by* (agrupa datos)
-- *summarize* (resume datos agrupados)
+- **%>%** pipeline
+- **group_by** (agrupa datos)
+- **summarize** (resume datos agrupados)
 - *filter* (Encuentra filas con ciertas condiciones)
 - *select* junto a *starts_with*, *ends_with* o *contains*
 - *mutate* (Genera variables nuevas)
-- *%>%* pipeline
-
-## summarize y group_by {.build .small}
-
-- *group_by* reune observaciones según una variable
-- *summarize* resume una variable
-
-```{r, eval=FALSE, echo = TRUE}
-library(tidyverse)
-Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
-```
-
-
-```{r, echo = FALSE}
-library(dplyr)
-library(knitr)
-Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
-
-kable(Summary.Petal) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
-```
-
-## summarize y group_by (continuado) {.small .build}
-
-```{r, eval = FALSE}
-Summary.Petal <- group_by(iris, Species)
-Summary.Petal <- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
-```
-
-
-```{r, echo = FALSE}
-library(dplyr)
-library(knitr)
-Summary.Petal <- group_by(iris, Species)
-Summary.Petal <- summarize(Summary.Petal, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
-kable(Summary.Petal) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
-```
-
-## summarize y group_by (continuado) {.small .build}
-   
-* Pueden agrupar por más de una variable a la vez
-
-```{r, eval = FALSE}
-data("mtcars")
-Mtcars2 <- group_by(mtcars, am, cyl)
-Consumo <- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
-```
-
-
-```{r, echo = FALSE}
-
-data("mtcars")
-Mtcars2 <- group_by(mtcars, am, cyl)
-Consumo <- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
-kable(Consumo) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
-```
-
-
-
-## mutate {.small}
-
-* Crea variables nuevas
-
-```{r, eval = FALSE}
-DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
-```
-
-```{r, echo = FALSE}
-DF <- mutate(iris, Petal.Sepal.Ratio = round((Petal.Length/Sepal.Length),2))
-
-kable(DF[seq(from = 15, to = 150, length.out = 10),], row.names = FALSE) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
-```
 
 ## Pipeline (%>%) {.small .build}
 
@@ -124,52 +54,136 @@ x <- c(1,4,6,8)
 x %>% log() %>% sqrt() %>% mean() %>% round(2)
 ```
 
-## Pipeline (%>%) {.small .build}
+## summarize y group_by {.build .small}
 
-* Muchos objetos intermedios
+- *group_by* reune observaciones según una variable
+- *summarize* resume una variable
 
-```{r, eval=FALSE}
-DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
-BySpecies <- group_by(DF, Species)
-Summary.Byspecies <- summarize(BySpecies, MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
-```
-
-
-```{r, echo=FALSE}
-DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
-BySpecies <- group_by(DF, Species)
-Summary.Byspecies <- summarize(BySpecies, MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
-kable(Summary.Byspecies) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
-```
-
-## Pipeline (%>%) {.small .build}
-
-* Con pipe
-
-```{r, eval=FALSE}
-Summary.Byspecies <- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length), Species), MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
-```
-
-
-```{r, echo=FALSE}
-Summary.Byspecies <- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length), Species), MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
-kable(Summary.Byspecies) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
-```
-
-
-## Pipeline (%>%) otro ejemplo
-
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo = TRUE}
 library(tidyverse)
-MEAN <- iris %>% group_by(Species) %>% summarize_all(mean)
+Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
 ```
 
-```{r, echo=FALSE}
+
+```{r, echo = FALSE}
 library(dplyr)
 library(knitr)
-MEAN <- iris %>% group_by(Species) %>% summarize_all(mean)
-kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+Summary.Petal <- summarize(iris, Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
+
+kable(Summary.Petal) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
+
+## summarize y group_by (continuado) {.small .build}
+
+```{r, eval = FALSE}
+Summary.Petal <- group_by(iris, Species) %>%  summarize(Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
+```
+
+
+```{r, echo = FALSE}
+library(dplyr)
+library(knitr)
+Summary.Petal <- group_by(iris, Species) %>% summarize(Mean.Petal.Length = mean(Petal.Length), SD.Petal.Length = sd(Petal.Length))
+kable(Summary.Petal) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+## summarize y group_by (continuado) {.small .build}
+   
+* Pueden agrupar por más de una variable a la vez
+
+```{r, eval = FALSE}
+data("mtcars")
+Mtcars2 <- group_by(mtcars, am, cyl) %>%  summarize(Consumo_promedio = mean(mpg), desv = sd(mpg))
+```
+
+
+```{r, echo = FALSE}
+
+data("mtcars")
+Mtcars2 <- group_by(mtcars, am, cyl)
+Consumo <- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
+kable(Consumo) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
+```
+
+# dplyr 2 (variaciones de summarize)
+
+## summmarize_all{.small .build}
+
+* Resume todas las variables
+
+```{r, eval = FALSE}
+data("iris")
+DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(funs(mean, sd))
+```
+
+```{r, echo = FALSE}
+library(dplyr)
+data("iris")
+DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(funs(mean, sd))
+kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+## summmarize_if{.small .build}
+
+* Resume todas las variables que cumplen con una caracteristica
+
+```{r, echo=TRUE}
+data("msleep")
+Resumen <- msleep %>% group_by(vore) %>% summarise_if(is.numeric, mean)
+```
+
+
+```{r, echo = FALSE}
+kable(Resumen, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+## summmarize_if continuado {.small .build}
+
+```{r, echo=TRUE}
+data("msleep")
+Resumen <- msleep %>% group_by(vore) %>% summarise_if(is.numeric, funs(mean(., na.rm = TRUE), sd(., na.rm = TRUE)))
+```
+
+
+```{r, echo = FALSE}
+kable(Resumen, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
+```
+
+## summarize_at
+
+* Resume columnas especificadas
+
+```{r}
+Resumen <- iris %>% group_by(Species) %>% summarize_at(c("Petal.Length", "Petal.Width"), funs(mean, sd))
+```
+
+```{r, echo = FALSE}
+kable(Resumen, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
+```
+
+## summarize_at (Continuado)
+
+```{r}
+Resumen <- iris %>% group_by(Species) %>% summarize_at(vars(contains("Petal")), funs(mean, sd))
+```
+
+```{r, echo = FALSE}
+kable(Resumen, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
+```
+
+# dplyr 3 (filter)
+
+## dplyr
+
+* Paquete con pocas funciones [muy poderosas](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) para ordenar datos 
+* Parte del [tidyverse](https://www.tidyverse.org/)
+
+- *%>%* pipeline
+- *group_by* (agrupa datos)
+- *summarize* (resume datos agrupados)
+- **filter** (Encuentra filas con ciertas condiciones)
+- *select* junto a *starts_with*, *ends_with* o *contains*
+- *mutate* (Genera variables nuevas)
 
 ## Filter {.build}
 
@@ -206,19 +220,20 @@ kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed
 ```
 
 
-## Más de una función {.small}
+## mutate {.small}
+
+* Crea variables nuevas
 
 ```{r, eval = FALSE}
-data("iris")
-DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(funs(mean, sd))
+DF <- mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length)
 ```
 
 ```{r, echo = FALSE}
-library(dplyr)
-data("iris")
-DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(funs(mean, sd))
-kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+DF <- mutate(iris, Petal.Sepal.Ratio = round((Petal.Length/Sepal.Length),2))
+
+kable(DF[seq(from = 15, to = 150, length.out = 10),], row.names = FALSE) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box(width = "900px", height = "400px")
 ```
+
 
 ## Select {.small .build}
 
