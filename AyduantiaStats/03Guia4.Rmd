@@ -63,7 +63,7 @@ Para hacer cálculos de poder en ANOVAS de una y dos vías en *R*, utilizamos el
 Para cálculos precisos de n necesarios para muestras usar la siguiente app
 
 ```{r}
-knitr::include_app("http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny3/", height = "450px")
+knitr::include_app("http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny3/", height = "600px")
 ```
 
 ## Tarea

@@ -1,0 +1,178 @@
+---
+title: "Práctico 4 Análisis de poder y primera tarea"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    logo: puc_logo.jpg
+---
+
+## El caso de la alarma de fuego {.build}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+options("kableExtra.html.bsTable" = T)
+
+```
+
+
+* **Hipotesis nula**:
+    + No hay fuego
+* **Hipótesis alternativa**:
+    + Hay fuego
+
+```{r}
+knitr::include_graphics("Smokedetectors.jpg")
+```
+
+
+## Tipos de error (matriz de confución) {.build}
+
+```{r, echo=FALSE}
+library(kableExtra)
+Coso <- data.frame(No.fuego = c("No hay error", "Error tipo 1"), Fuego =c("Error tipo 2", "No hay error"))
+colnames(Coso) <- c("No hay fuego", "Hay fuego")
+rownames(Coso) <- c("No suena alarma", "Suena alarma")
+kable(Coso) %>% kable_styling(font_size = 40)
+```
+
+* Probabilidad de que suene la alarma cuando no hay fuego
+    + $\alpha$ usualmente 5% 
+    + una de cada 20 alarmas es falsa
+    + ¿Cuál es el $\alpha$ de una alarma de auto?
+* Probabilidad de que no suene la alarma cuando hay fuego
+    + $\beta$ si es 10% uno de cada 10 fuegos no es detectado
+    + poder es $1-\beta$ confianza de que fuegos son detectados
+
+## Effecto de beta
+
+```{r, echo=FALSE}
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+library(broom)
+sigmoid = function(x, a, c =0) {
+        1 / (1 + exp(-a*(x-c)))
+}
+
+ Poder <- data.frame(x =-5:10, Tostada = sigmoid(x=-5:10, a =5), Fuego = sigmoid(x=-5:10, a =1, c = 1.8), Bomba = sigmoid(x=-5:10, a =0.5, c =4.5))
+
+Poder <-gather(Poder, key = Calibracion, value = probabilidad, -x)
+
+ggplot(Poder, aes(x = x + 5, y = probabilidad)) + geom_line(aes(color= Calibracion)) + theme_classic() + xlab("Densidad de humo") + geom_vline(xintercept = 10, lty = 2) + theme(axis.title.x=element_text(size=28), axis.title.y = element_text(size = 28) )
+
+```
+
+## Efecto de beta y alfa {.build}
+
+* ¿cual tiene mas probabilidad de sonar cuando no hay fuego?
+    + $\alpha$ alto
+* ¿Cuál tiene mas probabilidad de no sonar cuando hay fuego?
+    + $\beta$ alto
+
+***
+
+```{r, echo=FALSE}
+ Poder <- data.frame(x =-5:10, Tostada = sigmoid(x=-5:10, a =5), Fuego = sigmoid(x=-5:10, a =1, c = 1.8), Bomba = sigmoid(x=-5:10, a =0.5, c =4.5))
+
+Poder <-gather(Poder, key = Calibracion, value = probabilidad, -x)
+
+ggplot(Poder, aes(x = x + 5, y = probabilidad)) + geom_line(aes(color= Calibracion)) + theme_classic() + xlab("Densidad de humo")  + geom_vline(xintercept = 10, lty = 2) + theme(axis.title.x=element_text(size=28), axis.title.y = element_text(size = 28) )
+
+```
+
+
+## ¿Cuantos individuos (n)ecesitamos? {.build}
+
+```{r, echo = TRUE}
+dietsample <- read.csv("dietsample.csv")
+```
+
+* Caso dieta (previamente pesamos 5 individuos por dieta)
+* Número de grupos
+    + K = 3
+* alpha
+    + $\alpha$ = 0.05
+* desviación estándar
+    + *sd(broom::augment(aov(weightLoss ~ Diet, data = dietsample))$.resid)*
+    + 2.84
+* $\beta$ = 0.8 , ¿delta mínimo?
+
+## ¿Cuantos individuos (n)ecesitamos? {.build .small}
+
+```{r, echo=TRUE}
+library(pwr2)
+pwr.1way(k=3, n=15, alpha=0.05, delta=3, sigma=2.84)
+```
+
+* ¿Que significa en este caso un poder de 0.8?
+* ¿Que significa en esta caso un $\alpha$ de 0.05?
+* Hagamos la tabla
+* Shiny time
+
+## Aleatoridad reproducible {.build .small}
+
+```{r, echo = TRUE}
+x <- 1:10
+x
+```
+
+```{r, echo = TRUE}
+sample(x, 3)
+sample(x, 3)
+sample(x, 3)
+```
+
+## Aleatoridad reproducible {.build .small}
+
+```{r, echo = TRUE}
+set.seed(123)
+sample(x, 3)
+set.seed(123)
+sample(x, 3)
+set.seed(123)
+sample(x, 3)
+```
+
+
+##  Muestremos de la base de datos {.small .build}
+
+```{r, echo = TRUE}
+diet <- read.csv("diet.csv")
+set.seed(2018)
+DietN19 <- diet %>% group_by(Diet) %>% sample_n(19)
+summary(aov(weightLoss ~ Diet, data = DietN19))
+```
+
+
+## Tarea 1 {.small .build}
+
+* En guía, ojala usando [rmarkdown](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
+* Problema contaminación en ríos con pato corta corriente
+
+```{r}
+MuestraPatos <- read_csv("MuestraPatos.csv")
+ggplot(MuestraPatos, aes(x = rio, y = mortalidad)) + geom_boxplot() + geom_jitter(aes(color = rio)) + theme_classic()
+```
+
+***
+
+```{r}
+knitr::kable(broom::tidy(aov(mortalidad ~ rio, data = MuestraPatos)), digits = 2)
+```
+
+
+## Shiny app en linea {.build}
+
+[Shiny](https://derek-corcoran.shinyapps.io/MinimosCuadrados/)
+
+## Prueba de Mann-Whitney en R
+
+* Alternativa a t.test cuando no se cumplen los supuestos de normalidad
+* Probaremos si hay diferencias en eficiencia de combustible con vehiculos de cambios automaticos o manuales
+
+```{r}
+wilcox.test(mpg ~ am, data = mtcars)
+
+```
+
