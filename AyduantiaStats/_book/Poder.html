@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-03-22">
+<meta name="date" content="2019-03-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -127,15 +127,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Supuestos.html"><a href="Supuestos.html"><i class="fa fa-check"></i><b>2</b> Supuestos de ANOVA y mínimos cuadrados</a><ul>
-<li class="chapter" data-level="2.1" data-path="Supuestos.html"><a href="Supuestos.html#objetivos-de-este-practico"><i class="fa fa-check"></i><b>2.1</b> Objetivos de este práctico</a></li>
-<li class="chapter" data-level="2.2" data-path="Supuestos.html"><a href="Supuestos.html#actividad-1-sueno-en-mamiferos"><i class="fa fa-check"></i><b>2.2</b> Actividad 1 Sueño en mamíferos</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="Supuestos.html"><a href="Supuestos.html#homogeneidad-de-varianza"><i class="fa fa-check"></i><b>2.2.1</b> Homogeneidad de varianza</a></li>
-<li class="chapter" data-level="2.2.2" data-path="Supuestos.html"><a href="Supuestos.html#normalidad-de-los-residuales"><i class="fa fa-check"></i><b>2.2.2</b> Normalidad de los residuales</a></li>
+<li class="chapter" data-level="2.1" data-path="Supuestos.html"><a href="Supuestos.html#paquetes-necesarios-para-este-practico-1"><i class="fa fa-check"></i><b>2.1</b> Paquetes necesarios para este práctico</a></li>
+<li class="chapter" data-level="2.2" data-path="Supuestos.html"><a href="Supuestos.html#objetivos-de-este-practico"><i class="fa fa-check"></i><b>2.2</b> Objetivos de este práctico</a></li>
+<li class="chapter" data-level="2.3" data-path="Supuestos.html"><a href="Supuestos.html#actividad-1-sueno-en-mamiferos"><i class="fa fa-check"></i><b>2.3</b> Actividad 1 Sueño en mamíferos</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="Supuestos.html"><a href="Supuestos.html#homogeneidad-de-varianza"><i class="fa fa-check"></i><b>2.3.1</b> Homogeneidad de varianza</a></li>
+<li class="chapter" data-level="2.3.2" data-path="Supuestos.html"><a href="Supuestos.html#normalidad-de-los-residuales"><i class="fa fa-check"></i><b>2.3.2</b> Normalidad de los residuales</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="Supuestos.html"><a href="Supuestos.html#actividad-2-suma-de-cuadrados"><i class="fa fa-check"></i><b>2.3</b> Actividad 2 Suma de cuadrados</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="Supuestos.html"><a href="Supuestos.html#que-es-el-error-por-que-al-cuadrado"><i class="fa fa-check"></i><b>2.3.1</b> ¿Que es el error? ¿Por qué al cuadrado??</a></li>
+<li class="chapter" data-level="2.4" data-path="Supuestos.html"><a href="Supuestos.html#actividad-2-suma-de-cuadrados"><i class="fa fa-check"></i><b>2.4</b> Actividad 2 Suma de cuadrados</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="Supuestos.html"><a href="Supuestos.html#que-es-el-error-por-que-al-cuadrado"><i class="fa fa-check"></i><b>2.4.1</b> ¿Que es el error? ¿Por qué al cuadrado??</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="Supuestos.html"><a href="Supuestos.html#referencias"><i class="fa fa-check"></i><b>2.4</b> Referencias</a></li>
+<li class="chapter" data-level="2.5" data-path="Supuestos.html"><a href="Supuestos.html#referencias"><i class="fa fa-check"></i><b>2.5</b> Referencias</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="Poder.html"><a href="Poder.html"><i class="fa fa-check"></i><b>3</b> Análisis de poder y primera tarea</a><ul>
 <li class="chapter" data-level="3.1" data-path="Poder.html"><a href="Poder.html#obejtivos-del-practico"><i class="fa fa-check"></i><b>3.1</b> Obejtivos del práctico</a></li>
@@ -190,47 +191,85 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">3.2</span> Matriz de confusión</h2>
 <p>La matriz de confusión es una herramienta de toma de decisiones, en el caso especial de la toma de decisiones tenemos la siguiente matriz de confusión (Tabla <a href="Poder.html#tab:errores">3.1</a>)</p>
 <table>
-<caption><span id="tab:errores">Tabla 3.1: </span>Tabla de confusión de errores</caption>
+<caption>
+<span id="tab:errores">Tabla 3.1: </span>Tabla de confusión de errores
+</caption>
 <thead>
-<tr class="header">
-<th></th>
-<th align="left">Hipótesis nula cierta</th>
-<th align="left">Hipótesis alternativa cierta</th>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Hipótesis nula cierta
+</th>
+<th style="text-align:left;">
+Hipótesis alternativa cierta
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td>Acepto hipótesis nula</td>
-<td align="left">No hay error</td>
-<td align="left">Error tipo 2</td>
+<tr>
+<td style="text-align:left;">
+Acepto hipótesis nula
+</td>
+<td style="text-align:left;">
+No hay error
+</td>
+<td style="text-align:left;">
+Error tipo 2
+</td>
 </tr>
-<tr class="even">
-<td>Acepto hipótesis alternativa</td>
-<td align="left">Error tipo 1</td>
-<td align="left">No hay error</td>
+<tr>
+<td style="text-align:left;">
+Acepto hipótesis alternativa
+</td>
+<td style="text-align:left;">
+Error tipo 1
+</td>
+<td style="text-align:left;">
+No hay error
+</td>
 </tr>
 </tbody>
 </table>
 <p>Esto puede ser fácilmente ejemplificado con el problema de una alarma de humo (tabla<a href="Poder.html#tab:Confucion">3.2</a>), en este caso cuando la alarma suena y no hay fuego y suena la alarma tenemos un error de tipo 1, en cambio si hay fuego y la alarma no suena tenemos un error de tipo 2</p>
 <table>
-<caption><span id="tab:Confucion">Tabla 3.2: </span>Matriz de confusión de una alarma de incendio</caption>
+<caption>
+<span id="tab:Confucion">Tabla 3.2: </span>Matriz de confusión de una alarma de incendio
+</caption>
 <thead>
-<tr class="header">
-<th></th>
-<th align="left">No hay fuego</th>
-<th align="left">Hay fuego</th>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+No hay fuego
+</th>
+<th style="text-align:left;">
+Hay fuego
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td>No suena alarma</td>
-<td align="left">No hay error</td>
-<td align="left">Error tipo 2</td>
+<tr>
+<td style="text-align:left;">
+No suena alarma
+</td>
+<td style="text-align:left;">
+No hay error
+</td>
+<td style="text-align:left;">
+Error tipo 2
+</td>
 </tr>
-<tr class="even">
-<td>Suena alarma</td>
-<td align="left">Error tipo 1</td>
-<td align="left">No hay error</td>
+<tr>
+<td style="text-align:left;">
+Suena alarma
+</td>
+<td style="text-align:left;">
+Error tipo 1
+</td>
+<td style="text-align:left;">
+No hay error
+</td>
 </tr>
 </tbody>
 </table>
@@ -278,33 +317,71 @@ Figura 3.1: Mortalidades calculadas en 10 zonas de tres ríos
 </p>
 </div>
 <table>
-<caption><span id="tab:unnamed-chunk-29">Tabla 3.3: </span>Tabla de ANOVA de una vía de la mortalidad de patos de los tres ríos</caption>
+<caption>
+<span id="tab:unnamed-chunk-29">Tabla 3.3: </span>Tabla de ANOVA de una vía de la mortalidad de patos de los tres ríos
+</caption>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">df</th>
-<th align="right">sumsq</th>
-<th align="right">meansq</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+sumsq
+</th>
+<th style="text-align:right;">
+meansq
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">rio</td>
-<td align="right">2</td>
-<td align="right">301.2531</td>
-<td align="right">150.62656</td>
-<td align="right">2.359899</td>
-<td align="right">0.1136188</td>
+<tr>
+<td style="text-align:left;">
+rio
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+301.2531
+</td>
+<td style="text-align:right;">
+150.62656
+</td>
+<td style="text-align:right;">
+2.359899
+</td>
+<td style="text-align:right;">
+0.1136188
+</td>
 </tr>
-<tr class="even">
-<td align="left">Residuals</td>
-<td align="right">27</td>
-<td align="right">1723.3436</td>
-<td align="right">63.82754</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<tr>
+<td style="text-align:left;">
+Residuals
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+1723.3436
+</td>
+<td style="text-align:right;">
+63.82754
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
 </tr>
 </tbody>
 </table>

@@ -7,7 +7,10 @@ suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
 
 ## Paquetes necesarios para este práctico
 
-Para este capitulo necesitas tener instalado el paquete tidyverse. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase2/Clase2.html). El video de la clase se encuentra disponible en este link.
+Para este capitulo necesitas tener instalado el paquete tidyverse. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase2/Clase2.html). El video de la clase se encuentra disponible en este [link](https://youtu.be/DM2U19a1y4s).
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/DM2U19a1y4s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Actividad 1 Educación en Chile
 

@@ -84,23 +84,19 @@ ggplot(MiBaseDeDatos, aes(x = VariableX, y = VariableY)) + geom_boxplot()
 
 ## Visualización de datos con ggplot2 {.build .small}
 
-<<<<<<< HEAD
 <div style="float: left; width: 40%;">
-=======
->>>>>>> 604d9cb7ba582961c924a7d677198721029eb075
 
 ```{r, echo=TRUE}
 ggplot(EducacionChile, aes(x = Administration, y = Average.PSU)) + geom_boxplot()
 ```
 
-<<<<<<< HEAD
 </div>
 
 <div style="float: right; width: 60%;">
-=======
+
+
 ## Visualización de datos con ggplot2 {.build .small}
 
->>>>>>> 604d9cb7ba582961c924a7d677198721029eb075
 
 * Box plot
     + Mediana (linea grueza)
@@ -111,39 +107,32 @@ ggplot(EducacionChile, aes(x = Administration, y = Average.PSU)) + geom_boxplot(
 
 ## Visualización de datos con ggplot2 {.build .small}
 
-<<<<<<< HEAD
+
 <div style="float: left; width: 40%;">
-=======
->>>>>>> 604d9cb7ba582961c924a7d677198721029eb075
 
 ```{r, echo=TRUE}
 ggplot(EducacionChile, aes(x = Administration, y = Average.PSU)) + geom_boxplot() + geom_jitter()
 ```
 
-<<<<<<< HEAD
+
 </div>
 
 <div style="float: right; width: 60%;">
-=======
+
+
 ## Visualización de datos con ggplot2 {.build .small}
 
->>>>>>> 604d9cb7ba582961c924a7d677198721029eb075
 
 * Jitter plot
     + agrega puntos de cada observación
 
-<<<<<<< HEAD
 </div>
 
-## Actividad 2 Captación de CO2 en plantas {.build}
-
-Utilizaremos base de datos $CO_2$ enviada al curso, en esta base de datos
-=======
 
 ## Actividad 2 Captación de CO2 en plantas {.build}
 
 Utilizaremos base de datos CO2 que esta en R
->>>>>>> 604d9cb7ba582961c924a7d677198721029eb075
+
 
 * **Plant**: Identidad de cada planta
 * **Type**: Variedad de la planta (subespecie Quebec o Mississippi)
@@ -175,7 +164,7 @@ knitr::kable(Co2, digits = 2) %>% kable_styling(bootstrap_options = c("striped",
 ## Captación de CO2 en plantas (Tablas) {.build .small}
 
 ```{r, echo = TRUE}
-Co2Real <- CO2 %>% group_by(Plant, Type, Treatment, ) %>% summarise(PromedioCO2 = mean(uptake))
+Co2Real <- CO2 %>% group_by(Plant, Type, Treatment) %>% summarise(PromedioCO2 = mean(uptake))
 ```
 
 ```{r, echo=FALSE}
@@ -229,8 +218,7 @@ ggplot(Co2Real, aes(x = Treatment, y = PromedioCO2)) + geom_boxplot() + geom_jit
 ggplot(Co2Real, aes(x = Treatment, y = PromedioCO2)) + geom_boxplot(aes(fill = Type)) + geom_jitter(aes(color = Type))
 ```
 
-<<<<<<< HEAD
-=======
+
 ## Ahora un anova pero antes...
 
 Entendamos como funciona usando un [simulador de anova](http://www.derek-corcoran-barrios.com/AyduantiaStats/_book/Explorando.html#antes-de-empezar-a-entender-el-anova)
@@ -238,7 +226,7 @@ Entendamos como funciona usando un [simulador de anova](http://www.derek-corcora
 <iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Lite/?showcase=0" width="672" height="1500px">
 </iframe>
 
->>>>>>> 604d9cb7ba582961c924a7d677198721029eb075
+
 ## Captación de CO2 en plantas (Mi primer ANOVA) {.build .small}
 
 * Funcion *aov(y ~ x, data = MisDatos)*

@@ -5,6 +5,12 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
 ```
 
+## Paquetes necesarios para este práctico
+
+Para este capitulo necesitas tener instalado el paquete *tidyverse*, también ayuda tener el paquete *broom*. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase3/Clase3.html). El video de la clase se encuentra disponible en este [link](https://youtu.be/Fgio8lDfDpo).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Fgio8lDfDpo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Objetivos de este práctico
 
 - Entender los supuestos de un ANOVA de una vía (independencia, aleatoriedad, homocedasticidad y normalidad)
@@ -145,7 +151,7 @@ $$\sum_{i=1}^{n} (Observado - Predicho)^2$$
 
 ```{r}
 library(knitr)
-include_app(url = "http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/")
+include_app(url = "http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/", height = "800px")
 ```
 
 

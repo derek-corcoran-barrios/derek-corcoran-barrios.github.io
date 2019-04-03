@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-03-22">
+<meta name="date" content="2019-03-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -127,15 +127,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Supuestos.html"><a href="Supuestos.html"><i class="fa fa-check"></i><b>2</b> Supuestos de ANOVA y mínimos cuadrados</a><ul>
-<li class="chapter" data-level="2.1" data-path="Supuestos.html"><a href="Supuestos.html#objetivos-de-este-practico"><i class="fa fa-check"></i><b>2.1</b> Objetivos de este práctico</a></li>
-<li class="chapter" data-level="2.2" data-path="Supuestos.html"><a href="Supuestos.html#actividad-1-sueno-en-mamiferos"><i class="fa fa-check"></i><b>2.2</b> Actividad 1 Sueño en mamíferos</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="Supuestos.html"><a href="Supuestos.html#homogeneidad-de-varianza"><i class="fa fa-check"></i><b>2.2.1</b> Homogeneidad de varianza</a></li>
-<li class="chapter" data-level="2.2.2" data-path="Supuestos.html"><a href="Supuestos.html#normalidad-de-los-residuales"><i class="fa fa-check"></i><b>2.2.2</b> Normalidad de los residuales</a></li>
+<li class="chapter" data-level="2.1" data-path="Supuestos.html"><a href="Supuestos.html#paquetes-necesarios-para-este-practico-1"><i class="fa fa-check"></i><b>2.1</b> Paquetes necesarios para este práctico</a></li>
+<li class="chapter" data-level="2.2" data-path="Supuestos.html"><a href="Supuestos.html#objetivos-de-este-practico"><i class="fa fa-check"></i><b>2.2</b> Objetivos de este práctico</a></li>
+<li class="chapter" data-level="2.3" data-path="Supuestos.html"><a href="Supuestos.html#actividad-1-sueno-en-mamiferos"><i class="fa fa-check"></i><b>2.3</b> Actividad 1 Sueño en mamíferos</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="Supuestos.html"><a href="Supuestos.html#homogeneidad-de-varianza"><i class="fa fa-check"></i><b>2.3.1</b> Homogeneidad de varianza</a></li>
+<li class="chapter" data-level="2.3.2" data-path="Supuestos.html"><a href="Supuestos.html#normalidad-de-los-residuales"><i class="fa fa-check"></i><b>2.3.2</b> Normalidad de los residuales</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="Supuestos.html"><a href="Supuestos.html#actividad-2-suma-de-cuadrados"><i class="fa fa-check"></i><b>2.3</b> Actividad 2 Suma de cuadrados</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="Supuestos.html"><a href="Supuestos.html#que-es-el-error-por-que-al-cuadrado"><i class="fa fa-check"></i><b>2.3.1</b> ¿Que es el error? ¿Por qué al cuadrado??</a></li>
+<li class="chapter" data-level="2.4" data-path="Supuestos.html"><a href="Supuestos.html#actividad-2-suma-de-cuadrados"><i class="fa fa-check"></i><b>2.4</b> Actividad 2 Suma de cuadrados</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="Supuestos.html"><a href="Supuestos.html#que-es-el-error-por-que-al-cuadrado"><i class="fa fa-check"></i><b>2.4.1</b> ¿Que es el error? ¿Por qué al cuadrado??</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="Supuestos.html"><a href="Supuestos.html#referencias"><i class="fa fa-check"></i><b>2.4</b> Referencias</a></li>
+<li class="chapter" data-level="2.5" data-path="Supuestos.html"><a href="Supuestos.html#referencias"><i class="fa fa-check"></i><b>2.5</b> Referencias</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="Poder.html"><a href="Poder.html"><i class="fa fa-check"></i><b>3</b> Análisis de poder y primera tarea</a><ul>
 <li class="chapter" data-level="3.1" data-path="Poder.html"><a href="Poder.html#obejtivos-del-practico"><i class="fa fa-check"></i><b>3.1</b> Obejtivos del práctico</a></li>
@@ -179,8 +180,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="Supuestos" class="section level1">
 <h1><span class="header-section-number">Práctico 2</span> Supuestos de ANOVA y mínimos cuadrados</h1>
+<div id="paquetes-necesarios-para-este-practico-1" class="section level2">
+<h2><span class="header-section-number">2.1</span> Paquetes necesarios para este práctico</h2>
+<p>Para este capitulo necesitas tener instalado el paquete <em>tidyverse</em>, también ayuda tener el paquete <em>broom</em>. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase3/Clase3.html">link</a>. El video de la clase se encuentra disponible en este <a href="https://youtu.be/Fgio8lDfDpo">link</a>.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Fgio8lDfDpo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
 <div id="objetivos-de-este-practico" class="section level2">
-<h2><span class="header-section-number">2.1</span> Objetivos de este práctico</h2>
+<h2><span class="header-section-number">2.2</span> Objetivos de este práctico</h2>
 <ul>
 <li>Entender los supuestos de un ANOVA de una vía (independencia, aleatoriedad, homocedasticidad y normalidad)</li>
 <li>Entender el concepto de mínimos cuadrados</li>
@@ -188,12 +195,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 </div>
 <div id="actividad-1-sueno-en-mamiferos" class="section level2">
-<h2><span class="header-section-number">2.2</span> Actividad 1 Sueño en mamíferos</h2>
+<h2><span class="header-section-number">2.3</span> Actividad 1 Sueño en mamíferos</h2>
 <p>En esta actividad intentaremos ver si hay diferencias en horas de sueño en mamíferos por Orden o dieta. Los datos fueron extraídos del trabajo de <span class="citation">Savage and West (<a href="#ref-savage2007quantitative">2007</a>)</span> y están incorporados en la base de datos de <em>ggplot2</em> con el nombre de <em>msleep</em>, pero estarán en webcursos en formato csv de todas formas. Para la guía los ejemplos se generarán en base a la base de datos <em>InsectSprays</em> que está en <em>R</em> y que fue extraída de <span class="citation">Beall (<a href="#ref-beall1942transformation">1942</a>)</span>, en la cual se testean la efectividad de insecticidas en Spray en la abundancia de insectos en plantaciones. Y en la base de datos <em>iris</em> que ya fue entregada, en la que se miden distintas características florales de especies del genero <em>Iris</em> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span>.</p>
 <div id="homogeneidad-de-varianza" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> Homogeneidad de varianza</h3>
+<h3><span class="header-section-number">2.3.1</span> Homogeneidad de varianza</h3>
 <div id="inspeccion-visual" class="section level4">
-<h4><span class="header-section-number">2.2.1.1</span> Inspección visual</h4>
+<h4><span class="header-section-number">2.3.1.1</span> Inspección visual</h4>
 <p>Lo primero que intentaremos explorar de forma visual y a partir de tests si es que hay homogeneidad de varianza, para esto usaremos boxplots, y jitter plots (Figura <a href="Supuestos.html#fig:Visual">2.1</a>), lo cual ya hemos hecho anteriormente:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(InsectSprays, <span class="kw">aes</span>(<span class="dt">x =</span> spray, <span class="dt">y =</span> count)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>(<span class="kw">aes</span>(<span class="dt">color =</span> spray)) </code></pre></div>
 <div class="figure"><span id="fig:Visual"></span>
@@ -205,7 +212,7 @@ Figura 2.1: Cuenta de insectos según tipo de insecticida
 <p>Para explorar visualmente si existe homogeneidad de varianza, se compraran las cajas y bigotes de los boxplots y se espera que tengan (Mas o menos distintos tamaños).</p>
 </div>
 <div id="test-de-bartlett" class="section level4">
-<h4><span class="header-section-number">2.2.1.2</span> Test de Bartlett</h4>
+<h4><span class="header-section-number">2.3.1.2</span> Test de Bartlett</h4>
 <p>Para realizar un test de homogeneidad de varianza se realiza el test de bartlett <span class="citation">(Bartlett <a href="#ref-bartlett1937properties">1937</a>)</span>, en este se usa nuestra conocida formula <em>y ~ x</em>, esto es, y explicado por x junto a la función <em>bartlett.test</em>. Para nuestro caso usaríamos:</p>
 <pre><code>## 
 ##  Bartlett test of homogeneity of variances
@@ -216,7 +223,7 @@ Figura 2.1: Cuenta de insectos según tipo de insecticida
 </div>
 </div>
 <div id="normalidad-de-los-residuales" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> Normalidad de los residuales</h3>
+<h3><span class="header-section-number">2.3.2</span> Normalidad de los residuales</h3>
 <p>En el caso de la base de datos <em>iris</em>, demostraremos inmediatamente que si hay homogeneidad de varianza en el ancho del sépalo (Figura <a href="Supuestos.html#fig:IrisBox">2.2</a>):</p>
 <div class="figure"><span id="fig:IrisBox"></span>
 <img src="AyduantiaStats_files/figure-html/IrisBox-1.png" alt="Ancho de sépalo según especie del género Iris" width="672" />
@@ -231,99 +238,227 @@ Figura 2.2: Ancho de sépalo según especie del género Iris
 ## Bartlett&#39;s K-squared = 2.0911, df = 2, p-value = 0.3515</code></pre>
 <p>Debido a ello, podemos testar si los residuales tienen una distribución normalidad de los residuales, para esto lo primero que debemos hacer es un ANOVA, como fue explicado en el práctico anterior y guardar este objeto con un nombre:</p>
 <div id="extraccion-de-los-residuales-del-modelo" class="section level4">
-<h4><span class="header-section-number">2.2.2.1</span> Extracción de los residuales del modelo</h4>
+<h4><span class="header-section-number">2.3.2.1</span> Extracción de los residuales del modelo</h4>
 <p>Para extraer los residuales, podemos hacerlo de dos formas, si solo queremos un vector de sus valores, podemos extraerlo desde el modelo mismo utilizando <em>$residuals</em>. Si queremos guardarlo en un dataframe mas completo podemos utilizar la función <em>augment</em> del paquete <em>broom</em>.</p>
 <p>La segunda opción nos entregará más información que podremos utilizar más tarde, pero ambas sirven para testear normalidad, la siguiente tabla muestra las primeras 6 observaciones generadas por la función <em>augment</em>, donde <em>resid</em>, son los residuales (Ver tabla <a href="Supuestos.html#tab:TabResid">2.1</a>.</p>
 <table>
-<caption><span id="tab:TabResid">Tabla 2.1: </span>primeras 6 observaciones del dataframe resultante de augment</caption>
+<caption>
+<span id="tab:TabResid">Tabla 2.1: </span>primeras 6 observaciones del dataframe resultante de augment
+</caption>
 <thead>
-<tr class="header">
-<th align="right">Sepal.Width</th>
-<th align="left">Species</th>
-<th align="right">.fitted</th>
-<th align="right">.se.fit</th>
-<th align="right">.resid</th>
-<th align="right">.hat</th>
-<th align="right">.sigma</th>
-<th align="right">.cooksd</th>
-<th align="right">.std.resid</th>
+<tr>
+<th style="text-align:right;">
+Sepal.Width
+</th>
+<th style="text-align:left;">
+Species
+</th>
+<th style="text-align:right;">
+.fitted
+</th>
+<th style="text-align:right;">
+.se.fit
+</th>
+<th style="text-align:right;">
+.resid
+</th>
+<th style="text-align:right;">
+.hat
+</th>
+<th style="text-align:right;">
+.sigma
+</th>
+<th style="text-align:right;">
+.cooksd
+</th>
+<th style="text-align:right;">
+.std.resid
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">3.5</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">0.072</td>
-<td align="right">0.02</td>
-<td align="right">0.341</td>
-<td align="right">0.000</td>
-<td align="right">0.214</td>
+<tr>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+0.072
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.341
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.214
+</td>
 </tr>
-<tr class="even">
-<td align="right">3.0</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">-0.428</td>
-<td align="right">0.02</td>
-<td align="right">0.339</td>
-<td align="right">0.011</td>
-<td align="right">-1.273</td>
+<tr>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+-0.428
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.339
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+-1.273
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3.2</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">-0.228</td>
-<td align="right">0.02</td>
-<td align="right">0.340</td>
-<td align="right">0.003</td>
-<td align="right">-0.678</td>
+<tr>
+<td style="text-align:right;">
+3.2
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+-0.228
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.340
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+<td style="text-align:right;">
+-0.678
+</td>
 </tr>
-<tr class="even">
-<td align="right">3.1</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">-0.328</td>
-<td align="right">0.02</td>
-<td align="right">0.340</td>
-<td align="right">0.006</td>
-<td align="right">-0.975</td>
+<tr>
+<td style="text-align:right;">
+3.1
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+-0.328
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.340
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+-0.975
+</td>
 </tr>
-<tr class="odd">
-<td align="right">3.6</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">0.172</td>
-<td align="right">0.02</td>
-<td align="right">0.341</td>
-<td align="right">0.002</td>
-<td align="right">0.511</td>
+<tr>
+<td style="text-align:right;">
+3.6
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+0.172
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.341
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+<td style="text-align:right;">
+0.511
+</td>
 </tr>
-<tr class="even">
-<td align="right">3.9</td>
-<td align="left">setosa</td>
-<td align="right">3.428</td>
-<td align="right">0.048</td>
-<td align="right">0.472</td>
-<td align="right">0.02</td>
-<td align="right">0.339</td>
-<td align="right">0.013</td>
-<td align="right">1.404</td>
+<tr>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:left;">
+setosa
+</td>
+<td style="text-align:right;">
+3.428
+</td>
+<td style="text-align:right;">
+0.048
+</td>
+<td style="text-align:right;">
+0.472
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.339
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+<td style="text-align:right;">
+1.404
+</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div id="inspeccion-visual-de-los-residuales" class="section level4">
-<h4><span class="header-section-number">2.2.2.2</span> Inspección visual de los residuales</h4>
+<h4><span class="header-section-number">2.3.2.2</span> Inspección visual de los residuales</h4>
 <p>Existen dos formas de visualizar los residuales para determinar si la distribución de estos es o no es normal, histogramas y el qqplot.</p>
 <div id="histograma" class="section level5">
-<h5><span class="header-section-number">2.2.2.2.1</span> Histograma</h5>
+<h5><span class="header-section-number">2.3.2.2.1</span> Histograma</h5>
 <p>Los histogramas nos darán una representación visual para tratar de entender si la distribución es normal, para esto, solo necesitamos usar el comando <em>hist</em>, seguido del vector de los residuales, este es el comando para hacer el histograma (Figura <a href="Supuestos.html#fig:histogram">2.3</a>) con cualquiera de las dos bases de datos, el resultado debiera ser el mismo:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(Residuales)
 <span class="kw">hist</span>(Resultados<span class="op">$</span>.resid)</code></pre></div>
@@ -335,7 +470,7 @@ Figura 2.3: Histograma de los resiudales del modelo ANOVA
 </div>
 </div>
 <div id="qqplot" class="section level5">
-<h5><span class="header-section-number">2.2.2.2.2</span> QQplot</h5>
+<h5><span class="header-section-number">2.3.2.2.2</span> QQplot</h5>
 <p>El qq plot es otra forma visual de establecer si los residuales son o no son normales, para esto, lo esperado es que la gráfica resultante sea una diagonal lo mas recta posible, para esto usaremos la función <em>qqnorm</em>, con nuestros residuales, de nuevo, podemos usar cualquiera de las dos versiones de nuestros datos:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(Residuales)
 <span class="kw">qqnorm</span>(Resultados<span class="op">$</span>.resid)</code></pre></div>
@@ -348,7 +483,7 @@ Figura 2.4: qqplot de los resiudales del modelo ANOVA
 </div>
 </div>
 <div id="test-de-shapiro-para-determinar-normalidad" class="section level4">
-<h4><span class="header-section-number">2.2.2.3</span> Test de Shapiro para determinar normalidad</h4>
+<h4><span class="header-section-number">2.3.2.3</span> Test de Shapiro para determinar normalidad</h4>
 <p>La forma más sencilla de determinar normalidad es usando el test de Shapiro-Wilk de normalidad <span class="citation">(Royston <a href="#ref-royston1995remark">1995</a>)</span>. Al igual que el test de Bartlett, si el valor de p es menor a 0.05, determinamos que la distribución de los datos no son normales, la función en <em>R</em> para este test es <em>shapiro.test</em>, y al igual que en los casos anteriores de <em>hist</em> y <em>qqpot</em>, solo necesitamos de usar un vector de residuales para ver el resultado del test. En nuestro caso:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(Residuales)
 <span class="kw">shapiro.test</span>(Resultados<span class="op">$</span>.resid)</code></pre></div>
@@ -362,10 +497,10 @@ Figura 2.4: qqplot de los resiudales del modelo ANOVA
 </div>
 </div>
 <div id="actividad-2-suma-de-cuadrados" class="section level2">
-<h2><span class="header-section-number">2.3</span> Actividad 2 Suma de cuadrados</h2>
+<h2><span class="header-section-number">2.4</span> Actividad 2 Suma de cuadrados</h2>
 <p>Tanto los ANOVAS como las regresiones lineales se basan en minimizar la suma de cuadrados, es la suma de los cuadrados de los errores o residuales.</p>
 <div id="que-es-el-error-por-que-al-cuadrado" class="section level3">
-<h3><span class="header-section-number">2.3.1</span> ¿Que es el error? ¿Por qué al cuadrado??</h3>
+<h3><span class="header-section-number">2.4.1</span> ¿Que es el error? ¿Por qué al cuadrado??</h3>
 <div class="figure"><span id="fig:unnamed-chunk-22"></span>
 <img src="AyduantiaStats_files/figure-html/unnamed-chunk-22-1.png" alt="Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado" width="672" />
 <p class="caption">
@@ -377,12 +512,12 @@ Figura 2.5: Errores de una regresión lineal ejemplificados con la linea entre e
 <p>El objetivo de todo modelo es el de minimizar estos errores, al ajustar el mejor modelo posible.</p>
 <p>Los errores siempre se calculan al cuadrado, discutiremos por que en clase</p>
 <p><span class="math display">\[\sum_{i=1}^{n} (Observado - Predicho)^2\]</span></p>
-<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/?showcase=0" width="672" height="400px">
+<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/?showcase=0" width="672" height="800px">
 </iframe>
 </div>
 </div>
 <div id="referencias" class="section level2">
-<h2><span class="header-section-number">2.4</span> Referencias</h2>
+<h2><span class="header-section-number">2.5</span> Referencias</h2>
 
 </div>
 </div>

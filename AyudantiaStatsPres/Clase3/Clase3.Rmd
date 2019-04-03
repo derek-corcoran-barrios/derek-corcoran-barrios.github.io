@@ -1,0 +1,191 @@
+---
+title: "Práctico 3 Supuestos de ANOVA y mínimos cuadrados"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    logo: puc_logo.jpg
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
+library(tidyverse)
+library(broom)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+
+## Objetivos de este práctico {.build}
+
+- Entender los supuestos de un ANOVA de una via (independencia, aleatoreidad, homocedasticidad y normalidad)
+- Entender el concepto de mínimos cuadrados
+- Saber cuando realizar un ANOVA e interpretar sus resultados
+
+
+## Primer ejemplo sueño en mamíferos 
+
+- Base de datos de *R* msleep
+- Para cargar usar *data(msleep)*
+- ¿Duermen distinta cantidad de horas mamíferos de distintos ordenes?
+- ¿Duermen distinta cantidad de horas mamíferos con distintas dietas?
+- Generar gráficos exploratorios y test de ANOVA
+
+## Exploración visual {.small}
+
+
+```{r, echo = TRUE}
+ggplot(msleep, aes(x = order, y = sleep_total)) + geom_boxplot() + geom_jitter() + theme(axis.text.x=element_text(angle=90, vjust=0.5))
+```
+
+## Exploración visual {.small}
+
+```{r, echo = TRUE}
+ggplot(msleep, aes(x = vore, y = sleep_total)) + geom_boxplot() + geom_jitter() 
+```
+
+## ¿Hay homogeneidad de varianza? {.small}
+
+
+```{r, echo=TRUE, eval=FALSE}
+msleepclean <- msleep %>% filter(!is.na(vore))
+```
+
+```{r, echo=FALSE}
+msleepclean <- msleep %>% filter(!is.na(vore))
+ggplot(msleepclean, aes(x = vore, y = sleep_total)) + geom_boxplot() + geom_jitter(aes(color = vore))
+```
+
+## ¿Hay homogeneidad de varianza? (cont.)
+
+```{r, eval = FALSE, echo = TRUE}
+bartlett.test(sleep_total ~ vore, data = msleepclean)
+```
+
+
+```{r}
+knitr::kable(tidy(bartlett.test(sleep_total ~ vore, data = msleepclean)))  %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) 
+```
+
+## Como determinar normalidad de los residuales {.small}
+
+¿Que es un residual?
+
+$$Observado - Predicho$$
+
+Tenemos que ajustar el modelo
+
+
+```{r, echo=TRUE}
+ANOVA.sleep <- aov(sleep_total ~ vore, data = msleepclean)
+```
+
+## dos formas de extraer los residuales {.small}
+
+
+```{r, echo=TRUE}
+Residuales <- ANOVA.sleep$residuals
+library(broom)
+Resultados <- augment(ANOVA.sleep)
+```
+
+## ¿Hay normalidad? {.small}
+
+```{r, echo=TRUE, eval = FALSE}
+hist(Residuales)
+hist(Resultados$.resid)
+```
+
+```{r, echo=FALSE}
+hist(Residuales)
+```
+
+## QQplot {.small}
+
+* Lo que queremos que pase en qqplot es que la linea sea recta y diagonal.
+
+```{r, echo=TRUE, eval = FALSE}
+qqnorm(Residuales)
+qqnorm(Resultados$.resid)
+```
+
+
+```{r, echo = FALSE}
+qqnorm(Residuales)
+```
+
+* si esto es así asumimos distribucion normal.
+
+
+## Shapiro test {.small}
+
+* Forma mas sencilla de ver normalidad
+
+```{r, echo=TRUE, eval=FALSE}
+shapiro.test(Residuales)
+shapiro.test(Resultados$.resid)
+```
+
+```{r, echo=FALSE, fig.cap= "qqplot de los resiudales del modelo ANOVA"}
+shapiro.test(Residuales)
+```
+
+Dado que valores son menores a 0.05, la distribución no es normal , se recomienda usar Kruskal-Wallis
+
+## Violación de normalidad {.small}
+
+Aumenta posibilidad de errores de tipo 1
+
+```{r}
+summary(aov(sleep_total ~ vore, data = msleepclean))
+```
+
+## Segundo ejemplo suma errores cuadrados
+
+¿Que es el error? **¿Por qué al cuadrado??** Actividad shiny
+
+$$Observado(puntos) - Predicho(linea)$$
+
+```{r}
+library(knitr)
+include_app(url = "http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/", height = "800px")
+```
+
+## Comparemos suma de errores vs suma errores cuadrados
+
+¿Que modelo predice mejor los valores de y el 1 o el 2?
+
+```{r}
+set.seed(2019)
+Simul <- data.frame(x = 1:100, y = rnorm(100) + 1:100 + 1,Modelo1 = rnorm(100) + 1:100 - 2, Modelo2 = rnorm(100, sd = 10) + 1:100)
+Simul2 <- gather(Simul, key = Modelo, Pred, - x)
+ggplot(Simul2, aes(x = x, y =Pred)) + geom_point(aes(color=Modelo)) + theme_classic()
+```
+
+## Sumemos los errores {.small}
+
+```{r, echo = TRUE}
+Simul$Error1 <- Simul$y - Simul$Modelo1
+Simul$Error2 <- Simul$y - Simul$Modelo2
+```
+
+```{r, echo=TRUE}
+sum(Simul$Error1)
+sum(Simul$Error2)
+```
+
+¿Que pasó?
+
+## Sumemos los errores Cuadrados {.small}
+
+```{r, echo = TRUE}
+Simul$Error1 <- (Simul$y - Simul$Modelo1)^2
+Simul$Error2 <- (Simul$y - Simul$Modelo2)^2
+```
+
+```{r, echo=TRUE}
+sum(Simul$Error1)
+sum(Simul$Error2)
+```
