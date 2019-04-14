@@ -1,0 +1,37 @@
+---
+title: "Control 4"
+date: "April 3, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+```
+
+## Pregunta 1
+
+¿Cuales son los supuestos de la prueba t de Student?
+
+## Pregunta 2
+
+Usted decide determinar si la media de una muestra es mayor que una media teórica de 53. En el gráfico, en la figura A, se observan las areas de corte en una distribución para decir que la media de la muestra es distinta de la población teórica en una prueba de dos colas, y la linea punteada es la media teórica. 
+
+Si hicieramos una prueba de una cola para determinar si la media de la muestra es mayor a 53, ¿Cual de las figuras siguientes (B o C) representaría mejor la prueba de una cola? ¿Se acepta la hipotesis nula de que no hay diferencias en esta prueba de una cola?
+
+```{r, cache=TRUE}
+a <- rnorm(n = 1000, mean = 60, sd = 5)
+DF <- density(a)
+DF <- data.frame(Value = DF$x, Frequency = DF$y)
+DFPlus <- DF %>% dplyr::filter(Value  >= 68)
+DFMinus <- DF %>% dplyr::filter(Value  <= 52)
+DFMinusB <- DF %>% dplyr::filter(Value  <= 50)
+DFMinusC <- DF %>% dplyr::filter(Value  <= 54)
+
+A <- ggplot(DF, aes(x = Value, y = Frequency)) + geom_line() + geom_ribbon(data = DFPlus, aes(ymax = Frequency, ymin = 0), fill = "red") + geom_ribbon(data = DFMinus, aes(ymax = Frequency, ymin = 0), fill = "red") + theme_bw() + ggtitle("A") + geom_vline(xintercept = 53, lty =2)
+B <- ggplot(DF, aes(x = Value, y = Frequency)) + geom_line() + geom_ribbon(data = DFMinusB, aes(ymax = Frequency, ymin = 0), fill = "red") + theme_bw() + ggtitle("B") + geom_vline(xintercept = 53, lty =2)
+C <- ggplot(DF, aes(x = Value, y = Frequency)) + geom_line() + geom_ribbon(data = DFMinusC, aes(ymax = Frequency, ymin = 0), fill = "red") + theme_bw() + ggtitle("C") + geom_vline(xintercept = 53, lty =2)
+library(gridExtra)
+grid.arrange(A, B, C, ncol = 2)
+```
+

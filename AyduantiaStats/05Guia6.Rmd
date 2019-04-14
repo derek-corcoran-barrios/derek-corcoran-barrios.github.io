@@ -1,0 +1,108 @@
+# Comparaciones posthoc y diseños anidados {#posthoc}
+
+Para este capitulo necesitas tener instalado el paquete *tidyverse*, también ayuda tener el paquete *broom*. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase6/Clase6.html)
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+```
+
+## Comparaciones posthoc
+
+Como ya vimos en los prácticos anteriores, un ANOVA sólo puede decirnos si hay diferencias entre grupos, sin embargo no nos dira entre que grupos hay diferencias, es para esto que existen las pruebas posthoc. En el práctico de hoy veremos dos tipos de comparaciones posthoc, la prueba honesta de diferencias significativas de Tukey (función `TukeyHSD` en R), y los ajustes de valores de p para comparaciones multiples (función `pairwise.t.test` en R), de las cuales la de Bonferroni es la más habitual.
+
+### Prueba honesta de diferencias significativas de Tukey
+
+#### Ejemplo ancho de spealo en el genero Iris
+
+Como vimos en nuestro ejemplo de la guía número 3 (Análisis exploratorio y el primer ANOVA), el ANOVA para determinar si hay diferencias en el ancho de sépalo entre las diferentes especies del genero *Iris*, son significativas:
+
+```{r, echo = TRUE}
+summary(aov(Sepal.Width ~ Species, data = iris))
+```
+
+Pero este análisis no nos dice en tre que especies encontramos estas diferencias, para esto, podemos realizar una prueba honesta de diferencias significativas de Tukey, para esto utilizamos la función `TukeyHSD` y usamos como argumento un ANOVA ya ajustado
+
+```{r, echo = TRUE}
+AnovaSepalo <- aov(Sepal.Width ~ Species, data = iris)
+TukeyHSD(AnovaSepalo)
+```
+
+### Ajustes de valores de p para comparaciones multiples
+
+#### Ajuste de Bonferroni
+
+Cuando realizamos multiples comparaciones pareadas entre grupos, la probabilidad de encontrar diferencias significativas cuando no los hay (error tipo I), aumenta a una tasa dada por la siguiente fórmula:
+
+$$\alpha_{ajustado} = 1 - (1 -\alpha)^n$$
+Donde $\alpha$ es la probabilidad de cometer un error tipo I que estamos dispuestos a aceptar (tipicamente 0.05), y $n$ es el numero de pruebas independientes a realizar.
+
+Con esto según el ajuste de Bonferroni, nuestro p critico para determinar diferencias significativas cambia segun la siguiente fórmula [@tukey1977some]
+
+$$p-critico_{ajustado} = 1 - (1 -\alpha)^{1/n}$$
+El ajuste de Bonferroni, sin embargo al disminuir los errores de tipo I, aumenta los errores de tipo II [@morgan2007p]. En ese sentido, la función de R `pairwise.t.test`, nos permite utilizar varios ajustes menos conservadores incluyendo los de Holm (1979), Hochberg (1988), Hommel (1988), Benjamini & Hochberg (1995) o el de Benjamini & Yekutieli (2001) 
+
+#### Ejemplo ancho de spealo en el genero Iris
+
+Volviendo al mismo ejemplo que usamos en la prueba de Tukey, mostraremos los valores de p determinados para comparaciones multiples de el ancho de sepalo sin ajuste y con diversos ajustes que encontramos en el la función `pairwise.t.test`
+
+##### Sin ajuste
+
+```{r, echo=TRUE}
+pairwise.t.test(x = airquality$Ozone, g = airquality$Month, p.adj = "none")
+```
+
+##### Ajuste de Bonferroni
+
+```{r, echo=TRUE}
+pairwise.t.test(x = airquality$Ozone, g = airquality$Month, p.adj = "bonf")
+```
+
+##### Ajuste de Holm
+
+```{r, echo=TRUE}
+pairwise.t.test(x = airquality$Ozone, g = airquality$Month, p.adj = "holm")
+```
+
+##### Ajuste de Hommel
+
+```{r, echo=TRUE}
+pairwise.t.test(x = airquality$Ozone, g = airquality$Month, p.adj = "hommel")
+```
+
+##### Diferencias
+
+Se observa como sin ajustar hay 6 pares de meses que tienen diferencias, en contraste con 4 pares de meses con el ajuste de Bonferroni, y 5 con los otros métodos de ajuste de valor de p.
+
+## Diseños anidados
+
+Los diseños anidados ocurren cuando queremos estudiar el efecto de un factor, pero dentro de las muestras existe un segundo factor que puede afectar nuestros análisis, por ejemplo si volvemos a el caso en de la base de datos `CO2`
+
+
+```{r}
+Co2Real <- CO2 %>% group_by(Plant, Type, Treatment) %>% summarise(PromedioCO2 = mean(uptake))
+Co2Promedio <- Co2Real %>%  group_by(Type, Treatment) %>% summarise(CO2 = mean(PromedioCO2), SD =sd(PromedioCO2))
+ggplot(Co2Promedio, aes(x = Treatment, y = CO2)) + geom_line(aes(color = Type)) + geom_point(aes(color = Type)) + geom_errorbar(aes(ymin = CO2 - SD, ymax = CO2 + SD, color = Type), width = 0.1)
+```
+
+
+## Tarea 1
+
+La municipalidad de *Muy muy lejano* tiene un sistema de 5 lagos muy contaminados. Se le encarga estudiar la capacidad biorremediadora de las algas unicelulares *Chlorellia fecolitica* (desde ahora alga A) y *Rhodollia coprofaga* (en adelante alga B). Para realizar el experimento y posteriormente comprar cepas para biorremediación. Con un presupuesto de 50,000 coronas, donde cada cultivo de alga cuesta 1,000 coronas. Utilizando la siguiente app realize un experimento, y luego genere un informe en formato paper donde aparezca lo siguiente:
+
+  + Realiza un calculo de poder en base al archivo *Presamp.csv* para ver cual debiera ser tu número de mustras necesaria y explicalo
+  + Establece si se cumplen los supuestos de los test a realizar y ejecuta deacurdo a tus conocimientos justificando
+  + Determinar si alguna de las algas es mejor biorremediador (incluyendo comparaciones post-hoc)
+  + Dentro de lo posible utiliza la menor cantidad posible de presupuesto, debes utilizar el presupuesto que te queda para proponer una medida de biorremediación
+
+
+
+```{r}
+library(knitr)
+include_app(url = "http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Acuarios/", height = "800px")
+```
+
+
+
+## Referencias

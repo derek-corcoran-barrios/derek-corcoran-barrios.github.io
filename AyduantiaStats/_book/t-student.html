@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-04-03">
+<meta name="date" content="2019-04-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="Poder.html">
-<link rel="next" href="Refs.html">
+<link rel="next" href="posthoc.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -144,9 +144,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.2.1" data-path="Poder.html"><a href="Poder.html#poder-y-matriz-de-confusion"><i class="fa fa-check"></i><b>3.2.1</b> Poder y matriz de confusión</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="Poder.html"><a href="Poder.html#calculo-de-poder-en-r"><i class="fa fa-check"></i><b>3.3</b> Calculo de poder en R</a></li>
-<li class="chapter" data-level="3.4" data-path="Poder.html"><a href="Poder.html#tarea"><i class="fa fa-check"></i><b>3.4</b> Tarea</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="Poder.html"><a href="Poder.html#el-problema"><i class="fa fa-check"></i><b>3.4.1</b> El problema</a></li>
-</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="t-student.html"><a href="t-student.html"><i class="fa fa-check"></i><b>4</b> Prueba t de Student</a><ul>
 <li class="chapter" data-level="4.0.1" data-path="t-student.html"><a href="t-student.html#pruebas-de-una-muestra"><i class="fa fa-check"></i><b>4.0.1</b> Pruebas de una muestra</a></li>
@@ -157,7 +154,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="t-student.html"><a href="t-student.html#bibliografia"><i class="fa fa-check"></i><b>4.2</b> Bibliografía</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>5</b> Referencias</a></li>
+<li class="chapter" data-level="5" data-path="posthoc.html"><a href="posthoc.html"><i class="fa fa-check"></i><b>5</b> Comparaciones posthoc y diseños anidados</a><ul>
+<li class="chapter" data-level="5.1" data-path="posthoc.html"><a href="posthoc.html#comparaciones-posthoc"><i class="fa fa-check"></i><b>5.1</b> Comparaciones posthoc</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="posthoc.html"><a href="posthoc.html#prueba-honesta-de-diferencias-significativas-de-tukey"><i class="fa fa-check"></i><b>5.1.1</b> Prueba honesta de diferencias significativas de Tukey</a></li>
+<li class="chapter" data-level="5.1.2" data-path="posthoc.html"><a href="posthoc.html#ajustes-de-valores-de-p-para-comparaciones-multiples"><i class="fa fa-check"></i><b>5.1.2</b> Ajustes de valores de p para comparaciones multiples</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="posthoc.html"><a href="posthoc.html#disenos-anidados"><i class="fa fa-check"></i><b>5.2</b> Diseños anidados</a></li>
+<li class="chapter" data-level="5.3" data-path="posthoc.html"><a href="posthoc.html#tarea-1"><i class="fa fa-check"></i><b>5.3</b> Tarea 1</a></li>
+<li class="chapter" data-level="5.4" data-path="posthoc.html"><a href="posthoc.html#referencias-1"><i class="fa fa-check"></i><b>5.4</b> Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>6</b> Referencias</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -180,6 +186,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="t-student" class="section level1">
 <h1><span class="header-section-number">Práctico 4</span> Prueba t de Student</h1>
+<p>Para este capitulo necesitas tener instalado el paquete <em>tidyverse</em>, también ayuda tener el paquete <em>broom</em>. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase5/Clase5.html">link</a>. Además hay una forma interactiva de esta guía en el siguiente <a href="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Test/Interactivo5/">link</a>.</p>
 <p>Puedes encontrar una versión interactiva de esta guía <a href="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/">aquí</a>.</p>
 <p>La prueba t de student fue desarrollada por Gosset cuando trabajaba para la cervecería Guinness <span class="citation">(Student <a href="#ref-student1908probable">1908</a>)</span>. Esta prueba permite comparar las medias de una muestra con la media teórica de una población, o comparar dos poblaciones. Una de las características de la prueba de student, es que permite la alternativa de ver si dos medias son diferentes o, si uno busca más confianza determinar si una media es mayor, o menor que otra. Para la prueba t de Student, se determina un valor de t, usando la siguiente formula (ecuación <a href="t-student.html#eq:tStud">(4.1)</a>):</p>
 <span class="math display" id="eq:tStud">\[\begin{equation} 
@@ -367,7 +374,7 @@ Figura 4.7: QQplot de eficiencia de vehiculos con cambios manuales
         </div>
       </div>
 <a href="Poder.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="Refs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="posthoc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

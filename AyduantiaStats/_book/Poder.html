@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-04-03">
+<meta name="date" content="2019-04-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -144,9 +144,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.2.1" data-path="Poder.html"><a href="Poder.html#poder-y-matriz-de-confusion"><i class="fa fa-check"></i><b>3.2.1</b> Poder y matriz de confusión</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="Poder.html"><a href="Poder.html#calculo-de-poder-en-r"><i class="fa fa-check"></i><b>3.3</b> Calculo de poder en R</a></li>
-<li class="chapter" data-level="3.4" data-path="Poder.html"><a href="Poder.html#tarea"><i class="fa fa-check"></i><b>3.4</b> Tarea</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="Poder.html"><a href="Poder.html#el-problema"><i class="fa fa-check"></i><b>3.4.1</b> El problema</a></li>
-</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="t-student.html"><a href="t-student.html"><i class="fa fa-check"></i><b>4</b> Prueba t de Student</a><ul>
 <li class="chapter" data-level="4.0.1" data-path="t-student.html"><a href="t-student.html#pruebas-de-una-muestra"><i class="fa fa-check"></i><b>4.0.1</b> Pruebas de una muestra</a></li>
@@ -157,7 +154,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="t-student.html"><a href="t-student.html#bibliografia"><i class="fa fa-check"></i><b>4.2</b> Bibliografía</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>5</b> Referencias</a></li>
+<li class="chapter" data-level="5" data-path="posthoc.html"><a href="posthoc.html"><i class="fa fa-check"></i><b>5</b> Comparaciones posthoc y diseños anidados</a><ul>
+<li class="chapter" data-level="5.1" data-path="posthoc.html"><a href="posthoc.html#comparaciones-posthoc"><i class="fa fa-check"></i><b>5.1</b> Comparaciones posthoc</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="posthoc.html"><a href="posthoc.html#prueba-honesta-de-diferencias-significativas-de-tukey"><i class="fa fa-check"></i><b>5.1.1</b> Prueba honesta de diferencias significativas de Tukey</a></li>
+<li class="chapter" data-level="5.1.2" data-path="posthoc.html"><a href="posthoc.html#ajustes-de-valores-de-p-para-comparaciones-multiples"><i class="fa fa-check"></i><b>5.1.2</b> Ajustes de valores de p para comparaciones multiples</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="posthoc.html"><a href="posthoc.html#disenos-anidados"><i class="fa fa-check"></i><b>5.2</b> Diseños anidados</a></li>
+<li class="chapter" data-level="5.3" data-path="posthoc.html"><a href="posthoc.html#tarea-1"><i class="fa fa-check"></i><b>5.3</b> Tarea 1</a></li>
+<li class="chapter" data-level="5.4" data-path="posthoc.html"><a href="posthoc.html#referencias-1"><i class="fa fa-check"></i><b>5.4</b> Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>6</b> Referencias</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -180,6 +186,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="Poder" class="section level1">
 <h1><span class="header-section-number">Práctico 3</span> Análisis de poder y primera tarea</h1>
+<p>Para este capitulo necesitas tener instalado el paquete <em>pwr2</em>, también ayuda tener el paquete <em>broom</em>. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase4/Clase4.html">link</a>.</p>
 <div id="obejtivos-del-practico" class="section level2">
 <h2><span class="header-section-number">3.1</span> Obejtivos del práctico</h2>
 <ul>
@@ -303,104 +310,7 @@ No hay error
 <p>Para cálculos precisos de n necesarios para muestras usar la siguiente app</p>
 <iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny3/?showcase=0" width="672" height="600px">
 </iframe>
-</div>
-<div id="tarea" class="section level2">
-<h2><span class="header-section-number">3.4</span> Tarea</h2>
-<div id="el-problema" class="section level3">
-<h3><span class="header-section-number">3.4.1</span> El problema</h3>
-<p>Una compañía que genera pesticidas descarga parte de sus desechos a un río. La ONG <strong>RioSano</strong>, dice que ha notado una alza en la mortalidad de los patos cortacorriente (<em>Merganneta armata</em>) del río.</p>
-<p>Ante esto la empresa contrata un científico, el cual hace una estimación de la mortalidad de patos en 10 zonas del río en que descargan sus desechos, y lo compara con otros dos ríos no contaminados. Este científico dice que no hay diferencias significativas en la mortalidad de los patos de los ríos con desechos y sin desechos con una confianza del 95%. Para esto muestra como evidencia la figura 1 y tabla 3 e incluso hace públicos sus datos en el archivo <em>MuestraPatos.csv</em>.</p>
-<div class="figure"><span id="fig:unnamed-chunk-28"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-28-1.png" alt="Mortalidades calculadas en 10 zonas de tres ríos" width="672" />
-<p class="caption">
-Figura 3.1: Mortalidades calculadas en 10 zonas de tres ríos
-</p>
-</div>
-<table>
-<caption>
-<span id="tab:unnamed-chunk-29">Tabla 3.3: </span>Tabla de ANOVA de una vía de la mortalidad de patos de los tres ríos
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-term
-</th>
-<th style="text-align:right;">
-df
-</th>
-<th style="text-align:right;">
-sumsq
-</th>
-<th style="text-align:right;">
-meansq
-</th>
-<th style="text-align:right;">
-statistic
-</th>
-<th style="text-align:right;">
-p.value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-rio
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-301.2531
-</td>
-<td style="text-align:right;">
-150.62656
-</td>
-<td style="text-align:right;">
-2.359899
-</td>
-<td style="text-align:right;">
-0.1136188
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Residuals
-</td>
-<td style="text-align:right;">
-27
-</td>
-<td style="text-align:right;">
-1723.3436
-</td>
-<td style="text-align:right;">
-63.82754
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-</tbody>
-</table>
-<p>La ONG <em>RioSano</em> lo contrata para determinar la validez del estudio y si es necesario generar un estudio extra. Ante esto:</p>
-<ol style="list-style-type: decimal">
-<li><p>Genere una matriz de confusión del problema y explique en este contexto que significaría el alfa y beta para este problema, y cual consideraría más relevante.</p></li>
-<li><p>Diseñe el estudio que le gustaría hacer, determinando cuantas áreas debe muestrear por río, estime un delta mínimo que le gustaría determinar y el beta con el que se siente seguro y determine el <em>n</em> mínimo necesario para ese estudio. Justifique su respuesta</p></li>
-<li>Dado este <em>n</em> mínimo realice lo siguiente
-<ul>
-<li>Realice un muestreo de n muestras por tipo de río del archivo <em>Patos.csv</em></li>
-<li>Genere gráficos y tablas exploratorias de los datos de su muestreo y describalas</li>
-<li>Revise los supuestos del ANOVA para su base de datos tanto gráficamente como con tests y determine si se puede realizar el anova</li>
-<li>Diga si según su diseño hay diferencias significativas en la mortalidad de patos entre los ríos</li>
-</ul></li>
-<li><p>Cada zona a muestrear requiere de un monitoreo exhaustivo, que tiene un costo de 500.000 pesos (esto es 1.500.000 de pesos si consideramos los 3 ríos). La ONG <em>RioSano</em> consiguió 20.000.000 de pesos para este estudio. Dadas esas limitaciones, genere un balance de <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> y <span class="math inline">\(n\)</span> dada esa limitación para hacer el mejor estudio posible dadas las consecuencias, justifique su respuesta.</p></li>
-</ol>
-<p>Genere un informe para la ONG <em>RioSano</em> incorporando estos 5 puntos e incluya una introducción, metodología, resultados, discusión-conclusión y bibliografía, envíe el script de como generó los resultados</p>
 
-</div>
 </div>
 </div>
 <h3> Referencias</h3>

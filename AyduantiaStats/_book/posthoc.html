@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Práctico 5 Comparaciones posthoc y diseños anidados | Practicos de Bioestadística 2</title>
+  <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Práctico 5 Comparaciones posthoc y diseños anidados | Practicos de Bioestadística 2" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Práctico 5 Comparaciones posthoc y diseños anidados | Practicos de Bioestadística 2" />
+  
+  <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
+  
+
+<meta name="author" content="Derek Corcoran">
+
+
+<meta name="date" content="2019-04-10">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="t-student.html">
+<link rel="next" href="Refs.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Practicos de Biestadistica 2 </a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Requerimientos</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#antes-de-comenzar"><i class="fa fa-check"></i><b>0.1</b> Antes de comenzar</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#descripcion-del-practico"><i class="fa fa-check"></i><b>0.2</b> Descripción del práctico</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#objetivos-del-practico"><i class="fa fa-check"></i><b>0.3</b> Objetivos del práctico</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#contenidos"><i class="fa fa-check"></i><b>0.4</b> Contenidos</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#metodologia"><i class="fa fa-check"></i><b>0.5</b> Metodología</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#evaluacion"><i class="fa fa-check"></i><b>0.6</b> Evaluación</a></li>
+<li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#presentacion-de-introduccion"><i class="fa fa-check"></i><b>0.7</b> Presentación de introducción</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="Explorando.html"><a href="Explorando.html"><i class="fa fa-check"></i><b>1</b> Exploración de datos y tu primer ANOVA</a><ul>
+<li class="chapter" data-level="1.1" data-path="Explorando.html"><a href="Explorando.html#paquetes-necesarios-para-este-practico"><i class="fa fa-check"></i><b>1.1</b> Paquetes necesarios para este práctico</a></li>
+<li class="chapter" data-level="1.2" data-path="Explorando.html"><a href="Explorando.html#actividad-1-educacion-en-chile"><i class="fa fa-check"></i><b>1.2</b> Actividad 1 Educación en Chile</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="Explorando.html"><a href="Explorando.html#tablas-resumen-de-los-datos"><i class="fa fa-check"></i><b>1.2.1</b> Tablas resumen de los datos:</a></li>
+<li class="chapter" data-level="1.2.2" data-path="Explorando.html"><a href="Explorando.html#visualizacion-de-datos-con-ggplot2-tidyverse"><i class="fa fa-check"></i><b>1.2.2</b> Visualización de datos con ggplot2 (tidyverse)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="Explorando.html"><a href="Explorando.html#actividad-2-captacion-de-co2-en-plantas"><i class="fa fa-check"></i><b>1.3</b> Actividad 2 Captación de CO2 en plantas</a></li>
+<li class="chapter" data-level="1.4" data-path="Explorando.html"><a href="Explorando.html#actividad-3-mi-primer-anova"><i class="fa fa-check"></i><b>1.4</b> Actividad 3 Mi primer ANOVA</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="Explorando.html"><a href="Explorando.html#antes-de-empezar-a-entender-el-anova"><i class="fa fa-check"></i><b>1.4.1</b> antes de empezar a entender el ANOVA</a></li>
+<li class="chapter" data-level="1.4.2" data-path="Explorando.html"><a href="Explorando.html#como-hacer-un-anova-en-r"><i class="fa fa-check"></i><b>1.4.2</b> Como hacer un ANOVA en R</a></li>
+<li class="chapter" data-level="1.4.3" data-path="Explorando.html"><a href="Explorando.html#ejercicio"><i class="fa fa-check"></i><b>1.4.3</b> Ejercicio</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Supuestos.html"><a href="Supuestos.html"><i class="fa fa-check"></i><b>2</b> Supuestos de ANOVA y mínimos cuadrados</a><ul>
+<li class="chapter" data-level="2.1" data-path="Supuestos.html"><a href="Supuestos.html#paquetes-necesarios-para-este-practico-1"><i class="fa fa-check"></i><b>2.1</b> Paquetes necesarios para este práctico</a></li>
+<li class="chapter" data-level="2.2" data-path="Supuestos.html"><a href="Supuestos.html#objetivos-de-este-practico"><i class="fa fa-check"></i><b>2.2</b> Objetivos de este práctico</a></li>
+<li class="chapter" data-level="2.3" data-path="Supuestos.html"><a href="Supuestos.html#actividad-1-sueno-en-mamiferos"><i class="fa fa-check"></i><b>2.3</b> Actividad 1 Sueño en mamíferos</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="Supuestos.html"><a href="Supuestos.html#homogeneidad-de-varianza"><i class="fa fa-check"></i><b>2.3.1</b> Homogeneidad de varianza</a></li>
+<li class="chapter" data-level="2.3.2" data-path="Supuestos.html"><a href="Supuestos.html#normalidad-de-los-residuales"><i class="fa fa-check"></i><b>2.3.2</b> Normalidad de los residuales</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="Supuestos.html"><a href="Supuestos.html#actividad-2-suma-de-cuadrados"><i class="fa fa-check"></i><b>2.4</b> Actividad 2 Suma de cuadrados</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="Supuestos.html"><a href="Supuestos.html#que-es-el-error-por-que-al-cuadrado"><i class="fa fa-check"></i><b>2.4.1</b> ¿Que es el error? ¿Por qué al cuadrado??</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="Supuestos.html"><a href="Supuestos.html#referencias"><i class="fa fa-check"></i><b>2.5</b> Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Poder.html"><a href="Poder.html"><i class="fa fa-check"></i><b>3</b> Análisis de poder y primera tarea</a><ul>
+<li class="chapter" data-level="3.1" data-path="Poder.html"><a href="Poder.html#obejtivos-del-practico"><i class="fa fa-check"></i><b>3.1</b> Obejtivos del práctico</a></li>
+<li class="chapter" data-level="3.2" data-path="Poder.html"><a href="Poder.html#matriz-de-confusion"><i class="fa fa-check"></i><b>3.2</b> Matriz de confusión</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="Poder.html"><a href="Poder.html#poder-y-matriz-de-confusion"><i class="fa fa-check"></i><b>3.2.1</b> Poder y matriz de confusión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Poder.html"><a href="Poder.html#calculo-de-poder-en-r"><i class="fa fa-check"></i><b>3.3</b> Calculo de poder en R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="t-student.html"><a href="t-student.html"><i class="fa fa-check"></i><b>4</b> Prueba t de Student</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="t-student.html"><a href="t-student.html#pruebas-de-una-muestra"><i class="fa fa-check"></i><b>4.0.1</b> Pruebas de una muestra</a></li>
+<li class="chapter" data-level="4.0.2" data-path="t-student.html"><a href="t-student.html#pruebas-de-dos-muestras"><i class="fa fa-check"></i><b>4.0.2</b> Pruebas de dos muestras</a></li>
+<li class="chapter" data-level="4.1" data-path="t-student.html"><a href="t-student.html#supuestos-de-la-prueba-de-t-y-alternativas"><i class="fa fa-check"></i><b>4.1</b> Supuestos de la prueba de t y alternativas</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="t-student.html"><a href="t-student.html#prueba-de-una-muestra"><i class="fa fa-check"></i><b>4.1.1</b> Prueba de una muestra</a></li>
+<li class="chapter" data-level="4.1.2" data-path="t-student.html"><a href="t-student.html#prueba-de-dos-muestras"><i class="fa fa-check"></i><b>4.1.2</b> Prueba de dos muestras</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="t-student.html"><a href="t-student.html#bibliografia"><i class="fa fa-check"></i><b>4.2</b> Bibliografía</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="posthoc.html"><a href="posthoc.html"><i class="fa fa-check"></i><b>5</b> Comparaciones posthoc y diseños anidados</a><ul>
+<li class="chapter" data-level="5.1" data-path="posthoc.html"><a href="posthoc.html#comparaciones-posthoc"><i class="fa fa-check"></i><b>5.1</b> Comparaciones posthoc</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="posthoc.html"><a href="posthoc.html#prueba-honesta-de-diferencias-significativas-de-tukey"><i class="fa fa-check"></i><b>5.1.1</b> Prueba honesta de diferencias significativas de Tukey</a></li>
+<li class="chapter" data-level="5.1.2" data-path="posthoc.html"><a href="posthoc.html#ajustes-de-valores-de-p-para-comparaciones-multiples"><i class="fa fa-check"></i><b>5.1.2</b> Ajustes de valores de p para comparaciones multiples</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="posthoc.html"><a href="posthoc.html#disenos-anidados"><i class="fa fa-check"></i><b>5.2</b> Diseños anidados</a></li>
+<li class="chapter" data-level="5.3" data-path="posthoc.html"><a href="posthoc.html#tarea-1"><i class="fa fa-check"></i><b>5.3</b> Tarea 1</a></li>
+<li class="chapter" data-level="5.4" data-path="posthoc.html"><a href="posthoc.html#referencias-1"><i class="fa fa-check"></i><b>5.4</b> Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>6</b> Referencias</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Practicos de Bioestadística 2</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="posthoc" class="section level1">
+<h1><span class="header-section-number">Práctico 5</span> Comparaciones posthoc y diseños anidados</h1>
+<p>Para este capitulo necesitas tener instalado el paquete <em>tidyverse</em>, también ayuda tener el paquete <em>broom</em>. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase6/Clase6.html">link</a></p>
+<div id="comparaciones-posthoc" class="section level2">
+<h2><span class="header-section-number">5.1</span> Comparaciones posthoc</h2>
+<p>Como ya vimos en los prácticos anteriores, un ANOVA sólo puede decirnos si hay diferencias entre grupos, sin embargo no nos dira entre que grupos hay diferencias, es para esto que existen las pruebas posthoc. En el práctico de hoy veremos dos tipos de comparaciones posthoc, la prueba honesta de diferencias significativas de Tukey (función <code>TukeyHSD</code> en R), y los ajustes de valores de p para comparaciones multiples (función <code>pairwise.t.test</code> en R), de las cuales la de Bonferroni es la más habitual.</p>
+<div id="prueba-honesta-de-diferencias-significativas-de-tukey" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Prueba honesta de diferencias significativas de Tukey</h3>
+<div id="ejemplo-ancho-de-spealo-en-el-genero-iris" class="section level4">
+<h4><span class="header-section-number">5.1.1.1</span> Ejemplo ancho de spealo en el genero Iris</h4>
+<p>Como vimos en nuestro ejemplo de la guía número 3 (Análisis exploratorio y el primer ANOVA), el ANOVA para determinar si hay diferencias en el ancho de sépalo entre las diferentes especies del genero <em>Iris</em>, son significativas:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">aov</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris))</code></pre></div>
+<pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## Species       2  11.35   5.672   49.16 &lt;2e-16 ***
+## Residuals   147  16.96   0.115                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Pero este análisis no nos dice en tre que especies encontramos estas diferencias, para esto, podemos realizar una prueba honesta de diferencias significativas de Tukey, para esto utilizamos la función <code>TukeyHSD</code> y usamos como argumento un ANOVA ya ajustado</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">AnovaSepalo &lt;-<span class="st"> </span><span class="kw">aov</span>(Sepal.Width <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris)
+<span class="kw">TukeyHSD</span>(AnovaSepalo)</code></pre></div>
+<pre><code>##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = Sepal.Width ~ Species, data = iris)
+## 
+## $Species
+##                        diff         lwr        upr     p adj
+## versicolor-setosa    -0.658 -0.81885528 -0.4971447 0.0000000
+## virginica-setosa     -0.454 -0.61485528 -0.2931447 0.0000000
+## virginica-versicolor  0.204  0.04314472  0.3648553 0.0087802</code></pre>
+</div>
+</div>
+<div id="ajustes-de-valores-de-p-para-comparaciones-multiples" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Ajustes de valores de p para comparaciones multiples</h3>
+<div id="ajuste-de-bonferroni" class="section level4">
+<h4><span class="header-section-number">5.1.2.1</span> Ajuste de Bonferroni</h4>
+<p>Cuando realizamos multiples comparaciones pareadas entre grupos, la probabilidad de encontrar diferencias significativas cuando no los hay (error tipo I), aumenta a una tasa dada por la siguiente fórmula:</p>
+<p><span class="math display">\[\alpha_{ajustado} = 1 - (1 -\alpha)^n\]</span> Donde <span class="math inline">\(\alpha\)</span> es la probabilidad de cometer un error tipo I que estamos dispuestos a aceptar (tipicamente 0.05), y <span class="math inline">\(n\)</span> es el numero de pruebas independientes a realizar.</p>
+<p>Con esto según el ajuste de Bonferroni, nuestro p critico para determinar diferencias significativas cambia segun la siguiente fórmula <span class="citation">(J. W. Tukey <a href="#ref-tukey1977some">1977</a>)</span></p>
+<p><span class="math display">\[p-critico_{ajustado} = 1 - (1 -\alpha)^{1/n}\]</span> El ajuste de Bonferroni, sin embargo al disminuir los errores de tipo I, aumenta los errores de tipo II <span class="citation">(Morgan <a href="#ref-morgan2007p">2007</a>)</span>. En ese sentido, la función de R <code>pairwise.t.test</code>, nos permite utilizar varios ajustes menos conservadores incluyendo los de Holm (1979), Hochberg (1988), Hommel (1988), Benjamini &amp; Hochberg (1995) o el de Benjamini &amp; Yekutieli (2001)</p>
+</div>
+<div id="ejemplo-ancho-de-spealo-en-el-genero-iris-1" class="section level4">
+<h4><span class="header-section-number">5.1.2.2</span> Ejemplo ancho de spealo en el genero Iris</h4>
+<p>Volviendo al mismo ejemplo que usamos en la prueba de Tukey, mostraremos los valores de p determinados para comparaciones multiples de el ancho de sepalo sin ajuste y con diversos ajustes que encontramos en el la función <code>pairwise.t.test</code></p>
+<div id="sin-ajuste" class="section level5">
+<h5><span class="header-section-number">5.1.2.2.1</span> Sin ajuste</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairwise.t.test</span>(<span class="dt">x =</span> airquality<span class="op">$</span>Ozone, <span class="dt">g =</span> airquality<span class="op">$</span>Month, <span class="dt">p.adj =</span> <span class="st">&quot;none&quot;</span>)</code></pre></div>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  airquality$Ozone and airquality$Month 
+## 
+##   5       6       7       8      
+## 6 0.60877 -       -       -      
+## 7 2.9e-05 0.01023 -       -      
+## 8 1.9e-05 0.00831 0.91744 -      
+## 9 0.32545 0.85838 0.00070 0.00048
+## 
+## P value adjustment method: none</code></pre>
+</div>
+<div id="ajuste-de-bonferroni-1" class="section level5">
+<h5><span class="header-section-number">5.1.2.2.2</span> Ajuste de Bonferroni</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairwise.t.test</span>(<span class="dt">x =</span> airquality<span class="op">$</span>Ozone, <span class="dt">g =</span> airquality<span class="op">$</span>Month, <span class="dt">p.adj =</span> <span class="st">&quot;bonf&quot;</span>)</code></pre></div>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  airquality$Ozone and airquality$Month 
+## 
+##   5       6       7       8      
+## 6 1.00000 -       -       -      
+## 7 0.00029 0.10225 -       -      
+## 8 0.00019 0.08312 1.00000 -      
+## 9 1.00000 1.00000 0.00697 0.00485
+## 
+## P value adjustment method: bonferroni</code></pre>
+</div>
+<div id="ajuste-de-holm" class="section level5">
+<h5><span class="header-section-number">5.1.2.2.3</span> Ajuste de Holm</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairwise.t.test</span>(<span class="dt">x =</span> airquality<span class="op">$</span>Ozone, <span class="dt">g =</span> airquality<span class="op">$</span>Month, <span class="dt">p.adj =</span> <span class="st">&quot;holm&quot;</span>)</code></pre></div>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  airquality$Ozone and airquality$Month 
+## 
+##   5       6       7       8      
+## 6 1.00000 -       -       -      
+## 7 0.00026 0.05113 -       -      
+## 8 0.00019 0.04987 1.00000 -      
+## 9 1.00000 1.00000 0.00488 0.00388
+## 
+## P value adjustment method: holm</code></pre>
+</div>
+<div id="ajuste-de-hommel" class="section level5">
+<h5><span class="header-section-number">5.1.2.2.4</span> Ajuste de Hommel</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairwise.t.test</span>(<span class="dt">x =</span> airquality<span class="op">$</span>Ozone, <span class="dt">g =</span> airquality<span class="op">$</span>Month, <span class="dt">p.adj =</span> <span class="st">&quot;hommel&quot;</span>)</code></pre></div>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  airquality$Ozone and airquality$Month 
+## 
+##   5       6       7       8      
+## 6 0.91744 -       -       -      
+## 7 0.00026 0.05113 -       -      
+## 8 0.00018 0.04156 0.91744 -      
+## 9 0.91744 0.91744 0.00488 0.00339
+## 
+## P value adjustment method: hommel</code></pre>
+</div>
+<div id="diferencias" class="section level5">
+<h5><span class="header-section-number">5.1.2.2.5</span> Diferencias</h5>
+<p>Se observa como sin ajustar hay 6 pares de meses que tienen diferencias, en contraste con 4 pares de meses con el ajuste de Bonferroni, y 5 con los otros métodos de ajuste de valor de p.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="disenos-anidados" class="section level2">
+<h2><span class="header-section-number">5.2</span> Diseños anidados</h2>
+<p>Los diseños anidados ocurren cuando queremos estudiar el efecto de un factor, pero dentro de las muestras existe un segundo factor que puede afectar nuestros análisis, por ejemplo si volvemos a el caso en de la base de datos <code>CO2</code></p>
+<p><img src="AyduantiaStats_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+</div>
+<div id="tarea-1" class="section level2">
+<h2><span class="header-section-number">5.3</span> Tarea 1</h2>
+<p>La municipalidad de <em>Muy muy lejano</em> tiene un sistema de 5 lagos muy contaminados. Se le encarga estudiar la capacidad biorremediadora de las algas unicelulares <em>Chlorellia fecolitica</em> (desde ahora alga A) y <em>Rhodollia coprofaga</em> (en adelante alga B). Para realizar el experimento y posteriormente comprar cepas para biorremediación. Con un presupuesto de 50,000 coronas, donde cada cultivo de alga cuesta 1,000 coronas. Utilizando la siguiente app realize un experimento, y luego genere un informe en formato paper donde aparezca lo siguiente:</p>
+<ul>
+<li>Realiza un calculo de poder en base al archivo <em>Presamp.csv</em> para ver cual debiera ser tu número de mustras necesaria y explicalo</li>
+<li>Establece si se cumplen los supuestos de los test a realizar y ejecuta deacurdo a tus conocimientos justificando</li>
+<li>Determinar si alguna de las algas es mejor biorremediador (incluyendo comparaciones post-hoc)</li>
+<li>Dentro de lo posible utiliza la menor cantidad posible de presupuesto, debes utilizar el presupuesto que te queda para proponer una medida de biorremediación</li>
+</ul>
+<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Acuarios/?showcase=0" width="672" height="800px">
+</iframe>
+</div>
+<div id="referencias-1" class="section level2">
+<h2><span class="header-section-number">5.4</span> Referencias</h2>
+
+</div>
+</div>
+<h3> Referencias</h3>
+<div id="refs" class="references">
+<div id="ref-tukey1977some">
+<p>Tukey, John W. 1977. “Some Thoughts on Clinical Trials, Especially Problems of Multiplicity.” <em>Science</em> 198 (4318). American Asociation for the Advancement of Science: 679–84.</p>
+</div>
+<div id="ref-morgan2007p">
+<p>Morgan, John F. 2007. “P Value Fetishism and Use of the Bonferroni Adjustment.” <em>Evidence-Based Mental Health</em> 10 (2). BMJ Publishing Group LTD: 34.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="t-student.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Refs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["AyduantiaStats.pdf", "AyduantiaStats.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

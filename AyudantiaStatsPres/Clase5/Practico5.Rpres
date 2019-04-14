@@ -1,0 +1,249 @@
+<style>
+.reveal h1, .reveal h2, .reveal h3 {
+  word-wrap: normal;
+  -moz-hyphens: none;
+}
+</style>
+
+<style>
+.small-code pre code {
+  font-size: 1em;
+}
+</style>
+
+Prueba t de Student
+========================================================
+author: Derek Corcoran
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+autosize: true
+transition: rotate
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+```
+
+
+En este práctico
+========================================================
+incremental:true
+
+* Probaremos el paquete `learnr`
+* Pruebas de t de para una muestra
+* Pruebas de t para dos muestras
+* Supuestos y alternativas a la prueba **t de student**
+
+Prueba de una muestra
+========================================================
+incremental:true
+
+* $H_0$ media de una población = una media teórica 
+* Ejemplo erupciones del géiser *Old Faithful*
+* Guardaparque dice que géiser erupta cada 1 hora
+* Base de datos `faithful`
+
+Funcion t.test()
+==============
+incremental:true
+class: small-code
+
+* **x:** Un vector con los valores numéricos de a poner a prueba
+* **mu:** La media teórica a poner a prueba
+* **alternative:** Puede ser "two.sided", "less" o "greater", dependiendo de si 
+
+```{r, echo=TRUE}
+data("faithful")
+t.test(x = faithful$waiting, mu = 60, alternative = "two.sided")
+```
+
+Ejercicio 1
+=============
+incremental:true
+
+* Base de datos `airquality` 
+* Partículas de ozono cada día de Mayo a Septiembre de 1973 entre 13:00 y 15:00
+* Disminuir a la mitad los pasajes del metro de Nueva York los meses que en promedio tengan sobre 55 ppb. 
+* Comprobar estadisticamente que meses tienen promedios sobre 55.
+* ¿Si se tienen todos los días por que hay que hacer prueba estadística?
+* Generen una tabla resumen con las medias y desviaciones estandar de ozono para cada mes
+
+Resumen por meses
+===========
+incremental:true
+class: small-code
+
+```{r, echo=TRUE, eval=FALSE}
+library(tidyverse)
+SummMonth <- airquality %>% group_by(Month) %>% summarize(Mean = mean(Ozone, na.rm = TRUE), SD = sd(Ozone, na.rm = TRUE))
+```
+
+```{r}
+SummMonth <- airquality %>% group_by(Month) %>% summarize(Mean = mean(Ozone, na.rm = TRUE), SD = sd(Ozone, na.rm = TRUE))
+knitr::kable(SummMonth)
+```
+
+Prueba de t
+===========
+incremental:true
+class: small-code
+
+```{r, echo = TRUE}
+AirJuly <- airquality %>% filter(Month == 7)
+AirAug <- airquality %>% filter(Month == 8)
+t.test(AirJuly$Ozone, mu = 55, alternative = "greater")
+t.test(AirAug$Ozone, mu = 55, alternative = "greater")
+```
+
+Prueba de t
+===========
+
+¿En que meses se debiera aplicar el descuento?
+
+Pruebas de 2 muestras
+========
+incremental:true
+class: small-code
+
+```{r}
+data("mtcars")
+mt <- mtcars
+mt$am <- ifelse(mtcars$am  == 0, "automatico", "manual")
+mt <- as.data.frame(mt)
+ggplot(mt, aes(x = am, y = mpg)) + geom_boxplot() + geom_jitter(aes(color = am))
+```
+
+***
+
+* <small>En base de datos `mtcars` columna *am* designa si un vehiculo es automático (0) o manual (1)</small> 
+* <small>Para prueba t de dos muestras debemos agregar el argumento `var.equal`</small>
+* <small>Usamos nuevamente simbolo ~ explicado por</small>
+
+```{r, echo =TRUE}
+t.test(mpg ~ am, data = mtcars, var.equal =TRUE)
+```
+
+
+Ejercicio 2
+===========
+incremental:true
+class: small-code
+
+* Base de datos `BeerDark` en webcursos o en el siguiente [link](https://archive.org/download/BeerDark/BeerDark.csv). 
+* **Estilo:** Separa las cervezas entre Porters y Stouts
+* **Grado_Alcoholico:** El grado alcoholico de las cervezas
+* **Amargor:** Valor IBU (International Bittering Units), a mayor valor más amarga la cerveza
+* **Color:** A mayor valor más oscura la cerveza.
+* Determinar si las cervezas Porter y Stouts son distintas en grado alcoholico, amargor y/o color. 
+
+Ejercicio 2
+===========
+incremental:true
+class: small-code
+
+```{r, echo =TRUE}
+BeerDark <- read_csv("https://archive.org/download/BeerDark/BeerDark.csv")
+t.test(Amargor ~ Estilo, var.equal =TRUE, data = BeerDark)
+```
+
+Supuestos de prueba t
+==========
+incremental:true
+class: small-code
+
+* **Independencia de las observaciones**
+* **Distribución normal de los datos en cada grupo**
+* Homogeneidad de varianza
+
+Normalidad
+============
+incremental:true
+class: small-code
+
+```{r, echo = TRUE}
+hist(faithful$waiting, xlab = "Minutos de espera entre erupciones")
+```
+
+Normalidad
+============
+incremental:true
+class: small-code
+
+```{r, echo = TRUE}
+qqnorm(faithful$waiting)
+```
+
+Normalidad
+============
+incremental:true
+class: small-code
+
+```{r, echo = TRUE}
+shapiro.test(faithful$waiting)
+```
+
+Alternativa Mann-Whitney
+=====================
+incremental:true
+class: small-code
+
+* Igual que `t.test` pero `wilcox.test`
+
+```{r, echo=TRUE}
+data("faithful")
+wilcox.test(x = faithful$waiting, mu = 60, alternative = "two.sided")
+```
+
+Prueba dos muestras dividir en clases
+===========
+class: small-code
+
+
+```{r, echo = TRUE}
+manuales <- mtcars %>% filter(am == 1)
+hist(manuales$mpg, xlim = c(10,35), ylim = c(0,5))
+```
+
+***
+
+```{r, echo = TRUE}
+autos <- mtcars %>% filter(am == 0)
+hist(autos$mpg, xlim = c(10,35), ylim = c(0,5))
+```
+
+Prueba dos muestras dividir en clases
+===========
+class: small-code
+
+```{r, echo = TRUE, fig.cap= "QQplot de eficiencia de vehiculos con cambios manuales"}
+qqnorm(manuales$mpg)
+```
+
+Homogeneidad de varianza
+=========
+class: small-code
+
+```{r, echo=TRUE}
+ggplot(mtcars, aes(x = factor(am), y = mpg)) + geom_boxplot()
+```
+
+***
+
+```{r, echo = TRUE}
+bartlett.test(mpg ~ am, data = mtcars)
+```
+
+
+Mann-Whitney 2 muestras
+=====================
+
+```{r, echo =TRUE}
+wilcox.test(mpg ~ am, data = mtcars)
+```
+
+Ejercicio 3
+==============
+incremental:true
+
+* Evalue basado en histograma, qqplot y test de shapiro si se debe reevaluar la hipótesis para los meses de julio y agosto y si es necesario haga una nueva prueba
+
+* Evalúe si es necesario revaluar la hipotesis de que el amargor es distinto entre ambos estilos de cerveza y si es necesario haga una nueva prueba

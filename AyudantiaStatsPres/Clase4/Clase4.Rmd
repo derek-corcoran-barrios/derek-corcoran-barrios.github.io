@@ -66,9 +66,9 @@ ggplot(Poder, aes(x = x + 5, y = probabilidad)) + geom_line(aes(color= Calibraci
 ## Efecto de beta y alfa {.build}
 
 * ¿cual tiene mas probabilidad de sonar cuando no hay fuego?
-    + $\alpha$ alto
+    + 1 - $\alpha$ alto
 * ¿Cuál tiene mas probabilidad de no sonar cuando hay fuego?
-    + $\beta$ alto
+    + 1 - $\beta$ alto
 
 ***
 
@@ -144,35 +144,4 @@ DietN19 <- diet %>% group_by(Diet) %>% sample_n(19)
 summary(aov(weightLoss ~ Diet, data = DietN19))
 ```
 
-
-## Tarea 1 {.small .build}
-
-* En guía, ojala usando [rmarkdown](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
-* Problema contaminación en ríos con pato corta corriente
-
-```{r}
-MuestraPatos <- read_csv("MuestraPatos.csv")
-ggplot(MuestraPatos, aes(x = rio, y = mortalidad)) + geom_boxplot() + geom_jitter(aes(color = rio)) + theme_classic()
-```
-
-***
-
-```{r}
-knitr::kable(broom::tidy(aov(mortalidad ~ rio, data = MuestraPatos)), digits = 2)
-```
-
-
-## Shiny app en linea {.build}
-
-[Shiny](https://derek-corcoran.shinyapps.io/MinimosCuadrados/)
-
-## Prueba de Mann-Whitney en R
-
-* Alternativa a t.test cuando no se cumplen los supuestos de normalidad
-* Probaremos si hay diferencias en eficiencia de combustible con vehiculos de cambios automaticos o manuales
-
-```{r}
-wilcox.test(mpg ~ am, data = mtcars)
-
-```
 
