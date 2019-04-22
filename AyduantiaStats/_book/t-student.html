@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-04-10">
+<meta name="date" content="2019-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -138,7 +138,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="Supuestos.html"><a href="Supuestos.html#referencias"><i class="fa fa-check"></i><b>2.5</b> Referencias</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="Poder.html"><a href="Poder.html"><i class="fa fa-check"></i><b>3</b> Análisis de poder y primera tarea</a><ul>
+<li class="chapter" data-level="3" data-path="Poder.html"><a href="Poder.html"><i class="fa fa-check"></i><b>3</b> Análisis de poder</a><ul>
 <li class="chapter" data-level="3.1" data-path="Poder.html"><a href="Poder.html#obejtivos-del-practico"><i class="fa fa-check"></i><b>3.1</b> Obejtivos del práctico</a></li>
 <li class="chapter" data-level="3.2" data-path="Poder.html"><a href="Poder.html#matriz-de-confusion"><i class="fa fa-check"></i><b>3.2</b> Matriz de confusión</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="Poder.html"><a href="Poder.html#poder-y-matriz-de-confusion"><i class="fa fa-check"></i><b>3.2.1</b> Poder y matriz de confusión</a></li>
@@ -163,7 +163,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3" data-path="posthoc.html"><a href="posthoc.html#tarea-1"><i class="fa fa-check"></i><b>5.3</b> Tarea 1</a></li>
 <li class="chapter" data-level="5.4" data-path="posthoc.html"><a href="posthoc.html#referencias-1"><i class="fa fa-check"></i><b>5.4</b> Referencias</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>6</b> Referencias</a></li>
+<li class="chapter" data-level="6" data-path="Formula.html"><a href="Formula.html"><i class="fa fa-check"></i><b>6</b> Como formular tu ANOVA</a><ul>
+<li class="chapter" data-level="6.1" data-path="Formula.html"><a href="Formula.html#anovas"><i class="fa fa-check"></i><b>6.1</b> ANOVA(s)</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="Formula.html"><a href="Formula.html#anova-simple"><i class="fa fa-check"></i><b>6.1.1</b> ANOVA simple</a></li>
+<li class="chapter" data-level="6.1.2" data-path="Formula.html"><a href="Formula.html#anova-factorial"><i class="fa fa-check"></i><b>6.1.2</b> ANOVA factorial</a></li>
+<li class="chapter" data-level="6.1.3" data-path="Formula.html"><a href="Formula.html#anova-anidado-o-jerarquico"><i class="fa fa-check"></i><b>6.1.3</b> ANOVA anidado o jerarquico</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="Formula.html"><a href="Formula.html#variables-fijas-vs-aleatoreas"><i class="fa fa-check"></i><b>6.2</b> Variables fijas vs aleatoreas</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="Formula.html"><a href="Formula.html#mas-casos-y-resumen"><i class="fa fa-check"></i><b>6.2.1</b> Más casos y resumen</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="Formula.html"><a href="Formula.html#referencias-2"><i class="fa fa-check"></i><b>6.3</b> Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>7</b> Referencias</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -187,6 +198,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="t-student" class="section level1">
 <h1><span class="header-section-number">Práctico 4</span> Prueba t de Student</h1>
 <p>Para este capitulo necesitas tener instalado el paquete <em>tidyverse</em>, también ayuda tener el paquete <em>broom</em>. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase5/Clase5.html">link</a>. Además hay una forma interactiva de esta guía en el siguiente <a href="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Test/Interactivo5/">link</a>.</p>
+<p>El video de la clase se encuentra disponible en este <a href="https://youtu.be/WoJ3wvFTejU?t=2279">link</a>.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WoJ3wvFTejU?start=2279" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
 <p>Puedes encontrar una versión interactiva de esta guía <a href="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo5/">aquí</a>.</p>
 <p>La prueba t de student fue desarrollada por Gosset cuando trabajaba para la cervecería Guinness <span class="citation">(Student <a href="#ref-student1908probable">1908</a>)</span>. Esta prueba permite comparar las medias de una muestra con la media teórica de una población, o comparar dos poblaciones. Una de las características de la prueba de student, es que permite la alternativa de ver si dos medias son diferentes o, si uno busca más confianza determinar si una media es mayor, o menor que otra. Para la prueba t de Student, se determina un valor de t, usando la siguiente formula (ecuación <a href="t-student.html#eq:tStud">(4.1)</a>):</p>
 <span class="math display" id="eq:tStud">\[\begin{equation} 

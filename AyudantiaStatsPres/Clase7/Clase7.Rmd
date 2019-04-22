@@ -1,0 +1,265 @@
+---
+title: "Práctico 6 Como formular tu ANOVA"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    logo: puc_logo.jpg
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+options("kableExtra.html.bsTable" = T)
+library(kableExtra)
+```
+
+## ANOVA {.build}
+
+* Muchos ANOVA(s)
+    + ANOVA
+    + ANOVA factorial o en bloque
+    + ANOVA anidado o jerarquico
+    + ANOVA desbalanceado
+    + al infinito
+    
+## ANOVA simple {.small .build}
+
+* Varios grupos comparten una variable que creemos que es diferente entre grupos
+    + por ejemplo ancho de sepalo puede ser differente entre tres especies de *Iris*
+    
+```{r}
+data(iris)
+IRISANOVA <- aov(Sepal.Width ~ Species, data = iris)
+summary(IRISANOVA)
+```
+
+## ANOVA simple {.small .build}
+
+```{r, echo=FALSE}
+ggplot(iris, aes(x = Species, y = Sepal.Width)) + geom_boxplot(aes(fill = Species)) + theme(legend.position = "bottom") + theme_classic()
+```
+
+
+## ANOVA factorial {.small .build}
+
+* Más de un factor puede afectar nuestra variable respuesta
+* Además interacciones
+* Ejemplo: Economía de combustible en mtcars según si es automático o manual y el número de cilindros que tiene
+
+```{r, echo=FALSE}
+mt <- mtcars
+mt$am <- ifelse(mt$am == 0, "Automatic", "Manual")
+```
+
+```{r}
+ANOVA.AUTO <- aov(mpg ~ am + cyl + am:cyl, data = mt)
+summary(ANOVA.AUTO)
+```
+
+
+## ANOVA factorial {.build}
+
+```{r, echo = FALSE}
+ggplot(mt, aes(x = factor(cyl), y = mpg)) + geom_boxplot(aes(fill = am)) + geom_jitter(aes(color = am)) + xlab("cylinders") + theme_classic() + theme(legend.position = "bottom")
+```
+
+## ANOVA factorial {.build}
+
+```{r, echo = FALSE}
+mt <- mt %>% group_by(am, cyl) %>% summarise(MeanMPG = mean(mpg), SDMPG = sd(mpg))
+
+ggplot(mt, aes(x = factor(cyl), y = MeanMPG)) + geom_line(aes(color = am))+ geom_errorbar(aes(ymin = MeanMPG - SDMPG, ymax = MeanMPG + SDMPG, color = am), width = 0.2) + geom_point(aes(color = am)) + xlab("cylinders") + theme_classic() + theme(legend.position = "bottom")
+```
+
+## Interacciones
+
+```{r, echo = FALSE}
+set.seed(2018)
+Aa <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "A", Var2 ="a")
+set.seed(2017)
+Ab <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "A", Var2 ="b")
+set.seed(2018)
+Ba <- data.frame(Resp = rnorm(30, mean = 20, sd = 4), Var1 = "B", Var2 ="a")
+set.seed(2017)
+Bb <- data.frame(Resp = rnorm(30, mean = 20, sd = 4), Var1 = "B", Var2 ="b")
+set.seed(2018)
+Ca <- data.frame(Resp = rnorm(30, mean = 15, sd = 4), Var1 = "C", Var2 ="a")
+set.seed(2017)
+Cb  <- data.frame(Resp = rnorm(30, mean = 15, sd = 4), Var1 = "C", Var2 ="b")
+Var1 <- list(Aa,Ba,Ca,Ab,Bb,Cb)
+Var1 <- do.call(rbind, Var1)
+
+SummVar1 <-  Var1 %>%  group_by(Var2, Var1) %>% summarise(MeanResp = mean(Resp), SD =sd(Resp)) %>% mutate(Graph = "A")
+
+
+
+set.seed(2018)
+Aa <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "A", Var2 ="a")
+set.seed(2017)
+Ab <- data.frame(Resp = rnorm(30, mean = 20, sd = 4), Var1 = "A", Var2 ="b")
+set.seed(2016)
+Ba <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "B", Var2 ="a")
+set.seed(2018)
+Bb <- data.frame(Resp = rnorm(30, mean = 20, sd = 4), Var1 = "B", Var2 ="b")
+set.seed(2017)
+Ca <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "C", Var2 ="a")
+set.seed(2016)
+Cb  <- data.frame(Resp = rnorm(30, mean = 20, sd = 4), Var1 = "C", Var2 ="b")
+Var2 <- list(Aa,Ba,Ca,Ab,Bb,Cb)
+Var2 <- do.call(rbind, Var2)
+
+SummVar2 <-  Var2 %>%  group_by(Var2, Var1) %>% summarise(MeanResp = mean(Resp), SD =sd(Resp)) %>% mutate(Graph = "B")
+
+set.seed(2018)
+Aa <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "A", Var2 ="a")
+set.seed(2017)
+Ab <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "A", Var2 ="b")
+set.seed(2016)
+Ba <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "B", Var2 ="a")
+set.seed(2018)
+Bb <- data.frame(Resp = rnorm(30, mean = 20, sd = 4), Var1 = "B", Var2 ="b")
+set.seed(2017)
+Ca <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "C", Var2 ="a")
+set.seed(2016)
+Cb  <- data.frame(Resp = rnorm(30, mean = 15, sd = 4), Var1 = "C", Var2 ="b")
+Var12 <- list(Aa,Ba,Ca,Ab,Bb,Cb)
+Var12 <- do.call(rbind, Var12)
+
+SummVar12 <-  Var12 %>%  group_by(Var2, Var1) %>% summarise(MeanResp = mean(Resp), SD =sd(Resp)) %>% mutate(Graph = "C")
+
+
+set.seed(2018)
+Aa <- data.frame(Resp = rnorm(30, mean = 15, sd = 4), Var1 = "A", Var2 ="a")
+set.seed(2017)
+Ab <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "A", Var2 ="b")
+set.seed(2016)
+Ba <- data.frame(Resp = rnorm(30, mean = 20, sd = 4), Var1 = "B", Var2 ="a")
+set.seed(2018)
+Bb <- data.frame(Resp = rnorm(30, mean = 20, sd = 4), Var1 = "B", Var2 ="b")
+set.seed(2017)
+Ca <- data.frame(Resp = rnorm(30, mean = 30, sd = 4), Var1 = "C", Var2 ="a")
+set.seed(2016)
+Cb  <- data.frame(Resp = rnorm(30, mean = 15, sd = 4), Var1 = "C", Var2 ="b")
+Var21 <- list(Aa,Ba,Ca,Ab,Bb,Cb)
+Var21 <- do.call(rbind, Var21)
+
+SummVar21 <-  Var21 %>%  group_by(Var2, Var1) %>% summarise(MeanResp = mean(Resp), SD =sd(Resp)) %>% mutate(Graph = "D")
+
+DF <- bind_rows(SummVar1, SummVar2, SummVar12, SummVar21)
+
+ggplot(DF,aes(x = Var1, y = MeanResp, group = Var2)) + geom_line(aes(color = Var2)) + geom_point(aes(color = Var2)) + geom_errorbar(aes(ymin = MeanResp - SD, ymax = MeanResp + SD, color = Var2), width = 0.1) + theme_classic() + ylim(c(10,35)) + facet_wrap(~Graph)
+```
+
+## Interacciones
+
+
+```{r, echo = FALSE}
+knitr::kable(broom::tidy(aov(Resp ~ Var1 + Var2 + Var1:Var2, data = Var2)), digits = c(0, 0, 2, 2, 2, 5)) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+## Interacciones
+
+```{r, echo = FALSE}
+ggplot(DF,aes(x = Var1, y = MeanResp, group = Var2)) + geom_line(aes(color = Var2)) + geom_point(aes(color = Var2)) + geom_errorbar(aes(ymin = MeanResp - SD, ymax = MeanResp + SD, color = Var2), width = 0.1) + theme_classic() + ylim(c(10,35)) + facet_wrap(~Graph)
+```
+
+## Interacciones
+
+```{r, echo = FALSE}
+knitr::kable(broom::tidy(aov(Resp ~ Var1 + Var2 + Var1:Var2, data = Var21)), digits = c(0, 0, 2, 2, 2, 5)) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+## Interacciones
+
+```{r, echo = FALSE}
+ggplot(DF,aes(x = Var1, y = MeanResp, group = Var2)) + geom_line(aes(color = Var2)) + geom_point(aes(color = Var2)) + geom_errorbar(aes(ymin = MeanResp - SD, ymax = MeanResp + SD, color = Var2), width = 0.1) + theme_classic() + ylim(c(10,35)) + facet_wrap(~Graph)
+```
+
+## Interacciones
+
+```{r, echo = FALSE}
+knitr::kable(broom::tidy(aov(Resp ~ Var1 + Var2 + Var1:Var2, data = Var12)), digits = c(0, 0, 2, 2, 2, 5)) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+## Interacciones
+
+```{r, echo = FALSE}
+ggplot(DF,aes(x = Var1, y = MeanResp, group = Var2)) + geom_line(aes(color = Var2)) + geom_point(aes(color = Var2)) + geom_errorbar(aes(ymin = MeanResp - SD, ymax = MeanResp + SD, color = Var2), width = 0.1) + theme_classic() + ylim(c(10,35)) + facet_wrap(~Graph)
+```
+
+## Interacciones
+
+```{r, echo = FALSE}
+knitr::kable(broom::tidy(aov(Resp ~ Var1 + Var2 + Var1:Var2, data = Var1)), digits = c(0, 0, 2, 2, 2, 5)) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+```
+
+## ANOVA anidado o jerarquico {.small .build}
+
+* Tenemos un factor jerarquicamente dentro de otro 
+  + individuos dentro de una especie)
+  + hojas dentro de un árbol
+  + varias medidas dentro de un mismo individuo
+  + en anova si el factor B esta anidado dendtro de A tenemos `A/B`
+* Ejemplo individuos en la base de datos CO2
+
+```{r}
+ANOVAUptake <- aov(uptake  ~  Type + Treatment + Type/Plant, data=CO2)
+summary(ANOVAUptake)
+```
+
+## Variables fijas vs aleatoreas {.small .build}
+
+* **Variables fijas:** Se espera que tengan una influencia predecible y sistemática en sobre lo que queremos explicar. Además usan todos los niveles de un factor (Ejemplo genero)
+    + Uso en `R`: A + B
+* **Variables aleatoreas:** Se espera que su influencia sea impredecible e idiosincratica. Además no se usan todos los niveles de un factor (todos los individuos) A + Error(B)
+
+## Variables fijas vs aleatoreas {.small .build}
+
+```{r}
+ANOVAUptake <- aov(uptake  ~  Type + Treatment + Type:Treatment + Error(Type/Plant), data=CO2)
+summary(ANOVAUptake)
+```
+
+
+## Más casos y resumen {.small .build}
+
+* Caso hipotético $Y$ es la variable a explicar y todo el resto variables explicativas en la base de datos d
+* ANOVA Simple
+```{r, eval=FALSE}
+aov(Y ~ A + B, data=d)
+```
+* para agregar interacciones
+
+```{r, eval=FALSE}
+aov(Y ~ A + B + A:B, data=d)
+```
+Igual a
+
+```{r, eval = FALSE}
+aov(Y ~ A * B, data=d)
+```
+
+## Anovas anidados y variables aleatorias {.small .build}
+
+* B anidado en A
+
+```{r, eval = FALSE}
+aov(Y ~ A/B, data=d)
+```
+
+* A es una variable aleatoria pero B esta anidada en A
+
+```{r, eval = FALSE}
+aov(Y ~ B + Error(A/B), data=d)
+```
+
+
+* B y X interactuan dentro de niveles aleatorios de A
+
+```{r, eval = FALSE}
+aov(Y ~ (B*X) + Error(A/(B*X)), data=d)
+```

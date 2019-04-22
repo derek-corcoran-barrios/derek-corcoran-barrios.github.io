@@ -31,12 +31,39 @@ El paquete *dplyr* es definido por sus autores como una gramática para la manip
 
 Este paquete tiene un gran número de verbos y sería difícil ver todos en una clase, en este capítulo nos enfocaremos en sus funciones más utilizadas, las cuales son:
 
+- *%>%* (pipeline)
 - *group_by* (agrupa datos)
 - *summarize* (resume datos agrupados)
 - *mutate* (genera variables nuevas)
-- *%>%* (pipeline)
 - *filter* (encuentra filas con ciertas condiciones)
 - *select* junto a *starts_with*, *ends_with* o *contains*
+
+en el siguiente video puedes aprender sobre el pipeline (%>%), *group_by* y *summarize*
+
+### Pipeline (%>%)
+
+El pipeline es un simbolo operatorio `%>%` que sirve para realizar varias operaciones de forma secuencial sin recurrir a parentesis anidados o a sobrescribir muúltiples bases de datos.
+
+Para ver como funciona esto como un vector, supongamos que se tiene una variable a la cual se quiere primero obtener su logaritmo, luego su raíz cuadrada y finalmente su promedio con dos cifras significativas. Para realizar esto se debe seguir lo siguiente:
+
+```{r, eval=FALSE}
+x <- c(1,4,6,8)
+y <- round(mean(sqrt(log(x))),2)
+```
+
+Si se utiliza pipeline, el código sería mucho más ordenado. En ese caso, se partiría por el objeto a procesar y luego cada una de las funciones con sus argumentos si es necesario:
+
+```{r, eval=FALSE}
+x <- c(1,4,6,8)
+y <- x %>% log() %>% sqrt() %>% mean() %>% round(2)
+```
+
+```{r, echo=FALSE}
+x <- c(1,4,6,8)
+x %>% log() %>% sqrt() %>% mean() %>% round(2)
+```
+
+El código con pipeline es mucho más fácil de interpretar a primera vista ya que se lee de izquierda a derecha y no de adentro hacia afuera.
 
 ### summarize
 
@@ -134,30 +161,6 @@ knitr::kable(DF[seq(from = 15, to = 150, length.out = 10),], booktabs = TRUE,
 ```
 
 
-### Pipeline (%>%)
-
-El pipeline es un simbolo operatorio `%>%` que sirve para realizar varias operaciones de forma secuencial sin recurrir a parentesis anidados o a sobrescribir muúltiples bases de datos.
-
-Para ver como funciona esto como un vector, supongamos que se tiene una variable a la cual se quiere primero obtener su logaritmo, luego su raíz cuadrada y finalmente su promedio con dos cifras significativas. Para realizar esto se debe seguir lo siguiente:
-
-```{r, eval=FALSE}
-x <- c(1,4,6,8)
-y <- round(mean(sqrt(log(x))),2)
-```
-
-Si se utiliza pipeline, el código sería mucho más ordenado. En ese caso, se partiría por el objeto a procesar y luego cada una de las funciones con sus argumentos si es necesario:
-
-```{r, eval=FALSE}
-x <- c(1,4,6,8)
-y <- x %>% log() %>% sqrt() %>% mean() %>% round(2)
-```
-
-```{r, echo=FALSE}
-x <- c(1,4,6,8)
-x %>% log() %>% sqrt() %>% mean() %>% round(2)
-```
-
-El código con pipeline es mucho más fácil de interpretar a primera vista ya que se lee de izquierda a derecha y no de adentro hacia afuera. EL uso de pipeli se hace aun más importante cuando se usa con un *Data frame*, como se ve en el siguiente ejemplo:
 
 #### El pipeline en data frames
 

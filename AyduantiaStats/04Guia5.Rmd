@@ -2,6 +2,11 @@
 
 Para este capitulo necesitas tener instalado el paquete *tidyverse*, también ayuda tener el paquete *broom*. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase5/Clase5.html). Además hay una forma interactiva de esta guía en el siguiente [link](http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Test/Interactivo5/).
 
+El video de la clase se encuentra disponible en este [link](https://youtu.be/WoJ3wvFTejU?t=2279).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WoJ3wvFTejU?start=2279" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)

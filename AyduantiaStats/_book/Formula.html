@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Práctico 3 Análisis de poder | Practicos de Bioestadística 2</title>
+  <title>Práctico 6 Como formular tu ANOVA | Practicos de Bioestadística 2</title>
   <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Práctico 3 Análisis de poder | Practicos de Bioestadística 2" />
+  <meta property="og:title" content="Práctico 6 Como formular tu ANOVA | Practicos de Bioestadística 2" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Práctico 3 Análisis de poder | Practicos de Bioestadística 2" />
+  <meta name="twitter:title" content="Práctico 6 Como formular tu ANOVA | Practicos de Bioestadística 2" />
   
   <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="Supuestos.html">
-<link rel="next" href="t-student.html">
+<link rel="prev" href="posthoc.html">
+<link rel="next" href="Refs.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -195,142 +195,115 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="Poder" class="section level1">
-<h1><span class="header-section-number">Práctico 3</span> Análisis de poder</h1>
-<p>Para este capitulo necesitas tener instalado el paquete <em>pwr2</em>, también ayuda tener el paquete <em>broom</em>. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase4/Clase4.html">link</a>.</p>
-<p>El video de la clase se encuentra disponible en este <a href="https://youtu.be/WoJ3wvFTejU">link</a>.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/WoJ3wvFTejU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-</iframe>
-<div id="obejtivos-del-practico" class="section level2">
-<h2><span class="header-section-number">3.1</span> Obejtivos del práctico</h2>
+<div id="Formula" class="section level1">
+<h1><span class="header-section-number">Práctico 6</span> Como formular tu ANOVA</h1>
+<p>Para este capitulo necesitas tener instalado el paquete <em>tidyverse</em>, también ayuda tener el paquete <em>broom</em>. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase7/Clase7.html">link</a></p>
+<div id="anovas" class="section level2">
+<h2><span class="header-section-number">6.1</span> ANOVA(s)</h2>
+<p>Si bien el ANOVA puede ser pensado como una extensión de una prueba de T de student, es mucho más complejo que eso, existen muchos tipos de anovas y sus combinaciones, tales como:</p>
 <ul>
-<li>Entender cálculos de poder en base a matriz de confusión</li>
-<li>Primera tarea de práctico</li>
+<li>ANOVA</li>
+<li>ANOVA factorial o en bloque</li>
+<li>ANOVA anidado o jerarquico</li>
+<li>ANOVA desbalanceado</li>
 </ul>
+<p>Tanta es la variedad de ANOVAS que existen muchos libros dedicados exclusivamente a la discusión de este tipo de análisis <span class="citation">(Girden <a href="#ref-girden1992anova">1992</a>)</span></p>
+<div id="anova-simple" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> ANOVA simple</h3>
+<p>En la versión más senilla del ANOVA, varios grupos comparten una variable que creemos que es diferente entre grupos, como por ejemplo ancho de sepalo puede ser differente entre tres especies de <em>Iris</em>, para analizar esto, usaríamos el siguiente código, lo que muestra diferencias en el ancho de sépalo entre especies, lo cual se aprecia en el gráfico 1.</p>
+<pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## Species       2  11.35   5.672   49.16 &lt;2e-16 ***
+## Residuals   147  16.96   0.115                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-47"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-47-1.png" alt="Relación entre el ancho del sépalo y las especies de Iris" width="672" />
+<p class="caption">
+Figura 6.1: Relación entre el ancho del sépalo y las especies de Iris
+</p>
 </div>
-<div id="matriz-de-confusion" class="section level2">
-<h2><span class="header-section-number">3.2</span> Matriz de confusión</h2>
-<p>La matriz de confusión es una herramienta de toma de decisiones, en el caso especial de la toma de decisiones tenemos la siguiente matriz de confusión (Tabla <a href="Poder.html#tab:errores">3.1</a>)</p>
-<table>
-<caption>
-<span id="tab:errores">Tabla 3.1: </span>Tabla de confusión de errores
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Hipótesis nula cierta
-</th>
-<th style="text-align:left;">
-Hipótesis alternativa cierta
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Acepto hipótesis nula
-</td>
-<td style="text-align:left;">
-No hay error
-</td>
-<td style="text-align:left;">
-Error tipo 2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Acepto hipótesis alternativa
-</td>
-<td style="text-align:left;">
-Error tipo 1
-</td>
-<td style="text-align:left;">
-No hay error
-</td>
-</tr>
-</tbody>
-</table>
-<p>Esto puede ser fácilmente ejemplificado con el problema de una alarma de humo (tabla<a href="Poder.html#tab:Confucion">3.2</a>), en este caso cuando la alarma suena y no hay fuego y suena la alarma tenemos un error de tipo 1, en cambio si hay fuego y la alarma no suena tenemos un error de tipo 2</p>
-<table>
-<caption>
-<span id="tab:Confucion">Tabla 3.2: </span>Matriz de confusión de una alarma de incendio
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-No hay fuego
-</th>
-<th style="text-align:left;">
-Hay fuego
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-No suena alarma
-</td>
-<td style="text-align:left;">
-No hay error
-</td>
-<td style="text-align:left;">
-Error tipo 2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Suena alarma
-</td>
-<td style="text-align:left;">
-Error tipo 1
-</td>
-<td style="text-align:left;">
-No hay error
-</td>
-</tr>
-</tbody>
-</table>
-<div id="poder-y-matriz-de-confusion" class="section level3">
-<h3><span class="header-section-number">3.2.1</span> Poder y matriz de confusión</h3>
+</div>
+<div id="anova-factorial" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> ANOVA factorial</h3>
+<p>En el ANOVA factorial, más de un factor puede afectar nuestra variable respuesta. Además, estas variables pueden interactuar, haciendo que el efecto de sobre las muestras sea mas complejo que el efecto de cada variable. Un ejemplo de análisis es la economía de combustible en <code>mtcars</code> según si es automático o manual y el número de cilindros que tiene.</p>
+<p>En este caso modificaremos la base de datos para que el factor am en vez de numerico sea factor:</p>
+<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## am           1  405.2   405.2  46.892 1.93e-07 ***
+## cyl          1  449.5   449.5  52.029 7.50e-08 ***
+## am:cyl       1   29.4    29.4   3.407   0.0755 .  
+## Residuals   28  241.9     8.6                     
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Aquí vemos que si hay una interacción. Las interacciones las notamos rápidamente en figuras como la que vemos en el grafico 2 imagen B, en la cual cada vez que las lineas no sean paralelas diremos que hay una interacción.</p>
+<div class="figure"><span id="fig:unnamed-chunk-49"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-49-1.png" alt="Relación entre el número de cilindros, transmición automática o manual, y la economía de combustible de los vehiculos, la relacion la mostramos como un boxplot (A) y como barras de errores unidas por sus medias (B), esta última interpretación permite ver gráficamente las interacciones entre factores" width="672" />
+<p class="caption">
+Figura 6.2: Relación entre el número de cilindros, transmición automática o manual, y la economía de combustible de los vehiculos, la relacion la mostramos como un boxplot (A) y como barras de errores unidas por sus medias (B), esta última interpretación permite ver gráficamente las interacciones entre factores
+</p>
+</div>
+</div>
+<div id="anova-anidado-o-jerarquico" class="section level3">
+<h3><span class="header-section-number">6.1.3</span> ANOVA anidado o jerarquico</h3>
+<p>En este tipo de ANOVA tenemos un factor jerarquicamente dentro de otro, por ejemplo individuos dentro de una especie, hojas dentro de un árbol o varias medidas dentro de un mismo individuo. En <code>R</code> dentro de la función <code>aov</code>, si el factor <span class="math inline">\(B\)</span> esta anidado dentro de <span class="math inline">\(A\)</span> tenemos <code>A/B</code> como una variable explicativa. Si usamos como ejemplo la de datos <code>CO2</code>, los individuos de cada subespecie estan anidados dentro de cada subespecie. Esto sería analizado con el siguiente codigo:</p>
+<pre><code>##                Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## Type            1   3366    3366  50.017 8.13e-10 ***
+## Treatment       1    988     988  14.685 0.000269 ***
+## Type:Treatment  1    226     226   3.355 0.071152 .  
+## Type:Plant      8    283      35   0.525 0.833637    
+## Residuals      72   4845      67                     
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
+<div id="variables-fijas-vs-aleatoreas" class="section level2">
+<h2><span class="header-section-number">6.2</span> Variables fijas vs aleatoreas</h2>
+<p>En los ANOVA(s), podemos ver dos tipos principales de variables, las cuales son importantes de diferenciar * <strong>Variables fijas:</strong> Se espera que tengan una influencia predecible y sistemática en sobre lo que queremos explicar. Además usan todos los niveles de un factor (Ejemplo genero) + Uso en <code>R</code>: <code>A + B</code> * <strong>Variables aleatorias:</strong> Se espera que su influencia sea impredecible e idiosincratica. Además no se usan todos los niveles de un factor (todos los individuos) <code>A + Error(B)</code></p>
+<p>Si volvemos al ejemplo que hemos trabajado ya en clase, en el cual tratamos cada planta como un factor anidado, podemos decir que estas plantas son una variable aleatoria</p>
+<pre><code>## 
+## Error: Type
+##      Df Sum Sq Mean Sq
+## Type  1   3366    3366
+## 
+## Error: Type:Plant
+##                Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## Treatment       1  988.1   988.1  27.949 0.00074 ***
+## Type:Treatment  1  225.7   225.7   6.385 0.03543 *  
+## Residuals       8  282.8    35.4                    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Error: Within
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Residuals 72   4845   67.29</code></pre>
+<div id="mas-casos-y-resumen" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Más casos y resumen</h3>
+<p>Trabajaremos con un caso hipotético donde <span class="math inline">\(Y\)</span> es la variable a explicar y todo el resto (<span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> y <span class="math inline">\(X\)</span>) son variables explicativas en la base de datos <code>d</code></p>
+<div id="anova-simple-1" class="section level4">
+<h4><span class="header-section-number">6.2.1.1</span> ANOVA Simple</h4>
+</div>
+<div id="anova-con-interacciones" class="section level4">
+<h4><span class="header-section-number">6.2.1.2</span> ANOVA con interacciones</h4>
+<p>Igual a</p>
+</div>
+<div id="anovas-anidados-y-otros-casos-mas-complejos" class="section level4">
+<h4><span class="header-section-number">6.2.1.3</span> Anovas anidados y otros casos más complejos</h4>
 <ul>
-<li>Probabilidad de que suene la alarma cuando no hay fuego
-<ul>
-<li><span class="math inline">\(\alpha\)</span> usualmente 5%</li>
-<li>una de cada 20 alarmas es falsa</li>
-<li>¿Cuál es el <span class="math inline">\(\alpha\)</span> de una alarma de auto?</li>
-</ul></li>
-<li>Probabilidad de que no suene la alarma cuando hay fuego
-<ul>
-<li><span class="math inline">\(\beta\)</span> si es 10% uno de cada 10 fuegos no es detectado</li>
-<li>poder es <span class="math inline">\(1-\beta\)</span> confianza de que fuegos son detectados</li>
-</ul></li>
+<li><p>B anidado en A</p></li>
+<li><p>A es una variable aleatoria pero B esta anidada en A</p></li>
+<li><p>B y X interactuan dentro de niveles aleatorios de A</p></li>
 </ul>
 </div>
 </div>
-<div id="calculo-de-poder-en-r" class="section level2">
-<h2><span class="header-section-number">3.3</span> Calculo de poder en R</h2>
-<p>Para hacer cálculos de poder en ANOVAS de una y dos vías en <em>R</em>, utilizamos el paquete <em>pwr2</em> <span class="citation">(Lu, Liu, and Koestler <a href="#ref-Pengcheng2017">2017</a>)</span>. En este paquete podemos utilizar la función <em>pwr.1way</em> para determinar el poder de un ANOVA de una vía, los argumentos de esta función son:</p>
-<ul>
-<li><em>K</em>: El número de grupos a testear</li>
-<li><em>n</em>: Número de individuos por grupo</li>
-<li><em>Alpha</em>: Nivel de significancia</li>
-<li><em>Delta</em>: Valor mínimo a detectar</li>
-<li><em>Sigma</em>: Desviación estándar de la muestra</li>
-</ul>
-<p>Para cálculos precisos de n necesarios para muestras usar la siguiente app</p>
-<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny3/?showcase=0" width="672" height="600px">
-</iframe>
+</div>
+<div id="referencias-2" class="section level2">
+<h2><span class="header-section-number">6.3</span> Referencias</h2>
 
 </div>
 </div>
 <h3> Referencias</h3>
 <div id="refs" class="references">
-<div id="ref-Pengcheng2017">
-<p>Lu, Pengcheng, Junhao Liu, and Devin Koestler. 2017. <em>Pwr2: Power and Sample Size Analysis for One-Way and Two-Way Anova Models</em>. <a href="https://CRAN.R-project.org/package=pwr2" class="uri">https://CRAN.R-project.org/package=pwr2</a>.</p>
+<div id="ref-girden1992anova">
+<p>Girden, Ellen R. 1992. <em>ANOVA: Repeated Measures</em>. 84. Sage.</p>
 </div>
 </div>
             </section>
@@ -338,8 +311,8 @@ No hay error
           </div>
         </div>
       </div>
-<a href="Supuestos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="t-student.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="posthoc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Refs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-03-22">
+<meta name="date" content="2019-04-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -118,10 +118,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.1" data-path="tidydata.html"><a href="tidydata.html#paquetes-necesarios-para-este-capitulo"><i class="fa fa-check"></i><b>1.1</b> Paquetes necesarios para este capítulo</a></li>
 <li class="chapter" data-level="1.2" data-path="tidydata.html"><a href="tidydata.html#tidy-data"><i class="fa fa-check"></i><b>1.2</b> Tidy data</a></li>
 <li class="chapter" data-level="1.3" data-path="tidydata.html"><a href="tidydata.html#dplyr"><i class="fa fa-check"></i><b>1.3</b> dplyr</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="tidydata.html"><a href="tidydata.html#summarize"><i class="fa fa-check"></i><b>1.3.1</b> summarize</a></li>
-<li class="chapter" data-level="1.3.2" data-path="tidydata.html"><a href="tidydata.html#group_by"><i class="fa fa-check"></i><b>1.3.2</b> group_by</a></li>
-<li class="chapter" data-level="1.3.3" data-path="tidydata.html"><a href="tidydata.html#mutate"><i class="fa fa-check"></i><b>1.3.3</b> mutate</a></li>
-<li class="chapter" data-level="1.3.4" data-path="tidydata.html"><a href="tidydata.html#pipeline"><i class="fa fa-check"></i><b>1.3.4</b> Pipeline (%&gt;%)</a></li>
+<li class="chapter" data-level="1.3.1" data-path="tidydata.html"><a href="tidydata.html#pipeline"><i class="fa fa-check"></i><b>1.3.1</b> Pipeline (%&gt;%)</a></li>
+<li class="chapter" data-level="1.3.2" data-path="tidydata.html"><a href="tidydata.html#summarize"><i class="fa fa-check"></i><b>1.3.2</b> summarize</a></li>
+<li class="chapter" data-level="1.3.3" data-path="tidydata.html"><a href="tidydata.html#group_by"><i class="fa fa-check"></i><b>1.3.3</b> group_by</a></li>
+<li class="chapter" data-level="1.3.4" data-path="tidydata.html"><a href="tidydata.html#mutate"><i class="fa fa-check"></i><b>1.3.4</b> mutate</a></li>
 <li class="chapter" data-level="1.3.5" data-path="tidydata.html"><a href="tidydata.html#filter"><i class="fa fa-check"></i><b>1.3.5</b> filter</a></li>
 <li class="chapter" data-level="1.3.6" data-path="tidydata.html"><a href="tidydata.html#select"><i class="fa fa-check"></i><b>1.3.6</b> select</a></li>
 <li class="chapter" data-level="1.3.7" data-path="tidydata.html"><a href="tidydata.html#joins"><i class="fa fa-check"></i><b>1.3.7</b> Joins</a></li>
@@ -257,15 +257,28 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>El paquete <em>dplyr</em> es definido por sus autores como una gramática para la manipulación de datos. De este modo sus funciones son conocidas como verbos. Un resumen útil de muchas de estas funciones se encuentra en este <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">link</a>.</p>
 <p>Este paquete tiene un gran número de verbos y sería difícil ver todos en una clase, en este capítulo nos enfocaremos en sus funciones más utilizadas, las cuales son:</p>
 <ul>
+<li><em>%&gt;%</em> (pipeline)</li>
 <li><em>group_by</em> (agrupa datos)</li>
 <li><em>summarize</em> (resume datos agrupados)</li>
 <li><em>mutate</em> (genera variables nuevas)</li>
-<li><em>%&gt;%</em> (pipeline)</li>
 <li><em>filter</em> (encuentra filas con ciertas condiciones)</li>
 <li><em>select</em> junto a <em>starts_with</em>, <em>ends_with</em> o <em>contains</em></li>
 </ul>
+<p>en el siguiente video puedes aprender sobre el pipeline (%&gt;%), <em>group_by</em> y <em>summarize</em></p>
+<div id="pipeline" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Pipeline (%&gt;%)</h3>
+<p>El pipeline es un simbolo operatorio <code>%&gt;%</code> que sirve para realizar varias operaciones de forma secuencial sin recurrir a parentesis anidados o a sobrescribir muúltiples bases de datos.</p>
+<p>Para ver como funciona esto como un vector, supongamos que se tiene una variable a la cual se quiere primero obtener su logaritmo, luego su raíz cuadrada y finalmente su promedio con dos cifras significativas. Para realizar esto se debe seguir lo siguiente:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)
+y &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">mean</span>(<span class="kw">sqrt</span>(<span class="kw">log</span>(x))), <span class="dv">2</span>)</code></pre></div>
+<p>Si se utiliza pipeline, el código sería mucho más ordenado. En ese caso, se partiría por el objeto a procesar y luego cada una de las funciones con sus argumentos si es necesario:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)
+y &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">log</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 0.99</code></pre>
+<p>El código con pipeline es mucho más fácil de interpretar a primera vista ya que se lee de izquierda a derecha y no de adentro hacia afuera.</p>
+</div>
 <div id="summarize" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> summarize</h3>
+<h3><span class="header-section-number">1.3.2</span> summarize</h3>
 <p>La función <code>summarize</code> toma los datos de un data frame y los resume. Para usar esta función, el primer argumento que tomaríamos sería un data frame, se continúa del nombre que queremos darle a una variable resumen, seguida del signo = y luego la fórmula a aplicar a una o mas columnas. COmo un ejemplo se utilizará la base de datos <code>iris</code> <span class="citation">(Anderson <a href="#ref-anderson1935irises">1935</a>)</span> que viene en <code>R</code> y de las cual podemos ver parte de sus datos en la tabla <a href="tidydata.html#tab:iris">1.1</a></p>
 <table>
 <caption>
@@ -495,7 +508,7 @@ SD.Petal.Length
 </table>
 </div>
 <div id="group_by" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> group_by</h3>
+<h3><span class="header-section-number">1.3.3</span> group_by</h3>
 <p>La función <code>group_by</code> por si sola no genera cambios visibles en las bases de datos. Sin embargo, al ser utilizada en conjunto con <code>summarize</code> permite resumir una variable agrupada (usualmente) basada en una o más variables categóricas.</p>
 <p>Se puede ver que para el ejemplo con el caso de las plantas del género <em>Iris</em>, el resumen que se obtiene en el caso de la tabla <a href="tidydata.html#tab:SummaryPetaltab">1.2</a> no es tan útil considerando que tenemos tres especies presentes. Si se quiere ver el promedio del largo del pétalo por especie, se debe ocupar la función <code>group_by</code> de la siguiente forma:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BySpecies &lt;-<span class="st"> </span><span class="kw">group_by</span>(iris, Species)
@@ -556,7 +569,7 @@ virginica
 </tbody>
 </table>
 <div id="group_by-en-mas-de-una-variable" class="section level4">
-<h4><span class="header-section-number">1.3.2.1</span> group_by en más de una variable</h4>
+<h4><span class="header-section-number">1.3.3.1</span> group_by en más de una variable</h4>
 <p>Se puede usar la función <code>group_by</code> en más de una variable, y esto generaría un resumen anidado. Como ejemplo se usará la base de datos <code>mtcars</code> presente en R <span class="citation">(Henderson and Velleman <a href="#ref-henderson1981building">1981</a>)</span>. Esta base de datos presenta una variable llamada <em>mpg</em> (miles per gallon) y una medida de eficiencia de combustible. Se resumirá la información en base a la variable <em>am</em> (que se refiere al tipo de transmisión, donde 0 es automático y 1 es manual) y al número de cilindros del motor. Para eso se utilizará el siguiente código:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(mtcars, cyl, am)
 Eficiencia &lt;-<span class="st"> </span><span class="kw">summarize</span>(Grouped, <span class="dt">Eficiencia =</span> <span class="kw">mean</span>(mpg))</code></pre></div>
@@ -650,7 +663,7 @@ Eficiencia
 </div>
 </div>
 <div id="mutate" class="section level3">
-<h3><span class="header-section-number">1.3.3</span> mutate</h3>
+<h3><span class="header-section-number">1.3.4</span> mutate</h3>
 <p>Esta función tiene como objetivo crear variables nuevas basadas en otras variables. Es muy facil de usar, como argumento se usa el nombre de la variable nueva que se quiere crear y se realiza una operación con variables que ya estan ahí. Por ejemplo, si se continúa el trabajo con la base de datos <em>Iris</em>, al crear una nueva variable que sea la razón entre el largo del pétalo y el del sépalo, resulta lo siguiente:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DF &lt;-<span class="st"> </span><span class="kw">mutate</span>(iris, <span class="dt">Petal.Sepal.Ratio =</span> Petal.Length<span class="op">/</span>Sepal.Length)</code></pre></div>
 <p>El resultado de esta operación es la tabla <a href="tidydata.html#tab:Mutate">1.5</a>. Siempre la variable que se acaba de crear aparecerá al final del data frame.</p>
@@ -883,18 +896,6 @@ virginica
 </tr>
 </tbody>
 </table>
-</div>
-<div id="pipeline" class="section level3">
-<h3><span class="header-section-number">1.3.4</span> Pipeline (%&gt;%)</h3>
-<p>El pipeline es un simbolo operatorio <code>%&gt;%</code> que sirve para realizar varias operaciones de forma secuencial sin recurrir a parentesis anidados o a sobrescribir muúltiples bases de datos.</p>
-<p>Para ver como funciona esto como un vector, supongamos que se tiene una variable a la cual se quiere primero obtener su logaritmo, luego su raíz cuadrada y finalmente su promedio con dos cifras significativas. Para realizar esto se debe seguir lo siguiente:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)
-y &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">mean</span>(<span class="kw">sqrt</span>(<span class="kw">log</span>(x))), <span class="dv">2</span>)</code></pre></div>
-<p>Si se utiliza pipeline, el código sería mucho más ordenado. En ese caso, se partiría por el objeto a procesar y luego cada una de las funciones con sus argumentos si es necesario:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)
-y &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">log</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 0.99</code></pre>
-<p>El código con pipeline es mucho más fácil de interpretar a primera vista ya que se lee de izquierda a derecha y no de adentro hacia afuera. EL uso de pipeli se hace aun más importante cuando se usa con un <em>Data frame</em>, como se ve en el siguiente ejemplo:</p>
 <div id="el-pipeline-en-data-frames" class="section level4">
 <h4><span class="header-section-number">1.3.4.1</span> El pipeline en data frames</h4>
 <p>POr ejemplo se quiere resumir la variable recien creada de la razón entre el sépalo y el petalo. Para hacer esto, si se partiera desde la base de datos original, tomaría varias líneas de código y la creación de múltiples bases de datos intermedias</p>

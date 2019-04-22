@@ -1,0 +1,134 @@
+# Como formular tu ANOVA {#Formula}
+
+Para este capitulo necesitas tener instalado el paquete *tidyverse*, también ayuda tener el paquete *broom*. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase7/Clase7.html)
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+options("kableExtra.html.bsTable" = T)
+library(kableExtra)
+```
+
+## ANOVA(s)
+
+Si bien el ANOVA puede ser pensado como una extensión de una prueba de T de student, es mucho más complejo que eso, existen muchos tipos de anovas y sus combinaciones, tales como:
+
+* ANOVA
+* ANOVA factorial o en bloque
+* ANOVA anidado o jerarquico
+* ANOVA desbalanceado
+
+Tanta es la variedad de ANOVAS que existen muchos libros dedicados exclusivamente a la discusión de este tipo de análisis [@girden1992anova]
+    
+### ANOVA simple
+
+En la versión más senilla del ANOVA, varios grupos comparten una variable que creemos que es diferente entre grupos, como por ejemplo ancho de sepalo puede ser differente entre tres especies de *Iris*, para analizar esto, usaríamos el siguiente código, lo que muestra diferencias en el ancho de sépalo entre especies, lo cual se aprecia en el gráfico 1.
+    
+```{r}
+data(iris)
+IRISANOVA <- aov(Sepal.Width ~ Species, data = iris)
+summary(IRISANOVA)
+```
+
+```{r, echo=FALSE, fig.cap="Relación entre el ancho del sépalo y las especies de Iris"}
+ggplot(iris, aes(x = Species, y = Sepal.Width)) + geom_boxplot(aes(fill = Species)) + theme(legend.position = "bottom") + theme_classic()
+```
+
+
+### ANOVA factorial
+
+En el ANOVA factorial, más de un factor puede afectar nuestra variable respuesta. Además, estas variables pueden interactuar, haciendo que el efecto de sobre las muestras sea mas complejo que el efecto de cada variable.  Un ejemplo de análisis es la economía de combustible en `mtcars` según si es automático o manual y el número de cilindros que tiene. 
+
+En este caso modificaremos la base de datos para que el factor am en vez de numerico sea factor:
+
+```{r}
+mt <- mtcars
+mt$am <- ifelse(mt$am == 0, "Automatic", "Manual")
+ANOVA.AUTO <- aov(mpg ~ am + cyl + am:cyl, data = mt)
+summary(ANOVA.AUTO)
+```
+
+Aquí vemos que si hay una interacción. Las interacciones las notamos rápidamente en figuras como la que vemos en el grafico 2 imagen B, en la cual cada vez que las lineas no sean paralelas diremos que hay una interacción.
+
+```{r, echo = FALSE, fig.cap="Relación entre el número de cilindros, transmición automática o manual, y la economía de combustible de los vehiculos, la relacion la mostramos como un boxplot (A) y como barras de errores unidas por sus medias (B), esta última interpretación permite ver gráficamente las interacciones entre factores"}
+A <- ggplot(mt, aes(x = factor(cyl), y = mpg)) + geom_boxplot(aes(fill = am)) + geom_jitter(aes(color = am)) + xlab("cylinders") + theme_classic() + theme(legend.position = "bottom") + ggtitle("A")
+
+mt <- mt %>% group_by(am, cyl) %>% summarise(MeanMPG = mean(mpg), SDMPG = sd(mpg))
+
+B <- ggplot(mt, aes(x = factor(cyl), y = MeanMPG, group = am)) + geom_line(aes(color = am))+ geom_errorbar(aes(ymin = MeanMPG - SDMPG, ymax = MeanMPG + SDMPG, color = am), width = 0.2) + geom_point(aes(color = am)) + xlab("cylinders") + theme_classic() + theme(legend.position = "bottom") + ggtitle("B")
+
+library(gridExtra)
+
+grid.arrange(A, B, ncol=2)
+```
+
+
+### ANOVA anidado o jerarquico
+
+En este tipo de ANOVA tenemos un factor jerarquicamente dentro de otro, por ejemplo individuos dentro de una especie, hojas dentro de un árbol o varias medidas dentro de un mismo individuo. En `R` dentro de la función `aov`, si el factor $B$ esta anidado dentro de $A$ tenemos `A/B` como una variable explicativa. Si usamos como ejemplo la de datos `CO2`, los individuos de cada subespecie estan anidados dentro de cada subespecie. Esto sería analizado con el siguiente codigo:
+
+```{r}
+ANOVAUptake <- aov(uptake  ~  Type + Treatment + Type:Treatment + Type/Plant, data=CO2)
+summary(ANOVAUptake)
+```
+
+
+## Variables fijas vs aleatoreas
+
+En los ANOVA(s), podemos ver dos tipos principales de variables, las cuales son importantes de diferenciar
+* **Variables fijas:** Se espera que tengan una influencia predecible y sistemática en sobre lo que queremos explicar. Además usan todos los niveles de un factor (Ejemplo genero)
+    + Uso en `R`: `A + B`
+* **Variables aleatorias:** Se espera que su influencia sea impredecible e idiosincratica. Además no se usan todos los niveles de un factor (todos los individuos) `A + Error(B)`
+
+Si volvemos al ejemplo que hemos trabajado ya en clase, en el cual tratamos cada planta como un factor anidado, podemos decir que estas plantas son una variable aleatoria
+
+```{r}
+ANOVAUptake <- aov(uptake  ~  Type + Treatment + Type:Treatment + Error(Type/Plant), data=CO2)
+summary(ANOVAUptake)
+```
+
+
+### Más casos y resumen
+
+Trabajaremos con un caso hipotético donde $Y$ es la variable a explicar y todo el resto ($A$, $B$ y $X$) son variables explicativas en la base de datos `d`
+
+#### ANOVA Simple
+
+```{r, eval=FALSE}
+aov(Y ~ A + B, data=d)
+```
+
+#### ANOVA con interacciones
+
+```{r, eval=FALSE}
+aov(Y ~ A + B + A:B, data=d)
+```
+Igual a
+
+```{r, eval = FALSE}
+aov(Y ~ A * B, data=d)
+```
+
+#### Anovas anidados y otros casos más complejos
+
+* B anidado en A
+
+```{r, eval = FALSE}
+aov(Y ~ A/B, data=d)
+```
+
+* A es una variable aleatoria pero B esta anidada en A
+
+```{r, eval = FALSE}
+aov(Y ~ B + Error(A/B), data=d)
+```
+
+
+* B y X interactuan dentro de niveles aleatorios de A
+
+```{r, eval = FALSE}
+aov(Y ~ (B*X) + Error(A/(B*X)), data=d)
+```
+
+## Referencias

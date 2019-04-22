@@ -1,6 +1,10 @@
-# Análisis de poder y primera tarea {#Poder}
+# Análisis de poder {#Poder}
 
 Para este capitulo necesitas tener instalado el paquete *pwr2*, también ayuda tener el paquete *broom*. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase4/Clase4.html).
+
+El video de la clase se encuentra disponible en este [link](https://youtu.be/WoJ3wvFTejU).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WoJ3wvFTejU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
