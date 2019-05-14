@@ -1,0 +1,337 @@
+---
+title: "Tipos de errores cuadrados"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    logo: puc_logo.jpg
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+options("kableExtra.html.bsTable" = T)
+library(kableExtra)
+```
+
+## Objetivos del práctico {.build .small}
+
+* Entender los distintos tipos de errores cuadrados 
+    + Tipo I
+    + Tipo II
+    + Tipo III
+* Cuando usar cada tipo de medida de error cuadrado
+    + Tipo I (Diseños anidados)
+    + Tipo II (Diseños factoriales sin interacción)
+    + Tipo III (Diseños factoriales con interacción)
+* Como implementarlo en R
+* Solo importa en ANOVAS de dos o mas factores
+
+## Antes de empezar {.build .small}
+
+* Función `Anova`: Nos permite medir diferencias entre dos modelos lineales o ANOVAS
+
+```{r, echo=TRUE}
+anova(aov(mpg ~ am, data =mtcars), aov(mpg ~ am + cyl, data =mtcars))
+```
+
+Usaremos esta función para explicar los tipos de errores cuadrados
+
+## Error tipo I (Error por defecto de R) {.build .small}
+
+* *Cuando usarlo*: Modelos anidados, anovas de una vía
+* *Cuando no usarlo*: Modelos factoriales (El orden de los factores importa)
+
+```{r, eval=FALSE, echo = TRUE}
+aov(mpg ~ am*cyl, data = mtcars)
+aov(mpg ~ cyl*am, data = mtcars)
+```
+
+
+```{r, echo = FALSE}
+a <- broom::tidy(aov(mpg ~ am*cyl, data = mtcars)) %>% select(-meansq, -statistic)
+b <- broom::tidy(aov(mpg ~ cyl*am, data = mtcars)) %>% select(-meansq, -statistic)
+c <- bind_cols(a,b)
+kable(c) %>% kable_styling("striped") %>% add_header_above(c("am primero" = 4, "cyl primero" = 4))
+```
+
+## ¿Por que cambian los valores? {.build .small}
+
+Errores cuadrados secuenciales `y ~ A + B + *A:B` esto se desglosa así:
+
+* Primero como explica A los datos (`y ~ A`)
+* Luego como explica B los datos después de que A explico los datos (`y ~ B|A`)
+* Finalmente como explica la interacción dado lo que ya explican ambas variables en conjunto (`y ~ A:B| A + B`)
+* Por eso es bueno para sistemas anidados
+
+## Anotemos los cuadrados del ANOVA {.build .small}
+
+```{r,eval = FALSE, echo=TRUE}
+broom::tidy(aov(uptake ~ Treatment*Type, data = CO2))
+```
+
+```{r, echo=FALSE}
+kable(broom::tidy(aov(uptake ~ Treatment*Type, data = CO2))) %>% kable_styling("striped")
+```
+
+## Cuanto explica Treatment {.build .small}
+
+Treatment
+
+```{r, echo=TRUE}
+anova(aov(uptake ~ 1, data = CO2), aov(uptake ~ Treatment, data = CO2))
+```
+
+## Cuanto explica Treatment {.build .small}
+
+```{r}
+library(gridExtra)
+a <- ggplot(CO2, aes(y = uptake)) + geom_hline(aes(yintercept =mean(uptake))) + theme_bw() + ggtitle("Intercepto") 
+
+b <- ggplot(CO2, aes(x = Treatment, y = uptake)) + geom_hline(aes(yintercept =mean(uptake))) + geom_boxplot() + theme_bw() + ggtitle("Efecto de tratamiento")
+grid.arrange(a,b)
+
+```
+
+## Cuanto explica Type dado Treatment {.build .small}
+
+```{r, echo=TRUE}
+anova(aov(uptake ~ Treatment, data = CO2), aov(uptake ~ Treatment + Type, data = CO2))
+```
+
+## Cuanto explica Type dado Treatment {.build .small}
+
+```{r, fig.width=9}
+library(gridExtra)
+b <- ggplot(CO2, aes(x = Treatment, y = uptake)) + geom_hline(aes(yintercept =mean(uptake))) + geom_boxplot() + theme_bw() + ggtitle("Efecto de tratamiento")
+
+c <- ggplot(CO2, aes(x = Treatment, y = uptake))  + geom_boxplot() + theme_bw() + ggtitle("Efecto de subespecie dado tratamiento") + facet_grid(vars(Type))
+
+grid.arrange(b, c, ncol = 2)
+
+```
+
+## Cuanto explica la interaccion dadas ambas variables {.build .small}
+
+```{r, echo=TRUE, tidy=TRUE, tidy.opts = list(blank = FALSE, width.cutoff = 60)}
+anova(aov(uptake ~ Treatment + Type, data = CO2), aov(uptake ~ Treatment + Type + Treatment:Type, data = CO2))
+```
+
+## Cuanto explica la interaccion dadas ambas variables {.build .small}
+
+```{r, fig.width=9}
+library(gridExtra)
+c <- ggplot(CO2, aes(x = Treatment, y = uptake))  + geom_boxplot() + theme_bw() + ggtitle("Efecto de subespecie dado tratamiento") + facet_grid(vars(Type))
+
+d <- ggplot(CO2, aes(x = Treatment, y = uptake))  + geom_boxplot(aes(fill = Type)) + theme_bw() + ggtitle("Efecto de interacción") + theme(legend.position = "bottom")
+
+grid.arrange(b, d, ncol = 2)
+```
+
+## Error tipo II {.build .small}
+
+* *Cuando usarlo*: Cuando no hay interacciones (el más poderoso), anovas de una vía (orden no importa)
+* *Cuando no usarlo*: Modelos factoriales interacciones fuertes 
+
+```{r, echo = TRUE}
+library(car)
+Anova(aov(mpg ~ am*cyl, data = mtcars), type = 2)
+Anova(aov(mpg ~ cyl*am, data = mtcars), type = 2)
+```
+
+## ¿Cual es la diferencia con el tipo 1? {.build .small}
+
+```{r, results='hide'}
+library(car)
+Anova(aov(mpg ~ am*cyl, data = mtcars), type = 2)
+anova(aov(mpg ~ am*cyl, data = mtcars))
+```
+
+```{r}
+a <- broom::tidy(Anova(aov(mpg ~ am*cyl, data = mtcars), type = 2)
+) %>% select(-statistic)
+b <- broom::tidy(aov(mpg ~ cyl*am, data = mtcars)) %>% select(-term,-meansq, -statistic)
+c <- bind_cols(a,b)
+kable(c) %>% kable_styling("striped") %>% add_header_above(c(" " = 1,"tipo 2" = 3, "tipo 1" = 3))
+```
+
+
+
+## Orden de los errores {.build .small}
+
+Errores cuadrados de `y ~ A + B + *A:B` se desglosan así:
+
+* Primero como explica A los datos despues de que B explico los datos (`y ~ A|B`)
+* Luego como explica B los datos después de que A explico los datos (`y ~ B|A`)
+* Finalmente como explica la interacción dado lo que ya explican ambas variables en conjunto (`y ~ A:B| A + B`)
+* Por le da última prioridad a las interacciones
+    + Bueno si nos interesan efectos principales
+    + Malo si nos interesan más las interacciones
+
+## Anotemos los cuadrados del ANOVA {.build .small}
+
+```{r, echo=TRUE}
+Anova(aov(mpg ~ am*cyl, data = mtcars), type = 2)
+```
+
+## Cuanto explica am, cuando ya tomamos en cuenta cyl {.build .small}
+
+```{r, echo=TRUE}
+anova(aov(mpg ~ cyl, data = mtcars), aov(mpg ~ am + cyl, data = mtcars))
+```
+
+## Cuanto explica am, cuando ya tomamos en cuenta cyl {.build .small}
+
+```{r, fig.width=9}
+library(gridExtra)
+b <- ggplot(mtcars, aes(x = factor(cyl), y = mpg)) + geom_boxplot() + theme_bw() + ggtitle("Efecto de cilindros") + xlab("Número de cilindros")
+
+c <- ggplot(mtcars, aes(x = factor(cyl), y = mpg)) + geom_boxplot() + theme_bw() + ggtitle("Efecto de cilindros") + xlab("Número de cilindros") + facet_grid(vars(factor(am)))
+
+grid.arrange(b, c, ncol = 2)
+
+```
+
+## Cuanto explica cyl, cuando ya tomamos en cuenta am {.build .small}
+
+```{r, echo=TRUE}
+anova(aov(mpg ~ am, data = mtcars), aov(mpg ~ am + cyl, data = mtcars))
+```
+
+## Cuanto explica cyl, cuando ya tomamos en cuenta am {.build .small}
+
+```{r, fig.width=9}
+library(gridExtra)
+b <- ggplot(mtcars, aes(x = factor(am), y = mpg)) + geom_boxplot() + theme_bw() + ggtitle("Efecto de am") + xlab("Automatico-manual")
+
+c <- ggplot(mtcars, aes(x = factor(am), y = mpg)) + geom_boxplot() + theme_bw() + ggtitle("Efecto de am") + xlab("Automatico-manual") + facet_grid(vars(factor(cyl)))
+
+grid.arrange(b, c, ncol = 2)
+
+```
+
+## Cuanto explica interacción, cuando ya tomamos en cuenta am y cyl {.build .small}
+
+```{r, echo=TRUE}
+anova(aov(mpg ~ am + cyl, data = mtcars), aov(mpg ~ am *cyl, data = mtcars))
+```
+
+## Cuanto explica interacción {.build .small}
+
+```{r, fig.width=9}
+library(gridExtra)
+b <- ggplot(mtcars, aes(x = factor(am), y = mpg)) + geom_boxplot() + theme_bw() + ggtitle("Efecto de am") + xlab("Automatico-manual")
+
+c <- ggplot(mtcars, aes(x = factor(am), y = mpg)) + geom_boxplot(aes(fill = factor(cyl))) + theme_bw() + ggtitle("Efecto de am") + xlab("Automatico-manual")
+grid.arrange(b, c, ncol = 2)
+
+```
+
+## Error tipo III {.build .small}
+
+* *Cuando usarlo*: Cuando hay interacciones, diseños desbalanceados, anovas de una vía (orden no importa)
+* *Cuando no usarlo*: Cuando las interacciones son fuertes no permite detectar efectos principales
+
+```{r, echo = TRUE}
+Anova(aov(mpg ~ am*cyl, data = mtcars), type = 3)
+```
+
+## ¿Cual es la diferencia con el tipo 2? {.build .small}
+
+```{r}
+Anova(aov(mpg ~ am*cyl, data = mtcars), type = 2)
+```
+
+***
+```{r}
+Anova(aov(mpg ~ am*cyl, data = mtcars), type = 3)
+```
+
+## Orden de los errores {.build .small}
+
+Errores cuadrados de`y ~ A + B + *A:B` se desglosan así:
+
+* Primero como explica A los datos despues de que B y las interacciones lo explicaron (`y ~ A|B + A:B`)
+* Luego como explica B los datos después de que A e interacciones explicaran los datos (`y ~ B|A + A:B`)
+* Finalmente como explica la interacción dado lo que ya explican ambas variables en conjunto (`y ~ A:B| A + B`)
+* Solo le da a cada variable lo que explica por si sola
+    + Malo si nos interesan mas los efectos principales
+    + Bueno si nos interesan más las interacciones
+
+## Anotemos los cuadrados del ANOVA {.build .small}
+
+```{r, echo=TRUE}
+Anova(aov(mpg ~ am*cyl, data = mtcars), type = 3)
+```
+
+## Cuanto explica am, cuando ya tomamos en cuenta cyl y las interacciones {.build .small}
+
+```{r, echo=TRUE}
+anova(aov(mpg ~ cyl, data = mtcars), aov(mpg ~ am + am:cyl, data = mtcars))
+```
+
+
+## Cuanto explica cyl, cuando ya tomamos en cuenta am y las interacciones {.build .small}
+
+```{r, echo=TRUE}
+anova(aov(mpg ~ am, data = mtcars), aov(mpg ~ cyl + am:cyl, data = mtcars))
+```
+
+
+## Cuanto explica interacción, cuando ya tomamos en cuenta am y cyl {.build .small}
+
+```{r, echo=TRUE}
+anova(aov(mpg ~ am + cyl, data = mtcars), aov(mpg ~ am *cyl, data = mtcars))
+```
+
+
+## Exploren ANOVAS {.build .small}
+
+Crearemos base de datos simulada con la funcion `SimulData`:
+
+```{r, echo=TRUE, tidy=TRUE, tidy.opts = list(blank = FALSE, width.cutoff = 60)}
+SimulData <- function(MeanA1B1 = 20, MeanA1B2 = 20, MeanA1B3 = 20, MeanA2B1 = 40, MeanA2B2 = 40, MeanA2B3 = 40, N = 5){
+  data.frame(A = rep(c("A1", "A2"), each =3*N), B = rep(rep(c("B1", "B2", "B3"), each =N),times =  2), y =(c(rnorm(mean = MeanA1B1, n = N , sd =5),rnorm(mean = MeanA1B2, n =N , sd =5), rnorm(mean = MeanA1B3, n =N , sd =5), rnorm(mean = MeanA2B1, n = N , sd =5),rnorm(mean = MeanA2B2, n = N , sd =5), rnorm(mean = MeanA2B3, n = N , sd =5))))
+}
+```
+
+## Exploren ANOVAS {.build .small}
+
+```{r}
+DF <- SimulData(MeanA1B1 = 20, MeanA1B2 = 60, MeanA1B3 = 100, MeanA2B1 = 40, MeanA2B2 = 80, MeanA2B3 = 110, N = 10)
+ggplot(DF, aes(x = B, y = y)) + geom_boxplot(aes(color = A)) + theme_classic()
+```
+
+## Exploren ANOVAS {.build .small}
+
+Graficaremos con la funcion `InterPlot`
+
+```{r, echo = TRUE, tidy=TRUE, tidy.opts = list(blank = FALSE, width.cutoff = 60)}
+InterPlot <- function(DF){
+  require(tidyverse)
+  DF <- group_by(DF, A, B) %>% summarize(MeanY = mean(y), SDy = sd(y))
+  ggplot(DF, aes(x = B, y = MeanY, group = A)) + geom_point(aes(color = A)) + geom_errorbar(aes(color = A, ymax = MeanY + SDy, ymin = MeanY - SDy)) + geom_line(aes(color = A)) + theme_classic()
+}
+```
+
+## Exploren ANOVAS {.build .small}
+
+```{r, echo = TRUE}
+InterPlot(DF)
+```
+
+## Exploren ANOVAS
+
+```{r, echo = TRUE}
+anova(aov(y ~ A*B, data = DF))
+anova(aov(y ~ B*A, data = DF))
+```
+
+***
+
+```{r, echo = TRUE}
+Anova(aov(y ~ A*B, data = DF), type = 2)
+Anova(aov(y ~ A*B, data = DF), type = 3)
+```

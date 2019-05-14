@@ -1,0 +1,86 @@
+# Tipos de errores cuadrados {#TipoError}
+
+Para este capitulo necesitas tener instalado el paquete *car*, también ayuda tener el paquete *broom*. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase8/Clase8.html)
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+options("kableExtra.html.bsTable" = T)
+library(kableExtra)
+```
+
+## Objetivos del práctico
+
+* Entender la diferencia entre los distintos tipos de sumas de cuadrado
+* Saber los pro y los contras de cada uno
+* Entender cuando usar cada tipo de sumas de cuadrados
+
+## Cuadrados medios esperados
+
+### Cuadrados medios de tipo I
+
+Este es el tipo de errores cuadrados por defecto en R, es el ideal para usarlo en modelos anidados
+
+#### Ventajas de error tipo I
+
+La suma de los cuadrados
+
+#### Desventajas del error tipo I
+
+El orden importa, no es igual poner `y ~ A*B` que `y ~ B*A`:
+
+
+```{r, echo = TRUE}
+anova(lm(mpg ~ am*cyl, data = mtcars))
+anova(lm(mpg ~ cyl*am, data = mtcars))
+```
+
+
+Esto es debido a que los errores se van calculando secuencialmente, entonces en el primer caso vemos cual es la variabilidad explicada por am, seguido de cuanto es explicado por cyl dado am y finalmente cuanto es explicado por la interacción dado am y cyl. Esto hace que se preste muy bien para un diseño anidado
+
+
+#### Cuando usarlo
+
+Diseños anidados
+
+#### Cuando no usarlo
+
+Para diseños factoriales
+
+
+
+### Cuadrados medios de tipo II
+
+Este es el tipo de errores cuadrados por defecto en R,
+
+
+### Paquete EMSaov
+
+El paquete de `R` *EMSaov* [@RJ-2017-011] permite calcular de forma presisa y dependiente del diseño los cuadrados medios esperados, lo cual entre otras cosas depende de si las variables son fijas o aleatoreas, recordemos del modluo pasado que:
+
+* **Variables fijas:** Se espera que tengan una influencia predecible y sistemática en sobre lo que queremos explicar. Además usan todos los niveles de un factor (Ejemplo genero)
+    
+* **Variables aleatorias:** Se espera que su influencia sea impredecible e idiosincratica. Además no se usan todos los niveles de un factor (todos los individuos)
+
+
+```{r, echo = TRUE}
+A        = c("a", "a", "a", "a", "b", "b", "b", "b", "b", "b", "b", "b")
+B        = c("x", "y", "x", "y", "x", "y", "x", "y", "x", "x", "x", "x")
+C        = c("l", "l", "m", "m", "l", "l", "m", "m", "l", "l", "l", "l")
+response = c( 14,  30,  15,  35,  50,  51,  30,  32,  51,  55,  53,  55)
+
+summary(aov(response ~ A + B + C + A:B + A:C + B:C))
+
+
+model = lm(response ~ A + B + C + A:B + A:C + B:C)
+
+anova(model)              # Type I tests
+
+
+library(car)
+
+Anova(model, type="II")   # Type II tests
+
+Anova(model, type="III")
+```

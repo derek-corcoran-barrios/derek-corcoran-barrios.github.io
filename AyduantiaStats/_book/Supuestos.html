@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-04-17">
+<meta name="date" content="2019-05-08">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -174,7 +174,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="Formula.html"><a href="Formula.html#referencias-2"><i class="fa fa-check"></i><b>6.3</b> Referencias</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>7</b> Referencias</a></li>
+<li class="chapter" data-level="7" data-path="TipoError.html"><a href="TipoError.html"><i class="fa fa-check"></i><b>7</b> Tipos de errores cuadrados</a><ul>
+<li class="chapter" data-level="7.1" data-path="TipoError.html"><a href="TipoError.html#objetivos-del-practico-1"><i class="fa fa-check"></i><b>7.1</b> Objetivos del práctico</a></li>
+<li class="chapter" data-level="7.2" data-path="TipoError.html"><a href="TipoError.html#cuadrados-medios-esperados"><i class="fa fa-check"></i><b>7.2</b> Cuadrados medios esperados</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="TipoError.html"><a href="TipoError.html#cuadrados-medios-de-tipo-i"><i class="fa fa-check"></i><b>7.2.1</b> Cuadrados medios de tipo I</a></li>
+<li class="chapter" data-level="7.2.2" data-path="TipoError.html"><a href="TipoError.html#cuadrados-medios-de-tipo-ii"><i class="fa fa-check"></i><b>7.2.2</b> Cuadrados medios de tipo II</a></li>
+<li class="chapter" data-level="7.2.3" data-path="TipoError.html"><a href="TipoError.html#paquete-emsaov"><i class="fa fa-check"></i><b>7.2.3</b> Paquete EMSaov</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>8</b> Referencias</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -491,8 +499,8 @@ Figura 2.3: Histograma de los resiudales del modelo ANOVA
 <p>El qq plot es otra forma visual de establecer si los residuales son o no son normales, para esto, lo esperado es que la gráfica resultante sea una diagonal lo mas recta posible, para esto usaremos la función <em>qqnorm</em>, con nuestros residuales, de nuevo, podemos usar cualquiera de las dos versiones de nuestros datos:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(Residuales)
 <span class="kw">qqnorm</span>(Resultados<span class="op">$</span>.resid)</code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-19"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-19-1.png" alt="qqplot de los resiudales del modelo ANOVA" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-57"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-57-1.png" alt="qqplot de los resiudales del modelo ANOVA" width="672" />
 <p class="caption">
 Figura 2.4: qqplot de los resiudales del modelo ANOVA
 </p>
@@ -518,8 +526,8 @@ Figura 2.4: qqplot de los resiudales del modelo ANOVA
 <p>Tanto los ANOVAS como las regresiones lineales se basan en minimizar la suma de cuadrados, es la suma de los cuadrados de los errores o residuales.</p>
 <div id="que-es-el-error-por-que-al-cuadrado" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> ¿Que es el error? ¿Por qué al cuadrado??</h3>
-<div class="figure"><span id="fig:unnamed-chunk-22"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-22-1.png" alt="Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-60"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-60-1.png" alt="Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado" width="672" />
 <p class="caption">
 Figura 2.5: Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado
 </p>

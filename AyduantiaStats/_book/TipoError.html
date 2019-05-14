@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Práctico 8 Referencias | Practicos de Bioestadística 2</title>
+  <title>Práctico 7 Tipos de errores cuadrados | Practicos de Bioestadística 2</title>
   <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Práctico 8 Referencias | Practicos de Bioestadística 2" />
+  <meta property="og:title" content="Práctico 7 Tipos de errores cuadrados | Practicos de Bioestadística 2" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Práctico 8 Referencias | Practicos de Bioestadística 2" />
+  <meta name="twitter:title" content="Práctico 7 Tipos de errores cuadrados | Practicos de Bioestadística 2" />
   
   <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="TipoError.html">
-
+<link rel="prev" href="Formula.html">
+<link rel="next" href="Refs.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -203,69 +203,137 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="Refs" class="section level1">
-<h1><span class="header-section-number">Práctico 8</span> Referencias</h1>
+<div id="TipoError" class="section level1">
+<h1><span class="header-section-number">Práctico 7</span> Tipos de errores cuadrados</h1>
+<p>Para este capitulo necesitas tener instalado el paquete <em>car</em>, también ayuda tener el paquete <em>broom</em>. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase8/Clase8.html">link</a></p>
+<div id="objetivos-del-practico-1" class="section level2">
+<h2><span class="header-section-number">7.1</span> Objetivos del práctico</h2>
+<ul>
+<li>Entender la diferencia entre los distintos tipos de sumas de cuadrado</li>
+<li>Saber los pro y los contras de cada uno</li>
+<li>Entender cuando usar cada tipo de sumas de cuadrados</li>
+</ul>
+</div>
+<div id="cuadrados-medios-esperados" class="section level2">
+<h2><span class="header-section-number">7.2</span> Cuadrados medios esperados</h2>
+<div id="cuadrados-medios-de-tipo-i" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Cuadrados medios de tipo I</h3>
+<p>Este es el tipo de errores cuadrados por defecto en R, es el ideal para usarlo en modelos anidados</p>
+<div id="ventajas-de-error-tipo-i" class="section level4">
+<h4><span class="header-section-number">7.2.1.1</span> Ventajas de error tipo I</h4>
+<p>La suma de los cuadrados</p>
+</div>
+<div id="desventajas-del-error-tipo-i" class="section level4">
+<h4><span class="header-section-number">7.2.1.2</span> Desventajas del error tipo I</h4>
+<p>El orden importa, no es igual poner <code>y ~ A*B</code> que <code>y ~ B*A</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>am<span class="op">*</span>cyl, <span class="dt">data =</span> mtcars))</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: mpg
+##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## am         1 405.15  405.15 46.8919 1.932e-07 ***
+## cyl        1 449.53  449.53 52.0289 7.503e-08 ***
+## am:cyl     1  29.44   29.44  3.4073   0.07551 .  
+## Residuals 28 241.92    8.64                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(<span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>cyl<span class="op">*</span>am, <span class="dt">data =</span> mtcars))</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: mpg
+##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## cyl        1 817.71  817.71 94.6416 1.761e-10 ***
+## am         1  36.97   36.97  4.2791   0.04793 *  
+## cyl:am     1  29.44   29.44  3.4073   0.07551 .  
+## Residuals 28 241.92    8.64                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Esto es debido a que los errores se van calculando secuencialmente, entonces en el primer caso vemos cual es la variabilidad explicada por am, seguido de cuanto es explicado por cyl dado am y finalmente cuanto es explicado por la interacción dado am y cyl. Esto hace que se preste muy bien para un diseño anidado</p>
+</div>
+<div id="cuando-usarlo" class="section level4">
+<h4><span class="header-section-number">7.2.1.3</span> Cuando usarlo</h4>
+<p>Diseños anidados</p>
+</div>
+<div id="cuando-no-usarlo" class="section level4">
+<h4><span class="header-section-number">7.2.1.4</span> Cuando no usarlo</h4>
+<p>Para diseños factoriales</p>
+</div>
+</div>
+<div id="cuadrados-medios-de-tipo-ii" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Cuadrados medios de tipo II</h3>
+<p>Este es el tipo de errores cuadrados por defecto en R,</p>
+</div>
+<div id="paquete-emsaov" class="section level3">
+<h3><span class="header-section-number">7.2.3</span> Paquete EMSaov</h3>
+<p>El paquete de <code>R</code> <em>EMSaov</em> <span class="citation">(<span class="citeproc-not-found" data-reference-id="RJ-2017-011"><strong>???</strong></span>)</span> permite calcular de forma presisa y dependiente del diseño los cuadrados medios esperados, lo cual entre otras cosas depende de si las variables son fijas o aleatoreas, recordemos del modluo pasado que:</p>
+<ul>
+<li><p><strong>Variables fijas:</strong> Se espera que tengan una influencia predecible y sistemática en sobre lo que queremos explicar. Además usan todos los niveles de un factor (Ejemplo genero)</p></li>
+<li><p><strong>Variables aleatorias:</strong> Se espera que su influencia sea impredecible e idiosincratica. Además no se usan todos los niveles de un factor (todos los individuos)</p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">A        =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;b&quot;</span>)
+B        =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>, <span class="st">&quot;x&quot;</span>)
+C        =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;l&quot;</span>, <span class="st">&quot;l&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;l&quot;</span>, <span class="st">&quot;l&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="st">&quot;l&quot;</span>, <span class="st">&quot;l&quot;</span>, <span class="st">&quot;l&quot;</span>, <span class="st">&quot;l&quot;</span>)
+response =<span class="st"> </span><span class="kw">c</span>( <span class="dv">14</span>,  <span class="dv">30</span>,  <span class="dv">15</span>,  <span class="dv">35</span>,  <span class="dv">50</span>,  <span class="dv">51</span>,  <span class="dv">30</span>,  <span class="dv">32</span>,  <span class="dv">51</span>,  <span class="dv">55</span>,  <span class="dv">53</span>,  <span class="dv">55</span>)
 
-<div id="refs" class="references">
-<div>
-<p>Anderson, Edgar. 1935. “The Irises of the Gaspe Peninsula.” <em>Bulletin of the American Iris Society</em> 59: 2–5.</p>
-</div>
-<div>
-<p>Azzalini, Adelchi, and Adrian W Bowman. 1990. “A Look at Some Data on the Old Faithful Geyser.” <em>Applied Statistics</em>. JSTOR, 357–65.</p>
-</div>
-<div>
-<p>Bartlett, Maurice S. 1937. “Properties of Sufficiency and Statistical Tests.” <em>Proc. R. Soc. Lond. A</em> 160 (901). The Royal Society: 268–82.</p>
-</div>
-<div>
-<p>Beall, Geoffrey. 1942. “The Transformation of Data from Entomological Field Experiments so That the Analysis of Variance Becomes Applicable.” <em>Biometrika</em> 32 (3/4). JSTOR: 243–62.</p>
-</div>
-<div>
-<p>Boneau, C Alan. 1960. “The Effects of Violations of Assumptions Underlying the T Test.” <em>Psychological Bulletin</em> 57 (1). American Psychological Association: 49.</p>
-</div>
-<div>
-<p>Chambers, John M, William S Cleveland, Beat Kleiner, and Paul A Tukey. 1983. “Graphical Methods for Data Analysis. 1983.” <em>Wadsworth, Belmont, CA</em> 35.</p>
-</div>
-<div>
-<p>Girden, Ellen R. 1992. <em>ANOVA: Repeated Measures</em>. 84. Sage.</p>
-</div>
-<div>
-<p>Kross, Sean, Nick Carchedi, Bill Bauer, and Gina Grdina. 2017. <em>Swirl: Learn R, in R</em>. <a href="https://CRAN.R-project.org/package=swirl" class="uri">https://CRAN.R-project.org/package=swirl</a>.</p>
-</div>
-<div>
-<p>Lix, Lisa M, Joanne C Keselman, and HJ Keselman. 1996. “Consequences of Assumption Violations Revisited: A Quantitative Review of Alternatives to the One-Way Analysis of Variance F Test.” <em>Review of Educational Research</em> 66 (4). Sage Publications Sage CA: Thousand Oaks, CA: 579–619.</p>
-</div>
-<div>
-<p>Lu, Pengcheng, Junhao Liu, and Devin Koestler. 2017. <em>Pwr2: Power and Sample Size Analysis for One-Way and Two-Way Anova Models</em>. <a href="https://CRAN.R-project.org/package=pwr2" class="uri">https://CRAN.R-project.org/package=pwr2</a>.</p>
-</div>
-<div>
-<p>Morgan, John F. 2007. “P Value Fetishism and Use of the Bonferroni Adjustment.” <em>Evidence-Based Mental Health</em> 10 (2). BMJ Publishing Group LTD: 34.</p>
-</div>
-<div>
-<p>Potvin, Catherine, Martin J Lechowicz, and Serge Tardif. 1990. “The Statistical Analysis of Ecophysiological Response Curves Obtained from Experiments Involving Repeated Measures.” <em>Ecology</em> 71 (4). Wiley Online Library: 1389–1400.</p>
-</div>
-<div>
-<p>R Core Team. 2018. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
-</div>
-<div>
-<p>Royston, Patrick. 1995. “Remark as R94: A Remark on Algorithm as 181: The W-Test for Normality.” <em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em> 44 (4). JSTOR: 547–51.</p>
-</div>
-<div>
-<p>Savage, Van M, and Geoffrey B West. 2007. “A Quantitative, Theoretical Framework for Understanding Mammalian Sleep.” <em>Proceedings of the National Academy of Sciences</em> 104 (3). National Acad Sciences: 1051–6.</p>
-</div>
-<div>
-<p>Student. 1908. “The Probable Error of a Mean.” <em>Biometrika</em>. JSTOR, 1–25.</p>
-</div>
-<div>
-<p>Sturges, Herbert A. 1926. “The Choice of a Class Interval.” <em>Journal of the American Statistical Association</em> 21 (153): 65–66.</p>
-</div>
-<div>
-<p>Tukey, John W. 1977. “Some Thoughts on Clinical Trials, Especially Problems of Multiplicity.” <em>Science</em> 198 (4318). American Asociation for the Advancement of Science: 679–84.</p>
-</div>
-<div>
-<p>Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="http://ggplot2.org" class="uri">http://ggplot2.org</a>.</p>
-</div>
-<div>
-<p>———. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</p>
+<span class="kw">summary</span>(<span class="kw">aov</span>(response <span class="op">~</span><span class="st"> </span>A <span class="op">+</span><span class="st"> </span>B <span class="op">+</span><span class="st"> </span>C <span class="op">+</span><span class="st"> </span>A<span class="op">:</span>B <span class="op">+</span><span class="st"> </span>A<span class="op">:</span>C <span class="op">+</span><span class="st"> </span>B<span class="op">:</span>C))</code></pre></div>
+<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## A            1 1488.4  1488.4 357.687 7.61e-06 ***
+## B            1   18.2    18.2   4.380 0.090576 .  
+## C            1  390.2   390.2  93.761 0.000199 ***
+## A:B          1  278.7   278.7  66.972 0.000443 ***
+## A:C          1  339.5   339.5  81.591 0.000278 ***
+## B:C          1    8.5     8.5   2.044 0.212159    
+## Residuals    5   20.8     4.2                     
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model =<span class="st"> </span><span class="kw">lm</span>(response <span class="op">~</span><span class="st"> </span>A <span class="op">+</span><span class="st"> </span>B <span class="op">+</span><span class="st"> </span>C <span class="op">+</span><span class="st"> </span>A<span class="op">:</span>B <span class="op">+</span><span class="st"> </span>A<span class="op">:</span>C <span class="op">+</span><span class="st"> </span>B<span class="op">:</span>C)
+
+<span class="kw">anova</span>(model)              <span class="co"># Type I tests</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: response
+##           Df  Sum Sq Mean Sq  F value    Pr(&gt;F)    
+## A          1 1488.37 1488.37 357.6869 7.614e-06 ***
+## B          1   18.22   18.22   4.3798 0.0905765 .  
+## C          1  390.15  390.15  93.7610 0.0001995 ***
+## A:B        1  278.68  278.68  66.9722 0.0004431 ***
+## A:C        1  339.51  339.51  81.5909 0.0002778 ***
+## B:C        1    8.51    8.51   2.0444 0.2121592    
+## Residuals  5   20.81    4.16                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
+
+<span class="kw">Anova</span>(model, <span class="dt">type=</span><span class="st">&quot;II&quot;</span>)   <span class="co"># Type II tests</span></code></pre></div>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: response
+##            Sum Sq Df  F value    Pr(&gt;F)    
+## A         1022.01  1 245.6103 1.923e-05 ***
+## B          131.25  1  31.5421 0.0024764 ** 
+## C          278.68  1  66.9722 0.0004431 ***
+## A:B        180.01  1  43.2593 0.0012194 ** 
+## A:C        321.01  1  77.1445 0.0003174 ***
+## B:C          8.51  1   2.0444 0.2121592    
+## Residuals   20.81  5                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Anova</span>(model, <span class="dt">type=</span><span class="st">&quot;III&quot;</span>)</code></pre></div>
+<pre><code>## Anova Table (Type III tests)
+## 
+## Response: response
+##              Sum Sq Df  F value    Pr(&gt;F)    
+## (Intercept)  226.71  1  54.4832 0.0007175 ***
+## A           1508.03  1 362.4099 7.371e-06 ***
+## B            178.46  1  42.8885 0.0012435 ** 
+## C              0.77  1   0.1854 0.6847216    
+## A:B          180.01  1  43.2593 0.0012194 ** 
+## A:C          321.01  1  77.1445 0.0003174 ***
+## B:C            8.51  1   2.0444 0.2121592    
+## Residuals     20.81  5                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+
 </div>
 </div>
 </div>
@@ -274,8 +342,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="TipoError.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="Formula.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Refs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
