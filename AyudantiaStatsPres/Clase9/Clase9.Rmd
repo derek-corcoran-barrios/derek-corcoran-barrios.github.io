@@ -1,0 +1,219 @@
+---
+title: "Diseño en bloques Split-plot"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    logo: puc_logo.jpg
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+options("kableExtra.html.bsTable" = T)
+library(kableExtra)
+```
+
+## Prueba
+
+```{r}
+countdown::countdown(minutes = 10, seconds = 0, 
+          top = 0, bottom = 0,
+          left = 0, right = 0,
+          padding = "20%",
+          margin = "5%",
+          font_size = "8em")
+```
+
+
+# Diseño en bloques
+
+## Diseño en bloques {.build}
+
+* Cuando por necesidades técnicas o experimentales para controlar la heterogeneidad de una variable que no es la de interés, por eso hay un efecto a *Bloquear*
+    + Medir el desgaste de 4 marcas de neumáticos en 3 modelos de autos
+    + Determinar el efecto de 3 técnicas de medir actividad fotosintética en 10 plantas distintas 
+    + Estudio de una dieta en disminución de colesterol en Hombres y mujeres
+
+
+## Ejemplo
+
+Don Juan el Campesino planta manzanas Fuji, hasta ahora ha usado *Guano* como fertilizante, pero lo ofrecen un nuevo producto basado en el alga *Macrocystis pyrifera*. Para esto Don juan tiene 4 parcelas, donde en cada una puede plantar 40 manzanos, ¿Cómo debiera diseñar su experimento Don Juan?
+
+## Ejemplo
+
+```{r}
+Juan1 <- read_rds("Juan1.rds")
+ggplot(Juan1, aes(x = fertilizante, y = Produccion)) + geom_boxplot() + theme_classic() + facet_wrap(~Parcela)
+```
+
+## Como generamos un ANOVA en bloques en R {.build .small}
+
+* Basarse en clase [como formular tu ANOVA](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase7/Clase7.html#1)
+    + ¿Hay variables Anidadas?
+    + ¿Hay variables fijas?
+    + ¿Hay variables aleatorias?
+    + Tienen 5 minutos para revisarlo
+
+
+
+```{r}
+library(countdown)
+countdown(minutes = 5, seconds = 0,left = 0, right = 0,padding = "15px",margin = "5%",font_size = "6em")
+```
+
+## Como generamos un ANOVA en bloques en R {.build .small}
+
+* ¿Hay variables Anidadas?
+    + Si: *fertilizante* dentro de *Parcela*
+* ¿Hay variables fijas?
+    + Si: *fertilizante* 
+* ¿Hay variables aleatorias?
+    + Si: *Parcela*
+  
+```{r, echo = TRUE}
+Bloques <- aov(Produccion ~ fertilizante + Error(Parcela/fertilizante), data = Juan1)
+```
+
+## Resultado
+
+```{r}
+summary(Bloques)
+```
+
+## Ejemplo 2
+
+El vecino de Don Juan, Don Pedro el Campesino, tiene 4 parcelas de los mismos tamaños que su amigo, pero están cada uno a cierta distancia de un cerro, que le tapa la luz en parte del día, por lo que además registra el número de horas con luz que tiene cada parcela, debe hacer el mismo diseño?
+
+## Ejemplo 2
+
+```{r}
+Pedro1 <- read_rds("Pedro1.rds")
+ggplot(Pedro1, aes(x = fertilizante, y = Produccion)) + geom_boxplot() + theme_classic() + facet_wrap(~Parcela)
+```
+
+## Como generamos un ANOVA en bloques en R {.build .small}
+
+* Basarse en clase [como formular tu ANOVA](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase7/Clase7.html#1)
+    + ¿Hay variables Anidadas?
+    + ¿Hay variables fijas?
+    + ¿Hay variables aleatorias?
+    + Tienen 5 minutos para revisarlo
+
+
+
+```{r}
+library(countdown)
+countdown(minutes = 5, seconds = 0,left = 0, right = 0,padding = "15px",margin = "5%",font_size = "6em")
+```
+
+## Como generamos un ANOVA en bloques en R {.build .small}
+
+* ¿Hay variables Anidadas?
+    + Si: *fertilizante* dentro de *Parcela*
+* ¿Hay variables fijas?
+    + Si: *fertilizante* y *Parcela* 
+* ¿Hay variables aleatorias?
+    + No
+  
+```{r, echo = TRUE}
+Bloques <- aov(Produccion ~ fertilizante + Parcela/fertilizante, data = Pedro1)
+```
+
+## Resultado
+
+```{r}
+summary(Bloques)
+```
+
+
+## Ejemplo 2 ¿Otra opcion?
+
+```{r}
+Pedro1 <- read_rds("Pedro1.rds")
+ggplot(Pedro1, aes(x = Luz, y = Produccion)) + geom_smooth(aes(color = fertilizante), method = "lm") + geom_point(aes(color = fertilizante)) + theme_classic() 
+```
+
+## Ejemplo 2 ¿Otra opcion?
+
+```{r, echo = TRUE}
+lineal <- lm(Produccion ~ fertilizante + Luz/fertilizante, data = Pedro1)
+car::Anova(lineal, type = 2)
+```
+
+## Ejemplo 2 ¿Otra opcion?
+
+```{r, echo = TRUE, eval = FALSE}
+broom::glance(lineal)
+```
+
+```{r}
+kable(broom::glance(lineal), digits = 2) %>% kable_styling("striped")
+```
+
+## Ejemplo 2 ¿Otra opcion?
+
+```{r, echo = TRUE, eval = FALSE}
+broom::tidy(lineal)
+```
+
+```{r}
+kable(broom::tidy(lineal), digits = 2) %>% kable_styling("striped")
+```
+
+$$0.52 \times luz + 0.28 \times luz\times Nuevo  + 2.05 \times Nuevo+ 29.7$$
+
+# Diseño Split-plot
+
+## Diseño Split-plot {.build}
+
+* ¿Cuando lo usamos?
+
+## Ejemplo
+
+Don Juan quiere diversificar su portafolio de inversiones, por lo que a pensado en plantar mas variedades de manzanas además de *Fuji* como *Granny Smith* y *Red*, pero su otro vecino Don Rodrigo le comenta que con otras variedades el nuevo fertilizante no es tan bueno. ¿Como debiera diseñar el experimento Don Juan para ver si Don Rodrigo tiene razón? 
+
+## Ejemplo
+
+```{r}
+Juan2 <- read_rds("Juan2.rds") %>% mutate(variedad = fct_reorder(variedad, Produccion))
+ggplot(Juan2, aes(x = fertilizante, y = Produccion)) + geom_boxplot(aes(fill = variedad)) + theme_classic() + facet_wrap(~Parcela)
+```
+
+
+## Como generamos un ANOVA split-block en R {.build .small}
+
+* Basarse en clase [como formular tu ANOVA](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase7/Clase7.html#1)
+    + ¿Hay variables Anidadas?
+    + ¿Hay variables fijas?
+    + ¿Hay variables aleatorias?
+    + Tienen 5 minutos para revisarlo
+
+
+
+```{r}
+library(countdown)
+countdown(minutes = 5, seconds = 0,left = 0, right = 0,padding = "15px",margin = "5%",font_size = "6em")
+```
+
+## Como generamos un ANOVA split-plot en R {.build .small}
+
+* ¿Hay variables Anidadas?
+    + Si: *fertilizante* dentro de *Parcela*
+* ¿Hay variables fijas?
+    + Si: *fertilizante* y *Parcela* 
+* ¿Hay variables aleatorias?
+    + No
+  
+```{r, echo = TRUE}
+split <- aov(Produccion ~ fertilizante * variedad + Error(Parcela/fertilizante), data = Juan2)
+```
+
+## Resultados
+
+```{r}
+summary(split)
+```
+
