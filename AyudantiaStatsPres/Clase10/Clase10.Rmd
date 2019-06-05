@@ -1,0 +1,145 @@
+---
+title: "Anova de medidas repetidas"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    logo: puc_logo.jpg
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+options("kableExtra.html.bsTable" = T)
+library(kableExtra)
+```
+
+# Anova de medidas repetidas
+
+## Anova de medidas repetidas {.build}
+
+Cuando lo usamos:
+
+  * Hay hipotesis del cambio de la variable respuesta en el tiempo
+  * No sabemos como pero sospechamos que la variable respuesta cambia en el tiempo
+  * Cambios no predecibles en el tiempo
+    
+## Ejemplo 1 {.build}
+
+  * 50 pollos
+  * 4 dietas
+  * 12 tiempos
+  * Cual dieta aumenta mas el peso de los pollos
+
+```{r, echo=FALSE, fig.height=4}
+library(tidyverse)
+data("ChickWeight")
+ggplot(ChickWeight, aes(x = Time, y = weight, group = Chick))+ geom_point(aes(color = Diet)) + geom_path(aes(color = Diet)) + theme_classic()
+```
+
+## Preguntas iniciales {.build}
+
+  * ¿Podemos hacer un diseño factorial $Dieta \times Tiempo$?
+    + No para hacer eso necesitamos distintos individuos para cada tiempo
+  * ¿Se ve una interacción entre tiempo y tratamiento?
+    + No, son aproximadamente paralelos
+
+## Para ver bien 
+
+```{r, echo=FALSE, fig.height=4}
+ggplot(ChickWeight, aes(x = Time, y = weight, group = Chick))+ geom_point(aes(color = Diet)) + geom_path(aes(color = Diet)) + facet_wrap(~Diet) + theme_classic()
+```
+
+# Como calculamos el ANOVA de medidas repetidas
+
+## Opción 1a
+
+```{r, echo = TRUE}
+MyReapeted <- aov(weight ~ Diet + Error(Chick/Time), data = ChickWeight)
+summary(MyReapeted)
+```
+
+## Opción 1b
+
+```{r, echo = TRUE}
+MyReapeted <- aov(weight ~ Diet*Time + Error(Chick/Time), data = ChickWeight)
+summary(MyReapeted)
+```
+
+## Opción 2a
+
+```{r, echo = TRUE}
+library(lme4)
+library(lmerTest)
+
+MyReapeted2 <- lmer(weight ~ Diet + (1|Chick), data = ChickWeight)
+
+anova(MyReapeted2)
+```
+
+## Opción 2b
+
+```{r, echo = TRUE}
+library(lme4)
+library(lmerTest)
+
+MyReapeted2 <- lmer(weight ~ Diet*Time + (1|Chick), data = ChickWeight)
+
+anova(MyReapeted2)
+```
+
+# Estimación de parámetros
+
+## Modelo lineal simple {.build}
+
+$$y = \beta X_1 + c_1$$
+```{r, echo = TRUE}
+Fit1 <- lm(mpg~hp, data = mtcars)
+```
+
+```{r}
+kable(broom::tidy(Fit1), digits = 3) %>% kable_styling("striped")
+```
+
+* Cuanto gasta un auto con 150 hp?
+
+```{r, echo = TRUE}
+150*-0.068 + 30.099
+```
+
+## Estimación por mínimos cuadrados
+
+¿Que es el error? **¿Por qué al cuadrado??** Actividad shiny
+
+$$Observado(puntos) - Predicho(linea)$$
+
+```{r}
+library(knitr)
+include_app(url = "http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Shiny1/", height = "800px")
+```
+
+## Intervalo de confianza del estimador {.build}
+
+$$\bar{Y} - SE \times t_{[0.05;n-1]} \leq \mu \leq \bar{Y} + SE \times t_{[0.05;n-1]}$$
+```{r, echo = T}
+kable(broom::tidy(Fit1), digits = 3) %>% kable_styling("striped")
+```
+
+```{r, echo = T}
+Low <- 30.099 - 1.634 * qt(0.975, df = nrow(mtcars) - 2)
+High <- 30.099 + 1.634 * qt(0.975, df = nrow(mtcars) - 2)
+```
+
+
+## Intervalo de confianza del estimador {.build}
+
+```{r, eval=FALSE, echo = TRUE}
+broom::tidy(Fit1, conf.int = T)
+```
+
+```{r}
+kable(broom::tidy(Fit1, conf.int = T)
+, digits = 3) %>% kable_styling("striped")
+```

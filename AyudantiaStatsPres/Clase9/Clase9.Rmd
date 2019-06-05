@@ -32,6 +32,7 @@ countdown::countdown(minutes = 10, seconds = 0,
 
 ## Diseño en bloques {.build}
 
+* Cuando sabemos que las unidades experimentales por naturaleza no son homogéneas
 * Cuando por necesidades técnicas o experimentales para controlar la heterogeneidad de una variable que no es la de interés, por eso hay un efecto a *Bloquear*
     + Medir el desgaste de 4 marcas de neumáticos en 3 modelos de autos
     + Determinar el efecto de 3 técnicas de medir actividad fotosintética en 10 plantas distintas 
@@ -169,9 +170,9 @@ $$0.52 \times luz + 0.28 \times luz\times Nuevo  + 2.05 \times Nuevo+ 29.7$$
 
 ## Diseño Split-plot {.build}
 
-* ¿Cuando lo usamos?
+* Tenemos un diseño en bloques, y en cada bloque, tenemos subplots
 
-## Ejemplo
+* Ejemplo
 
 Don Juan quiere diversificar su portafolio de inversiones, por lo que a pensado en plantar mas variedades de manzanas además de *Fuji* como *Granny Smith* y *Red*, pero su otro vecino Don Rodrigo le comenta que con otras variedades el nuevo fertilizante no es tan bueno. ¿Como debiera diseñar el experimento Don Juan para ver si Don Rodrigo tiene razón? 
 

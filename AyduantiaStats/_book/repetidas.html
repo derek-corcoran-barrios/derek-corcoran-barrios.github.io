@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Practicos de Bioestadística 2</title>
+  <title>Práctico 9 Medidas repetidas | Practicos de Bioestadística 2</title>
   <meta name="description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Practicos de Bioestadística 2" />
+  <meta property="og:title" content="Práctico 9 Medidas repetidas | Practicos de Bioestadística 2" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Practicos de Bioestadística 2" />
+  <meta name="twitter:title" content="Práctico 9 Medidas repetidas | Practicos de Bioestadística 2" />
   
   <meta name="twitter:description" content="Este libro es una compañia al curso BIO4022, análisis y manipulación de datos en R" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="Explorando.html">
+<link rel="prev" href="Bloque.html">
+<link rel="next" href="likelihood.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -212,94 +212,60 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Practicos de Bioestadística 2</h1>
-<p class="author"><em>Derek Corcoran</em></p>
-<p class="date"><em>2019-06-05</em></p>
+<div id="repetidas" class="section level1">
+<h1><span class="header-section-number">Práctico 9</span> Medidas repetidas</h1>
+<p>Para este capitulo necesitas tener instalado el paquete <em>tidyverse</em>, también ayuda tener el paquete <em>broom</em>. Esta clase del curso puede también ser seguida en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase10/Clase10.html">link</a></p>
+<p>El ANOVA de medidas repetidas se utiliza cuando queremos ver como un factor afecta nuestra variable respuesta en el tiempo. Ejemplos de esto pueden ser tratamientos de restauración y su efecto en el tiempo. El efecto de una dieta en el cambio de peso en el tiempo, entre otros ejemplos.</p>
+<p>El primer ejemplo de este trabajo lo veremos con la base de datos <code>ChickWeight</code> qye viene en R, el cual muestra el experimento de el efecto de una dieta en el crecimiento temprano de 50 pollos (Figura <a href="repetidas.html#fig:Pollos">9.1</a>)</p>
+<div class="figure"><span id="fig:Pollos"></span>
+<img src="AyduantiaStats_files/figure-html/Pollos-1.png" alt="Peso de pollos según tiempo y dieta" width="672" />
+<p class="caption">
+Figura 9.1: Peso de pollos según tiempo y dieta
+</p>
 </div>
-<div id="requerimientos" class="section level1 unnumbered">
-<h1>Requerimientos</h1>
-<p>Para comenzar el trabajo se necesita la última versión de R y RStudio <span class="citation">(R Core Team <a href="#ref-R-base">2018</a>)</span>.También se requiere de los paquetes <em>pacman</em>, <em>rmarkdown</em>, <em>tidyverse</em> y <em>tinytex</em>. Si no se ha usado R o RStudio anteriormente, el siguiente video muestra cómo instalar ambos programas y los paquetes necesarios para este curso en el siguiente <a href="https://youtu.be/RtkCAKXsVbw">link</a>.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RtkCAKXsVbw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-</iframe>
-<p>El código para la instalación de esos paquetes es el siguiente:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;pacman&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;tinytex&quot;</span>)</code></pre></div>
-<p>En caso de necesitar ayuda para la instalación, contactarse con el instructor del curso.</p>
-<div id="antes-de-comenzar" class="section level2">
-<h2><span class="header-section-number">0.1</span> Antes de comenzar</h2>
-<p>Si nunca se ha trabajado con <code>R</code> antes de este curso, una buena herramienta es provista por el paquete <a href="http://swirlstats.com/students.html">Swirl</a> <span class="citation">(Kross et al. <a href="#ref-Kross2017">2017</a>)</span>. Si deseas estar más preparado para el curso, realiza los primeros 7 módulos del programa <em>R Programming: The basics of programming in R</em> que incluye:</p>
-<ul>
-<li>Basic Building Blocks</li>
-<li>Workspace and Files</li>
-<li>Sequences of Numbers</li>
-<li>Vectors</li>
-<li>Missing Values</li>
-<li>Subsetting Vectors</li>
-<li>Matrices and Data Frames</li>
-</ul>
-<p>El siguiente link muestra un video explicativo de cómo usar el paquete swirl <a href="https://youtu.be/w6L7Ye18yPE">Video</a></p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/w6L7Ye18yPE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-</iframe>
+<p>Para resolver este problema usamos el siguiente</p>
+<div id="version-1" class="section level3">
+<h3><span class="header-section-number">9.0.1</span> Version 1</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MyReapeted &lt;-<span class="st"> </span><span class="kw">aov</span>(weight <span class="op">~</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span><span class="kw">Error</span>(Chick<span class="op">/</span>Time), <span class="dt">data =</span> ChickWeight)
+
+<span class="kw">summary</span>(MyReapeted)</code></pre></div>
+<pre><code>## 
+## Error: Chick
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+## Diet       3 155863   51954   6.386 0.00104 **
+## Residuals 46 374243    8136                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Error: Chick:Time
+##           Df  Sum Sq Mean Sq F value Pr(&gt;F)
+## Residuals 50 2306278   46126               
+## 
+## Error: Within
+##            Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Residuals 478  78173   163.5</code></pre>
 </div>
-<div id="descripcion-del-practico" class="section level2">
-<h2><span class="header-section-number">0.2</span> Descripción del práctico</h2>
-<p>Los prácticos de este curso se enfocan en aprender a realizar de manera práctica los conceptos enseñados en el cuso, pero además, usando herramientas interactivas y/o programáticas, el profundizar el entendimiento de ciertos conceptos teóricos y filosóficos del curso.</p>
+<div id="version-2" class="section level3">
+<h3><span class="header-section-number">9.0.2</span> Version 2</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lme4)
+<span class="kw">library</span>(lmerTest)
+
+MyReapeted2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(weight <span class="op">~</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>Chick), <span class="dt">data =</span> ChickWeight)
+
+<span class="kw">anova</span>(MyReapeted2)</code></pre></div>
+<pre><code>## Type III Analysis of Variance Table with Satterthwaite&#39;s method
+##      Sum Sq Mean Sq NumDF  DenDF F value    Pr(&gt;F)    
+## Diet  91545   30515     3 43.255  6.7413 0.0007857 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-<div id="objetivos-del-practico" class="section level2">
-<h2><span class="header-section-number">0.3</span> Objetivos del práctico</h2>
-<ol style="list-style-type: decimal">
-<li><p>Aprender el uso de R como ambiente estadístico de limpieza, exploración, visualización de datos.</p></li>
-<li><p>Conocer y aplicar de manera aplicada los conceptos enseñados en el curso de Bioestadística 2.</p></li>
-<li><p>Aprender buenas prácticas de recolección y estandarización de bases de datos, con la finalidad de optimizar el análisis de datos y la revisión de éstas por pares.</p></li>
-<li><p>Realizar análisis críticos de la naturaleza de los datos al realizar análisis exploratorios, que permitirán determinar la mejor forma de comprobar hipótesis asociadas a estas bases de datos.</p></li>
-</ol>
-</div>
-<div id="contenidos" class="section level2">
-<h2><span class="header-section-number">0.4</span> Contenidos</h2>
-<ul>
-<li><p>Capítulo <a href="Explorando.html#Explorando">1</a> <em>Análisis exploratorio y el primer ANOVA</em>: En este capítulo se aprenderá a cómo explorar, resumir y visualizar una base de datos utilizando el paquete tidyverse <span class="citation">(Wickham <a href="#ref-WickhamTidy2017">2017</a>)</span>, además se realizarán un análisis básico de ANOVA</p></li>
-<li><p>Capítulo <a href="Supuestos.html#Supuestos">2</a> <em>Supuestos de ANOVA y mínimos cuadrados</em></p></li>
-<li><p>Capítulo <a href="Poder.html#Poder">3</a> <em>Análisis de poder y primera tarea</em></p></li>
-<li><p>Capítulo <a href="Refs.html#Refs">11</a> <em>Referencias</em></p></li>
-<li><p>Capítulo <a href="t-student.html#t-student">4</a> <em>T de student</em></p></li>
-<li><p>Capítulo <a href="posthoc.html#posthoc">5</a> <em>Tests posthoc</em></p></li>
-<li><p>Capítulo <a href="Formula.html#Formula">6</a> <em>Como formular tu ANOVA</em></p></li>
-</ul>
-</div>
-<div id="metodologia" class="section level2">
-<h2><span class="header-section-number">0.5</span> Metodología</h2>
-<p>Clases prácticas donde cada estudiante trabajará con datos entregados para desarrollar análisis de datos. Además, se deberán generar informes, en base al trabajo con sus datos.</p>
-</div>
-<div id="evaluacion" class="section level2">
-<h2><span class="header-section-number">0.6</span> Evaluación</h2>
-<p>El trabajo práctico de este ramo es un 20% de la nota final del curso, y es obligatorio ir a todos los trabajos prácticos para pasar el ramo.</p>
-<p>Durante los primeros 15 minutos se tomará un control. Pasado ese período, no se acepta la entrega de controles, recibiendo calificación 1. La ausencia a los trabajos prácticos puede ser causal de reprobación del curso. Ademas de los controles habrán trabajos de investigación.</p>
-<p>La nota final de los practicos se evaluará de la siguiente forma:</p>
-<ul>
-<li>Tests de entrada: 60%</li>
-<li>Trabajos: 40%</li>
-</ul>
-</div>
-<div id="presentacion-de-introduccion" class="section level2">
-<h2><span class="header-section-number">0.7</span> Presentación de introducción</h2>
-<p>Para la introducción de los prácticos seguiremos un a presentación que se encuentra en este <a href="http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase1/Clase1.html">link</a></p>
-<p>Si no has conseguido instalar <code>R</code>, puedes seguir el práctico usando la siguiente <a href="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/Interactivo1/">guía interactiva</a></p>
-<p>Puedes ver la clase de nuevo en el siguiente video o clickeando en este <a href="https://youtu.be/VVqUmAcYvVY">link</a></p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VVqUmAcYvVY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+<div id="tarea-2" class="section level2">
+<h2><span class="header-section-number">9.1</span> Tarea 2</h2>
+<p>El Dr Wario tiene una plantación de plantas pirañas. El le vende plantas a Bowswer y sus hijos, a quienes les interesa tener las plantas mas fuertes y robustas en la menor cantidad de tiempo para poder defender sus castillos de Intrusos. Todo indica que si las plantas llegan mas grandes a su lugar de destino tienen más opciones de crecer y defender a sus dueños. Bowser le da 80,000 monedas de oro a el Dr Wario para que pueda realizar experimentos. El sospecha que alguna combinación de temperatura, riego y humedad son los factores que tienen más relevancia a la hora de cultivar sus plantas pirañas.</p>
+<p>Dada la base de datos <em>Explore.csv</em>, diseña el mejor experimento que podría hacer el doctor Wario y determina que condiciones debiera utilizar para cultivar sus plantas.</p>
+<iframe src="http://admin.derek-corcoran-barrios.com/shiny/rstudio/sample-apps/ExperimentGame/?showcase=0" width="672" height="800px">
 </iframe>
 
-</div>
-</div>
-<h3> Referencias</h3>
-<div id="refs" class="references">
-<div id="ref-R-base">
-<p>R Core Team. 2018. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
-</div>
-<div id="ref-Kross2017">
-<p>Kross, Sean, Nick Carchedi, Bill Bauer, and Gina Grdina. 2017. <em>Swirl: Learn R, in R</em>. <a href="https://CRAN.R-project.org/package=swirl" class="uri">https://CRAN.R-project.org/package=swirl</a>.</p>
-</div>
-<div id="ref-WickhamTidy2017">
-<p>Wickham, Hadley. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</p>
 </div>
 </div>
             </section>
@@ -307,8 +273,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-
-<a href="Explorando.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="Bloque.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="likelihood.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

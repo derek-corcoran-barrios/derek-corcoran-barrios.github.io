@@ -1,0 +1,18 @@
+# Diseños en bloque y split-plot {#Bloque}
+
+Para este capitulo necesitas tener instalado el paquete *tidyverse*, también ayuda tener el paquete *broom*. Esta clase del curso puede también ser seguida en este [link](http://www.derek-corcoran-barrios.com/AyudantiaStatsPres/Clase9/Clase9.html)
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(suppressWarnings(library(tidyverse, quietly = TRUE)))
+options("kableExtra.html.bsTable" = T)
+library(kableExtra)
+```
+
+## Objetivos del práctico
+
+* Entender la diferencia entre diseño en bloque y split-plot
+* Saber los pro y los contras de cada uno
+* Entender cuando usar cada tipo de diseño experimental
+
