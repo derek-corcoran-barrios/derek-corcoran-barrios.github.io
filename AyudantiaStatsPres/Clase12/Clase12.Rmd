@@ -1,0 +1,393 @@
+---
+title: "Introducción a los GLM"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    logo: puc_logo.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE)
+library(tidyverse)
+library(caret)
+library(MuMIn)
+library(broom)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Formula (g)lm con interacciones {.build}
+
+Supongamos que tenemos dos variables $X_1$ categorica e $X_2$ es continua
+
+* $C_0$ Intercepto
+* $C_1$ modificador de intercepto para nivel 1
+* $\beta_1$ pendiente de argumento 1
+
+$$y = beta_1X_1 + \beta_2X_2 + \beta_3X_1X_2 + C_0 + C_1$$
+
+## Algunas especificaciones de un modelo lineal
+
+```{r, echo = FALSE}
+ggplot(ChickWeight, aes(x = Time, y = weight)) + geom_point(aes(color = Diet)) + theme_classic()
+DF <- expand.grid(Diet = as.factor(c(1,2,3,4)), Time = 0:24)
+```
+
+## Cambio intercepto pero no pendiente
+
+```{r}
+fit1 <- lm(weight ~ Time + Diet, data=ChickWeight)
+```
+
+```{r, echo=FALSE}
+DF$Pred <- predict(fit1, DF)
+DF$SE <- predict(fit1, DF, se.fit = T)$se.fit
+ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet)) + theme_classic()
+```
+
+## Calculemos
+
+```{r, echo = FALSE}
+kable(tidy(fit1)) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+```
+
+* Nuevos datos
+
+```{r, echo=F}
+D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
+kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+
+## Cambio Pendiente pero no intercepto
+
+```{r}
+fit2 <- lm(weight ~ Time + Time:Diet, data=ChickWeight)
+```
+
+```{r, echo=FALSE}
+DF$Pred <- predict(fit2, DF)
+DF$SE <- predict(fit2, DF, se.fit = T)$se.fit
+ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet))+ theme_classic()
+```
+
+## Calculemos
+
+```{r, echo = FALSE}
+kable(tidy(fit2)) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+```
+
+* Nuevos datos
+
+```{r, echo=F}
+D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
+kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+
+## Cambio Pendiente e intercepto
+
+```{r}
+fit3 <- lm(weight ~ Time*Diet, data=ChickWeight)
+```
+
+```{r, echo=FALSE}
+DF$Pred <- predict(fit3, DF)
+DF$SE <- predict(fit3, DF, se.fit = T)$se.fit
+ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet))+ theme_classic()
+```
+
+## Calculemos
+
+```{r, echo = FALSE}
+kable(tidy(fit3)) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+```
+
+* Nuevos datos
+
+```{r, echo=F}
+D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
+kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+## Cual es el mejor modelo?
+
+```{r}
+kable(MuMIn::model.sel(list(fit1,fit2, fit3))) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+
+## Modelo lineal simple
+
+* Son los residuales normales?
+
+```{r}
+Test <- augment(fit2)
+hist(Test$.resid)
+```
+
+## Es la varianza constante?
+
+```{r}
+ggplot(Test, aes(x = .fitted, y = .resid)) + geom_point() + theme_classic() + geom_hline(yintercept = 0, lty = 2, color = "red")
+```
+
+
+# GLMs
+
+## Distribuciones {.build}
+
+* Para entender GLM hay que entender distribuciones
+
+
+```{r, echo = FALSE}
+knitr::include_graphics("Distributions.jpeg", dpi = 170)
+```
+
+
+## Estructura de error
+
+* **family =**
+* gaussian (variable dependiente continua)
+* binomial (variable dependiente 0 o 1)
+* poisson (variable dependiente cuentas 1, 2 ,3 ,4 ,5)
+* gamma (variable dependiente continua solo positiva)
+
+## Modelo lineal generalizado
+
+* Familia?
+    + Gamma
+    + respuesta (link = inverso)
+
+ $$\frac{1}{y} = \beta_1X_1 + C_0$$
+
+## Modelo Gamma
+
+```{r}
+fit2g <- glm(weight ~ Time + Time:Diet, Gamma, data=ChickWeight)
+```
+
+
+```{r, echo=FALSE}
+DF$Pred <- predict(fit2g, DF, type = "response")
+DF$SE <- predict(fit1, DF, se.fit = T, type = "response")$se.fit
+ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet)) + theme_classic()
+```
+
+
+## Calculemos 
+
+* Nuevos datos
+
+```{r,echo = FALSE}
+tidy(fit2g) %>% kable(digits = 2)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+```{r, echo=F}
+D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
+kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+
+## Modelo lineal generalizado
+
+* Son los residuales normales?
+
+```{r}
+Test <- augment(fit2g)
+hist(Test$.resid)
+```
+
+## Es la varianza constante?
+
+```{r}
+ggplot(Test, aes(x = .fitted, y = .resid)) + geom_point() + theme_classic() + geom_hline(yintercept = 0, lty = 2, color = "red")
+```
+
+## Modelo lineal generalizado
+
+* Familia?
+    + Gamma
+    + respuesta (link = log)
+
+ $$\log{y} = \beta_1X_1 + C_0$$
+
+## Modelo Gamma
+
+```{r}
+fit2g <- glm(weight ~ Time + Time:Diet, Gamma(link = "log"), data=ChickWeight)
+```
+
+
+```{r, echo=FALSE}
+DF$Pred <- predict(fit2g, DF, type = "response")
+DF$SE <- predict(fit1, DF, se.fit = T, type = "response")$se.fit
+ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet)) + theme_classic()
+```
+
+
+## Calculemos 
+
+* Nuevos datos
+
+```{r,echo = FALSE}
+tidy(fit2g) %>% kable(digits = 2)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+```{r, echo=F}
+D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
+kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+
+## Modelo lineal generalizado
+
+* Son los residuales normales?
+
+```{r}
+Test <- augment(fit2g)
+hist(Test$.resid)
+```
+
+## Es la varianza constante?
+
+```{r}
+ggplot(Test, aes(x = .fitted, y = .resid)) + geom_point() + theme_classic() + geom_hline(yintercept = 0, lty = 2, color = "red")
+```
+
+
+
+
+## Modelo lineal generalizado {.build}
+
+```{r, results= "asis"}
+train <- read_csv("train.csv") %>% filter(Embarked == "S")
+```
+
+```{r, echo = FALSE}
+knitr::kable(train, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
+```
+
+## Modelo lineal generalizado {.build}
+
+* Familia?
+    + Binomial
+    + respuesta (link = logit)
+
+ $$log{\frac{p}{1-p}} = \beta_1X_1 + C_0$$
+
+
+
+## Modelo lineal generalizado (familia: binomial)
+
+```{r}
+FitBin <- glm(Survived ~ Fare + Sex, data = train)
+```
+
+```{r, echo=FALSE}
+DF <- expand.grid(Fare = seq(from = min(train$Fare), to = max(train$Fare), length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
+
+
+DF$Prediction <- predict(FitBin, DF, se.fit = TRUE)$fit
+DF$SE <- predict(FitBin, DF, se.fit = TRUE)$se.fit
+
+ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
+
+```
+
+## Modelo lineal generalizado (familia: binomial)
+
+```{r}
+FitBin <- glm(Survived ~ Fare + Sex, data = train)
+```
+
+```{r, echo=FALSE}
+ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + geom_hline(lty = 2, color = "red", yintercept = 1) + theme_classic()
+
+```
+
+
+## Modelo lineal generalizado (familia: binomial)
+
+```{r, results="asis", cache = TRUE}
+FitBin2 <- glm(Survived ~ Fare*Sex, data = train, family = binomial)
+```
+
+```{r, echo=FALSE}
+##1
+DF <- expand.grid(Fare = seq(from = min(train$Fare), to = max(train$Fare), length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
+
+DF$Prediction <- predict(FitBin2, DF, se.fit = TRUE, type = "response")$fit
+DF$SE <- predict(FitBin2, DF, se.fit = TRUE,"response")$se.fit
+
+
+ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
+```
+
+## Modelo lineal generalizado (familia: binomial)
+
+```{r, echo = FALSE}
+knitr::kable(broom::tidy(FitBin2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover")) 
+```
+
+```{r, echo = FALSE}
+knitr::kable(broom::glance(FitBin2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover")) 
+```
+
+$R^2$: `r DescTools::PseudoR2(FitBin2, "Nagelkerke")`
+
+## Modelo lineal generalizado (familia: binomial)
+
+```{r, results="asis", cache = TRUE}
+FitBin2 <- glm(Survived ~ Fare*Sex, data = train, family = binomial())
+```
+
+
+```{r, echo = FALSE, cache = TRUE}
+##1
+DF <- expand.grid(Fare = seq(from = -200, to = 1000, length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
+
+DF$Prediction <- predict(FitBin2, DF, se.fit = TRUE, type = "response")$fit
+DF$SE <- predict(FitBin2, DF, se.fit = TRUE,"response")$se.fit
+
+
+ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
+```
+
+## Función link
+
+* Actua sobre $Y$
+* family Gaussian, link = identidad
+* family Gamma, link = inverso
+* family poisson, link  = log
+* family binomial, link = logit
+
+$$Logit = log{\frac{p}{1-p}}$$
+
+## Función link
+
+```{r, echo = F}
+x = c(-1, -0.8, 0.1, 0.2, 0.5, 0.8, 1, 2, 2.3)
+link = data.frame(Valor = x, Identidad = x, Inverso = 1/x, Log = log(x), logit = log(x/(1-x)))
+```
+
+```{r, echo = FALSE}
+knitr::kable(link) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)  %>% scroll_box(width = "100%", height = "400px")
+```
+
+## Función link
+
+```{r, echo=FALSE}
+x = seq(from = -4, to = 4, by = 0.2)
+link = data.frame(Valor = x, Identidad = x, Inverso = 1/x, Log = log(x), logit = log(x/(1-x)))
+link2 <- link %>% gather(key = link, value = transformacion, -Valor)
+ggplot(link2, aes(x = Valor, y = transformacion)) + geom_line(aes(color = link)) + geom_point(aes(color = link)) + theme_classic() + geom_vline(xintercept = c(0,1), lty = 2 , color = "red")
+```
+
+## Ajuste
+
+Pseudo $R^2$
+

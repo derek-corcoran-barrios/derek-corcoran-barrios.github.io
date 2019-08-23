@@ -25,7 +25,7 @@
 <meta name="author" content="Derek Corcoran">
 
 
-<meta name="date" content="2019-06-05">
+<meta name="date" content="2019-06-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -191,7 +191,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.1" data-path="repetidas.html"><a href="repetidas.html#tarea-2"><i class="fa fa-check"></i><b>9.1</b> Tarea 2</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="likelihood.html"><a href="likelihood.html"><i class="fa fa-check"></i><b>10</b> Máxima verosimilitud y Modelos lineales</a></li>
-<li class="chapter" data-level="11" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>11</b> Referencias</a></li>
+<li class="chapter" data-level="11" data-path="GLMs.html"><a href="GLMs.html"><i class="fa fa-check"></i><b>11</b> Modelos Lineales Generalizados</a></li>
+<li class="chapter" data-level="12" data-path="Refs.html"><a href="Refs.html"><i class="fa fa-check"></i><b>12</b> Referencias</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -508,8 +509,8 @@ Figura 2.3: Histograma de los resiudales del modelo ANOVA
 <p>El qq plot es otra forma visual de establecer si los residuales son o no son normales, para esto, lo esperado es que la gráfica resultante sea una diagonal lo mas recta posible, para esto usaremos la función <em>qqnorm</em>, con nuestros residuales, de nuevo, podemos usar cualquiera de las dos versiones de nuestros datos:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(Residuales)
 <span class="kw">qqnorm</span>(Resultados<span class="op">$</span>.resid)</code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-24"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-24-1.png" alt="qqplot de los resiudales del modelo ANOVA" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-19"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-19-1.png" alt="qqplot de los resiudales del modelo ANOVA" width="672" />
 <p class="caption">
 Figura 2.4: qqplot de los resiudales del modelo ANOVA
 </p>
@@ -535,8 +536,8 @@ Figura 2.4: qqplot de los resiudales del modelo ANOVA
 <p>Tanto los ANOVAS como las regresiones lineales se basan en minimizar la suma de cuadrados, es la suma de los cuadrados de los errores o residuales.</p>
 <div id="que-es-el-error-por-que-al-cuadrado" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> ¿Que es el error? ¿Por qué al cuadrado??</h3>
-<div class="figure"><span id="fig:unnamed-chunk-27"></span>
-<img src="AyduantiaStats_files/figure-html/unnamed-chunk-27-1.png" alt="Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-22"></span>
+<img src="AyduantiaStats_files/figure-html/unnamed-chunk-22-1.png" alt="Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado" width="672" />
 <p class="caption">
 Figura 2.5: Errores de una regresión lineal ejemplificados con la linea entre el valor predicho y el observado
 </p>
