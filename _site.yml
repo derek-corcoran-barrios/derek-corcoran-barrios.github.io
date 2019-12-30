@@ -10,6 +10,8 @@ navbar:
     - text: Cursos
     - text: Curso de R
       href: Libro/_book/index.html
+    - text: Curso modelos multivariados
+      href: CursoMulti/_book/index.html  
     - text: BIO249c
       href: AyduantiaStats/_book/index.html      
     - text: Hackathon

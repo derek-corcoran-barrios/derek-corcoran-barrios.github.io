@@ -1,0 +1,101 @@
+--- 
+title: "Curso BIO4318 Modelos Multivariados y Machine learning"
+author: "Derek Corcoran"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning"
+---
+
+
+# Requerimientos {-}
+
+Para comenzar el trabajo se necesita la última versión de R y RStudio [@R-base].También se requiere de los paquetes *pacman*, *rmarkdown*, *tidyverse* y *tinytex*. Si no se ha usado R o RStudio anteriormente, el siguiente video muestra cómo instalar ambos programas y los paquetes necesarios para este curso en el siguiente [link](https://youtu.be/RtkCAKXsVbw).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RtkCAKXsVbw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+El código para la instalación de esos paquetes es el siguiente:
+
+```{r eval=FALSE}
+install.packages("pacman", "rmarkdown", "tidyverse", "tinytex")
+```
+
+
+En caso de necesitar ayuda para la instalación, contactarse con el instructor del curso.
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+## Antes de comenzar
+
+Si nunca se ha trabajado con `R` antes de este curso, una buena herramienta es provista por el paquete [Swirl](http://swirlstats.com/students.html) [@Kross2017]. Para comenzar la práctica, realizar los primeros 7 modulos del programa *R Programming: The basics of programming in R* que incluye:
+
+* Basic Building Blocks
+* Workspace and Files
+* Sequences of Numbers
+* Vectors
+* Missing Values
+* Subsetting Vectors
+* Matrices and Data Frames
+
+
+El siguiente link muestra un video explicativo de cómo usar el paquete swirl [Video](https://youtu.be/w6L7Ye18yPE)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/w6L7Ye18yPE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+## Descripción del curso
+
+El objetivo de este curso es el poder decidir cuando hacer modelos predictivos y cuando modelos explicativos. Cuando usar modelos estadísticos y cuando algoritmos de inteligencia artificial.
+
+##  Objetivos del curso
+
+1. Entender con claridad que es un modelo estadístico como una aproximación al entendimiento de un fenómento
+
+2. Conocer y entender cuando un modelo es predictivo y/o cuando es explicatico, y que medidas nos permiten establecer que tan bueno es un modelo para predecir y/o explicar
+
+3. Conocer y aplicar los conceptos de Inferencia Multimodelo, en particular selección de modelos y el saber cuando elegir el "mejor" modelo, y cuando promediar entre varios candidatos.
+
+4. Entender el como utilizar algoritmos de Machine learning, como mejorarlos y como medir su desempeño.
+
+
+## Contenidos
+
++  Capítulo \@ref(CriteriosInfo) *Criterios de Información*: En este capítulo se aprenderá a cómo optimizar una de base de datos, sobre la limpieza y transformación de bases de datos, qué es una base de datos *tidy* y cómo manipular estas bases de datos con el paquete *dplyr* [@R-dplyr].
+
++  Capítulo \@ref(reproducible) *Investigación reproducible*: En este capítulo se trabajará en la confección de un documento que combine códigos de `R` y texto para generar documentos reproducibles utilizando el paquete *rmarkdown* [@Allaire2018]. Además, se verá cómo al usar RStudio se pueden guardar los proyectos en un repositorio de github.
+    
++ Capítulo \@ref(tidyverso) *El tidyverso* y el concepto de pipeline:En este capítulo se aprenderá sobre la limpieza de datos complejos.
+
++ Capítulo \@ref(visualizacion) *Visualización de datos* visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd
+
++ Capítulo \@ref(modelos) *Modelos en R* Aprender a generar modelos en R, desde ANOVA a GLM.
+
++ Capítulo \@ref(loops) *Loops*. Generación de funciones propias en R y loops
+
+6. Escritura de manuscritos en R, transformación de documentos Rmd en un manuscrito
+
+7. Presentaciones en R y generar documentos interactivos. Transformación de datos en una presentación o en una Shiny app. Realizar una presentación o aplicación en R.
+
+## Metodología
+
+Todas las clases estarán divididas en dos partes: I. Clases expositivas de principios y herramientas, donde se presentarán los principios de investigación reproducible y tidy data, junto con las herramientas actuales más utilizadas, y II. Clases prácticas donde cada estudiante trabajará con datos propios para desarrollar un documento reproducible. Los estudiantes que no cuenten con datos propios podrán acceder a sets de datos para su trabajo o podrán simularlos, dependiendo del caso.
+
+Además, se deberán generar informes y presentaciones siguiendo los principios de investigación reproducible, en base al trabajo con sus datos. Se realizará un informe final, en el cual se espera un trabajo que compile los conociminetos adquiridos durante el curso.
+
+
+## Libros de consulta
+
+Los principios de este curso están explicados en los siguientes libros gratuitos.
+
+* Gandrud, Christopher. Reproducible Research with R and R Studio. CRC Press, 2013. Available for free in the following
+[link](https://englianhu.files.wordpress.com/2016/01/reproducible-research-with-r-and-studio-2nd-edition.pdf)
+* Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. Implementing reproducible research. CRC Press, 2014. Available for free in the following [link](http://web.stanford.edu/~vcs/papers/ijclp-STODDEN-2009.pdf)
+
+## Bibliografía

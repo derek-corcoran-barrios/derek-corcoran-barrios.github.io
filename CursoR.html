@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Derek Corcoran" />
@@ -86,7 +86,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -235,6 +234,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -246,18 +246,6 @@ $(document).ready(function () {
   display: none;
 }
 </style>
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
 
 <!-- code folding -->
 
@@ -301,6 +289,9 @@ $(document).ready(function () {
     <li class="dropdown-header">Cursos</li>
     <li>
       <a href="Libro/_book/index.html">Curso de R</a>
+    </li>
+    <li>
+      <a href="CursoMulti/_book/index.html">Curso modelos multivariados</a>
     </li>
     <li>
       <a href="AyduantiaStats/_book/index.html">BIO249c</a>
@@ -388,7 +379,7 @@ $(document).ready(function () {
 </div>
 
 
-<div id="bio-4022.-analisis-y-manipulacion-de-datos-en-r" class="section level1">
+<div id="bio-4022.-análisis-y-manipulación-de-datos-en-r" class="section level1">
 <h1>BIO 4022. Análisis y manipulación de datos en R</h1>
 <div id="en-el-inicio-se-encuentra" class="section level3">
 <h3>En el inicio se encuentra:</h3>
@@ -456,6 +447,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

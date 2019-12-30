@@ -1,0 +1,249 @@
+# Criterios de Información {#CriteriosInfo}
+
+## Paquetes necesarios para este capítulo
+
+Para este capitulo necesitas tener instalado los paquetes *tidyverse* [@R-tidyverse], *broom*  [@R-broom], *MuMIn*  [@R-MuMIn] y caret [@R-caret]
+
+```{r, echo=FALSE}
+knitr::write_bib(c("base", "broom", "caret", "dplyr", "knitr", "MuMIn", "stringr", "tidyverse"), "packages.bib", width = 60)
+library(knitr)
+suppressMessages(library(tidyverse))
+suppressMessages(library(broom))
+suppressMessages(library(kableExtra))
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+```
+
+En este capítulo se explicará que es un modelo estadísitco, y como evaluar su capacidad explicativa y/o preditiva. Además, hablaremos de los criterios de información y como estos nos ayudan a tener un balance entre predicción y explicación.
+
+## Predecir vs Explicar
+
+### Modelos estadísticos
+
+Un modelo estadístico es un modelo no determinista que utiliza una muestra de una población para intentar determinar patrones de esta población. En ese sentido un ANOVA (Análisis de varianza), una regresión lineal, una regresión no lineal son modelos estadísticos.
+
+En un modelo estadístico muchas veces podemos medir su poder explicativo y su poder predictivo, en este curso aprenderemos varios parametros para medir estas carácteristicas en varios modelos. Una de las medidas más conocidas para tratar de medir el poder predictivo de un modelo es el $R^2$ de una regresión lineal, donde usualmente si tenemos por ejemplo un $R^2$ de 0.74, es usual el decir que el modelo explica el 74% de variación de la variable respuesta. Siguiendo ese ejemplo, una forma fácil de medir el poder predictivo de un modelo (pero no el mejor), es medir el $R^2$ de las predicciones del modelo en una nueva base de datos.
+
+#### Ejemplo
+
+¿Podemos explicar o predecir la eficiencia de combustible (*mpg*) a partir de los caballos de fuerza (*hp*) de un Vehículo? Veamos el patrón que se observa en la Figura \@ref(fig:patron)
+
+
+```{r patron, fig.cap='Caballos de Fuerza de un vehículo (HP) graficados contra la eficiencia en millas por galon (mpg) del mismo vehículo', out.width='80%', fig.asp=.75, fig.align='center'}
+ggplot(mtcars, aes(x = hp, y = mpg)) + geom_point() + theme_classic()
+```
+
+Claramente vemos que en general a medida que aumentan los caballos de fuerza disminuye la eficiencia de los vehículos, lo cual sería nuestra hipótesis
+
+#### Primer paso separar en base de datos de entrenamiento y de testeo
+
+En este caso queremos probar el poder explicativo y predictivo de esta base de datos, por lo cuál dividiremos nuestra base de datos en dos una base de datos de entrenamiento, con la cual ajustaremos el modelo y una de testeo o de prueba, en la cual veremos el poder predictivo del modelo con una base de datos que el modelo no ha visto anteriormente.
+
+Para esto utilizamos el siguiente código
+
+```{r, echo=TRUE}
+set.seed(2018)
+index <- sample(1:nrow(mtcars), size = round(nrow(mtcars)/2))
+
+Train <- mtcars[index,]
+
+Test <- mtcars[-index,]
+```
+
+Esto genera la base de datos *Train* que tiene `r nrow(Train)` observaciones y la base de datos *Test* que tiene `r nrow(Test)` observaciones independientes. En este caso nuevamente si vemos la figura \@ref(fig:patron), vemos que la relación entre los caballos de fuerza y la eficiencia no parecen ser particualrmente lineales, por lo que testearemos el siguiente modelo estadístico:
+
+
+$$mpg = \beta_1 hp + \beta_2 hp^2 + c$$
+
+Para determinar el poder tanto explicativo como predictivo del modelo, lo primero que haremos será crear el objeto *Modelo* usando un modelo lineal simple `lm`
+
+```{r, echo = TRUE}
+Modelo <- lm(mpg ~ hp + I(hp^2), data = Train)
+```
+
+
+#### Poder explicativo:
+
+Primero veamos el poder predictivo de este modelo, para eso usaremos la función `glance` del paquete *broom*
+
+```{r, echo=TRUE, eval = FALSE}
+glance(Modelo)
+```
+
+```{r Tab, tidy=FALSE}
+kable(glance(Modelo) %>% select(r.squared, p.value, df), caption = "R cuadrado, valor de p y grados de libertad del modelo")  %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+Como vemos en la Tabla \@ref(tab:Tab), nuestro modelo tiene un poder explicativo bastante bueno, donde con solo saber los caballos de fuerza de un vehículo, podemos explicar un `r (glance(Modelo) %>% mutate(r.squared = round(r.squared*100, 2)) %>% pull(r.squared))`% de la variación en la eficiencia del vehículo.
+
+Usando la función `predict`, podemos ver la predicción del modelo con nuestra base de datos original, ademas si vemos la tabla \@ref(tab:TabResidPred), vemos la predicción el observado y los residuales, que es la resta entre lo observado y la predicción. Además en la \@ref(fig:Pred1) podemos ver en la linea segmentada la predicción del modelo comparado con los datos en los puntos
+
+```{r, echo=TRUE}
+Train$Pred <- predict(Modelo, Train)
+```
+
+```{r TabResidPred}
+kable(Train %>% dplyr::select(hp, mpg,  Pred) %>% mutate(resid = Pred - mpg), caption = "En esta tabla podemos observar para cada observación los caballos de fuerza, la predicción y los residuales para cada observación")  %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+```{r Pred1, fig.cap= "Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo"}
+ggplot(Train, aes(x = hp, y = mpg)) + geom_point() + geom_line(aes(y = Pred), color = "red", lty = 2) + theme_classic()
+```
+
+#### Poder Predictivo:
+
+Para determinar el poder predictivo de un modelo, tenemos que probar su predicciones con una base de datos que no haya sido usada para ajustar el modelo, es para eso que generamos la base de datos *Test*, lo primero que debemos hacer para ver el poder predictivo del modelo es usar el modelo con esta base de datos nueva, y generear predicciones, para esto nuevamente usamos la función `predict`
+
+```{r}
+Test$Pred <- predict(Modelo, Test)
+```
+
+Posteriormente, usamos la funcion `postResample`del paquete `caret`, usando dos argumentos. En el argumento `pred` usamos los valores predichos con el modelo, y en el argumento `obs` usamos los valores observados, es decir, los que esperamos que nos entregue el modelo:
+
+```{r, echo=TRUE}
+library(caret)
+postResample(pred = Test$Pred, obs = Test$mpg)
+```
+
+La tabla resultante de esta función nos entrega varios valores para determinar que tan buena es la predicción (Mean Square Error, R Cuadrado y Mean Absolute Error), estos valores los estudiaremos mas adelante en los capítulos de Machine Learning, pero por ahora quedemonos con el valor de R Cuadrado, que es igual a `r round(postResample(pred = Test$Pred, obs = Test$mpg)[2],2)`, un valor menor al `r (glance(Modelo) %>% mutate(r.squared = round(r.squared, 2)) %>% pull(r.squared))` del poder predictivo, lo cual es de esperarse. Casi siempre el valor predictivo de un modelo es menor al valor explicativo de este mismo. En la tabla \@ref(tab:PredPower) y en la figura \@ref(fig:PredPowerFig) podemos ver las predicciones del modelo.
+
+```{r PredPower}
+kable(Test %>% dplyr::select(hp, mpg,  Pred) %>% mutate(resid = Pred - mpg), caption = "En esta tabla podemos observar para cada observación los caballos de fuerza, la predicción y los residuales para cada observación")  %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+
+
+
+
+```{r PredPowerFig, fig.cap= "Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo"}
+ggplot(Test, aes(x = hp, y = mpg)) + geom_point() + geom_line(aes(y = Pred), color = "red", lty = 2) + theme_classic()
+```
+
+#### Que pasa al complejizar el modelo
+
+El modelo que evaluamos tenia un terminlo lineal $\beta_1 hp$ y uno cuadrático $\beta_2 hp^2$, pero el poder tanto explicativo como predictivo podría mejorar o empeorar si agregamos un termino cúbico $\beta_3 hp^3$ o uno elevado a la cuarta $\beta_4 hp^4$, ¿Que ocurre con el poder explicativo y/o el predictivo cuando aumentamos la complejidad del modelo?
+
+Para este ejemplo, veremos que ocurre con el $R^2$ explicativo a medida que aumentamos la complejidad del modelo desde $K = 1$, esto es solo un intercepto, pasando por el modelo lineal $K = 2$, modelo cuadratico $K = 3$ hasta llegar a agregar el argumento elevado a 12:
+
+$$mpg = \beta_1 hp + \beta_2 hp^2 + ... + \beta_12 hp^{12}  c$$
+
+Al observar como se comporta el poder explicativo, vemos que aumenta siempre que agregamos parametros como vemos en la animación de la figura \@ref(fig:GifExplicativo), en esta vemos que el $R^2$ siempre aumenta, y que la linea roja que marca la predicción del modelo, sigue de forma casi perfecta los puntos de la base de datos *Train*, si esto es así, por que no usamos siempre el modelo más complejo, lo veremos en la siguiente sección donde hablaremos del Sobreajuste.
+
+```{r GifExplicativo, fig.cap= "Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo"}
+knitr::include_graphics("Explicativo.gif")
+```
+
+## Sobreajuste
+
+El sobreajute ocurre cuando por aumentar el ajuste de un modelo ($R^2$ por ejemplo), generamos un modelo tan complejo, que practicamente no tiene error con la base de datos que lo entrenamos, sin embargo, al probarlo con una nueva base de datos, vemos que el modelo es muy malo para predecir sobre una nueva base de datos, esto es el modelo se ha vuelto idiosincrático, y creemos que es un buen modelo, pero solo para los datos que usamos para el modelo mismo. Esto podemos verlo en la figura \@ref(fig:SobreAjuste), en esta vemos como en el gráfico de la izquierda, a medida que aumentamos el número de parametros, siempre aumenta nuestro $R^2$, en el gráfico de la derecha sin embargo, vemos que desde los 6 parametros en adelante, el modelo es peor en su predicción que sobre la base de datos original, y ya cuando tenemos 8 parametros, la diferencia es muy alta, con un $R^2$ de 0.83 para la base de datos original, y 0.3 para la base de datos de prueba, en ese momento, el modelo ya esta sobreajustado.
+
+```{r SobreAjuste, fig.cap= "El gráfico de la Izquerda muestra el ajuste del modelo en los datos en que se entrenó el modelo, mientras que el de la derecha, sobre la base de datos de prueba. Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo"}
+knitr::include_graphics("Predictivo.gif")
+```
+
+## Quiero predecir y no explicar
+
+* Texto predictivo del celular
+* Auto-corrector
+* Efectos de cambio climático
+* Detección de caras en redes sociales
+* A veces el modelo equivocado puede predecir mejor
+* Como selecciono el modelo con mayor poder predictivo?
+    + Maximizo el $R^2$ de la base de datos de prueba (*Test*)
+
+
+## Quiero explicar y no predecir
+
+* Pruebas a hipótesis causales
+* ¿Que causa el cambio climático?
+* Como funciona:
+  + Generación de hipótesis (plural)
+  + Generación de modelos para cada hipótesis
+  + Interpretación de resultados en base a modelos e hipótesis
+  + Recomendaciones?
+
+
+## Explicación o Predicción?
+
+```{r}
+knitr::include_graphics("Dilema.jpg", dpi = 80)
+```
+
+<iframe src="https://giphy.com/embed/3o7aCRloybJlXpNjSU" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/3o7aCRloybJlXpNjSU">via GIPHY</a></p>
+
+## AIC
+
+* Balancea explicación y predicción
+* Castiga el uso de muchos parámetros
+* Menor AIC, mejor modelo
+
+$$AIC = 2k  - \ln(L)$$
+
+* Corregido
+
+$$AICc = AIC + \frac{2k^2 + 2k}{n-k-1}$$
+
+* Usualmente una diferencia de 2 en AIC, se considera "Significativa" 
+
+## Calculo de AICc en R
+
+* Función `AICc` en MuMIn
+
+```{r, echo = TRUE}
+library(MuMIn)
+Modelo <- lm(mpg ~ hp + I(hp^2), data = Train)
+AICc(Modelo)
+```
+
+* MuMIn tiene otros criterios de informacion:
+    + $BIC = \ln(n)k  - \ln(L)$
+    + CAIFC
+    + DIC
+    + QAIC
+    
+## AICc
+    
+```{r, cache=TRUE}
+library(MuMIn)
+library(tidyverse)
+library(gridExtra)
+
+Fit1 <- glm(mpg ~., data = mtcars)
+options(na.action = "na.fail")
+dd <- dredge(Fit1, extra = "R^2")
+dd <- as.data.frame(dd) 
+colnames(dd) <- make.names(colnames(dd))
+SUMM <- dd %>% group_by(df) %>% summarize(RSq = max(R.2), AICc = min(AICc))
+
+dfAICmin <- filter(SUMM, AICc == min(AICc))$df
+
+G2 <- ggplot(SUMM, aes(x = df, y = AICc)) + geom_line() + theme_classic() + geom_vline(xintercept =dfAICmin, col = "red")
+
+G1 <- ggplot(SUMM, aes(x = df, y = RSq)) + geom_line() + theme_classic() + geom_hline(yintercept = 1, lty = 2) + geom_vline(xintercept =dfAICmin, col = "red")
+
+grid.arrange(G1, G2, ncol = 2)
+```
+
+## Ejercicio
+
+Tomando la base de datos `mtcars` explora la relacion entre AICc, $R^2$ Exploratorio y $R^2$ Predictivo.
+
+Para eso genera un data frame con las siguientes columnas:
+
+* AICc
+* K
+* $R^2$ Exploratorio
+* $R^2$ Predictivo
+* Id modelo
+* Hasta 11:30
+
+# Discusión artículo
+
+## Mensaje final
+
+```{r, echo = FALSE}
+DF <- data.frame(Predicción = c("Asociación", "Datos", "Futura", "Maximizar predicción"), Explicación = c("Causalidad", "Teoria", "Retrospectiva", "Minimizar sesgo"))
+
+rownames(DF) <- c("Relación x e y", "Relación función modelos", "Visión", "Varianza")
+kable(DF) %>% kable_styling()
+```

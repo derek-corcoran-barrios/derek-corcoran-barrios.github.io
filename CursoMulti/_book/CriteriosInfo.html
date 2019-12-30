@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 1 Criterios de Información | Curso BIO4318 Modelos Multivariados y Machine learning</title>
+  <meta name="description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 1 Criterios de Información | Curso BIO4318 Modelos Multivariados y Machine learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 1 Criterios de Información | Curso BIO4318 Modelos Multivariados y Machine learning" />
+  
+  <meta name="twitter:description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
+  
+
+<meta name="author" content="Derek Corcoran" />
+
+
+<meta name="date" content="2019-12-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="discusión-artículo.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Modelos Multivariados</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Requerimientos</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#antes-de-comenzar"><i class="fa fa-check"></i><b>0.1</b> Antes de comenzar</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#descripción-del-curso"><i class="fa fa-check"></i><b>0.2</b> Descripción del curso</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#objetivos-del-curso"><i class="fa fa-check"></i><b>0.3</b> Objetivos del curso</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#contenidos"><i class="fa fa-check"></i><b>0.4</b> Contenidos</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#metodología"><i class="fa fa-check"></i><b>0.5</b> Metodología</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#libros-de-consulta"><i class="fa fa-check"></i><b>0.6</b> Libros de consulta</a></li>
+<li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#bibliografía"><i class="fa fa-check"></i><b>0.7</b> Bibliografía</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html"><i class="fa fa-check"></i><b>1</b> Criterios de Información</a><ul>
+<li class="chapter" data-level="1.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#paquetes-necesarios-para-este-capítulo"><i class="fa fa-check"></i><b>1.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="1.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#predecir-vs-explicar"><i class="fa fa-check"></i><b>1.2</b> Predecir vs Explicar</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#modelos-estadísticos"><i class="fa fa-check"></i><b>1.2.1</b> Modelos estadísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#sobreajuste"><i class="fa fa-check"></i><b>1.3</b> Sobreajuste</a></li>
+<li class="chapter" data-level="1.4" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#quiero-predecir-y-no-explicar"><i class="fa fa-check"></i><b>1.4</b> Quiero predecir y no explicar</a></li>
+<li class="chapter" data-level="1.5" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#quiero-explicar-y-no-predecir"><i class="fa fa-check"></i><b>1.5</b> Quiero explicar y no predecir</a></li>
+<li class="chapter" data-level="1.6" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#explicación-o-predicción"><i class="fa fa-check"></i><b>1.6</b> Explicación o Predicción?</a></li>
+<li class="chapter" data-level="1.7" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#aic"><i class="fa fa-check"></i><b>1.7</b> AIC</a></li>
+<li class="chapter" data-level="1.8" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#calculo-de-aicc-en-r"><i class="fa fa-check"></i><b>1.8</b> Calculo de AICc en R</a></li>
+<li class="chapter" data-level="1.9" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#aicc"><i class="fa fa-check"></i><b>1.9</b> AICc</a></li>
+<li class="chapter" data-level="1.10" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#ejercicio"><i class="fa fa-check"></i><b>1.10</b> Ejercicio</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="discusión-artículo.html"><a href="discusión-artículo.html"><i class="fa fa-check"></i><b>2</b> Discusión artículo</a><ul>
+<li class="chapter" data-level="2.1" data-path="discusión-artículo.html"><a href="discusión-artículo.html#mensaje-final"><i class="fa fa-check"></i><b>2.1</b> Mensaje final</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>3</b> Literature</a></li>
+<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
+<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
+<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
+<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Curso BIO4318 Modelos Multivariados y Machine learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="CriteriosInfo" class="section level1">
+<h1><span class="header-section-number">Capítulo 1</span> Criterios de Información</h1>
+<div id="paquetes-necesarios-para-este-capítulo" class="section level2">
+<h2><span class="header-section-number">1.1</span> Paquetes necesarios para este capítulo</h2>
+<p>Para este capitulo necesitas tener instalado los paquetes <em>tidyverse</em> <span class="citation">(Wickham <a href="#ref-R-tidyverse">2019</a>)</span>, <em>broom</em> <span class="citation">(Robinson and Hayes <a href="#ref-R-broom">2019</a>)</span>, <em>MuMIn</em> <span class="citation">(Bartoń <a href="#ref-R-MuMIn">2019</a>)</span> y caret <span class="citation">(Jed Wing et al. <a href="#ref-R-caret">2019</a>)</span></p>
+<p>En este capítulo se explicará que es un modelo estadísitco, y como evaluar su capacidad explicativa y/o preditiva. Además, hablaremos de los criterios de información y como estos nos ayudan a tener un balance entre predicción y explicación.</p>
+</div>
+<div id="predecir-vs-explicar" class="section level2">
+<h2><span class="header-section-number">1.2</span> Predecir vs Explicar</h2>
+<div id="modelos-estadísticos" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Modelos estadísticos</h3>
+<p>Un modelo estadístico es un modelo no determinista que utiliza una muestra de una población para intentar determinar patrones de esta población. En ese sentido un ANOVA (Análisis de varianza), una regresión lineal, una regresión no lineal son modelos estadísticos.</p>
+<p>En un modelo estadístico muchas veces podemos medir su poder explicativo y su poder predictivo, en este curso aprenderemos varios parametros para medir estas carácteristicas en varios modelos. Una de las medidas más conocidas para tratar de medir el poder predictivo de un modelo es el <span class="math inline">\(R^2\)</span> de una regresión lineal, donde usualmente si tenemos por ejemplo un <span class="math inline">\(R^2\)</span> de 0.74, es usual el decir que el modelo explica el 74% de variación de la variable respuesta. Siguiendo ese ejemplo, una forma fácil de medir el poder predictivo de un modelo (pero no el mejor), es medir el <span class="math inline">\(R^2\)</span> de las predicciones del modelo en una nueva base de datos.</p>
+<div id="ejemplo" class="section level4">
+<h4><span class="header-section-number">1.2.1.1</span> Ejemplo</h4>
+<p>¿Podemos explicar o predecir la eficiencia de combustible (<em>mpg</em>) a partir de los caballos de fuerza (<em>hp</em>) de un Vehículo? Veamos el patrón que se observa en la Figura <a href="CriteriosInfo.html#fig:patron">1.1</a></p>
+<div class="figure" style="text-align: center"><span id="fig:patron"></span>
+<img src="CursoMulti_files/figure-html/patron-1.png" alt="Caballos de Fuerza de un vehículo (HP) graficados contra la eficiencia en millas por galon (mpg) del mismo vehículo" width="80%" />
+<p class="caption">
+Figura 1.1: Caballos de Fuerza de un vehículo (HP) graficados contra la eficiencia en millas por galon (mpg) del mismo vehículo
+</p>
+</div>
+<p>Claramente vemos que en general a medida que aumentan los caballos de fuerza disminuye la eficiencia de los vehículos, lo cual sería nuestra hipótesis</p>
+</div>
+<div id="primer-paso-separar-en-base-de-datos-de-entrenamiento-y-de-testeo" class="section level4">
+<h4><span class="header-section-number">1.2.1.2</span> Primer paso separar en base de datos de entrenamiento y de testeo</h4>
+<p>En este caso queremos probar el poder explicativo y predictivo de esta base de datos, por lo cuál dividiremos nuestra base de datos en dos una base de datos de entrenamiento, con la cual ajustaremos el modelo y una de testeo o de prueba, en la cual veremos el poder predictivo del modelo con una base de datos que el modelo no ha visto anteriormente.</p>
+<p>Para esto utilizamos el siguiente código</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2018</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">index &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(mtcars), <span class="dt">size =</span> <span class="kw">round</span>(<span class="kw">nrow</span>(mtcars)<span class="op">/</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">Train &lt;-<span class="st"> </span>mtcars[index, ]</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">Test &lt;-<span class="st"> </span>mtcars[<span class="op">-</span>index, ]</a></code></pre></div>
+<p>Esto genera la base de datos <em>Train</em> que tiene 16 observaciones y la base de datos <em>Test</em> que tiene 16 observaciones independientes. En este caso nuevamente si vemos la figura <a href="CriteriosInfo.html#fig:patron">1.1</a>, vemos que la relación entre los caballos de fuerza y la eficiencia no parecen ser particualrmente lineales, por lo que testearemos el siguiente modelo estadístico:</p>
+<p><span class="math display">\[mpg = \beta_1 hp + \beta_2 hp^2 + c\]</span></p>
+<p>Para determinar el poder tanto explicativo como predictivo del modelo, lo primero que haremos será crear el objeto <em>Modelo</em> usando un modelo lineal simple <code>lm</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a></code></pre></div>
+</div>
+<div id="poder-explicativo" class="section level4">
+<h4><span class="header-section-number">1.2.1.3</span> Poder explicativo:</h4>
+<p>Primero veamos el poder predictivo de este modelo, para eso usaremos la función <code>glance</code> del paquete <em>broom</em></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">glance</span>(Modelo)</a></code></pre></div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:Tab">Tabla 1.1: </span>R cuadrado, valor de p y grados de libertad del modelo
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+r.squared
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+<th style="text-align:right;">
+df
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.7879861
+</td>
+<td style="text-align:right;">
+4.18e-05
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+</tbody>
+</table>
+<p>Como vemos en la Tabla <a href="CriteriosInfo.html#tab:Tab">1.1</a>, nuestro modelo tiene un poder explicativo bastante bueno, donde con solo saber los caballos de fuerza de un vehículo, podemos explicar un 78.8% de la variación en la eficiencia del vehículo.</p>
+<p>Usando la función <code>predict</code>, podemos ver la predicción del modelo con nuestra base de datos original, ademas si vemos la tabla <a href="CriteriosInfo.html#tab:TabResidPred">1.2</a>, vemos la predicción el observado y los residuales, que es la resta entre lo observado y la predicción. Además en la <a href="CriteriosInfo.html#fig:Pred1">1.2</a> podemos ver en la linea segmentada la predicción del modelo comparado con los datos en los puntos</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Train<span class="op">$</span>Pred &lt;-<span class="st"> </span><span class="kw">predict</span>(Modelo, Train)</a></code></pre></div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:TabResidPred">Tabla 1.2: </span>En esta tabla podemos observar para cada observación los caballos de fuerza, la predicción y los residuales para cada observación
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+hp
+</th>
+<th style="text-align:right;">
+mpg
+</th>
+<th style="text-align:right;">
+Pred
+</th>
+<th style="text-align:right;">
+resid
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+205
+</td>
+<td style="text-align:right;">
+10.4
+</td>
+<td style="text-align:right;">
+14.14298
+</td>
+<td style="text-align:right;">
+3.7429788
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+150
+</td>
+<td style="text-align:right;">
+15.2
+</td>
+<td style="text-align:right;">
+16.82526
+</td>
+<td style="text-align:right;">
+1.6252606
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+22.8
+</td>
+<td style="text-align:right;">
+23.11205
+</td>
+<td style="text-align:right;">
+0.3120512
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+180
+</td>
+<td style="text-align:right;">
+16.4
+</td>
+<td style="text-align:right;">
+14.95019
+</td>
+<td style="text-align:right;">
+-1.4498054
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+180
+</td>
+<td style="text-align:right;">
+17.3
+</td>
+<td style="text-align:right;">
+14.95019
+</td>
+<td style="text-align:right;">
+-2.3498054
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:right;">
+32.4
+</td>
+<td style="text-align:right;">
+27.33590
+</td>
+<td style="text-align:right;">
+-5.0640977
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:right;">
+21.5
+</td>
+<td style="text-align:right;">
+22.55441
+</td>
+<td style="text-align:right;">
+1.0544133
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+22.8
+</td>
+<td style="text-align:right;">
+22.83103
+</td>
+<td style="text-align:right;">
+0.0310349
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+123
+</td>
+<td style="text-align:right;">
+17.8
+</td>
+<td style="text-align:right;">
+19.35825
+</td>
+<td style="text-align:right;">
+1.5582506
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+24.4
+</td>
+<td style="text-align:right;">
+28.02978
+</td>
+<td style="text-align:right;">
+3.6297759
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+264
+</td>
+<td style="text-align:right;">
+15.8
+</td>
+<td style="text-align:right;">
+14.96047
+</td>
+<td style="text-align:right;">
+-0.8395335
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+109
+</td>
+<td style="text-align:right;">
+21.4
+</td>
+<td style="text-align:right;">
+20.98697
+</td>
+<td style="text-align:right;">
+-0.4130274
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+150
+</td>
+<td style="text-align:right;">
+15.5
+</td>
+<td style="text-align:right;">
+16.82526
+</td>
+<td style="text-align:right;">
+1.3252606
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+245
+</td>
+<td style="text-align:right;">
+13.3
+</td>
+<td style="text-align:right;">
+14.27971
+</td>
+<td style="text-align:right;">
+0.9797112
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:right;">
+20.86349
+</td>
+<td style="text-align:right;">
+-0.1365061
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+19.2
+</td>
+<td style="text-align:right;">
+15.19404
+</td>
+<td style="text-align:right;">
+-4.0059616
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure"><span id="fig:Pred1"></span>
+<img src="CursoMulti_files/figure-html/Pred1-1.png" alt="Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo" width="672" />
+<p class="caption">
+Figura 1.2: Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo
+</p>
+</div>
+</div>
+<div id="poder-predictivo" class="section level4">
+<h4><span class="header-section-number">1.2.1.4</span> Poder Predictivo:</h4>
+<p>Para determinar el poder predictivo de un modelo, tenemos que probar su predicciones con una base de datos que no haya sido usada para ajustar el modelo, es para eso que generamos la base de datos <em>Test</em>, lo primero que debemos hacer para ver el poder predictivo del modelo es usar el modelo con esta base de datos nueva, y generear predicciones, para esto nuevamente usamos la función <code>predict</code></p>
+<p>Posteriormente, usamos la funcion <code>postResample</code>del paquete <code>caret</code>, usando dos argumentos. En el argumento <code>pred</code> usamos los valores predichos con el modelo, y en el argumento <code>obs</code> usamos los valores observados, es decir, los que esperamos que nos entregue el modelo:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">postResample</span>(<span class="dt">pred =</span> Test<span class="op">$</span>Pred, <span class="dt">obs =</span> Test<span class="op">$</span>mpg)</a></code></pre></div>
+<pre><code>##      RMSE  Rsquared       MAE 
+## 3.8741375 0.6805523 2.6437118</code></pre>
+<p>La tabla resultante de esta función nos entrega varios valores para determinar que tan buena es la predicción (Mean Square Error, R Cuadrado y Mean Absolute Error), estos valores los estudiaremos mas adelante en los capítulos de Machine Learning, pero por ahora quedemonos con el valor de R Cuadrado, que es igual a 0.68, un valor menor al 0.79 del poder predictivo, lo cual es de esperarse. Casi siempre el valor predictivo de un modelo es menor al valor explicativo de este mismo. En la tabla <a href="CriteriosInfo.html#tab:PredPower">1.3</a> y en la figura <a href="CriteriosInfo.html#fig:PredPowerFig">1.3</a> podemos ver las predicciones del modelo.</p>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:PredPower">Tabla 1.3: </span>En esta tabla podemos observar para cada observación los caballos de fuerza, la predicción y los residuales para cada observación
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+hp
+</th>
+<th style="text-align:right;">
+mpg
+</th>
+<th style="text-align:right;">
+Pred
+</th>
+<th style="text-align:right;">
+resid
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:right;">
+20.86349
+</td>
+<td style="text-align:right;">
+-0.1365061
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+21.4
+</td>
+<td style="text-align:right;">
+20.86349
+</td>
+<td style="text-align:right;">
+-0.5365061
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+18.7
+</td>
+<td style="text-align:right;">
+15.19404
+</td>
+<td style="text-align:right;">
+-3.5059616
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+105
+</td>
+<td style="text-align:right;">
+18.1
+</td>
+<td style="text-align:right;">
+21.49187
+</td>
+<td style="text-align:right;">
+3.3918740
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+245
+</td>
+<td style="text-align:right;">
+14.3
+</td>
+<td style="text-align:right;">
+14.27971
+</td>
+<td style="text-align:right;">
+-0.0202888
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+123
+</td>
+<td style="text-align:right;">
+19.2
+</td>
+<td style="text-align:right;">
+19.35825
+</td>
+<td style="text-align:right;">
+0.1582506
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+180
+</td>
+<td style="text-align:right;">
+15.2
+</td>
+<td style="text-align:right;">
+14.95019
+</td>
+<td style="text-align:right;">
+-0.2498054
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+215
+</td>
+<td style="text-align:right;">
+10.4
+</td>
+<td style="text-align:right;">
+14.01236
+</td>
+<td style="text-align:right;">
+3.6123606
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+230
+</td>
+<td style="text-align:right;">
+14.7
+</td>
+<td style="text-align:right;">
+14.02243
+</td>
+<td style="text-align:right;">
+-0.6775651
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:right;">
+30.4
+</td>
+<td style="text-align:right;">
+29.84137
+</td>
+<td style="text-align:right;">
+-0.5586329
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+33.9
+</td>
+<td style="text-align:right;">
+27.50772
+</td>
+<td style="text-align:right;">
+-6.3922773
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+66
+</td>
+<td style="text-align:right;">
+27.3
+</td>
+<td style="text-align:right;">
+27.33590
+</td>
+<td style="text-align:right;">
+0.0359023
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+26.0
+</td>
+<td style="text-align:right;">
+23.39746
+</td>
+<td style="text-align:right;">
+-2.6025378
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+113
+</td>
+<td style="text-align:right;">
+30.4
+</td>
+<td style="text-align:right;">
+20.49965
+</td>
+<td style="text-align:right;">
+-9.9003501
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+19.7
+</td>
+<td style="text-align:right;">
+15.19404
+</td>
+<td style="text-align:right;">
+-4.5059616
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+335
+</td>
+<td style="text-align:right;">
+15.0
+</td>
+<td style="text-align:right;">
+21.01461
+</td>
+<td style="text-align:right;">
+6.0146090
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure"><span id="fig:PredPowerFig"></span>
+<img src="CursoMulti_files/figure-html/PredPowerFig-1.png" alt="Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo" width="672" />
+<p class="caption">
+Figura 1.3: Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo
+</p>
+</div>
+</div>
+<div id="que-pasa-al-complejizar-el-modelo" class="section level4">
+<h4><span class="header-section-number">1.2.1.5</span> Que pasa al complejizar el modelo</h4>
+<p>El modelo que evaluamos tenia un terminlo lineal <span class="math inline">\(\beta_1 hp\)</span> y uno cuadrático <span class="math inline">\(\beta_2 hp^2\)</span>, pero el poder tanto explicativo como predictivo podría mejorar o empeorar si agregamos un termino cúbico <span class="math inline">\(\beta_3 hp^3\)</span> o uno elevado a la cuarta <span class="math inline">\(\beta_4 hp^4\)</span>, ¿Que ocurre con el poder explicativo y/o el predictivo cuando aumentamos la complejidad del modelo?</p>
+<p>Para este ejemplo, veremos que ocurre con el <span class="math inline">\(R^2\)</span> explicativo a medida que aumentamos la complejidad del modelo desde <span class="math inline">\(K = 1\)</span>, esto es solo un intercepto, pasando por el modelo lineal <span class="math inline">\(K = 2\)</span>, modelo cuadratico <span class="math inline">\(K = 3\)</span> hasta llegar a agregar el argumento elevado a 12:</p>
+<p><span class="math display">\[mpg = \beta_1 hp + \beta_2 hp^2 + ... + \beta_12 hp^{12}  c\]</span></p>
+<p>Al observar como se comporta el poder explicativo, vemos que aumenta siempre que agregamos parametros como vemos en la animación de la figura <a href="CriteriosInfo.html#fig:GifExplicativo">1.4</a>, en esta vemos que el <span class="math inline">\(R^2\)</span> siempre aumenta, y que la linea roja que marca la predicción del modelo, sigue de forma casi perfecta los puntos de la base de datos <em>Train</em>, si esto es así, por que no usamos siempre el modelo más complejo, lo veremos en la siguiente sección donde hablaremos del Sobreajuste.</p>
+<div class="figure"><span id="fig:GifExplicativo"></span>
+<img src="Explicativo.gif" alt="Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo"  />
+<p class="caption">
+Figura 1.4: Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="sobreajuste" class="section level2">
+<h2><span class="header-section-number">1.3</span> Sobreajuste</h2>
+<p>El sobreajute ocurre cuando por aumentar el ajuste de un modelo (<span class="math inline">\(R^2\)</span> por ejemplo), generamos un modelo tan complejo, que practicamente no tiene error con la base de datos que lo entrenamos, sin embargo, al probarlo con una nueva base de datos, vemos que el modelo es muy malo para predecir sobre una nueva base de datos, esto es el modelo se ha vuelto idiosincrático, y creemos que es un buen modelo, pero solo para los datos que usamos para el modelo mismo. Esto podemos verlo en la figura <a href="CriteriosInfo.html#fig:SobreAjuste">1.5</a>, en esta vemos como en el gráfico de la izquierda, a medida que aumentamos el número de parametros, siempre aumenta nuestro <span class="math inline">\(R^2\)</span>, en el gráfico de la derecha sin embargo, vemos que desde los 6 parametros en adelante, el modelo es peor en su predicción que sobre la base de datos original, y ya cuando tenemos 8 parametros, la diferencia es muy alta, con un <span class="math inline">\(R^2\)</span> de 0.83 para la base de datos original, y 0.3 para la base de datos de prueba, en ese momento, el modelo ya esta sobreajustado.</p>
+<div class="figure"><span id="fig:SobreAjuste"></span>
+<img src="Predictivo.gif" alt="El gráfico de la Izquerda muestra el ajuste del modelo en los datos en que se entrenó el modelo, mientras que el de la derecha, sobre la base de datos de prueba. Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo"  />
+<p class="caption">
+Figura 1.5: El gráfico de la Izquerda muestra el ajuste del modelo en los datos en que se entrenó el modelo, mientras que el de la derecha, sobre la base de datos de prueba. Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo
+</p>
+</div>
+</div>
+<div id="quiero-predecir-y-no-explicar" class="section level2">
+<h2><span class="header-section-number">1.4</span> Quiero predecir y no explicar</h2>
+<ul>
+<li>Texto predictivo del celular</li>
+<li>Auto-corrector</li>
+<li>Efectos de cambio climático</li>
+<li>Detección de caras en redes sociales</li>
+<li>A veces el modelo equivocado puede predecir mejor</li>
+<li>Como selecciono el modelo con mayor poder predictivo?
+<ul>
+<li>Maximizo el <span class="math inline">\(R^2\)</span> de la base de datos de prueba (<em>Test</em>)</li>
+</ul></li>
+</ul>
+</div>
+<div id="quiero-explicar-y-no-predecir" class="section level2">
+<h2><span class="header-section-number">1.5</span> Quiero explicar y no predecir</h2>
+<ul>
+<li>Pruebas a hipótesis causales</li>
+<li>¿Que causa el cambio climático?</li>
+<li>Como funciona:
+<ul>
+<li>Generación de hipótesis (plural)</li>
+<li>Generación de modelos para cada hipótesis</li>
+<li>Interpretación de resultados en base a modelos e hipótesis</li>
+<li>Recomendaciones?</li>
+</ul></li>
+</ul>
+</div>
+<div id="explicación-o-predicción" class="section level2">
+<h2><span class="header-section-number">1.6</span> Explicación o Predicción?</h2>
+<p><img src="Dilema.jpg" /><!-- --></p>
+<iframe src="https://giphy.com/embed/3o7aCRloybJlXpNjSU" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/3o7aCRloybJlXpNjSU">via GIPHY</a>
+</p>
+</div>
+<div id="aic" class="section level2">
+<h2><span class="header-section-number">1.7</span> AIC</h2>
+<ul>
+<li>Balancea explicación y predicción</li>
+<li>Castiga el uso de muchos parámetros</li>
+<li>Menor AIC, mejor modelo</li>
+</ul>
+<p><span class="math display">\[AIC = 2k  - \ln(L)\]</span></p>
+<ul>
+<li>Corregido</li>
+</ul>
+<p><span class="math display">\[AICc = AIC + \frac{2k^2 + 2k}{n-k-1}\]</span></p>
+<ul>
+<li>Usualmente una diferencia de 2 en AIC, se considera “Significativa”</li>
+</ul>
+</div>
+<div id="calculo-de-aicc-en-r" class="section level2">
+<h2><span class="header-section-number">1.8</span> Calculo de AICc en R</h2>
+<ul>
+<li>Función <code>AICc</code> en MuMIn</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(MuMIn)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">AICc</span>(Modelo)</a></code></pre></div>
+<pre><code>## [1] 84.02319</code></pre>
+<ul>
+<li>MuMIn tiene otros criterios de informacion:
+<ul>
+<li><span class="math inline">\(BIC = \ln(n)k - \ln(L)\)</span></li>
+<li>CAIFC</li>
+<li>DIC</li>
+<li>QAIC</li>
+</ul></li>
+</ul>
+</div>
+<div id="aicc" class="section level2">
+<h2><span class="header-section-number">1.9</span> AICc</h2>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="ejercicio" class="section level2">
+<h2><span class="header-section-number">1.10</span> Ejercicio</h2>
+<p>Tomando la base de datos <code>mtcars</code> explora la relacion entre AICc, <span class="math inline">\(R^2\)</span> Exploratorio y <span class="math inline">\(R^2\)</span> Predictivo.</p>
+<p>Para eso genera un data frame con las siguientes columnas:</p>
+<ul>
+<li>AICc</li>
+<li>K</li>
+<li><span class="math inline">\(R^2\)</span> Exploratorio</li>
+<li><span class="math inline">\(R^2\)</span> Predictivo</li>
+<li>Id modelo</li>
+<li>Hasta 11:30</li>
+</ul>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-MuMIn">
+<p>Bartoń, Kamil. 2019. <em>MuMIn: Multi-Model Inference</em>. <a href="https://CRAN.R-project.org/package=MuMIn">https://CRAN.R-project.org/package=MuMIn</a>.</p>
+</div>
+<div id="ref-R-caret">
+<p>Jed Wing, Max Kuhn. Contributions from, Steve Weston, Andre Williams, Chris Keefer, Allan Engelhardt, Tony Cooper, Zachary Mayer, et al. 2019. <em>Caret: Classification and Regression Training</em>. <a href="https://CRAN.R-project.org/package=caret">https://CRAN.R-project.org/package=caret</a>.</p>
+</div>
+<div id="ref-R-broom">
+<p>Robinson, David, and Alex Hayes. 2019. <em>Broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a>.</p>
+</div>
+<div id="ref-R-tidyverse">
+<p>Wickham, Hadley. 2019. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="discusión-artículo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["CursoMulti.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
