@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2020-01-02" />
+<meta name="date" content="2020-01-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="discusión-artículo.html"/>
+<link rel="next" href="ElegirModelo.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,6 +51,7 @@
 
 
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -146,25 +147,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#predecir-vs-explicar"><i class="fa fa-check"></i><b>1.2</b> Predecir vs Explicar</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#modelos-estadísticos"><i class="fa fa-check"></i><b>1.2.1</b> Modelos estadísticos</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#sobreajuste"><i class="fa fa-check"></i><b>1.3</b> Sobreajuste</a></li>
-<li class="chapter" data-level="1.4" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#quiero-predecir-y-no-explicar"><i class="fa fa-check"></i><b>1.4</b> Quiero predecir y no explicar</a></li>
-<li class="chapter" data-level="1.5" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#quiero-explicar-y-no-predecir"><i class="fa fa-check"></i><b>1.5</b> Quiero explicar y no predecir</a></li>
-<li class="chapter" data-level="1.6" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#explicación-o-predicción"><i class="fa fa-check"></i><b>1.6</b> Explicación o Predicción?</a></li>
-<li class="chapter" data-level="1.7" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#aic"><i class="fa fa-check"></i><b>1.7</b> AIC</a></li>
-<li class="chapter" data-level="1.8" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#calculo-de-aicc-en-r"><i class="fa fa-check"></i><b>1.8</b> Calculo de AICc en R</a></li>
-<li class="chapter" data-level="1.9" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#aicc"><i class="fa fa-check"></i><b>1.9</b> AICc</a></li>
-<li class="chapter" data-level="1.10" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#ejercicio"><i class="fa fa-check"></i><b>1.10</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.3" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#sobreajuste"><i class="fa fa-check"></i><b>1.3</b> Sobreajuste</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#cuando-me-puede-interesar-el-maximizar-el-poder-predictivo"><i class="fa fa-check"></i><b>1.3.1</b> ¿Cuando me puede interesar el maximizar el poder predictivo?</a></li>
+<li class="chapter" data-level="1.3.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#cuando-me-puede-interesar-el-maximizar-el-poder-explicativo"><i class="fa fa-check"></i><b>1.3.2</b> ¿Cuando me puede interesar el maximizar el poder explicativo?</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="discusión-artículo.html"><a href="discusión-artículo.html"><i class="fa fa-check"></i><b>2</b> Discusión artículo</a><ul>
-<li class="chapter" data-level="2.1" data-path="discusión-artículo.html"><a href="discusión-artículo.html#mensaje-final"><i class="fa fa-check"></i><b>2.1</b> Mensaje final</a></li>
+<li class="chapter" data-level="1.4" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#Dilema"><i class="fa fa-check"></i><b>1.4</b> Explicación o Predicción?</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#criterio-de-información-de-akaike"><i class="fa fa-check"></i><b>1.4.1</b> Criterio de Información de Akaike</a></li>
+<li class="chapter" data-level="1.4.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#relación-entre-aicc-y-r-cuadrado"><i class="fa fa-check"></i><b>1.4.2</b> Relación entre AICc y R cuadrado</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>3</b> Literature</a></li>
-<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
-<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+<li class="chapter" data-level="1.5" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#ejercicio"><i class="fa fa-check"></i><b>1.5</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.6" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#mensaje-final"><i class="fa fa-check"></i><b>1.6</b> Mensaje final</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="2" data-path="ElegirModelo.html"><a href="ElegirModelo.html"><i class="fa fa-check"></i><b>2</b> Selección de modelos</a><ul>
+<li class="chapter" data-level="2.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#paquetes-necesarios-para-este-capítulo-1"><i class="fa fa-check"></i><b>2.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="2.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#introducción"><i class="fa fa-check"></i><b>2.2</b> Introducción</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#que-necesitamos-para-realizar-inferencia-multimodelo"><i class="fa fa-check"></i><b>2.2.1</b> Que necesitamos para realizar inferencia multimodelo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#como-decidimos-que-modelo-elegimos-para-explicar-mejor-un-fenomeno"><i class="fa fa-check"></i><b>2.3</b> ¿Como decidimos que modelo elegimos para explicar mejor un fenomeno?</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#paquete-mumin"><i class="fa fa-check"></i><b>2.3.1</b> Paquete MuMIn</a></li>
+<li class="chapter" data-level="2.3.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#paquete-mumin-model.sel"><i class="fa fa-check"></i><b>2.3.2</b> Paquete MuMIn (model.sel)</a></li>
+<li class="chapter" data-level="2.3.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#pesos-de-akaike"><i class="fa fa-check"></i><b>2.3.3</b> ¿Pesos de Akaike?</a></li>
+<li class="chapter" data-level="2.3.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#hemos-seleccionado-3-modelos-ahora-que"><i class="fa fa-check"></i><b>2.3.4</b> ¿Hemos seleccionado 3 modelos ahora que?</a></li>
+<li class="chapter" data-level="2.3.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#mejor-modelo"><i class="fa fa-check"></i><b>2.3.5</b> Mejor modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#promediar-modelos"><i class="fa fa-check"></i><b>2.4</b> Promediar modelos</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#promediar-modelos-usando-mumin"><i class="fa fa-check"></i><b>2.4.1</b> Promediar modelos usando MuMIn</a></li>
+<li class="chapter" data-level="2.4.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#metodo-full"><i class="fa fa-check"></i><b>2.4.2</b> Metodo full</a></li>
+<li class="chapter" data-level="2.4.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#método-subset"><i class="fa fa-check"></i><b>2.4.3</b> Método subset</a></li>
+<li class="chapter" data-level="2.4.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#mumin"><i class="fa fa-check"></i><b>2.4.4</b> MuMIn</a></li>
+<li class="chapter" data-level="2.4.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#comparemos-modelos"><i class="fa fa-check"></i><b>2.4.5</b> Comparemos modelos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="ElegirModelo.html"><a href="ElegirModelo.html#comparemos-modelos-cont."><i class="fa fa-check"></i><b>2.4.6</b> Comparemos modelos (cont.)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#discusión-artículo"><i class="fa fa-check"></i><b>2.5</b> Discusión artículo</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#gpa-y-multiolinearidad"><i class="fa fa-check"></i><b>2.5.1</b> GPA y multiolinearidad</a></li>
+<li class="chapter" data-level="2.5.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#gpa-y-multiolinearidad-cont"><i class="fa fa-check"></i><b>2.5.2</b> GPA y multiolinearidad (cont)</a></li>
+<li class="chapter" data-level="2.5.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#todos-vs-delta-2"><i class="fa fa-check"></i><b>2.5.3</b> Todos vs Delta 2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a></li>
+<li class="chapter" data-level="4" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>4</b> Applications</a><ul>
+<li class="chapter" data-level="4.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>4.1</b> Example one</a></li>
+<li class="chapter" data-level="4.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>4.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>5</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
@@ -217,9 +242,9 @@ Figura 1.1: Caballos de Fuerza de un vehículo (HP) graficados contra la eficien
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2018</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">index &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(mtcars), <span class="dt">size =</span> <span class="kw">round</span>(<span class="kw">nrow</span>(mtcars)<span class="op">/</span><span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">Train &lt;-<span class="st"> </span>mtcars[index, ]</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">Train &lt;-<span class="st"> </span>mtcars[index,]</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">Test &lt;-<span class="st"> </span>mtcars[<span class="op">-</span>index, ]</a></code></pre></div>
+<a class="sourceLine" id="cb2-6" data-line-number="6">Test &lt;-<span class="st"> </span>mtcars[<span class="op">-</span>index,]</a></code></pre></div>
 <p>Esto genera la base de datos <em>Train</em> que tiene 16 observaciones y la base de datos <em>Test</em> que tiene 16 observaciones independientes. En este caso nuevamente si vemos la figura <a href="CriteriosInfo.html#fig:patron">1.1</a>, vemos que la relación entre los caballos de fuerza y la eficiencia no parecen ser particualrmente lineales, por lo que testearemos el siguiente modelo estadístico:</p>
 <p><span class="math display">\[mpg = \beta_1 hp + \beta_2 hp^2 + c\]</span></p>
 <p>Para determinar el poder tanto explicativo como predictivo del modelo, lo primero que haremos será crear el objeto <em>Modelo</em> usando un modelo lineal simple <code>lm</code></p>
@@ -804,85 +829,74 @@ Figura 1.4: Los puntos representan las observaciones con las que se entrenó el 
 Figura 1.5: El gráfico de la Izquerda muestra el ajuste del modelo en los datos en que se entrenó el modelo, mientras que el de la derecha, sobre la base de datos de prueba. Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo
 </p>
 </div>
-</div>
-<div id="quiero-predecir-y-no-explicar" class="section level2">
-<h2><span class="header-section-number">1.4</span> Quiero predecir y no explicar</h2>
+<div id="cuando-me-puede-interesar-el-maximizar-el-poder-predictivo" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> ¿Cuando me puede interesar el maximizar el poder predictivo?</h3>
+<p>Hay momentos en los cuales me preocupa el poder predictivo y no me interesa la explicación, algunos ejemplos de esto son:</p>
 <ul>
 <li>Texto predictivo del celular</li>
 <li>Auto-corrector</li>
 <li>Efectos de cambio climático</li>
 <li>Detección de caras en redes sociales</li>
-<li>A veces el modelo equivocado puede predecir mejor</li>
-<li>Como selecciono el modelo con mayor poder predictivo?
-<ul>
-<li>Maximizo el <span class="math inline">\(R^2\)</span> de la base de datos de prueba (<em>Test</em>)</li>
-</ul></li>
 </ul>
+<p>Para seleccionar el modelo con mayor poder predictivo, se debe maximizar el desempeño de la metrica en la base de datos de prueba (<em>Test</em>), en el caso que explicamos anteriormente ese valor es <span class="math inline">\(R^2\)</span>. Esto es muy importante tenerlo en mente, es el principio básico de cuando empezemos a trabajar con Machine Learning en capítulos posteriores.</p>
 </div>
-<div id="quiero-explicar-y-no-predecir" class="section level2">
-<h2><span class="header-section-number">1.5</span> Quiero explicar y no predecir</h2>
+<div id="cuando-me-puede-interesar-el-maximizar-el-poder-explicativo" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> ¿Cuando me puede interesar el maximizar el poder explicativo?</h3>
+<p>En otros casos lo que mas me interesa es el poder explicar un fenómeno, sin importar que pueda hacer predicciones en una base de datos nueva, por ejemplo:</p>
 <ul>
 <li>Pruebas a hipótesis causales</li>
 <li>¿Que causa el cambio climático?</li>
-<li>Como funciona:
+</ul>
+<p>En general para trabajar bajo esta aproximación debemos seguir los siguientes pasos:</p>
 <ul>
 <li>Generación de hipótesis (plural)</li>
 <li>Generación de modelos para cada hipótesis</li>
 <li>Interpretación de resultados en base a modelos e hipótesis</li>
-<li>Recomendaciones?</li>
-</ul></li>
 </ul>
 </div>
-<div id="explicación-o-predicción" class="section level2">
-<h2><span class="header-section-number">1.6</span> Explicación o Predicción?</h2>
-<p><img src="Dilema.jpg" /><!-- --></p>
+</div>
+<div id="Dilema" class="section level2">
+<h2><span class="header-section-number">1.4</span> Explicación o Predicción?</h2>
+<div class="figure"><span id="fig:Dilema"></span>
+<img src="Dilema.jpg" alt="Que hacer?"  />
+<p class="caption">
+Figura 1.6: Que hacer?
+</p>
+</div>
 <iframe src="https://giphy.com/embed/3o7aCRloybJlXpNjSU" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen>
 </iframe>
 <p>
 <a href="https://giphy.com/gifs/3o7aCRloybJlXpNjSU">via GIPHY</a>
 </p>
-</div>
-<div id="aic" class="section level2">
-<h2><span class="header-section-number">1.7</span> AIC</h2>
-<ul>
-<li>Balancea explicación y predicción</li>
-<li>Castiga el uso de muchos parámetros</li>
-<li>Menor AIC, mejor modelo</li>
-</ul>
+<p>En la mayoría de los casos, lo que más nos interesa es el tratar de encontrar un balance entre el poder predictivo y el explicativo, no queremos tomar la decición de la la figura <a href="CriteriosInfo.html#fig:Dilema">1.6</a>. Por un lado el maximizar el poder explivativo, lleva a modelos muy particulares, que solo explican la base de datos que usamos para entrenar el modelo, lo cual puede no aplicar a una nueva base de datos, (por ejemplo podemos hacer un gran modelo que explique en un 99% la variación en el exito reproductivo de huemules en los altos de Chillán, pero esto puede no explicar ni un 10% de la variación del exito reproductivo de la misma especie en el Parque Nacional Bernardo O’Higgins) ¿Como hacer para balancear el poder explicativo y predictivo? Usando criterios de Información.</p>
+<div id="criterio-de-información-de-akaike" class="section level3">
+<h3><span class="header-section-number">1.4.1</span> Criterio de Información de Akaike</h3>
+<p>El Criterio de Información de Akaike <span class="citation">(Akaike <a href="#ref-akaike1974new">1974</a>)</span> (AIC de aquí en adelante por sus siglas en inglés Akaike Information Criterion), es un criterio basado en teoría de información, el cual balancea bastante bien el poder explicativo y predictivo, para esto castiga el uso de muchas variables o parametros en un modelo (<span class="math inline">\(K\)</span>), algo difícil de entender del AIC cuando empezamos a trabajar con el, es que no existen valores buenos o malos de AIC, sinó que todo tiene que ver con la comparación entre modelos que compiten entre sí, y en general a menor AIC, mejor es el modelo, la siguiente es la formula de AIC:</p>
 <p><span class="math display">\[AIC = 2k  - \ln(L)\]</span></p>
-<ul>
-<li>Corregido</li>
-</ul>
+<p>Existe además una formula de AIC corregido (AICc) <span class="citation">(Cavanaugh <a href="#ref-cavanaugh1997unifying">1997</a>)</span>, el cual incorpora el número de observaciones en el calculo del criterio, como vemos en la siguiente formula, n se encuentra en el denominador de el segundo término que se suma a AIC:</p>
 <p><span class="math display">\[AICc = AIC + \frac{2k^2 + 2k}{n-k-1}\]</span></p>
-<ul>
-<li>Usualmente una diferencia de 2 en AIC, se considera “Significativa”</li>
-</ul>
-</div>
-<div id="calculo-de-aicc-en-r" class="section level2">
-<h2><span class="header-section-number">1.8</span> Calculo de AICc en R</h2>
-<ul>
-<li>Función <code>AICc</code> en MuMIn</li>
-</ul>
+<p>Esto implica que cuando n tiende a infinito, AICc es casi igual a AIC, por lo cual siempre se recomienda el uso de AICc sobre AIC. Usualmente una diferencia de 2 en AIC, se considera “Significativa” <span class="citation">(Anderson and Burnham <a href="#ref-anderson2004model">2004</a>)</span></p>
+<p>Para calcular AICc podemos usar la función <code>AICc</code> en MuMIn, en el siguiente código, generamos un modelo en el cual usando la base de datos <code>mtcars</code>, en el cual ajustamos un modelo lineal, donde vemos si la eficiencia de un vehículo puede ser explicada por los caballos de fuerza en su forma lineal y cuadrática:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">library</span>(MuMIn)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">AICc</span>(Modelo)</a></code></pre></div>
 <pre><code>## [1] 84.02319</code></pre>
-<ul>
-<li>MuMIn tiene otros criterios de informacion:
-<ul>
-<li><span class="math inline">\(BIC = \ln(n)k - \ln(L)\)</span></li>
-<li>CAIFC</li>
-<li>DIC</li>
-<li>QAIC</li>
-</ul></li>
-</ul>
+<p><em>AICc</em> no es el único criterio de información, en el paquete <code>MuMIn</code>, existen otros como <em>BIC</em>, <em>CAIFC</em>, <em>DIC</em> y <em>QAIC</em>. En ecología y lo más habitual es usar <em>AICc</em>, en algunos campos experimentales es habitual <em>BIC</em>, para más sobre esto ver <span class="citation">(Aho, Derryberry, and Peterson <a href="#ref-aho2014model">2014</a>)</span>. En otros casos por sobredispersión existen otros Criteros de información <span class="citation">(Kim et al. <a href="#ref-kim2014model">2014</a>)</span></p>
 </div>
-<div id="aicc" class="section level2">
-<h2><span class="header-section-number">1.9</span> AICc</h2>
-<p><img src="CursoMulti_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div id="relación-entre-aicc-y-r-cuadrado" class="section level3">
+<h3><span class="header-section-number">1.4.2</span> Relación entre AICc y R cuadrado</h3>
+<p>Como fue prometido en la sección <a href="CriteriosInfo.html#Dilema">1.4</a>, el <em>AICc</em> intenta balancear explicación con predicción, y para ello, busca que aumente la métrica explicativa (en este caso <span class="math inline">\(R^2\)</span>), pero para agregar un parámetro extra el <span class="math inline">\(R^2\)</span> tiene que aumentar bastante. En la Figura <a href="CriteriosInfo.html#fig:AICRsq">1.7</a>, vemos las medidas de <em>AICc</em> y <span class="math inline">\(R^2\)</span> para los mismos modelos.</p>
+<div class="figure"><span id="fig:AICRsq"></span>
+<img src="CursoMulti_files/figure-html/AICRsq-1.png" alt="Relación entre AICc y R cuadrado" width="672" />
+<p class="caption">
+Figura 1.7: Relación entre AICc y R cuadrado
+</p>
+</div>
+<p>La linea roja corresponde al modelo con <em>AICc</em> más bajo, el cual corresponde a un modelo con 5 parámetros (ver figura <a href="CriteriosInfo.html#fig:AICRsq">1.7</a>, panel izquierdo), en el panel derecho, vemos que en ese momento el aumento de <span class="math inline">\(R^2\)</span> disminuye en pendiente. El mejor modelo de 5 parametros tiene un <span class="math inline">\(R^2\)</span> de 0.850 y el mejor modelo de 6 parámetros tiene un <span class="math inline">\(R^2\)</span> de 0.858. Lo que nos esta diciendo el <em>AICc</em> en resumen es ¿Vale la pena agregar un parametro más y arriesgar un sobreajuste por aumentar el <span class="math inline">\(R^2\)</span> en 0.08? Probablemente no.</p>
+</div>
 </div>
 <div id="ejercicio" class="section level2">
-<h2><span class="header-section-number">1.10</span> Ejercicio</h2>
+<h2><span class="header-section-number">1.5</span> Ejercicio</h2>
 <p>Tomando la base de datos <code>mtcars</code> explora la relacion entre AICc, <span class="math inline">\(R^2\)</span> Exploratorio y <span class="math inline">\(R^2\)</span> Predictivo.</p>
 <p>Para eso genera un data frame con las siguientes columnas:</p>
 <ul>
@@ -894,14 +908,93 @@ Figura 1.5: El gráfico de la Izquerda muestra el ajuste del modelo en los datos
 <li>Hasta 11:30</li>
 </ul>
 </div>
+<div id="mensaje-final" class="section level2">
+<h2><span class="header-section-number">1.6</span> Mensaje final</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Predicción
+</th>
+<th style="text-align:left;">
+Explicación
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Relación x e y
+</td>
+<td style="text-align:left;">
+Asociación
+</td>
+<td style="text-align:left;">
+Causalidad
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Relación función modelos
+</td>
+<td style="text-align:left;">
+Datos
+</td>
+<td style="text-align:left;">
+Teoria
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Visión
+</td>
+<td style="text-align:left;">
+Futura
+</td>
+<td style="text-align:left;">
+Retrospectiva
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Varianza
+</td>
+<td style="text-align:left;">
+Maximizar predicción
+</td>
+<td style="text-align:left;">
+Minimizar sesgo
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-aho2014model">
+<p>Aho, Ken, DeWayne Derryberry, and Teri Peterson. 2014. “Model Selection for Ecologists: The Worldviews of Aic and Bic.” <em>Ecology</em> 95 (3). Wiley Online Library: 631–36.</p>
+</div>
+<div id="ref-akaike1974new">
+<p>Akaike, Hirotugu. 1974. “A New Look at the Statistical Model Identification.” In <em>Selected Papers of Hirotugu Akaike</em>, 215–22. Springer.</p>
+</div>
+<div id="ref-anderson2004model">
+<p>Anderson, D, and K Burnham. 2004. “Model Selection and Multi-Model Inference.” <em>Second. NY: Springer-Verlag</em> 63.</p>
+</div>
 <div id="ref-R-MuMIn">
 <p>Bartoń, Kamil. 2019. <em>MuMIn: Multi-Model Inference</em>. <a href="https://CRAN.R-project.org/package=MuMIn">https://CRAN.R-project.org/package=MuMIn</a>.</p>
 </div>
+<div id="ref-cavanaugh1997unifying">
+<p>Cavanaugh, Joseph E. 1997. “Unifying the Derivations for the Akaike and Corrected Akaike Information Criteria.” <em>Statistics &amp; Probability Letters</em> 33 (2). Elsevier: 201–8.</p>
+</div>
 <div id="ref-R-caret">
 <p>Jed Wing, Max Kuhn. Contributions from, Steve Weston, Andre Williams, Chris Keefer, Allan Engelhardt, Tony Cooper, Zachary Mayer, et al. 2019. <em>Caret: Classification and Regression Training</em>. <a href="https://CRAN.R-project.org/package=caret">https://CRAN.R-project.org/package=caret</a>.</p>
+</div>
+<div id="ref-kim2014model">
+<p>Kim, Hyun-Joo, Joseph E Cavanaugh, Tad A Dallas, and Stephanie A Foré. 2014. “Model Selection Criteria for Overdispersed Data and Their Application to the Characterization of a Host-Parasite Relationship.” <em>Environmental and Ecological Statistics</em> 21 (2). Springer: 329–50.</p>
 </div>
 <div id="ref-R-broom">
 <p>Robinson, David, and Alex Hayes. 2019. <em>Broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a>.</p>
@@ -916,7 +1009,7 @@ Figura 1.5: El gráfico de la Izquerda muestra el ajuste del modelo en los datos
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="discusión-artículo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ElegirModelo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

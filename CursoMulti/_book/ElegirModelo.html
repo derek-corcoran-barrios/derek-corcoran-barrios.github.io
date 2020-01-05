@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 2 Selección de modelos | Curso BIO4318 Modelos Multivariados y Machine learning</title>
+  <meta name="description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 2 Selección de modelos | Curso BIO4318 Modelos Multivariados y Machine learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 2 Selección de modelos | Curso BIO4318 Modelos Multivariados y Machine learning" />
+  
+  <meta name="twitter:description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
+  
+
+<meta name="author" content="Derek Corcoran" />
+
+
+<meta name="date" content="2020-01-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="CriteriosInfo.html"/>
+<link rel="next" href="methods.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Modelos Multivariados</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Requerimientos</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#antes-de-comenzar"><i class="fa fa-check"></i><b>0.1</b> Antes de comenzar</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#descripción-del-curso"><i class="fa fa-check"></i><b>0.2</b> Descripción del curso</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#objetivos-del-curso"><i class="fa fa-check"></i><b>0.3</b> Objetivos del curso</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#contenidos"><i class="fa fa-check"></i><b>0.4</b> Contenidos</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#metodología"><i class="fa fa-check"></i><b>0.5</b> Metodología</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#libros-de-consulta"><i class="fa fa-check"></i><b>0.6</b> Libros de consulta</a></li>
+<li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#bibliografía"><i class="fa fa-check"></i><b>0.7</b> Bibliografía</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html"><i class="fa fa-check"></i><b>1</b> Criterios de Información</a><ul>
+<li class="chapter" data-level="1.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#paquetes-necesarios-para-este-capítulo"><i class="fa fa-check"></i><b>1.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="1.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#predecir-vs-explicar"><i class="fa fa-check"></i><b>1.2</b> Predecir vs Explicar</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#modelos-estadísticos"><i class="fa fa-check"></i><b>1.2.1</b> Modelos estadísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#sobreajuste"><i class="fa fa-check"></i><b>1.3</b> Sobreajuste</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#cuando-me-puede-interesar-el-maximizar-el-poder-predictivo"><i class="fa fa-check"></i><b>1.3.1</b> ¿Cuando me puede interesar el maximizar el poder predictivo?</a></li>
+<li class="chapter" data-level="1.3.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#cuando-me-puede-interesar-el-maximizar-el-poder-explicativo"><i class="fa fa-check"></i><b>1.3.2</b> ¿Cuando me puede interesar el maximizar el poder explicativo?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#Dilema"><i class="fa fa-check"></i><b>1.4</b> Explicación o Predicción?</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#criterio-de-información-de-akaike"><i class="fa fa-check"></i><b>1.4.1</b> Criterio de Información de Akaike</a></li>
+<li class="chapter" data-level="1.4.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#relación-entre-aicc-y-r-cuadrado"><i class="fa fa-check"></i><b>1.4.2</b> Relación entre AICc y R cuadrado</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#ejercicio"><i class="fa fa-check"></i><b>1.5</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.6" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#mensaje-final"><i class="fa fa-check"></i><b>1.6</b> Mensaje final</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ElegirModelo.html"><a href="ElegirModelo.html"><i class="fa fa-check"></i><b>2</b> Selección de modelos</a><ul>
+<li class="chapter" data-level="2.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#paquetes-necesarios-para-este-capítulo-1"><i class="fa fa-check"></i><b>2.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="2.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#introducción"><i class="fa fa-check"></i><b>2.2</b> Introducción</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#que-necesitamos-para-realizar-inferencia-multimodelo"><i class="fa fa-check"></i><b>2.2.1</b> Que necesitamos para realizar inferencia multimodelo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#como-decidimos-que-modelo-elegimos-para-explicar-mejor-un-fenomeno"><i class="fa fa-check"></i><b>2.3</b> ¿Como decidimos que modelo elegimos para explicar mejor un fenomeno?</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#paquete-mumin"><i class="fa fa-check"></i><b>2.3.1</b> Paquete MuMIn</a></li>
+<li class="chapter" data-level="2.3.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#paquete-mumin-model.sel"><i class="fa fa-check"></i><b>2.3.2</b> Paquete MuMIn (model.sel)</a></li>
+<li class="chapter" data-level="2.3.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#pesos-de-akaike"><i class="fa fa-check"></i><b>2.3.3</b> ¿Pesos de Akaike?</a></li>
+<li class="chapter" data-level="2.3.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#hemos-seleccionado-3-modelos-ahora-que"><i class="fa fa-check"></i><b>2.3.4</b> ¿Hemos seleccionado 3 modelos ahora que?</a></li>
+<li class="chapter" data-level="2.3.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#mejor-modelo"><i class="fa fa-check"></i><b>2.3.5</b> Mejor modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#promediar-modelos"><i class="fa fa-check"></i><b>2.4</b> Promediar modelos</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#promediar-modelos-usando-mumin"><i class="fa fa-check"></i><b>2.4.1</b> Promediar modelos usando MuMIn</a></li>
+<li class="chapter" data-level="2.4.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#metodo-full"><i class="fa fa-check"></i><b>2.4.2</b> Metodo full</a></li>
+<li class="chapter" data-level="2.4.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#método-subset"><i class="fa fa-check"></i><b>2.4.3</b> Método subset</a></li>
+<li class="chapter" data-level="2.4.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#mumin"><i class="fa fa-check"></i><b>2.4.4</b> MuMIn</a></li>
+<li class="chapter" data-level="2.4.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#comparemos-modelos"><i class="fa fa-check"></i><b>2.4.5</b> Comparemos modelos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="ElegirModelo.html"><a href="ElegirModelo.html#comparemos-modelos-cont."><i class="fa fa-check"></i><b>2.4.6</b> Comparemos modelos (cont.)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#discusión-artículo"><i class="fa fa-check"></i><b>2.5</b> Discusión artículo</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#gpa-y-multiolinearidad"><i class="fa fa-check"></i><b>2.5.1</b> GPA y multiolinearidad</a></li>
+<li class="chapter" data-level="2.5.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#gpa-y-multiolinearidad-cont"><i class="fa fa-check"></i><b>2.5.2</b> GPA y multiolinearidad (cont)</a></li>
+<li class="chapter" data-level="2.5.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#todos-vs-delta-2"><i class="fa fa-check"></i><b>2.5.3</b> Todos vs Delta 2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a></li>
+<li class="chapter" data-level="4" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>4</b> Applications</a><ul>
+<li class="chapter" data-level="4.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>4.1</b> Example one</a></li>
+<li class="chapter" data-level="4.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>4.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>5</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Curso BIO4318 Modelos Multivariados y Machine learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ElegirModelo" class="section level1">
+<h1><span class="header-section-number">Capítulo 2</span> Selección de modelos</h1>
+<div id="paquetes-necesarios-para-este-capítulo-1" class="section level2">
+<h2><span class="header-section-number">2.1</span> Paquetes necesarios para este capítulo</h2>
+<p>Para este capitulo necesitas tener instalado los paquetes <em>tidyverse</em> <span class="citation">(Wickham <a href="#ref-R-tidyverse">2019</a>)</span>, <em>broom</em> <span class="citation">(Robinson and Hayes <a href="#ref-R-broom">2019</a>)</span> y <em>MuMIn</em> <span class="citation">(Bartoń <a href="#ref-R-MuMIn">2019</a>)</span></p>
+</div>
+<div id="introducción" class="section level2">
+<h2><span class="header-section-number">2.2</span> Introducción</h2>
+<p>La inferencia Multimodelo <span class="citation">(Anderson and Burnham <a href="#ref-anderson2004model">2004</a>)</span> es un campo teórico de la estadística que nos perminte tomar decisiones equilibrando el poder predictivo y explicativo de multiples modelos en competencia, y nos da un marco de acción para seleccionar entre distintos modelos, dentro de esto, seleccionar el o los modelos <em>más parsimoniosos</em> entre varios en competencia, no el que predice más</p>
+<div id="que-es-lo-que-no-nos-permite-la-inferencia-multimodelo" class="section level4">
+<h4><span class="header-section-number">2.2.0.1</span> Que es lo que no nos permite la inferencia multimodelo</h4>
+<p>Si bien la Inferencia Multimodelo es una herramienta muy poderosa, hay varios problemas previos que no puede arreglar, entre ellos está un estudio mal diseñado y una pobre selección de variables a explicar un problema. Por otro lado, es importante recordar que la Inferencia Multimodelo no es una receta, hay mucho de criterio y desiciones que tomar en base a nuestro conocimiento del sistema a modelar.</p>
+</div>
+<div id="que-necesitamos-para-realizar-inferencia-multimodelo" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Que necesitamos para realizar inferencia multimodelo</h3>
+<p>Antes de intentar seleccionar entre modelos, hay varios pasos a seguir, lo primero es generar un buen diseño de muestreo o diseño experimental para nuestra base de datos y pregunta, luego debemos generar las hipótesis de forma muy cuidadosa y detallada, y finalmente (y quizás lo más importante para este curso), la selección adecuada de variables para distinguir entre hipótesis.</p>
+</div>
+</div>
+<div id="como-decidimos-que-modelo-elegimos-para-explicar-mejor-un-fenomeno" class="section level2">
+<h2><span class="header-section-number">2.3</span> ¿Como decidimos que modelo elegimos para explicar mejor un fenomeno?</h2>
+<p>Partamos con una base de datos, utilizaremos la base de datos de kaggle de expectativa de vida que encontramos en el el siguiente <a href="https://www.kaggle.com/kumarajarshi/life-expectancy-who/version/1">link</a> <span class="citation">(Rajarshi <a href="#ref-Rajarshi2018">2018</a>)</span></p>
+<div id="paquete-mumin" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Paquete MuMIn</h3>
+<p>Multi Moldel Inference</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">fit1 &lt;-<span class="st"> </span><span class="kw">glm</span>(mpg <span class="op">~</span><span class="st"> </span>carb <span class="op">+</span><span class="st"> </span>cyl, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">fit2 &lt;-<span class="st"> </span><span class="kw">glm</span>(mpg <span class="op">~</span>cyl <span class="op">+</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">fit3 &lt;-<span class="st"> </span><span class="kw">glm</span>(mpg <span class="op">~</span>am <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">fit4 &lt;-<span class="st"> </span><span class="kw">glm</span>(mpg <span class="op">~</span>carb <span class="op">+</span><span class="st"> </span>cyl <span class="op">+</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">fit5 &lt;-<span class="st"> </span><span class="kw">glm</span>(mpg <span class="op">~</span>am <span class="op">+</span><span class="st"> </span>carb <span class="op">+</span><span class="st"> </span>cyl <span class="op">+</span><span class="st"> </span>qsec <span class="op">+</span><span class="st"> </span>wt, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">fit6 &lt;-<span class="st"> </span><span class="kw">glm</span>(mpg <span class="op">~</span>am <span class="op">+</span><span class="st"> </span>carb <span class="op">+</span><span class="st"> </span>cyl <span class="op">+</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>qsec, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">models &lt;-<span class="st"> </span><span class="kw">list</span>(fit1, fit2, fit3, fit4, fit5, fit6)</a></code></pre></div>
+</div>
+<div id="paquete-mumin-model.sel" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Paquete MuMIn (model.sel)</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">Select &lt;-<span class="st"> </span><span class="kw">model.sel</span>(models)</a></code></pre></div>
+<table class="table table-striped table-hover table-condensed" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+(Intercept)
+</th>
+<th style="text-align:right;">
+carb
+</th>
+<th style="text-align:right;">
+cyl
+</th>
+<th style="text-align:right;">
+wt
+</th>
+<th style="text-align:right;">
+am
+</th>
+<th style="text-align:right;">
+qsec
+</th>
+<th style="text-align:right;">
+hp
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+9.62
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+-3.92
+</td>
+<td style="text-align:right;">
+2.94
+</td>
+<td style="text-align:right;">
+1.23
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-72.06
+</td>
+<td style="text-align:right;">
+156.43
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.46
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+39.69
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+-1.51
+</td>
+<td style="text-align:right;">
+-3.19
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-74.01
+</td>
+<td style="text-align:right;">
+157.49
+</td>
+<td style="text-align:right;">
+1.06
+</td>
+<td style="text-align:right;">
+0.27
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+39.60
+</td>
+<td style="text-align:right;">
+-0.49
+</td>
+<td style="text-align:right;">
+-1.29
+</td>
+<td style="text-align:right;">
+-3.16
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-72.81
+</td>
+<td style="text-align:right;">
+157.93
+</td>
+<td style="text-align:right;">
+1.50
+</td>
+<td style="text-align:right;">
+0.22
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+20.04
+</td>
+<td style="text-align:right;">
+-0.52
+</td>
+<td style="text-align:right;">
+-0.46
+</td>
+<td style="text-align:right;">
+-3.05
+</td>
+<td style="text-align:right;">
+2.94
+</td>
+<td style="text-align:right;">
+0.73
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-71.03
+</td>
+<td style="text-align:right;">
+160.73
+</td>
+<td style="text-align:right;">
+4.30
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+33.97
+</td>
+<td style="text-align:right;">
+-0.80
+</td>
+<td style="text-align:right;">
+-1.27
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+4.19
+</td>
+<td style="text-align:right;">
+-0.13
+</td>
+<td style="text-align:right;">
+-0.02
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-74.85
+</td>
+<td style="text-align:right;">
+168.36
+</td>
+<td style="text-align:right;">
+11.93
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+37.81
+</td>
+<td style="text-align:right;">
+-0.53
+</td>
+<td style="text-align:right;">
+-2.63
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-80.79
+</td>
+<td style="text-align:right;">
+171.06
+</td>
+<td style="text-align:right;">
+14.64
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>¿Que modelos seleccionamos?</li>
+</ul>
+</div>
+<div id="pesos-de-akaike" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> ¿Pesos de Akaike?</h3>
+<ul>
+<li>Suman uno</li>
+<li>A mayor peso, mejor modelo</li>
+<li>Dependen del número de modelos</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">Selected &lt;-<span class="st"> </span><span class="kw">subset</span>(Select, delta <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<table class="table table-striped table-hover table-condensed" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+(Intercept)
+</th>
+<th style="text-align:right;">
+carb
+</th>
+<th style="text-align:right;">
+cyl
+</th>
+<th style="text-align:right;">
+wt
+</th>
+<th style="text-align:right;">
+am
+</th>
+<th style="text-align:right;">
+qsec
+</th>
+<th style="text-align:right;">
+hp
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+9.62
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+-3.92
+</td>
+<td style="text-align:right;">
+2.94
+</td>
+<td style="text-align:right;">
+1.23
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-72.06
+</td>
+<td style="text-align:right;">
+156.43
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.49
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+39.69
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+-1.51
+</td>
+<td style="text-align:right;">
+-3.19
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-74.01
+</td>
+<td style="text-align:right;">
+157.49
+</td>
+<td style="text-align:right;">
+1.06
+</td>
+<td style="text-align:right;">
+0.29
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+39.60
+</td>
+<td style="text-align:right;">
+-0.49
+</td>
+<td style="text-align:right;">
+-1.29
+</td>
+<td style="text-align:right;">
+-3.16
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-72.81
+</td>
+<td style="text-align:right;">
+157.93
+</td>
+<td style="text-align:right;">
+1.50
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+(Intercept)
+</th>
+<th style="text-align:right;">
+carb
+</th>
+<th style="text-align:right;">
+cyl
+</th>
+<th style="text-align:right;">
+wt
+</th>
+<th style="text-align:right;">
+am
+</th>
+<th style="text-align:right;">
+qsec
+</th>
+<th style="text-align:right;">
+hp
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+9.62
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+-3.92
+</td>
+<td style="text-align:right;">
+2.94
+</td>
+<td style="text-align:right;">
+1.23
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-72.06
+</td>
+<td style="text-align:right;">
+156.43
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.63
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+39.69
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+-1.51
+</td>
+<td style="text-align:right;">
+-3.19
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-74.01
+</td>
+<td style="text-align:right;">
+157.49
+</td>
+<td style="text-align:right;">
+1.06
+</td>
+<td style="text-align:right;">
+0.37
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="hemos-seleccionado-3-modelos-ahora-que" class="section level3">
+<h3><span class="header-section-number">2.3.4</span> ¿Hemos seleccionado 3 modelos ahora que?</h3>
+<ul>
+<li>Seleccionar el mejor modelo</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">BestModel &lt;-<span class="st"> </span><span class="kw">get.models</span>(Select, <span class="dv">1</span>)[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">broom<span class="op">::</span><span class="kw">glance</span>(BestModel)</a></code></pre></div>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+null.deviance
+</th>
+<th style="text-align:right;">
+df.null
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+deviance
+</th>
+<th style="text-align:right;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1126.05
+</td>
+<td style="text-align:right;">
+31
+</td>
+<td style="text-align:right;">
+-72.06
+</td>
+<td style="text-align:right;">
+154.12
+</td>
+<td style="text-align:right;">
+161.45
+</td>
+<td style="text-align:right;">
+169.29
+</td>
+<td style="text-align:right;">
+28
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="mejor-modelo" class="section level3">
+<h3><span class="header-section-number">2.3.5</span> Mejor modelo</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">broom<span class="op">::</span><span class="kw">tidy</span>(BestModel)</a></code></pre></div>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+9.62
+</td>
+<td style="text-align:right;">
+6.96
+</td>
+<td style="text-align:right;">
+1.38
+</td>
+<td style="text-align:right;">
+0.18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+am
+</td>
+<td style="text-align:right;">
+2.94
+</td>
+<td style="text-align:right;">
+1.41
+</td>
+<td style="text-align:right;">
+2.08
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+qsec
+</td>
+<td style="text-align:right;">
+1.23
+</td>
+<td style="text-align:right;">
+0.29
+</td>
+<td style="text-align:right;">
+4.25
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+wt
+</td>
+<td style="text-align:right;">
+-3.92
+</td>
+<td style="text-align:right;">
+0.71
+</td>
+<td style="text-align:right;">
+-5.51
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>¿p no es significativo?
+<ul>
+<li>¡¡¡¡No importa!!!!</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="promediar-modelos" class="section level2">
+<h2><span class="header-section-number">2.4</span> Promediar modelos</h2>
+<div id="promediar-modelos-usando-mumin" class="section level3 build">
+<h3><span class="header-section-number">2.4.1</span> Promediar modelos usando MuMIn</h3>
+<ul>
+<li>Trabajemos con el numero de cilindros</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">S &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(Selected)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">S &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(Selected) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(cyl, weight)</a></code></pre></div>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+cyl
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+0.4854123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+-1.51
+</td>
+<td style="text-align:right;">
+0.2850763
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:right;">
+-1.29
+</td>
+<td style="text-align:right;">
+0.2295115
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Dos métodos <strong>full</strong> y <strong>subset</strong></li>
+</ul>
+</div>
+<div id="metodo-full" class="section level3 build">
+<h3><span class="header-section-number">2.4.2</span> Metodo full</h3>
+<p><span class="math display">\[\hat{\theta} = \sum_{i=1}^R w_i \times \theta_i\]</span></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">S_full &lt;-<span class="st"> </span>S</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">S_full<span class="op">$</span>cyl &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.na</span>(S_full<span class="op">$</span>cyl), <span class="dv">0</span>, S_full<span class="op">$</span>cyl)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">S_full &lt;-<span class="st"> </span>S_full <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Theta_i =</span> cyl<span class="op">*</span>weight)</a></code></pre></div>
+<table class="table table-striped table-hover table-condensed" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+cyl
+</th>
+<th style="text-align:right;">
+weight
+</th>
+<th style="text-align:right;">
+Theta_i
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.4854123
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-1.51
+</td>
+<td style="text-align:right;">
+0.2850763
+</td>
+<td style="text-align:right;">
+-0.4298366
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-1.29
+</td>
+<td style="text-align:right;">
+0.2295115
+</td>
+<td style="text-align:right;">
+-0.2960210
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">Cyl_hat &lt;-<span class="st"> </span><span class="kw">sum</span>(S_full<span class="op">$</span>Theta_i)</a></code></pre></div>
+<pre><code>## [1] -0.7258576</code></pre>
+</div>
+<div id="método-subset" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> Método subset</h3>
+<p><span class="math display">\[\hat{\theta} =  \frac{\sum_{i=1}^Rw_i \times \theta_i}{\sum_{i=1}^Rw_i}\]</span></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">S_sub &lt;-<span class="st"> </span>S <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(cyl))</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">S_sub &lt;-<span class="st"> </span>S_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Theta_i =</span> cyl<span class="op">*</span>weight)</a></code></pre></div>
+<table class="table table-striped table-hover table-condensed" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+cyl
+</th>
+<th style="text-align:right;">
+weight
+</th>
+<th style="text-align:right;">
+Theta_i
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+-1.51
+</td>
+<td style="text-align:right;">
+0.2850763
+</td>
+<td style="text-align:right;">
+-0.4298366
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-1.29
+</td>
+<td style="text-align:right;">
+0.2295115
+</td>
+<td style="text-align:right;">
+-0.2960210
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">Cyl_hat &lt;-<span class="st"> </span><span class="kw">sum</span>(S_sub<span class="op">$</span>Theta_i)<span class="op">/</span><span class="kw">sum</span>(S_sub<span class="op">$</span>weight)</a></code></pre></div>
+<pre><code>## [1] -1.410561</code></pre>
+</div>
+<div id="mumin" class="section level3">
+<h3><span class="header-section-number">2.4.4</span> MuMIn</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">AverageModel  &lt;-<span class="st"> </span><span class="kw">model.avg</span>(Select, <span class="dt">subset =</span> delta <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">fit =</span> T)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">AverageModel<span class="op">$</span>coefficients</a></code></pre></div>
+<table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+(Intercept)
+</th>
+<th style="text-align:right;">
+am
+</th>
+<th style="text-align:right;">
+qsec
+</th>
+<th style="text-align:right;">
+wt
+</th>
+<th style="text-align:right;">
+cyl
+</th>
+<th style="text-align:right;">
+carb
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:right;">
+25.07
+</td>
+<td style="text-align:right;">
+1.43
+</td>
+<td style="text-align:right;">
+0.60
+</td>
+<td style="text-align:right;">
+-3.54
+</td>
+<td style="text-align:right;">
+-0.73
+</td>
+<td style="text-align:right;">
+-0.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+subset
+</td>
+<td style="text-align:right;">
+25.07
+</td>
+<td style="text-align:right;">
+2.94
+</td>
+<td style="text-align:right;">
+1.23
+</td>
+<td style="text-align:right;">
+-3.54
+</td>
+<td style="text-align:right;">
+-1.41
+</td>
+<td style="text-align:right;">
+-0.49
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co">#AverageModel$importance</span></a></code></pre></div>
+</div>
+<div id="comparemos-modelos" class="section level3">
+<h3><span class="header-section-number">2.4.5</span> Comparemos modelos</h3>
+</div>
+<div id="comparemos-modelos-cont." class="section level3">
+<h3><span class="header-section-number">2.4.6</span> Comparemos modelos (cont.)</h3>
+</div>
+</div>
+<div id="discusión-artículo" class="section level2">
+<h2><span class="header-section-number">2.5</span> Discusión artículo</h2>
+<div id="gpa-y-multiolinearidad" class="section level3">
+<h3><span class="header-section-number">2.5.1</span> GPA y multiolinearidad</h3>
+</div>
+<div id="gpa-y-multiolinearidad-cont" class="section level3">
+<h3><span class="header-section-number">2.5.2</span> GPA y multiolinearidad (cont)</h3>
+</div>
+<div id="todos-vs-delta-2" class="section level3">
+<h3><span class="header-section-number">2.5.3</span> Todos vs Delta 2</h3>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-anderson2004model">
+<p>Anderson, D, and K Burnham. 2004. “Model Selection and Multi-Model Inference.” <em>Second. NY: Springer-Verlag</em> 63.</p>
+</div>
+<div id="ref-R-MuMIn">
+<p>Bartoń, Kamil. 2019. <em>MuMIn: Multi-Model Inference</em>. <a href="https://CRAN.R-project.org/package=MuMIn">https://CRAN.R-project.org/package=MuMIn</a>.</p>
+</div>
+<div id="ref-Rajarshi2018">
+<p>Rajarshi, Kumar. 2018. “Life Expectancy (Who), Statistical Analysis on Factors Influencing Life Expectancy.” 2018.</p>
+</div>
+<div id="ref-R-broom">
+<p>Robinson, David, and Alex Hayes. 2019. <em>Broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a>.</p>
+</div>
+<div id="ref-R-tidyverse">
+<p>Wickham, Hadley. 2019. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="CriteriosInfo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["CursoMulti.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

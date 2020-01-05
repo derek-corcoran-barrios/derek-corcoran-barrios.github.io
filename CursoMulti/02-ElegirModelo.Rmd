@@ -1,0 +1,251 @@
+# Selección de modelos {#ElegirModelo}
+
+```{r setupSeleccion, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, tidy = TRUE, cache = TRUE)
+library(tidyverse)
+library(MuMIn)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Paquetes necesarios para este capítulo
+
+Para este capitulo necesitas tener instalado los paquetes *tidyverse* [@R-tidyverse], *broom*  [@R-broom] y *MuMIn*  [@R-MuMIn]
+
+## Introducción
+
+  La inferencia Multimodelo [@anderson2004model] es un campo teórico de la estadística que nos perminte tomar decisiones equilibrando el poder predictivo y explicativo de multiples modelos en competencia, y nos da un marco de acción para seleccionar entre distintos modelos, dentro de esto, seleccionar el o los modelos *más parsimoniosos* entre varios en competencia, no el que predice más
+
+#### Que es lo que no nos permite la inferencia multimodelo
+
+  Si bien la Inferencia Multimodelo es una herramienta muy poderosa, hay varios problemas previos que no puede arreglar, entre ellos está un estudio mal diseñado y una pobre selección de variables a explicar un problema. Por otro lado, es importante recordar que la Inferencia Multimodelo no es una receta, hay mucho de criterio y desiciones que tomar en base a nuestro conocimiento del sistema a modelar.
+
+### Que necesitamos para realizar inferencia multimodelo
+
+  Antes de intentar seleccionar entre modelos, hay varios pasos a seguir, lo primero es generar un buen diseño de muestreo o diseño experimental para nuestra base de datos y pregunta, luego debemos generar las hipótesis de forma muy cuidadosa y detallada, y finalmente (y quizás lo más importante para este curso), la selección adecuada de variables para distinguir entre hipótesis.
+
+
+## ¿Como decidimos que modelo elegimos para explicar mejor un fenomeno?
+
+Partamos con una base de datos, utilizaremos la base de datos de kaggle de expectativa de vida que encontramos en el el siguiente [link](https://www.kaggle.com/kumarajarshi/life-expectancy-who/version/1) [@Rajarshi2018]
+
+    
+
+
+### Paquete MuMIn
+
+Multi Moldel Inference
+
+```{r}
+data("mtcars")
+
+fit1 <- glm(mpg ~ carb + cyl, data = mtcars)
+fit2 <- glm(mpg ~cyl + wt, data = mtcars)
+fit3 <- glm(mpg ~am + qsec + wt, data = mtcars)
+fit4 <- glm(mpg ~carb + cyl + wt, data = mtcars)
+fit5 <- glm(mpg ~am + carb + cyl + qsec + wt, data = mtcars)
+fit6 <- glm(mpg ~am + carb + cyl + hp + qsec, data = mtcars)
+
+models <- list(fit1, fit2, fit3, fit4, fit5, fit6)
+```
+
+### Paquete MuMIn (model.sel)
+
+```{r}
+Select <- model.sel(models)
+```
+
+```{r, echo = FALSE}
+as.data.frame(Select) %>%  mutate(weight = as.numeric(weight)) %>% kable(digits = 2) %>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+* ¿Que modelos seleccionamos?
+
+### ¿Pesos de Akaike?
+
+* Suman uno
+* A mayor peso, mejor modelo
+* Dependen del número de modelos
+
+```{r}
+Selected <- subset(Select, delta <= 2)
+```
+
+```{r, echo = FALSE}
+as.data.frame(Selected) %>%  mutate(weight = as.numeric(weight)) %>% kable(digits = 2) %>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+```{r, echo = FALSE}
+as.data.frame(Select[1:2,]) %>%  mutate(weight = as.numeric(weight)) %>% kable(digits = 2) %>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+### ¿Hemos seleccionado 3 modelos ahora que?
+
+* Seleccionar el mejor modelo
+
+```{r, eval=F}
+BestModel <- get.models(Select, 1)[[1]]
+broom::glance(BestModel)
+```
+
+```{r, echo=F}
+BestModel <- get.models(Select, 1)[[1]]
+broom::glance(BestModel) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+
+### Mejor modelo
+
+```{r, eval=F}
+broom::tidy(BestModel)
+```
+
+```{r, echo = F}
+broom::tidy(BestModel) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+* ¿p no es significativo?
+    + ¡¡¡¡No importa!!!!
+
+## Promediar modelos
+
+### Promediar modelos usando MuMIn {.build}
+
+* Trabajemos con el numero de cilindros
+
+```{r}
+S <- as.data.frame(Selected)
+S <- as.data.frame(Selected) %>% select(cyl, weight)
+```
+
+```{r, echo = FALSE}
+S %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+* Dos métodos **full** y **subset**
+
+### Metodo full {.build}
+
+$$\hat{\theta} = \sum_{i=1}^R w_i \times \theta_i$$
+
+```{r}
+S_full <- S
+S_full$cyl <- ifelse(is.na(S_full$cyl), 0, S_full$cyl)
+S_full <- S_full %>% mutate(Theta_i = cyl*weight)
+```
+
+```{r, echo=F}
+S_full %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+```{r}
+Cyl_hat <- sum(S_full$Theta_i)
+```
+
+```{r, echo=F}
+Cyl_hat
+```
+
+
+### Método subset
+
+$$\hat{\theta} =  \frac{\sum_{i=1}^Rw_i \times \theta_i}{\sum_{i=1}^Rw_i}$$
+
+```{r}
+S_sub <- S %>% filter(!is.na(cyl))
+
+S_sub <- S_sub %>% mutate(Theta_i = cyl*weight)
+```
+
+```{r, echo=F}
+S_sub %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+```{r}
+Cyl_hat <- sum(S_sub$Theta_i)/sum(S_sub$weight)
+```
+
+```{r, echo=F}
+Cyl_hat
+```
+
+
+### MuMIn
+
+```{r}
+AverageModel  <- model.avg(Select, subset = delta < 2, fit = T)
+```
+
+```{r, eval = FALSE}
+AverageModel$coefficients
+```
+
+```{r, echo = FALSE}
+as.data.frame(AverageModel$coefficients) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+```{r, eval = FALSE}
+#AverageModel$importance
+```
+
+```{r, echo=FALSE}
+#as.data.frame(AverageModel$importance)%>% rename(Importance = "AverageModel$importance") %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+
+### Comparemos modelos
+
+```{r, echo=FALSE}
+#DF <- data.frame(am = rep(c(0,1), each = 30), qsec = rep(mean(mtcars$qsec), 60), wt = rep(seq(from = min(mtcars$wt), to = max(mtcars$wt), length.out = 30),2), cyl= rep(median(mtcars$cyl), 60), carb= rep(median(mtcars$carb), 60))
+
+#DF2 <- DF %>% mutate(best = predict(BestModel, DF), Full = predict(AverageModel, DF, full = T), Subset = predict(AverageModel, DF, full = F)) %>% select(am, wt, best, Full, Subset) %>% mutate(am = case_when(am == 0 ~ "Automatico",am == 1 ~ "Manual")) %>% gather(key = Tipo, value = Pred, -am, -wt)
+
+#ggplot(DF2, aes(x = wt, y = Pred)) + geom_line(aes(color= Tipo, lty = am)) + theme_classic()
+```
+
+### Comparemos modelos (cont.)
+
+```{r, echo=FALSE}
+#DF <- data.frame(am = rep(c(0,1), each = 30), wt = rep(mean(mtcars$wt), 60), qsec = rep(seq(from = min(mtcars$qsec), to = max(mtcars$qsec), length.out = 30),2), cyl= rep(median(mtcars$cyl), 60), carb= rep(median(mtcars$carb), 60))
+
+#DF3 <- DF %>% mutate(best = predict(BestModel, DF), Full = predict(AverageModel, DF, full = T), Subset = predict(AverageModel, DF, full = F)) %>% select(am, qsec, best, Full, Subset) %>% mutate(am = case_when(am == 0 ~ "Automatico",am == 1 ~ "Manual")) %>% gather(key = Tipo, value = Pred, -am, -qsec)
+
+#ggplot(DF3, aes(x = qsec, y = Pred)) + geom_line(aes(color= Tipo, lty = am)) + theme_classic()
+```
+
+## Discusión artículo
+
+### GPA y multiolinearidad
+
+```{r, echo = F}
+#data("GPA")
+#GPA2 <- GPA %>% rename(GPA = y, MathSAT = x1, VerbalSAT = x2, HSmath = x3, HSEnglish = x4)
+
+#as.data.frame(cor(GPA2))  %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+### GPA y multiolinearidad (cont)
+
+```{r, echo = FALSE}
+#model <- lm(GPA ~ MathSAT + VerbalSAT + HSmath + HSEnglish, data = GPA2)
+
+#options(na.action = "na.fail")
+
+#dd <- dredge(model)
+
+#subset(dd, delta < 10) %>% mutate(weight = as.numeric(weight)) %>% kable(digits = 4) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+```{r, echo=F}
+#(dd %>% model.avg())$coefficients %>% as.data.frame() %>% kable(digits = 4) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+### Todos vs Delta 2
+
+```{r, echo=F}
+#(dd %>% model.avg(fit = T))$coefficients %>% as.data.frame() %>% kable(digits = 4, caption = "Todos los modelos") %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+```{r, echo=F}
+#(dd %>% model.avg(subset = delta < 2, fit = T))$coefficients %>% as.data.frame() %>% kable(digits = 4, caption = "Delta 2") %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```

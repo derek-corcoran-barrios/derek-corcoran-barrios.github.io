@@ -165,7 +165,7 @@ En general para trabajar bajo esta aproximación debemos seguir los siguientes p
 * Generación de modelos para cada hipótesis
 * Interpretación de resultados en base a modelos e hipótesis
 
-## Explicación o Predicción?
+## Explicación o Predicción? {#Dilema}
 
 
 ```{r Dilema, fig.cap=  "Que hacer?"}
@@ -178,19 +178,17 @@ En la mayoría de los casos, lo que más nos interesa es el tratar de encontrar 
 
 ### Criterio de Información de Akaike
 
-El Criterio de Información de Akaike (AIC de aquí en adelante por sus siglas en inglés Akaike Information Criterion), es un criterio basado en teoría de información, el cual balancea bastante bien el poder explicativo y predictivo, para esto castiga el uso de muchas variables o parametros en un modelo ($K$), algo difícil de entender del AIC cuando empezamos a trabajar con el, es que no existen valores buenos o malos de AIC, sinó que todo tiene que ver con la comparación entre modelos que compiten entre sí, y en general a menor AIC, mejor es el modelo, la siguiente es la formula de AIC:
+El Criterio de Información de Akaike [@akaike1974new] (AIC de aquí en adelante por sus siglas en inglés Akaike Information Criterion), es un criterio basado en teoría de información, el cual balancea bastante bien el poder explicativo y predictivo, para esto castiga el uso de muchas variables o parametros en un modelo ($K$), algo difícil de entender del AIC cuando empezamos a trabajar con el, es que no existen valores buenos o malos de AIC, sinó que todo tiene que ver con la comparación entre modelos que compiten entre sí, y en general a menor AIC, mejor es el modelo, la siguiente es la formula de AIC:
 
 $$AIC = 2k  - \ln(L)$$
 
-Existe además una formula de AIC corregido (AICc), el cual incorpora el número de observaciones en el calculo del criterio, como vemos en la siguiente formula, n se encuentra en el denominador de el segundo término que se suma a AIC:
+Existe además una formula de AIC corregido (AICc) [@cavanaugh1997unifying], el cual incorpora el número de observaciones en el calculo del criterio, como vemos en la siguiente formula, n se encuentra en el denominador de el segundo término que se suma a AIC:
 
 $$AICc = AIC + \frac{2k^2 + 2k}{n-k-1}$$
 
-Esto implica que cuando n tiende a infinito, AICc es casi igual a AIC, por lo cual siempre se recomienda el uso de AICc sobre AIC. Usualmente una diferencia de 2 en AIC, se considera "Significativa" 
+Esto implica que cuando n tiende a infinito, AICc es casi igual a AIC, por lo cual siempre se recomienda el uso de AICc sobre AIC. Usualmente una diferencia de 2 en AIC, se considera "Significativa" [@anderson2004model] 
 
-## Calculo de AICc en R
-
-* Función `AICc` en MuMIn
+Para calcular AICc podemos usar la función `AICc` en MuMIn, en el siguiente código, generamos un modelo en el cual usando la base de datos `mtcars`, en el cual ajustamos un modelo lineal, donde vemos si la eficiencia de un vehículo puede ser explicada por los caballos de fuerza en su forma lineal y cuadrática:
 
 ```{r, echo = TRUE}
 library(MuMIn)
@@ -198,18 +196,15 @@ Modelo <- lm(mpg ~ hp + I(hp^2), data = Train)
 AICc(Modelo)
 ```
 
-* MuMIn tiene otros criterios de informacion:
-    + $BIC = \ln(n)k  - \ln(L)$
-    + CAIFC
-    + DIC
-    + QAIC
+*AICc* no es el único criterio de información, en el paquete `MuMIn`, existen otros como *BIC*, *CAIFC*, *DIC* y *QAIC*. En ecología y lo más habitual es usar *AICc*, en algunos campos experimentales es habitual *BIC*, para más sobre esto ver [@aho2014model]. En otros casos por sobredispersión existen otros Criteros de información [@kim2014model]
+
+### Relación entre AICc y R cuadrado
+
+Como fue prometido en la sección \@ref(Dilema), el *AICc* intenta balancear explicación con predicción, y para ello, busca que aumente la métrica explicativa (en este caso $R^2$), pero para agregar un parámetro extra el $R^2$ tiene que aumentar bastante. En la Figura \@ref(fig:AICRsq), vemos las medidas de *AICc* y $R^2$ para los mismos modelos.
     
-## AICc
-    
-```{r, cache=TRUE}
+```{r AICRsq, fig.cap=  "Relación entre AICc y R cuadrado"}
 library(MuMIn)
 library(tidyverse)
-library(gridExtra)
 
 Fit1 <- glm(mpg ~., data = mtcars)
 options(na.action = "na.fail")
@@ -220,12 +215,12 @@ SUMM <- dd %>% group_by(df) %>% summarize(RSq = max(R.2), AICc = min(AICc))
 
 dfAICmin <- filter(SUMM, AICc == min(AICc))$df
 
-G2 <- ggplot(SUMM, aes(x = df, y = AICc)) + geom_line() + theme_classic() + geom_vline(xintercept =dfAICmin, col = "red")
+SUMM <- SUMM %>% pivot_longer(-df)
 
-G1 <- ggplot(SUMM, aes(x = df, y = RSq)) + geom_line() + theme_classic() + geom_hline(yintercept = 1, lty = 2) + geom_vline(xintercept =dfAICmin, col = "red")
-
-grid.arrange(G1, G2, ncol = 2)
+ggplot(SUMM, aes(x = df, y = value)) + geom_line() + geom_point() + facet_wrap(~name, scales = "free_y", strip.position = "left") + theme_bw() + ylab("") + geom_vline(xintercept =dfAICmin, col = "red") + xlab("Número de parámetros") + scale_x_continuous(breaks = c(3, 5, 7, 9, 11))
 ```
+
+La linea roja corresponde al modelo con *AICc* más bajo, el cual corresponde a un modelo con `r dfAICmin` parámetros (ver figura \@ref(fig:AICRsq), panel izquierdo), en el panel derecho, vemos que en ese momento el aumento de $R^2$ disminuye en pendiente. El mejor modelo de 5 parametros tiene un $R^2$ de 0.850 y el mejor modelo de 6 parámetros tiene un $R^2$ de 0.858. Lo que nos esta diciendo el *AICc* en resumen es ¿Vale la pena agregar un parametro más y arriesgar un sobreajuste por aumentar el $R^2$ en 0.08? Probablemente no.
 
 ## Ejercicio
 
@@ -240,7 +235,6 @@ Para eso genera un data frame con las siguientes columnas:
 * Id modelo
 * Hasta 11:30
 
-# Discusión artículo
 
 ## Mensaje final
 

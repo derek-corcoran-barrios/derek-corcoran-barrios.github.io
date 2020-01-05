@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2020-01-02" />
+<meta name="date" content="2020-01-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,7 @@
 
 
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -146,25 +147,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#predecir-vs-explicar"><i class="fa fa-check"></i><b>1.2</b> Predecir vs Explicar</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#modelos-estadísticos"><i class="fa fa-check"></i><b>1.2.1</b> Modelos estadísticos</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#sobreajuste"><i class="fa fa-check"></i><b>1.3</b> Sobreajuste</a></li>
-<li class="chapter" data-level="1.4" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#quiero-predecir-y-no-explicar"><i class="fa fa-check"></i><b>1.4</b> Quiero predecir y no explicar</a></li>
-<li class="chapter" data-level="1.5" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#quiero-explicar-y-no-predecir"><i class="fa fa-check"></i><b>1.5</b> Quiero explicar y no predecir</a></li>
-<li class="chapter" data-level="1.6" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#explicación-o-predicción"><i class="fa fa-check"></i><b>1.6</b> Explicación o Predicción?</a></li>
-<li class="chapter" data-level="1.7" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#aic"><i class="fa fa-check"></i><b>1.7</b> AIC</a></li>
-<li class="chapter" data-level="1.8" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#calculo-de-aicc-en-r"><i class="fa fa-check"></i><b>1.8</b> Calculo de AICc en R</a></li>
-<li class="chapter" data-level="1.9" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#aicc"><i class="fa fa-check"></i><b>1.9</b> AICc</a></li>
-<li class="chapter" data-level="1.10" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#ejercicio"><i class="fa fa-check"></i><b>1.10</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.3" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#sobreajuste"><i class="fa fa-check"></i><b>1.3</b> Sobreajuste</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#cuando-me-puede-interesar-el-maximizar-el-poder-predictivo"><i class="fa fa-check"></i><b>1.3.1</b> ¿Cuando me puede interesar el maximizar el poder predictivo?</a></li>
+<li class="chapter" data-level="1.3.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#cuando-me-puede-interesar-el-maximizar-el-poder-explicativo"><i class="fa fa-check"></i><b>1.3.2</b> ¿Cuando me puede interesar el maximizar el poder explicativo?</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="discusión-artículo.html"><a href="discusión-artículo.html"><i class="fa fa-check"></i><b>2</b> Discusión artículo</a><ul>
-<li class="chapter" data-level="2.1" data-path="discusión-artículo.html"><a href="discusión-artículo.html#mensaje-final"><i class="fa fa-check"></i><b>2.1</b> Mensaje final</a></li>
+<li class="chapter" data-level="1.4" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#Dilema"><i class="fa fa-check"></i><b>1.4</b> Explicación o Predicción?</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#criterio-de-información-de-akaike"><i class="fa fa-check"></i><b>1.4.1</b> Criterio de Información de Akaike</a></li>
+<li class="chapter" data-level="1.4.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#relación-entre-aicc-y-r-cuadrado"><i class="fa fa-check"></i><b>1.4.2</b> Relación entre AICc y R cuadrado</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>3</b> Literature</a></li>
-<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
-<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+<li class="chapter" data-level="1.5" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#ejercicio"><i class="fa fa-check"></i><b>1.5</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.6" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#mensaje-final"><i class="fa fa-check"></i><b>1.6</b> Mensaje final</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="2" data-path="ElegirModelo.html"><a href="ElegirModelo.html"><i class="fa fa-check"></i><b>2</b> Selección de modelos</a><ul>
+<li class="chapter" data-level="2.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#paquetes-necesarios-para-este-capítulo-1"><i class="fa fa-check"></i><b>2.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="2.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#introducción"><i class="fa fa-check"></i><b>2.2</b> Introducción</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#que-necesitamos-para-realizar-inferencia-multimodelo"><i class="fa fa-check"></i><b>2.2.1</b> Que necesitamos para realizar inferencia multimodelo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#como-decidimos-que-modelo-elegimos-para-explicar-mejor-un-fenomeno"><i class="fa fa-check"></i><b>2.3</b> ¿Como decidimos que modelo elegimos para explicar mejor un fenomeno?</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#paquete-mumin"><i class="fa fa-check"></i><b>2.3.1</b> Paquete MuMIn</a></li>
+<li class="chapter" data-level="2.3.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#paquete-mumin-model.sel"><i class="fa fa-check"></i><b>2.3.2</b> Paquete MuMIn (model.sel)</a></li>
+<li class="chapter" data-level="2.3.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#pesos-de-akaike"><i class="fa fa-check"></i><b>2.3.3</b> ¿Pesos de Akaike?</a></li>
+<li class="chapter" data-level="2.3.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#hemos-seleccionado-3-modelos-ahora-que"><i class="fa fa-check"></i><b>2.3.4</b> ¿Hemos seleccionado 3 modelos ahora que?</a></li>
+<li class="chapter" data-level="2.3.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#mejor-modelo"><i class="fa fa-check"></i><b>2.3.5</b> Mejor modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#promediar-modelos"><i class="fa fa-check"></i><b>2.4</b> Promediar modelos</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#promediar-modelos-usando-mumin"><i class="fa fa-check"></i><b>2.4.1</b> Promediar modelos usando MuMIn</a></li>
+<li class="chapter" data-level="2.4.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#metodo-full"><i class="fa fa-check"></i><b>2.4.2</b> Metodo full</a></li>
+<li class="chapter" data-level="2.4.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#método-subset"><i class="fa fa-check"></i><b>2.4.3</b> Método subset</a></li>
+<li class="chapter" data-level="2.4.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#mumin"><i class="fa fa-check"></i><b>2.4.4</b> MuMIn</a></li>
+<li class="chapter" data-level="2.4.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#comparemos-modelos"><i class="fa fa-check"></i><b>2.4.5</b> Comparemos modelos</a></li>
+<li class="chapter" data-level="2.4.6" data-path="ElegirModelo.html"><a href="ElegirModelo.html#comparemos-modelos-cont."><i class="fa fa-check"></i><b>2.4.6</b> Comparemos modelos (cont.)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#discusión-artículo"><i class="fa fa-check"></i><b>2.5</b> Discusión artículo</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#gpa-y-multiolinearidad"><i class="fa fa-check"></i><b>2.5.1</b> GPA y multiolinearidad</a></li>
+<li class="chapter" data-level="2.5.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#gpa-y-multiolinearidad-cont"><i class="fa fa-check"></i><b>2.5.2</b> GPA y multiolinearidad (cont)</a></li>
+<li class="chapter" data-level="2.5.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#todos-vs-delta-2"><i class="fa fa-check"></i><b>2.5.3</b> Todos vs Delta 2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a></li>
+<li class="chapter" data-level="4" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>4</b> Applications</a><ul>
+<li class="chapter" data-level="4.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>4.1</b> Example one</a></li>
+<li class="chapter" data-level="4.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>4.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>5</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
@@ -189,7 +214,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Curso BIO4318 Modelos Multivariados y Machine learning</h1>
 <p class="author"><em>Derek Corcoran</em></p>
-<p class="date"><em>2020-01-02</em></p>
+<p class="date"><em>2020-01-05</em></p>
 </div>
 <div id="requerimientos" class="section level1 unnumbered">
 <h1>Requerimientos</h1>
@@ -231,8 +256,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="contenidos" class="section level2">
 <h2><span class="header-section-number">0.4</span> Contenidos</h2>
 <ul>
-<li><p>Capítulo <a href="CriteriosInfo.html#CriteriosInfo">1</a> <em>Criterios de Información</em>: En este capítulo se aprenderá a cómo optimizar una de base de datos, sobre la limpieza y transformación de bases de datos, qué es una base de datos <em>tidy</em> y cómo manipular estas bases de datos con el paquete <em>dplyr</em> <span class="citation">(Wickham et al. <a href="#ref-R-dplyr">2019</a>)</span>.</p></li>
-<li><p>Capítulo <a href="#reproducible"><strong>??</strong></a> <em>Investigación reproducible</em>: En este capítulo se trabajará en la confección de un documento que combine códigos de <code>R</code> y texto para generar documentos reproducibles utilizando el paquete <em>rmarkdown</em> <span class="citation">(Allaire et al. <a href="#ref-Allaire2018">2018</a>)</span>. Además, se verá cómo al usar RStudio se pueden guardar los proyectos en un repositorio de github.</p></li>
+<li><p>Capítulo <a href="CriteriosInfo.html#CriteriosInfo">1</a> <em>Criterios de Información</em>: En este capítulo se aprenderá sobre la diferencia entre un modelos predictivo y explicativo. Cuando queremos trabajar con cada uno de ellos, y como usar los criterios de información para encontrar un balance entre predicción y explicación.</p></li>
+<li><p>Capítulo <a href="ElegirModelo.html#ElegirModelo">2</a> <em>Selección de modelos</em>: En este capítulo se trabajará en la selección de modelos basandonos en criterios de información. Para esto discutiremos cuál es el conjunto de modelos que compiten por ser seleccionados, como elegimos el mejor modelo, y en caso que sea necesario, como promediar entre modelos similares.</p></li>
 <li><p>Capítulo <a href="#tidyverso"><strong>??</strong></a> <em>El tidyverso</em> y el concepto de pipeline:En este capítulo se aprenderá sobre la limpieza de datos complejos.</p></li>
 <li><p>Capítulo <a href="#visualizacion"><strong>??</strong></a> <em>Visualización de datos</em> visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd</p></li>
 <li><p>Capítulo <a href="#modelos"><strong>??</strong></a> <em>Modelos en R</em> Aprender a generar modelos en R, desde ANOVA a GLM.</p></li>
@@ -250,12 +275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="libros-de-consulta" class="section level2">
 <h2><span class="header-section-number">0.6</span> Libros de consulta</h2>
-<p>Los principios de este curso están explicados en los siguientes libros gratuitos.</p>
-<ul>
-<li>Gandrud, Christopher. Reproducible Research with R and R Studio. CRC Press, 2013. Available for free in the following
-<a href="https://englianhu.files.wordpress.com/2016/01/reproducible-research-with-r-and-studio-2nd-edition.pdf">link</a></li>
-<li>Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. Implementing reproducible research. CRC Press, 2014. Available for free in the following <a href="http://web.stanford.edu/~vcs/papers/ijclp-STODDEN-2009.pdf">link</a></li>
-</ul>
+<p>El libro más importante para los contenidos es el libro de Inferencia Multimodelos <span class="citation">(Anderson and Burnham <a href="#ref-anderson2004model">2004</a>)</span>, para la segunda parte (machine learning), el libro más relevante es el de modelos predictivos <span class="citation">(Kuhn and Johnson <a href="#ref-kuhn2013applied">2013</a>)</span></p>
 </div>
 <div id="bibliografía" class="section level2">
 <h2><span class="header-section-number">0.7</span> Bibliografía</h2>
@@ -264,17 +284,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-Allaire2018">
-<p>Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, and Winston Chang. 2018. <em>Rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.</p>
+<div id="ref-anderson2004model">
+<p>Anderson, D, and K Burnham. 2004. “Model Selection and Multi-Model Inference.” <em>Second. NY: Springer-Verlag</em> 63.</p>
 </div>
 <div id="ref-Kross2017">
 <p>Kross, Sean, Nick Carchedi, Bill Bauer, and Gina Grdina. 2017. <em>Swirl: Learn R, in R</em>. <a href="https://CRAN.R-project.org/package=swirl">https://CRAN.R-project.org/package=swirl</a>.</p>
 </div>
+<div id="ref-kuhn2013applied">
+<p>Kuhn, Max, and Kjell Johnson. 2013. <em>Applied Predictive Modeling</em>. Vol. 26. Springer.</p>
+</div>
 <div id="ref-R-base">
 <p>R Core Team. 2019. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
-</div>
-<div id="ref-R-dplyr">
-<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2019. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.</p>
 </div>
 </div>
             </section>
