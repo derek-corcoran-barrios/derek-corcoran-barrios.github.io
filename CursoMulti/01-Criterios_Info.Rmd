@@ -141,49 +141,52 @@ El sobreajute ocurre cuando por aumentar el ajuste de un modelo ($R^2$ por ejemp
 knitr::include_graphics("Predictivo.gif")
 ```
 
-## Quiero predecir y no explicar
+###  ¿Cuando me puede interesar el maximizar el poder predictivo?
+
+Hay momentos en los cuales me preocupa el poder predictivo y no me interesa la explicación, algunos ejemplos de esto son:
 
 * Texto predictivo del celular
 * Auto-corrector
 * Efectos de cambio climático
 * Detección de caras en redes sociales
-* A veces el modelo equivocado puede predecir mejor
-* Como selecciono el modelo con mayor poder predictivo?
-    + Maximizo el $R^2$ de la base de datos de prueba (*Test*)
 
+Para seleccionar el modelo con mayor poder predictivo, se debe maximizar el desempeño de la metrica en la base de datos de prueba (*Test*), en el caso que explicamos anteriormente ese valor es $R^2$. Esto es muy importante tenerlo en mente, es el principio básico de cuando empezemos a trabajar con Machine Learning en capítulos posteriores.
 
-## Quiero explicar y no predecir
+###  ¿Cuando me puede interesar el maximizar el poder explicativo?
+
+En otros casos lo que mas me interesa es el poder explicar un fenómeno, sin importar que pueda hacer predicciones en una base de datos nueva, por ejemplo:
 
 * Pruebas a hipótesis causales
 * ¿Que causa el cambio climático?
-* Como funciona:
-  + Generación de hipótesis (plural)
-  + Generación de modelos para cada hipótesis
-  + Interpretación de resultados en base a modelos e hipótesis
-  + Recomendaciones?
 
+En general para trabajar bajo esta aproximación debemos seguir los siguientes pasos:
+
+* Generación de hipótesis (plural)
+* Generación de modelos para cada hipótesis
+* Interpretación de resultados en base a modelos e hipótesis
 
 ## Explicación o Predicción?
 
-```{r}
+
+```{r Dilema, fig.cap=  "Que hacer?"}
 knitr::include_graphics("Dilema.jpg", dpi = 80)
 ```
 
 <iframe src="https://giphy.com/embed/3o7aCRloybJlXpNjSU" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/3o7aCRloybJlXpNjSU">via GIPHY</a></p>
 
-## AIC
+En la mayoría de los casos, lo que más nos interesa es el tratar de encontrar un balance entre el poder predictivo y el explicativo, no queremos tomar la decición de la la figura \@ref(fig:Dilema). Por un lado el maximizar el poder explivativo, lleva a modelos muy particulares, que solo explican la base de datos que usamos para entrenar el modelo, lo cual puede no aplicar a una nueva base de datos, (por ejemplo podemos hacer un gran modelo que explique en un 99% la variación en el exito reproductivo de huemules en los altos de Chillán, pero esto puede no explicar ni un 10% de la variación del exito reproductivo de la misma especie en el Parque Nacional Bernardo O'Higgins) ¿Como hacer para balancear el poder explicativo y predictivo? Usando criterios de Información.
 
-* Balancea explicación y predicción
-* Castiga el uso de muchos parámetros
-* Menor AIC, mejor modelo
+### Criterio de Información de Akaike
+
+El Criterio de Información de Akaike (AIC de aquí en adelante por sus siglas en inglés Akaike Information Criterion), es un criterio basado en teoría de información, el cual balancea bastante bien el poder explicativo y predictivo, para esto castiga el uso de muchas variables o parametros en un modelo ($K$), algo difícil de entender del AIC cuando empezamos a trabajar con el, es que no existen valores buenos o malos de AIC, sinó que todo tiene que ver con la comparación entre modelos que compiten entre sí, y en general a menor AIC, mejor es el modelo, la siguiente es la formula de AIC:
 
 $$AIC = 2k  - \ln(L)$$
 
-* Corregido
+Existe además una formula de AIC corregido (AICc), el cual incorpora el número de observaciones en el calculo del criterio, como vemos en la siguiente formula, n se encuentra en el denominador de el segundo término que se suma a AIC:
 
 $$AICc = AIC + \frac{2k^2 + 2k}{n-k-1}$$
 
-* Usualmente una diferencia de 2 en AIC, se considera "Significativa" 
+Esto implica que cuando n tiende a infinito, AICc es casi igual a AIC, por lo cual siempre se recomienda el uso de AICc sobre AIC. Usualmente una diferencia de 2 en AIC, se considera "Significativa" 
 
 ## Calculo de AICc en R
 

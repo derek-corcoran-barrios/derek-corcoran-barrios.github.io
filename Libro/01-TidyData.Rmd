@@ -6,6 +6,7 @@ Para este capitulo necesitas tener instalado el paquete *tidyverse*
 
 ```{r, echo=FALSE}
 library(knitr)
+library(tidyverse)
 opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 ```
 

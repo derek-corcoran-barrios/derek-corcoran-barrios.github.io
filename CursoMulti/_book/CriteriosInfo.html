@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2019-12-30" />
+<meta name="date" content="2020-01-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -214,21 +214,21 @@ Figura 1.1: Caballos de Fuerza de un vehículo (HP) graficados contra la eficien
 <h4><span class="header-section-number">1.2.1.2</span> Primer paso separar en base de datos de entrenamiento y de testeo</h4>
 <p>En este caso queremos probar el poder explicativo y predictivo de esta base de datos, por lo cuál dividiremos nuestra base de datos en dos una base de datos de entrenamiento, con la cual ajustaremos el modelo y una de testeo o de prueba, en la cual veremos el poder predictivo del modelo con una base de datos que el modelo no ha visto anteriormente.</p>
 <p>Para esto utilizamos el siguiente código</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2018</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">index &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(mtcars), <span class="dt">size =</span> <span class="kw">round</span>(<span class="kw">nrow</span>(mtcars)<span class="op">/</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">Train &lt;-<span class="st"> </span>mtcars[index, ]</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">Test &lt;-<span class="st"> </span>mtcars[<span class="op">-</span>index, ]</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2018</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">index &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(mtcars), <span class="dt">size =</span> <span class="kw">round</span>(<span class="kw">nrow</span>(mtcars)<span class="op">/</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">Train &lt;-<span class="st"> </span>mtcars[index, ]</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">Test &lt;-<span class="st"> </span>mtcars[<span class="op">-</span>index, ]</a></code></pre></div>
 <p>Esto genera la base de datos <em>Train</em> que tiene 16 observaciones y la base de datos <em>Test</em> que tiene 16 observaciones independientes. En este caso nuevamente si vemos la figura <a href="CriteriosInfo.html#fig:patron">1.1</a>, vemos que la relación entre los caballos de fuerza y la eficiencia no parecen ser particualrmente lineales, por lo que testearemos el siguiente modelo estadístico:</p>
 <p><span class="math display">\[mpg = \beta_1 hp + \beta_2 hp^2 + c\]</span></p>
 <p>Para determinar el poder tanto explicativo como predictivo del modelo, lo primero que haremos será crear el objeto <em>Modelo</em> usando un modelo lineal simple <code>lm</code></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a></code></pre></div>
 </div>
 <div id="poder-explicativo" class="section level4">
 <h4><span class="header-section-number">1.2.1.3</span> Poder explicativo:</h4>
 <p>Primero veamos el poder predictivo de este modelo, para eso usaremos la función <code>glance</code> del paquete <em>broom</em></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">glance</span>(Modelo)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">glance</span>(Modelo)</a></code></pre></div>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:Tab">Tabla 1.1: </span>R cuadrado, valor de p y grados de libertad del modelo
@@ -262,7 +262,7 @@ df
 </table>
 <p>Como vemos en la Tabla <a href="CriteriosInfo.html#tab:Tab">1.1</a>, nuestro modelo tiene un poder explicativo bastante bueno, donde con solo saber los caballos de fuerza de un vehículo, podemos explicar un 78.8% de la variación en la eficiencia del vehículo.</p>
 <p>Usando la función <code>predict</code>, podemos ver la predicción del modelo con nuestra base de datos original, ademas si vemos la tabla <a href="CriteriosInfo.html#tab:TabResidPred">1.2</a>, vemos la predicción el observado y los residuales, que es la resta entre lo observado y la predicción. Además en la <a href="CriteriosInfo.html#fig:Pred1">1.2</a> podemos ver en la linea segmentada la predicción del modelo comparado con los datos en los puntos</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Train<span class="op">$</span>Pred &lt;-<span class="st"> </span><span class="kw">predict</span>(Modelo, Train)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">Train<span class="op">$</span>Pred &lt;-<span class="st"> </span><span class="kw">predict</span>(Modelo, Train)</a></code></pre></div>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:TabResidPred">Tabla 1.2: </span>En esta tabla podemos observar para cada observación los caballos de fuerza, la predicción y los residuales para cada observación
@@ -521,8 +521,8 @@ Figura 1.2: Los puntos representan las observaciones con las que se entrenó el 
 <h4><span class="header-section-number">1.2.1.4</span> Poder Predictivo:</h4>
 <p>Para determinar el poder predictivo de un modelo, tenemos que probar su predicciones con una base de datos que no haya sido usada para ajustar el modelo, es para eso que generamos la base de datos <em>Test</em>, lo primero que debemos hacer para ver el poder predictivo del modelo es usar el modelo con esta base de datos nueva, y generear predicciones, para esto nuevamente usamos la función <code>predict</code></p>
 <p>Posteriormente, usamos la funcion <code>postResample</code>del paquete <code>caret</code>, usando dos argumentos. En el argumento <code>pred</code> usamos los valores predichos con el modelo, y en el argumento <code>obs</code> usamos los valores observados, es decir, los que esperamos que nos entregue el modelo:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">postResample</span>(<span class="dt">pred =</span> Test<span class="op">$</span>Pred, <span class="dt">obs =</span> Test<span class="op">$</span>mpg)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">postResample</span>(<span class="dt">pred =</span> Test<span class="op">$</span>Pred, <span class="dt">obs =</span> Test<span class="op">$</span>mpg)</a></code></pre></div>
 <pre><code>##      RMSE  Rsquared       MAE 
 ## 3.8741375 0.6805523 2.6437118</code></pre>
 <p>La tabla resultante de esta función nos entrega varios valores para determinar que tan buena es la predicción (Mean Square Error, R Cuadrado y Mean Absolute Error), estos valores los estudiaremos mas adelante en los capítulos de Machine Learning, pero por ahora quedemonos con el valor de R Cuadrado, que es igual a 0.68, un valor menor al 0.79 del poder predictivo, lo cual es de esperarse. Casi siempre el valor predictivo de un modelo es menor al valor explicativo de este mismo. En la tabla <a href="CriteriosInfo.html#tab:PredPower">1.3</a> y en la figura <a href="CriteriosInfo.html#fig:PredPowerFig">1.3</a> podemos ver las predicciones del modelo.</p>
@@ -863,9 +863,9 @@ Figura 1.5: El gráfico de la Izquerda muestra el ajuste del modelo en los datos
 <ul>
 <li>Función <code>AICc</code> en MuMIn</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(MuMIn)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">AICc</span>(Modelo)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">library</span>(MuMIn)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">AICc</span>(Modelo)</a></code></pre></div>
 <pre><code>## [1] 84.02319</code></pre>
 <ul>
 <li>MuMIn tiene otros criterios de informacion:
@@ -879,7 +879,7 @@ Figura 1.5: El gráfico de la Izquerda muestra el ajuste del modelo en los datos
 </div>
 <div id="aicc" class="section level2">
 <h2><span class="header-section-number">1.9</span> AICc</h2>
-<p><img src="CursoMulti_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="ejercicio" class="section level2">
 <h2><span class="header-section-number">1.10</span> Ejercicio</h2>

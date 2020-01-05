@@ -8,6 +8,8 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 description: "Este libro es una compañia al curso, análisis y manipulación de datos en R"
+github-repo: "/derek-corcoran-barrios/derek-corcoran-barrios.github.io/tree/master/Libro"
+cover-image: "Cover.png"
 ---
 
 

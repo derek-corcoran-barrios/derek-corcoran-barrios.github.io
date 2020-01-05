@@ -1,38 +1,37 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 9 Referencias | Manipulación de datos e investigación reproducible en R</title>
-  <meta name="description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 9 Referencias | Manipulación de datos e investigación reproducible en R" />
   <meta property="og:type" content="book" />
   
-  
+  <meta property="og:image" content="Cover.png" />
   <meta property="og:description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
-  
+  <meta name="github-repo" content="/derek-corcoran-barrios/derek-corcoran-barrios.github.io/tree/master/Libro" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Capítulo 9 Referencias | Manipulación de datos e investigación reproducible en R" />
   
   <meta name="twitter:description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
+  <meta name="twitter:image" content="Cover.png" />
+
+<meta name="author" content="Derek Corcoran" />
+
+
+<meta name="date" content="2019-12-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-
-<meta name="author" content="Derek Corcoran">
-
-
-<meta name="date" content="2019-04-14">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
-  
-<link rel="prev" href="soluciones.html">
+<link rel="prev" href="soluciones.html"/>
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -41,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -51,41 +53,66 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -106,16 +133,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Requerimientos</a><ul>
 <li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#antes-de-comenzar"><i class="fa fa-check"></i><b>0.1</b> Antes de comenzar</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#descripcion-del-curso"><i class="fa fa-check"></i><b>0.2</b> Descripción del curso</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#descripción-del-curso"><i class="fa fa-check"></i><b>0.2</b> Descripción del curso</a></li>
 <li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#objetivos-del-curso"><i class="fa fa-check"></i><b>0.3</b> Objetivos del curso</a></li>
 <li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#contenidos"><i class="fa fa-check"></i><b>0.4</b> Contenidos</a></li>
-<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#metodologia"><i class="fa fa-check"></i><b>0.5</b> Metodología</a></li>
-<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#evaluacion"><i class="fa fa-check"></i><b>0.6</b> Evaluación</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#metodología"><i class="fa fa-check"></i><b>0.5</b> Metodología</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#evaluación"><i class="fa fa-check"></i><b>0.6</b> Evaluación</a></li>
 <li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#libros-de-consulta"><i class="fa fa-check"></i><b>0.7</b> Libros de consulta</a></li>
-<li class="chapter" data-level="0.8" data-path="index.html"><a href="index.html#bibliografia"><i class="fa fa-check"></i><b>0.8</b> Bibliografía</a></li>
+<li class="chapter" data-level="0.8" data-path="index.html"><a href="index.html#bibliografía"><i class="fa fa-check"></i><b>0.8</b> Bibliografía</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>1</b> Tidy Data y manipulación de datos</a><ul>
-<li class="chapter" data-level="1.1" data-path="tidydata.html"><a href="tidydata.html#paquetes-necesarios-para-este-capitulo"><i class="fa fa-check"></i><b>1.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="1.1" data-path="tidydata.html"><a href="tidydata.html#paquetes-necesarios-para-este-capítulo"><i class="fa fa-check"></i><b>1.1</b> Paquetes necesarios para este capítulo</a></li>
 <li class="chapter" data-level="1.2" data-path="tidydata.html"><a href="tidydata.html#tidy-data"><i class="fa fa-check"></i><b>1.2</b> Tidy data</a></li>
 <li class="chapter" data-level="1.3" data-path="tidydata.html"><a href="tidydata.html#dplyr"><i class="fa fa-check"></i><b>1.3</b> dplyr</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="tidydata.html"><a href="tidydata.html#pipeline"><i class="fa fa-check"></i><b>1.3.1</b> Pipeline (%&gt;%)</a></li>
@@ -131,8 +158,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="reproducible.html"><a href="reproducible.html"><i class="fa fa-check"></i><b>2</b> Investigación reproducible</a><ul>
-<li class="chapter" data-level="2.1" data-path="reproducible.html"><a href="reproducible.html#paquetes-necesarios-para-este-capitulo-1"><i class="fa fa-check"></i><b>2.1</b> Paquetes necesarios para este capítulo</a></li>
-<li class="chapter" data-level="2.2" data-path="reproducible.html"><a href="reproducible.html#investigacion-reproducible"><i class="fa fa-check"></i><b>2.2</b> Investigación reproducible</a></li>
+<li class="chapter" data-level="2.1" data-path="reproducible.html"><a href="reproducible.html#paquetes-necesarios-para-este-capítulo-1"><i class="fa fa-check"></i><b>2.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="2.2" data-path="reproducible.html"><a href="reproducible.html#investigación-reproducible"><i class="fa fa-check"></i><b>2.2</b> Investigación reproducible</a></li>
 <li class="chapter" data-level="2.3" data-path="reproducible.html"><a href="reproducible.html#guardando-nuestro-proyecto-en-github"><i class="fa fa-check"></i><b>2.3</b> Guardando nuestro proyecto en github</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="reproducible.html"><a href="reproducible.html#que-es-github"><i class="fa fa-check"></i><b>2.3.1</b> Que es github?</a></li>
 <li class="chapter" data-level="2.3.2" data-path="reproducible.html"><a href="reproducible.html#creando-un-proyecto-de-github-en-rstudio"><i class="fa fa-check"></i><b>2.3.2</b> creando un proyecto de github en RStudio</a></li>
@@ -142,12 +169,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.4.1" data-path="reproducible.html"><a href="reproducible.html#creando-un-rmarkdown"><i class="fa fa-check"></i><b>2.4.1</b> Creando un Rmarkdown</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="reproducible.html"><a href="reproducible.html#subtitulo-1"><i class="fa fa-check"></i>subtitulo 1</a><ul>
-<li class="chapter" data-level="" data-path="reproducible.html"><a href="reproducible.html#subtitulo-2"><i class="fa fa-check"></i>subtítulo 2</a></li>
+<li class="chapter" data-level="" data-path="reproducible.html"><a href="reproducible.html#subtítulo-2"><i class="fa fa-check"></i>subtítulo 2</a></li>
 <li class="chapter" data-level="2.4.2" data-path="reproducible.html"><a href="reproducible.html#ejercicios-1"><i class="fa fa-check"></i><b>2.4.2</b> Ejercicios</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tidyverso.html"><a href="tidyverso.html"><i class="fa fa-check"></i><b>3</b> El Tidyverso y tidyr</a><ul>
-<li class="chapter" data-level="3.1" data-path="tidyverso.html"><a href="tidyverso.html#paquetes-necesarios-para-este-capitulo-2"><i class="fa fa-check"></i><b>3.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="3.1" data-path="tidyverso.html"><a href="tidyverso.html#paquetes-necesarios-para-este-capítulo-2"><i class="fa fa-check"></i><b>3.1</b> Paquetes necesarios para este capítulo</a></li>
 <li class="chapter" data-level="3.2" data-path="tidyverso.html"><a href="tidyverso.html#el-tidyverso"><i class="fa fa-check"></i><b>3.2</b> El tidyverso</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="tidyverso.html"><a href="tidyverso.html#readr"><i class="fa fa-check"></i><b>3.2.1</b> readr</a></li>
 <li class="chapter" data-level="3.2.2" data-path="tidyverso.html"><a href="tidyverso.html#dplyr-1"><i class="fa fa-check"></i><b>3.2.2</b> dplyr</a></li>
@@ -167,47 +194,47 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="visualizacion.html"><a href="visualizacion.html"><i class="fa fa-check"></i><b>4</b> Visualización de datos</a><ul>
-<li class="chapter" data-level="4.1" data-path="visualizacion.html"><a href="visualizacion.html#paquetes-necesarios-para-este-capitulo-3"><i class="fa fa-check"></i><b>4.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="4.1" data-path="visualizacion.html"><a href="visualizacion.html#paquetes-necesarios-para-este-capítulo-3"><i class="fa fa-check"></i><b>4.1</b> Paquetes necesarios para este capítulo</a></li>
 <li class="chapter" data-level="4.2" data-path="visualizacion.html"><a href="visualizacion.html#el-esqueleto"><i class="fa fa-check"></i><b>4.2</b> El esqueleto</a></li>
 <li class="chapter" data-level="4.3" data-path="visualizacion.html"><a href="visualizacion.html#por-que-usamos-aes-y"><i class="fa fa-check"></i><b>4.3</b> Por que usamos aes() y +</a></li>
 <li class="chapter" data-level="4.4" data-path="visualizacion.html"><a href="visualizacion.html#geom_algo"><i class="fa fa-check"></i><b>4.4</b> geom_algo</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="visualizacion.html"><a href="visualizacion.html#una-variable-categorica-una-continua"><i class="fa fa-check"></i><b>4.4.1</b> Una variable categórica una continua</a></li>
+<li class="chapter" data-level="4.4.1" data-path="visualizacion.html"><a href="visualizacion.html#una-variable-categórica-una-continua"><i class="fa fa-check"></i><b>4.4.1</b> Una variable categórica una continua</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="visualizacion.html"><a href="visualizacion.html#combinando-geoms"><i class="fa fa-check"></i><b>4.5</b> Combinando geoms</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="visualizacion.html"><a href="visualizacion.html#el-orden-importa"><i class="fa fa-check"></i><b>4.5.1</b> El orden importa</a></li>
 <li class="chapter" data-level="4.5.2" data-path="visualizacion.html"><a href="visualizacion.html#dos-variables-continuas"><i class="fa fa-check"></i><b>4.5.2</b> Dos variables continuas</a></li>
-<li class="chapter" data-level="4.5.3" data-path="visualizacion.html"><a href="visualizacion.html#combinando-varios-graficos-con-facet_wrap"><i class="fa fa-check"></i><b>4.5.3</b> Combinando varios gráficos con facet_wrap</a></li>
+<li class="chapter" data-level="4.5.3" data-path="visualizacion.html"><a href="visualizacion.html#combinando-varios-gráficos-con-facet_wrap"><i class="fa fa-check"></i><b>4.5.3</b> Combinando varios gráficos con facet_wrap</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="modelos.html"><a href="modelos.html"><i class="fa fa-check"></i><b>5</b> Modelos en R</a><ul>
-<li class="chapter" data-level="5.1" data-path="modelos.html"><a href="modelos.html#paquetes-necesarios-para-este-capitulo-4"><i class="fa fa-check"></i><b>5.1</b> Paquetes necesarios para este capítulo</a></li>
-<li class="chapter" data-level="5.2" data-path="modelos.html"><a href="modelos.html#modelos-estadisticos"><i class="fa fa-check"></i><b>5.2</b> Modelos estadísticos</a><ul>
+<li class="chapter" data-level="5.1" data-path="modelos.html"><a href="modelos.html#paquetes-necesarios-para-este-capítulo-4"><i class="fa fa-check"></i><b>5.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="5.2" data-path="modelos.html"><a href="modelos.html#modelos-estadísticos"><i class="fa fa-check"></i><b>5.2</b> Modelos estadísticos</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="modelos.html"><a href="modelos.html#ejemplo"><i class="fa fa-check"></i><b>5.2.1</b> Ejemplo</a></li>
 <li class="chapter" data-level="5.2.2" data-path="modelos.html"><a href="modelos.html#representando-un-modelo-en-r"><i class="fa fa-check"></i><b>5.2.2</b> Representando un modelo en R</a></li>
 <li class="chapter" data-level="5.2.3" data-path="modelos.html"><a href="modelos.html#volvamos-al-ejemplo-de-las-plantas"><i class="fa fa-check"></i><b>5.2.3</b> Volvamos al ejemplo de las plantas</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>6</b> Loops (purrr) y bibliografía (rticles)</a><ul>
-<li class="chapter" data-level="6.1" data-path="loops.html"><a href="loops.html#paquetes-necesarios-para-este-capitulo-5"><i class="fa fa-check"></i><b>6.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="6.1" data-path="loops.html"><a href="loops.html#paquetes-necesarios-para-este-capítulo-5"><i class="fa fa-check"></i><b>6.1</b> Paquetes necesarios para este capítulo</a></li>
 <li class="chapter" data-level="6.2" data-path="loops.html"><a href="loops.html#generando-una-receta"><i class="fa fa-check"></i><b>6.2</b> Generando una receta</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="loops.html"><a href="loops.html#dioxido-de-nitrogeno-en-madrid"><i class="fa fa-check"></i><b>6.2.1</b> Dioxido de nitrógeno en Madrid</a></li>
+<li class="chapter" data-level="6.2.1" data-path="loops.html"><a href="loops.html#dioxido-de-nitrógeno-en-madrid"><i class="fa fa-check"></i><b>6.2.1</b> Dioxido de nitrógeno en Madrid</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="loops.html"><a href="loops.html#empezando-el-loop"><i class="fa fa-check"></i><b>6.3</b> Empezando el loop</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="loops.html"><a href="loops.html#volvamos-a-nuestra-receta"><i class="fa fa-check"></i><b>6.3.1</b> Volvamos a nuestra receta</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="presentacion.html"><a href="presentacion.html"><i class="fa fa-check"></i><b>7</b> Presentaciones en R</a><ul>
-<li class="chapter" data-level="7.1" data-path="presentacion.html"><a href="presentacion.html#paquetes-necesarios-para-este-capitulo-6"><i class="fa fa-check"></i><b>7.1</b> Paquetes necesarios para este capítulo</a></li>
+<li class="chapter" data-level="7.1" data-path="presentacion.html"><a href="presentacion.html#paquetes-necesarios-para-este-capítulo-6"><i class="fa fa-check"></i><b>7.1</b> Paquetes necesarios para este capítulo</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="soluciones.html"><a href="soluciones.html"><i class="fa fa-check"></i><b>8</b> Soluciones a problemas</a><ul>
-<li class="chapter" data-level="8.1" data-path="soluciones.html"><a href="soluciones.html#capitulo-1"><i class="fa fa-check"></i><b>8.1</b> Capítulo 1</a><ul>
+<li class="chapter" data-level="8.1" data-path="soluciones.html"><a href="soluciones.html#capítulo-1"><i class="fa fa-check"></i><b>8.1</b> Capítulo 1</a><ul>
 <li class="chapter" data-level="8.1.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-3"><i class="fa fa-check"></i><b>8.1.1</b> Ejercicio 1</a></li>
 <li class="chapter" data-level="8.1.2" data-path="soluciones.html"><a href="soluciones.html#ejercicio-2-2"><i class="fa fa-check"></i><b>8.1.2</b> Ejercicio 2</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="soluciones.html"><a href="soluciones.html#capitulo-2"><i class="fa fa-check"></i><b>8.2</b> Capítulo 2</a><ul>
+<li class="chapter" data-level="8.2" data-path="soluciones.html"><a href="soluciones.html#capítulo-2"><i class="fa fa-check"></i><b>8.2</b> Capítulo 2</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-4"><i class="fa fa-check"></i><b>8.2.1</b> Ejercicio 1</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="soluciones.html"><a href="soluciones.html#capitulo-3"><i class="fa fa-check"></i><b>8.3</b> Capítulo 3</a><ul>
+<li class="chapter" data-level="8.3" data-path="soluciones.html"><a href="soluciones.html#capítulo-3"><i class="fa fa-check"></i><b>8.3</b> Capítulo 3</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-5"><i class="fa fa-check"></i><b>8.3.1</b> Ejercicio 1</a></li>
 <li class="chapter" data-level="8.3.2" data-path="soluciones.html"><a href="soluciones.html#ejercicio-2-3"><i class="fa fa-check"></i><b>8.3.2</b> Ejercicio 2</a></li>
 </ul></li>
@@ -238,31 +265,31 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <div id="refs" class="references">
 <div>
-<p>Aden-Buie, Garrick. 2018. “Animations of Tidyverse Verbs Using R, the Tidyverse, and Gganimate.” <em>GitHub Repository</em>. <a href="https://github.com/gadenbuie/tidy-animated-verbs" class="uri">https://github.com/gadenbuie/tidy-animated-verbs</a>; GitHub.</p>
+<p>Aden-Buie, Garrick. 2018. “Animations of Tidyverse Verbs Using R, the Tidyverse, and Gganimate.” <em>GitHub Repository</em>. <a href="https://github.com/gadenbuie/tidy-animated-verbs">https://github.com/gadenbuie/tidy-animated-verbs</a>; GitHub.</p>
 </div>
 <div>
 <p>Aho, Ken, DeWayne Derryberry, and Teri Peterson. 2014. “Model Selection for Ecologists: The Worldviews of Aic and Bic.” <em>Ecology</em> 95 (3). Wiley Online Library: 631–36.</p>
 </div>
 <div>
-<p>Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, and Winston Chang. 2018. <em>Rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown" class="uri">https://CRAN.R-project.org/package=rmarkdown</a>.</p>
+<p>Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, and Winston Chang. 2018. <em>Rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.</p>
 </div>
 <div>
 <p>Anderson, Edgar. 1935. “The Irises of the Gaspe Peninsula.” <em>Bulletin of the American Iris Society</em> 59: 2–5.</p>
 </div>
 <div>
-<p>Barton, Kamil. 2018. <em>MuMIn: Multi-Model Inference</em>. <a href="https://CRAN.R-project.org/package=MuMIn" class="uri">https://CRAN.R-project.org/package=MuMIn</a>.</p>
+<p>Barton, Kamil. 2018. <em>MuMIn: Multi-Model Inference</em>. <a href="https://CRAN.R-project.org/package=MuMIn">https://CRAN.R-project.org/package=MuMIn</a>.</p>
 </div>
 <div>
 <p>Henderson, Harold V, and Paul F Velleman. 1981. “Building Multiple Regression Models Interactively.” <em>Biometrics</em>. JSTOR, 391–411.</p>
 </div>
 <div>
-<p>Henry, Lionel, and Hadley Wickham. 2018. <em>Purrr: Functional Programming Tools</em>. <a href="https://CRAN.R-project.org/package=purrr" class="uri">https://CRAN.R-project.org/package=purrr</a>.</p>
+<p>Henry, Lionel, and Hadley Wickham. 2018. <em>Purrr: Functional Programming Tools</em>. <a href="https://CRAN.R-project.org/package=purrr">https://CRAN.R-project.org/package=purrr</a>.</p>
 </div>
 <div>
-<p>Hlavac, Marek. 2018. <em>Stargazer: Well-Formatted Regression and Summary Statistics Tables</em>. Bratislava, Slovakia: Central European Labour Studies Institute (CELSI). <a href="https://CRAN.R-project.org/package=stargazer" class="uri">https://CRAN.R-project.org/package=stargazer</a>.</p>
+<p>Hlavac, Marek. 2018. <em>Stargazer: Well-Formatted Regression and Summary Statistics Tables</em>. Bratislava, Slovakia: Central European Labour Studies Institute (CELSI). <a href="https://CRAN.R-project.org/package=stargazer">https://CRAN.R-project.org/package=stargazer</a>.</p>
 </div>
 <div>
-<p>Kross, Sean, Nick Carchedi, Bill Bauer, and Gina Grdina. 2017. <em>Swirl: Learn R, in R</em>. <a href="https://CRAN.R-project.org/package=swirl" class="uri">https://CRAN.R-project.org/package=swirl</a>.</p>
+<p>Kross, Sean, Nick Carchedi, Bill Bauer, and Gina Grdina. 2017. <em>Swirl: Learn R, in R</em>. <a href="https://CRAN.R-project.org/package=swirl">https://CRAN.R-project.org/package=swirl</a>.</p>
 </div>
 <div>
 <p>Leek, Jeff. 2015. “The Elements of Data Analytic Style.” <em>J. Leek.—Amazon Digital Services, Inc</em>.</p>
@@ -274,37 +301,37 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Potvin, Catherine, Martin J Lechowicz, and Serge Tardif. 1990. “The Statistical Analysis of Ecophysiological Response Curves Obtained from Experiments Involving Repeated Measures.” <em>Ecology</em> 71 (4). Wiley Online Library: 1389–1400.</p>
 </div>
 <div>
-<p>R Core Team. 2018. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
+<p>R Core Team. 2019. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
 </div>
 <div>
-<p>Robinson, David, and Alex Hayes. 2018. <em>Broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom" class="uri">https://CRAN.R-project.org/package=broom</a>.</p>
+<p>Robinson, David, and Alex Hayes. 2018. <em>Broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a>.</p>
 </div>
 <div>
-<p>Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="http://ggplot2.org" class="uri">http://ggplot2.org</a>.</p>
+<p>Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="http://ggplot2.org">http://ggplot2.org</a>.</p>
 </div>
 <div>
-<p>———. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse" class="uri">https://CRAN.R-project.org/package=tidyverse</a>.</p>
+<p>———. 2017. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.</p>
 </div>
 <div>
-<p>———. 2018a. <em>Forcats: Tools for Working with Categorical Variables (Factors)</em>. <a href="https://CRAN.R-project.org/package=forcats" class="uri">https://CRAN.R-project.org/package=forcats</a>.</p>
+<p>———. 2018a. <em>Forcats: Tools for Working with Categorical Variables (Factors)</em>. <a href="https://CRAN.R-project.org/package=forcats">https://CRAN.R-project.org/package=forcats</a>.</p>
 </div>
 <div>
-<p>———. 2018b. <em>Stringr: Simple, Consistent Wrappers for Common String Operations</em>. <a href="https://CRAN.R-project.org/package=stringr" class="uri">https://CRAN.R-project.org/package=stringr</a>.</p>
+<p>———. 2018b. <em>Stringr: Simple, Consistent Wrappers for Common String Operations</em>. <a href="https://CRAN.R-project.org/package=stringr">https://CRAN.R-project.org/package=stringr</a>.</p>
 </div>
 <div>
-<p>Wickham, Hadley, and Lionel Henry. 2018. <em>Tidyr: Easily Tidy Data with ’Spread()’ and ’Gather()’ Functions</em>. <a href="https://CRAN.R-project.org/package=tidyr" class="uri">https://CRAN.R-project.org/package=tidyr</a>.</p>
+<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2019. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.</p>
+</div>
+<div>
+<p>Wickham, Hadley, and Lionel Henry. 2018. <em>Tidyr: Easily Tidy Data with ’Spread()’ and ’Gather()’ Functions</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.</p>
+</div>
+<div>
+<p>Wickham, Hadley, Jim Hester, and Romain Francois. 2017. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a>.</p>
 </div>
 <div>
 <p>Wickham, Hadley, and others. 2014. “Tidy Data.” <em>Journal of Statistical Software</em> 59 (10). Foundation for Open Access Statistics: 1–23.</p>
 </div>
 <div>
-<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2019. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a>.</p>
-</div>
-<div>
-<p>Wickham, Hadley, Jim Hester, and Romain Francois. 2017. <em>Readr: Read Rectangular Text Data</em>. <a href="https://CRAN.R-project.org/package=readr" class="uri">https://CRAN.R-project.org/package=readr</a>.</p>
-</div>
-<div>
-<p>Xie, Yihui. 2015. <em>Dynamic Documents with R and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.name/knitr/" class="uri">http://yihui.name/knitr/</a>.</p>
+<p>Xie, Yihui. 2015. <em>Dynamic Documents with R and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="http://yihui.name/knitr/">http://yihui.name/knitr/</a>.</p>
 </div>
 </div>
 </div>
@@ -319,11 +346,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -331,12 +360,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -348,6 +376,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -364,10 +396,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
