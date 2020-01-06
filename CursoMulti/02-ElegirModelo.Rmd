@@ -4,8 +4,6 @@
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, tidy = TRUE, cache = TRUE)
 library(tidyverse)
 library(MuMIn)
-library(kableExtra)
-options("kableExtra.html.bsTable" = T)
 ```
 
 ## Paquetes necesarios para este capítulo
@@ -27,7 +25,18 @@ Para este capitulo necesitas tener instalado los paquetes *tidyverse* [@R-tidyve
 
 ## ¿Como decidimos que modelo elegimos para explicar mejor un fenomeno?
 
-Partamos con una base de datos, utilizaremos la base de datos de kaggle de expectativa de vida que encontramos en el el siguiente [link](https://www.kaggle.com/kumarajarshi/life-expectancy-who/version/1) [@Rajarshi2018]
+Partamos con una base de datos, utilizaremos la base de datos de kaggle de expectativa de vida que encontramos en el el siguiente [link](https://www.kaggle.com/kumarajarshi/life-expectancy-who/version/1) [@Rajarshi2018], y que he modificado, aquí esta el código para bajar la versión simplificada y modificada por mi:
+
+```{r}
+URL <- download.file("https://github.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/raw/master/CursoMulti/LifeExpect.rds", "LifeExpect.rds")
+
+Life_Expect <- readRDS("LifeExpect.rds")
+```
+
+
+```{r, echo = FALSE}
+rmarkdown::paged_table(head(Life_Expect, 20)) 
+```
 
     
 
