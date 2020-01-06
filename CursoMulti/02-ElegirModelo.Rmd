@@ -38,13 +38,12 @@ Life_Expect <- readRDS("LifeExpect.rds")
 ```{r}
 DT::datatable(Life_Expect, caption = "Expectativa de vida en distintos países en distintos años", 
          extensions = c('FixedColumns',"FixedHeader"),
-          options = list(scrollX = TRUE, 
-                         paging=FALSE,
-                         fixedHeader=TRUE)) 
+          options = list(scrollX = TRUE)) 
 ```
 
     
 
+Las variables que podemos utilizar para crear hipotesis son `r paste(colnames(Life_Expect), collapse = ", ")`
 
 ### Paquete MuMIn
 
