@@ -1,4 +1,6 @@
-# Criterios de Información {#CriteriosInfo}
+# Tipos de modelos multivariados {#CriteriosInfo}
+
+En este capítulo se explicará que es un modelo estadísitco, y como evaluar su capacidad explicativa y/o preditiva. Además, hablaremos de los criterios de información y como estos nos ayudan a tener un balance entre predicción y explicación.
 
 ## Paquetes necesarios para este capítulo
 
@@ -14,9 +16,8 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 ```
 
-En este capítulo se explicará que es un modelo estadísitco, y como evaluar su capacidad explicativa y/o preditiva. Además, hablaremos de los criterios de información y como estos nos ayudan a tener un balance entre predicción y explicación.
 
-## Predecir vs Explicar
+## Modelos explicativos y predictivos
 
 ### Modelos estadísticos
 
