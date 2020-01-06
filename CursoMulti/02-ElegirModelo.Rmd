@@ -4,6 +4,7 @@
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, tidy = TRUE, cache = TRUE)
 library(tidyverse)
 library(MuMIn)
+library(kableExtra)
 ```
 
 ## Paquetes necesarios para este capítulo
@@ -34,8 +35,12 @@ Life_Expect <- readRDS("LifeExpect.rds")
 ```
 
 
-```{r, echo = FALSE}
-rmarkdown::paged_table(head(Life_Expect, 20)) 
+```{r}
+DT::datatable(Life_Expect, caption = "Expectativa de vida en distintos países en distintos años", 
+         extensions = c('FixedColumns',"FixedHeader"),
+          options = list(scrollX = TRUE, 
+                         paging=FALSE,
+                         fixedHeader=TRUE)) 
 ```
 
     
