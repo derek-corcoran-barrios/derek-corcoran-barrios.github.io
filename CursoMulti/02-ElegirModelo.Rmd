@@ -38,7 +38,7 @@ Life_Expect <- readRDS("LifeExpect.rds")
 ```{r}
 DT::datatable(Life_Expect, caption = "Expectativa de vida en distintos países en distintos años", 
          extensions = c('FixedColumns',"FixedHeader"),
-          options = list(scrollX = TRUE)) 
+          options = list(scrollX = TRUE)) %>% DT::formatRound(columns = 1:9) 
 ```
 
     
