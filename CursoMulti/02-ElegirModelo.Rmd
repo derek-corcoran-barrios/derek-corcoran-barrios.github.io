@@ -1,7 +1,7 @@
 # Selección de modelos {#ElegirModelo}
 
 ```{r setupSeleccion, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, tidy = TRUE, cache = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, tidy = TRUE, cache = FALSE)
 library(tidyverse)
 library(MuMIn)
 library(kableExtra)
@@ -28,51 +28,144 @@ Para este capitulo necesitas tener instalado los paquetes *tidyverse* [@R-tidyve
 
 Partamos con una base de datos, utilizaremos la base de datos de kaggle de expectativa de vida que encontramos en el el siguiente [link](https://www.kaggle.com/kumarajarshi/life-expectancy-who/version/1) [@Rajarshi2018], y que he modificado, aquí esta el código para bajar la versión simplificada y modificada por mi:
 
-```{r}
+```{r, eval = FALSE}
 URL <- download.file("https://github.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/raw/master/CursoMulti/LifeExpect.rds", "LifeExpect.rds")
 
 Life_Expect <- readRDS("LifeExpect.rds")
 ```
+```{r, echo = FALSE}
+Life_Expect <- readRDS("LifeExpect.rds")
+```
 
-
-```{r}
+```{r, echo = FALSE}
 DT::datatable(Life_Expect, caption = "Expectativa de vida en distintos países en distintos años", 
          extensions = c('FixedColumns',"FixedHeader"),
           options = list(scrollX = TRUE)) %>% DT::formatRound(columns = 1:9) 
 ```
 
-    
 
-Las variables que podemos utilizar para crear hipotesis son `r paste(colnames(Life_Expect), collapse = ", ")`
+### Generación de hipótesis    
 
-### Paquete MuMIn
+Las variables que podemos utilizar para crear hipotesis son `r paste(colnames(Life_Expect), collapse = ", ")`, podemos ver una esplicación de cada una de estas variables en su descripción en [kaggle](https://www.kaggle.com/kumarajarshi/life-expectancy-who/version/1). 
 
-Multi Moldel Inference
+#### Hipótesis 1: nula negativa
+
+Para partir, estableceremos un modelo nulo negativo, donde la expectativa de vida no es explicada por nada, es decir, no cambia de acuerdo a nunguna de nuestras variables:
 
 ```{r}
-data("mtcars")
-
-fit1 <- glm(mpg ~ carb + cyl, data = mtcars)
-fit2 <- glm(mpg ~cyl + wt, data = mtcars)
-fit3 <- glm(mpg ~am + qsec + wt, data = mtcars)
-fit4 <- glm(mpg ~carb + cyl + wt, data = mtcars)
-fit5 <- glm(mpg ~am + carb + cyl + qsec + wt, data = mtcars)
-fit6 <- glm(mpg ~am + carb + cyl + hp + qsec, data = mtcars)
-
-models <- list(fit1, fit2, fit3, fit4, fit5, fit6)
+fit1 <- lm(Life.expectancy ~ 1, data=Life_Expect)
 ```
 
-### Paquete MuMIn (model.sel)
+#### Hipótesis 2: nula positiva
+
+Luego partiremos con un modelo en el cual solo el país y el paso del tiempo explican el cambio en la espectativa de vida, so vemos en la Figura \@ref(fig:ByCountry), cada país parece tener una historia bastante consistente, donde por lo general en cada uno, la espectativa de vida parece aumentar en el tiempo. 
+
+```{r ByCountry, echo=FALSE, fig.cap="Expectativa de vida por año y país, cada linea de color representa un país distinto"}
+A <-ggplot(Life_Expect, aes(x = Year, y = Life.expectancy), group = Country) + geom_path(aes(color=Country)) + theme_classic() + theme(legend.position = "none")
+
+plotly::ggplotly(A)
+```
+
+Esto lo usaremos como un modelo nulo positivo, esto es, la espectativa cambia con el paso del tiempo en cada país independiente de las desiciones y políticas públicas que tomen. Esto es, no importa cuanto del Producto Interno Bruto se invierta en salud, ni cuanta educación haya en el país, esto no afectará en la expectativa de vida:
+
+```{r}
+fit2 <- lm(Life.expectancy ~ Year + Country, data=Life_Expect)
+```
+
+Todas las hipóteses siguientes tomarán este modelo de base y agregaremos variables para hipótesis específicas
+
+#### Hipótesis 3: económica
+
+En este caso tomaremos solo las variables económicas, esto es `percentage.expenditure` que es el gasto en saludo, como porcentaje de PIB per cápita; `Total.expenditure` Gasto general del gobierno en saludo como porcentaje del gasto total del gobierno y `GDP` que es El producto Interno Bruto por persona en dolares.
+
+```{r}
+fit3 <- lm(Life.expectancy ~ percentage.expenditure + Total.expenditure + GDP + Year + Country, data=Life_Expect)
+```
+
+Lo que estamos suponiendo en este modelo es que la administración económica del gobierno es lo que mejor explica la expectativa de vida
+
+#### Hipótesis 4: educativa
+
+En esta hipótesis asumimos que la educación del país es lo que nos lleva a tener una mayor expectativa de vida. Para esto usamos la variable `Schooling` que es el número de años de escolaridad promedio en el país. 
+
+```{r}
+fit4 <- lm(Life.expectancy ~ Schooling + Year + Country, data=Life_Expect)
+```
+
+
+#### Hipótesis 5: educativa y económica
+
+En esta hipótesis decimos que no es la educación ni la economía por si solas las que explican la expectativa, sinó que ambas en conjunto
+
+```{r}
+fit5 <- lm(Life.expectancy ~ percentage.expenditure + Total.expenditure + GDP + Schooling + Year + Country, data=Life_Expect)
+```
+
+Para continuar debemos hacer una lista con todos los modelos e hipotesis a testear
+
+```{r}
+models <- list(fit1, fit2, fit3, fit4, fit5)
+```
+
+
+### Selección de modelos
+
+La selección de modelos la realizaremos en base a su valor de `AICc` utilizando la función `model.sel` del paquete `MuMIn`, para esto solo debemos dentro de la función poner como argumento la lista de modelos que creamos en la sección anterior.
 
 ```{r}
 Select <- model.sel(models)
 ```
 
-```{r, echo = FALSE}
-as.data.frame(Select) %>%  mutate(weight = as.numeric(weight)) %>% kable(digits = 2) %>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```{r AicTab, echo = FALSE}
+as.data.frame(Select) %>%  mutate(weight = as.numeric(weight)) %>%DT::datatable(caption = "Modelos ordenados por su valor de AICc, con la estimación de cada parámetro, el Delta AICc y el peso de Akaike", 
+         extensions = c('FixedColumns',"FixedHeader"),
+          options = list(scrollX = TRUE)) %>% DT::formatRound(columns = c(1,3:13), digits = 3)
 ```
 
-* ¿Que modelos seleccionamos?
+Como comentamos en el Capítulo \@ref(CriteriosInfo), a menor valor de `AICc`, mejor el modelo, como vemos en la tabla anterior. Como vemos según esto, el mejor modelo de acuerdo a nuestras hipótesis es el modelo educativo, seguido del educativo mas económica, un poco mas abajo encontramos la hipotesis nula positiva, es decir, solo país y año, el cuarto modelo es el modelo economico y finalmente con mucha diferencia el modelo nulo educativo, en este momento puedo seleccionar modelos bajo varios criterios
+
+#### Delta AICc
+
+Este es el método mas habitual, lo más típico es quedarse con los modelos que tienen un $\Delta AICc$ de máximo dos [@anderson2004model], en este caso solo hay uno con esas carácteristicas, que es el modelo educativo, el segundo (el más complejo) tiene un $\Delta AICc$ de 2.789, y por eso siguiendo esta metodología nos quedamos con el primero, el mejor modelo. Para hacer esto programáticamente usando `MuMIn`, seguimos los siguientes pasos:
+
+Primero generamos la tabla con $\Delta AICc$ de 2:
+
+```{r}
+Selected <- subset(Select, delta < 2)
+```
+
+Lo cual nos dá la siguiente tabla:
+
+```{r, echo = FALSE}
+as.data.frame(Selected) %>%  mutate(weight = as.numeric(weight))%>%
+  map(~.x) %>%
+  discard(~all(is.na(.x))) %>%
+  map_df(~.x) %>%DT::datatable(caption = "Modelos con un Delta AICc de máximo 2", 
+         extensions = c('FixedColumns',"FixedHeader"),
+          options = list(scrollX = TRUE)) %>% DT::formatRound(columns = c(1,3:13), digits = 3)
+```
+
+Y luego con el siguiente código seleccionamos el mejor modelo y podemos ver sus carácteristicas y parametros usando las funciones `glance` y `tidy` de `broom`:
+
+```{r, eval=F}
+BestModel <- get.models(Select, 1)[[1]]
+broom::glance(BestModel)
+broom::tidy(BestModel)
+```
+
+```{r, echo=F}
+BestModel <- get.models(Select, 1)[[1]]
+broom::glance(BestModel) %>%DT::datatable(caption = "Carácteristicas del mejor modelo obtenidas con la función glance, incluyendo R cuadrado", 
+         extensions = c('FixedColumns',"FixedHeader"),
+          options = list(scrollX = TRUE)) %>% DT::formatRound(columns = c(1:13), digits = 2)
+```
+
+```{r, echo=F}
+BestModel <- get.models(Select, 1)[[1]]
+broom::tidy(BestModel) %>%DT::datatable(caption = "Parametros del modelo obtenidos con la función glance, incluyendo el estimador y valor de p para cada uno", 
+         extensions = c('FixedColumns',"FixedHeader"),
+          options = list(scrollX = TRUE)) %>% DT::formatRound(columns = c(2:13), digits = 3)
+```
 
 ### ¿Pesos de Akaike?
 
@@ -81,16 +174,18 @@ as.data.frame(Select) %>%  mutate(weight = as.numeric(weight)) %>% kable(digits 
 * Dependen del número de modelos
 
 ```{r}
-Selected <- subset(Select, delta <= 2)
+Selected <- subset(Select, cumsum(weight) <= 0.95)
 ```
 
 ```{r, echo = FALSE}
-as.data.frame(Selected) %>%  mutate(weight = as.numeric(weight)) %>% kable(digits = 2) %>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+as.data.frame(Selected) %>%  mutate(weight = as.numeric(weight))%>%
+  map(~.x) %>%
+  discard(~all(is.na(.x))) %>%
+  map_df(~.x) %>%DT::datatable(caption = "Expectativa de vida en distintos países en distintos años", 
+         extensions = c('FixedColumns',"FixedHeader"),
+          options = list(scrollX = TRUE)) %>% DT::formatRound(columns = c(1,3:13), digits = 3)
 ```
 
-```{r, echo = FALSE}
-as.data.frame(Select[1:2,]) %>%  mutate(weight = as.numeric(weight)) %>% kable(digits = 2) %>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
-```
 
 ### ¿Hemos seleccionado 3 modelos ahora que?
 
@@ -105,7 +200,6 @@ broom::glance(BestModel)
 BestModel <- get.models(Select, 1)[[1]]
 broom::glance(BestModel) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
 ```
-
 
 ### Mejor modelo
 
@@ -127,12 +221,12 @@ broom::tidy(BestModel) %>% kable(digits = 2) %>%   kable_styling(bootstrap_optio
 * Trabajemos con el numero de cilindros
 
 ```{r}
-S <- as.data.frame(Selected)
-S <- as.data.frame(Selected) %>% select(cyl, weight)
+#S <- as.data.frame(Selected)
+#S <- as.data.frame(Selected) %>% select(cyl, weight)
 ```
 
 ```{r, echo = FALSE}
-S %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+#S %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
 ```
 
 * Dos métodos **full** y **subset**
@@ -142,21 +236,21 @@ S %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "ho
 $$\hat{\theta} = \sum_{i=1}^R w_i \times \theta_i$$
 
 ```{r}
-S_full <- S
-S_full$cyl <- ifelse(is.na(S_full$cyl), 0, S_full$cyl)
-S_full <- S_full %>% mutate(Theta_i = cyl*weight)
+#S_full <- S
+#S_full$cyl <- ifelse(is.na(S_full$cyl), 0, S_full$cyl)
+#S_full <- S_full %>% mutate(Theta_i = cyl*weight)
 ```
 
 ```{r, echo=F}
-S_full %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+#S_full %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
 ```
 
 ```{r}
-Cyl_hat <- sum(S_full$Theta_i)
+#Cyl_hat <- sum(S_full$Theta_i)
 ```
 
 ```{r, echo=F}
-Cyl_hat
+#Cyl_hat
 ```
 
 
@@ -165,36 +259,36 @@ Cyl_hat
 $$\hat{\theta} =  \frac{\sum_{i=1}^Rw_i \times \theta_i}{\sum_{i=1}^Rw_i}$$
 
 ```{r}
-S_sub <- S %>% filter(!is.na(cyl))
+#S_sub <- S %>% filter(!is.na(cyl))
 
-S_sub <- S_sub %>% mutate(Theta_i = cyl*weight)
+#S_sub <- S_sub %>% mutate(Theta_i = cyl*weight)
 ```
 
 ```{r, echo=F}
-S_sub %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+#S_sub %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
 ```
 
 ```{r}
-Cyl_hat <- sum(S_sub$Theta_i)/sum(S_sub$weight)
+#Cyl_hat <- sum(S_sub$Theta_i)/sum(S_sub$weight)
 ```
 
 ```{r, echo=F}
-Cyl_hat
+#Cyl_hat
 ```
 
 
 ### MuMIn
 
 ```{r}
-AverageModel  <- model.avg(Select, subset = delta < 2, fit = T)
+#AverageModel  <- model.avg(Select, subset = delta < 2, fit = T)
 ```
 
 ```{r, eval = FALSE}
-AverageModel$coefficients
+#AverageModel$coefficients
 ```
 
 ```{r, echo = FALSE}
-as.data.frame(AverageModel$coefficients) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+#as.data.frame(AverageModel$coefficients) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
 ```
 
 ```{r, eval = FALSE}
