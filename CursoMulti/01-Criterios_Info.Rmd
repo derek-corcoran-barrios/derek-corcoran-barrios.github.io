@@ -1,4 +1,4 @@
-# Tipos de modelos multivariados {#CriteriosInfo}
+# Tipos de modelos: Predictivos vs Explicativos {#CriteriosInfo}
 
 En este capítulo se explicará que es un modelo estadísitco, y como evaluar su capacidad explicativa y/o preditiva. Además, hablaremos de los criterios de información y como estos nos ayudan a tener un balance entre predicción y explicación.
 
@@ -16,6 +16,10 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 ```
 
+
+### Presentación html
+
+Puedes seguir la clase de los videos en el siguiente [link](https://derek-corcoran-barrios.github.io/CursoMultiPres/Capitulo_1/Capitulo_1.html)
 
 ## Modelos explicativos y predictivos
 
@@ -120,7 +124,9 @@ kable(Test %>% dplyr::select(hp, mpg,  Pred) %>% mutate(resid = Pred - mpg), cap
 ggplot(Test, aes(x = hp, y = mpg)) + geom_point() + geom_line(aes(y = Pred), color = "red", lty = 2) + theme_classic()
 ```
 
-#### Que pasa al complejizar el modelo
+## Sobreajuste
+
+### Que pasa al complejizar el modelo
 
 El modelo que evaluamos tenia un terminlo lineal $\beta_1 hp$ y uno cuadrático $\beta_2 hp^2$, pero el poder tanto explicativo como predictivo podría mejorar o empeorar si agregamos un termino cúbico $\beta_3 hp^3$ o uno elevado a la cuarta $\beta_4 hp^4$, ¿Que ocurre con el poder explicativo y/o el predictivo cuando aumentamos la complejidad del modelo?
 
@@ -134,7 +140,7 @@ Al observar como se comporta el poder explicativo, vemos que aumenta siempre que
 knitr::include_graphics("Explicativo.gif")
 ```
 
-## Sobreajuste
+### Sobreajuste
 
 El sobreajute ocurre cuando por aumentar el ajuste de un modelo ($R^2$ por ejemplo), generamos un modelo tan complejo, que practicamente no tiene error con la base de datos que lo entrenamos, sin embargo, al probarlo con una nueva base de datos, vemos que el modelo es muy malo para predecir sobre una nueva base de datos, esto es el modelo se ha vuelto idiosincrático, y creemos que es un buen modelo, pero solo para los datos que usamos para el modelo mismo. Esto podemos verlo en la figura \@ref(fig:SobreAjuste), en esta vemos como en el gráfico de la izquierda, a medida que aumentamos el número de parametros, siempre aumenta nuestro $R^2$, en el gráfico de la derecha sin embargo, vemos que desde los 6 parametros en adelante, el modelo es peor en su predicción que sobre la base de datos original, y ya cuando tenemos 8 parametros, la diferencia es muy alta, con un $R^2$ de 0.83 para la base de datos original, y 0.3 para la base de datos de prueba, en ese momento, el modelo ya esta sobreajustado.
 
