@@ -21,6 +21,8 @@ options("kableExtra.html.bsTable" = T)
 
 ## Modelos estadísticos {.build}
 
+* Simplificación numérica de la realidad
+* Todos los modelos están equivocados, algunos son útiles
 * Modelo no determinista que utiliza una muestra de una población para intentar determinar patrones de esta población. 
     + ANOVA 
     + regresión lineal
@@ -29,7 +31,51 @@ options("kableExtra.html.bsTable" = T)
 * Poder explivativo ($R^2$)
 * Poder Predictivo ($R^2$, en una nueva base de datos)
 
-## Ejemplo
+## Ejemplo 1 Altura y sexo
+
+```{r, echo=FALSE, fig.width=6, fig.height=4}
+library(dslabs)
+data("heights")
+
+heights <- heights %>% mutate(height = (height*2.54))
+
+ggplot(heights, aes(x = sex, y = height)) + geom_boxplot() + geom_jitter(aes(color = sex)) + theme_bw()
+```
+
+```{r, echo=FALSE}
+aov(height ~ sex, data = heights) %>% broom::glance() %>%  dplyr::select(r.squared, p.value, df) %>% kable(digits = 2)  %>% kable_styling(bootstrap_options = c("striped"), full_width = F)
+```
+
+## Ejemplo 1 Altura y sexo
+
+```{r}
+aov(height ~ sex, data = heights) %>% broom::augment() %>%  dplyr::select(height, sex, .fitted, .resid) %>% rename(Prediccion = .fitted, Diferencia = .resid) %>% kable(digits = 2)  %>% kable_styling(bootstrap_options = c("striped"), full_width = F) %>%  scroll_box(width = "800px", height = "400px")
+```
+
+
+## Ejemplo 2 temperautra explicada por fecha
+
+```{r, echo = FALSE}
+Temp <- read_rds("TempHum.rds")
+
+Temp <- Temp %>% dplyr::filter(Ciudad_localidad == "Concepción") %>% mutate(Mes = as.numeric(Mes), mes = case_when(Mes == 1 ~ "Enero", Mes == 2 ~ "Febrero", Mes == 3 ~ "Marzo",Mes == 4 ~ "Abril", Mes == 5 ~ "Mayo", Mes == 6 ~ "Junio", Mes == 7 ~ "Julio", Mes == 8 ~ "Agosto", Mes == 9 ~ "Septiembre",Mes == 10 ~ "Octubre", Mes == 11 ~ "Noviembre", Mes == 12 ~ "Diciembre"), mes = fct_reorder(mes, Mes))
+
+
+Model <- lm(Temperatura ~ Mes + I(Mes^2), data = Temp)
+Temp$Pred <- predict(Model, Temp)
+
+ggplot(Temp, aes(x = Mes, y = Temperatura)) + geom_point() + theme_bw() + scale_x_continuous(labels = unique(Temp$mes)[seq(2, 12, by = 2)], breaks = seq(2, 12, by = 2), guide = guide_axis(check.overlap = TRUE)) + ggtitle("Temperatura Concepción")
+
+```
+
+## Ejemplo 2 temperautra explicada por fecha
+
+```{r, echo = FALSE}
+ggplot(Temp, aes(x = Mes, y = Temperatura)) + geom_point() + geom_line(aes(y = Pred), color = "red") + theme_bw() + scale_x_continuous(labels = unique(Temp$mes)[seq(2, 12, by = 2)], breaks = seq(2, 12, by = 2), guide = guide_axis(check.overlap = TRUE)) + ggtitle("Temperatura Concepción")
+```
+
+
+## Ejemplo 3
 
 ¿Podemos explicar o predecir la eficiencia de combustible (*mpg*) a partir de los caballos de fuerza (*hp*) de un Vehículo?
 
@@ -145,7 +191,7 @@ knitr::include_graphics("Predictivo.gif")
 
 ##  ¿Cuando me puede interesar el maximizar el poder predictivo? {.build}
 
-
+* Predicción de casos de COVID19
 * Texto predictivo del celular
 * Auto-corrector
 * Efectos de cambio climático
@@ -153,6 +199,13 @@ knitr::include_graphics("Predictivo.gif")
 * Eficiencia de medidas ante epidemias
 * Maximizar metrica en base de prueba (*Test*)
 * Machine learning
+
+##  ¿Cuando me puede interesar el maximizar el poder predictivo?
+
+```{r,dpi=60, echo=F}
+knitr::include_graphics("COVID.png")
+```
+
 
 
 ##  ¿Cuando me puede interesar el maximizar el poder explicativo?
@@ -243,6 +296,7 @@ Para eso genera un data frame con las siguientes columnas:
 * $R^2$ Predictivo
 * Id modelo
 
+# Solución 1
 
 ## Resolviendo el Ejercicio
 
@@ -291,6 +345,8 @@ DF <- DF %>% select(-Model)
 kable(DF)  %>% kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
+# Solución 2
+
 ## Resolviendo el Ejercicio para una lista de modelos {.build}
 
 * Generamos el data.frame a ser llenado
@@ -330,6 +386,8 @@ DF <- DF %>% select(-Model)
 ```{r tidy=TRUE, echo = FALSE}
 kable(DF)  %>% kable_styling(bootstrap_options = c("striped", "hover"))
 ```
+
+# Solución 3
 
 ## Para todos los modelos
 
