@@ -1,0 +1,305 @@
+---
+title: "Clase 2 Promediar modelos o elejir el mejor?"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, tidy = TRUE, cache = TRUE)
+library(tidyverse)
+library(MuMIn)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+# ¿Como decidimos que modelo elegimos para explicar mejor un fenomeno?
+
+## Que es lo que no nos permite la inferencia multimodelo {.build}
+
+* Arreglar un estudio mal diseñado
+* Predecir en base a variables no relacionadas
+* Darnos una receta
+
+## Para que nos sirve la inferencia multimodelo {.build}
+
+* Seleccionar el o los modelos **más parsimoniosos** entre varios en competencia
+    + No el que predice más
+* Nos entrega estrategia para seleccionar modelos
+    
+## Que necesitamos para realizar inferencia multimodelo {.build}
+
+* Buen diseño de muestreo/experimental
+* Generación cuidadosa de hipótesis
+* Selección adecuada de variables para distinguir entre hipótesis
+
+
+## Paquete MuMIn
+
+Multi Moldel Inference
+
+```{r}
+data("mtcars")
+
+fit1 <- lm(mpg ~ carb + cyl, data = mtcars)
+fit2 <- lm(mpg ~cyl + wt, data = mtcars)
+fit3 <- lm(mpg ~am + qsec + wt, data = mtcars)
+fit4 <- lm(mpg ~carb + cyl + wt, data = mtcars)
+fit5 <- lm(mpg ~am + carb + cyl + qsec + wt, data = mtcars)
+fit6 <- lm(mpg ~am + carb + cyl + hp + qsec, data = mtcars)
+
+models <- list(fit1, fit2, fit3, fit4, fit5, fit6)
+```
+
+## Paquete MuMIn (model.sel)
+
+```{r}
+Select <- model.sel(models)
+```
+
+```{r, echo = FALSE}
+as.data.frame(Select) %>%  mutate(weight = as.numeric(weight)) %>% kable(digits = 2) %>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+* ¿Que modelos seleccionamos?
+
+## ¿Pesos de Akaike? {.build}
+
+* Suman uno
+* A mayor peso, mejor modelo
+* Dependen del número de modelos
+
+```{r}
+Selected <- subset(Select, delta <= 2)
+```
+
+```{r, echo = FALSE}
+as.data.frame(Selected) %>%  mutate(weight = as.numeric(weight)) %>% kable(digits = 2) %>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+```{r, echo = FALSE}
+as.data.frame(Select[1:2,]) %>%  mutate(weight = as.numeric(weight)) %>% kable(digits = 2) %>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+## ¿Hemos seleccionado 3 modelos ahora que? {.build .small}
+
+* Seleccionar el mejor modelo
+
+```{r, eval=F}
+BestModel <- get.models(Select, 1)[[1]]
+broom::glance(BestModel)
+```
+
+```{r, echo=F}
+BestModel <- get.models(Select, 1)[[1]]
+broom::glance(BestModel) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+
+## Mejor modelo {.build}
+
+```{r, eval=F}
+broom::tidy(BestModel)
+```
+
+```{r, echo = F}
+broom::tidy(BestModel) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+* ¿p no es significativo?
+    + ¡¡¡¡No importa!!!!
+
+# Promediar modelos
+
+## Promediar modelos usando MuMIn {.build}
+
+* Trabajemos con el numero de cilindros
+
+```{r}
+S <- as.data.frame(Selected)
+S <- as.data.frame(Selected) %>% select(cyl, weight)
+```
+
+```{r, echo = FALSE}
+S %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+* Dos métodos **full** y **subset**
+
+## Metodo full {.build}
+
+$$\hat{\theta} = \sum_{i=1}^R w_i \times \theta_i$$
+
+```{r}
+S_full <- S
+S_full$cyl <- ifelse(is.na(S_full$cyl), 0, S_full$cyl)
+S_full <- S_full %>% mutate(Theta_i = cyl*weight)
+```
+
+```{r, echo=F}
+S_full %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+```{r}
+Cyl_hat <- sum(S_full$Theta_i)
+```
+
+```{r, echo=F}
+Cyl_hat
+```
+
+
+## Método subset {.build}
+
+$$\hat{\theta} =  \frac{\sum_{i=1}^Rw_i \times \theta_i}{\sum_{i=1}^Rw_i}$$
+
+```{r}
+S_sub <- S %>% filter(!is.na(cyl))
+
+S_sub <- S_sub %>% mutate(Theta_i = cyl*weight)
+```
+
+```{r, echo=F}
+S_sub %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+```{r}
+Cyl_hat <- sum(S_sub$Theta_i)/sum(S_sub$weight)
+```
+
+```{r, echo=F}
+Cyl_hat
+```
+
+
+## MuMIn
+
+```{r}
+AverageModel  <- model.avg(Select, subset = delta < 2, fit = T)
+```
+
+```{r, eval = FALSE}
+AverageModel$coefficients
+```
+
+```{r, echo = FALSE}
+as.data.frame(AverageModel$coefficients) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+
+## Comparemos modelos
+
+```{r, echo=FALSE}
+DF <- data.frame(am = rep(c(0,1), each = 30), qsec = rep(mean(mtcars$qsec), 60), wt = rep(seq(from = min(mtcars$wt), to = max(mtcars$wt), length.out = 30),2), cyl= rep(median(mtcars$cyl), 60), carb= rep(median(mtcars$carb), 60))
+
+DF2 <- DF %>% mutate(best = predict(BestModel, DF), Full = predict(AverageModel, DF, full = T), Subset = predict(AverageModel, DF, full = F)) %>% select(am, wt, best, Full, Subset) %>% mutate(am = case_when(am == 0 ~ "Automatico",am == 1 ~ "Manual")) %>% gather(key = Tipo, value = Pred, -am, -wt)
+
+ggplot(DF2, aes(x = wt, y = Pred)) + geom_line(aes(color= Tipo, lty = am)) + theme_classic()
+```
+
+## Comparemos modelos (cont.)
+
+```{r, echo=FALSE}
+DF <- data.frame(am = rep(c(0,1), each = 30), wt = rep(mean(mtcars$wt), 60), qsec = rep(seq(from = min(mtcars$qsec), to = max(mtcars$qsec), length.out = 30),2), cyl= rep(median(mtcars$cyl), 60), carb= rep(median(mtcars$carb), 60))
+
+DF3 <- DF %>% mutate(best = predict(BestModel, DF), Full = predict(AverageModel, DF, full = T), Subset = predict(AverageModel, DF, full = F)) %>% select(am, qsec, best, Full, Subset) %>% mutate(am = case_when(am == 0 ~ "Automatico",am == 1 ~ "Manual")) %>% gather(key = Tipo, value = Pred, -am, -qsec)
+
+ggplot(DF3, aes(x = qsec, y = Pred)) + geom_line(aes(color= Tipo, lty = am)) + theme_classic()
+```
+
+# Multicolinearidad
+
+## Presión arterial y multicolinearidad
+
+```{r, echo = TRUE}
+library(readr)
+bloodpress <- read_delim("https://online.stat.psu.edu/onlinecourses/sites/stat501/files/data/bloodpress.txt",   "\t", escape_double = FALSE, col_types = cols(Pt = col_skip()), 
+trim_ws = TRUE)
+```
+
+```{r, echo=F}
+kable(bloodpress, digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+## Presión arterial y multicolinearidad (Cont)
+
+```{r, echo = F}
+library(corrr)
+Vars <- bloodpress %>% dplyr::select(-BP)
+
+d <- correlate(Vars, quiet = TRUE)
+
+
+d  %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+## Presión arterial y multiolinearidad (Cont)
+
+```{r, echo = FALSE}
+bloodpress %>% dplyr::select(BP, BSA, Weight) %>% pivot_longer(cols = c(BSA, Weight), names_to = "Variable", values_to = "Medida") %>% ggplot(aes(x = Medida, y = BP)) + geom_smooth(aes(fill = Variable, color = Variable),method = "lm", alpha = 0.5) + geom_point(aes(color = Variable)) + theme_bw() + facet_wrap(~Variable, scales = "free_x")
+```
+
+## Presión arterial y multicolinearidad (Cont)
+
+```{r}
+Model1 <- lm(BP ~ BSA, data = bloodpress)
+```
+
+```{r, echo=F}
+broom::tidy(Model1) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+
+## Presión arterial y multicolinearidad (Cont)
+
+```{r}
+Model2 <- lm(BP ~ Weight, data = bloodpress)
+```
+
+```{r, echo=F}
+broom::tidy(Model2) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+## Presión arterial y multicolinearidad (Cont)
+
+```{r}
+Model3 <- lm(BP ~ BSA + Weight, data = bloodpress)
+```
+
+```{r, echo=F}
+broom::tidy(Model3) %>% kable(digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+
+## Presión arterial y multicolinearidad (Cont)
+
+```{r, echo = FALSE}
+model <- lm(BP ~ Age + Weight + BSA + Dur + Pulse + Stress, data = bloodpress)
+
+options(na.action = "na.fail")
+
+dd <- dredge(model)
+
+subset(dd, delta < 2) %>% mutate(weight = as.numeric(weight)) %>% kable(digits = 4) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F) 
+```
+
+
+## Presión arterial y multicolinearidad (Cont)
+
+
+```{r, echo=F}
+(dd %>% model.avg())$coefficients %>% as.data.frame() %>% kable(digits = 4) %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+## Todos vs Delta 2
+
+```{r, echo=F}
+(dd %>% model.avg(fit = T))$coefficients %>% as.data.frame() %>% kable(digits = 4, caption = "Todos los modelos") %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
+
+```{r, echo=F}
+(dd %>% model.avg(subset = delta < 2, fit = T))$coefficients %>% as.data.frame() %>% kable(digits = 4, caption = "Delta 2") %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F, font_size = 20)
+```
