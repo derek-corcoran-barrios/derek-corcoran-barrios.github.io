@@ -11,6 +11,14 @@ library(kableExtra)
 
 Para este capitulo necesitas tener instalado los paquetes *tidyverse* [@R-tidyverse], *broom*  [@R-broom] y *MuMIn*  [@R-MuMIn]
 
+### Presentación html
+
+Puedes seguir la clase de los videos en el siguiente [link](https://derek-corcoran-barrios.github.io/CursoMultiPres/Capitulo_2/Capitulo_2.html)
+
+y ver la clase en vivo desde las 20:30 horas el día martes 5 de Mayo del 2020 a continuación
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ZG9Z8l7ueZM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Alcance de la inferencia multimodelo
 
   La inferencia Multimodelo [@anderson2004model] es un campo teórico de la estadística que nos perminte tomar decisiones equilibrando el poder predictivo y explicativo de multiples modelos en competencia, y nos da un marco de acción para seleccionar entre distintos modelos, dentro de esto, seleccionar el o los modelos *más parsimoniosos* entre varios en competencia, no el que predice más

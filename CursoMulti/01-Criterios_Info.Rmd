@@ -21,6 +21,10 @@ opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 
 Puedes seguir la clase de los videos en el siguiente [link](https://derek-corcoran-barrios.github.io/CursoMultiPres/Capitulo_1/Capitulo_1.html)
 
+y ver la clase nuevamente en el sigueinte video
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/SLbgiN5HVyg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Modelos explicativos y predictivos
 
 ### Modelos estadísticos
