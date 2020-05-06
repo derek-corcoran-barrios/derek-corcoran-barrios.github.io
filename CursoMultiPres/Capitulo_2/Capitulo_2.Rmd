@@ -1,5 +1,5 @@
 ---
-title: "Clase 2 Promediar modelos o elejir el mejor?"
+title: "Clase 2 Promediar modelos o elegir el mejor?"
 author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
