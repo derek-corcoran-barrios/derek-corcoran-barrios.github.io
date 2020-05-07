@@ -209,6 +209,17 @@ knitr::include_graphics("Distributions.jpeg", dpi = 170)
 
  $$\frac{1}{y} = \beta_1X_1 + C_0$$
 
+## Como se ve el link?
+
+```{r, echo = F}
+x = ChickWeight$weight %>% unique() %>% sort()
+link = data.frame(Valor = x, Inverso = 1/x)
+link2 <- link %>% gather(key = link, value = transformacion, -Valor)
+ggplot(link2, aes(x = Valor, y = transformacion)) + geom_line(aes(color = link)) + geom_point(aes(color = link)) + theme_classic()
+```
+
+
+
 ## Modelo Gamma
 
 ```{r}
@@ -226,13 +237,14 @@ ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pre
 ```
 
 
-## Calculemos 
-
-* Nuevos datos
+## Parámetros
 
 ```{r,echo = FALSE}
-tidy(fit2g) %>% kable(digits = 2)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+tidy(fit2g) %>% kable(digits = 5)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
+
+## Calculemos
+$$\small Weight = \frac{1}{eq}$$
 
 ```{r, echo=F}
 D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
@@ -240,18 +252,14 @@ kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size 
 ```
 
 
-## Modelo lineal generalizado
-
-* Son los residuales normales?
-
-```{r, echo = F}
-hist(DF$Resid)
-```
-
-## Es la varianza constante?
 
 ```{r}
-ggplot(DF, aes(x = Pred, y = Resid)) + geom_point() + theme_classic() + geom_hline(yintercept = 0, lty = 2, color = "red")
+1/((-0.00058*3) + 0.01711)
+```
+
+
+```{r}
+1/((-0.00058*4) +  (-0.00009*4) + 0.01711)
 ```
 
 ## Modelo lineal generalizado
@@ -261,6 +269,16 @@ ggplot(DF, aes(x = Pred, y = Resid)) + geom_point() + theme_classic() + geom_hli
     + respuesta (link = log)
 
  $$\log{y} = \beta_1X_1 + C_0$$
+
+## Link
+
+```{r, echo = F}
+x = ChickWeight$weight %>% unique() %>% sort()
+link = data.frame(Valor = x, log = log(x))
+link2 <- link %>% gather(key = link, value = transformacion, -Valor)
+ggplot(link2, aes(x = Valor, y = transformacion)) + geom_line(aes(color = link)) + geom_point(aes(color = link)) + theme_classic()
+```
+
 
 ## Modelo Poisson
 
@@ -279,13 +297,15 @@ ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pre
 ```
 
 
-## Calculemos 
-
-* Nuevos datos
+## Parametros 
 
 ```{r,echo = FALSE}
-tidy(fit2p) %>% kable(digits = 2)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+tidy(fit2p) %>% kable(digits = 3)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
+
+## Calculemos
+
+$$Weight = e^{eq}$$
 
 ```{r, echo=F}
 D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
@@ -293,23 +313,13 @@ kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size 
 ```
 
 
-## Modelo lineal generalizado
-
-* Son los residuales normales?
-
 ```{r}
-
-hist(DF$Resid)
+exp((0.066*3) + 3.859)
 ```
 
-## Es la varianza constante?
-
 ```{r}
-ggplot(DF, aes(x = Pred, y = Resid)) + geom_point() + theme_classic() + geom_hline(yintercept = 0, lty = 2, color = "red")
+exp((0.066*4) + (0.017*4) + 3.859)
 ```
-
-
-
 
 ## Modelo lineal generalizado {.build}
 
@@ -329,8 +339,15 @@ knitr::kable(train, digits = 3) %>% kable_styling(bootstrap_options = c("striped
     + respuesta (link = logit)
 
  $$log{\frac{p}{1-p}} = \beta_1X_1 + C_0$$
+ 
+## Link
 
-
+```{r, echo= F}
+x = train$Survived %>% unique() %>% sort()
+link = data.frame(Valor = x, logit = x/(1-x))
+link2 <- link %>% gather(key = link, value = transformacion, -Valor)
+ggplot(link2, aes(x = Valor, y = transformacion)) + geom_line(aes(color = link)) + geom_point(aes(color = link)) + theme_classic()
+```
 
 ## Modelo lineal generalizado (familia: binomial)
 
@@ -388,8 +405,6 @@ knitr::kable(broom::tidy(FitBin2), digits = 2) %>% kable_styling(bootstrap_optio
 knitr::kable(broom::glance(FitBin2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover")) 
 ```
 
-$R^2$: `r DescTools::PseudoR2(FitBin2, "Nagelkerke")`
-
 ## Modelo lineal generalizado (familia: binomial)
 
 ```{r, results="asis", cache = TRUE}
@@ -433,12 +448,13 @@ knitr::kable(link) %>% kable_styling(bootstrap_options = c("striped", "hover"), 
 
 ```{r, echo=FALSE}
 x = seq(from = -4, to = 4, by = 0.2)
+x2 <- seq(from = 0.1, to = 1, length.out = 12)
+
+x <- c(x, x2) %>% unique()
 link = data.frame(Valor = x, Identidad = x, Inverso = 1/x, Log = log(x), logit = log(x/(1-x)))
 link2 <- link %>% gather(key = link, value = transformacion, -Valor)
-ggplot(link2, aes(x = Valor, y = transformacion)) + geom_line(aes(color = link)) + geom_point(aes(color = link)) + theme_classic() + geom_vline(xintercept = c(0,1), lty = 2 , color = "red")
+
+g <- ggplot(link2, aes(x = Valor, y = transformacion)) + geom_line(aes(color = link)) + geom_point(aes(color = link)) + theme_classic() + geom_vline(xintercept = c(0,1), lty = 2 , color = "red")
+
+plotly::ggplotly(g)
 ```
-
-## Ajuste
-
-Pseudo $R^2$
-
