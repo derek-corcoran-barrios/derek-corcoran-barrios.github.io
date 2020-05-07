@@ -47,19 +47,37 @@ DF$SE <- predict(fit1, DF, se.fit = T)$se.fit
 ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet)) + theme_classic()
 ```
 
-## Calculemos
+## Parametros {.build}
 
 ```{r, echo = FALSE}
 kable(tidy(fit1)) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
 ```
 
-* Nuevos datos
+## Calculemos {.smaller .build}
+
+$$\small Weight = 8.75\times Time + 10.92 + \theta_216.17 + \theta_336.50 + \theta_430.23$$
 
 ```{r, echo=F}
-D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
+D <-  data.frame(Time = c(0, 0, 4, 4), Diet = as.factor(c(1,4,1, 4))) %>% t %>% as.data.frame()
+colnames(D) <- c("", "", "", "")
 kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
+```{r}
+(8.75*0) + 10.92 + (0*16.17) + (0*36.5) + (0*30.23)
+```
+
+```{r}
+(8.75*0) + 10.92 + (0*16.17) + (0*36.5) + (1*30.23)
+```
+
+```{r}
+(8.75*4) + 10.92 + (0*16.17) + (0*36.5) + (0*30.23)
+```
+
+```{r}
+(8.75*4) + 10.92 + (0*16.17) + (0*36.5) + (1*30.23)
+```
 
 ## Cambio Pendiente pero no intercepto
 
@@ -73,17 +91,28 @@ DF$SE <- predict(fit2, DF, se.fit = T)$se.fit
 ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet))+ theme_classic()
 ```
 
-## Calculemos
+## Parametros
 
 ```{r, echo = FALSE}
 kable(tidy(fit2)) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
 ```
+
+## Calculemos
+
+$$\small Weight = 7.05\times Time + Time \theta_2\times 1.61 + Time \theta_3\times 3.74 + Time \theta_4\times 2.86 + 27.86$$
 
 * Nuevos datos
 
 ```{r, echo=F}
 D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
 kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+```{r}
+(7.05*3) + (3*0*1.61) + (3*0*3.74) + (3*0*2.86) + 27.86
+```
+
+```{r}
+(7.05*4) + (4*0*1.61) + (4*0*3.74) + (4*1*2.86) + 27.86
 ```
 
 
@@ -99,23 +128,40 @@ DF$SE <- predict(fit3, DF, se.fit = T)$se.fit
 ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet))+ theme_classic()
 ```
 
-## Calculemos
+## Parametros
 
 ```{r, echo = FALSE}
 kable(tidy(fit3)) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
 ```
 
-* Nuevos datos
+## Calculemos {.smaller}
+
+$$\scriptsize Weight = 6.84\times Time + Time \theta_2\times 1.77 + Time \theta_3\times 4.58 + Time \theta_4\times 2.87 + 30.93 + -2.3\theta_2 + -12.7\theta_3 + -0.14\theta_4$$
 
 ```{r, echo=F}
 D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
 kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
+```{r}
+(6.84*3) + (3*0*1.77) + (3*0*4.58) + (3*0*2.87) + 30.93 + (-2.3*0) + (-12.7*0) + (-0.14*0)
+```
+
+```{r}
+(6.84*4) + (4*0*1.77) + (4*0*4.58) + (4*1*2.87) + 30.93 + (-2.3*0) + (-12.7*0) + (-0.14*1)
+```
+
+
 ## Cual es el mejor modelo?
 
 ```{r}
-kable(MuMIn::model.sel(list(fit1,fit2, fit3))) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+Select <- MuMIn::model.sel(list(fit1,fit2, fit3))
+```
+
+
+
+```{r, echo = FALSE}
+kable(Select) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
 
@@ -171,8 +217,11 @@ fit2g <- glm(weight ~ Time + Time:Diet, Gamma, data=ChickWeight)
 
 
 ```{r, echo=FALSE}
+DF <- ChickWeight
 DF$Pred <- predict(fit2g, DF, type = "response")
-DF$SE <- predict(fit1, DF, se.fit = T, type = "response")$se.fit
+DF$SE <- predict(fit2g, DF, se.fit = T, type = "response")$se.fit
+DF$Obs <- ChickWeight$weight
+DF <- DF %>% mutate(Resid = Obs - Pred)
 ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet)) + theme_classic()
 ```
 
@@ -195,21 +244,20 @@ kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size 
 
 * Son los residuales normales?
 
-```{r}
-Test <- augment(fit2g)
-hist(Test$.resid)
+```{r, echo = F}
+hist(DF$Resid)
 ```
 
 ## Es la varianza constante?
 
 ```{r}
-ggplot(Test, aes(x = .fitted, y = .resid)) + geom_point() + theme_classic() + geom_hline(yintercept = 0, lty = 2, color = "red")
+ggplot(DF, aes(x = Pred, y = Resid)) + geom_point() + theme_classic() + geom_hline(yintercept = 0, lty = 2, color = "red")
 ```
 
 ## Modelo lineal generalizado
 
 * Familia?
-    + Gamma
+    + poisson
     + respuesta (link = log)
 
  $$\log{y} = \beta_1X_1 + C_0$$
@@ -217,13 +265,16 @@ ggplot(Test, aes(x = .fitted, y = .resid)) + geom_point() + theme_classic() + ge
 ## Modelo Gamma
 
 ```{r}
-fit2g <- glm(weight ~ Time + Time:Diet, Gamma(link = "log"), data=ChickWeight)
+fit2p <- glm(weight ~ Time + Time:Diet, poisson, data=ChickWeight)
 ```
 
 
 ```{r, echo=FALSE}
-DF$Pred <- predict(fit2g, DF, type = "response")
-DF$SE <- predict(fit1, DF, se.fit = T, type = "response")$se.fit
+DF <- ChickWeight
+DF$Obs <- ChickWeight$weight
+DF$Pred <- predict(fit2p, DF, type = "response")
+DF$SE <- predict(fit2p, DF, se.fit = T, type = "response")$se.fit
+DF$Resid <- DF$Obs - DF$Pred
 ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet)) + theme_classic()
 ```
 
@@ -233,7 +284,7 @@ ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pre
 * Nuevos datos
 
 ```{r,echo = FALSE}
-tidy(fit2g) %>% kable(digits = 2)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+tidy(fit2p) %>% kable(digits = 2)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
 ```{r, echo=F}
@@ -247,14 +298,14 @@ kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size 
 * Son los residuales normales?
 
 ```{r}
-Test <- augment(fit2g)
-hist(Test$.resid)
+
+hist(DF$Resid)
 ```
 
 ## Es la varianza constante?
 
 ```{r}
-ggplot(Test, aes(x = .fitted, y = .resid)) + geom_point() + theme_classic() + geom_hline(yintercept = 0, lty = 2, color = "red")
+ggplot(DF, aes(x = Pred, y = Resid)) + geom_point() + theme_classic() + geom_hline(yintercept = 0, lty = 2, color = "red")
 ```
 
 
