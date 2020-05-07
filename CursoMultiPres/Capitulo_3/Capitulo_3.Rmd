@@ -262,7 +262,7 @@ ggplot(DF, aes(x = Pred, y = Resid)) + geom_point() + theme_classic() + geom_hli
 
  $$\log{y} = \beta_1X_1 + C_0$$
 
-## Modelo Gamma
+## Modelo Poisson
 
 ```{r}
 fit2p <- glm(weight ~ Time + Time:Diet, poisson, data=ChickWeight)
@@ -314,7 +314,8 @@ ggplot(DF, aes(x = Pred, y = Resid)) + geom_point() + theme_classic() + geom_hli
 ## Modelo lineal generalizado {.build}
 
 ```{r, results= "asis"}
-train <- read_csv("train.csv") %>% filter(Embarked == "S")
+train <- train <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/CursoMultiPres/Capitulo_3/train.csv") %>% 
+  filter(Embarked == "S")
 ```
 
 ```{r, echo = FALSE}
