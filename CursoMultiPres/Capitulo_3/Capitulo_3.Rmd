@@ -115,6 +115,7 @@ kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size 
 (7.05*4) + (4*0*1.61) + (4*0*3.74) + (4*1*2.86) + 27.86
 ```
 
+# Dudas?
 
 ## Cambio Pendiente e intercepto
 
@@ -262,6 +263,8 @@ kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size 
 1/((-0.00058*4) +  (-0.00009*4) + 0.01711)
 ```
 
+# Otra distribución
+
 ## Modelo lineal generalizado
 
 * Familia?
@@ -320,6 +323,8 @@ exp((0.066*3) + 3.859)
 ```{r}
 exp((0.066*4) + (0.017*4) + 3.859)
 ```
+
+# Modelo binomial
 
 ## Modelo lineal generalizado {.build}
 
@@ -422,6 +427,8 @@ DF$SE <- predict(FitBin2, DF, se.fit = TRUE,"response")$se.fit
 
 ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
 ```
+
+# Resumen función link
 
 ## Función link
 
