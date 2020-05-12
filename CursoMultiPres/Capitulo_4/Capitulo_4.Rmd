@@ -1,0 +1,306 @@
+---
+title: "Repaso y GLM 2"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 30))
+library(tidyverse)
+library(caret)
+library(MuMIn)
+library(broom)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+# Repaso
+
+## Entren a la siguiente página
+
+[https://kahoot.it/](https://kahoot.it/)
+
+# Entender la hipótesis estadística a generar basado en la hipótesis biológica
+
+## Pregunta 1
+
+* ¿Cual de estas relaciones es la que uno esperaría ver al finalizar el experimento?
+
+```{r, echo=FALSE}
+knitr::include_graphics("Pregunta1.png", dpi = 100)
+```
+
+## Pregunta 2
+
+* ¿Cuál de estos códigos resultaría en el modelo que generaría este gráfico?
+
+```{r, echo=FALSE}
+knitr::include_graphics("Pregunta2.png", dpi = 100)
+```
+
+## Pregunta 2 (cont){.small}
+
+```{r, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
+library(lme4)
+ChickPoissMM1 <- glmer(weight ~ Time + Diet + (1|Chick), family = poisson, data = ChickWeight)
+
+ChickPoissMM2 <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = poisson, data = ChickWeight)
+
+ChickPoissMM3 <- glmer(weight ~ Time + Time*Diet + (1|Chick), family = poisson, data = ChickWeight)
+```
+
+## Pregunta 3
+
+* ¿Cuanto pesaria un pollo en el dia 10 en la dieta 2 basado en el modelo anterior?
+
+```{r, echo=F}
+kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+## Pregunta 3 (cont)
+
+$$y = beta_1X_1 + \beta_2X_2 + \beta_3X_1X_2 + C_0 + C_1$$
+
+## Pregunta 3 (cont)
+
+```{r}
+exp(3.83 + 10*0.07 + 0.02)
+
+exp(3.83 + 10*0.07 + (10*0.02))
+
+3.83 + 10*0.07 + 0.02
+
+3.83 + 10*0.07 + (10*0.02)
+```
+
+## Pregunta 3 discución
+
+* Interpretación de los parámetros
+
+```{r, echo=F}
+kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+## Pregunta 4
+
+* ¿Cuál es el código que mejor representa este gráfico?
+
+```{r, echo=FALSE}
+knitr::include_graphics("Pregunta4.png", dpi = 100)
+```
+
+## Pregunta 5
+
+* ¿Cuantas pendientes e interceptos espero ver en este modelo?
+
+```{r, echo=FALSE}
+knitr::include_graphics("Pregunta4.png", dpi = 100)
+```
+
+## Pregunta 6
+
+* ¿Como interpreto ese modelo?
+
+```{r, echo=F}
+kable(tidy(ChickPoissMM1), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+# Criterios de información y crossvalidation
+
+## Pregunta 7
+
+* Se realiza un experimento en un invernadero con 12 plantas, 6 de Quebec y 6 de Mississippi, de cada lugar de origen 3 se enfriaron y 3 no, luego se procedió a medir la captación de $CO_2$ de cada planta a  95, 175, 250, 350, 500, 675 y 1000 ppm de $CO_2$ ¿Que criterio de información debiera usar para elegir entre modelos que compiten?
+
+## Pregunta 7 (cont)
+
+```{r, echo = F}
+ggplot(CO2, aes(x = conc, y = uptake, group = Plant)) + geom_line(aes(color = Type, lty = Treatment)) + theme_classic()
+```
+
+## Pregunta 8 {.small}
+
+* Asumiendo que se cumplen los supuestos ¿Que modelo debo elegir entre estos dos?
+
+```{r, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
+ChickPoissMM <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = poisson, data = ChickWeight)
+
+ChickGammaMM <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = Gamma, data = ChickWeight)
+
+```
+
+```{r, echo=FALSE}
+m1 <- glance(ChickGammaMM) %>% mutate(Family = "gamma", link = "Inverse") %>% dplyr::select(-sigma)
+m2<-glance(ChickPoissMM) %>% mutate(Family = "Poisson", link = "log") %>% dplyr::select(-sigma)
+
+kable(bind_rows(m1, m2), digits = 2)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+
+```
+
+## Pregunta 9
+
+* ¿Cuál de estos modelos tendra un AICc más bajo?
+
+```{r, echo= FALSE, cache= TRUE}
+data("swiss")
+sw <- swiss %>% dplyr::select(-Infant.Mortality)
+
+fit <- lm(Fertility ~., data = sw)
+
+options(na.action = "na.fail")
+
+dd <- dredge(fit, extra = c("R^2")) %>% subset(delta < 2) %>% dplyr::select(-AICc, -delta, -weight)
+kable(dd, digits = 3)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+
+
+# Control mas detallado de dredge en MuMin
+
+## Pregunta 10
+
+¿Cuantas variables como máximo puedo tener en un modelo para explicar empleo en la base de datos longley?
+
+```{r, echo= FALSE, cache= TRUE}
+data("longley")
+
+kable(longley, digits = 2)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) %>% scroll_box(width = "100%", height = "400px")
+```
+
+
+## Como agrego eso a MuMIn
+
+```{r, cache=TRUE}
+fit <- lm(Employed ~. ,data = longley)
+
+options(na.action = "na.fail")
+
+
+dd <- dredge(fit, m.lim= c(0,floor(nrow(longley)/10)))
+```
+
+## Como agrego eso a MuMIn
+
+```{r, echo=F}
+
+dd <- dd %>% mutate(weight = as.numeric(weight))
+kable(dd, digits = 2)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) %>% scroll_box(width = "100%", height = "400px")
+```
+
+## Pregunta 11
+
+* ¿Que problema tiene la siguiente base de datos para LMs o GLMs?
+* Ejemplo base de datos `Cement` de MuMIn
+
+```{r, cache=TRUE, echo=FALSE}
+library(MuMIn)
+data("Cement")
+
+panel.hist <- function(x, ...)
+{
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(usr[1:2], 0, 1.5) )
+  h <- hist(x, plot = FALSE)
+  breaks <- h$breaks; nB <- length(breaks)
+  y <- h$counts; y <- y/max(y)
+  rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  r <- cor(x, y)
+  txt <- format(c(r, 0.123456789), digits = digits)[1]
+  txt <- paste0(prefix, txt)
+  if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+  text(0.5, 0.5, txt, cex = cex.cor * abs(r))
+}
+
+pairs(Cement, lower.panel = panel.smooth, upper.panel = panel.cor, diag.panel = panel.hist)
+
+
+```
+
+## Como agrego eso a MuMIn
+
+```{r, echo=TRUE}
+GlobalMod <- lm(y ~ X1 + X2 + X3 + X4, data = Cement)
+```
+
+
+```{r, echo=TRUE, eval=FALSE}
+cor(Cement[,-1])
+```
+
+```{r, echo=FALSE}
+kable(cor(Cement[,-1])) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+```
+
+
+## Como agrego eso a MuMIn (cont)
+
+```{r, echo=TRUE}
+nm <- colnames(Cement[-1])
+smat <- abs(cor(Cement[, -1])) <= .7
+smat[!lower.tri(smat)] <- NA
+```
+
+```{r, echo=FALSE}
+kable(smat) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+```
+
+## Como agrego eso a MuMIn (cont)
+
+```{r, cache= TRUE, echo=TRUE}
+options(na.action = "na.fail")
+Selected <- dredge(GlobalMod, subset = smat)
+```
+
+```{r, echo=FALSE}
+Selected <- Selected %>% mutate(weight = as.numeric(weight))
+kable(Selected, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) %>% scroll_box(width = "100%", height = "400px")
+```
+
+## Incluir además límite de numero de variables
+
+```{r, cache= TRUE, echo=TRUE}
+options(na.action = "na.fail")
+Selected <- dredge(GlobalMod, subset = smat, m.lim = c(0, floor(nrow(Cement)/10)))
+```
+
+```{r, echo=FALSE}
+Selected <- Selected %>% mutate(weight = as.numeric(weight))
+kable(Selected, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) %>% scroll_box(width = "100%", height = "400px")
+```
+
+# Otra Forma de modelos Binomiales
+
+## Binomial
+
+```{r, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
+library(faraway)
+data("orings")
+logitmod <- glm(cbind(damage,6-damage) ~ temp,family=binomial, orings)
+```
+
+```{r, echo=FALSE}
+kable(glance(logitmod), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) 
+```
+
+```{r, echo=FALSE}
+kable(tidy(logitmod), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) 
+```
+
+```{r}
+pchisq(deviance(logitmod), df.residual(logitmod),lower=FALSE)
+```
+
+## Predicción
+
+```{r, echo=FALSE}
+sjPlot::plot_model(logitmod, type = "eff", terms = c("temp")) + ggtitle("") + ylab("Probabilidad de fallo") + xlab("Temp F") + theme_classic()
+```
