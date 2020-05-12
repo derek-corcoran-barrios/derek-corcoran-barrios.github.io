@@ -171,13 +171,9 @@ hist(Test$.resid)
 ggplot(Test, aes(x = .fitted, y = .resid)) + geom_point() + theme_classic() + geom_hline(yintercept = 0, lty = 2, color = "red")
 ```
 
-
-# GLMs
-
 ## Distribuciones {.build}
 
 * Para entender GLM hay que entender distribuciones
-
 
 
 ## Estructura de error

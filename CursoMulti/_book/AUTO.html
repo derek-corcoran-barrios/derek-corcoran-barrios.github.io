@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 5 Automatización de la seleccion de modelos | Curso BIO4318 Modelos Multivariados y Machine learning</title>
+  <title>Capítulo 4 Automatización de la seleccion de modelos | Curso BIO4318 Modelos Multivariados y Machine learning</title>
   <meta name="description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 5 Automatización de la seleccion de modelos | Curso BIO4318 Modelos Multivariados y Machine learning" />
+  <meta property="og:title" content="Capítulo 4 Automatización de la seleccion de modelos | Curso BIO4318 Modelos Multivariados y Machine learning" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 5 Automatización de la seleccion de modelos | Curso BIO4318 Modelos Multivariados y Machine learning" />
+  <meta name="twitter:title" content="Capítulo 4 Automatización de la seleccion de modelos | Curso BIO4318 Modelos Multivariados y Machine learning" />
   
   <meta name="twitter:description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
   
@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="glms.html"/>
+<link rel="prev" href="GLMs.html"/>
 <link rel="next" href="final-words.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -220,38 +220,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.10" data-path="GLMs.html"><a href="GLMs.html#cual-es-el-mejor-modelo"><i class="fa fa-check"></i><b>3.10</b> Cual es el mejor modelo?</a></li>
 <li class="chapter" data-level="3.11" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-simple"><i class="fa fa-check"></i><b>3.11</b> Modelo lineal simple</a></li>
 <li class="chapter" data-level="3.12" data-path="GLMs.html"><a href="GLMs.html#es-la-varianza-constante"><i class="fa fa-check"></i><b>3.12</b> Es la varianza constante?</a></li>
+<li class="chapter" data-level="3.13" data-path="GLMs.html"><a href="GLMs.html#distribuciones"><i class="fa fa-check"></i><b>3.13</b> Distribuciones</a></li>
+<li class="chapter" data-level="3.14" data-path="GLMs.html"><a href="GLMs.html#estructura-de-error"><i class="fa fa-check"></i><b>3.14</b> Estructura de error</a></li>
+<li class="chapter" data-level="3.15" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado"><i class="fa fa-check"></i><b>3.15</b> Modelo lineal generalizado</a></li>
+<li class="chapter" data-level="3.16" data-path="GLMs.html"><a href="GLMs.html#como-se-ve-el-link"><i class="fa fa-check"></i><b>3.16</b> Como se ve el link?</a></li>
+<li class="chapter" data-level="3.17" data-path="GLMs.html"><a href="GLMs.html#modelo-gamma"><i class="fa fa-check"></i><b>3.17</b> Modelo Gamma</a></li>
+<li class="chapter" data-level="3.18" data-path="GLMs.html"><a href="GLMs.html#parámetros"><i class="fa fa-check"></i><b>3.18</b> Parámetros</a></li>
+<li class="chapter" data-level="3.19" data-path="GLMs.html"><a href="GLMs.html#calculemos-2"><i class="fa fa-check"></i><b>3.19</b> Calculemos</a></li>
+<li class="chapter" data-level="3.20" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-1"><i class="fa fa-check"></i><b>3.20</b> Modelo lineal generalizado</a></li>
+<li class="chapter" data-level="3.21" data-path="GLMs.html"><a href="GLMs.html#link"><i class="fa fa-check"></i><b>3.21</b> Link</a></li>
+<li class="chapter" data-level="3.22" data-path="GLMs.html"><a href="GLMs.html#modelo-poisson"><i class="fa fa-check"></i><b>3.22</b> Modelo Poisson</a></li>
+<li class="chapter" data-level="3.23" data-path="GLMs.html"><a href="GLMs.html#parametros-2"><i class="fa fa-check"></i><b>3.23</b> Parametros</a></li>
+<li class="chapter" data-level="3.24" data-path="GLMs.html"><a href="GLMs.html#calculemos-3"><i class="fa fa-check"></i><b>3.24</b> Calculemos</a></li>
+<li class="chapter" data-level="3.25" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-2"><i class="fa fa-check"></i><b>3.25</b> Modelo lineal generalizado</a></li>
+<li class="chapter" data-level="3.26" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-3"><i class="fa fa-check"></i><b>3.26</b> Modelo lineal generalizado</a></li>
+<li class="chapter" data-level="3.27" data-path="GLMs.html"><a href="GLMs.html#link-1"><i class="fa fa-check"></i><b>3.27</b> Link</a></li>
+<li class="chapter" data-level="3.28" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-familia-binomial"><i class="fa fa-check"></i><b>3.28</b> Modelo lineal generalizado (familia: binomial)</a></li>
+<li class="chapter" data-level="3.29" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-familia-binomial-1"><i class="fa fa-check"></i><b>3.29</b> Modelo lineal generalizado (familia: binomial)</a></li>
+<li class="chapter" data-level="3.30" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-familia-binomial-2"><i class="fa fa-check"></i><b>3.30</b> Modelo lineal generalizado (familia: binomial)</a></li>
+<li class="chapter" data-level="3.31" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-familia-binomial-3"><i class="fa fa-check"></i><b>3.31</b> Modelo lineal generalizado (familia: binomial)</a></li>
+<li class="chapter" data-level="3.32" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-familia-binomial-4"><i class="fa fa-check"></i><b>3.32</b> Modelo lineal generalizado (familia: binomial)</a></li>
+<li class="chapter" data-level="3.33" data-path="GLMs.html"><a href="GLMs.html#función-link"><i class="fa fa-check"></i><b>3.33</b> Función link</a></li>
+<li class="chapter" data-level="3.34" data-path="GLMs.html"><a href="GLMs.html#función-link-1"><i class="fa fa-check"></i><b>3.34</b> Función link</a></li>
+<li class="chapter" data-level="3.35" data-path="GLMs.html"><a href="GLMs.html#función-link-2"><i class="fa fa-check"></i><b>3.35</b> Función link</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="glms.html"><a href="glms.html"><i class="fa fa-check"></i><b>4</b> GLMs</a><ul>
-<li class="chapter" data-level="4.1" data-path="glms.html"><a href="glms.html#distribuciones"><i class="fa fa-check"></i><b>4.1</b> Distribuciones</a></li>
-<li class="chapter" data-level="4.2" data-path="glms.html"><a href="glms.html#estructura-de-error"><i class="fa fa-check"></i><b>4.2</b> Estructura de error</a></li>
-<li class="chapter" data-level="4.3" data-path="glms.html"><a href="glms.html#modelo-lineal-generalizado"><i class="fa fa-check"></i><b>4.3</b> Modelo lineal generalizado</a></li>
-<li class="chapter" data-level="4.4" data-path="glms.html"><a href="glms.html#como-se-ve-el-link"><i class="fa fa-check"></i><b>4.4</b> Como se ve el link?</a></li>
-<li class="chapter" data-level="4.5" data-path="glms.html"><a href="glms.html#modelo-gamma"><i class="fa fa-check"></i><b>4.5</b> Modelo Gamma</a></li>
-<li class="chapter" data-level="4.6" data-path="glms.html"><a href="glms.html#parámetros"><i class="fa fa-check"></i><b>4.6</b> Parámetros</a></li>
-<li class="chapter" data-level="4.7" data-path="glms.html"><a href="glms.html#calculemos-2"><i class="fa fa-check"></i><b>4.7</b> Calculemos</a></li>
-<li class="chapter" data-level="4.8" data-path="glms.html"><a href="glms.html#modelo-lineal-generalizado-1"><i class="fa fa-check"></i><b>4.8</b> Modelo lineal generalizado</a></li>
-<li class="chapter" data-level="4.9" data-path="glms.html"><a href="glms.html#link"><i class="fa fa-check"></i><b>4.9</b> Link</a></li>
-<li class="chapter" data-level="4.10" data-path="glms.html"><a href="glms.html#modelo-poisson"><i class="fa fa-check"></i><b>4.10</b> Modelo Poisson</a></li>
-<li class="chapter" data-level="4.11" data-path="glms.html"><a href="glms.html#parametros-2"><i class="fa fa-check"></i><b>4.11</b> Parametros</a></li>
-<li class="chapter" data-level="4.12" data-path="glms.html"><a href="glms.html#calculemos-3"><i class="fa fa-check"></i><b>4.12</b> Calculemos</a></li>
-<li class="chapter" data-level="4.13" data-path="glms.html"><a href="glms.html#modelo-lineal-generalizado-2"><i class="fa fa-check"></i><b>4.13</b> Modelo lineal generalizado</a></li>
-<li class="chapter" data-level="4.14" data-path="glms.html"><a href="glms.html#modelo-lineal-generalizado-3"><i class="fa fa-check"></i><b>4.14</b> Modelo lineal generalizado</a></li>
-<li class="chapter" data-level="4.15" data-path="glms.html"><a href="glms.html#link-1"><i class="fa fa-check"></i><b>4.15</b> Link</a></li>
-<li class="chapter" data-level="4.16" data-path="glms.html"><a href="glms.html#modelo-lineal-generalizado-familia-binomial"><i class="fa fa-check"></i><b>4.16</b> Modelo lineal generalizado (familia: binomial)</a></li>
-<li class="chapter" data-level="4.17" data-path="glms.html"><a href="glms.html#modelo-lineal-generalizado-familia-binomial-1"><i class="fa fa-check"></i><b>4.17</b> Modelo lineal generalizado (familia: binomial)</a></li>
-<li class="chapter" data-level="4.18" data-path="glms.html"><a href="glms.html#modelo-lineal-generalizado-familia-binomial-2"><i class="fa fa-check"></i><b>4.18</b> Modelo lineal generalizado (familia: binomial)</a></li>
-<li class="chapter" data-level="4.19" data-path="glms.html"><a href="glms.html#modelo-lineal-generalizado-familia-binomial-3"><i class="fa fa-check"></i><b>4.19</b> Modelo lineal generalizado (familia: binomial)</a></li>
-<li class="chapter" data-level="4.20" data-path="glms.html"><a href="glms.html#modelo-lineal-generalizado-familia-binomial-4"><i class="fa fa-check"></i><b>4.20</b> Modelo lineal generalizado (familia: binomial)</a></li>
-<li class="chapter" data-level="4.21" data-path="glms.html"><a href="glms.html#función-link"><i class="fa fa-check"></i><b>4.21</b> Función link</a></li>
-<li class="chapter" data-level="4.22" data-path="glms.html"><a href="glms.html#función-link-1"><i class="fa fa-check"></i><b>4.22</b> Función link</a></li>
-<li class="chapter" data-level="4.23" data-path="glms.html"><a href="glms.html#función-link-2"><i class="fa fa-check"></i><b>4.23</b> Función link</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="AUTO.html"><a href="AUTO.html"><i class="fa fa-check"></i><b>5</b> Automatización de la seleccion de modelos</a><ul>
-<li class="chapter" data-level="5.1" data-path="AUTO.html"><a href="AUTO.html#paquetes-necesarios-para-este-capítulo-3"><i class="fa fa-check"></i><b>5.1</b> Paquetes necesarios para este capítulo</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="AUTO.html"><a href="AUTO.html#presentación-html-3"><i class="fa fa-check"></i><b>5.1.1</b> Presentación html</a></li>
+<li class="chapter" data-level="4" data-path="AUTO.html"><a href="AUTO.html"><i class="fa fa-check"></i><b>4</b> Automatización de la seleccion de modelos</a><ul>
+<li class="chapter" data-level="4.1" data-path="AUTO.html"><a href="AUTO.html#paquetes-necesarios-para-este-capítulo-3"><i class="fa fa-check"></i><b>4.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="AUTO.html"><a href="AUTO.html#presentación-html-3"><i class="fa fa-check"></i><b>4.1.1</b> Presentación html</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="5" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>5</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
@@ -274,12 +272,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="AUTO" class="section level1">
-<h1><span class="header-section-number">Capítulo 5</span> Automatización de la seleccion de modelos</h1>
+<h1><span class="header-section-number">Capítulo 4</span> Automatización de la seleccion de modelos</h1>
 <div id="paquetes-necesarios-para-este-capítulo-3" class="section level2">
-<h2><span class="header-section-number">5.1</span> Paquetes necesarios para este capítulo</h2>
+<h2><span class="header-section-number">4.1</span> Paquetes necesarios para este capítulo</h2>
 <p>Para este capitulo necesitas tener instalado los paquetes <em>tidyverse</em> <span class="citation">(Wickham <a href="#ref-R-tidyverse">2019</a>)</span>, <em>broom</em> <span class="citation">(Robinson and Hayes <a href="#ref-R-broom">2020</a>)</span>, <em>lme4</em> <span class="citation">(Bates et al. <a href="#ref-Bates_2015">2015</a>)</span> y <em>MuMIn</em> <span class="citation">(Bartoń <a href="#ref-R-MuMIn">2019</a>)</span></p>
 <div id="presentación-html-3" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Presentación html</h3>
+<h3><span class="header-section-number">4.1.1</span> Presentación html</h3>
 <p>Puedes seguir la clase de los videos en el siguiente <a href="https://derek-corcoran-barrios.github.io/CursoMultiPres/Capitulo_4/Capitulo_4.html">link</a></p>
 <p>y ver la clase en vivo desde las 20:30 horas el día martes 12 de Mayo del 2020 a continuación</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ebd8p9ljyWM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
@@ -308,7 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="glms.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="GLMs.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="final-words.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
