@@ -1,0 +1,20 @@
+# Automatización de la seleccion de modelos {#AUTO}
+
+```{r setupAUTO, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, tidy = TRUE, cache = FALSE)
+library(tidyverse)
+library(MuMIn)
+library(kableExtra)
+```
+
+## Paquetes necesarios para este capítulo
+
+Para este capitulo necesitas tener instalado los paquetes *tidyverse* [@R-tidyverse], *broom*  [@R-broom], *lme4* [@Bates_2015] y *MuMIn*  [@R-MuMIn]
+
+### Presentación html
+
+Puedes seguir la clase de los videos en el siguiente [link](https://derek-corcoran-barrios.github.io/CursoMultiPres/Capitulo_4/Capitulo_4.html)
+
+y ver la clase en vivo desde las 20:30 horas el día martes 12 de Mayo del 2020 a continuación
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ebd8p9ljyWM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

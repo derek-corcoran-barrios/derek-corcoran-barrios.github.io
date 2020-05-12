@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2020-05-07" />
+<meta name="date" content="2020-05-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -246,12 +246,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.22" data-path="glms.html"><a href="glms.html#función-link-1"><i class="fa fa-check"></i><b>4.22</b> Función link</a></li>
 <li class="chapter" data-level="4.23" data-path="glms.html"><a href="glms.html#función-link-2"><i class="fa fa-check"></i><b>4.23</b> Función link</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>5</b> Methods</a></li>
-<li class="chapter" data-level="6" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>6</b> Applications</a><ul>
-<li class="chapter" data-level="6.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>6.1</b> Example one</a></li>
-<li class="chapter" data-level="6.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>6.2</b> Example two</a></li>
+<li class="chapter" data-level="5" data-path="AUTO.html"><a href="AUTO.html"><i class="fa fa-check"></i><b>5</b> Automatización de la seleccion de modelos</a><ul>
+<li class="chapter" data-level="5.1" data-path="AUTO.html"><a href="AUTO.html#paquetes-necesarios-para-este-capítulo-3"><i class="fa fa-check"></i><b>5.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="AUTO.html"><a href="AUTO.html#presentación-html-3"><i class="fa fa-check"></i><b>5.1.1</b> Presentación html</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>7</b> Final Words</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
@@ -434,7 +434,7 @@ Diet4
 <h2><span class="header-section-number">3.4</span> Cambio Pendiente pero no intercepto</h2>
 <p>Si queremos tenes solo un intercepto, con distintas pendientes para cada dieta, tendremos que utilizar el siguiente modelo:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time<span class="op">:</span>Diet, <span class="dt">data =</span> ChickWeight)</a></code></pre></div>
-<p><img src="CursoMulti_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
 </div>
 <div id="parametros" class="section level2">
 <h2><span class="header-section-number">3.5</span> Parametros</h2>
@@ -593,7 +593,7 @@ Diet
 <div id="cambio-pendiente-e-intercepto" class="section level2">
 <h2><span class="header-section-number">3.7</span> Cambio Pendiente e intercepto</h2>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">data =</span> ChickWeight)</a></code></pre></div>
-<p><img src="CursoMulti_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
 </div>
 <div id="parametros-1" class="section level2">
 <h2><span class="header-section-number">3.8</span> Parametros</h2>
@@ -945,13 +945,13 @@ NA
 </ul>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">Test &lt;-<span class="st"> </span><span class="kw">augment</span>(fit2)</a>
 <a class="sourceLine" id="cb42-2" data-line-number="2"><span class="kw">hist</span>(Test<span class="op">$</span>.resid)</a></code></pre></div>
-<p><img src="CursoMulti_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
 </div>
 <div id="es-la-varianza-constante" class="section level2">
 <h2><span class="header-section-number">3.12</span> Es la varianza constante?</h2>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">ggplot</span>(Test, <span class="kw">aes</span>(<span class="dt">x =</span> .fitted, <span class="dt">y =</span> .resid)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb43-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
-<p><img src="CursoMulti_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
 </div>
 </div>
 <h3>References</h3>
