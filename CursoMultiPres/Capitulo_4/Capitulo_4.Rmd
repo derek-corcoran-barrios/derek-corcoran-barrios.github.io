@@ -53,11 +53,13 @@ mod2 <- lmer(uptake ~ Type*Treatment + I(log(conc)) + conc + (1|Plant), data = C
 
 ```{r, cache = TRUE, echo=TRUE}
 options(na.action = "na.fail")
-Seleccion <- dredge(mod1, m.lim = c(0,round(nrow(CO2)/10)))
 
+Max.Vars <- floor(nrow(CO2)/10)
+
+Seleccion <- dredge(mod2, m.lim = c(0, Max.Vars))
 ```
 
-## Selección
+## Selección {.build}
 
 ```{r, echo = FALSE}
 DF <- as.data.frame(Seleccion) %>%  mutate(weight = as.numeric(weight)) %>% mutate_if(is.factor, as.character)
@@ -65,41 +67,37 @@ DF <- as.data.frame(Seleccion) %>%  mutate(weight = as.numeric(weight)) %>% muta
 kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, font_size = 16) %>% scroll_box(width = "100%", height = "400px")
 ```
 
+* Solo el primer modelo es seleccionado
+
+## Modelo
+
+```{r, eval = FALSE}
+BestModel <- get.models(Seleccion, 1)[[1]]
+broom::tidy(BestModel)
+```
+
+```{r, echo=FALSE}
+BestModel <- get.models(Seleccion, 1)[[1]]
+DF <- broom::tidy(BestModel)
+
+kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
+```
+
+## Modelo
+
+```{r, echo = FALSE}
+library(lme4)
+NewData <- CO2
+
+NewData$Pred <- predict(BestModel, re.form=NA, se.fit = T)
+ggplot(NewData, aes(x = conc, y = Pred)) + geom_line(aes(color = Type, lty = Treatment)) + geom_point(aes(y = uptake, color = Type, shape = Treatment)) + theme_bw()
+```
+
 
 # Control mas detallado de dredge en MuMin
 
 
-## Pregunta 10
-
-¿Cuantas variables como máximo puedo tener en un modelo para explicar empleo en la base de datos longley?
-
-```{r, echo= FALSE, cache= TRUE}
-data("longley")
-
-kable(longley, digits = 2)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) %>% scroll_box(width = "100%", height = "400px")
-```
-
-
-## Como agrego eso a MuMIn
-
-```{r, cache=TRUE}
-fit <- lm(Employed ~. ,data = longley)
-
-options(na.action = "na.fail")
-
-
-dd <- dredge(fit, m.lim= c(0,floor(nrow(longley)/10)))
-```
-
-## Como agrego eso a MuMIn
-
-```{r, echo=F}
-
-dd <- dd %>% mutate(weight = as.numeric(weight))
-kable(dd, digits = 2)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) %>% scroll_box(width = "100%", height = "400px")
-```
-
-## Pregunta 11
+## Cemento
 
 * ¿Que problema tiene la siguiente base de datos para LMs o GLMs?
 * Ejemplo base de datos `Cement` de MuMIn
@@ -107,6 +105,8 @@ kable(dd, digits = 2)  %>% kable_styling(bootstrap_options = c("striped", "hover
 ```{r, cache=TRUE, echo=FALSE}
 library(MuMIn)
 data("Cement")
+
+Cement2 <- Cement %>% rename(Calorias  = y, CaAl = X1, SiCa3 = X2, Ca2AlFe = X3, Ca2Si = X4)
 
 panel.hist <- function(x, ...)
 {
@@ -129,7 +129,7 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
   text(0.5, 0.5, txt, cex = cex.cor * abs(r))
 }
 
-pairs(Cement, lower.panel = panel.smooth, upper.panel = panel.cor, diag.panel = panel.hist)
+pairs(Cement2, lower.panel = panel.smooth, upper.panel = panel.cor, diag.panel = panel.hist)
 
 
 ```
@@ -137,24 +137,24 @@ pairs(Cement, lower.panel = panel.smooth, upper.panel = panel.cor, diag.panel = 
 ## Como agrego eso a MuMIn
 
 ```{r, echo=TRUE}
-GlobalMod <- lm(y ~ X1 + X2 + X3 + X4, data = Cement)
+GlobalMod <- lm(Calorias ~., data = Cement2)
 ```
 
 
 ```{r, echo=TRUE, eval=FALSE}
-cor(Cement[,-1])
+cor(Cement2[,-1])
 ```
 
 ```{r, echo=FALSE}
-kable(cor(Cement[,-1])) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+kable(cor(Cement2[,-1])) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
 ```
 
 
 ## Como agrego eso a MuMIn (cont)
 
 ```{r, echo=TRUE}
-nm <- colnames(Cement[-1])
-smat <- abs(cor(Cement[, -1])) <= .7
+nm <- colnames(Cement2[-1])
+smat <- abs(cor(Cement2[, -1])) <= .7
 smat[!lower.tri(smat)] <- NA
 ```
 
@@ -186,62 +186,78 @@ Selected <- Selected %>% mutate(weight = as.numeric(weight))
 kable(Selected, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) %>% scroll_box(width = "100%", height = "400px")
 ```
 
-# Otra Forma de modelos Binomiales
 
-## Binomial
-
-```{r, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
-library(faraway)
-data("orings")
-logitmod <- glm(cbind(damage,6-damage) ~ temp,family=binomial, orings)
-```
 
 ```{r, echo=FALSE}
-kable(glance(logitmod), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) 
-```
-
-```{r, echo=FALSE}
-kable(tidy(logitmod), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) 
-```
-
-```{r}
-pchisq(deviance(logitmod), df.residual(logitmod),lower=FALSE)
-```
-
-## Predicción
-
-```{r, echo=FALSE}
-sjPlot::plot_model(logitmod, type = "eff", terms = c("temp")) + ggtitle("") + ylab("Probabilidad de fallo") + xlab("Temp F") + theme_classic()
+#sjPlot::plot_model(logitmod, type = "eff", terms = c("temp")) + ggtitle("") + ylab("Probabilidad de fallo") + xlab("Temp F") + theme_classic()
 ```
 
 
 # Repaso
 
-## Entren a la siguiente página
-
-[https://kahoot.it/](https://kahoot.it/)
-
 # Entender la hipótesis estadística a generar basado en la hipótesis biológica
 
-## Pregunta 1
+## Pregunta 1 {.build}
 
 * ¿Cual de estas relaciones es la que uno esperaría ver al finalizar el experimento?
 
-```{r, echo=FALSE}
-knitr::include_graphics("Pregunta1.png", dpi = 100)
+```{r, echo=FALSE, fig.height= 4}
+Fit1 <- glm(weight ~ Time + Diet:Time, family = poisson, data = ChickWeight)
+  
+Fit2 <- glm(weight ~ Time + Diet, family = poisson, data = ChickWeight)
+  
+Fit3 <- glm(weight ~ Time*Diet, family = poisson, data = ChickWeight)
+
+DATA <- ChickWeight
+DATA1 <- ChickWeight
+DATA2 <- ChickWeight
+DATA3 <- ChickWeight
+
+
+DATA1$Pred <- predict(Fit1, newdata = DATA, type = "response")
+DATA1$sd <- predict(Fit1, newdata = DATA, type = "response", se.fit = T)$se.fit
+DATA1$Model <- "A"
+
+DATA2$Pred <- predict(Fit2, newdata = DATA, type = "response")
+DATA2$sd <- predict(Fit2, newdata = DATA, type = "response", se.fit = T)$se.fit
+DATA2$Model <- "B"
+
+DATA3$Pred <- predict(Fit3, newdata = DATA, type = "response")
+DATA3$sd <- predict(Fit3, newdata = DATA, type = "response", se.fit = T)$se.fit
+DATA3$Model <- "C"
+
+DATA <- list(DATA1, DATA2, DATA3) %>% reduce(bind_rows)
+
+ggplot(DATA, aes(x = Time, y = Pred, color = Diet)) + geom_ribbon(aes(ymax = Pred + sd, ymin = Pred - sd, fill = Diet), alpha = 0.5) + geom_line(aes(color = Diet)) + facet_grid(.~ Model) + theme_bw()
+
+library(countdown)
+library(beepr)
 ```
+
+`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, play_sound = TRUE)`
+
+* Respuesta: A
 
 ## Pregunta 2
 
 * ¿Cuál de estos códigos resultaría en el modelo que generaría este gráfico?
 
-```{r, echo=FALSE}
-knitr::include_graphics("Pregunta2.png", dpi = 100)
+```{r, echo=FALSE, fig.height= 3}
+ggplot(DATA1, aes(x = Time, y = Pred, color = Diet)) + geom_ribbon(aes(ymax = Pred + sd, ymin = Pred - sd, fill = Diet), alpha = 0.5) + geom_line(aes(color = Diet)) + theme_bw()
 ```
+
+```{r, eval = F}
+A <- glm(weight ~ Time + Diet, family = poisson)
+B <- glm(weight ~ Time*Diet, family = poisson)
+C <- glm(weight ~ Time + Time:Diet, family = poisson)
+```
+
+
+`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
 
 ## Pregunta 2 (cont){.small}
 
-```{r, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
+```{r, tidy.opts= list(blank = FALSE, width.cutoff = 60)}
 library(lme4)
 ChickPoissMM1 <- glmer(weight ~ Time + Diet + (1|Chick), family = poisson, data = ChickWeight)
 
@@ -258,9 +274,11 @@ ChickPoissMM3 <- glmer(weight ~ Time + Time*Diet + (1|Chick), family = poisson, 
 kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
-## Pregunta 3 (cont)
+* A = `r exp(3.83 + 10*0.07 + 0.02)`
+* B = `r exp(3.83 + 10*0.07 + (10*0.02))`
+* C = `r 3.83 + 10*0.07 + (10*0.02)`
 
-$$y = beta_1X_1 + \beta_2X_2 + \beta_3X_1X_2 + C_0 + C_1$$
+`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
 
 ## Pregunta 3 (cont)
 
@@ -269,89 +287,41 @@ exp(3.83 + 10*0.07 + 0.02)
 
 exp(3.83 + 10*0.07 + (10*0.02))
 
-3.83 + 10*0.07 + 0.02
-
 3.83 + 10*0.07 + (10*0.02)
 ```
 
-## Pregunta 3 discución
-
-* Interpretación de los parámetros
-
-```{r, echo=F}
-kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
-```
 
 ## Pregunta 4
 
 * ¿Cuál es el código que mejor representa este gráfico?
 
-```{r, echo=FALSE}
-knitr::include_graphics("Pregunta4.png", dpi = 100)
+
+```{r, echo=FALSE, fig.height= 3}
+ggplot(DATA2, aes(x = Time, y = Pred, color = Diet)) + geom_ribbon(aes(ymax = Pred + sd, ymin = Pred - sd, fill = Diet), alpha = 0.5) + geom_line(aes(color = Diet)) + theme_bw()
 ```
+
+```{r, eval = F}
+A <- glm(weight ~ Time + Diet, family = poisson)
+B <- glm(weight ~ Time*Diet, family = poisson)
+C <- glm(weight ~ Time + Time:Diet, family = poisson)
+```
+
+`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
 
 ## Pregunta 5
 
 * ¿Cuantas pendientes e interceptos espero ver en este modelo?
 
-```{r, echo=FALSE}
-knitr::include_graphics("Pregunta4.png", dpi = 100)
+```{r, echo=FALSE, fig.height= 3}
+ggplot(DATA2, aes(x = Time, y = Pred, color = Diet)) + geom_ribbon(aes(ymax = Pred + sd, ymin = Pred - sd, fill = Diet), alpha = 0.5) + geom_line(aes(color = Diet)) + theme_bw()
 ```
 
-## Pregunta 6
+`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10)`
 
-* ¿Como interpreto ese modelo?
-
-```{r, echo=F}
-kable(tidy(ChickPoissMM1), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
-```
-
-# Criterios de información y crossvalidation
-
-## Pregunta 7
-
-* Se realiza un experimento en un invernadero con 12 plantas, 6 de Quebec y 6 de Mississippi, de cada lugar de origen 3 se enfriaron y 3 no, luego se procedió a medir la captación de $CO_2$ de cada planta a  95, 175, 250, 350, 500, 675 y 1000 ppm de $CO_2$ ¿Que criterio de información debiera usar para elegir entre modelos que compiten?
-
-## Pregunta 7 (cont)
+## Pregunta 5 (cont)
 
 ```{r, echo = F}
-ggplot(CO2, aes(x = conc, y = uptake, group = Plant)) + geom_line(aes(color = Type, lty = Treatment)) + theme_classic()
+kable(tidy(Fit2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
-## Pregunta 8 {.small}
-
-* Asumiendo que se cumplen los supuestos ¿Que modelo debo elegir entre estos dos?
-
-```{r, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
-ChickPoissMM <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = poisson, data = ChickWeight)
-
-ChickGammaMM <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = Gamma, data = ChickWeight)
-
-```
-
-```{r, echo=FALSE}
-m1 <- glance(ChickGammaMM) %>% mutate(Family = "gamma", link = "Inverse") %>% dplyr::select(-sigma)
-m2<-glance(ChickPoissMM) %>% mutate(Family = "Poisson", link = "log") %>% dplyr::select(-sigma)
-
-kable(bind_rows(m1, m2), digits = 2)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
-
-```
-
-## Pregunta 9
-
-* ¿Cuál de estos modelos tendra un AICc más bajo?
-
-```{r, echo= FALSE, cache= TRUE}
-data("swiss")
-sw <- swiss %>% dplyr::select(-Infant.Mortality)
-
-fit <- lm(Fertility ~., data = sw)
-
-options(na.action = "na.fail")
-
-dd <- dredge(fit, extra = c("R^2")) %>% subset(delta < 2) %>% dplyr::select(-AICc, -delta, -weight)
-kable(dd, digits = 3)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
-```
-
-
-
+# Dudas
