@@ -1,5 +1,5 @@
 ---
-title: "Repaso y GLM 2"
+title: "Automatización de selección de modelos, variables fijas y aleatorias"
 author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
@@ -9,7 +9,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 30))
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 80))
 library(tidyverse)
 library(caret)
 library(MuMIn)
@@ -18,147 +18,56 @@ library(kableExtra)
 options("kableExtra.html.bsTable" = T)
 ```
 
-# Repaso
+# Variables fijas vs aleatorias
 
-## Entren a la siguiente página
+## Variables fijas vs aleatorias
 
-[https://kahoot.it/](https://kahoot.it/)
+* Fijas (continuas o categóricas)
+    + Se espera que tengan una influencia predecible y sistemática en sobre lo que queremos explicar. Además usan todos los niveles de un factor (Ejemplo genero)
 
-# Entender la hipótesis estadística a generar basado en la hipótesis biológica
+* Aleatorias 
 
-## Pregunta 1
+    + Se espera que su influencia sea impredecible e idiosincratica. Además no se usan todos los niveles de un factor (todos los individuos) A + Error(B)
+    
+## Ejemplo CO2
 
-* ¿Cual de estas relaciones es la que uno esperaría ver al finalizar el experimento?
-
-```{r, echo=FALSE}
-knitr::include_graphics("Pregunta1.png", dpi = 100)
+```{r, echo = FALSE}
+data(CO2)
+ggplot(CO2, aes(x = conc, y = uptake)) + geom_point(aes(shape = Treatment, fill = Type, color = Type)) + theme_classic()
 ```
 
-## Pregunta 2
+## Ejemplo CO2
 
-* ¿Cuál de estos códigos resultaría en el modelo que generaría este gráfico?
-
-```{r, echo=FALSE}
-knitr::include_graphics("Pregunta2.png", dpi = 100)
+```{r, echo = FALSE}
+kable(CO2, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
 ```
 
-## Pregunta 2 (cont){.small}
+## Modelos {.build}
 
-```{r, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
+```{r, echo = TRUE}
 library(lme4)
-ChickPoissMM1 <- glmer(weight ~ Time + Diet + (1|Chick), family = poisson, data = ChickWeight)
-
-ChickPoissMM2 <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = poisson, data = ChickWeight)
-
-ChickPoissMM3 <- glmer(weight ~ Time + Time*Diet + (1|Chick), family = poisson, data = ChickWeight)
+mod1 <- lm(uptake ~ Type*Treatment + I(log(conc)) + conc, data = CO2)
+mod2 <- lmer(uptake ~ Type*Treatment + I(log(conc)) + conc + (1|Plant), data = CO2)
 ```
 
-## Pregunta 3
 
-* ¿Cuanto pesaria un pollo en el dia 10 en la dieta 2 basado en el modelo anterior?
-
-```{r, echo=F}
-kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
-```
-
-## Pregunta 3 (cont)
-
-$$y = beta_1X_1 + \beta_2X_2 + \beta_3X_1X_2 + C_0 + C_1$$
-
-## Pregunta 3 (cont)
-
-```{r}
-exp(3.83 + 10*0.07 + 0.02)
-
-exp(3.83 + 10*0.07 + (10*0.02))
-
-3.83 + 10*0.07 + 0.02
-
-3.83 + 10*0.07 + (10*0.02)
-```
-
-## Pregunta 3 discución
-
-* Interpretación de los parámetros
-
-```{r, echo=F}
-kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
-```
-
-## Pregunta 4
-
-* ¿Cuál es el código que mejor representa este gráfico?
-
-```{r, echo=FALSE}
-knitr::include_graphics("Pregunta4.png", dpi = 100)
-```
-
-## Pregunta 5
-
-* ¿Cuantas pendientes e interceptos espero ver en este modelo?
-
-```{r, echo=FALSE}
-knitr::include_graphics("Pregunta4.png", dpi = 100)
-```
-
-## Pregunta 6
-
-* ¿Como interpreto ese modelo?
-
-```{r, echo=F}
-kable(tidy(ChickPoissMM1), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
-```
-
-# Criterios de información y crossvalidation
-
-## Pregunta 7
-
-* Se realiza un experimento en un invernadero con 12 plantas, 6 de Quebec y 6 de Mississippi, de cada lugar de origen 3 se enfriaron y 3 no, luego se procedió a medir la captación de $CO_2$ de cada planta a  95, 175, 250, 350, 500, 675 y 1000 ppm de $CO_2$ ¿Que criterio de información debiera usar para elegir entre modelos que compiten?
-
-## Pregunta 7 (cont)
-
-```{r, echo = F}
-ggplot(CO2, aes(x = conc, y = uptake, group = Plant)) + geom_line(aes(color = Type, lty = Treatment)) + theme_classic()
-```
-
-## Pregunta 8 {.small}
-
-* Asumiendo que se cumplen los supuestos ¿Que modelo debo elegir entre estos dos?
-
-```{r, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
-ChickPoissMM <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = poisson, data = ChickWeight)
-
-ChickGammaMM <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = Gamma, data = ChickWeight)
-
-```
-
-```{r, echo=FALSE}
-m1 <- glance(ChickGammaMM) %>% mutate(Family = "gamma", link = "Inverse") %>% dplyr::select(-sigma)
-m2<-glance(ChickPoissMM) %>% mutate(Family = "Poisson", link = "log") %>% dplyr::select(-sigma)
-
-kable(bind_rows(m1, m2), digits = 2)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
-
-```
-
-## Pregunta 9
-
-* ¿Cuál de estos modelos tendra un AICc más bajo?
-
-```{r, echo= FALSE, cache= TRUE}
-data("swiss")
-sw <- swiss %>% dplyr::select(-Infant.Mortality)
-
-fit <- lm(Fertility ~., data = sw)
-
+```{r, cache = TRUE, echo=TRUE}
 options(na.action = "na.fail")
+Seleccion <- dredge(mod1, m.lim = c(0,round(nrow(CO2)/10)))
 
-dd <- dredge(fit, extra = c("R^2")) %>% subset(delta < 2) %>% dplyr::select(-AICc, -delta, -weight)
-kable(dd, digits = 3)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
+## Selección
+
+```{r, echo = FALSE}
+DF <- as.data.frame(Seleccion) %>%  mutate(weight = as.numeric(weight)) %>% mutate_if(is.factor, as.character)
+
+kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, font_size = 16) %>% scroll_box(width = "100%", height = "400px")
+```
 
 
 # Control mas detallado de dredge en MuMin
+
 
 ## Pregunta 10
 
@@ -304,3 +213,145 @@ pchisq(deviance(logitmod), df.residual(logitmod),lower=FALSE)
 ```{r, echo=FALSE}
 sjPlot::plot_model(logitmod, type = "eff", terms = c("temp")) + ggtitle("") + ylab("Probabilidad de fallo") + xlab("Temp F") + theme_classic()
 ```
+
+
+# Repaso
+
+## Entren a la siguiente página
+
+[https://kahoot.it/](https://kahoot.it/)
+
+# Entender la hipótesis estadística a generar basado en la hipótesis biológica
+
+## Pregunta 1
+
+* ¿Cual de estas relaciones es la que uno esperaría ver al finalizar el experimento?
+
+```{r, echo=FALSE}
+knitr::include_graphics("Pregunta1.png", dpi = 100)
+```
+
+## Pregunta 2
+
+* ¿Cuál de estos códigos resultaría en el modelo que generaría este gráfico?
+
+```{r, echo=FALSE}
+knitr::include_graphics("Pregunta2.png", dpi = 100)
+```
+
+## Pregunta 2 (cont){.small}
+
+```{r, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
+library(lme4)
+ChickPoissMM1 <- glmer(weight ~ Time + Diet + (1|Chick), family = poisson, data = ChickWeight)
+
+ChickPoissMM2 <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = poisson, data = ChickWeight)
+
+ChickPoissMM3 <- glmer(weight ~ Time + Time*Diet + (1|Chick), family = poisson, data = ChickWeight)
+```
+
+## Pregunta 3
+
+* ¿Cuanto pesaria un pollo en el dia 10 en la dieta 2 basado en el modelo anterior?
+
+```{r, echo=F}
+kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+## Pregunta 3 (cont)
+
+$$y = beta_1X_1 + \beta_2X_2 + \beta_3X_1X_2 + C_0 + C_1$$
+
+## Pregunta 3 (cont)
+
+```{r}
+exp(3.83 + 10*0.07 + 0.02)
+
+exp(3.83 + 10*0.07 + (10*0.02))
+
+3.83 + 10*0.07 + 0.02
+
+3.83 + 10*0.07 + (10*0.02)
+```
+
+## Pregunta 3 discución
+
+* Interpretación de los parámetros
+
+```{r, echo=F}
+kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+## Pregunta 4
+
+* ¿Cuál es el código que mejor representa este gráfico?
+
+```{r, echo=FALSE}
+knitr::include_graphics("Pregunta4.png", dpi = 100)
+```
+
+## Pregunta 5
+
+* ¿Cuantas pendientes e interceptos espero ver en este modelo?
+
+```{r, echo=FALSE}
+knitr::include_graphics("Pregunta4.png", dpi = 100)
+```
+
+## Pregunta 6
+
+* ¿Como interpreto ese modelo?
+
+```{r, echo=F}
+kable(tidy(ChickPoissMM1), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+# Criterios de información y crossvalidation
+
+## Pregunta 7
+
+* Se realiza un experimento en un invernadero con 12 plantas, 6 de Quebec y 6 de Mississippi, de cada lugar de origen 3 se enfriaron y 3 no, luego se procedió a medir la captación de $CO_2$ de cada planta a  95, 175, 250, 350, 500, 675 y 1000 ppm de $CO_2$ ¿Que criterio de información debiera usar para elegir entre modelos que compiten?
+
+## Pregunta 7 (cont)
+
+```{r, echo = F}
+ggplot(CO2, aes(x = conc, y = uptake, group = Plant)) + geom_line(aes(color = Type, lty = Treatment)) + theme_classic()
+```
+
+## Pregunta 8 {.small}
+
+* Asumiendo que se cumplen los supuestos ¿Que modelo debo elegir entre estos dos?
+
+```{r, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
+ChickPoissMM <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = poisson, data = ChickWeight)
+
+ChickGammaMM <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = Gamma, data = ChickWeight)
+
+```
+
+```{r, echo=FALSE}
+m1 <- glance(ChickGammaMM) %>% mutate(Family = "gamma", link = "Inverse") %>% dplyr::select(-sigma)
+m2<-glance(ChickPoissMM) %>% mutate(Family = "Poisson", link = "log") %>% dplyr::select(-sigma)
+
+kable(bind_rows(m1, m2), digits = 2)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+
+```
+
+## Pregunta 9
+
+* ¿Cuál de estos modelos tendra un AICc más bajo?
+
+```{r, echo= FALSE, cache= TRUE}
+data("swiss")
+sw <- swiss %>% dplyr::select(-Infant.Mortality)
+
+fit <- lm(Fertility ~., data = sw)
+
+options(na.action = "na.fail")
+
+dd <- dredge(fit, extra = c("R^2")) %>% subset(delta < 2) %>% dplyr::select(-AICc, -delta, -weight)
+kable(dd, digits = 3)  %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+
+
