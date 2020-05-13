@@ -68,6 +68,8 @@
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
+<script src="libs/countdown-0.3.5/countdown.js"></script>
 
 
 <style type="text/css">
@@ -248,6 +250,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1" data-path="AUTO.html"><a href="AUTO.html#paquetes-necesarios-para-este-capítulo-3"><i class="fa fa-check"></i><b>4.1</b> Paquetes necesarios para este capítulo</a><ul>
 <li class="chapter" data-level="4.1.1" data-path="AUTO.html"><a href="AUTO.html#presentación-html-3"><i class="fa fa-check"></i><b>4.1.1</b> Presentación html</a></li>
 </ul></li>
+<li class="chapter" data-level="4.2" data-path="AUTO.html"><a href="AUTO.html#variables-fijas-vs-aleatorias"><i class="fa fa-check"></i><b>4.2</b> Variables fijas vs aleatorias</a></li>
+<li class="chapter" data-level="4.3" data-path="AUTO.html"><a href="AUTO.html#ejemplo-co2"><i class="fa fa-check"></i><b>4.3</b> Ejemplo CO2</a></li>
+<li class="chapter" data-level="4.4" data-path="AUTO.html"><a href="AUTO.html#selección"><i class="fa fa-check"></i><b>4.4</b> Selección</a></li>
+<li class="chapter" data-level="4.5" data-path="AUTO.html"><a href="AUTO.html#modelo"><i class="fa fa-check"></i><b>4.5</b> Modelo</a></li>
+<li class="chapter" data-level="4.6" data-path="AUTO.html"><a href="AUTO.html#modelo-1"><i class="fa fa-check"></i><b>4.6</b> Modelo</a></li>
+<li class="chapter" data-level="4.7" data-path="AUTO.html"><a href="AUTO.html#cemento"><i class="fa fa-check"></i><b>4.7</b> Cemento</a></li>
+<li class="chapter" data-level="4.8" data-path="AUTO.html"><a href="AUTO.html#como-agrego-eso-a-mumin"><i class="fa fa-check"></i><b>4.8</b> Como agrego eso a MuMIn</a></li>
+<li class="chapter" data-level="4.9" data-path="AUTO.html"><a href="AUTO.html#como-agrego-eso-a-mumin-cont"><i class="fa fa-check"></i><b>4.9</b> Como agrego eso a MuMIn (cont)</a></li>
+<li class="chapter" data-level="4.10" data-path="AUTO.html"><a href="AUTO.html#como-agrego-eso-a-mumin-cont-1"><i class="fa fa-check"></i><b>4.10</b> Como agrego eso a MuMIn (cont)</a></li>
+<li class="chapter" data-level="4.11" data-path="AUTO.html"><a href="AUTO.html#incluir-además-límite-de-numero-de-variables"><i class="fa fa-check"></i><b>4.11</b> Incluir además límite de numero de variables</a></li>
+<li class="chapter" data-level="4.12" data-path="AUTO.html"><a href="AUTO.html#pregunta-1"><i class="fa fa-check"></i><b>4.12</b> Pregunta 1</a></li>
+<li class="chapter" data-level="4.13" data-path="AUTO.html"><a href="AUTO.html#pregunta-2"><i class="fa fa-check"></i><b>4.13</b> Pregunta 2</a></li>
+<li class="chapter" data-level="4.14" data-path="AUTO.html"><a href="AUTO.html#pregunta-2-cont"><i class="fa fa-check"></i><b>4.14</b> Pregunta 2 (cont)</a></li>
+<li class="chapter" data-level="4.15" data-path="AUTO.html"><a href="AUTO.html#pregunta-3"><i class="fa fa-check"></i><b>4.15</b> Pregunta 3</a></li>
+<li class="chapter" data-level="4.16" data-path="AUTO.html"><a href="AUTO.html#pregunta-3-cont"><i class="fa fa-check"></i><b>4.16</b> Pregunta 3 (cont)</a></li>
+<li class="chapter" data-level="4.17" data-path="AUTO.html"><a href="AUTO.html#pregunta-4"><i class="fa fa-check"></i><b>4.17</b> Pregunta 4</a></li>
+<li class="chapter" data-level="4.18" data-path="AUTO.html"><a href="AUTO.html#pregunta-5"><i class="fa fa-check"></i><b>4.18</b> Pregunta 5</a></li>
+<li class="chapter" data-level="4.19" data-path="AUTO.html"><a href="AUTO.html#pregunta-5-cont"><i class="fa fa-check"></i><b>4.19</b> Pregunta 5 (cont)</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>5</b> Final Words</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -282,8 +302,3507 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>y ver la clase en vivo desde las 20:30 horas el día martes 12 de Mayo del 2020 a continuación</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ebd8p9ljyWM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
-
 </div>
+</div>
+<div id="variables-fijas-vs-aleatorias" class="section level2">
+<h2><span class="header-section-number">4.2</span> Variables fijas vs aleatorias</h2>
+<p>Tanto en los modelos lineales como en los GLM, siempre asumimos que todas las variables son fijas, esto es que toda variable tiene un efecto predecible y preciso de como afectará nuestro resultado final. Hoy introduciremos los modelos lineales mixtos y modelos generalizados mixtos, los cuales tienen variables fijas y aleatorias</p>
+<p>Estas se definen a continuación:</p>
+<ul>
+<li>Fijas (continuas o categóricas)
+<ul>
+<li>Se espera que tengan una influencia predecible y sistemática en sobre lo que queremos explicar. Además, si es que son variables categóricas usan todos (o casi todos) los niveles de un factor (Ejemplo genero)</li>
+</ul></li>
+<li><p>Aleatorias</p>
+<ul>
+<li>Se espera que su influencia sea impredecible e idiosincratica. Además no se usan todos los niveles de un factor (todos los individuos)</li>
+</ul></li>
+</ul>
+</div>
+<div id="ejemplo-co2" class="section level2">
+<h2><span class="header-section-number">4.3</span> Ejemplo CO2</h2>
+<p><img src="CursoMulti_files/figure-html/GraphCO2-1.png" width="672" /></p>
+<p>Para explicar los modelos lineales mixtos, usaremos una base de datos de un experimento con plantas de la misma especie <span class="citation">(Potvin, Lechowicz, and Tardif <a href="#ref-potvin1990statistical">1990</a>)</span>, la base de datos podemos verla entera en la tabla <a href="#tab:DatosCo2"><strong>??</strong></a> y observar las relaciones en le figura <a href="#fig:DatosCo2"><strong>??</strong></a>. En este experimento distinas plantas fueron expuestas a distintas concentraciones de <span class="math inline">\(CO_2\)</span>, pero anteriormente fueron tratadas o no con temperaturas bajas. Este tratamiento está codificado en la columna <em>Treatment</em>. Además de esto tenemos que hay plantas provenientes de Mississippi y de Quebec y finalmente tenemos la identidad de las plantas en la variable <em>Plant</em></p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Plant
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Type
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Treatment
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+conc
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+uptake
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+16.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+30.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+34.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+37.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+35.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+39.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+39.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+13.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+27.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+37.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+41.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+40.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+41.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+44.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+16.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+32.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+40.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+42.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+42.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+43.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qn3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+45.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+14.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+24.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+30.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+34.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+35.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc1
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+38.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+9.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+27.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+35.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+38.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+38.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+37.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+42.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+15.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+21.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+38.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+34.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+38.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+39.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Qc3
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+41.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+10.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+19.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+26.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+30.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+30.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+32.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+35.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+22.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+30.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+31.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+32.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+31.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+31.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+11.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+19.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+25.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+27.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+28.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+28.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mn3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+nonchilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+27.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+10.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+14.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+18.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+18.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+19.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+22.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc1
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+21.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+7.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+11.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+12.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+13.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+12.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+13.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc2
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+14.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+10.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+18.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+250
+</td>
+<td style="text-align:right;">
+17.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+17.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+17.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+675
+</td>
+<td style="text-align:right;">
+18.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mc3
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+chilled
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+19.9
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Partiremos con un ejemplo de un modelo lineal y un modelo lineal mixto en paralelo para empezar a trabajar. El modelo codificado como <code>mod1</code> es un modelo lineal, en el cual asumimos que existirá un comportamiento logarítmico de la captación de <span class="math inline">\(CO2\)</span>, esto es, se saturará la relación</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">library</span>(lme4)</a>
+<a class="sourceLine" id="cb70-2" data-line-number="2">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>Type <span class="op">*</span><span class="st"> </span>Treatment <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(<span class="kw">log</span>(conc)) <span class="op">+</span><span class="st"> </span>conc, <span class="dt">data =</span> CO2)</a>
+<a class="sourceLine" id="cb70-3" data-line-number="3">mod2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(uptake <span class="op">~</span><span class="st"> </span>Type <span class="op">*</span><span class="st"> </span>Treatment <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(<span class="kw">log</span>(conc)) <span class="op">+</span><span class="st"> </span>conc <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Plant), <span class="dt">data =</span> CO2)</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</a>
+<a class="sourceLine" id="cb71-2" data-line-number="2">Max.Vars &lt;-<span class="st"> </span><span class="kw">floor</span>(<span class="kw">nrow</span>(CO2)<span class="op">/</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb71-3" data-line-number="3">Seleccion &lt;-<span class="st"> </span><span class="kw">dredge</span>(mod2, <span class="dt">m.lim =</span> <span class="kw">c</span>(<span class="dv">0</span>, Max.Vars))</a></code></pre></div>
+</div>
+<div id="selección" class="section level2 build">
+<h2><span class="header-section-number">4.4</span> Selección</h2>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+(Intercept)
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+conc
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+I(log(conc))
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Treatment
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Type
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Treatment:Type
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+df
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+logLik
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+AICc
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+delta
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+-57.247
+</td>
+<td style="text-align:right;">
+-0.025
+</td>
+<td style="text-align:right;">
+17.789
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+-230.705
+</td>
+<td style="text-align:right;">
+479.331
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.963
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-55.608
+</td>
+<td style="text-align:right;">
+-0.025
+</td>
+<td style="text-align:right;">
+17.789
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-235.188
+</td>
+<td style="text-align:right;">
+485.850
+</td>
+<td style="text-align:right;">
+6.519
+</td>
+<td style="text-align:right;">
+0.037
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-59.037
+</td>
+<td style="text-align:right;">
+-0.025
+</td>
+<td style="text-align:right;">
+17.789
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-241.972
+</td>
+<td style="text-align:right;">
+497.036
+</td>
+<td style="text-align:right;">
+17.705
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-14.037
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+8.484
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-241.168
+</td>
+<td style="text-align:right;">
+497.809
+</td>
+<td style="text-align:right;">
+18.478
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-12.398
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+8.484
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-245.650
+</td>
+<td style="text-align:right;">
+504.392
+</td>
+<td style="text-align:right;">
+25.061
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-61.937
+</td>
+<td style="text-align:right;">
+-0.025
+</td>
+<td style="text-align:right;">
+17.789
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-246.728
+</td>
+<td style="text-align:right;">
+506.546
+</td>
+<td style="text-align:right;">
+27.215
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-65.367
+</td>
+<td style="text-align:right;">
+-0.025
+</td>
+<td style="text-align:right;">
+17.789
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-250.329
+</td>
+<td style="text-align:right;">
+511.428
+</td>
+<td style="text-align:right;">
+32.097
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-15.827
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+8.484
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-252.435
+</td>
+<td style="text-align:right;">
+515.638
+</td>
+<td style="text-align:right;">
+36.307
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-18.727
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+8.484
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-257.190
+</td>
+<td style="text-align:right;">
+525.149
+</td>
+<td style="text-align:right;">
+45.818
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-22.157
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+8.484
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-260.792
+</td>
+<td style="text-align:right;">
+530.089
+</td>
+<td style="text-align:right;">
+50.759
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+27.621
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-267.614
+</td>
+<td style="text-align:right;">
+550.702
+</td>
+<td style="text-align:right;">
+71.371
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+29.260
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-272.096
+</td>
+<td style="text-align:right;">
+557.284
+</td>
+<td style="text-align:right;">
+77.953
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+25.830
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-278.881
+</td>
+<td style="text-align:right;">
+568.530
+</td>
+<td style="text-align:right;">
+89.200
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+22.930
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-283.636
+</td>
+<td style="text-align:right;">
+578.041
+</td>
+<td style="text-align:right;">
+98.710
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19.500
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-287.238
+</td>
+<td style="text-align:right;">
+582.982
+</td>
+<td style="text-align:right;">
+103.651
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+35.333
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-286.019
+</td>
+<td style="text-align:right;">
+585.128
+</td>
+<td style="text-align:right;">
+105.798
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+36.973
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+-289.930
+</td>
+<td style="text-align:right;">
+590.630
+</td>
+<td style="text-align:right;">
+111.299
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+33.543
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-296.656
+</td>
+<td style="text-align:right;">
+601.819
+</td>
+<td style="text-align:right;">
+122.488
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.643
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-301.412
+</td>
+<td style="text-align:right;">
+611.330
+</td>
+<td style="text-align:right;">
+131.999
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+27.213
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-305.013
+</td>
+<td style="text-align:right;">
+616.327
+</td>
+<td style="text-align:right;">
+136.996
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+</tbody>
+</table>
+</div></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>Solo el primer modelo es seleccionado</li>
+</ul>
+</div>
+<div id="modelo" class="section level2">
+<h2><span class="header-section-number">4.5</span> Modelo</h2>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1">BestModel &lt;-<span class="st"> </span><span class="kw">get.models</span>(Seleccion, <span class="dv">1</span>)[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb72-2" data-line-number="2">broom<span class="op">::</span><span class="kw">tidy</span>(BestModel)</a></code></pre></div>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:left;">
+group
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-57.247
+</td>
+<td style="text-align:right;">
+7.867
+</td>
+<td style="text-align:right;">
+-7.277
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+conc
+</td>
+<td style="text-align:right;">
+-0.025
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+<td style="text-align:right;">
+-6.075
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I(log(conc))
+</td>
+<td style="text-align:right;">
+17.789
+</td>
+<td style="text-align:right;">
+1.622
+</td>
+<td style="text-align:right;">
+10.970
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Treatmentchilled
+</td>
+<td style="text-align:right;">
+-3.581
+</td>
+<td style="text-align:right;">
+1.835
+</td>
+<td style="text-align:right;">
+-1.952
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TypeMississippi
+</td>
+<td style="text-align:right;">
+-9.381
+</td>
+<td style="text-align:right;">
+1.835
+</td>
+<td style="text-align:right;">
+-5.112
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Treatmentchilled:TypeMississippi
+</td>
+<td style="text-align:right;">
+-6.557
+</td>
+<td style="text-align:right;">
+2.595
+</td>
+<td style="text-align:right;">
+-2.527
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sd_(Intercept).Plant
+</td>
+<td style="text-align:right;">
+1.769
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+Plant
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sd_Observation.Residual
+</td>
+<td style="text-align:right;">
+3.667
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+Residual
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="modelo-1" class="section level2">
+<h2><span class="header-section-number">4.6</span> Modelo</h2>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
+</div>
+<div id="cemento" class="section level2">
+<h2><span class="header-section-number">4.7</span> Cemento</h2>
+<ul>
+<li>¿Que problema tiene la siguiente base de datos para LMs o GLMs?</li>
+<li>Ejemplo base de datos <code>Cement</code> de MuMIn</li>
+</ul>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+</div>
+<div id="como-agrego-eso-a-mumin" class="section level2">
+<h2><span class="header-section-number">4.8</span> Como agrego eso a MuMIn</h2>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">GlobalMod &lt;-<span class="st"> </span><span class="kw">lm</span>(Calorias <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> Cement2)</a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="kw">cor</span>(Cement2[, <span class="dv">-1</span>])</a></code></pre></div>
+<table class="table table-striped table-hover" style="font-size: 20px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+CaAl
+</th>
+<th style="text-align:right;">
+SiCa3
+</th>
+<th style="text-align:right;">
+Ca2AlFe
+</th>
+<th style="text-align:right;">
+Ca2Si
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CaAl
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.2285795
+</td>
+<td style="text-align:right;">
+-0.8241338
+</td>
+<td style="text-align:right;">
+-0.2454451
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SiCa3
+</td>
+<td style="text-align:right;">
+0.2285795
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+-0.1392424
+</td>
+<td style="text-align:right;">
+-0.9729550
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ca2AlFe
+</td>
+<td style="text-align:right;">
+-0.8241338
+</td>
+<td style="text-align:right;">
+-0.1392424
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.0295370
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ca2Si
+</td>
+<td style="text-align:right;">
+-0.2454451
+</td>
+<td style="text-align:right;">
+-0.9729550
+</td>
+<td style="text-align:right;">
+0.0295370
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="como-agrego-eso-a-mumin-cont" class="section level2">
+<h2><span class="header-section-number">4.9</span> Como agrego eso a MuMIn (cont)</h2>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">nm &lt;-<span class="st"> </span><span class="kw">colnames</span>(Cement2[<span class="op">-</span><span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb75-2" data-line-number="2">smat &lt;-<span class="st"> </span><span class="kw">abs</span>(<span class="kw">cor</span>(Cement2[, <span class="dv">-1</span>])) <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.7</span></a>
+<a class="sourceLine" id="cb75-3" data-line-number="3">smat[<span class="op">!</span><span class="kw">lower.tri</span>(smat)] &lt;-<span class="st"> </span><span class="ot">NA</span></a></code></pre></div>
+<table class="table table-striped table-hover" style="font-size: 20px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+CaAl
+</th>
+<th style="text-align:left;">
+SiCa3
+</th>
+<th style="text-align:left;">
+Ca2AlFe
+</th>
+<th style="text-align:left;">
+Ca2Si
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CaAl
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SiCa3
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ca2AlFe
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ca2Si
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="como-agrego-eso-a-mumin-cont-1" class="section level2">
+<h2><span class="header-section-number">4.10</span> Como agrego eso a MuMIn (cont)</h2>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</a>
+<a class="sourceLine" id="cb76-2" data-line-number="2">Selected &lt;-<span class="st"> </span><span class="kw">dredge</span>(GlobalMod, <span class="dt">subset =</span> smat)</a></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+(Intercept)
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Ca2AlFe
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Ca2Si
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+CaAl
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+SiCa3
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+df
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+logLik
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+AICc
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+delta
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+52.58
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+1.47
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-28.16
+</td>
+<td style="text-align:right;">
+69.31
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.84
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+103.10
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+-0.61
+</td>
+<td style="text-align:right;">
+1.44
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-29.82
+</td>
+<td style="text-align:right;">
+72.63
+</td>
+<td style="text-align:right;">
+3.32
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+131.28
+</td>
+<td style="text-align:right;">
+-1.20
+</td>
+<td style="text-align:right;">
+-0.72
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-35.37
+</td>
+<td style="text-align:right;">
+83.74
+</td>
+<td style="text-align:right;">
+14.43
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+72.07
+</td>
+<td style="text-align:right;">
+-1.01
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+0.73
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+-40.96
+</td>
+<td style="text-align:right;">
+94.93
+</td>
+<td style="text-align:right;">
+25.62
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+117.57
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+-0.74
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-45.87
+</td>
+<td style="text-align:right;">
+100.41
+</td>
+<td style="text-align:right;">
+31.10
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+57.42
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+0.79
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-46.04
+</td>
+<td style="text-align:right;">
+100.74
+</td>
+<td style="text-align:right;">
+31.42
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+81.48
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+1.87
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-48.21
+</td>
+<td style="text-align:right;">
+105.08
+</td>
+<td style="text-align:right;">
+35.77
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+110.20
+</td>
+<td style="text-align:right;">
+-1.26
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-50.98
+</td>
+<td style="text-align:right;">
+110.63
+</td>
+<td style="text-align:right;">
+41.31
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+95.42
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-53.17
+</td>
+<td style="text-align:right;">
+111.54
+</td>
+<td style="text-align:right;">
+42.22
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="incluir-además-límite-de-numero-de-variables" class="section level2">
+<h2><span class="header-section-number">4.11</span> Incluir además límite de numero de variables</h2>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</a>
+<a class="sourceLine" id="cb77-2" data-line-number="2">Selected &lt;-<span class="st"> </span><span class="kw">dredge</span>(GlobalMod, <span class="dt">subset =</span> smat, <span class="dt">m.lim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">floor</span>(<span class="kw">nrow</span>(Cement)<span class="op">/</span><span class="dv">10</span>)))</a></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+(Intercept)
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Ca2AlFe
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Ca2Si
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+CaAl
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+SiCa3
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+df
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+logLik
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+AICc
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+delta
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+117.57
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+-0.74
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-45.87
+</td>
+<td style="text-align:right;">
+100.41
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.51
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+57.42
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+0.79
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-46.04
+</td>
+<td style="text-align:right;">
+100.74
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+<td style="text-align:right;">
+0.43
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+81.48
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+1.87
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-48.21
+</td>
+<td style="text-align:right;">
+105.08
+</td>
+<td style="text-align:right;">
+4.67
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+110.20
+</td>
+<td style="text-align:right;">
+-1.26
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-50.98
+</td>
+<td style="text-align:right;">
+110.63
+</td>
+<td style="text-align:right;">
+10.22
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+95.42
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-53.17
+</td>
+<td style="text-align:right;">
+111.54
+</td>
+<td style="text-align:right;">
+11.13
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="pregunta-1" class="section level2 build">
+<h2><span class="header-section-number">4.12</span> Pregunta 1</h2>
+<ul>
+<li>¿Cual de estas relaciones es la que uno esperaría ver al finalizar el experimento?</li>
+</ul>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
+<div class="countdown" id="timer_5ebb3d40" style="right:0;bottom:0;" data-audio="true" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">40</span></code>
+</div>
+<ul>
+<li>Respuesta: A</li>
+</ul>
+</div>
+<div id="pregunta-2" class="section level2">
+<h2><span class="header-section-number">4.13</span> Pregunta 2</h2>
+<ul>
+<li>¿Cuál de estos códigos resultaría en el modelo que generaría este gráfico?</li>
+</ul>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1">A &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
+<a class="sourceLine" id="cb78-2" data-line-number="2">B &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
+<a class="sourceLine" id="cb78-3" data-line-number="3">C &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time<span class="op">:</span>Diet, <span class="dt">family =</span> poisson)</a></code></pre></div>
+<div class="countdown" id="timer_5ebb3cbc" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">40</span></code>
+</div>
+</div>
+<div id="pregunta-2-cont" class="section level2 small">
+<h2><span class="header-section-number">4.14</span> Pregunta 2 (cont)</h2>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">library</span>(lme4)</a>
+<a class="sourceLine" id="cb79-2" data-line-number="2">ChickPoissMM1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Chick), <span class="dt">family =</span> poisson, </a>
+<a class="sourceLine" id="cb79-3" data-line-number="3">    <span class="dt">data =</span> ChickWeight)</a>
+<a class="sourceLine" id="cb79-4" data-line-number="4">ChickPoissMM2 &lt;-<span class="st"> </span><span class="kw">glmer</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time<span class="op">:</span>Diet <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Chick), </a>
+<a class="sourceLine" id="cb79-5" data-line-number="5">    <span class="dt">family =</span> poisson, <span class="dt">data =</span> ChickWeight)</a>
+<a class="sourceLine" id="cb79-6" data-line-number="6">ChickPoissMM3 &lt;-<span class="st"> </span><span class="kw">glmer</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time <span class="op">*</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Chick), </a>
+<a class="sourceLine" id="cb79-7" data-line-number="7">    <span class="dt">family =</span> poisson, <span class="dt">data =</span> ChickWeight)</a></code></pre></div>
+</div>
+<div id="pregunta-3" class="section level2">
+<h2><span class="header-section-number">4.15</span> Pregunta 3</h2>
+<ul>
+<li>¿Cuanto pesaria un pollo en el dia 10 en la dieta 2 basado en el modelo anterior?</li>
+</ul>
+<table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+<th style="text-align:left;">
+group
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+3.84
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+<td style="text-align:right;">
+121.74
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Time
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+63.72
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Time:Diet2
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+4.99
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Time:Diet3
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+12.59
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Time:Diet4
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+5.91
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+fixed
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sd_(Intercept).Chick
+</td>
+<td style="text-align:right;">
+0.21
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+Chick
+</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>A = 94.6324083</li>
+<li>B = 113.2955623</li>
+<li>C = 4.73</li>
+</ul>
+<div class="countdown" id="timer_5ebb3fab" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">40</span></code>
+</div>
+</div>
+<div id="pregunta-3-cont" class="section level2">
+<h2><span class="header-section-number">4.16</span> Pregunta 3 (cont)</h2>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="kw">exp</span>(<span class="fl">3.83</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.07</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.02</span>)</a></code></pre></div>
+<pre><code>## [1] 94.63241</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="kw">exp</span>(<span class="fl">3.83</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.07</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.02</span>))</a></code></pre></div>
+<pre><code>## [1] 113.2956</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="fl">3.83</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.07</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.02</span>)</a></code></pre></div>
+<pre><code>## [1] 4.73</code></pre>
+</div>
+<div id="pregunta-4" class="section level2">
+<h2><span class="header-section-number">4.17</span> Pregunta 4</h2>
+<ul>
+<li>¿Cuál es el código que mejor representa este gráfico?</li>
+</ul>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1">A &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
+<a class="sourceLine" id="cb86-2" data-line-number="2">B &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
+<a class="sourceLine" id="cb86-3" data-line-number="3">C &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time<span class="op">:</span>Diet, <span class="dt">family =</span> poisson)</a></code></pre></div>
+<div class="countdown" id="timer_5ebb3f64" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">40</span></code>
+</div>
+</div>
+<div id="pregunta-5" class="section level2">
+<h2><span class="header-section-number">4.18</span> Pregunta 5</h2>
+<ul>
+<li>¿Cuantas pendientes e interceptos espero ver en este modelo?</li>
+</ul>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
+<div class="countdown" id="timer_5ebb3d36" style="right:0;bottom:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">40</span></code>
+</div>
+</div>
+<div id="pregunta-5-cont" class="section level2">
+<h2><span class="header-section-number">4.19</span> Pregunta 5 (cont)</h2>
+<table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+3.70
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+346.30
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Time
+</td>
+<td style="text-align:right;">
+0.08
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+125.25
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Diet2
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+13.69
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Diet3
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+29.46
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Diet4
+</td>
+<td style="text-align:right;">
+0.26
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+24.88
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
 <h3>References</h3>
@@ -293,6 +3812,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="ref-Bates_2015">
 <p>Bates, Douglas, Martin Mächler, Ben Bolker, and Steve Walker. 2015. “Fitting Linear Mixed-Effects Models Using lme4.” <em>Journal of Statistical Software</em> 67 (1): 1–48. <a href="https://doi.org/10.18637/jss.v067.i01">https://doi.org/10.18637/jss.v067.i01</a>.</p>
+</div>
+<div id="ref-potvin1990statistical">
+<p>Potvin, Catherine, Martin J Lechowicz, and Serge Tardif. 1990. “The Statistical Analysis of Ecophysiological Response Curves Obtained from Experiments Involving Repeated Measures.” <em>Ecology</em> 71 (4). Wiley Online Library: 1389–1400.</p>
 </div>
 <div id="ref-R-broom">
 <p>Robinson, David, and Alex Hayes. 2020. <em>Broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a>.</p>

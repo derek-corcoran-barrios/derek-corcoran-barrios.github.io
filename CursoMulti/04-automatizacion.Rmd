@@ -18,3 +18,307 @@ Puedes seguir la clase de los videos en el siguiente [link](https://derek-corcor
 y ver la clase en vivo desde las 20:30 horas el día martes 12 de Mayo del 2020 a continuación
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ebd8p9ljyWM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+## Variables fijas vs aleatorias
+
+Tanto en los modelos lineales como en los GLM, siempre asumimos que todas las variables son fijas, esto es que toda variable tiene un efecto predecible y preciso de como afectará nuestro resultado final. Hoy introduciremos los modelos lineales mixtos y modelos generalizados mixtos, los cuales tienen variables fijas y aleatorias
+
+Estas se definen a continuación:
+
+* Fijas (continuas o categóricas)
+    + Se espera que tengan una influencia predecible y sistemática en sobre lo que queremos explicar. Además, si es que son variables categóricas usan todos (o casi todos) los niveles de un factor (Ejemplo genero)
+
+* Aleatorias 
+
+    + Se espera que su influencia sea impredecible e idiosincratica. Además no se usan todos los niveles de un factor (todos los individuos)
+    
+## Ejemplo CO2
+
+```{r GraphCO2, echo = FALSE}
+data(CO2)
+ggplot(CO2, aes(x = conc, y = uptake)) + geom_point(aes(shape = Treatment, fill = Type, color = Type)) + theme_classic()
+```
+
+
+Para explicar los modelos lineales mixtos, usaremos una base de datos de un experimento con plantas de la misma especie [@potvin1990statistical], la base de datos podemos verla entera en la tabla \@ref(tab:DatosCo2) y observar las relaciones en le figura \@ref(fig:DatosCo2). En este experimento distinas plantas fueron expuestas a distintas concentraciones de $CO_2$, pero anteriormente fueron tratadas o no con temperaturas bajas. Este tratamiento está codificado en la columna *Treatment*. Además de esto tenemos que hay plantas provenientes de Mississippi y de Quebec y finalmente tenemos la identidad de las plantas en la variable *Plant*
+
+```{r DatosCo2, echo = FALSE}
+kable(CO2, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
+```
+
+Partiremos con un ejemplo de un modelo lineal y un modelo lineal mixto en paralelo para empezar a trabajar. El modelo codificado como `mod1` es un modelo lineal, en el cual asumimos que existirá un comportamiento logarítmico de la captación de $CO2$, esto es, se saturará la relación
+
+```{r, echo = TRUE}
+library(lme4)
+mod1 <- lm(uptake ~ Type*Treatment + I(log(conc)) + conc, data = CO2)
+mod2 <- lmer(uptake ~ Type*Treatment + I(log(conc)) + conc + (1|Plant), data = CO2)
+```
+
+
+```{r, cache = TRUE, echo=TRUE}
+options(na.action = "na.fail")
+
+Max.Vars <- floor(nrow(CO2)/10)
+
+Seleccion <- dredge(mod2, m.lim = c(0, Max.Vars))
+```
+
+## Selección {.build}
+
+```{r, echo = FALSE}
+DF <- as.data.frame(Seleccion) %>%  mutate(weight = as.numeric(weight)) %>% mutate_if(is.factor, as.character)
+
+kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, font_size = 16) %>% scroll_box(width = "100%", height = "400px")
+```
+
+* Solo el primer modelo es seleccionado
+
+## Modelo
+
+```{r, eval = FALSE}
+BestModel <- get.models(Seleccion, 1)[[1]]
+broom::tidy(BestModel)
+```
+
+```{r, echo=FALSE}
+BestModel <- get.models(Seleccion, 1)[[1]]
+DF <- broom::tidy(BestModel)
+
+kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
+```
+
+## Modelo
+
+```{r, echo = FALSE}
+library(lme4)
+NewData <- CO2
+
+NewData$Pred <- predict(BestModel, re.form=NA, se.fit = T)
+ggplot(NewData, aes(x = conc, y = Pred)) + geom_line(aes(color = Type, lty = Treatment)) + geom_point(aes(y = uptake, color = Type, shape = Treatment)) + theme_bw()
+```
+
+
+## Cemento
+
+* ¿Que problema tiene la siguiente base de datos para LMs o GLMs?
+* Ejemplo base de datos `Cement` de MuMIn
+
+```{r, cache=TRUE, echo=FALSE}
+library(MuMIn)
+data("Cement")
+
+Cement2 <- Cement %>% rename(Calorias  = y, CaAl = X1, SiCa3 = X2, Ca2AlFe = X3, Ca2Si = X4)
+
+panel.hist <- function(x, ...)
+{
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(usr[1:2], 0, 1.5) )
+  h <- hist(x, plot = FALSE)
+  breaks <- h$breaks; nB <- length(breaks)
+  y <- h$counts; y <- y/max(y)
+  rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  r <- cor(x, y)
+  txt <- format(c(r, 0.123456789), digits = digits)[1]
+  txt <- paste0(prefix, txt)
+  if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+  text(0.5, 0.5, txt, cex = cex.cor * abs(r))
+}
+
+pairs(Cement2, lower.panel = panel.smooth, upper.panel = panel.cor, diag.panel = panel.hist)
+
+
+```
+
+## Como agrego eso a MuMIn
+
+```{r, echo=TRUE}
+GlobalMod <- lm(Calorias ~., data = Cement2)
+```
+
+
+```{r, echo=TRUE, eval=FALSE}
+cor(Cement2[,-1])
+```
+
+```{r, echo=FALSE}
+kable(cor(Cement2[,-1])) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+```
+
+
+## Como agrego eso a MuMIn (cont)
+
+```{r, echo=TRUE}
+nm <- colnames(Cement2[-1])
+smat <- abs(cor(Cement2[, -1])) <= .7
+smat[!lower.tri(smat)] <- NA
+```
+
+```{r, echo=FALSE}
+kable(smat) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+```
+
+## Como agrego eso a MuMIn (cont)
+
+```{r, cache= TRUE, echo=TRUE}
+options(na.action = "na.fail")
+Selected <- dredge(GlobalMod, subset = smat)
+```
+
+```{r, echo=FALSE}
+Selected <- Selected %>% mutate(weight = as.numeric(weight))
+kable(Selected, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) %>% scroll_box(width = "100%", height = "400px")
+```
+
+## Incluir además límite de numero de variables
+
+```{r, cache= TRUE, echo=TRUE}
+options(na.action = "na.fail")
+Selected <- dredge(GlobalMod, subset = smat, m.lim = c(0, floor(nrow(Cement)/10)))
+```
+
+```{r, echo=FALSE}
+Selected <- Selected %>% mutate(weight = as.numeric(weight))
+kable(Selected, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F) %>% scroll_box(width = "100%", height = "400px")
+```
+
+
+
+```{r, echo=FALSE}
+#sjPlot::plot_model(logitmod, type = "eff", terms = c("temp")) + ggtitle("") + ylab("Probabilidad de fallo") + xlab("Temp F") + theme_classic()
+```
+
+
+## Pregunta 1 {.build}
+
+* ¿Cual de estas relaciones es la que uno esperaría ver al finalizar el experimento?
+
+```{r, echo=FALSE, fig.height= 4}
+Fit1 <- glm(weight ~ Time + Diet:Time, family = poisson, data = ChickWeight)
+  
+Fit2 <- glm(weight ~ Time + Diet, family = poisson, data = ChickWeight)
+  
+Fit3 <- glm(weight ~ Time*Diet, family = poisson, data = ChickWeight)
+
+DATA <- ChickWeight
+DATA1 <- ChickWeight
+DATA2 <- ChickWeight
+DATA3 <- ChickWeight
+
+
+DATA1$Pred <- predict(Fit1, newdata = DATA, type = "response")
+DATA1$sd <- predict(Fit1, newdata = DATA, type = "response", se.fit = T)$se.fit
+DATA1$Model <- "A"
+
+DATA2$Pred <- predict(Fit2, newdata = DATA, type = "response")
+DATA2$sd <- predict(Fit2, newdata = DATA, type = "response", se.fit = T)$se.fit
+DATA2$Model <- "B"
+
+DATA3$Pred <- predict(Fit3, newdata = DATA, type = "response")
+DATA3$sd <- predict(Fit3, newdata = DATA, type = "response", se.fit = T)$se.fit
+DATA3$Model <- "C"
+
+DATA <- list(DATA1, DATA2, DATA3) %>% reduce(bind_rows)
+
+ggplot(DATA, aes(x = Time, y = Pred, color = Diet)) + geom_ribbon(aes(ymax = Pred + sd, ymin = Pred - sd, fill = Diet), alpha = 0.5) + geom_line(aes(color = Diet)) + facet_grid(.~ Model) + theme_bw()
+
+library(countdown)
+library(beepr)
+```
+
+`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, play_sound = TRUE)`
+
+* Respuesta: A
+
+## Pregunta 2
+
+* ¿Cuál de estos códigos resultaría en el modelo que generaría este gráfico?
+
+```{r, echo=FALSE, fig.height= 3}
+ggplot(DATA1, aes(x = Time, y = Pred, color = Diet)) + geom_ribbon(aes(ymax = Pred + sd, ymin = Pred - sd, fill = Diet), alpha = 0.5) + geom_line(aes(color = Diet)) + theme_bw()
+```
+
+```{r, eval = F}
+A <- glm(weight ~ Time + Diet, family = poisson)
+B <- glm(weight ~ Time*Diet, family = poisson)
+C <- glm(weight ~ Time + Time:Diet, family = poisson)
+```
+
+
+`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
+
+## Pregunta 2 (cont){.small}
+
+```{r, tidy.opts= list(blank = FALSE, width.cutoff = 60)}
+library(lme4)
+ChickPoissMM1 <- glmer(weight ~ Time + Diet + (1|Chick), family = poisson, data = ChickWeight)
+
+ChickPoissMM2 <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = poisson, data = ChickWeight)
+
+ChickPoissMM3 <- glmer(weight ~ Time + Time*Diet + (1|Chick), family = poisson, data = ChickWeight)
+```
+
+## Pregunta 3
+
+* ¿Cuanto pesaria un pollo en el dia 10 en la dieta 2 basado en el modelo anterior?
+
+```{r, echo=F}
+kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+* A = `r exp(3.83 + 10*0.07 + 0.02)`
+* B = `r exp(3.83 + 10*0.07 + (10*0.02))`
+* C = `r 3.83 + 10*0.07 + (10*0.02)`
+
+`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
+
+## Pregunta 3 (cont)
+
+```{r}
+exp(3.83 + 10*0.07 + 0.02)
+
+exp(3.83 + 10*0.07 + (10*0.02))
+
+3.83 + 10*0.07 + (10*0.02)
+```
+
+
+## Pregunta 4
+
+* ¿Cuál es el código que mejor representa este gráfico?
+
+
+```{r, echo=FALSE, fig.height= 3}
+ggplot(DATA2, aes(x = Time, y = Pred, color = Diet)) + geom_ribbon(aes(ymax = Pred + sd, ymin = Pred - sd, fill = Diet), alpha = 0.5) + geom_line(aes(color = Diet)) + theme_bw()
+```
+
+```{r, eval = F}
+A <- glm(weight ~ Time + Diet, family = poisson)
+B <- glm(weight ~ Time*Diet, family = poisson)
+C <- glm(weight ~ Time + Time:Diet, family = poisson)
+```
+
+`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
+
+## Pregunta 5
+
+* ¿Cuantas pendientes e interceptos espero ver en este modelo?
+
+```{r, echo=FALSE, fig.height= 3}
+ggplot(DATA2, aes(x = Time, y = Pred, color = Diet)) + geom_ribbon(aes(ymax = Pred + sd, ymin = Pred - sd, fill = Diet), alpha = 0.5) + geom_line(aes(color = Diet)) + theme_bw()
+```
+
+`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10)`
+
+## Pregunta 5 (cont)
+
+```{r, echo = F}
+kable(tidy(Fit2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
