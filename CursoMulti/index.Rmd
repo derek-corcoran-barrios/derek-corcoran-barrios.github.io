@@ -75,6 +75,8 @@ El objetivo de este curso es el poder decidir cuando hacer modelos predictivos y
 
 + Capítulo \@ref(AUTO) *Automatización de selecciond de modelos*: En este capítulo entenderemos la diferencia entre variables fijas y aleatorieas, y además veremos como automatizar la selección de modelos.
 
++ Capítulo \@ref(CROSS) *Crossvalidation*: En este capítulo entenderemos el concepto de crossvalidation, un concepto totalmente necesario para poder entender Machine Learning.
+
 ## Metodología
 
 Todas las clases estarán divididas en dos partes: I. Clases expositivas de principios y herramientas, donde se presentarán los principios de investigación reproducible y tidy data, junto con las herramientas actuales más utilizadas, y II. Clases prácticas donde cada estudiante trabajará con datos propios para desarrollar un documento reproducible. Los estudiantes que no cuenten con datos propios podrán acceder a sets de datos para su trabajo o podrán simularlos, dependiendo del caso.
