@@ -1,35 +1,269 @@
 ---
-title: "Capitulo_5"
+title: "Límites de selección de modelos y como resolverlo"
 author: "Derek Corcoran"
-date: "5/14/2020"
-output: ioslides_presentation
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, tidy = TRUE)
+library(MuMIn)
+library(tidyverse)
+library(broom)
+library(caret)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
 ```
 
-## R Markdown
+## A veces no se pueden usar criterios de información {.build}
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+* No se pueden calcular IC
+* No se cumplen supuestos de criterios de información
+* Comparacion entre distintos tipos de modelos (GLM, vs GAM vs RPART, etc)
+* Se aplican distintas transformaciones a la variable respuesta (GLM)
+* Varios terminos polinomiales (no se debe promediar modelos)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+## Alternativas a los métodos de criterios de información
 
-## Slide with Bullets
+* Simular que presentamos datos nuevos
+  + Crossvalidation
+  + Bootstrapping
+  + Leave one out
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
-
-## Slide with R Output
-
-```{r cars, echo = TRUE}
-summary(cars)
+```{r, echo=FALSE}
+knitr::include_graphics("K-fold_cross_validation_EN.jpg", dpi = 70)
 ```
 
-## Slide with Plot
 
-```{r pressure}
-plot(pressure)
+## k-fold Crossvalidation
+
+* Divido aleatoreamente mi base de datos en $k$ grupos
+* Entreno mis modelos con $k-1$ grupos 
+* Testeo con el grupo $k_i$
+* Promedio medida de desempeño por ejemplo $R^2$
+
+
+## Volvamos al ejemplo de hp {.build}
+
+```{r, echo = FALSE}
+data(mtcars)
+ggplot(mtcars, aes(x = hp, y = mpg)) + geom_smooth(method = "lm", lty = 2, color = "red") + geom_point() + theme_classic()
+```
+
+* Veamos como evaluamos 1 modelo $mpg = \beta_1 hp +c$
+* $R^2$ = `r round(broom::glance(lm(mpg~hp, data = mtcars))$r.squared,2)`
+
+# Paso 1 K-fold
+
+## Divido my base en K  {.build}
+
+* En este caso K = 5
+    + Dividiremos nuestra base de datos en 5 partes iguales
+
+```{r, echo = FALSE, cache=TRUE}
+set.seed(2018)
+Folds <- createFolds(mtcars$hp, 5)
+
+COLS <- rainbow(5)
+#data("diamonds")  
+flds <- createFolds(mtcars$hp, k = 5, returnTrain = FALSE)
+FOLDS <- list()
+for(i in 1:5){
+  FOLDS[[i]] <- mtcars[flds[[i]],]
+  FOLDS[[i]]$Fold <- names(flds)[[i]]
+  FOLDS[[i]]$Color <- COLS[i]
+}
+
+FOLDS <- bind_rows(FOLDS)
+
+ggplot(FOLDS, aes(x = hp, y = mpg)) + geom_point(aes(color = Fold), alpha = 0.5) + theme_classic() + scale_color_manual(values =  COLS)
+
+```
+
+
+# Paso 2 Entreno y testeo para cada K
+
+## Fold 1
+
+```{r, echo=FALSE}
+  temp <- COLS
+  temp[!str_detect(temp, pattern = COLS[1])] <- "black"
+  Train <- filter(FOLDS, Fold != unique(Fold)[1])
+  Test <- filter(FOLDS, Fold == unique(Fold)[1])
+  mod <- lm(mpg ~ hp, data = Train)
+  Test$pred <- predict(mod, Test)
+  Test$Rsq <- round(postResample(pred = Test$pred, obs = Test$mpg)[2],2)
+  print(ggplot(Train, aes(x = hp, y = mpg)) + geom_point(color = "black", alpha = 0.5) + geom_point(data = Test, color = COLS[1]) + geom_line(data = Test, aes(x = hp, y = pred), lty = 2, color = "red") + geom_text(data = Test, x = 250, y = 30, aes(label =paste("Rsq =", Rsq))) + theme_classic() + theme(legend.position = "none") + ylim(c(3, 35))+ xlim(c(45,345))) 
+```
+
+* Rsq = c(0.61)
+
+## Fold 2
+
+```{r, echo=FALSE}
+  temp <- COLS
+  temp[!str_detect(temp, pattern = COLS[2])] <- "black"
+  Train <- filter(FOLDS, Fold != unique(Fold)[2])
+  Test <- filter(FOLDS, Fold == unique(Fold)[2])
+  mod <- lm(mpg ~ hp, data = Train)
+  Test$pred <- predict(mod, Test)
+  Test$Rsq <- round(postResample(pred = Test$pred, obs = Test$mpg)[2],2)
+  print(ggplot(Train, aes(x = hp, y = mpg)) + geom_point(color = "black", alpha = 0.5) + geom_point(data = Test, color = COLS[2]) + geom_line(data = Test, aes(x = hp, y = pred), lty = 2, color = COLS[2]) + geom_text(data = Test, x = 250, y = 30, aes(label =paste("Rsq =", Rsq))) + theme_classic() + theme(legend.position = "none") + ylim(c(3, 35))+ xlim(c(45,345))) 
+```
+
+* Rsq = c(0.61, 0.65)
+
+## Fold 3
+
+```{r, echo=FALSE}
+  temp <- COLS
+  temp[!str_detect(temp, pattern = COLS[3])] <- "black"
+  Train <- filter(FOLDS, Fold != unique(Fold)[3])
+  Test <- filter(FOLDS, Fold == unique(Fold)[3])
+  mod <- lm(mpg ~ hp, data = Train)
+  Test$pred <- predict(mod, Test)
+  Test$Rsq <- round(postResample(pred = Test$pred, obs = Test$mpg)[2],2)
+  print(ggplot(Train, aes(x = hp, y = mpg)) + geom_point(color = "black", alpha = 0.5) + geom_point(data = Test, color = COLS[3]) + geom_line(data = Test, aes(x = hp, y = pred), lty = 2, color = COLS[3]) + geom_text(data = Test, x = 250, y = 30, aes(label =paste("Rsq =", Rsq))) + theme_classic() + theme(legend.position = "none") + ylim(c(3, 35))+ xlim(c(45,345))) 
+```
+
+* Rsq = c(0.61, 0.65, 0.89)
+
+## Fold 4
+
+```{r, echo=FALSE}
+  temp <- COLS
+  temp[!str_detect(temp, pattern = COLS[4])] <- "black"
+  Train <- filter(FOLDS, Fold != unique(Fold)[4])
+  Test <- filter(FOLDS, Fold == unique(Fold)[4])
+  mod <- lm(mpg ~ hp, data = Train)
+  Test$pred <- predict(mod, Test)
+  Test$Rsq <- round(postResample(pred = Test$pred, obs = Test$mpg)[2],2)
+  print(ggplot(Train, aes(x = hp, y = mpg)) + geom_point(color = "black", alpha = 0.5) + geom_point(data = Test, color = COLS[4]) + geom_line(data = Test, aes(x = hp, y = pred), lty = 2, color = COLS[4]) + geom_text(data = Test, x = 250, y = 30, aes(label =paste("Rsq =", Rsq))) + theme_classic() + theme(legend.position = "none") + ylim(c(3, 35))+ xlim(c(45,345))) 
+```
+
+* Rsq = c(0.61, 0.65, 0.89, 0.6)
+
+## Fold 5
+
+```{r, echo=FALSE}
+  temp <- COLS
+  temp[!str_detect(temp, pattern = COLS[5])] <- "black"
+  Train <- filter(FOLDS, Fold != unique(Fold)[5])
+  Test <- filter(FOLDS, Fold == unique(Fold)[5])
+  mod <- lm(mpg ~ hp, data = Train)
+  Test$pred <- predict(mod, Test)
+  Test$Rsq <- round(postResample(pred = Test$pred, obs = Test$mpg)[2],2)
+  print(ggplot(Train, aes(x = hp, y = mpg)) + geom_point(color = "black", alpha = 0.5) + geom_point(data = Test, color = COLS[5]) + geom_line(data = Test, aes(x = hp, y = pred), lty = 2, color = COLS[5]) + geom_text(data = Test, x = 250, y = 30, aes(label =paste("Rsq =", Rsq))) + theme_classic() + theme(legend.position = "none") + ylim(c(3, 35))+ xlim(c(45,345))) 
+```
+
+* Rsq = c(0.61, 0.65, 0.89, 0.6, 0.67), media = `r round(mean(c(0.61, 0.65, 0.89, 0.6, 0.67)),2)`
+
+## k-fold repeated Crossvalidation
+
+* Repito esto n veces
+* 10-repeated-5-fold-crossvalidation = 50 $R^2$
+
+```{r, echo = F}
+knitr::include_graphics("nrepeatkfold.gif", dpi = 30)
+```
+
+## k-fold repeated Crossvalidation (cont)
+
+```{r, echo = FALSE, cache = TRUE}
+set.seed(2018)
+ctrl <- trainControl(method = "repeatedcv",number = 5, repeats = 10)
+
+Tests2 <- train(mpg ~ hp, data = mtcars, method = "lm",trControl = ctrl)$resample %>% select(Rsquared,Resample)
+
+kable(Tests2, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
+```
+
+* $R^2$ = `r mean(Tests2$Rsquared)`
+
+## k-fold repeated Crossvalidation (cont)
+
+```{r, echo=F}
+ggplot(Tests2, aes(Rsquared)) + geom_density(fill = "grey") + geom_vline(xintercept = mean(Tests2$Rsquared), lty = 2, color = "red") + theme_classic()
+```
+
+# Seleccionando modelos usando k-fold repeated Crossvalidation
+
+## Modelos candidatos:
+
+* $mpg = \beta_1hp + c$
+* $mpg = \beta_1hp + \beta_2hp^2 + c$
+* $mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + c$
+* $mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + \beta_4hp^4 + c$
+* $mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + \beta_4hp^4 + \beta_5hp^5 + c$
+* $mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + \beta_4hp^4 + \beta_5hp^5 + \beta_6hp^6 + c$
+
+## Seleccionando por AICc
+
+```{r, echo = TRUE}
+data("mtcars")
+
+fit1 <- lm(mpg ~ hp, data = mtcars)
+fit2 <- lm(mpg ~ hp + I(hp^2), data = mtcars)
+fit3 <- lm(mpg ~ hp + I(hp^2) + I(hp^3), data = mtcars)
+fit4 <- lm(mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4), data = mtcars)
+fit5 <- lm(mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5), data = mtcars)
+fit6 <- lm(mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5) + I(hp^6), data = mtcars)
+
+models <- list(fit1, fit2, fit3, fit4, fit5, fit6)
+SelectedMods <- model.sel(models)
+
+```
+
+## Seleccionando por AICc (cont)
+
+```{r, echo = FALSE}
+SelectedMods <- SelectedMods %>% dplyr::select(-df, -logLik) %>% mutate(weight = as.numeric(weight))
+kable(SelectedMods, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Seleccionando por n-repeated-K-fold-crossvalidation {.build .small}
+
+* para 1 modelo
+
+```{r, echo = TRUE}
+set.seed(2020)
+ctrl <- trainControl(method = "repeatedcv",number = 5, repeats = 50)
+
+DF <- train(mpg ~ hp, data = mtcars, method = "lm",trControl = ctrl)$resample 
+
+DF <- DF %>% select(Rsquared,Resample)
+```
+
+
+## Ejercicio resuelto {.small}
+
+```{r, echo = TRUE}
+form1 <- "mpg ~ hp"
+form2 <- "mpg ~ hp + I(hp^2)"
+form3 <- "mpg ~ hp + I(hp^2) + I(hp^3)"
+form4 <- "mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4)"
+form5 <- "mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5)"
+form6 <- "mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5) + I(hp^6)"
+
+forms <- list(form1, form2, form3, form4, form5, form6)
+K = (2:7)
+
+ctrl <- trainControl(method = "repeatedcv",number = 5, repeats = 50)
+```
+
+## Continuado {.small .build}
+
+```{r, cache= TRUE, echo = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
+set.seed(2020)
+Tests <- forms %>% map(~train(as.formula(.x), data = mtcars, method = "lm",trControl = ctrl)) %>% map(~as.data.frame(.x$resample)) %>% map(~select(.x, Rsquared))  %>% map(~summarise_all(.x,funs(mean, sd), na.rm = T)) %>% map2(.y = forms,~ mutate(.x, model = .y)) %>% reduce(bind_rows) %>% mutate(K = K) %>% arrange(desc(mean))
+```
+
+## Continuado {.small .build}
+
+```{r, echo=FALSE}
+kable(Tests, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
