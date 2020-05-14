@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 5 Crossvalidation | Curso BIO4318 Modelos Multivariados y Machine learning</title>
+  <meta name="description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 5 Crossvalidation | Curso BIO4318 Modelos Multivariados y Machine learning" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 5 Crossvalidation | Curso BIO4318 Modelos Multivariados y Machine learning" />
+  
+  <meta name="twitter:description" content="Este libro es una compañia al Curso BIO4318: Modelos Multivariados y Machine learning" />
+  
+
+<meta name="author" content="Derek Corcoran" />
+
+
+<meta name="date" content="2020-05-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="AUTO.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.12/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="libs/dt-ext-fixedcolumns-1.10.20/css/fixedColumns.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-fixedcolumns-1.10.20/js/dataTables.fixedColumns.min.js"></script>
+<link href="libs/dt-ext-fixedheader-1.10.20/css/fixedHeader.dataTables.min.css" rel="stylesheet" />
+<script src="libs/dt-ext-fixedheader-1.10.20/js/dataTables.fixedHeader.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
+<script src="libs/countdown-0.3.5/countdown.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Modelos Multivariados</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Requerimientos</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#antes-de-comenzar"><i class="fa fa-check"></i><b>0.1</b> Antes de comenzar</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#descripción-del-curso"><i class="fa fa-check"></i><b>0.2</b> Descripción del curso</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#objetivos-del-curso"><i class="fa fa-check"></i><b>0.3</b> Objetivos del curso</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#contenidos"><i class="fa fa-check"></i><b>0.4</b> Contenidos</a></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#metodología"><i class="fa fa-check"></i><b>0.5</b> Metodología</a></li>
+<li class="chapter" data-level="0.6" data-path="index.html"><a href="index.html#libros-de-consulta"><i class="fa fa-check"></i><b>0.6</b> Libros de consulta</a></li>
+<li class="chapter" data-level="0.7" data-path="index.html"><a href="index.html#bibliografía"><i class="fa fa-check"></i><b>0.7</b> Bibliografía</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html"><i class="fa fa-check"></i><b>1</b> Tipos de modelos: Predictivos vs Explicativos</a><ul>
+<li class="chapter" data-level="1.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#paquetes-necesarios-para-este-capítulo"><i class="fa fa-check"></i><b>1.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#presentación-html"><i class="fa fa-check"></i><b>1.1.1</b> Presentación html</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#modelos-explicativos-y-predictivos"><i class="fa fa-check"></i><b>1.2</b> Modelos explicativos y predictivos</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#modelos-estadísticos"><i class="fa fa-check"></i><b>1.2.1</b> Modelos estadísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#sobreajuste"><i class="fa fa-check"></i><b>1.3</b> Sobreajuste</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#que-pasa-al-complejizar-el-modelo"><i class="fa fa-check"></i><b>1.3.1</b> Que pasa al complejizar el modelo</a></li>
+<li class="chapter" data-level="1.3.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#sobreajuste-1"><i class="fa fa-check"></i><b>1.3.2</b> Sobreajuste</a></li>
+<li class="chapter" data-level="1.3.3" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#cuando-me-puede-interesar-el-maximizar-el-poder-predictivo"><i class="fa fa-check"></i><b>1.3.3</b> ¿Cuando me puede interesar el maximizar el poder predictivo?</a></li>
+<li class="chapter" data-level="1.3.4" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#cuando-me-puede-interesar-el-maximizar-el-poder-explicativo"><i class="fa fa-check"></i><b>1.3.4</b> ¿Cuando me puede interesar el maximizar el poder explicativo?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#Dilema"><i class="fa fa-check"></i><b>1.4</b> Explicación o Predicción?</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#criterio-de-información-de-akaike"><i class="fa fa-check"></i><b>1.4.1</b> Criterio de Información de Akaike</a></li>
+<li class="chapter" data-level="1.4.2" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#relación-entre-aicc-y-r-cuadrado"><i class="fa fa-check"></i><b>1.4.2</b> Relación entre AICc y R cuadrado</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#ejercicio"><i class="fa fa-check"></i><b>1.5</b> Ejercicio</a></li>
+<li class="chapter" data-level="1.6" data-path="CriteriosInfo.html"><a href="CriteriosInfo.html#mensaje-final"><i class="fa fa-check"></i><b>1.6</b> Mensaje final</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ElegirModelo.html"><a href="ElegirModelo.html"><i class="fa fa-check"></i><b>2</b> Selección de modelos</a><ul>
+<li class="chapter" data-level="2.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#paquetes-necesarios-para-este-capítulo-1"><i class="fa fa-check"></i><b>2.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#presentación-html-1"><i class="fa fa-check"></i><b>2.1.1</b> Presentación html</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#alcance-de-la-inferencia-multimodelo"><i class="fa fa-check"></i><b>2.2</b> Alcance de la inferencia multimodelo</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#que-necesitamos-para-realizar-inferencia-multimodelo"><i class="fa fa-check"></i><b>2.2.1</b> Que necesitamos para realizar inferencia multimodelo</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#generación-de-hipótesis"><i class="fa fa-check"></i><b>2.3</b> Generación de hipótesis</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#hipótesis-1-nula-negativa"><i class="fa fa-check"></i><b>2.3.1</b> Hipótesis 1: nula negativa</a></li>
+<li class="chapter" data-level="2.3.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#hipótesis-2-nula-positiva"><i class="fa fa-check"></i><b>2.3.2</b> Hipótesis 2: nula positiva</a></li>
+<li class="chapter" data-level="2.3.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#hipótesis-3-económica"><i class="fa fa-check"></i><b>2.3.3</b> Hipótesis 3: económica</a></li>
+<li class="chapter" data-level="2.3.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#hipótesis-4-educativa"><i class="fa fa-check"></i><b>2.3.4</b> Hipótesis 4: educativa</a></li>
+<li class="chapter" data-level="2.3.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#hipótesis-5-educativa-y-económica"><i class="fa fa-check"></i><b>2.3.5</b> Hipótesis 5: educativa y económica</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#selección-de-modelos"><i class="fa fa-check"></i><b>2.4</b> Selección de modelos</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#Metodo1"><i class="fa fa-check"></i><b>2.4.1</b> Delta AICc</a></li>
+<li class="chapter" data-level="2.4.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#AkWt"><i class="fa fa-check"></i><b>2.4.2</b> Pesos de Akaike</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#ModAvg"><i class="fa fa-check"></i><b>2.5</b> Promediar modelos</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="ElegirModelo.html"><a href="ElegirModelo.html#promediar-modelos-usando-mumin"><i class="fa fa-check"></i><b>2.5.1</b> Promediar modelos usando MuMIn</a></li>
+<li class="chapter" data-level="2.5.2" data-path="ElegirModelo.html"><a href="ElegirModelo.html#metodo-compelto"><i class="fa fa-check"></i><b>2.5.2</b> Metodo compelto</a></li>
+<li class="chapter" data-level="2.5.3" data-path="ElegirModelo.html"><a href="ElegirModelo.html#método-subset"><i class="fa fa-check"></i><b>2.5.3</b> Método subset</a></li>
+<li class="chapter" data-level="2.5.4" data-path="ElegirModelo.html"><a href="ElegirModelo.html#calculando-los-modelos-promedios-usando-mumin"><i class="fa fa-check"></i><b>2.5.4</b> Calculando los modelos promedios usando MuMIn</a></li>
+<li class="chapter" data-level="2.5.5" data-path="ElegirModelo.html"><a href="ElegirModelo.html#comparemos-modelos"><i class="fa fa-check"></i><b>2.5.5</b> Comparemos modelos</a></li>
+<li class="chapter" data-level="2.5.6" data-path="ElegirModelo.html"><a href="ElegirModelo.html#comparemos-modelos-cont."><i class="fa fa-check"></i><b>2.5.6</b> Comparemos modelos (cont.)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="GLMs.html"><a href="GLMs.html"><i class="fa fa-check"></i><b>3</b> Introducción a los (G)LM</a><ul>
+<li class="chapter" data-level="3.1" data-path="GLMs.html"><a href="GLMs.html#paquetes-necesarios-para-este-capítulo-2"><i class="fa fa-check"></i><b>3.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="GLMs.html"><a href="GLMs.html#presentación-html-2"><i class="fa fa-check"></i><b>3.1.1</b> Presentación html</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="GLMs.html"><a href="GLMs.html#formula-glm-con-interacciones"><i class="fa fa-check"></i><b>3.2</b> Formula (g)lm con interacciones</a></li>
+<li class="chapter" data-level="3.3" data-path="GLMs.html"><a href="GLMs.html#algunas-especificaciones-de-un-modelo-lineal"><i class="fa fa-check"></i><b>3.3</b> Algunas especificaciones de un modelo lineal</a></li>
+<li class="chapter" data-level="3.4" data-path="GLMs.html"><a href="GLMs.html#cambio-pendiente-pero-no-intercepto"><i class="fa fa-check"></i><b>3.4</b> Cambio Pendiente pero no intercepto</a></li>
+<li class="chapter" data-level="3.5" data-path="GLMs.html"><a href="GLMs.html#parametros"><i class="fa fa-check"></i><b>3.5</b> Parametros</a></li>
+<li class="chapter" data-level="3.6" data-path="GLMs.html"><a href="GLMs.html#calculemos"><i class="fa fa-check"></i><b>3.6</b> Calculemos</a></li>
+<li class="chapter" data-level="3.7" data-path="GLMs.html"><a href="GLMs.html#cambio-pendiente-e-intercepto"><i class="fa fa-check"></i><b>3.7</b> Cambio Pendiente e intercepto</a></li>
+<li class="chapter" data-level="3.8" data-path="GLMs.html"><a href="GLMs.html#parametros-1"><i class="fa fa-check"></i><b>3.8</b> Parametros</a></li>
+<li class="chapter" data-level="3.9" data-path="GLMs.html"><a href="GLMs.html#calculemos-1"><i class="fa fa-check"></i><b>3.9</b> Calculemos</a></li>
+<li class="chapter" data-level="3.10" data-path="GLMs.html"><a href="GLMs.html#cual-es-el-mejor-modelo"><i class="fa fa-check"></i><b>3.10</b> Cual es el mejor modelo?</a></li>
+<li class="chapter" data-level="3.11" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-simple"><i class="fa fa-check"></i><b>3.11</b> Modelo lineal simple</a></li>
+<li class="chapter" data-level="3.12" data-path="GLMs.html"><a href="GLMs.html#es-la-varianza-constante"><i class="fa fa-check"></i><b>3.12</b> Es la varianza constante?</a></li>
+<li class="chapter" data-level="3.13" data-path="GLMs.html"><a href="GLMs.html#distribuciones"><i class="fa fa-check"></i><b>3.13</b> Distribuciones</a></li>
+<li class="chapter" data-level="3.14" data-path="GLMs.html"><a href="GLMs.html#estructura-de-error"><i class="fa fa-check"></i><b>3.14</b> Estructura de error</a></li>
+<li class="chapter" data-level="3.15" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado"><i class="fa fa-check"></i><b>3.15</b> Modelo lineal generalizado</a></li>
+<li class="chapter" data-level="3.16" data-path="GLMs.html"><a href="GLMs.html#como-se-ve-el-link"><i class="fa fa-check"></i><b>3.16</b> Como se ve el link?</a></li>
+<li class="chapter" data-level="3.17" data-path="GLMs.html"><a href="GLMs.html#modelo-gamma"><i class="fa fa-check"></i><b>3.17</b> Modelo Gamma</a></li>
+<li class="chapter" data-level="3.18" data-path="GLMs.html"><a href="GLMs.html#parámetros"><i class="fa fa-check"></i><b>3.18</b> Parámetros</a></li>
+<li class="chapter" data-level="3.19" data-path="GLMs.html"><a href="GLMs.html#calculemos-2"><i class="fa fa-check"></i><b>3.19</b> Calculemos</a></li>
+<li class="chapter" data-level="3.20" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-1"><i class="fa fa-check"></i><b>3.20</b> Modelo lineal generalizado</a></li>
+<li class="chapter" data-level="3.21" data-path="GLMs.html"><a href="GLMs.html#link"><i class="fa fa-check"></i><b>3.21</b> Link</a></li>
+<li class="chapter" data-level="3.22" data-path="GLMs.html"><a href="GLMs.html#modelo-poisson"><i class="fa fa-check"></i><b>3.22</b> Modelo Poisson</a></li>
+<li class="chapter" data-level="3.23" data-path="GLMs.html"><a href="GLMs.html#parametros-2"><i class="fa fa-check"></i><b>3.23</b> Parametros</a></li>
+<li class="chapter" data-level="3.24" data-path="GLMs.html"><a href="GLMs.html#calculemos-3"><i class="fa fa-check"></i><b>3.24</b> Calculemos</a></li>
+<li class="chapter" data-level="3.25" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-2"><i class="fa fa-check"></i><b>3.25</b> Modelo lineal generalizado</a></li>
+<li class="chapter" data-level="3.26" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-3"><i class="fa fa-check"></i><b>3.26</b> Modelo lineal generalizado</a></li>
+<li class="chapter" data-level="3.27" data-path="GLMs.html"><a href="GLMs.html#link-1"><i class="fa fa-check"></i><b>3.27</b> Link</a></li>
+<li class="chapter" data-level="3.28" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-familia-binomial"><i class="fa fa-check"></i><b>3.28</b> Modelo lineal generalizado (familia: binomial)</a></li>
+<li class="chapter" data-level="3.29" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-familia-binomial-1"><i class="fa fa-check"></i><b>3.29</b> Modelo lineal generalizado (familia: binomial)</a></li>
+<li class="chapter" data-level="3.30" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-familia-binomial-2"><i class="fa fa-check"></i><b>3.30</b> Modelo lineal generalizado (familia: binomial)</a></li>
+<li class="chapter" data-level="3.31" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-familia-binomial-3"><i class="fa fa-check"></i><b>3.31</b> Modelo lineal generalizado (familia: binomial)</a></li>
+<li class="chapter" data-level="3.32" data-path="GLMs.html"><a href="GLMs.html#modelo-lineal-generalizado-familia-binomial-4"><i class="fa fa-check"></i><b>3.32</b> Modelo lineal generalizado (familia: binomial)</a></li>
+<li class="chapter" data-level="3.33" data-path="GLMs.html"><a href="GLMs.html#función-link"><i class="fa fa-check"></i><b>3.33</b> Función link</a></li>
+<li class="chapter" data-level="3.34" data-path="GLMs.html"><a href="GLMs.html#función-link-1"><i class="fa fa-check"></i><b>3.34</b> Función link</a></li>
+<li class="chapter" data-level="3.35" data-path="GLMs.html"><a href="GLMs.html#función-link-2"><i class="fa fa-check"></i><b>3.35</b> Función link</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="AUTO.html"><a href="AUTO.html"><i class="fa fa-check"></i><b>4</b> Automatización de la seleccion de modelos</a><ul>
+<li class="chapter" data-level="4.1" data-path="AUTO.html"><a href="AUTO.html#paquetes-necesarios-para-este-capítulo-3"><i class="fa fa-check"></i><b>4.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="AUTO.html"><a href="AUTO.html#presentación-html-3"><i class="fa fa-check"></i><b>4.1.1</b> Presentación html</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="AUTO.html"><a href="AUTO.html#variables-fijas-vs-aleatorias"><i class="fa fa-check"></i><b>4.2</b> Variables fijas vs aleatorias</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="AUTO.html"><a href="AUTO.html#ejemplo-co2"><i class="fa fa-check"></i><b>4.2.1</b> Ejemplo CO2</a></li>
+<li class="chapter" data-level="4.2.2" data-path="AUTO.html"><a href="AUTO.html#selección"><i class="fa fa-check"></i><b>4.2.2</b> Selección</a></li>
+<li class="chapter" data-level="4.2.3" data-path="AUTO.html"><a href="AUTO.html#modelo"><i class="fa fa-check"></i><b>4.2.3</b> Modelo</a></li>
+<li class="chapter" data-level="4.2.4" data-path="AUTO.html"><a href="AUTO.html#modelo-1"><i class="fa fa-check"></i><b>4.2.4</b> Modelo</a></li>
+<li class="chapter" data-level="4.2.5" data-path="AUTO.html"><a href="AUTO.html#como-agrego-eso-a-mumin"><i class="fa fa-check"></i><b>4.2.5</b> Como agrego eso a MuMIn</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="AUTO.html"><a href="AUTO.html#incluir-además-límite-de-numero-de-variables"><i class="fa fa-check"></i><b>4.3</b> Incluir además límite de numero de variables</a></li>
+<li class="chapter" data-level="4.4" data-path="AUTO.html"><a href="AUTO.html#preguntas"><i class="fa fa-check"></i><b>4.4</b> Preguntas</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="AUTO.html"><a href="AUTO.html#pregunta-1"><i class="fa fa-check"></i><b>4.4.1</b> Pregunta 1</a></li>
+<li class="chapter" data-level="4.4.2" data-path="AUTO.html"><a href="AUTO.html#pregunta-2"><i class="fa fa-check"></i><b>4.4.2</b> Pregunta 2</a></li>
+<li class="chapter" data-level="4.4.3" data-path="AUTO.html"><a href="AUTO.html#pregunta-3"><i class="fa fa-check"></i><b>4.4.3</b> Pregunta 3</a></li>
+<li class="chapter" data-level="4.4.4" data-path="AUTO.html"><a href="AUTO.html#pregunta-4"><i class="fa fa-check"></i><b>4.4.4</b> Pregunta 4</a></li>
+<li class="chapter" data-level="4.4.5" data-path="AUTO.html"><a href="AUTO.html#pregunta-5"><i class="fa fa-check"></i><b>4.4.5</b> Pregunta 5</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Cross.html"><a href="Cross.html"><i class="fa fa-check"></i><b>5</b> Crossvalidation</a><ul>
+<li class="chapter" data-level="5.1" data-path="Cross.html"><a href="Cross.html#paquetes-necesarios-para-este-capítulo-4"><i class="fa fa-check"></i><b>5.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="Cross.html"><a href="Cross.html#presentación-html-4"><i class="fa fa-check"></i><b>5.1.1</b> Presentación html</a></li>
+<li class="chapter" data-level="5.1.2" data-path="Cross.html"><a href="Cross.html#a-veces-no-se-pueden-usar-criterios-de-información"><i class="fa fa-check"></i><b>5.1.2</b> A veces no se pueden usar criterios de información</a></li>
+<li class="chapter" data-level="5.1.3" data-path="Cross.html"><a href="Cross.html#alternativas-a-los-métodos-de-criterios-de-información"><i class="fa fa-check"></i><b>5.1.3</b> Alternativas a los métodos de criterios de información</a></li>
+<li class="chapter" data-level="5.1.4" data-path="Cross.html"><a href="Cross.html#k-fold-crossvalidation"><i class="fa fa-check"></i><b>5.1.4</b> k-fold Crossvalidation</a></li>
+<li class="chapter" data-level="5.1.5" data-path="Cross.html"><a href="Cross.html#volvamos-al-ejemplo-de-hp"><i class="fa fa-check"></i><b>5.1.5</b> Volvamos al ejemplo de hp</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="Cross.html"><a href="Cross.html#paso-1-k-fold"><i class="fa fa-check"></i><b>5.2</b> Paso 1 K-fold</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="Cross.html"><a href="Cross.html#divido-my-base-en-k"><i class="fa fa-check"></i><b>5.2.1</b> Divido my base en K</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="Cross.html"><a href="Cross.html#paso-2-entreno-y-testeo-para-cada-k"><i class="fa fa-check"></i><b>5.3</b> Paso 2 Entreno y testeo para cada K</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="Cross.html"><a href="Cross.html#k-fold-repeated-crossvalidation"><i class="fa fa-check"></i><b>5.3.1</b> k-fold repeated Crossvalidation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="Cross.html"><a href="Cross.html#seleccionando-modelos-usando-k-fold-repeated-crossvalidation"><i class="fa fa-check"></i><b>5.4</b> Seleccionando modelos usando k-fold repeated Crossvalidation</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="Cross.html"><a href="Cross.html#seleccionando-por-aicc"><i class="fa fa-check"></i><b>5.4.1</b> Seleccionando por AICc</a></li>
+<li class="chapter" data-level="5.4.2" data-path="Cross.html"><a href="Cross.html#seleccionando-por-n-repeated-k-fold-crossvalidation"><i class="fa fa-check"></i><b>5.4.2</b> Seleccionando por n-repeated-K-fold-crossvalidation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Curso BIO4318 Modelos Multivariados y Machine learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Cross" class="section level1">
+<h1><span class="header-section-number">Capítulo 5</span> Crossvalidation</h1>
+<div id="paquetes-necesarios-para-este-capítulo-4" class="section level2">
+<h2><span class="header-section-number">5.1</span> Paquetes necesarios para este capítulo</h2>
+<p>Para este capitulo necesitas tener instalado los paquetes <em>tidyverse</em> <span class="citation">(Wickham <a href="#ref-R-tidyverse">2019</a>)</span>, <em>broom</em> <span class="citation">(Robinson and Hayes <a href="#ref-R-broom">2020</a>)</span>, <em>caret</em> <span class="citation">(Kuhn and Johnson <a href="#ref-kuhn2013applied">2013</a>)</span> y <em>MuMIn</em> <span class="citation">(Bartoń <a href="#ref-R-MuMIn">2019</a>)</span></p>
+<div id="presentación-html-4" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Presentación html</h3>
+<p>Puedes seguir la clase de los videos en el siguiente <a href="https://derek-corcoran-barrios.github.io/CursoMultiPres/Capitulo_5/Capitulo_5.html">link</a></p>
+<p>y ver la clase en vivo desde las 20:30 horas el día jueves 19 de Mayo del 2020 a continuación</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bjhgA8f8-6g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<p>El script de esta y otras clases anteriores se encuentran en el siguiente <a href="https://github.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/tree/master/CursoMulti/Scripts">link</a></p>
+</div>
+<div id="a-veces-no-se-pueden-usar-criterios-de-información" class="section level3 build">
+<h3><span class="header-section-number">5.1.2</span> A veces no se pueden usar criterios de información</h3>
+<ul>
+<li>No se pueden calcular IC</li>
+<li>No se cumplen supuestos de criterios de información</li>
+<li>Comparacion entre distintos tipos de modelos (GLM, vs GAM vs RPART, etc)</li>
+<li>Se aplican distintas transformaciones a la variable respuesta (GLM)</li>
+<li>Varios terminos polinomiales (no se debe promediar modelos)</li>
+</ul>
+</div>
+<div id="alternativas-a-los-métodos-de-criterios-de-información" class="section level3">
+<h3><span class="header-section-number">5.1.3</span> Alternativas a los métodos de criterios de información</h3>
+<ul>
+<li>Simular que presentamos datos nuevos
+<ul>
+<li>Crossvalidation</li>
+<li>Bootstrapping</li>
+<li>Leave one out</li>
+</ul></li>
+</ul>
+<p><img src="K-fold_cross_validation_EN.jpg" width="721" /></p>
+</div>
+<div id="k-fold-crossvalidation" class="section level3">
+<h3><span class="header-section-number">5.1.4</span> k-fold Crossvalidation</h3>
+<ul>
+<li>Divido aleatoreamente mi base de datos en <span class="math inline">\(k\)</span> grupos</li>
+<li>Entreno mis modelos con <span class="math inline">\(k-1\)</span> grupos</li>
+<li>Testeo con el grupo <span class="math inline">\(k_i\)</span></li>
+<li>Promedio medida de desempeño por ejemplo <span class="math inline">\(R^2\)</span></li>
+</ul>
+</div>
+<div id="volvamos-al-ejemplo-de-hp" class="section level3 build">
+<h3><span class="header-section-number">5.1.5</span> Volvamos al ejemplo de hp</h3>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
+<ul>
+<li>Veamos como evaluamos 1 modelo <span class="math inline">\(mpg = \beta_1 hp +c\)</span></li>
+<li><span class="math inline">\(R^2\)</span> = 0.6</li>
+</ul>
+</div>
+</div>
+<div id="paso-1-k-fold" class="section level2">
+<h2><span class="header-section-number">5.2</span> Paso 1 K-fold</h2>
+<div id="divido-my-base-en-k" class="section level3 build">
+<h3><span class="header-section-number">5.2.1</span> Divido my base en K</h3>
+<ul>
+<li>En este caso K = 5
+<ul>
+<li>Dividiremos nuestra base de datos en 5 partes iguales</li>
+</ul></li>
+</ul>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
+</div>
+</div>
+<div id="paso-2-entreno-y-testeo-para-cada-k" class="section level2">
+<h2><span class="header-section-number">5.3</span> Paso 2 Entreno y testeo para cada K</h2>
+<div id="fold-1" class="section level4">
+<h4><span class="header-section-number">5.3.0.1</span> Fold 1</h4>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-117-1.png" width="672" /></p>
+<ul>
+<li>Rsq = c(0.61)</li>
+</ul>
+</div>
+<div id="fold-2" class="section level4">
+<h4><span class="header-section-number">5.3.0.2</span> Fold 2</h4>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
+<ul>
+<li>Rsq = c(0.61, 0.65)</li>
+</ul>
+</div>
+<div id="fold-3" class="section level4">
+<h4><span class="header-section-number">5.3.0.3</span> Fold 3</h4>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<ul>
+<li>Rsq = c(0.61, 0.65, 0.89)</li>
+</ul>
+</div>
+<div id="fold-4" class="section level4">
+<h4><span class="header-section-number">5.3.0.4</span> Fold 4</h4>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-120-1.png" width="672" /></p>
+<ul>
+<li>Rsq = c(0.61, 0.65, 0.89, 0.6)</li>
+</ul>
+</div>
+<div id="fold-5" class="section level4">
+<h4><span class="header-section-number">5.3.0.5</span> Fold 5</h4>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
+<ul>
+<li>Rsq = c(0.61, 0.65, 0.89, 0.6, 0.67), media = 0.68</li>
+</ul>
+</div>
+<div id="k-fold-repeated-crossvalidation" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> k-fold repeated Crossvalidation</h3>
+<ul>
+<li>Repito esto n veces</li>
+<li>10-repeated-5-fold-crossvalidation = 50 <span class="math inline">\(R^2\)</span></li>
+</ul>
+<p><img src="nrepeatkfold.gif" /><!-- --></p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Rsquared
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Resample
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.383
+</td>
+<td style="text-align:left;">
+Fold1.Rep01
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.776
+</td>
+<td style="text-align:left;">
+Fold2.Rep01
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.550
+</td>
+<td style="text-align:left;">
+Fold3.Rep01
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.910
+</td>
+<td style="text-align:left;">
+Fold4.Rep01
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.667
+</td>
+<td style="text-align:left;">
+Fold5.Rep01
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.682
+</td>
+<td style="text-align:left;">
+Fold1.Rep02
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.869
+</td>
+<td style="text-align:left;">
+Fold2.Rep02
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.562
+</td>
+<td style="text-align:left;">
+Fold3.Rep02
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.729
+</td>
+<td style="text-align:left;">
+Fold4.Rep02
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.615
+</td>
+<td style="text-align:left;">
+Fold5.Rep02
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.858
+</td>
+<td style="text-align:left;">
+Fold1.Rep03
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.677
+</td>
+<td style="text-align:left;">
+Fold2.Rep03
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.500
+</td>
+<td style="text-align:left;">
+Fold3.Rep03
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.639
+</td>
+<td style="text-align:left;">
+Fold4.Rep03
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.615
+</td>
+<td style="text-align:left;">
+Fold5.Rep03
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.838
+</td>
+<td style="text-align:left;">
+Fold1.Rep04
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.983
+</td>
+<td style="text-align:left;">
+Fold2.Rep04
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.718
+</td>
+<td style="text-align:left;">
+Fold3.Rep04
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.609
+</td>
+<td style="text-align:left;">
+Fold4.Rep04
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.832
+</td>
+<td style="text-align:left;">
+Fold5.Rep04
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.901
+</td>
+<td style="text-align:left;">
+Fold1.Rep05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.753
+</td>
+<td style="text-align:left;">
+Fold2.Rep05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.521
+</td>
+<td style="text-align:left;">
+Fold3.Rep05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.543
+</td>
+<td style="text-align:left;">
+Fold4.Rep05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.840
+</td>
+<td style="text-align:left;">
+Fold5.Rep05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.771
+</td>
+<td style="text-align:left;">
+Fold1.Rep06
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.576
+</td>
+<td style="text-align:left;">
+Fold2.Rep06
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.845
+</td>
+<td style="text-align:left;">
+Fold3.Rep06
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.681
+</td>
+<td style="text-align:left;">
+Fold4.Rep06
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.659
+</td>
+<td style="text-align:left;">
+Fold5.Rep06
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.860
+</td>
+<td style="text-align:left;">
+Fold1.Rep07
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.550
+</td>
+<td style="text-align:left;">
+Fold2.Rep07
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.612
+</td>
+<td style="text-align:left;">
+Fold3.Rep07
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.838
+</td>
+<td style="text-align:left;">
+Fold4.Rep07
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.591
+</td>
+<td style="text-align:left;">
+Fold5.Rep07
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.683
+</td>
+<td style="text-align:left;">
+Fold1.Rep08
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.910
+</td>
+<td style="text-align:left;">
+Fold2.Rep08
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.795
+</td>
+<td style="text-align:left;">
+Fold3.Rep08
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.469
+</td>
+<td style="text-align:left;">
+Fold4.Rep08
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.902
+</td>
+<td style="text-align:left;">
+Fold5.Rep08
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.645
+</td>
+<td style="text-align:left;">
+Fold1.Rep09
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.557
+</td>
+<td style="text-align:left;">
+Fold2.Rep09
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.788
+</td>
+<td style="text-align:left;">
+Fold3.Rep09
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.686
+</td>
+<td style="text-align:left;">
+Fold4.Rep09
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.788
+</td>
+<td style="text-align:left;">
+Fold5.Rep09
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.406
+</td>
+<td style="text-align:left;">
+Fold1.Rep10
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.921
+</td>
+<td style="text-align:left;">
+Fold2.Rep10
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.759
+</td>
+<td style="text-align:left;">
+Fold3.Rep10
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.707
+</td>
+<td style="text-align:left;">
+Fold4.Rep10
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.718
+</td>
+<td style="text-align:left;">
+Fold5.Rep10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span class="math inline">\(R^2\)</span> = 0.7057077</li>
+</ul>
+<p><img src="CursoMulti_files/figure-html/unnamed-chunk-124-1.png" width="672" /></p>
+</div>
+</div>
+<div id="seleccionando-modelos-usando-k-fold-repeated-crossvalidation" class="section level2">
+<h2><span class="header-section-number">5.4</span> Seleccionando modelos usando k-fold repeated Crossvalidation</h2>
+<p>Modelos candidatos</p>
+<ul>
+<li><span class="math inline">\(mpg = \beta_1hp + c\)</span></li>
+<li><span class="math inline">\(mpg = \beta_1hp + \beta_2hp^2 + c\)</span></li>
+<li><span class="math inline">\(mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + c\)</span></li>
+<li><span class="math inline">\(mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + \beta_4hp^4 + c\)</span></li>
+<li><span class="math inline">\(mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + \beta_4hp^4 + \beta_5hp^5 + c\)</span></li>
+<li><span class="math inline">\(mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + \beta_4hp^4 + \beta_5hp^5 + \beta_6hp^6 + c\)</span></li>
+</ul>
+<div id="seleccionando-por-aicc" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Seleccionando por AICc</h3>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)</a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb75-3" data-line-number="3">fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb75-4" data-line-number="4">fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb75-5" data-line-number="5">fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>), <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb75-6" data-line-number="6">fit4 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">4</span>), <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb75-7" data-line-number="7">fit5 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">5</span>), </a>
+<a class="sourceLine" id="cb75-8" data-line-number="8">    <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb75-9" data-line-number="9">fit6 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb75-10" data-line-number="10"><span class="st">    </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">6</span>), <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb75-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb75-12" data-line-number="12">models &lt;-<span class="st"> </span><span class="kw">list</span>(fit1, fit2, fit3, fit4, fit5, fit6)</a>
+<a class="sourceLine" id="cb75-13" data-line-number="13">SelectedMods &lt;-<span class="st"> </span><span class="kw">model.sel</span>(models)</a></code></pre></div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+(Intercept)
+</th>
+<th style="text-align:right;">
+hp
+</th>
+<th style="text-align:right;">
+I(hp^2)
+</th>
+<th style="text-align:right;">
+I(hp^3)
+</th>
+<th style="text-align:right;">
+I(hp^4)
+</th>
+<th style="text-align:right;">
+I(hp^5)
+</th>
+<th style="text-align:right;">
+I(hp^6)
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+40.41
+</td>
+<td style="text-align:right;">
+-0.21
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+169.08
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.70
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+44.22
+</td>
+<td style="text-align:right;">
+-0.29
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+171.32
+</td>
+<td style="text-align:right;">
+2.24
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+45.36
+</td>
+<td style="text-align:right;">
+-0.33
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+174.36
+</td>
+<td style="text-align:right;">
+5.28
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+61.80
+</td>
+<td style="text-align:right;">
+-0.96
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+177.45
+</td>
+<td style="text-align:right;">
+8.37
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-62.95
+</td>
+<td style="text-align:right;">
+4.81
+</td>
+<td style="text-align:right;">
+-0.09
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+178.28
+</td>
+<td style="text-align:right;">
+9.20
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.10
+</td>
+<td style="text-align:right;">
+-0.07
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+182.10
+</td>
+<td style="text-align:right;">
+13.01
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="seleccionando-por-n-repeated-k-fold-crossvalidation" class="section level3 build small">
+<h3><span class="header-section-number">5.4.2</span> Seleccionando por n-repeated-K-fold-crossvalidation</h3>
+<ul>
+<li>para 1 modelo</li>
+</ul>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2020</span>)</a>
+<a class="sourceLine" id="cb76-2" data-line-number="2">ctrl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>, <span class="dt">repeats =</span> <span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb76-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb76-4" data-line-number="4">DF &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">trControl =</span> ctrl)<span class="op">$</span>resample</a>
+<a class="sourceLine" id="cb76-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb76-6" data-line-number="6">DF &lt;-<span class="st"> </span>DF <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Rsquared, Resample)</a></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1">form1 &lt;-<span class="st"> &quot;mpg ~ hp&quot;</span></a>
+<a class="sourceLine" id="cb77-2" data-line-number="2">form2 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2)&quot;</span></a>
+<a class="sourceLine" id="cb77-3" data-line-number="3">form3 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3)&quot;</span></a>
+<a class="sourceLine" id="cb77-4" data-line-number="4">form4 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4)&quot;</span></a>
+<a class="sourceLine" id="cb77-5" data-line-number="5">form5 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5)&quot;</span></a>
+<a class="sourceLine" id="cb77-6" data-line-number="6">form6 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5) + I(hp^6)&quot;</span></a>
+<a class="sourceLine" id="cb77-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb77-8" data-line-number="8">forms &lt;-<span class="st"> </span><span class="kw">list</span>(form1, form2, form3, form4, form5, form6)</a>
+<a class="sourceLine" id="cb77-9" data-line-number="9">K =<span class="st"> </span>(<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb77-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb77-11" data-line-number="11">ctrl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>, <span class="dt">repeats =</span> <span class="dv">50</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2020</span>)</a>
+<a class="sourceLine" id="cb78-2" data-line-number="2">Tests &lt;-<span class="st"> </span>forms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">train</span>(<span class="kw">as.formula</span>(.x), </a>
+<a class="sourceLine" id="cb78-3" data-line-number="3">    <span class="dt">data =</span> mtcars, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </a>
+<a class="sourceLine" id="cb78-4" data-line-number="4">    <span class="dt">trControl =</span> ctrl)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">as.data.frame</span>(.x<span class="op">$</span>resample)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb78-5" data-line-number="5"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">select</span>(.x, Rsquared)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb78-6" data-line-number="6"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">summarise_all</span>(.x, <span class="kw">funs</span>(mean, </a>
+<a class="sourceLine" id="cb78-7" data-line-number="7">        sd), <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map2</span>(<span class="dt">.y =</span> forms, </a>
+<a class="sourceLine" id="cb78-8" data-line-number="8">    <span class="op">~</span><span class="kw">mutate</span>(.x, <span class="dt">model =</span> .y)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb78-9" data-line-number="9"><span class="st">    </span><span class="kw">reduce</span>(bind_rows) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">K =</span> K) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb78-10" data-line-number="10"><span class="st">    </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean))</a></code></pre></div>
+<table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:left;">
+model
+</th>
+<th style="text-align:right;">
+K
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.785
+</td>
+<td style="text-align:right;">
+0.162
+</td>
+<td style="text-align:left;">
+mpg ~ hp + I(hp^2)
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.766
+</td>
+<td style="text-align:right;">
+0.180
+</td>
+<td style="text-align:left;">
+mpg ~ hp + I(hp^2) + I(hp^3)
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.713
+</td>
+<td style="text-align:right;">
+0.145
+</td>
+<td style="text-align:left;">
+mpg ~ hp
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.655
+</td>
+<td style="text-align:right;">
+0.321
+</td>
+<td style="text-align:left;">
+mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4)
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.633
+</td>
+<td style="text-align:right;">
+0.303
+</td>
+<td style="text-align:left;">
+mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5)
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.632
+</td>
+<td style="text-align:right;">
+0.294
+</td>
+<td style="text-align:left;">
+mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5) + I(hp^6)
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-MuMIn">
+<p>Bartoń, Kamil. 2019. <em>MuMIn: Multi-Model Inference</em>. <a href="https://CRAN.R-project.org/package=MuMIn">https://CRAN.R-project.org/package=MuMIn</a>.</p>
+</div>
+<div id="ref-kuhn2013applied">
+<p>Kuhn, Max, and Kjell Johnson. 2013. <em>Applied Predictive Modeling</em>. Vol. 26. Springer.</p>
+</div>
+<div id="ref-R-broom">
+<p>Robinson, David, and Alex Hayes. 2020. <em>Broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a>.</p>
+</div>
+<div id="ref-R-tidyverse">
+<p>Wickham, Hadley. 2019. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="AUTO.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["CursoMulti.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

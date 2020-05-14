@@ -19,6 +19,10 @@ y ver la clase en vivo desde las 20:30 horas el día martes 12 de Mayo del 2020 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ebd8p9ljyWM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+**Este video se cortó** por falta de internet, acá esta la segunda parte
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/l8oCjsjbb38" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 ## Variables fijas vs aleatorias
 
@@ -33,7 +37,7 @@ Estas se definen a continuación:
 
     + Se espera que su influencia sea impredecible e idiosincratica. Además no se usan todos los niveles de un factor (todos los individuos)
     
-## Ejemplo CO2
+### Ejemplo CO2
 
 ```{r GraphCO2, echo = FALSE}
 data(CO2)
@@ -64,7 +68,7 @@ Max.Vars <- floor(nrow(CO2)/10)
 Seleccion <- dredge(mod2, m.lim = c(0, Max.Vars))
 ```
 
-## Selección {.build}
+### Selección
 
 ```{r, echo = FALSE}
 DF <- as.data.frame(Seleccion) %>%  mutate(weight = as.numeric(weight)) %>% mutate_if(is.factor, as.character)
@@ -74,7 +78,7 @@ kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"
 
 * Solo el primer modelo es seleccionado
 
-## Modelo
+### Modelo
 
 ```{r, eval = FALSE}
 BestModel <- get.models(Seleccion, 1)[[1]]
@@ -88,7 +92,7 @@ DF <- broom::tidy(BestModel)
 kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
 ```
 
-## Modelo
+### Modelo
 
 ```{r, echo = FALSE}
 library(lme4)
@@ -99,7 +103,7 @@ ggplot(NewData, aes(x = conc, y = Pred)) + geom_line(aes(color = Type, lty = Tre
 ```
 
 
-## Cemento
+#### Cemento
 
 * ¿Que problema tiene la siguiente base de datos para LMs o GLMs?
 * Ejemplo base de datos `Cement` de MuMIn
@@ -136,7 +140,7 @@ pairs(Cement2, lower.panel = panel.smooth, upper.panel = panel.cor, diag.panel =
 
 ```
 
-## Como agrego eso a MuMIn
+### Como agrego eso a MuMIn
 
 ```{r, echo=TRUE}
 GlobalMod <- lm(Calorias ~., data = Cement2)
@@ -152,7 +156,6 @@ kable(cor(Cement2[,-1])) %>% kable_styling(bootstrap_options = c("striped", "hov
 ```
 
 
-## Como agrego eso a MuMIn (cont)
 
 ```{r, echo=TRUE}
 nm <- colnames(Cement2[-1])
@@ -164,7 +167,6 @@ smat[!lower.tri(smat)] <- NA
 kable(smat) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
 ```
 
-## Como agrego eso a MuMIn (cont)
 
 ```{r, cache= TRUE, echo=TRUE}
 options(na.action = "na.fail")
@@ -194,9 +196,9 @@ kable(Selected, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "
 #sjPlot::plot_model(logitmod, type = "eff", terms = c("temp")) + ggtitle("") + ylab("Probabilidad de fallo") + xlab("Temp F") + theme_classic()
 ```
 
+## Preguntas
 
-## Pregunta 1 {.build}
-
+### Pregunta 1
 * ¿Cual de estas relaciones es la que uno esperaría ver al finalizar el experimento?
 
 ```{r, echo=FALSE, fig.height= 4}
@@ -236,7 +238,7 @@ library(beepr)
 
 * Respuesta: A
 
-## Pregunta 2
+### Pregunta 2
 
 * ¿Cuál de estos códigos resultaría en el modelo que generaría este gráfico?
 
@@ -253,7 +255,6 @@ C <- glm(weight ~ Time + Time:Diet, family = poisson)
 
 `r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
 
-## Pregunta 2 (cont){.small}
 
 ```{r, tidy.opts= list(blank = FALSE, width.cutoff = 60)}
 library(lme4)
@@ -264,7 +265,7 @@ ChickPoissMM2 <- glmer(weight ~ Time + Time:Diet + (1|Chick), family = poisson, 
 ChickPoissMM3 <- glmer(weight ~ Time + Time*Diet + (1|Chick), family = poisson, data = ChickWeight)
 ```
 
-## Pregunta 3
+### Pregunta 3
 
 * ¿Cuanto pesaria un pollo en el dia 10 en la dieta 2 basado en el modelo anterior?
 
@@ -278,7 +279,6 @@ kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("
 
 `r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
 
-## Pregunta 3 (cont)
 
 ```{r}
 exp(3.83 + 10*0.07 + 0.02)
@@ -289,7 +289,7 @@ exp(3.83 + 10*0.07 + (10*0.02))
 ```
 
 
-## Pregunta 4
+### Pregunta 4
 
 * ¿Cuál es el código que mejor representa este gráfico?
 
@@ -306,7 +306,7 @@ C <- glm(weight ~ Time + Time:Diet, family = poisson)
 
 `r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
 
-## Pregunta 5
+### Pregunta 5
 
 * ¿Cuantas pendientes e interceptos espero ver en este modelo?
 
@@ -316,7 +316,6 @@ ggplot(DATA2, aes(x = Time, y = Pred, color = Diet)) + geom_ribbon(aes(ymax = Pr
 
 `r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10)`
 
-## Pregunta 5 (cont)
 
 ```{r, echo = F}
 kable(tidy(Fit2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
