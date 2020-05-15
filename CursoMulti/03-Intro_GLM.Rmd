@@ -245,7 +245,7 @@ kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size 
 1/((-0.00058*4) +  (-0.00009*4) + 0.01711)
 ```
 
-## Modelo lineal generalizado
+### Modelo lineal generalizado
 
 * Familia?
     + poisson
@@ -253,7 +253,7 @@ kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size 
 
  $$\log{y} = \beta_1X_1 + C_0$$
 
-## Link
+##### Link
 
 ```{r, echo = F}
 x = ChickWeight$weight %>% unique() %>% sort()
@@ -263,7 +263,7 @@ ggplot(link2, aes(x = Valor, y = transformacion)) + geom_line(aes(color = link))
 ```
 
 
-## Modelo Poisson
+### Modelo Poisson
 
 ```{r}
 fit2p <- glm(weight ~ Time + Time:Diet, poisson, data=ChickWeight)
@@ -280,13 +280,13 @@ ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pre
 ```
 
 
-## Parametros 
+#### Parametros 
 
 ```{r,echo = FALSE}
 tidy(fit2p) %>% kable(digits = 3)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
-## Calculemos
+#### Calculemos
 
 $$Weight = e^{eq}$$
 
@@ -315,15 +315,14 @@ train <- train <- read_csv("https://raw.githubusercontent.com/derek-corcoran-bar
 knitr::kable(train, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
 ```
 
-## Modelo lineal generalizado {.build}
-
+### Modelo lineal generalizado 
 * Familia?
     + Binomial
     + respuesta (link = logit)
 
  $$log{\frac{p}{1-p}} = \beta_1X_1 + C_0$$
  
-## Link
+### Link
 
 ```{r, echo= F}
 x = train$Survived %>% unique() %>% sort()
@@ -332,7 +331,7 @@ link2 <- link %>% gather(key = link, value = transformacion, -Valor)
 ggplot(link2, aes(x = Valor, y = transformacion)) + geom_line(aes(color = link)) + geom_point(aes(color = link)) + theme_classic()
 ```
 
-## Modelo lineal generalizado (familia: binomial)
+### Modelo lineal generalizado (familia: binomial)
 
 ```{r}
 FitBin <- glm(Survived ~ Fare + Sex, data = train)
@@ -349,7 +348,6 @@ ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + S
 
 ```
 
-## Modelo lineal generalizado (familia: binomial)
 
 ```{r}
 FitBin <- glm(Survived ~ Fare + Sex, data = train)
@@ -360,8 +358,6 @@ ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + S
 
 ```
 
-
-## Modelo lineal generalizado (familia: binomial)
 
 ```{r, results="asis", cache = TRUE}
 FitBin2 <- glm(Survived ~ Fare*Sex, data = train, family = binomial)
@@ -378,7 +374,6 @@ DF$SE <- predict(FitBin2, DF, se.fit = TRUE,"response")$se.fit
 ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
 ```
 
-## Modelo lineal generalizado (familia: binomial)
 
 ```{r, echo = FALSE}
 knitr::kable(broom::tidy(FitBin2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover")) 
@@ -387,8 +382,6 @@ knitr::kable(broom::tidy(FitBin2), digits = 2) %>% kable_styling(bootstrap_optio
 ```{r, echo = FALSE}
 knitr::kable(broom::glance(FitBin2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover")) 
 ```
-
-## Modelo lineal generalizado (familia: binomial)
 
 ```{r, results="asis", cache = TRUE}
 FitBin2 <- glm(Survived ~ Fare*Sex, data = train, family = binomial())
@@ -406,7 +399,7 @@ DF$SE <- predict(FitBin2, DF, se.fit = TRUE,"response")$se.fit
 ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
 ```
 
-## Función link
+### Función link
 
 * Actua sobre $Y$
 * family Gaussian, link = identidad
@@ -416,7 +409,6 @@ ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + S
 
 $$Logit = log{\frac{p}{1-p}}$$
 
-## Función link
 
 ```{r, echo = F}
 x = c(-1, -0.8, 0.1, 0.2, 0.5, 0.8, 1, 2, 2.3)
@@ -427,7 +419,6 @@ link = data.frame(Valor = x, Identidad = x, Inverso = 1/x, Log = log(x), logit =
 knitr::kable(link) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)  %>% scroll_box(width = "100%", height = "400px")
 ```
 
-## Función link
 
 ```{r, echo=FALSE}
 x = seq(from = -4, to = 4, by = 0.2)
