@@ -1,0 +1,397 @@
+---
+title: "Clase 6 Machine Learning"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 80))
+library(tidyverse)
+library(caret)
+library(MuMIn)
+library(broom)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Machine learning (que es y cuando usarlo)
+
+* Algoritmos de inteligencia artificial
+* Perfectos para máxima predicción
+* En general malos para explicar
+* El mejor caso es cuando tengo al menos 1000 casos
+* Si tengo millones de datos, mejor deeplearning
+* Tanto para clasificación como regresión
+
+## En general Crossvalidation
+
+```{r, echo = FALSE}
+knitr::include_graphics("https://cdn-images-1.medium.com/max/1600/0*y9RdoXDYImowXoRS.", dpi = 150)
+```
+
+## Partamos con clasificación
+
+```{r, echo = FALSE}
+kable(iris, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
+```
+
+## Caracteres buenos para clasificar
+
+```{r, echo = FALSE}
+ggplot(iris, aes(x = Species, y = Petal.Width)) + geom_jitter(aes(color = Species))
+```
+
+## Caracteres malos para clasificar
+
+```{r, echo = FALSE}
+ggplot(iris, aes(x = Species, y = Sepal.Width)) + geom_jitter(aes(color = Species))
+```
+
+## Usemos caret!!!!
+
+* Lo primero dividir en **Entrenamiento** y **Prueba**
+
+```{r}
+set.seed(2020)
+Index <- createDataPartition(iris$Species, list = FALSE, p = 0.5)
+
+Train <- iris[Index,]
+Test <- iris[-Index,]
+```
+
+* Luego preparo el entrenamiento 10 fold repeated Crossvalidation
+
+```{r}
+fitControl <- trainControl(method = "repeatedcv",
+  number = 10,
+  repeats = 10)
+```
+
+## ¿Repeated que?
+
+```{r, echo=FALSE}
+knitr::include_graphics("K-fold_cross_validation_EN.jpg", dpi = 70)
+```
+
+## Elegimos un algorítmo
+
+```{r, echo = FALSE}
+tag_data <- read_csv("tag_data.csv")
+kable(tag_data, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
+```
+
+* Pueden ver base de datos [acá](http://topepo.github.io/caret/tag_data.csv)
+
+## Probemos una vez con train y rpart (regression trees)
+
+```{r}
+Class <- train(Species~., data = Train, method = "rpart",trControl = fitControl)
+
+postResample(pred = predict(Class, Train), obs = Train$Species)
+
+postResample(pred = predict(Class, Test), obs = Test$Species)
+```
+
+
+## ¿Que es Accuracy?
+
+* Muchas medidas [acá](https://en.wikipedia.org/wiki/Sensitivity_and_specificity)
+
+$$Accuracy = \frac{Correctos}{Totales}$$
+
+```{r}
+confusionMatrix(data = predict(Class, Test), reference = Test$Species)
+```
+
+## ¿Que nos dice este modelo?
+
+```{r, echo = FALSE}
+library(rpart.plot)
+
+rpart.plot(Class$finalModel)
+```
+
+## ¿Que variables explican?
+
+```{r}
+plot(varImp(Class))
+```
+
+
+## Caracteres buenos para clasificar
+
+```{r, echo = FALSE}
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species))
+```
+
+## Caracteres malos para clasificar
+
+```{r, echo = FALSE}
+ggplot(iris, aes(x = Species, y = Sepal.Width)) + geom_jitter(aes(color = Species))
+```
+
+## Como mejorar o empeorar un modelo
+
+* Parametros
+
+```{r}
+plot(Class)
+```
+
+## Que es CP?
+
+```{r, echo = FALSE}
+kable(Class$results, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+* Complexity parameter
+
+
+## ¿Como lo controlo? {.small}
+
+```{r}
+rpartGrid <-  expand.grid(cp = c(0.8, 1))
+Class2 <- train(Species~., data = Train, method = "rpart",trControl = fitControl, tuneGrid = rpartGrid)                        
+plot(Class2)
+```
+
+## ¿Que tan malo es esto? 
+
+```{r}
+postResample(pred = predict(Class2, Train), obs = Train$Species)
+
+postResample(pred = predict(Class2, Test), obs = Test$Species)
+```
+
+## A ver?
+
+```{r}
+rpart.plot.version1(Class2$finalModel)
+```
+
+## ¿Como lo controlo? {.small}
+
+```{r}
+rpartGrid <-  expand.grid(cp = seq(0.01,1, by = 0.01))
+Class3 <- train(Species~., data = Train, method = "rpart",trControl = fitControl, tuneGrid = rpartGrid)                        
+plot(Class3)
+```
+
+
+## ¿Que tan bueno es esto? 
+
+```{r}
+postResample(pred = predict(Class3, Train), obs = Train$Species)
+
+postResample(pred = predict(Class3, Test), obs = Test$Species)
+```
+
+## A ver?
+
+```{r}
+rpart.plot(Class3$finalModel)
+```
+
+## ¿De donde saco los parámetros de cada algorítmo?
+
+De la [página](http://topepo.github.io/caret/available-models.html) de caret
+
+# Ahora regresión
+
+## Donde vive el guanaco?
+
+```{r, echo = FALSE}
+knitr::include_graphics("Guanaco.jpg", dpi = 200)
+```
+
+* Base de datos **sp2.rds** y **SA.rds**
+
+## Veamos
+
+```{r, echo = FALSE}
+library(leaflet)
+sp2 <-read_rds("sp2.rds")
+sp <-read_rds("sp.rds")
+SA <-read_rds("SA.rds")
+
+leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=sp$decimalLongitude, lat=sp$decimalLatitude)
+```
+
+## ¿Que variables tenemos?
+
+```{r, echo= FALSE}
+kable(sp2, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
+```
+
+## ¿Que hacemos primero? {.small .build}
+
+```{r, echo=TRUE}
+
+set.seed(2018)
+
+Index1 <- createDataPartition(sp2$presence, list = FALSE)
+
+Train1 <- sp2[Index1,]
+Test1 <- sp2[-Index1,]
+
+nrow(Train1 %>% filter(presence == 1))
+nrow(Test1 %>% filter(presence == 1))
+```
+
+
+## Luego
+
+```{r}
+
+fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 10)
+
+set.seed(2018)
+
+Model <- train(presence~., data = Train1, method = "rpart", trControl = fitControl)
+caret::postResample(pred = predict(Model, Train1), obs = Train1$presence)
+
+caret::postResample(pred = predict(Model, Test1), obs =  Test1$presence)
+```
+
+
+## Veamos el modelo
+
+```{r, echo = FALSE}
+rpart.plot(Model$finalModel)
+```
+
+## Más del modelo
+
+```{r, echo = FALSE}
+plot(varImp(Model))
+```
+
+## ¿Hagamos un mapa?
+
+```{r}
+library(raster)
+Map <- predict(SA, Model)
+```
+
+```{r, echo = FALSE}
+plot(Map, colNA = "black")
+```
+
+## Mapas
+
+```{r, leaflet2, echo = FALSE}
+leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addRasterImage(Map, opacity = 0.8) %>% 
+  addMarkers(lng=sp$decimalLongitude, lat=sp$decimalLatitude)
+```
+
+## Probemos más algoritmos
+
+```{r, results='hide'}
+set.seed(2020)
+Model2 <- train(presence~., data = Train1, method = "gbm",trControl = fitControl)
+
+set.seed(2020)
+Model3 <- train(presence~., data = Train1, method = "rf",trControl = fitControl)
+```
+
+## Como rinden
+
+```{r}
+caret::postResample(pred = predict(Model, Test1), obs =  Test1$presence)
+
+caret::postResample(pred = predict(Model2, Test1), obs =  Test1$presence)
+
+caret::postResample(pred = predict(Model3, Test1), obs =  Test1$presence)
+```
+
+## Comparar entre modelos {.small}
+
+```{r}
+Comp <- resamples(list(Rpart = Model, GBM = Model2, RF = Model3))
+Difs <- diff(Comp)
+```
+
+
+## Más comparaciones
+
+```{r}
+densityplot(Difs,metric = "Rsquared",auto.key = TRUE,pch = "|")
+```
+
+## Mas comparaciones
+
+```{r}
+bwplot(Difs,metric = "Rsquared")
+```
+
+## Mas mapas
+
+```{r}
+Map2 <- predict(SA, Model2)
+
+Map3 <- predict(SA, Model3)
+```
+
+## Mas mapas
+
+```{r, echo = FALSE}
+Models <-stack(Map, Map2, Map3)
+
+names(Models) <- c("rpart", "gbr", "rf")
+rasterVis::levelplot(Models)
+```
+
+
+# Sigan probando más algoritmos
+
+## Se puede con GLM binomial tambien
+
+```{r}
+FitGlob <- glm(presence ~.,family = binomial, data=sp2)
+library(MuMIn)
+
+
+smat <- abs(cor(sp2[, -1])) <=   0.7
+smat[!lower.tri(smat)] <- NA
+K = floor(nrow(sp2)/10)
+options(na.action = "na.fail")
+Selected <- dredge(FitGlob, subset = smat, m.lim = c(0,K))
+
+```
+
+## Se puede con GLM binomial tambien
+
+
+```{r, echo = FALSE}
+kable(Selected, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
+```
+
+
+## GLM
+
+```{r}
+best <- get.models(Selected, subset = delta < 2)
+best<- best[[1]]
+
+library(raster)
+MapLM <- predict(SA,best, type = "response")
+```
+
+
+## GLM
+
+```{r, echo = FALSE}
+Models <-stack(Map, Map2, Map3, MapLM)
+
+names(Models) <- c("rpart", "gbr", "rf", "Binomial")
+rasterVis::levelplot(Models)
+```
