@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2020-05-14" />
+<meta name="date" content="2020-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="AUTO.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="Machine.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -276,6 +276,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4" data-path="Cross.html"><a href="Cross.html#seleccionando-modelos-usando-k-fold-repeated-crossvalidation"><i class="fa fa-check"></i><b>5.4</b> Seleccionando modelos usando k-fold repeated Crossvalidation</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="Cross.html"><a href="Cross.html#seleccionando-por-aicc"><i class="fa fa-check"></i><b>5.4.1</b> Seleccionando por AICc</a></li>
 <li class="chapter" data-level="5.4.2" data-path="Cross.html"><a href="Cross.html#seleccionando-por-n-repeated-k-fold-crossvalidation"><i class="fa fa-check"></i><b>5.4.2</b> Seleccionando por n-repeated-K-fold-crossvalidation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Machine.html"><a href="Machine.html"><i class="fa fa-check"></i><b>6</b> Machine Learning</a><ul>
+<li class="chapter" data-level="6.1" data-path="Machine.html"><a href="Machine.html#paquetes-necesarios-para-este-capítulo-5"><i class="fa fa-check"></i><b>6.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="Machine.html"><a href="Machine.html#presentación-html-5"><i class="fa fa-check"></i><b>6.1.1</b> Presentación html</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -844,19 +849,15 @@ Fold5.Rep10
 </ul>
 <div id="seleccionando-por-aicc" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Seleccionando por AICc</h3>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)</a>
-<a class="sourceLine" id="cb75-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb75-3" data-line-number="3">fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars)</a>
-<a class="sourceLine" id="cb75-4" data-line-number="4">fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> mtcars)</a>
-<a class="sourceLine" id="cb75-5" data-line-number="5">fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>), <span class="dt">data =</span> mtcars)</a>
-<a class="sourceLine" id="cb75-6" data-line-number="6">fit4 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">4</span>), <span class="dt">data =</span> mtcars)</a>
-<a class="sourceLine" id="cb75-7" data-line-number="7">fit5 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">5</span>), </a>
-<a class="sourceLine" id="cb75-8" data-line-number="8">    <span class="dt">data =</span> mtcars)</a>
-<a class="sourceLine" id="cb75-9" data-line-number="9">fit6 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb75-10" data-line-number="10"><span class="st">    </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">6</span>), <span class="dt">data =</span> mtcars)</a>
-<a class="sourceLine" id="cb75-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb75-12" data-line-number="12">models &lt;-<span class="st"> </span><span class="kw">list</span>(fit1, fit2, fit3, fit4, fit5, fit6)</a>
-<a class="sourceLine" id="cb75-13" data-line-number="13">SelectedMods &lt;-<span class="st"> </span><span class="kw">model.sel</span>(models)</a></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;mtcars&quot;</span>)</a>
+<a class="sourceLine" id="cb87-2" data-line-number="2">fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb87-3" data-line-number="3">fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb87-4" data-line-number="4">fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>), <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb87-5" data-line-number="5">fit4 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">4</span>), <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb87-6" data-line-number="6">fit5 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">5</span>), <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb87-7" data-line-number="7">fit6 &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">4</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">6</span>), <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb87-8" data-line-number="8">models &lt;-<span class="st"> </span><span class="kw">list</span>(fit1, fit2, fit3, fit4, fit5, fit6)</a>
+<a class="sourceLine" id="cb87-9" data-line-number="9">SelectedMods &lt;-<span class="st"> </span><span class="kw">model.sel</span>(models)</a></code></pre></div>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1093,33 +1094,29 @@ NA
 <ul>
 <li>para 1 modelo</li>
 </ul>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2020</span>)</a>
-<a class="sourceLine" id="cb76-2" data-line-number="2">ctrl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>, <span class="dt">repeats =</span> <span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb76-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb76-4" data-line-number="4">DF &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">trControl =</span> ctrl)<span class="op">$</span>resample</a>
-<a class="sourceLine" id="cb76-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb76-6" data-line-number="6">DF &lt;-<span class="st"> </span>DF <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Rsquared, Resample)</a></code></pre></div>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1">form1 &lt;-<span class="st"> &quot;mpg ~ hp&quot;</span></a>
-<a class="sourceLine" id="cb77-2" data-line-number="2">form2 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2)&quot;</span></a>
-<a class="sourceLine" id="cb77-3" data-line-number="3">form3 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3)&quot;</span></a>
-<a class="sourceLine" id="cb77-4" data-line-number="4">form4 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4)&quot;</span></a>
-<a class="sourceLine" id="cb77-5" data-line-number="5">form5 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5)&quot;</span></a>
-<a class="sourceLine" id="cb77-6" data-line-number="6">form6 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5) + I(hp^6)&quot;</span></a>
-<a class="sourceLine" id="cb77-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb77-8" data-line-number="8">forms &lt;-<span class="st"> </span><span class="kw">list</span>(form1, form2, form3, form4, form5, form6)</a>
-<a class="sourceLine" id="cb77-9" data-line-number="9">K =<span class="st"> </span>(<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>)</a>
-<a class="sourceLine" id="cb77-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb77-11" data-line-number="11">ctrl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>, <span class="dt">repeats =</span> <span class="dv">50</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2020</span>)</a>
-<a class="sourceLine" id="cb78-2" data-line-number="2">Tests &lt;-<span class="st"> </span>forms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">train</span>(<span class="kw">as.formula</span>(.x), </a>
-<a class="sourceLine" id="cb78-3" data-line-number="3">    <span class="dt">data =</span> mtcars, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </a>
-<a class="sourceLine" id="cb78-4" data-line-number="4">    <span class="dt">trControl =</span> ctrl)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">as.data.frame</span>(.x<span class="op">$</span>resample)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb78-5" data-line-number="5"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">select</span>(.x, Rsquared)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb78-6" data-line-number="6"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">summarise_all</span>(.x, <span class="kw">funs</span>(mean, </a>
-<a class="sourceLine" id="cb78-7" data-line-number="7">        sd), <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map2</span>(<span class="dt">.y =</span> forms, </a>
-<a class="sourceLine" id="cb78-8" data-line-number="8">    <span class="op">~</span><span class="kw">mutate</span>(.x, <span class="dt">model =</span> .y)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb78-9" data-line-number="9"><span class="st">    </span><span class="kw">reduce</span>(bind_rows) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">K =</span> K) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb78-10" data-line-number="10"><span class="st">    </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean))</a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2020</span>)</a>
+<a class="sourceLine" id="cb88-2" data-line-number="2">ctrl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>, <span class="dt">repeats =</span> <span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb88-3" data-line-number="3">DF &lt;-<span class="st"> </span><span class="kw">train</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">trControl =</span> ctrl)<span class="op">$</span>resample</a>
+<a class="sourceLine" id="cb88-4" data-line-number="4">DF &lt;-<span class="st"> </span>DF <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(Rsquared, Resample)</a></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1">form1 &lt;-<span class="st"> &quot;mpg ~ hp&quot;</span></a>
+<a class="sourceLine" id="cb89-2" data-line-number="2">form2 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2)&quot;</span></a>
+<a class="sourceLine" id="cb89-3" data-line-number="3">form3 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3)&quot;</span></a>
+<a class="sourceLine" id="cb89-4" data-line-number="4">form4 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4)&quot;</span></a>
+<a class="sourceLine" id="cb89-5" data-line-number="5">form5 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5)&quot;</span></a>
+<a class="sourceLine" id="cb89-6" data-line-number="6">form6 &lt;-<span class="st"> &quot;mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5) + I(hp^6)&quot;</span></a>
+<a class="sourceLine" id="cb89-7" data-line-number="7">forms &lt;-<span class="st"> </span><span class="kw">list</span>(form1, form2, form3, form4, form5, form6)</a>
+<a class="sourceLine" id="cb89-8" data-line-number="8">K =<span class="st"> </span>(<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb89-9" data-line-number="9">ctrl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="dt">number =</span> <span class="dv">5</span>, <span class="dt">repeats =</span> <span class="dv">50</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2020</span>)</a>
+<a class="sourceLine" id="cb90-2" data-line-number="2">Tests &lt;-<span class="st"> </span>forms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">train</span>(<span class="kw">as.formula</span>(.x), </a>
+<a class="sourceLine" id="cb90-3" data-line-number="3">    <span class="dt">data =</span> mtcars, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, </a>
+<a class="sourceLine" id="cb90-4" data-line-number="4">    <span class="dt">trControl =</span> ctrl)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">as.data.frame</span>(.x<span class="op">$</span>resample)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb90-5" data-line-number="5"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span>dplyr<span class="op">::</span><span class="kw">select</span>(.x, Rsquared)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb90-6" data-line-number="6"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">summarise_all</span>(.x, <span class="kw">funs</span>(mean, </a>
+<a class="sourceLine" id="cb90-7" data-line-number="7">        sd), <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map2</span>(<span class="dt">.y =</span> forms, </a>
+<a class="sourceLine" id="cb90-8" data-line-number="8">    <span class="op">~</span><span class="kw">mutate</span>(.x, <span class="dt">model =</span> .y)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb90-9" data-line-number="9"><span class="st">    </span><span class="kw">reduce</span>(bind_rows) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">K =</span> K) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb90-10" data-line-number="10"><span class="st">    </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean))</a></code></pre></div>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1249,7 +1246,7 @@ mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5) + I(hp^6)
         </div>
       </div>
 <a href="AUTO.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="Machine.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

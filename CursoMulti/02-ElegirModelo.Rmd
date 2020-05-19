@@ -207,7 +207,7 @@ En la sección \@ref(Metodo1), usando $\Delta AICc$ seleccionamos un solo modelo
 Lo primero que haremos para ejemplificar este problema es el generar un data frame con solo el estimador de esa variable y el peso de akaike de la misma (ver tabla \@ref(tab:DosVars))
 
 ```{r}
-S <- as.data.frame(Selected) %>% select(percentage.expenditure, weight)
+S <- as.data.frame(Selected) %>% dplyr::select(percentage.expenditure, weight)
 ```
 
 ```{r DosVars, echo = FALSE}
@@ -292,11 +292,11 @@ AverageModel  <- model.avg(Select, subset = cumsum(weight) <= 0.95, fit = T)
 Luego podemos ver para distintas variables sus parámetros promedio, en este caso mostraremos los del porcentaje de gastos y de enseñanza (Tabla \@ref(tab:Promedio)):
 
 ```{r, eval = FALSE}
-AverageModel$coefficients %>% as.data.frame() %>% select(percentage.expenditure, Schooling)
+AverageModel$coefficients %>% as.data.frame() %>% dplyr::select(percentage.expenditure, Schooling)
 ```
 
 ```{r Promedio, echo = FALSE}
-AverageModel$coefficients %>% as.data.frame() %>% select(percentage.expenditure, Schooling) %>% kable(caption = "Promedios de los métodos completo y subset para las variables de Schooling y de percentage.expenditure") %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+AverageModel$coefficients %>% as.data.frame() %>% dplyr::select(percentage.expenditure, Schooling) %>% kable(caption = "Promedios de los métodos completo y subset para las variables de Schooling y de percentage.expenditure") %>%   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
 ```
 
 

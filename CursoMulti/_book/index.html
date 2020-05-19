@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2020-05-14" />
+<meta name="date" content="2020-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -278,6 +278,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.2" data-path="Cross.html"><a href="Cross.html#seleccionando-por-n-repeated-k-fold-crossvalidation"><i class="fa fa-check"></i><b>5.4.2</b> Seleccionando por n-repeated-K-fold-crossvalidation</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="Machine.html"><a href="Machine.html"><i class="fa fa-check"></i><b>6</b> Machine Learning</a><ul>
+<li class="chapter" data-level="6.1" data-path="Machine.html"><a href="Machine.html#paquetes-necesarios-para-este-capítulo-5"><i class="fa fa-check"></i><b>6.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="Machine.html"><a href="Machine.html#presentación-html-5"><i class="fa fa-check"></i><b>6.1.1</b> Presentación html</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
@@ -302,7 +307,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Curso BIO4318 Modelos Multivariados y Machine learning</h1>
 <p class="author"><em>Derek Corcoran</em></p>
-<p class="date"><em>2020-05-14</em></p>
+<p class="date"><em>2020-05-19</em></p>
 </div>
 <div id="requerimientos" class="section level1 unnumbered">
 <h1>Requerimientos</h1>
@@ -310,6 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <iframe width="560" height="315" src="https://www.youtube.com/embed/RtkCAKXsVbw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 <p>El código para la instalación de esos paquetes es el siguiente:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;pacman&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;tinytex&quot;</span>)</a></code></pre></div>
 <p>En caso de necesitar ayuda para la instalación, contactarse con el instructor del curso.</p>
 <div id="antes-de-comenzar" class="section level2">
 <h2><span class="header-section-number">0.1</span> Antes de comenzar</h2>
@@ -347,7 +353,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Capítulo <a href="ElegirModelo.html#ElegirModelo">2</a> <em>Selección de modelos</em>: En este capítulo se trabajará en la selección de modelos basandonos en criterios de información. Para esto discutiremos cuál es el conjunto de modelos que compiten por ser seleccionados, como elegimos el mejor modelo, y en caso que sea necesario, como promediar entre modelos similares.</p></li>
 <li><p>Capítulo <a href="GLMs.html#GLMs">3</a> <em>Introducción a los GLMs</em>: Entendiendo cuando y para que usar los distintos GLMs.</p></li>
 <li><p>Capítulo <a href="AUTO.html#AUTO">4</a> <em>Automatización de selecciond de modelos</em>: En este capítulo entenderemos la diferencia entre variables fijas y aleatorieas, y además veremos como automatizar la selección de modelos.</p></li>
-<li><p>Capítulo <a href="#CROSS"><strong>??</strong></a> <em>Crossvalidation</em>: En este capítulo entenderemos el concepto de crossvalidation, un concepto totalmente necesario para poder entender Machine Learning.</p></li>
+<li><p>Capítulo <a href="Cross.html#Cross">5</a> <em>Crossvalidation</em>: En este capítulo entenderemos el concepto de crossvalidation, un concepto totalmente necesario para poder entender Machine Learning.</p></li>
+<li><p>Capítulo <a href="Machine.html#Machine">6</a> <em>Crossvalidation</em>: En este capítulo entenderemos el concepto de machine learning.</p></li>
 </ul>
 </div>
 <div id="metodología" class="section level2">

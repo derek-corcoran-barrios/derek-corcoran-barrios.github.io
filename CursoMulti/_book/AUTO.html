@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2020-05-14" />
+<meta name="date" content="2020-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -276,6 +276,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4" data-path="Cross.html"><a href="Cross.html#seleccionando-modelos-usando-k-fold-repeated-crossvalidation"><i class="fa fa-check"></i><b>5.4</b> Seleccionando modelos usando k-fold repeated Crossvalidation</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="Cross.html"><a href="Cross.html#seleccionando-por-aicc"><i class="fa fa-check"></i><b>5.4.1</b> Seleccionando por AICc</a></li>
 <li class="chapter" data-level="5.4.2" data-path="Cross.html"><a href="Cross.html#seleccionando-por-n-repeated-k-fold-crossvalidation"><i class="fa fa-check"></i><b>5.4.2</b> Seleccionando por n-repeated-K-fold-crossvalidation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Machine.html"><a href="Machine.html"><i class="fa fa-check"></i><b>6</b> Machine Learning</a><ul>
+<li class="chapter" data-level="6.1" data-path="Machine.html"><a href="Machine.html#paquetes-necesarios-para-este-capítulo-5"><i class="fa fa-check"></i><b>6.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="Machine.html"><a href="Machine.html#presentación-html-5"><i class="fa fa-check"></i><b>6.1.1</b> Presentación html</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -1787,15 +1792,12 @@ chilled
 </table>
 </div>
 <p>Partiremos con un ejemplo de un modelo lineal y un modelo lineal mixto en paralelo para empezar a trabajar. El modelo codificado como <code>mod1</code> es un modelo lineal, en el cual asumimos que existirá un comportamiento logarítmico de la captación de <span class="math inline">\(CO2\)</span>, esto es, se saturará la relación</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">library</span>(lme4)</a>
-<a class="sourceLine" id="cb58-2" data-line-number="2">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>Type <span class="op">*</span><span class="st"> </span>Treatment <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(<span class="kw">log</span>(conc)) <span class="op">+</span><span class="st"> </span>conc, <span class="dt">data =</span> CO2)</a>
-<a class="sourceLine" id="cb58-3" data-line-number="3">mod2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(uptake <span class="op">~</span><span class="st"> </span>Type <span class="op">*</span><span class="st"> </span>Treatment <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(<span class="kw">log</span>(conc)) <span class="op">+</span><span class="st"> </span>conc <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb58-4" data-line-number="4"><span class="st">    </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Plant), <span class="dt">data =</span> CO2)</a></code></pre></div>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</a>
-<a class="sourceLine" id="cb59-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb59-3" data-line-number="3">Max.Vars &lt;-<span class="st"> </span><span class="kw">floor</span>(<span class="kw">nrow</span>(CO2)<span class="op">/</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb59-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb59-5" data-line-number="5">Seleccion &lt;-<span class="st"> </span><span class="kw">dredge</span>(mod2, <span class="dt">m.lim =</span> <span class="kw">c</span>(<span class="dv">0</span>, Max.Vars))</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">library</span>(lme4)</a>
+<a class="sourceLine" id="cb70-2" data-line-number="2">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>Type <span class="op">*</span><span class="st"> </span>Treatment <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(<span class="kw">log</span>(conc)) <span class="op">+</span><span class="st"> </span>conc, <span class="dt">data =</span> CO2)</a>
+<a class="sourceLine" id="cb70-3" data-line-number="3">mod2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(uptake <span class="op">~</span><span class="st"> </span>Type <span class="op">*</span><span class="st"> </span>Treatment <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(<span class="kw">log</span>(conc)) <span class="op">+</span><span class="st"> </span>conc <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Plant), <span class="dt">data =</span> CO2)</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</a>
+<a class="sourceLine" id="cb71-2" data-line-number="2">Max.Vars &lt;-<span class="st"> </span><span class="kw">floor</span>(<span class="kw">nrow</span>(CO2)<span class="op">/</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb71-3" data-line-number="3">Seleccion &lt;-<span class="st"> </span><span class="kw">dredge</span>(mod2, <span class="dt">m.lim =</span> <span class="kw">c</span>(<span class="dv">0</span>, Max.Vars))</a></code></pre></div>
 </div>
 <div id="selección" class="section level3">
 <h3><span class="header-section-number">4.2.2</span> Selección</h3>
@@ -2574,8 +2576,8 @@ NA
 </div>
 <div id="modelo" class="section level3">
 <h3><span class="header-section-number">4.2.3</span> Modelo</h3>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">BestModel &lt;-<span class="st"> </span><span class="kw">get.models</span>(Seleccion, <span class="dv">1</span>)[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb60-2" data-line-number="2">broom<span class="op">::</span><span class="kw">tidy</span>(BestModel)</a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1">BestModel &lt;-<span class="st"> </span><span class="kw">get.models</span>(Seleccion, <span class="dv">1</span>)[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb72-2" data-line-number="2">broom<span class="op">::</span><span class="kw">tidy</span>(BestModel)</a></code></pre></div>
 <table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2750,8 +2752,8 @@ Residual
 </div>
 <div id="como-agrego-eso-a-mumin" class="section level3">
 <h3><span class="header-section-number">4.2.5</span> Como agrego eso a MuMIn</h3>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">GlobalMod &lt;-<span class="st"> </span><span class="kw">lm</span>(Calorias <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> Cement2)</a></code></pre></div>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="kw">cor</span>(Cement2[, <span class="dv">-1</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">GlobalMod &lt;-<span class="st"> </span><span class="kw">lm</span>(Calorias <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> Cement2)</a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="kw">cor</span>(Cement2[, <span class="dv">-1</span>])</a></code></pre></div>
 <table class="table table-striped table-hover" style="font-size: 20px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2842,9 +2844,9 @@ Ca2Si
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">nm &lt;-<span class="st"> </span><span class="kw">colnames</span>(Cement2[<span class="op">-</span><span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb63-2" data-line-number="2">smat &lt;-<span class="st"> </span><span class="kw">abs</span>(<span class="kw">cor</span>(Cement2[, <span class="dv">-1</span>])) <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.7</span></a>
-<a class="sourceLine" id="cb63-3" data-line-number="3">smat[<span class="op">!</span><span class="kw">lower.tri</span>(smat)] &lt;-<span class="st"> </span><span class="ot">NA</span></a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">nm &lt;-<span class="st"> </span><span class="kw">colnames</span>(Cement2[<span class="op">-</span><span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb75-2" data-line-number="2">smat &lt;-<span class="st"> </span><span class="kw">abs</span>(<span class="kw">cor</span>(Cement2[, <span class="dv">-1</span>])) <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.7</span></a>
+<a class="sourceLine" id="cb75-3" data-line-number="3">smat[<span class="op">!</span><span class="kw">lower.tri</span>(smat)] &lt;-<span class="st"> </span><span class="ot">NA</span></a></code></pre></div>
 <table class="table table-striped table-hover" style="font-size: 20px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2935,8 +2937,8 @@ NA
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</a>
-<a class="sourceLine" id="cb64-2" data-line-number="2">Selected &lt;-<span class="st"> </span><span class="kw">dredge</span>(GlobalMod, <span class="dt">subset =</span> smat)</a></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</a>
+<a class="sourceLine" id="cb76-2" data-line-number="2">Selected &lt;-<span class="st"> </span><span class="kw">dredge</span>(GlobalMod, <span class="dt">subset =</span> smat)</a></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
 <table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -3269,8 +3271,8 @@ NA
 </div>
 <div id="incluir-además-límite-de-numero-de-variables" class="section level2">
 <h2><span class="header-section-number">4.3</span> Incluir además límite de numero de variables</h2>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</a>
-<a class="sourceLine" id="cb65-2" data-line-number="2">Selected &lt;-<span class="st"> </span><span class="kw">dredge</span>(GlobalMod, <span class="dt">subset =</span> smat, <span class="dt">m.lim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">floor</span>(<span class="kw">nrow</span>(Cement)<span class="op">/</span><span class="dv">10</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</a>
+<a class="sourceLine" id="cb77-2" data-line-number="2">Selected &lt;-<span class="st"> </span><span class="kw">dredge</span>(GlobalMod, <span class="dt">subset =</span> smat, <span class="dt">m.lim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">floor</span>(<span class="kw">nrow</span>(Cement)<span class="op">/</span><span class="dv">10</span>)))</a></code></pre></div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; ">
 <table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -3480,7 +3482,7 @@ NA
 <li>¿Cual de estas relaciones es la que uno esperaría ver al finalizar el experimento?</li>
 </ul>
 <p><img src="CursoMulti_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
-<div class="countdown" id="timer_5ebdcebc" style="right:0;bottom:0;" data-audio="true" data-warnwhen="10">
+<div class="countdown" id="timer_5ec44a4d" style="right:0;bottom:0;" data-audio="true" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">40</span></code>
 </div>
 <ul>
@@ -3493,19 +3495,19 @@ NA
 <li>¿Cuál de estos códigos resultaría en el modelo que generaría este gráfico?</li>
 </ul>
 <p><img src="CursoMulti_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1">A &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
-<a class="sourceLine" id="cb66-2" data-line-number="2">B &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
-<a class="sourceLine" id="cb66-3" data-line-number="3">C &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time<span class="op">:</span>Diet, <span class="dt">family =</span> poisson)</a></code></pre></div>
-<div class="countdown" id="timer_5ebdcdff" style="top:0;right:0;" data-warnwhen="10">
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1">A &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
+<a class="sourceLine" id="cb78-2" data-line-number="2">B &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
+<a class="sourceLine" id="cb78-3" data-line-number="3">C &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time<span class="op">:</span>Diet, <span class="dt">family =</span> poisson)</a></code></pre></div>
+<div class="countdown" id="timer_5ec44d60" style="top:0;right:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">40</span></code>
 </div>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw">library</span>(lme4)</a>
-<a class="sourceLine" id="cb67-2" data-line-number="2">ChickPoissMM1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Chick), <span class="dt">family =</span> poisson, </a>
-<a class="sourceLine" id="cb67-3" data-line-number="3">    <span class="dt">data =</span> ChickWeight)</a>
-<a class="sourceLine" id="cb67-4" data-line-number="4">ChickPoissMM2 &lt;-<span class="st"> </span><span class="kw">glmer</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time<span class="op">:</span>Diet <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Chick), </a>
-<a class="sourceLine" id="cb67-5" data-line-number="5">    <span class="dt">family =</span> poisson, <span class="dt">data =</span> ChickWeight)</a>
-<a class="sourceLine" id="cb67-6" data-line-number="6">ChickPoissMM3 &lt;-<span class="st"> </span><span class="kw">glmer</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time <span class="op">*</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Chick), </a>
-<a class="sourceLine" id="cb67-7" data-line-number="7">    <span class="dt">family =</span> poisson, <span class="dt">data =</span> ChickWeight)</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">library</span>(lme4)</a>
+<a class="sourceLine" id="cb79-2" data-line-number="2">ChickPoissMM1 &lt;-<span class="st"> </span><span class="kw">glmer</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Chick), <span class="dt">family =</span> poisson, </a>
+<a class="sourceLine" id="cb79-3" data-line-number="3">    <span class="dt">data =</span> ChickWeight)</a>
+<a class="sourceLine" id="cb79-4" data-line-number="4">ChickPoissMM2 &lt;-<span class="st"> </span><span class="kw">glmer</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time<span class="op">:</span>Diet <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Chick), </a>
+<a class="sourceLine" id="cb79-5" data-line-number="5">    <span class="dt">family =</span> poisson, <span class="dt">data =</span> ChickWeight)</a>
+<a class="sourceLine" id="cb79-6" data-line-number="6">ChickPoissMM3 &lt;-<span class="st"> </span><span class="kw">glmer</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time <span class="op">*</span><span class="st"> </span>Diet <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Chick), </a>
+<a class="sourceLine" id="cb79-7" data-line-number="7">    <span class="dt">family =</span> poisson, <span class="dt">data =</span> ChickWeight)</a></code></pre></div>
 </div>
 <div id="pregunta-3" class="section level3">
 <h3><span class="header-section-number">4.4.3</span> Pregunta 3</h3>
@@ -3663,14 +3665,14 @@ Chick
 <li>B = 113.2955623</li>
 <li>C = 4.73</li>
 </ul>
-<div class="countdown" id="timer_5ebdcfae" style="top:0;right:0;" data-warnwhen="10">
+<div class="countdown" id="timer_5ec44b51" style="top:0;right:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">40</span></code>
 </div>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">exp</span>(<span class="fl">3.83</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.07</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.02</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="kw">exp</span>(<span class="fl">3.83</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.07</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.02</span>)</a></code></pre></div>
 <pre><code>## [1] 94.63241</code></pre>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">exp</span>(<span class="fl">3.83</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.07</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.02</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="kw">exp</span>(<span class="fl">3.83</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.07</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.02</span>))</a></code></pre></div>
 <pre><code>## [1] 113.2956</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="fl">3.83</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.07</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.02</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="fl">3.83</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.07</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">10</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.02</span>)</a></code></pre></div>
 <pre><code>## [1] 4.73</code></pre>
 </div>
 <div id="pregunta-4" class="section level3">
@@ -3679,10 +3681,10 @@ Chick
 <li>¿Cuál es el código que mejor representa este gráfico?</li>
 </ul>
 <p><img src="CursoMulti_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">A &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
-<a class="sourceLine" id="cb74-2" data-line-number="2">B &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
-<a class="sourceLine" id="cb74-3" data-line-number="3">C &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time<span class="op">:</span>Diet, <span class="dt">family =</span> poisson)</a></code></pre></div>
-<div class="countdown" id="timer_5ebdcf79" style="top:0;right:0;" data-warnwhen="10">
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1">A &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
+<a class="sourceLine" id="cb86-2" data-line-number="2">B &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">*</span><span class="st"> </span>Diet, <span class="dt">family =</span> poisson)</a>
+<a class="sourceLine" id="cb86-3" data-line-number="3">C &lt;-<span class="st"> </span><span class="kw">glm</span>(weight <span class="op">~</span><span class="st"> </span>Time <span class="op">+</span><span class="st"> </span>Time<span class="op">:</span>Diet, <span class="dt">family =</span> poisson)</a></code></pre></div>
+<div class="countdown" id="timer_5ec44c38" style="top:0;right:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">40</span></code>
 </div>
 </div>
@@ -3692,7 +3694,7 @@ Chick
 <li>¿Cuantas pendientes e interceptos espero ver en este modelo?</li>
 </ul>
 <p><img src="CursoMulti_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
-<div class="countdown" id="timer_5ebdceff" style="right:0;bottom:0;" data-warnwhen="10">
+<div class="countdown" id="timer_5ec449c8" style="right:0;bottom:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">00</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">40</span></code>
 </div>
 <table class="table table-striped table-hover" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">

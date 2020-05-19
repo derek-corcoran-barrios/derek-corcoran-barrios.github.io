@@ -20,3 +20,8 @@ lme4
 faraway
 countdown
 beepr
+rpart
+rpart.plot
+leaflet
+sp
+raster

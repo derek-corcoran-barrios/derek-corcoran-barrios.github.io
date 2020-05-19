@@ -182,7 +182,7 @@ knitr::include_graphics("nrepeatkfold.gif", dpi = 30)
 set.seed(2018)
 ctrl <- trainControl(method = "repeatedcv",number = 5, repeats = 10)
 
-Tests2 <- train(mpg ~ hp, data = mtcars, method = "lm",trControl = ctrl)$resample %>% select(Rsquared,Resample)
+Tests2 <- train(mpg ~ hp, data = mtcars, method = "lm",trControl = ctrl)$resample %>% dplyr::select(Rsquared,Resample)
 
 kable(Tests2, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
 ```
@@ -238,7 +238,7 @@ ctrl <- trainControl(method = "repeatedcv",number = 5, repeats = 50)
 
 DF <- train(mpg ~ hp, data = mtcars, method = "lm",trControl = ctrl)$resample 
 
-DF <- DF %>% select(Rsquared,Resample)
+DF <- DF %>% dplyr::select(Rsquared,Resample)
 ```
 
 
@@ -260,7 +260,7 @@ ctrl <- trainControl(method = "repeatedcv",number = 5, repeats = 50)
 
 ```{r, cache= TRUE, echo = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
 set.seed(2020)
-Tests <- forms %>% map(~train(as.formula(.x), data = mtcars, method = "lm",trControl = ctrl)) %>% map(~as.data.frame(.x$resample)) %>% map(~select(.x, Rsquared))  %>% map(~summarise_all(.x,funs(mean, sd), na.rm = T)) %>% map2(.y = forms,~ mutate(.x, model = .y)) %>% reduce(bind_rows) %>% mutate(K = K) %>% arrange(desc(mean))
+Tests <- forms %>% map(~train(as.formula(.x), data = mtcars, method = "lm",trControl = ctrl)) %>% map(~as.data.frame(.x$resample)) %>% map(~dplyr::select(.x, Rsquared))  %>% map(~summarise_all(.x,funs(mean, sd), na.rm = T)) %>% map2(.y = forms,~ mutate(.x, model = .y)) %>% reduce(bind_rows) %>% mutate(K = K) %>% arrange(desc(mean))
 ```
 
 

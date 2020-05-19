@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2020-05-14" />
+<meta name="date" content="2020-05-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -278,6 +278,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.2" data-path="Cross.html"><a href="Cross.html#seleccionando-por-n-repeated-k-fold-crossvalidation"><i class="fa fa-check"></i><b>5.4.2</b> Seleccionando por n-repeated-K-fold-crossvalidation</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="Machine.html"><a href="Machine.html"><i class="fa fa-check"></i><b>6</b> Machine Learning</a><ul>
+<li class="chapter" data-level="6.1" data-path="Machine.html"><a href="Machine.html#paquetes-necesarios-para-este-capítulo-5"><i class="fa fa-check"></i><b>6.1</b> Paquetes necesarios para este capítulo</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="Machine.html"><a href="Machine.html#presentación-html-5"><i class="fa fa-check"></i><b>6.1.1</b> Presentación html</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado con bookdown</a></li>
@@ -322,6 +327,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ejemplo" class="section level4">
 <h4><span class="header-section-number">1.2.1.1</span> Ejemplo</h4>
 <p>¿Podemos explicar o predecir la eficiencia de combustible (<em>mpg</em>) a partir de los caballos de fuerza (<em>hp</em>) de un Vehículo? Veamos el patrón que se observa en la Figura <a href="CriteriosInfo.html#fig:patron">1.1</a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">ggplot</span>(mtcars, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:patron"></span>
 <img src="CursoMulti_files/figure-html/patron-1.png" alt="Caballos de Fuerza de un vehículo (HP) graficados contra la eficiencia en millas por galon (mpg) del mismo vehículo" width="80%" />
 <p class="caption">
@@ -334,21 +340,22 @@ Figura 1.1: Caballos de Fuerza de un vehículo (HP) graficados contra la eficien
 <h4><span class="header-section-number">1.2.1.2</span> Primer paso separar en base de datos de entrenamiento y de testeo</h4>
 <p>En este caso queremos probar el poder explicativo y predictivo de esta base de datos, por lo cuál dividiremos nuestra base de datos en dos una base de datos de entrenamiento, con la cual ajustaremos el modelo y una de testeo o de prueba, en la cual veremos el poder predictivo del modelo con una base de datos que el modelo no ha visto anteriormente.</p>
 <p>Para esto utilizamos el siguiente código</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2018</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">index &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(mtcars), <span class="dt">size =</span> <span class="kw">round</span>(<span class="kw">nrow</span>(mtcars)<span class="op">/</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">Train &lt;-<span class="st"> </span>mtcars[index, ]</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">Test &lt;-<span class="st"> </span>mtcars[<span class="op">-</span>index, ]</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">2018</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">index &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(mtcars), <span class="dt">size =</span> <span class="kw">round</span>(<span class="kw">nrow</span>(mtcars)<span class="op">/</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">Train &lt;-<span class="st"> </span>mtcars[index,]</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">Test &lt;-<span class="st"> </span>mtcars[<span class="op">-</span>index,]</a></code></pre></div>
 <p>Esto genera la base de datos <em>Train</em> que tiene 16 observaciones y la base de datos <em>Test</em> que tiene 16 observaciones independientes. En este caso nuevamente si vemos la figura <a href="CriteriosInfo.html#fig:patron">1.1</a>, vemos que la relación entre los caballos de fuerza y la eficiencia no parecen ser particualrmente lineales, por lo que testearemos el siguiente modelo estadístico:</p>
 <p><span class="math display">\[mpg = \beta_1 hp + \beta_2 hp^2 + c\]</span></p>
 <p>Para determinar el poder tanto explicativo como predictivo del modelo, lo primero que haremos será crear el objeto <em>Modelo</em> usando un modelo lineal simple <code>lm</code></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a></code></pre></div>
 </div>
 <div id="poder-explicativo" class="section level4">
 <h4><span class="header-section-number">1.2.1.3</span> Poder explicativo:</h4>
 <p>Primero veamos el poder predictivo de este modelo, para eso usaremos la función <code>glance</code> del paquete <em>broom</em></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">glance</span>(Modelo)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">glance</span>(Modelo)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw">glance</span>(Modelo) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(r.squared, p.value, df), <span class="dt">caption =</span> <span class="st">&quot;R cuadrado, valor de p y grados de libertad del modelo&quot;</span>)  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="kw">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>))</a></code></pre></div>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:Tab">Tabla 1.1: </span>R cuadrado, valor de p y grados de libertad del modelo
@@ -382,7 +389,8 @@ df
 </table>
 <p>Como vemos en la Tabla <a href="CriteriosInfo.html#tab:Tab">1.1</a>, nuestro modelo tiene un poder explicativo bastante bueno, donde con solo saber los caballos de fuerza de un vehículo, podemos explicar un 78.8% de la variación en la eficiencia del vehículo.</p>
 <p>Usando la función <code>predict</code>, podemos ver la predicción del modelo con nuestra base de datos original, ademas si vemos la tabla <a href="CriteriosInfo.html#tab:TabResidPred">1.2</a>, vemos la predicción el observado y los residuales, que es la resta entre lo observado y la predicción. Además en la <a href="CriteriosInfo.html#fig:Pred1">1.2</a> podemos ver en la linea segmentada la predicción del modelo comparado con los datos en los puntos</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Train<span class="op">$</span>Pred &lt;-<span class="st"> </span><span class="kw">predict</span>(Modelo, Train)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">Train<span class="op">$</span>Pred &lt;-<span class="st"> </span><span class="kw">predict</span>(Modelo, Train)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">kable</span>(Train <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(hp, mpg,  Pred) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">resid =</span> Pred <span class="op">-</span><span class="st"> </span>mpg), <span class="dt">caption =</span> <span class="st">&quot;En esta tabla podemos observar para cada observación los caballos de fuerza, la predicción y los residuales para cada observación&quot;)  %&gt;% kable_styling(bootstrap_options = c(&quot;</span>striped<span class="st">&quot;, &quot;</span>hover<span class="st">&quot;))</span></a></code></pre></div>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:TabResidPred">Tabla 1.2: </span>En esta tabla podemos observar para cada observación los caballos de fuerza, la predicción y los residuales para cada observación
@@ -630,6 +638,7 @@ resid
 </tr>
 </tbody>
 </table>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(Train, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Pred), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</a></code></pre></div>
 <div class="figure"><span id="fig:Pred1"></span>
 <img src="CursoMulti_files/figure-html/Pred1-1.png" alt="Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo" width="672" />
 <p class="caption">
@@ -640,12 +649,14 @@ Figura 1.2: Los puntos representan las observaciones con las que se entrenó el 
 <div id="poder-predictivo" class="section level4">
 <h4><span class="header-section-number">1.2.1.4</span> Poder Predictivo:</h4>
 <p>Para determinar el poder predictivo de un modelo, tenemos que probar su predicciones con una base de datos que no haya sido usada para ajustar el modelo, es para eso que generamos la base de datos <em>Test</em>, lo primero que debemos hacer para ver el poder predictivo del modelo es usar el modelo con esta base de datos nueva, y generear predicciones, para esto nuevamente usamos la función <code>predict</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">Test<span class="op">$</span>Pred &lt;-<span class="st"> </span><span class="kw">predict</span>(Modelo, Test)</a></code></pre></div>
 <p>Posteriormente, usamos la funcion <code>postResample</code>del paquete <code>caret</code>, usando dos argumentos. En el argumento <code>pred</code> usamos los valores predichos con el modelo, y en el argumento <code>obs</code> usamos los valores observados, es decir, los que esperamos que nos entregue el modelo:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">postResample</span>(<span class="dt">pred =</span> Test<span class="op">$</span>Pred, <span class="dt">obs =</span> Test<span class="op">$</span>mpg)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">postResample</span>(<span class="dt">pred =</span> Test<span class="op">$</span>Pred, <span class="dt">obs =</span> Test<span class="op">$</span>mpg)</a></code></pre></div>
 <pre><code>##      RMSE  Rsquared       MAE 
 ## 3.8741375 0.6805523 2.6437118</code></pre>
 <p>La tabla resultante de esta función nos entrega varios valores para determinar que tan buena es la predicción (Mean Square Error, R Cuadrado y Mean Absolute Error), estos valores los estudiaremos mas adelante en los capítulos de Machine Learning, pero por ahora quedemonos con el valor de R Cuadrado, que es igual a 0.68, un valor menor al 0.79 del poder predictivo, lo cual es de esperarse. Casi siempre el valor predictivo de un modelo es menor al valor explicativo de este mismo. En la tabla <a href="CriteriosInfo.html#tab:PredPower">1.3</a> y en la figura <a href="CriteriosInfo.html#fig:PredPowerFig">1.3</a> podemos ver las predicciones del modelo.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">kable</span>(Test <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(hp, mpg,  Pred) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">resid =</span> Pred <span class="op">-</span><span class="st"> </span>mpg), <span class="dt">caption =</span> <span class="st">&quot;En esta tabla podemos observar para cada observación los caballos de fuerza, la predicción y los residuales para cada observación&quot;)  %&gt;% kable_styling(bootstrap_options = c(&quot;</span>striped<span class="st">&quot;, &quot;</span>hover<span class="st">&quot;))</span></a></code></pre></div>
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:PredPower">Tabla 1.3: </span>En esta tabla podemos observar para cada observación los caballos de fuerza, la predicción y los residuales para cada observación
@@ -893,6 +904,7 @@ resid
 </tr>
 </tbody>
 </table>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">ggplot</span>(Test, <span class="kw">aes</span>(<span class="dt">x =</span> hp, <span class="dt">y =</span> mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> Pred), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</a></code></pre></div>
 <div class="figure"><span id="fig:PredPowerFig"></span>
 <img src="CursoMulti_files/figure-html/PredPowerFig-1.png" alt="Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo" width="672" />
 <p class="caption">
@@ -910,6 +922,7 @@ Figura 1.3: Los puntos representan las observaciones con las que se entrenó el 
 <p>Para este ejemplo, veremos que ocurre con el <span class="math inline">\(R^2\)</span> explicativo a medida que aumentamos la complejidad del modelo desde <span class="math inline">\(K = 1\)</span>, esto es solo un intercepto, pasando por el modelo lineal <span class="math inline">\(K = 2\)</span>, modelo cuadratico <span class="math inline">\(K = 3\)</span> hasta llegar a agregar el argumento elevado a 12:</p>
 <p><span class="math display">\[mpg = \beta_1 hp + \beta_2 hp^2 + ... + \beta_12 hp^{12}  c\]</span></p>
 <p>Al observar como se comporta el poder explicativo, vemos que aumenta siempre que agregamos parametros como vemos en la animación de la figura <a href="CriteriosInfo.html#fig:GifExplicativo">1.4</a>, en esta vemos que el <span class="math inline">\(R^2\)</span> siempre aumenta, y que la linea roja que marca la predicción del modelo, sigue de forma casi perfecta los puntos de la base de datos <em>Train</em>, si esto es así, por que no usamos siempre el modelo más complejo, lo veremos en la siguiente sección donde hablaremos del Sobreajuste.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;Explicativo.gif&quot;</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:GifExplicativo"></span>
 <img src="Explicativo.gif" alt="Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo"  />
 <p class="caption">
@@ -920,6 +933,7 @@ Figura 1.4: Los puntos representan las observaciones con las que se entrenó el 
 <div id="sobreajuste-1" class="section level3">
 <h3><span class="header-section-number">1.3.2</span> Sobreajuste</h3>
 <p>El sobreajute ocurre cuando por aumentar el ajuste de un modelo (<span class="math inline">\(R^2\)</span> por ejemplo), generamos un modelo tan complejo, que practicamente no tiene error con la base de datos que lo entrenamos, sin embargo, al probarlo con una nueva base de datos, vemos que el modelo es muy malo para predecir sobre una nueva base de datos, esto es el modelo se ha vuelto idiosincrático, y creemos que es un buen modelo, pero solo para los datos que usamos para el modelo mismo. Esto podemos verlo en la figura <a href="CriteriosInfo.html#fig:SobreAjuste">1.5</a>, en esta vemos como en el gráfico de la izquierda, a medida que aumentamos el número de parametros, siempre aumenta nuestro <span class="math inline">\(R^2\)</span>, en el gráfico de la derecha sin embargo, vemos que desde los 6 parametros en adelante, el modelo es peor en su predicción que sobre la base de datos original, y ya cuando tenemos 8 parametros, la diferencia es muy alta, con un <span class="math inline">\(R^2\)</span> de 0.83 para la base de datos original, y 0.3 para la base de datos de prueba, en ese momento, el modelo ya esta sobreajustado.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;Predictivo.gif&quot;</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:SobreAjuste"></span>
 <img src="Predictivo.gif" alt="El gráfico de la Izquerda muestra el ajuste del modelo en los datos en que se entrenó el modelo, mientras que el de la derecha, sobre la base de datos de prueba. Los puntos representan las observaciones con las que se entrenó el modelo, la linea roja segmentada representa la predicción del modelo"  />
 <p class="caption">
@@ -955,6 +969,7 @@ Figura 1.5: El gráfico de la Izquerda muestra el ajuste del modelo en los datos
 </div>
 <div id="Dilema" class="section level2">
 <h2><span class="header-section-number">1.4</span> Explicación o Predicción?</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;Dilema.jpg&quot;</span>, <span class="dt">dpi =</span> <span class="dv">80</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:Dilema"></span>
 <img src="Dilema.jpg" alt="Que hacer?" width="600" />
 <p class="caption">
@@ -975,15 +990,30 @@ Figura 1.6: Que hacer?
 <p><span class="math display">\[AICc = AIC + \frac{2k^2 + 2k}{n-k-1}\]</span></p>
 <p>Esto implica que cuando n tiende a infinito, AICc es casi igual a AIC, por lo cual siempre se recomienda el uso de AICc sobre AIC. Usualmente una diferencia de 2 en AIC, se considera “Significativa” <span class="citation">(Anderson and Burnham <a href="#ref-anderson2004model">2004</a>)</span></p>
 <p>Para calcular AICc podemos usar la función <code>AICc</code> en MuMIn, en el siguiente código, generamos un modelo en el cual usando la base de datos <code>mtcars</code>, en el cual ajustamos un modelo lineal, donde vemos si la eficiencia de un vehículo puede ser explicada por los caballos de fuerza en su forma lineal y cuadrática:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(MuMIn)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">AICc</span>(Modelo)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">library</span>(MuMIn)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">Modelo &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(hp<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> Train)</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">AICc</span>(Modelo)</a></code></pre></div>
 <pre><code>## [1] 84.02319</code></pre>
 <p><em>AICc</em> no es el único criterio de información, en el paquete <code>MuMIn</code>, existen otros como <em>BIC</em>, <em>CAIFC</em>, <em>DIC</em> y <em>QAIC</em>. En ecología y lo más habitual es usar <em>AICc</em>, en algunos campos experimentales es habitual <em>BIC</em>, para más sobre esto ver <span class="citation">(Aho, Derryberry, and Peterson <a href="#ref-aho2014model">2014</a>)</span>. En otros casos por sobredispersión existen otros Criteros de información <span class="citation">(Kim et al. <a href="#ref-kim2014model">2014</a>)</span></p>
 </div>
 <div id="relación-entre-aicc-y-r-cuadrado" class="section level3">
 <h3><span class="header-section-number">1.4.2</span> Relación entre AICc y R cuadrado</h3>
 <p>Como fue prometido en la sección <a href="CriteriosInfo.html#Dilema">1.4</a>, el <em>AICc</em> intenta balancear explicación con predicción, y para ello, busca que aumente la métrica explicativa (en este caso <span class="math inline">\(R^2\)</span>), pero para agregar un parámetro extra el <span class="math inline">\(R^2\)</span> tiene que aumentar bastante. En la Figura <a href="CriteriosInfo.html#fig:AICRsq">1.7</a>, vemos las medidas de <em>AICc</em> y <span class="math inline">\(R^2\)</span> para los mismos modelos.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">library</span>(MuMIn)</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">Fit1 &lt;-<span class="st"> </span><span class="kw">glm</span>(mpg <span class="op">~</span>., <span class="dt">data =</span> mtcars)</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="kw">options</span>(<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">dd &lt;-<span class="st"> </span><span class="kw">dredge</span>(Fit1, <span class="dt">extra =</span> <span class="st">&quot;R^2&quot;</span>)</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">dd &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(dd) </a>
+<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="kw">colnames</span>(dd) &lt;-<span class="st"> </span><span class="kw">make.names</span>(<span class="kw">colnames</span>(dd))</a>
+<a class="sourceLine" id="cb20-9" data-line-number="9">SUMM &lt;-<span class="st"> </span>dd <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">RSq =</span> <span class="kw">max</span>(R<span class="fl">.2</span>), <span class="dt">AICc =</span> <span class="kw">min</span>(AICc))</a>
+<a class="sourceLine" id="cb20-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb20-11" data-line-number="11">dfAICmin &lt;-<span class="st"> </span><span class="kw">filter</span>(SUMM, AICc <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(AICc))<span class="op">$</span>df</a>
+<a class="sourceLine" id="cb20-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb20-13" data-line-number="13">SUMM &lt;-<span class="st"> </span>SUMM <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>df)</a>
+<a class="sourceLine" id="cb20-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb20-15" data-line-number="15"><span class="kw">ggplot</span>(SUMM, <span class="kw">aes</span>(<span class="dt">x =</span> df, <span class="dt">y =</span> value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>name, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>, <span class="dt">strip.position =</span> <span class="st">&quot;left&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span>dfAICmin, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Número de parámetros&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">11</span>))</a></code></pre></div>
 <div class="figure"><span id="fig:AICRsq"></span>
 <img src="CursoMulti_files/figure-html/AICRsq-1.png" alt="Relación entre AICc y R cuadrado" width="672" />
 <p class="caption">

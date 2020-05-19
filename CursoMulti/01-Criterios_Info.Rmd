@@ -80,7 +80,7 @@ glance(Modelo)
 ```
 
 ```{r Tab, tidy=FALSE}
-kable(glance(Modelo) %>% select(r.squared, p.value, df), caption = "R cuadrado, valor de p y grados de libertad del modelo")  %>% kable_styling(bootstrap_options = c("striped", "hover"))
+kable(glance(Modelo) %>% dplyr::select(r.squared, p.value, df), caption = "R cuadrado, valor de p y grados de libertad del modelo")  %>% kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
 Como vemos en la Tabla \@ref(tab:Tab), nuestro modelo tiene un poder explicativo bastante bueno, donde con solo saber los caballos de fuerza de un vehículo, podemos explicar un `r (glance(Modelo) %>% mutate(r.squared = round(r.squared*100, 2)) %>% pull(r.squared))`% de la variación en la eficiencia del vehículo.

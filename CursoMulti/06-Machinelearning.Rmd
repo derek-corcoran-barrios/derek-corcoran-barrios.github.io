@@ -1,0 +1,27 @@
+# Machine Learning {#Machine}
+
+```{r setupMachine, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, tidy = TRUE)
+library(MuMIn)
+library(tidyverse)
+library(broom)
+library(caret)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Paquetes necesarios para este capítulo
+
+Para este capitulo necesitas tener instalado los paquetes *raster*, *tidyverse* [@R-tidyverse], *broom*  [@R-broom], *caret* [@kuhn2013applied] y *MuMIn* [@R-MuMIn]
+
+### Presentación html
+
+Puedes seguir la clase de los videos en el siguiente [link](https://derek-corcoran-barrios.github.io/CursoMultiPres/Capitulo_6/Capitulo_6.html)
+
+y ver la clase en vivo desde las 20:30 horas el día martes 19 de Mayo del 2020 a continuación
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Hfle2WVoo3E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+El script de esta y otras clases anteriores se encuentran en el siguiente [link](https://github.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/tree/master/CursoMulti/Scripts)
+

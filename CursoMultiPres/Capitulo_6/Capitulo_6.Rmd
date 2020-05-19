@@ -209,6 +209,8 @@ De la [página](http://topepo.github.io/caret/available-models.html) de caret
 knitr::include_graphics("Guanaco.jpg", dpi = 200)
 ```
 
+## Bajar bases de datos
+
 * Base de datos **sp2.rds** y **SA.rds**
 
 ```{r, echo = TRUE}

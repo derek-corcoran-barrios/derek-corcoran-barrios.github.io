@@ -75,7 +75,9 @@ El objetivo de este curso es el poder decidir cuando hacer modelos predictivos y
 
 + Capítulo \@ref(AUTO) *Automatización de selecciond de modelos*: En este capítulo entenderemos la diferencia entre variables fijas y aleatorieas, y además veremos como automatizar la selección de modelos.
 
-+ Capítulo \@ref(CROSS) *Crossvalidation*: En este capítulo entenderemos el concepto de crossvalidation, un concepto totalmente necesario para poder entender Machine Learning.
++ Capítulo \@ref(Cross) *Crossvalidation*: En este capítulo entenderemos el concepto de crossvalidation, un concepto totalmente necesario para poder entender Machine Learning.
+
++ Capítulo \@ref(Machine) *Crossvalidation*: En este capítulo entenderemos el concepto de machine learning.
 
 ## Metodología
 
