@@ -211,6 +211,21 @@ knitr::include_graphics("Guanaco.jpg", dpi = 200)
 
 * Base de datos **sp2.rds** y **SA.rds**
 
+```{r, echo = TRUE}
+githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/CursoMultiPres/Capitulo_6/SA.rds")
+download.file(githubURL,"SA.rds", method="curl")
+SA <- readRDS("SA.rds")
+
+githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/CursoMultiPres/Capitulo_6/sp2.rds")
+download.file(githubURL,"sp2.rds", method="curl")
+sp2 <-read_rds("sp2.rds")
+
+githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/CursoMultiPres/Capitulo_6/sp.rds")
+download.file(githubURL,"sp.rds", method="curl")
+sp <-read_rds("sp.rds")
+```
+
+
 ## Veamos
 
 ```{r, echo = FALSE}
