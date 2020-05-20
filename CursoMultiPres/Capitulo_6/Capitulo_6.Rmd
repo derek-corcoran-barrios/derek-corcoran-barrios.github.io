@@ -155,7 +155,7 @@ kable(Class$results, digits = 3) %>% kable_styling(bootstrap_options = c("stripe
 ## ¿Como lo controlo? {.small}
 
 ```{r}
-rpartGrid <-  expand.grid(cp = c(0.8, 1))
+rpartGrid <-  expand.grid(cp = c(0.48, 0.8,  1))
 Class2 <- train(Species~., data = Train, method = "rpart",trControl = fitControl, tuneGrid = rpartGrid)                        
 plot(Class2)
 ```
