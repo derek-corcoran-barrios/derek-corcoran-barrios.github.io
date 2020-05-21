@@ -3188,6 +3188,18 @@ Test &lt;- BreastCancer[-Index, -1]</pre>
 
 </article></slide><slide class=""><hgroup><h2>Eliminamos los NA si son pocos</h2></hgroup><article  id="eliminamos-los-na-si-son-pocos">
 
+<pre class = 'prettyprint lang-r'>BC2 &lt;- BreastCancer[complete.cases(BreastCancer), ]
+set.seed(2020)
+Index &lt;- createDataPartition(BC2$Class, list = FALSE, p = 0.8)
+Train &lt;- BC2[Index, -1]
+Test &lt;- BC2[-Index, -1]
+gbmFit1 &lt;- train(Class ~ ., data = Train, method = &quot;gbm&quot;, trControl = fitControl, 
+    verbose = FALSE)</pre>
+
+<ul class = 'build'>
+<li>También podemos imputar (no recomendado)</li>
+</ul>
+
 </article></slide><slide class=""><hgroup><h2>Que tal funcionó</h2></hgroup><article  id="que-tal-funcionó">
 
 <pre class = 'prettyprint lang-r'>confusionMatrix(data = predict(gbmFit1, Test), reference = Test$Class)</pre>

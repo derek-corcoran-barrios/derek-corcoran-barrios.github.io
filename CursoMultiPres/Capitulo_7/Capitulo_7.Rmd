@@ -81,7 +81,7 @@ gbmFit1 <- train(Class ~ ., data = Train,
 
 ## Eliminamos los NA si son pocos
 
-```{r, cache=TRUE}
+```{r, cache=TRUE, echo = TRUE}
 BC2 <- BreastCancer[complete.cases(BreastCancer),]
 set.seed(2020)
 Index <- createDataPartition(BC2$Class, list = FALSE, p = 0.8)
@@ -94,6 +94,8 @@ gbmFit1 <- train(Class ~ ., data = Train,
                  trControl = fitControl,
                  verbose = FALSE)
 ```
+
+* También podemos imputar (no recomendado)
 
 ## Que tal funcionó
 
@@ -122,6 +124,11 @@ kable(Results, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "h
 ```{r}
 ggplot(Results, aes(x = correcto, y = Dif)) + geom_boxplot(aes(fill = correcto)) + scale_fill_discrete(name = "Resultado") + xlab("") + theme_bw()
 ```
+
+# Series de Tiempo
+
+## Series de tiempo
+
 
 
 ## Veamos ese tunning grid
