@@ -1,0 +1,153 @@
+---
+title: "Mas detalles de Machine Learning"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 80))
+library(tidyverse)
+library(caret)
+library(MuMIn)
+library(broom)
+library(kableExtra)
+library(AppliedPredictiveModeling)
+library(mlbench)
+options("kableExtra.html.bsTable" = T)
+```
+
+# Mas detalles de crossvalidation
+
+## Crossvalidation
+
+* Finalidad
+    + Simular que hay datos nuevos
+* k-fold-n-crossvalidation es bueno cuando el estudio no es temporal
+* Hay mas opciones a k-fold-n-crossvalidation
+* ¿Que pasa con series de tiempo?
+
+## Veamos con algunnos problemas
+
+```{r, echo=TRUE}
+data("BreastCancer")
+transparentTheme(trans = .4)
+featurePlot(x = BreastCancer[, 2:5], y = BreastCancer$Class, plot = "pairs",
+            auto.key = list(columns = 2))
+```
+
+## Mas exploración
+
+```{r, echo=FALSE}
+featurePlot(x = BreastCancer[, 6:10], 
+            y = BreastCancer$Class, 
+            plot = "pairs",
+            ## Add a key at the top
+            auto.key = list(columns = 2))
+
+```
+
+## Separación en Entrenamiento y Prueba
+
+```{r, echo=TRUE}
+set.seed(2020)
+Index <- createDataPartition(BreastCancer$Class, list = FALSE, p = 0.8)
+
+Train <- BreastCancer[Index,-1]
+Test <- BreastCancer[-Index,-1]
+```
+
+* Luego preparo el entrenamiento 10 fold repeated Crossvalidation
+
+```{r, echo=TRUE}
+fitControl <- trainControl(method = "repeatedcv",
+  number = 10,
+  repeats = 10)
+```
+
+## Entrenamos el modelo
+
+```{r, echo=TRUE, eval=FALSE}
+gbmFit1 <- train(Class ~ ., data = Train, 
+                 method = "gbm", 
+                 trControl = fitControl,
+                 verbose = FALSE)
+```
+* Que error hay?
+* Que hacemos?
+
+## Eliminamos los NA si son pocos
+
+```{r, cache=TRUE}
+BC2 <- BreastCancer[complete.cases(BreastCancer),]
+set.seed(2020)
+Index <- createDataPartition(BC2$Class, list = FALSE, p = 0.8)
+
+Train <- BC2[Index,-1]
+Test <- BC2[-Index,-1]
+
+gbmFit1 <- train(Class ~ ., data = Train, 
+                 method = "gbm", 
+                 trControl = fitControl,
+                 verbose = FALSE)
+```
+
+## Que tal funcionó
+
+```{r, echo=TRUE}
+confusionMatrix(data = predict(gbmFit1, Test), reference = Test$Class)
+```
+
+## Predicciones
+
+```{r, eval = F, echo=TRUE}
+predict(gbmFit1, Test, type = "raw")
+predict(gbmFit1, Test, type = "prob")
+```
+
+
+```{r}
+Results <- data.frame(Clase = Test$Class, Prediccion = predict(gbmFit1, Test, type = "raw")) %>% mutate(correcto = case_when(Clase == Prediccion ~ "Correcto", Clase != Prediccion ~ "Errado"))
+
+Results <- bind_cols(Results, predict(gbmFit1, Test, type = "prob")) %>% mutate(Dif = abs(benign - malignant)) %>% arrange(desc(Dif))
+
+kable(Results, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
+```
+
+## Predicciones
+
+```{r}
+ggplot(Results, aes(x = correcto, y = Dif)) + geom_boxplot(aes(fill = correcto)) + scale_fill_discrete(name = "Resultado") + xlab("") + theme_bw()
+```
+
+
+## Veamos ese tunning grid
+
+```{r}
+gbmGrid <-  expand.grid(interaction.depth = c(1, 5, 9), 
+                        n.trees = (1:30)*50, 
+                        shrinkage = 0.1,
+                        n.minobsinnode = 20)
+```
+
+
+
+
+
+## Reproducibilidad
+
+<details><summary>Reproducibility receipt</summary>
+
+```{r}
+##
+Sys.time()
+
+git2r::repository()
+
+sessionInfo()
+```
+
+</details>
