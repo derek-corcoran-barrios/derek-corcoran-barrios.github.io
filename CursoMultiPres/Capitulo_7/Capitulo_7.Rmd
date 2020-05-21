@@ -129,6 +129,73 @@ ggplot(Results, aes(x = correcto, y = Dif)) + geom_boxplot(aes(fill = correcto))
 
 ## Series de tiempo
 
+```{r, echo = TRUE}
+Contaminacion <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/CursoMultiPres/Capitulo_7/Contaminacion.csv")
+```
+
+
+```{r, cache=T}
+kable(Contaminacion, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
+```
+
+## Explorando datos
+
+```{r}
+ggplot(Contaminacion, aes(x = Fecha, y = MP25)) + geom_path() + theme_bw()
+```
+
+
+## Entrenamiento y prueba
+
+* Separamos igual?
+* No!!!!!
+* Intenamos simular el predecir el futuro
+
+```{r, echo = TRUE}
+Train <- Contaminacion %>% dplyr::filter(!(lubridate::year(Fecha) %in% c(2016, 2017)))
+Test <- Contaminacion %>% dplyr::filter(lubridate::year(Fecha) %in% c(2016, 2017))
+```
+
+## Train Test cont()
+
+```{r}
+Contaminacion2 <- Contaminacion %>% mutate(Datos = case_when(lubridate::year(Fecha) %in% c(2016, 2017) ~ "Test",!(lubridate::year(Fecha) %in% c(2016, 2017)) ~ "Train"))
+
+ggplot(Contaminacion2, aes(x = Fecha, y = MP25)) + geom_path(aes(color = Datos)) + theme_bw()
+```
+
+##  Separar en bases de datos
+
+```{r, echo = TRUE, cache= T}
+fitControl <- trainControl(method = "timeslice",
+  horizon = 365,
+  initialWindow = 365*3,
+  fixedWindow = T,
+  skip = 30)
+
+gbmFitTime <- train(MP25 ~ ., data = Train, 
+                   method = "gbm", 
+                   trControl = fitControl,
+                   verbose = FALSE)
+```
+
+
+## Veamos el resultado
+
+```{r, echo=T}
+postResample(pred = predict(gbmFitTime, Test), obs = Test$MP25)
+```
+
+```{r}
+
+Train$Pred <- NA
+Test$Pred <- predict(gbmFitTime, Test)
+
+Contaminacion2 <- bind_rows(Train, Test) %>% dplyr::filter(!is.na(Pred)) %>% pivot_longer(cols = c(Pred, MP25), names_to = "Datos", values_to = "MP25") %>% mutate(Datos = ifelse(Datos == "MP25", "Observado", "Predicho"))
+
+ggplot(Contaminacion2, aes(x = Fecha, y = MP25)) + geom_path(aes(color = Datos)) + theme_bw()
+```
+
 
 
 ## Veamos ese tunning grid
@@ -140,7 +207,7 @@ gbmGrid <-  expand.grid(interaction.depth = c(1, 5, 9),
                         n.minobsinnode = 20)
 ```
 
-
+  
 
 
 
