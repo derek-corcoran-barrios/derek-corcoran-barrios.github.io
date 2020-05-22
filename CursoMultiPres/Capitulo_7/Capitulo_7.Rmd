@@ -166,6 +166,46 @@ ggplot(Contaminacion2, aes(x = Fecha, y = MP25)) + geom_path(aes(color = Datos))
 
 ##  Separar en bases de datos
 
+* Horizon = Test
+* InitialWindow = Train
+* Skip = Intervalos
+
+```{r, echo=TRUE}
+
+Graph_Slice <- function(Slices = Slices){
+  Slice <- list()
+  
+  for(i in 1:length(Slices$test)){
+    Window <- Train[Slices$train[[i]],] %>% mutate(rep = as.character(i), class = "Window (Train)")
+    Horizon <- Train[Slices$test[[i]],] %>% mutate(rep = as.character(i), class = "Horizon (Test)")
+    Slice[[i]] <-bind_rows(Window, Horizon)
+  }
+  
+  Slices <- Slice %>% purrr::reduce(bind_rows)
+  
+  
+  ggplot(Slices, aes(x = Fecha, y = MP25)) + geom_path(aes(color = class)) + facet_wrap(~rep) + theme_bw()
+}
+
+```
+
+
+## Veamos como funciona
+
+```{r, echo=TRUE}
+Slices <- createTimeSlices(Train$MP25, horizon = 365,
+                           initialWindow = 365*3,
+                           fixedWindow = T,
+                           skip = 365)
+
+Graph_Slice(Slices)
+```
+
+
+# Dudas?
+
+## Probemos
+
 ```{r, echo = TRUE, cache= T}
 fitControl <- trainControl(method = "timeslice",
   horizon = 365,
@@ -187,24 +227,12 @@ postResample(pred = predict(gbmFitTime, Test), obs = Test$MP25)
 ```
 
 ```{r}
-
 Train$Pred <- NA
 Test$Pred <- predict(gbmFitTime, Test)
 
 Contaminacion2 <- bind_rows(Train, Test) %>% dplyr::filter(!is.na(Pred)) %>% pivot_longer(cols = c(Pred, MP25), names_to = "Datos", values_to = "MP25") %>% mutate(Datos = ifelse(Datos == "MP25", "Observado", "Predicho"))
 
 ggplot(Contaminacion2, aes(x = Fecha, y = MP25)) + geom_path(aes(color = Datos)) + theme_bw()
-```
-
-
-
-## Veamos ese tunning grid
-
-```{r}
-gbmGrid <-  expand.grid(interaction.depth = c(1, 5, 9), 
-                        n.trees = (1:30)*50, 
-                        shrinkage = 0.1,
-                        n.minobsinnode = 20)
 ```
 
   
