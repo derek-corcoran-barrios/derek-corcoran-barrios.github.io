@@ -253,3 +253,12 @@ sessionInfo()
 ```
 
 </details>
+
+## Otra cosa
+
+```{r}
+details::details(
+     plot(x = mtcars$mpg, y = mtcars$wt),
+     summary = 'Plots')
+```
+
