@@ -4,6 +4,9 @@ library(caret)
 Train <- read_csv("Train.csv")
 
 
+ggplot(Train, aes(x = Fecha, y = Activos_5_por_100.000)) + geom_path(aes(color = Comuna)) + theme_bw() + theme(legend.position = "none")
+
+
 
 Graph_Slice <- function(Slices = Slices) {
   Slice <- list()
@@ -20,17 +23,15 @@ Graph_Slice <- function(Slices = Slices) {
 }
 
 
-Slices <- createTimeSlices(Train$Activos_5_por_100.000, horizon = 365, initialWindow = 365 * 
-                             3, fixedWindow = T, skip = 365)
+Slices <- createTimeSlices(Train$Activos_5_por_100.000, horizon = 365, initialWindow = 365 * 3, fixedWindow = T, skip = 365)
 
-
+Graph_Slice(Slices)
 
 #####
 
-Train2 <-  Train %>% arrange(Fecha)
+Train <-  Train %>% arrange(Fecha)
 
-Slices <- createTimeSlices(Train2$Activos_5_por_100.000, horizon = 365, initialWindow = 365 * 
-                             3, fixedWindow = T, skip = 365)
+Slices <- createTimeSlices(Train$Activos_5_por_100.000, horizon = 365, initialWindow = 365 * 3, fixedWindow = T, skip = 365)
 
 Graph_Slice(Slices)
 
@@ -39,13 +40,15 @@ Graph_Slice(Slices)
 
 
 
-Slices <- createTimeSlices(Train2$Activos_5_por_100.000, horizon = 346*5, initialWindow = 346 * 5, fixedWindow = T, skip = 346)
+Slices <- createTimeSlices(Train$Activos_5_por_100.000, horizon = 346*2, initialWindow = 346 * 1, fixedWindow = T, skip = 346)
 
 Graph_Slice(Slices)
 
 
 #####
 
-Slices <- createTimeSlices(Train2$Activos_5_por_100.000, horizon = 346*5, initialWindow = 346 * 5, fixedWindow = F, skip = 346)
+Slices <- createTimeSlices(Train$Activos_5_por_100.000, horizon = 346*5, initialWindow = 346 * 5, fixedWindow = F, skip = 346)
 
 Graph_Slice(Slices)
+caret::postResample()
+
