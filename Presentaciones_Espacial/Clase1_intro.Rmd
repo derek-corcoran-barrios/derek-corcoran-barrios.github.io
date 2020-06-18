@@ -1,0 +1,67 @@
+---
+title: "Introducción a Sistemas de Información Geográfica"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
+library(leaflet)
+library(sf)
+library(tidyverse)
+library(rgdal)
+library(raster)
+library(rasterVis)
+library(rworldxtra)
+library(tidyverse)
+
+library(gridExtra)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+# Que es el SIG
+
+## Sistema de Información Geográfica {.build}
+
+* Representación de datos de forma espacial
+* Muchos tipos de datos
+    + Datos de captura remota (Satelites lidar)
+    + Datos modelados (Modelos Distribución de Especies)
+    + Datos de expertos
+    + Planes futuros (Panificación territorial)
+    + Mapas de fantasía (Tierra Media, Westeros)
+* Dos formatos principales
+    + Datos Vectoriales (Shapefiles)
+    + Datos en grilla (Rasters)
+
+## Datos Vectoriales
+
+* Shapefiles
+* Puntos (Ciudades, presencias de especies, sucesos, sitios de muestreo)
+* Lineas (Ríos, Carreteras, Caminos, Senderos)
+* Polígonos (Países, Regiones, Lagos)
+* Paquetes (sf, sp, raster)
+
+## Ejemplos datos vectoriales
+
+```{r, echo = TRUE}
+library(sf)
+library(tidyverse)
+library(rworldxtra)
+data("countriesHigh")
+Mundo <- st_as_sf(countriesHigh)
+
+ggplot() + geom_sf(data = Mundo, aes(fill = POP_EST))
+```
+
+## Ejemplos datos vectoriales (cont.)
+
+```{r, echo = TRUE}
+ggplot() + geom_sf(data = Mundo, aes(fill = continent))
+```
+
