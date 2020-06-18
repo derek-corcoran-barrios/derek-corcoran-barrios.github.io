@@ -49,6 +49,8 @@ Graph_Slice(Slices)
 
 Slices <- createTimeSlices(Train$Activos_5_por_100.000, horizon = 346*5, initialWindow = 346 * 5, fixedWindow = F, skip = 346)
 
+
+
 Graph_Slice(Slices)
 caret::postResample()
 

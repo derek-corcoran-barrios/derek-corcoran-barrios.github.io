@@ -1,0 +1,122 @@
+---
+title: "Anuncio curso de SIG en R"
+author: "Derek Corcoran"
+date: "6/17/2020"
+output: ioslides_presentation
+---
+
+---
+title: "Mas detalles de Machine Learning"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
+library(leaflet)
+library(sf)
+library(tidyverse)
+library(rgdal)
+library(raster)
+library(rasterVis)
+library(rworldxtra)
+library(tidyverse)
+
+library(gridExtra)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+# Viernes a las 19:00
+
+## Paquetes necesarios
+
+```{r, echo=TRUE , eval=FALSE}
+library(leaflet)
+library(sf)
+library(tidyverse)
+library(rgdal)
+library(raster)
+library(rasterVis)
+library(rworldxtra)
+library(tidyverse)
+```
+
+* para [sf](https://r-spatial.github.io/sf/)
+
+## Temas a tratar {.build}
+
+* Importar y exportar datos (rasters y shapefiles)
+* Entender para que son las proyecciones
+* Hacer calculos en sistemas espaciales
+* Subsetear y retransformar 
+* Generar modelos espacialmente explicitos
+* Visualización espacial
+* Mapas interactivos
+
+## Entender que son las proyecciones
+
+```{r}
+data("countriesHigh")
+
+Count <- countriesHigh %>% st_as_sf() %>% mutate(Proj = crs(countriesHigh) %>% as.character())
+Count2 <- countriesHigh %>% st_as_sf() %>%  st_transform("+proj=aeqd +lon_0=0 +lat_0=0 +datum=WGS84 +units=m +no_defs") %>% mutate(Proj = "+proj=aeqd +lon_0=0 +lat_0=0 +datum=WGS84 +units=m +no_defs")
+```
+
+```{r}
+Uno <- ggplot() + geom_sf(data = Count) + theme_dark() + ggtitle(unique(Count$Proj))
+Dos <- ggplot() + geom_sf(data = Count2) + theme_dark() + ggtitle(unique(Count$Proj2))
+grid.arrange(Uno, Dos)
+```
+ 
+## Hacer calculos en sistemas espaciales
+
+```{r}
+Calc <- Count %>% dplyr::select(POP_EST, GDP_MD_EST) %>% rename(Poblacion = POP_EST, PIB = GDP_MD_EST) %>% mutate(PIB = ifelse(PIB == -99, NA, PIB), PIB_per_Capita = PIB/Poblacion) 
+
+ggplot() + geom_sf(data = Calc, aes(fill = Poblacion)) + theme_dark() + scale_fill_continuous(labels = scales::comma)#+ ggtitle("Pop")
+```
+
+## Hacer calculos en sistemas espaciales 2
+
+```{r}
+ggplot() + geom_sf(data = Calc, aes(fill = PIB)) + theme_dark() + scale_fill_continuous(labels = scales::comma)#+ ggtitle("Pop")
+```
+
+## Hacer calculos en sistemas espaciales 3
+
+```{r}
+ ggplot() + geom_sf(data = Calc, aes(fill = PIB_per_Capita)) + theme_dark() + scale_fill_continuous(labels = scales::comma)#+ ggtitle("Pop")
+```
+
+## Subsetear y retransformar
+
+```{r}
+Calc2 <- Calc %>% dplyr::filter(!is.na(PIB_per_Capita)) %>% dplyr::slice_max(PIB_per_Capita,n =  20) %>% mutate(Status = "top 20") 
+Calc  <-Calc  %>% mutate(Status = "All") %>% bind_rows(Calc2)
+```
+
+```{r}
+ggplot() + geom_sf(data = Calc, aes(fill = PIB_per_Capita)) + theme_dark() + scale_fill_continuous(labels = scales::comma) + facet_grid(Status~.)
+```
+
+## Mapas interactivos
+
+```{r}
+pal = colorQuantile("YlOrRd", Calc2$PIB_per_Capita)
+
+leaflet(sf::as_Spatial(Calc2)) %>%  addTiles() %>%
+  addPolygons(color = "#444444", weight = 1, smoothFactor = 0.5,
+    opacity = 1.0, fillOpacity = 0.5,
+    fillColor = ~colorQuantile("YlOrRd", PIB_per_Capita)(PIB_per_Capita),
+    highlightOptions = highlightOptions(color = "white", weight = 2,
+      bringToFront = TRUE), popup = ~as.character(round(Calc2$PIB_per_Capita,2))) %>%  addLegend("bottomright", pal = pal, values = ~PIB_per_Capita,
+    title = "PIB per capita(2010)",
+    labFormat = labelFormat(prefix = "$"),
+    opacity = 1
+  )
+```
