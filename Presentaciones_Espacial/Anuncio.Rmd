@@ -1,13 +1,6 @@
 ---
 title: "Anuncio curso de SIG en R"
 author: "Derek Corcoran"
-date: "6/17/2020"
-output: ioslides_presentation
----
-
----
-title: "Mas detalles de Machine Learning"
-author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
   ioslides_presentation:
