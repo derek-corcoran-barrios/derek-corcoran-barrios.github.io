@@ -10,14 +10,14 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
-library(leaflet)
-library(sf)
-library(tidyverse)
-library(rgdal)
-library(raster)
-library(rasterVis)
-library(rworldxtra)
-library(tidyverse)
+  library(leaflet)
+  library(sf)
+  library(tidyverse)
+  library(rgdal)
+  library(raster)
+  library(rasterVis)
+  library(rworldxtra)
+  library(tidyverse)
 
 library(gridExtra)
 library(kableExtra)
@@ -64,4 +64,162 @@ ggplot() + geom_sf(data = Mundo, aes(fill = POP_EST))
 ```{r, echo = TRUE}
 ggplot() + geom_sf(data = Mundo, aes(fill = continent))
 ```
+
+
+## Elegir parte de datos vectoriales
+
+```{r, echo = TRUE}
+Africa <- Mundo %>% dplyr::filter(continent == "Africa")
+ggplot() + geom_sf(data = Africa, aes(fill = POP_EST))
+```
+
+
+## Modificar datos vectoriales
+
+```{r, echo = T}
+Africa <- Africa %>% mutate(Poblacion_mill = POP_EST/1000000)
+ggplot() + geom_sf(data = Africa, aes(fill = Poblacion_mill)) + theme_bw() + scale_fill_viridis_c()
+```
+
+## Modificar datos vectoriales (Cont.)
+
+
+```{r, echo = T}
+Africa <- Africa %>% mutate(PIB_per_Cap = GDP_MD_EST/POP_EST)
+ggplot() + geom_sf(data = Africa, aes(fill = PIB_per_Cap)) + theme_bw()
+```
+
+## Exportar y leer datos vectoriales
+
+```{r, echo = T}
+Africa <- Africa %>% dplyr::select(NAME, Poblacion_mill, PIB_per_Cap, GLOCAF)
+write_sf(Africa, "Africa.shp")
+Africa2 <- read_sf("Africa.shp")
+ggplot() + geom_sf(data = Africa2, aes(fill = GLOCAF)) + theme_dark() 
+```
+
+
+## Algunas bases de datos vectoriales
+
+* [Datos vectoriales del mundo](http://www.diva-gis.org/gdata)
+* [Datos vectoriales de Chile](https://www.bcn.cl/siit/mapas_vectoriales) 
+* En raster función `getData("GADM")`
+
+```{r}
+Peru <- getData(name = "GADM", country = "PER", level = 1) %>% st_as_sf()
+ggplot() + geom_sf(data = Peru) + theme(legend.position = "none")
+```
+
+
+# Raster
+
+## Datos en grilla
+
+* Como una foto
+* Cada pixel tiene ciertas caracteristicas (Resolución, Proyección, Unidades)
+
+```{r, echo = T}
+Prec <- getData("worldclim", res = 10, var = "prec") 
+Prec
+```
+
+
+## Precipitacion
+
+```{r, echo = T}
+plot(Prec)
+```
+
+
+## Subset de stacks
+
+```{r, echo =T}
+Invierno <- Prec[[c(6,7,8)]]
+
+plot(Invierno)
+```
+
+## Operaciones Simples
+
+```{r, echo = T}
+Total_inv <- Prec[[1]] + Prec[[2]] + Prec[[3]]
+plot(Total_inv)
+```
+
+## O resumen total
+
+```{r, echo = T}
+PP_Total <- sum(Prec)
+plot(PP_Total)
+```
+
+
+## Cortar un raster (En base a otro mapa)
+
+```{r, echo = T, echo = T, echo = T}
+Raster_Africa <- PP_Total %>% crop(Africa)
+plot(Raster_Africa)
+```
+
+## Exportar y leer un raster
+
+```{r, echo = T}
+writeRaster(Raster_Africa, "PP_Africa.grd", overwrite = T)
+AfricaRast2 <- raster("PP_Africa.grd")
+plot(AfricaRast2)
+```
+
+
+## Proyecciones y por que importan
+
+```{r}
+Area <- area(AfricaRast2) %>% mask(Africa)
+plot(Area)
+```
+
+## Proyecciones
+
+```{r, echo = T}
+proj4string(AfricaRast2)
+```
+
+
+* Supongamos que el gráfico anterior fuera de diversidad
+    + Tiene sentido comparar diversidad de especies en celdas de áreas diferentes?
+* [Projection wizard](https://projectionwizard.org/)
+* Además por presentación
+
+## Reproyectar a equal area
+
+```{r, echo=T}
+newproj <- "+proj=laea +lon_0=18.28125 +lat_0=0 +datum=WGS84 +units=km +no_defs"
+Africa_igual <- projectRaster(AfricaRast2, crs=newproj)
+plot(Africa_igual)
+```
+
+## La prueba
+
+```{r}
+Area <- area(Africa_igual) %>% mask(Africa_igual)
+plot(Area)
+```
+
+
+# Graficar juntos
+
+## Graficar rasters y shapefiles juntos
+
+```{r, echo = T}
+Africa_DF <- AfricaRast2 %>% as("SpatialPixelsDataFrame") %>% as.data.frame()
+Africa_DF <- Africa_DF %>% rename(Prec = layer)
+ggplot() + geom_tile(data = Africa_DF, aes(x = x, y = y, fill = Prec)) + geom_sf(data = Africa, alpha = 0) + theme_bw() + scale_fill_viridis_c()
+```
+
+## Graficar rasters y shapefiles juntos
+
+```{r, echo = T}
+ggplot() + geom_tile(data = Africa_DF, aes(x = x, y = y, fill = Prec)) + geom_sf(data = Africa, alpha = 0)  + coord_sf(crs = "+proj=laea +lon_0=18.28125 +lat_0=0 +datum=WGS84 +units=km +no_defs")+ theme_bw() + scale_fill_viridis_c()
+```
+
+# Mas preguntas?
 
