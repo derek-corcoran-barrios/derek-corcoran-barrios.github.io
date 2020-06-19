@@ -102,10 +102,14 @@ ggplot() + geom_sf(data = Africa2, aes(fill = GLOCAF)) + theme_dark()
 ## Algunas bases de datos vectoriales
 
 * [Datos vectoriales del mundo](http://www.diva-gis.org/gdata)
-* [Datos vectoriales de Chile](https://www.bcn.cl/siit/mapas_vectoriales) 
+* [Datos vectoriales de Chile](https://www.bcn.cl/siit/mapas_vectoriales)
+
+
+## Algunas bases de datos vectoriales
+
 * En raster función `getData("GADM")`
 
-```{r}
+```{r, echo = T}
 Peru <- getData(name = "GADM", country = "PER", level = 1) %>% st_as_sf()
 ggplot() + geom_sf(data = Peru) + theme(legend.position = "none")
 ```
@@ -166,6 +170,11 @@ plot(Raster_Africa)
 ```{r, echo = T}
 writeRaster(Raster_Africa, "PP_Africa.grd", overwrite = T)
 AfricaRast2 <- raster("PP_Africa.grd")
+```
+
+## Exportar y leer un raster
+
+```{r, echo = T}
 plot(AfricaRast2)
 ```
 
