@@ -1,0 +1,38 @@
+---
+title: "Modelos con rasters"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
+library(leaflet)
+library(sf)
+library(tidyverse)
+library(rgdal)
+library(raster)
+library(rasterVis)
+library(rworldxtra)
+library(tidyverse)
+library(gridExtra)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Estudio de abundancia
+
+```{r, echo = TRUE, eval=TRUE}
+library(sf)
+library(rworldxtra)
+library(raster)
+library(tidyverse)
+```
+
+```{r}
+read_csv("")
+```
+
