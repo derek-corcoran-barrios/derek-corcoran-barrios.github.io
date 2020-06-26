@@ -84,7 +84,7 @@ ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos) + theme_bw() + facet_wr
 
 ## Resumen
 
-* Ver video tidyverse
+* Ver video [tidyverse](https://youtu.be/5tjCeFb2oSk)
 
 ```{r, echo = FALSE}
 Datos %>% as.data.frame() %>% group_by(species) %>% summarise(n = n(), mean = mean(Measurement), max = max(Measurement), min = min(Measurement)) %>% arrange(desc(mean)) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
@@ -148,7 +148,7 @@ ggplot(For_Plot, aes(x = value, y = Measurement)) + geom_point()  + facet_wrap(~
 
 ## GLM
 
-* Para mas información ver este video
+* Para mas información ver [este video](https://youtu.be/1gLswJR7ZSc) sobre GLMs
 
 ```{r}
 Fit1 <- glm(Measurement ~ bio1 + I(bio1^2) + bio7 + I(bio7^2) + bio12 + I(bio12^2) + bio15+ I(bio15^2), family = poisson , data = B_impatiens)
