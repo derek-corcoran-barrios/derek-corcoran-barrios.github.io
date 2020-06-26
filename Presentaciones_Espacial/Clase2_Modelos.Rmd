@@ -9,7 +9,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
 library(leaflet)
 library(sf)
 library(tidyverse)
@@ -26,13 +26,55 @@ options("kableExtra.html.bsTable" = T)
 ## Estudio de abundancia
 
 ```{r, echo = TRUE, eval=TRUE}
-library(sf)
 library(rworldxtra)
 library(raster)
+library(sf)
 library(tidyverse)
 ```
 
 ```{r}
-read_csv("")
+data("countriesHigh")
+Datos <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Bombus.csv")
+
+## Miremos los datos
+
+Datos <- Datos %>% st_as_sf(coords = c(5,6), crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")
+
+Mapa <- countriesHigh %>% st_as_sf() %>% st_crop(Datos)
 ```
 
+```{r, eval=F}
+write_sf(Datos, "Datos.shp")
+```
+
+## Vamos graficando
+
+```{r}
+ggplot() + geom_sf(data = Mapa) + theme_bw()
+```
+
+
+## Agreguemos los puntos
+
+```{r}
+ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos) + theme_bw()
+```
+
+## Agreguemos colores por especie
+
+```{r}
+ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos, aes(color = species)) + theme_bw()
+```
+
+## Agreguemos el tamaño por abundancia
+
+```{r}
+ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos, aes(color = species, size = Measurement)) + theme_bw()
+```
+
+
+## o un panel por especie
+
+```{r}
+ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos, aes(size = Measurement)) + theme_bw() + facet_wrap(~species)
+```
