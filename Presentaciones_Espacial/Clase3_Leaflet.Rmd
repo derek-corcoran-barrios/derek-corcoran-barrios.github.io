@@ -9,8 +9,11 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+#remotes::install_github("rlesur/klippy")
+
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
 library(leaflet)
+library(leaflet.extras)
 library(sf)
 library(tidyverse)
 library(rgdal)
@@ -20,7 +23,12 @@ library(rworldxtra)
 library(tidyverse)
 library(gridExtra)
 library(kableExtra)
+
 options("kableExtra.html.bsTable" = T)
+```
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy()
 ```
 
 ## Mapas interactivos
@@ -33,7 +41,15 @@ unzip("Chile.zip")
 Chile <- read_sf("Chile.shp")
 
 Nothofagus <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Nothofagus.csv")
+Number_spp <- Nothofagus$scrubbed_species_binomial %>% unique() %>% length()
 
+Spp_Names <- Nothofagus$scrubbed_species_binomial %>% unique()
+
+## Desde https://colorbrewer2.org
+
+Colores <- c("#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6")
+
+pal <- colorFactor(Colores, domain = Spp_Names)
 
 Number_spp <- Nothofagus$scrubbed_species_binomial %>% unique() %>% length()
 
@@ -59,10 +75,280 @@ leaflet() %>%  addTiles() %>% addCircleMarkers(data = Nothofagus, lat = ~latitud
 
 ## Cargamos paquetes
 
-```{r, echo = FALSE, eval=TRUE}
+```{r, echo = TRUE, eval= FALSE}
 library(leaflet)
+library(leaflet.extras)
 library(rworldxtra)
 library(raster)
 library(sf)
 library(tidyverse)
+```
+
+## Partamos con puntos
+
+```{r}
+Nothofagus <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Nothofagus.csv")
+```
+
+```{r, echo = FALSE}
+ knitr::kable(Nothofagus) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  scroll_box(width = "100%", height = "350px")
+```
+
+
+## Pongamos los puntos en un mapa
+
+```{r, eval = FALSE}
+leaflet() %>%  addTiles() %>% addCircles(data = Nothofagus, lat = ~latitude, lng = ~longitude)
+```
+
+* Otras opciones
+    + addAwesomeMarkers
+    + addCircleMarkers
+    + addMarkers
+
+## Cambiemos el color según especie
+
+* Número de especies
+
+```{r, eval = FALSE}
+Number_spp <- Nothofagus$scrubbed_species_binomial %>% unique() %>% length()
+```
+
+* Nombre de especies
+
+```{r, eval = FALSE}
+Spp_Names <- Nothofagus$scrubbed_species_binomial %>% unique()
+```
+
+* Colores de [colorbrewer2](https://colorbrewer2.org)
+
+```{r, eval = FALSE}
+Colores <- c("#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6")
+```
+
+## Cambiemos el color según especie (Cont.)
+
+* Creamos la paleta
+
+```{r, eval = FALSE}
+pal <- colorFactor(Colores, domain = Spp_Names)
+```
+
+* y finalmente el mapa
+
+```{r, eval = FALSE}
+leaflet() %>%  addTiles() %>% addCircles(data = Nothofagus, lat = ~latitude, lng = ~longitude, color = ~pal(scrubbed_species_binomial), fillOpacity = 0.5)
+```
+
+# Genial tenemos las especies, pero cual es cual?
+
+
+## Labels
+
+```{r}
+leaflet() %>%  addTiles() %>% addCircles(data = Nothofagus, lat = ~latitude, lng = ~longitude, color = ~pal(scrubbed_species_binomial), fillOpacity = 0.5, label = ~scrubbed_species_binomial)
+```
+
+## Popups
+
+```{r, eval = FALSE}
+m <- leaflet() %>%  addTiles() %>% addCircles(data = Nothofagus, lat = ~latitude, lng = ~longitude, color = ~pal(scrubbed_species_binomial), fillOpacity = 0.5, label = ~scrubbed_species_binomial, popup =  ~datasource, group = "Especies")
+
+m
+```
+
+* Podemos usar guardar en m para luego agregar cosas con `%>%` 
+* agregamos Group Para control más adelante
+
+
+## Leyenda
+
+```{r, eval = F}
+m <- m %>%  addLegend(data = Nothofagus, "bottomright", pal = pal, values = ~scrubbed_species_binomial,
+            title = "Especies",
+            opacity = 1, group = "Leyenda")
+
+m
+```
+
+
+## Control de objetos
+
+* Ahora empezamos con los grupos!!
+
+```{r, eval= FALSE}
+m <- m %>% addLayersControl(overlayGroups = c("Especies", "Leyenda"),
+                         options = layersControlOptions(collapsed =TRUE))
+
+m
+```
+
+
+## Hagamos un grupo por especie
+
+```{r}
+N_alpina <- Nothofagus %>% dplyr::filter(scrubbed_species_binomial == "Nothofagus alpina")
+```
+
+```{r}
+leaflet() %>%  addTiles() %>% addCircleMarkers(data = N_alpina, lat = ~latitude, lng = ~longitude, color = ~pal(scrubbed_species_binomial), fillOpacity = 0.5, label = ~scrubbed_species_binomial, popup =  ~datasource)
+```
+
+## Ahora para todas
+
+```{r}
+Spp_Pres <- list()
+  
+for(i in 1:length(Spp_Names)){
+  Spp_Pres[[i]] <- Nothofagus %>%  dplyr::filter(scrubbed_species_binomial == Spp_Names[i])
+}
+
+names(Spp_Pres) <-Spp_Names
+```
+
+## Generemos el mapa
+
+```{r, eval = F}
+Spp_Map <- leaflet() %>%  addTiles() %>% addCircles(data = Spp_Pres[[1]], lat = ~latitude, lng = ~longitude, color = ~pal(scrubbed_species_binomial), fillOpacity = 0.5, label = ~scrubbed_species_binomial, popup =  ~datasource, group = Spp_Names[1]) %>% 
+addCircles(data = Spp_Pres[[2]], lat = ~latitude, lng = ~longitude, color = ~pal(scrubbed_species_binomial), fillOpacity = 0.5, label = ~scrubbed_species_binomial, popup =  ~datasource, group = Spp_Names[2]) %>% 
+addCircles(data = Spp_Pres[[3]], lat = ~latitude, lng = ~longitude, color = ~pal(scrubbed_species_binomial), fillOpacity = 0.5, label = ~scrubbed_species_binomial, popup =  ~datasource, group = Spp_Names[3]) 
+```
+
+## En un loop 
+
+```{r}
+Spp_Map <- leaflet() %>%  addTiles()
+
+for(i in 1:length(Spp_Pres)){
+  Spp_Map <- Spp_Map %>% addCircles(data = Spp_Pres[[i]], lat = ~latitude, lng = ~longitude, color = ~pal(scrubbed_species_binomial), fillOpacity = 0.5, label = ~scrubbed_species_binomial, popup =  ~datasource, group = Spp_Names[i])
+}
+```
+
+## Agregemos leyenda
+
+```{r}
+Spp_Map <- Spp_Map %>%  addLegend(data = Nothofagus, "bottomright", pal = pal, values = ~scrubbed_species_binomial,
+            title = "Especies",
+            opacity = 1, group = "Leyenda")
+```
+
+
+## Agregemos control por especie
+
+```{r}
+Grupos <- c("Leyenda", Spp_Names)
+
+Spp_Map <- Spp_Map %>% addLayersControl(overlayGroups = Grupos,
+                         options = layersControlOptions(collapsed =TRUE)) %>% hideGroup("Leyenda")
+```
+
+# Dudas?
+
+## Densidad por especie
+
+```{r}
+Heat_Map <-  leaflet() %>%  addTiles()
+
+for(i in 1:length(Spp_Pres)){
+  Heat_Map <- Heat_Map %>%
+  addHeatmap(data = Spp_Pres[[i]], lat = ~latitude, lng = ~longitude,
+             group = Spp_Names[i])
+} 
+
+Heat_Map <- Heat_Map %>% addLayersControl(
+    baseGroups = Spp_Names,
+    options = layersControlOptions(collapsed = FALSE))
+```
+
+# Polygonos
+
+## Ejemplo Regiones de Chile
+
+```{r}
+download.file("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Chile.zip", destfile = "Chile.zip")
+
+unzip("Chile.zip")
+
+Chile <- read_sf("Chile.shp")
+
+Chile_Spat <- Chile %>% as_Spatial()
+
+Regiones_Chile <- leaflet() %>%  addTiles() %>% addPolygons(data = Chile_Spat, fillColor = topo.colors(16, alpha = NULL),  weight =  0.5, label = ~NAME_1, group = "Regiones") %>%  addLayersControl(overlayGroups = "Regiones",
+                         options = layersControlOptions(collapsed =TRUE))
+```
+
+## Ejemplo Regiones de Chile
+
+```{r}
+Regiones_Chile
+```
+
+
+## Agreguemos medidas de áreas
+
+```{r}
+Regiones_Chile <- Regiones_Chile %>%
+  addMeasurePathToolbar(options =
+                          measurePathOptions(imperial = F,
+                                             minPixelDistance = 100,
+                                             showDistances = FALSE))
+```
+
+## Y si quieremos generar nuevas Áreas?
+
+```{r}
+Regiones_Chile <- leaflet() %>%  
+  addTiles() %>% 
+  addPolygons(data = Chile_Spat, fillColor = topo.colors(16, alpha = NULL),  weight =  0.5, label = ~NAME_1, group = "Regiones") %>%
+  addDrawToolbar(targetGroup = "Regiones Marinas",
+    editOptions = editToolbarOptions(
+      selectedPathOptions = selectedPathOptions())) %>%  addLayersControl(overlayGroups = c("Regiones", "Regiones Marinas"),
+                         options = layersControlOptions(collapsed =TRUE)) %>%
+  addMeasurePathToolbar(options =
+                          measurePathOptions(imperial = F,
+                                             minPixelDistance = 100,
+                                             showDistances = FALSE))
+```
+
+## Editar estilos
+
+```{r}
+Regiones_Chile <- Regiones_Chile %>%addStyleEditor()
+```
+
+## Mapa final
+
+```{r, echo = F, out.width = '100%'}
+Regiones_Chile
+```
+
+
+## Como lo comparto?
+
+* Rmarkdown 
+
+```{r, eval = FALSE}
+download.file("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Chile.zip", destfile = "Chile.zip")
+
+unzip("Chile.zip")
+
+Chile <- read_sf("Chile.shp")
+
+Chile_Spat <- Chile %>% as_Spatial()
+
+Regiones_Chile <- leaflet() %>%  
+  addTiles() %>% 
+  addPolygons(data = Chile_Spat, fillColor = topo.colors(16, alpha = NULL),  weight =  0.5, label = ~NAME_1, group = "Regiones") %>%
+  addDrawToolbar(targetGroup = "Regiones Marinas",
+    editOptions = editToolbarOptions(
+      selectedPathOptions = selectedPathOptions())) %>%  addLayersControl(overlayGroups = c("Regiones", "Regiones Marinas"),
+                         options = layersControlOptions(collapsed =TRUE)) %>%
+  addMeasurePathToolbar(options =
+                          measurePathOptions(imperial = F,
+                                             minPixelDistance = 100,
+                                             showDistances = FALSE)) %>% 
+  addStyleEditor()
+
 ```
