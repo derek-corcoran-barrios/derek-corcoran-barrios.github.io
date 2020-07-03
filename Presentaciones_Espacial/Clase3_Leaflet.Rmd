@@ -352,3 +352,20 @@ Regiones_Chile <- leaflet() %>%
   addStyleEditor()
 
 ```
+
+# Mapedit
+
+## Editando shapefiles interactivamente
+
+```{r, eval=F}
+library(mapview)
+library(mapedit)
+
+Chile_SF <- Chile_Spat %>% st_as_sf()
+
+
+Nuevas_Regiones <- mapview(Chile_SF) %>%
+  editMap("Chile_SF")
+```
+
+
