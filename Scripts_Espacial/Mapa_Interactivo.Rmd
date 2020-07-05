@@ -1,0 +1,35 @@
+---
+title: "Mapa Interactivo"
+author: "Derek Corcoran"
+date: "7/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, error = FALSE, message = FALSE)
+```
+
+```{r}
+library(leaflet)
+library(leaflet.extras)
+library(sf)
+library(tidyverse)
+
+download.file("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Chile.zip", 
+    destfile = "Chile.zip")
+unzip("Chile.zip")
+Chile <- read_sf("Chile.shp")
+Chile_Spat <- Chile %>% as_Spatial()
+Regiones_Chile <- leaflet() %>% addTiles() %>% addPolygons(data = Chile_Spat, 
+    fillColor = topo.colors(16, alpha = NULL), weight = 0.5, 
+    label = ~NAME_1, group = "Regiones") %>% addDrawToolbar(targetGroup = "Regiones Marinas", 
+    editOptions = editToolbarOptions(selectedPathOptions = selectedPathOptions())) %>% 
+    addLayersControl(overlayGroups = c("Regiones", "Regiones Marinas"), 
+        options = layersControlOptions(collapsed = TRUE)) %>% 
+    addMeasurePathToolbar(options = measurePathOptions(imperial = F, 
+        minPixelDistance = 100, showDistances = FALSE)) %>% addStyleEditor()
+
+
+Regiones_Chile
+```
+
