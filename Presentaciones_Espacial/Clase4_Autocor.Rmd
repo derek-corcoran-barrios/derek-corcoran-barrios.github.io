@@ -10,15 +10,15 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
-library(leaflet)
+
+library(gstat)
+library(raster)
+library(rgdal)
+library(rworldxtra)
 library(sf)
 library(tidyverse)
-library(rgdal)
-library(raster)
-library(rasterVis)
-library(rworldxtra)
-library(tidyverse)
-library(gridExtra)
+
+library(leaflet)
 library(kableExtra)
 options("kableExtra.html.bsTable" = T)
 ```
@@ -26,3 +26,235 @@ options("kableExtra.html.bsTable" = T)
 # todo está relacionado con todo lo demás, pero las cosas cercanas están más relacionadas que las distantes
 
 Ley de Tobler (Primera ley de la Geografía)
+
+## Autocorrelación espacial
+
+```{r, echo = T, eval = F}
+library(gstat)
+library(raster)
+library(rgdal)
+library(rworldxtra)
+library(sf)
+library(sp)
+library(tidyverse)
+```
+
+
+* A veces el fenomeno tiene más que ver con proximidad que con condiciones
+
+* Figura de COVID o de vicarianza
+
+## Base de datos meuse
+
+```{r}
+data(meuse)
+Meuse <- st_as_sf(meuse, coords = c(1,2), crs = "+init=epsg:28992")
+coordinates(meuse) = ~x+y
+ggplot() + geom_sf(data = Meuse, aes(color = zinc)) + theme_bw()
+```
+
+## Donde queda meuse?
+
+```{r, echo = F}
+leaflet(as_Spatial(st_transform(Meuse, crs = 4326))) %>% addTiles() %>% addCircles()
+```
+
+## Variogramas
+
+```{r}
+# Modelo nulo
+Z_vgm_null <- variogram(log(zinc)~1, meuse) 
+```
+
+```{r, echo = FALSE, fig.height= 4.5}
+ggplot(Z_vgm_null, aes(x = dist, y = gamma)) + geom_point() + theme_bw()  + xlab("Ditancia metros") + ylim(c(0,max(Z_vgm_null$gamma)))
+```
+
+## Variogramas
+
+
+```{r}
+# Modelo nulo
+Z_vgm_null <- variogram(log(zinc)~1, meuse) %>% mutate(Modelo = "Nulo")
+#Modelo Espacial
+Z_vgm_Spat <- variogram(log(zinc)~x+y, meuse) %>% mutate(Modelo = "Espacial")
+# Modelo distancia
+Z_vgm_Dist <- variogram(log(zinc)~dist, meuse) %>% mutate(Modelo = "distancia")
+## Modelo sqrt Dist
+Z_vgm_Dist_sq <- variogram(log(zinc)~sqrt(dist), meuse) %>% mutate(Modelo = "sqrt(dist)")
+
+Z_vgm <- list(Z_vgm_Dist, Z_vgm_null, Z_vgm_Spat, Z_vgm_Dist_sq) %>% reduce(bind_rows)
+```
+
+## Variograma
+
+```{r, echo = FALSE}
+ggplot(Z_vgm, aes(x = dist, y = gamma)) + geom_point(aes(color = Modelo)) + theme_bw()  + xlab("Ditancia metros") + ylim(c(0,max(Z_vgm$gamma)))
+```
+
+# Dudas
+
+## Variogram
+
+```{r}
+Abn_fit_Spat <- fit.variogram(Z_vgm_Spat, model=vgm(1, "Sph", 700, 1))
+
+Abn_fit_Spat
+```
+
+## fitted variogram
+
+```{r, echo = F}
+ggplot(variogramLine(Abn_fit_Spat, 1600), aes(x = dist, y = gamma)) + geom_path() + geom_point(data = Z_vgm_Spat, color = "red") + geom_vline(xintercept = Abn_fit_Spat$range[2], lty = 2) + geom_text(x = Abn_fit_Spat$range[2], y = Abn_fit_Spat$psill[2]/2, label = "range") + theme_bw() + geom_hline(yintercept = Abn_fit_Spat$psill[2] + Abn_fit_Spat$psill[1] , lty = 2) + geom_text(x = Abn_fit_Spat$range[2]/2, y = Abn_fit_Spat$psill[2] + Abn_fit_Spat$psill[1], label = "psill") + geom_text(x = Abn_fit_Spat$range[1], y = Abn_fit_Spat$psill[1], label = "Nugget") + ylim(c(0,max(Z_vgm_Spat$gamma)))
+```
+
+## Todos
+```{r}
+Abn_fit_null <- fit.variogram(Z_vgm_null, model=vgm(1, "Sph", 700, 1))
+
+Abn_fit_Spat <- fit.variogram(Z_vgm_Spat, model=vgm(1, "Sph", 700, 1))
+
+Abn_fit_Dist <- fit.variogram(Z_vgm_Dist, model=vgm(1, "Sph", 700, 1))
+
+Abn_fit_Dist_sq <- fit.variogram(Z_vgm_Dist_sq, model=vgm(1, "Sph", 700, 1))
+```
+
+
+## Predicciones para todos
+
+```{r, echo = F}
+Abn_line_null <- variogramLine(Abn_fit_null, 1600) %>% mutate(Modelo = "Nulo")
+
+Abn_line_Spat <- variogramLine(Abn_fit_Spat, 1600) %>% mutate(Modelo = "Espacial")
+
+Abn_line_Dist <- variogramLine(Abn_fit_Dist, 1600) %>% mutate(Modelo = "distancia")
+
+Abn_line_Dist_sq <- variogramLine(Abn_fit_Dist_sq, 1600) %>% mutate(Modelo = "sqrt(dist)")
+
+Abn_line <- list(Abn_line_null, Abn_line_Spat, Abn_line_Dist, Abn_line_Dist_sq) %>% reduce(bind_rows)
+
+ggplot(Abn_line, aes(x = dist, y = gamma)) + geom_path(aes(color = Modelo)) + geom_point(data = Z_vgm, aes(color = Modelo)) + theme_bw()
+
+```
+
+
+
+
+## Kriging
+
+```{r}
+data(meuse.grid)
+Meuse_Grid <- st_as_sf(meuse.grid, coords = c(1,2), crs = "+init=epsg:28992")
+
+ggplot() + geom_sf(data = Meuse_Grid, aes(color = dist)) + scale_color_viridis_c()
+```
+
+## Predicción
+
+```{r, message=F, results='hold'}
+Spat_pred <- krige(log(zinc)~1, Meuse, Meuse_Grid, model = Abn_fit_Spat)
+```
+
+## Resultado
+
+```{r}
+ggplot() + geom_sf(data = Spat_pred, aes(color = exp(var1.pred))) + scale_color_viridis_c(name = "[Zinc]")+ theme_bw()
+```
+
+## Varianza
+
+```{r}
+ggplot() + geom_sf(data = Spat_pred, aes(color = var1.var)) + scale_color_viridis_c()+ theme_bw()
+```
+
+## Prediccion todos juntos
+
+```{r}
+Null_pred <- krige(log(zinc)~1, Meuse, Meuse_Grid, model = Abn_fit_null) %>% mutate(Modelo = "Nulo")
+
+Spat_pred <- krige(log(zinc)~1, Meuse, Meuse_Grid, model = Abn_fit_Spat) %>% mutate(Modelo = "Espacial")
+
+Dist_pred <- krige(log(zinc)~1, Meuse, Meuse_Grid, model = Abn_fit_Dist) %>% mutate(Modelo = "distancia")
+
+Dist_sq_pred <- krige(log(zinc)~1, Meuse, Meuse_Grid, model = Abn_fit_Dist_sq)  %>% mutate(Modelo = "sqrt(dist)")
+
+Pred <- list(Null_pred, Spat_pred, Dist_pred, Dist_sq_pred) %>% reduce(bind_rows)
+```
+
+
+## Predicciones
+
+```{r}
+ggplot() + geom_sf(data = Pred, aes(color = exp(var1.pred))) + scale_color_viridis_c(name = "[Zinc]") + facet_wrap(~Modelo)  + theme_bw()
+```
+
+## Variaciones
+
+```{r}
+ggplot() + geom_sf(data = Pred, aes(color = var1.var)) + scale_color_viridis_c() + facet_wrap(~Modelo)  + theme_bw()
+```
+
+# Como elijo el mejor modelo
+
+## RMSE
+
+* Root Mean Square Error
+
+$$RMSE = \sqrt{ \frac{1}{N}\sum_{i=1}^{N} (x_{i})^2}$$
+
+* Donde x es el error
+* Cross validation
+    + Entrenamos el modelo con algunos datos y dejamos otros
+    + Vemos el error al predecir los datos faltantes
+    
+    
+## krige.cv
+
+```{r}
+Null_CV <- krige.cv(log(zinc)~1, Meuse, model = Abn_fit_null, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "Nulo")
+
+Spat_CV <- krige.cv(log(zinc)~1, Meuse, model = Abn_fit_Spat, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "Espacial")
+
+Dist_CV <- krige.cv(log(zinc)~1, Meuse, model = Abn_fit_Dist, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "distancia")
+
+Dist_sq_CV <- krige.cv(log(zinc)~1, Meuse, model = Abn_fit_Dist_sq, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "sqrt(dist)")
+
+Pred_CV <- list(Null_CV, Spat_CV, Dist_CV, Dist_sq_CV) %>% reduce(bind_rows)
+```
+
+## Folds?
+
+```{r, echo = F}
+ggplot() + geom_sf(data = Spat_CV, aes(color = as.factor(fold))) + facet_wrap(~fold) + theme_bw() + scale_color_viridis_d()
+```
+
+## Reumen y orden por RMSE
+
+```{r}
+Resumen <- Pred_CV %>% as.data.frame() %>% 
+  group_by(Modelo) %>% 
+  summarise(RMSE = sqrt(sum(residual^2)/length(residual))) %>% arrange(RMSE)
+```
+
+## Podemos hacer algunos diagnósticos
+
+```{r, echo = FALSE}
+ggplot(Spat_CV, aes(y = var1.pred, x = observed)) + geom_smooth(method = "lm")+ geom_point() + theme_bw()
+```
+
+## Estructura espacial?
+
+```{r}
+Var <- variogram(residual~1, Spat_CV)
+ggplot(Var, aes(x = dist, y = gamma)) + geom_point() + theme_bw()  + xlab("Ditancia metros") + ylim(c(0,max(Var$gamma)))
+```
+
+
+## Nos quedamos con el espacial
+
+```{r, echo = F}
+ggplot() + geom_sf(data = Spat_pred, aes(color = exp(var1.pred))) + scale_color_viridis_c(name = "[Zinc]")+ theme_bw()
+```
+
+
+
