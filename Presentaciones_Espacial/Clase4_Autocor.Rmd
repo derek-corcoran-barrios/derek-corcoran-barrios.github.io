@@ -50,6 +50,7 @@ library(tidyverse)
 data(meuse)
 Meuse <- st_as_sf(meuse, coords = c(1,2), crs = "+init=epsg:28992")
 coordinates(meuse) = ~x+y
+proj4string(meuse) <- CRS("+init=epsg:28992")
 ggplot() + geom_sf(data = Meuse, aes(color = zinc)) + theme_bw()
 ```
 
@@ -145,6 +146,9 @@ ggplot(Abn_line, aes(x = dist, y = gamma)) + geom_path(aes(color = Modelo)) + ge
 ```{r}
 data(meuse.grid)
 Meuse_Grid <- st_as_sf(meuse.grid, coords = c(1,2), crs = "+init=epsg:28992")
+coordinates(meuse.grid) = ~x+y
+proj4string(meuse.grid) <- CRS("+init=epsg:28992")
+
 
 ggplot() + geom_sf(data = Meuse_Grid, aes(color = dist)) + scale_color_viridis_c()
 ```
@@ -152,7 +156,7 @@ ggplot() + geom_sf(data = Meuse_Grid, aes(color = dist)) + scale_color_viridis_c
 ## Predicción
 
 ```{r, message=F, results='hold'}
-Spat_pred <- krige(log(zinc)~1, Meuse, Meuse_Grid, model = Abn_fit_Spat)
+Spat_pred <- krige(log(zinc)~x+y, meuse, meuse.grid, model = Abn_fit_Spat) %>% st_as_sf()
 ```
 
 ## Resultado
@@ -172,11 +176,11 @@ ggplot() + geom_sf(data = Spat_pred, aes(color = var1.var)) + scale_color_viridi
 ```{r}
 Null_pred <- krige(log(zinc)~1, Meuse, Meuse_Grid, model = Abn_fit_null) %>% mutate(Modelo = "Nulo")
 
-Spat_pred <- krige(log(zinc)~1, Meuse, Meuse_Grid, model = Abn_fit_Spat) %>% mutate(Modelo = "Espacial")
+Spat_pred <- krige(log(zinc)~x + y, meuse, meuse.grid, model = Abn_fit_Spat) %>% st_as_sf() %>% mutate(Modelo = "Espacial")
 
-Dist_pred <- krige(log(zinc)~1, Meuse, Meuse_Grid, model = Abn_fit_Dist) %>% mutate(Modelo = "distancia")
+Dist_pred <- krige(log(zinc)~dist, Meuse, Meuse_Grid, model = Abn_fit_Dist) %>% mutate(Modelo = "distancia")
 
-Dist_sq_pred <- krige(log(zinc)~1, Meuse, Meuse_Grid, model = Abn_fit_Dist_sq)  %>% mutate(Modelo = "sqrt(dist)")
+Dist_sq_pred <- krige(log(zinc)~sqrt(dist), Meuse, Meuse_Grid, model = Abn_fit_Dist_sq)  %>% mutate(Modelo = "sqrt(dist)")
 
 Pred <- list(Null_pred, Spat_pred, Dist_pred, Dist_sq_pred) %>% reduce(bind_rows)
 ```
@@ -211,13 +215,13 @@ $$RMSE = \sqrt{ \frac{1}{N}\sum_{i=1}^{N} (x_{i})^2}$$
 ## krige.cv
 
 ```{r}
-Null_CV <- krige.cv(log(zinc)~1, Meuse, model = Abn_fit_null, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "Nulo")
+Null_CV <- krige.cv(log(zinc)~1, meuse, model = Abn_fit_null, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "Nulo")
 
-Spat_CV <- krige.cv(log(zinc)~1, Meuse, model = Abn_fit_Spat, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "Espacial")
+Spat_CV <- krige.cv(log(zinc)~x+y, meuse, model = Abn_fit_Spat, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "Espacial")
 
-Dist_CV <- krige.cv(log(zinc)~1, Meuse, model = Abn_fit_Dist, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "distancia")
+Dist_CV <- krige.cv(log(zinc)~dist, meuse, model = Abn_fit_Dist, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "distancia")
 
-Dist_sq_CV <- krige.cv(log(zinc)~1, Meuse, model = Abn_fit_Dist_sq, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "sqrt(dist)")
+Dist_sq_CV <- krige.cv(log(zinc)~sqrt(dist), meuse, model = Abn_fit_Dist_sq, nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "sqrt(dist)")
 
 Pred_CV <- list(Null_CV, Spat_CV, Dist_CV, Dist_sq_CV) %>% reduce(bind_rows)
 ```
@@ -236,25 +240,29 @@ Resumen <- Pred_CV %>% as.data.frame() %>%
   summarise(RMSE = sqrt(sum(residual^2)/length(residual))) %>% arrange(RMSE)
 ```
 
+```{r}
+kable(Resumen) %>% kable_styling()
+```
+
+
 ## Podemos hacer algunos diagnósticos
 
 ```{r, echo = FALSE}
-ggplot(Spat_CV, aes(y = var1.pred, x = observed)) + geom_smooth(method = "lm")+ geom_point() + theme_bw()
+ggplot(Dist_CV, aes(y = var1.pred, x = observed)) + geom_smooth(method = "lm")+ geom_point() + theme_bw()
 ```
 
 ## Estructura espacial?
 
 ```{r}
-Var <- variogram(residual~1, Spat_CV)
+Var <- variogram(residual~1, Dist_CV)
 ggplot(Var, aes(x = dist, y = gamma)) + geom_point() + theme_bw()  + xlab("Ditancia metros") + ylim(c(0,max(Var$gamma)))
 ```
 
 
-## Nos quedamos con el espacial
+## Nos quedamos con la distancia
 
 ```{r, echo = F}
-ggplot() + geom_sf(data = Spat_pred, aes(color = exp(var1.pred))) + scale_color_viridis_c(name = "[Zinc]")+ theme_bw()
+ggplot() + geom_sf(data = Dist_pred, aes(color = exp(var1.pred))) + scale_color_viridis_c(name = "[Zinc]")+ theme_bw()
 ```
-
 
 

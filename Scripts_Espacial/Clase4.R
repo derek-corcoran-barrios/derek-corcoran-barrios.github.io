@@ -16,6 +16,7 @@ Meuse <- st_as_sf(meuse, coords = c(1, 2), crs = "+init=epsg:28992")
 ## Transformamos a SpatialPoints
 
 coordinates(meuse) = ~x + y
+proj4string(meuse) <- CRS("+init=epsg:28992")
 
 # graficamos concentración de zinc
 
@@ -70,20 +71,23 @@ Abn_fit_Dist_sq <- fit.variogram(Z_vgm_Dist_sq, model = vgm(1,"Sph", 700, 1))
 ## Tenemos nuestro grid
 
 data(meuse.grid)
-Meuse_Grid <- st_as_sf(meuse.grid, coords = c(1, 2), crs = "+init=epsg:28992")
+Meuse_Grid <- st_as_sf(meuse.grid, coords = c(1,2), crs = "+init=epsg:28992")
+coordinates(meuse.grid) = ~x+y
+proj4string(meuse.grid) <- CRS("+init=epsg:28992")
 
 ## Modelo Kriging
 
 Null_pred <- krige(log(zinc) ~ 1, Meuse, Meuse_Grid, model = Abn_fit_null) %>% 
   mutate(Modelo = "Nulo")
 ## [using ordinary kriging]
-Spat_pred <- krige(log(zinc) ~ 1, Meuse, Meuse_Grid, model = Abn_fit_Spat) %>% 
+Spat_pred <- krige(log(zinc) ~ x+y, meuse, meuse.grid, model = Abn_fit_Spat) %>% 
+  st_as_sf() %>% 
   mutate(Modelo = "Espacial")
 ## [using ordinary kriging]
-Dist_pred <- krige(log(zinc) ~ 1, Meuse, Meuse_Grid, model = Abn_fit_Dist) %>% 
+Dist_pred <- krige(log(zinc) ~ dist, Meuse, Meuse_Grid, model = Abn_fit_Dist) %>% 
   mutate(Modelo = "distancia")
 ## [using ordinary kriging]
-Dist_sq_pred <- krige(log(zinc) ~ 1, Meuse, Meuse_Grid, model = Abn_fit_Dist_sq) %>% 
+Dist_sq_pred <- krige(log(zinc) ~ sqrt(dist), Meuse, Meuse_Grid, model = Abn_fit_Dist_sq) %>% 
   mutate(Modelo = "sqrt(dist)")
 
 ## Juntando predicciones
@@ -102,7 +106,7 @@ ggplot() + geom_sf(data =Spat_pred, aes(color = var1.var)) + scale_color_viridis
 
 ## Observando todos los modelos
 
-ggplot() + geom_sf(data = Pred, aes(color = var1.var)) + scale_color_viridis_c() + 
+ggplot() + geom_sf(data = Pred, aes(color = exp(var1.pred))) + scale_color_viridis_c() + 
   facet_wrap(~Modelo) + theme_bw()
 
 
@@ -116,11 +120,11 @@ Null_CV <- krige.cv(log(zinc) ~ 1, Meuse, model = Abn_fit_null, nfold = 5) %>%
   st_as_sf() %>% 
   mutate(Modelo = "Nulo")
 
-Spat_CV <- krige.cv(log(zinc) ~ 1, Meuse, model = Abn_fit_Spat, 
+Spat_CV <- krige.cv(log(zinc) ~ x+y, meuse, model = Abn_fit_Spat, 
                     nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "Espacial")
-Dist_CV <- krige.cv(log(zinc) ~ 1, Meuse, model = Abn_fit_Dist, 
+Dist_CV <- krige.cv(log(zinc) ~ dist, Meuse, model = Abn_fit_Dist, 
                     nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "distancia")
-Dist_sq_CV <- krige.cv(log(zinc) ~ 1, Meuse, model = Abn_fit_Dist_sq, 
+Dist_sq_CV <- krige.cv(log(zinc) ~ sqrt(dist), Meuse, model = Abn_fit_Dist_sq, 
                        nfold = 5) %>% st_as_sf() %>% mutate(Modelo = "sqrt(dist)")
 
 
@@ -133,6 +137,17 @@ Resumen <- Pred_CV %>% as.data.frame() %>% group_by(Modelo) %>%
   summarise(RMSE = sqrt(sum(residual^2)/length(residual))) %>% 
   arrange(RMSE)
 
-###
+### Diagnosticos
 
-ggplot(Null_CV, aes(x = observed, y = var1.pred)) + geom_smooth(method = "lm")+ geom_point()
+ggplot(Dist_sq_CV, aes(x = observed, y = var1.pred)) + geom_smooth(method = "lm")+ geom_point()
+
+
+Var <- variogram(residual ~ 1, Dist_sq_CV)
+
+ggplot(Var, aes(x = dist, y = gamma)) + geom_point() + theme_bw() + 
+  xlab("Ditancia metros") + ylim(c(0, max(Var$gamma)))
+
+
+ggplot() + geom_sf(data = Dist_sq_pred, aes(color = exp(var1.pred))) +
+scale_color_viridis_c()  
+
