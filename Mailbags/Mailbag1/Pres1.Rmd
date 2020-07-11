@@ -1,0 +1,55 @@
+---
+title: "Presentación"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
+
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+options("kableExtra.html.bsTable" = T)
+```
+
+# Sección 1
+
+## Titulo 1
+
+* Un bullet
+* dos bullet
+
+## Una Tabla
+
+* En esta tabla vemos un resumen
+* otro bullet
+* Otra más
+
+```{r}
+data("mtcars")
+Resumen <- mtcars %>% group_by(cyl) %>% summarise(MPG = mean(mpg), SD = sd(mpg), n =n())
+
+kable(Resumen, digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, position = "float_right")
+```
+
+
+## Una Tabla
+
+```{r}
+data("iris")
+
+kable(iris, digits = 2) %>%   kable_styling(bootstrap_options = c("striped", "hover"), full_width = F) %>% scroll_box(height = "350px", width = "700px")
+```
+
+## Graficos
+
+```{r, fig.align='center'}
+ggplot(mtcars, aes(x = hp, y = mpg)) + geom_point(aes(color = factor(cyl))) + theme_bw()
+```
+
