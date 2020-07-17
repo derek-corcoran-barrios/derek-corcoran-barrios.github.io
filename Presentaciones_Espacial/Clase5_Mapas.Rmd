@@ -14,7 +14,15 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Objetivos de hoy
 
-* Nombres de lugares
-* Polígonos
+* Graficando Polígonos (y projecciones)
+    + Escalas de colores
+* Puntos
+    + Nombres de lugares
+    + Escalas diferentes
+    + Separación de nombres
 * Rasters
-* Exportar gráficos
+    + Variables categóricas
+    + Cambiar las projecciones
+* Inset maps
+* Exportar gráficos en alta calidad
+    + Que nos pide una revista
