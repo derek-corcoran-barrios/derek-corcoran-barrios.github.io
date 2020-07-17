@@ -9,7 +9,8 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
+options("kableExtra.html.bsTable" = T)
 ```
 
 ## Objetivos de hoy
@@ -20,9 +21,462 @@ knitr::opts_chunk$set(echo = FALSE)
     + Nombres de lugares
     + Escalas diferentes
     + Separación de nombres
+* Exportar gráficos en alta calidad
+    + Que nos pide una revista
 * Rasters
     + Variables categóricas
     + Cambiar las projecciones
 * Inset maps
-* Exportar gráficos en alta calidad
-    + Que nos pide una revista
+    
+## Cargamos paquetes
+
+```{r}
+library(ggforce)
+library(scales)
+library(raster)
+library(rworldxtra)
+library(sf)
+library(tidyverse)
+```
+
+    
+# Polígonos
+
+## Partimos con un gráfico básico
+
+```{r,eval=FALSE}
+# Base de datos
+
+githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Casos_Activos_Valpo.rds")
+
+# La descargamos
+
+download.file(githubURL,"Casos_Activos_Valpo.rds")
+
+# La leemos
+
+Casos_Activos_Valpo <- readRDS("Casos_Activos_Valpo.rds")
+
+# Gráfico simple
+
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha)
+```
+
+
+## Partimos con un gráfico básico (cont.)
+
+```{r,echo= F}
+# Base de datos
+
+githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Casos_Activos_Valpo.rds")
+
+# La descargamos
+
+download.file(githubURL,"Casos_Activos_Valpo.rds")
+
+# La leemos
+
+Casos_Activos_Valpo <- readRDS("Casos_Activos_Valpo.rds")
+
+# Gráfico simple
+
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha)
+```
+
+## Modifiquemos la escala
+
+* Experimentemos con el número de colores
+
+```{r, eval = F}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha) + 
+  scale_fill_gradientn(name = "Activos por 100.000 hab",
+                       colours = heat.colors(10))
+```
+
+## Modifiquemos la escala (cont)
+
+```{r, echo= F}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha) + 
+  scale_fill_gradientn(name = "Activos por 100.000 hab",
+                       colours = heat.colors(10))
+```
+
+## Otras paletas
+
+* rainbow
+* terrain.colors
+* topo.colors
+* cm.colors
+
+Ejemplo feo
+
+```{r, eval = F}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha) + 
+  scale_fill_gradientn(name = "Activos por 100.000 hab",
+                       colours = rainbow(10))
+```
+
+## Cuando es feo se nota por que es importante
+
+```{r, echo = F}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha) + 
+  scale_fill_gradientn(name = "Activos por 100.000 hab",
+                       colours = rainbow(10))
+```
+
+## Virids
+
+```{r, eval = T}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha) + 
+  scale_fill_viridis_c(name = "Activos por 100.000 hab")
+```
+
+## Escala por bins
+
+```{r, eval = T}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha) + 
+  scale_fill_binned(name = "Activos por 100.000 hab")
+```
+
+
+## Cambiando algunos default
+
+* breaks: donde se cortan los bins
+
+```{r, eval=FALSE}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha) + 
+  scale_fill_binned(name = "Activos por 100.000 hab", 
+                    breaks = seq(0,200, by = 25))
+```
+
+## Escala gradient2
+
+* Algunos parametros importantes
+  + mid = color de punto medio
+  + high = color de valor alto
+  + low = color de valor bajo
+  + mipoint = que valor se considera medio
+
+```{r, eval=F}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) + 
+  facet_wrap(~Fecha) + 
+  scale_fill_gradient2(mid = "white", 
+                       low = muted("blue"), 
+                       high = muted("red"), 
+                       midpoint = median(Casos_Activos_Valpo$Activos_por_100.000),
+                       name = "Activos por 100.000 hab")
+```
+
+## Escala gradient2
+
+```{r, echo = F}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, aes(fill = Activos_por_100.000)) + 
+  facet_wrap(~Fecha) + 
+  scale_fill_gradient2(mid = "white", 
+                       low = muted("blue"), 
+                       high = muted("red"),
+                       midpoint = median(Casos_Activos_Valpo$Activos_por_100.000),
+                       name = "Activos por 100.000 hab")
+```
+
+## últimos toques
+
+* Punto de referencia del MINSAL 40 por cada 100.000 (midpoint)
+* Agregamos titulo, subtitulo y fuente al pie
+* Leyenda abajo
+* lineas mas tenues
+
+```{r, eval = F}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, size = 0.05, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha) + 
+  scale_fill_gradient2(mid = "white", low = muted("blue"), high = muted("red"), midpoint = 40, name = "Activos por 100.000 hab") +
+  theme(legend.position = "bottom") + 
+  labs(title = "Prevalencia de Región de Valparaíso por Provincia", 
+       subtitle = paste("Actualizado", max(CasosActivosCurso$Fecha)), 
+       caption = "Datos: https://github.com/MinCiencia/Datos-COVID19",
+       y = NULL,
+       x = NULL)
+```
+
+## Mapa final
+
+```{r, echo = FALSE}
+ggplot() + geom_sf(data = Casos_Activos_Valpo, size = 0.05, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha) + 
+  scale_fill_gradient2(mid = "white", low = muted("blue"), high = muted("red"), midpoint = 40, name = "Activos por 100.000 hab") +
+  theme(legend.position = "bottom") + 
+  labs(title = "Prevalencia de Región de Valparaíso por Provincia", 
+       subtitle = paste("Actualizado", max(Casos_Activos_Valpo$Fecha)), 
+       caption = "Datos: https://github.com/MinCiencia/Datos-COVID19",
+       y = NULL,
+       x = NULL)
+```
+
+
+# Puntos
+
+## Bajaremos puntos desde la biblioteca naciona
+
+* Mapas [vectoriales de Chile](https://www.bcn.cl/siit/mapas_vectoriales/index_html)
+* Ciudades y mas
+
+```{r}
+# Bajamos el archivo
+
+download.file("https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10400/2/Toponimos.zip", destfile = "Topo.zip")
+
+# Lo descomprimimos
+
+unzip("Topo.zip")
+
+## Leemos el shapefile y nos quedamos solo con valparaíso continenal
+
+Topo <- read_sf("Toponimos.shp") %>% 
+  dplyr::filter(Region == "DE VALPARAISO") %>% 
+  st_crop(Casos_Activos_Valpo)
+```
+
+```{r, echo = FALSE}
+file.remove("Topo.zip")
+file.remove(list.files(pattern = "Toponimos"))
+```
+
+## Partamos con el mapa anterior de base:
+
+```{r}
+Mapa <- ggplot() + geom_sf(data = Casos_Activos_Valpo, size = 0.05, aes(fill = Activos_por_100.000)) +
+  facet_wrap(~Fecha) + 
+  scale_fill_gradient2(mid = "white", low = muted("blue"), high = muted("red"), midpoint = 40, name = "Activos por 100.000 hab") +
+  theme(legend.position = "bottom") + 
+  labs(title = "Prevalencia de Región de Valparaíso por Provincia", 
+       subtitle = paste("Actualizado", max(Casos_Activos_Valpo$Fecha)), 
+       caption = "Datos: https://github.com/MinCiencia/Datos-COVID19",
+       y = NULL,
+       x = NULL)
+```
+
+## Agreguemos los puntos
+
+```{r}
+Mapa + geom_sf(data = Topo)
+```
+
+## Quitemos puntos
+
+```{r}
+Topo2 <- Topo %>% dplyr::filter(Clase_Topo %in% c("Centro Poblado"))
+
+Topo$Clase_Topo %>% unique()
+```
+
+## Sigue siendo mucho
+
+```{r}
+Mapa + geom_sf(data = Topo2)
+```
+
+## Dejemos solo las capitales provinciales
+
+```{r}
+Topo2 <- Topo %>% 
+  dplyr::filter(Nombre %in% c("Los Andes", "Quilpué","La Ligua", "Quillota", 
+                              "San Antonio", "San Felipe", "Valparaíso"),
+                Clase_Topo %in% c("Centro Poblado"))
+```
+
+## Mejor!!
+
+```{r}
+Mapa + geom_sf(data = Topo2)
+```
+
+## Agreguemos los nombres
+
+```{r}
+Mapa + 
+  geom_sf(data = Topo2) +
+  geom_sf_text(data = Topo2, aes(label = Nombre))
+```
+
+## Problemas
+
+* Tapan los puntos y chocan los nombres
+* ggrepel
+* cambio de tema
+
+```{r, eval=FALSE}
+Mapa + 
+  geom_sf(data = Topo2) +
+  ggrepel::geom_text_repel(
+    data = Topo2,
+    aes(label = Nombre, geometry = geometry),
+    stat = "sf_coordinates",
+    force = 1
+  ) + theme_bw()
+```
+
+## Listos?
+
+```{r, echo = FALSE}
+Mapa + 
+  geom_sf(data = Topo2) +
+  ggrepel::geom_text_repel(
+    data = Topo2,
+    aes(label = Nombre, geometry = geometry),
+    stat = "sf_coordinates",
+    force = 1
+  ) + theme_bw()
+```
+
+
+# Exportando archivos
+
+## Usando tif
+
+```{r}
+tiff('Mapa.tiff', units="in", width=10, height=5, res=600, compression = 'lzw')
+
+Mapa + 
+  geom_sf(data = Topo2) +
+  ggrepel::geom_text_repel(
+    data = Topo2,
+    aes(label = Nombre, geometry = geometry),
+    stat = "sf_coordinates",
+    force = 1
+  ) + theme_bw()
+
+dev.off()
+```
+
+* Se puede usar bmp, jpeg, png, svg, cairo_pdf
+
+```{r, echo =F}
+
+file.remove('Mapa.tiff')
+
+```
+
+# Rasters
+
+## Prioridades de conservación en el neotrópico
+
+* De este [paper](https://onlinelibrary.wiley.com/doi/full/10.1111/ecog.05166)
+* De [acá](https://figshare.com/collections/Hannah_et_al_2020_Ecography/4868019) pueden bajarlo para otros continentes
+
+```{r}
+download.file("https://ndownloader.figshare.com/files/21843771", destfile = "Priority.tiff")
+
+Priority <- raster("Priority.tiff")
+
+plot(Priority, colNA = "black")
+```
+
+```{r}
+Priority <- readAll(Priority)
+file.remove("Priority.tiff")
+```
+
+## Poligono para el mismo lugar
+
+```{r}
+data("countriesHigh")
+SA <- countriesHigh %>% st_as_sf()  %>% st_make_valid() %>% st_crop(extent(Priority))
+ggplot() + geom_sf(data = SA)
+```
+
+
+## Cambiando Priority
+
+```{r}
+## Cambiamos los NA a 0
+values(Priority) <- ifelse(is.na(values(Priority)), 0, values(Priority))
+
+## Generamos un raster de todo el neotropico con valores de 1
+
+MASK <- rasterize(SA, Priority, field = 1)
+
+## Multiplicamos para dejar 0s e prioridad
+
+Priority <- Priority*MASK
+
+## Achicamos el extent
+
+Priority <- raster::trim(Priority)
+```
+
+## Transformamos las prioridades en categorías
+
+* Valores de 1 es el 17%
+* Valores de 0.87 son el 30%
+* Valores de 0 son lugares muy desarrollados (Agricultura o ciudad)
+
+```{r}
+Priority2 <- Priority %>% as("SpatialPixelsDataFrame") %>% 
+  as.data.frame() %>% rename(Priority = layer) %>% 
+  mutate(Priority = case_when(Priority >= 0.97 ~ "Prioridad muy alta",
+                              Priority < 1 & Priority > 0.87 ~ "Prioridad alta",
+                              Priority == 0 ~ "Altamente desarrollado")) %>% 
+  dplyr::filter(!is.na(Priority)) %>% mutate(Priority = fct_relevel(Priority,"Prioridad alta", "Prioridad muy alta"))
+
+
+
+P  <- ggplot() + geom_sf(data = SA, size = 0.1) + geom_raster(data = Priority2, aes(x = x, y = y, fill = Priority))
+```
+
+## Veamos que tal
+
+```{r, echo = F}
+P
+```
+
+
+## Mejoremos los colores
+
+```{r}
+P <- P + scale_fill_manual(name = "Priority",values = c("#006d2c","#31a354","#d7c29e"))
+```
+
+```{r, echo = F}
+P
+```
+
+
+## Avancemos más
+
+```{r}
+P <- P + ylab("") + xlab("") + theme_bw()
+```
+
+```{r, echo = F}
+P
+```
+
+## Inset map
+
+```{r}
+P <- P + facet_zoom(xlim = c(-87.117, -82.56), ylim = c(5.51, 11.21), horizontal = T, zoom.size = 0.8, shrink = F) 
+```
+
+```{r, echo = F}
+P
+```
+
+## Exportamos
+
+```{r}
+tiff('Priority.tiff', units="in", width=10, height=8, res=600, compression = 'lzw')
+
+P
+
+dev.off()
+```
+
