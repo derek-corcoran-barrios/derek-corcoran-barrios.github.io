@@ -10,5 +10,191 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
+
+library(BIEN)
+library(ENMeval)
+library(sf)
+library(tidyverse)
+library(raster)
+library(dismo)
+library(maxnet)
+library(rworldxtra)
+
+library(kableExtra)
+
 options("kableExtra.html.bsTable" = T)
+```
+
+## Carguemos paquetes
+
+```{r, eval = F}
+library(BIEN)
+library(dismo)
+library(ENMeval)
+library(maxnet)
+library(raster)
+library(rworldxtra)
+library(sf)
+library(tidyverse)
+```
+
+# Que son los SDM (Species Distribution Models)
+
+## Objetivos
+
+* Entender que modelan las SDM
+* Diferenciando Maxent de otros algoritmos
+    + Parametros de regularización
+    + Pseudoaucencias vs Background
+* Respuestas (Lineal, Cuadrática, Bisagra, Producto)
+* Recomendaciones según número de presencias
+
+## Que modelan las SDM
+
+* Distribución potencial, no real
+* No considera disperción
+* No es tan fácil dividir en presencia y ausencia
+
+## Primero obtengamos presencias
+
+* Paquete [BIEN](https://bien.nceas.ucsb.edu/bien/) para plantas
+* Para animales y otros rgbif, pero hay que hacerse cuenta
+
+```{r, echo = F, out.width = "400px"}
+knitr::include_graphics("https://momentostdf.files.wordpress.com/2008/02/arbolbandera.jpg")
+```
+
+
+```{r}
+N_pumilio <- BIEN_occurrence_species(species = "Nothofagus pumilio")
+```
+
+
+## Generaremos un Buffer para el background y bajamos capas
+
+```{r}
+N_pumilio_SF <- N_pumilio %>% 
+  st_as_sf(coords =c(3,2), crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")
+
+Hull <- N_pumilio_SF %>% st_union() %>% st_convex_hull() 
+
+Buffer <- Hull %>% st_buffer(dist = 1) %>% st_as_sf()
+
+data("countriesHigh")
+
+SA <- countriesHigh %>% st_as_sf() %>% 
+  st_make_valid() %>% st_crop(Buffer)
+
+Bioclimatic <- getData(name = "worldclim", var='bio', res=0.5, lon=-70, lat=-50) 
+
+## capas climaticas
+
+Bioclimatic <- Bioclimatic %>%
+  crop(Buffer) %>% 
+  trim()
+
+## Cortamos el Tile
+
+names(Bioclimatic) <- str_remove_all(names(Bioclimatic), "_43")
+```
+
+
+## Como se ve
+
+```{r, echo = F}
+Bio1 <- Bioclimatic[[1]] %>% as("SpatialPixelsDataFrame") %>% as.data.frame()
+
+ggplot() + 
+  geom_tile(data = Bio1, aes(x = x, y = y, fill = bio1)) +
+  geom_sf(data = SA, alpha = 0) + 
+  geom_sf(data = Hull, alpha = 0) +
+  geom_sf(data = Buffer, alpha = 0, color = "red") +
+  geom_sf(data = N_pumilio_SF) +
+  scale_fill_viridis_c(name = "Temperatura media") +
+  theme_bw() 
+```
+
+
+## Para generar un modelo necesitamos Backgrounds
+
+```{r}
+set.seed(2020)
+
+Pres <- N_pumilio %>% dplyr::select(longitude, latitude) %>% 
+  mutate(Pres = 1)
+
+Aus <- dismo::randomPoints(mask = Bioclimatic[[1]],
+                    n = 5000) %>% as.data.frame() %>% rename(longitude = x, latitude= y) %>% mutate(Pres = 0)
+
+Pres_Aus <- bind_rows(Pres, Aus)
+
+Pres_Aus_Sf <- Pres_Aus %>% st_as_sf(coords= c(1,2), crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")
+```
+
+## Así se vé
+
+```{r, echo = F}
+ggplot() + 
+  geom_sf(data = Pres_Aus_Sf, aes(color = as.factor(Pres)), alpha = 0.4) +
+  scale_fill_viridis_c(name = "Temperatura media") +
+  theme_bw() + ylab("") + xlab("") + scale_fill_viridis_d(name = "Presencias")
+```
+
+## Extracción de datos
+
+```{r}
+Condiciones <- raster::extract(Bioclimatic, Pres_Aus_Sf) %>% as.data.frame() %>% bind_cols(Pres_Aus)
+```
+
+```{r, echo = F}
+ggplot(Condiciones, aes(x = bio1, y = bio12)) + geom_point(aes(color = as.factor(Pres)), alpha = 0.05) + geom_density2d(aes(color = factor(Pres))) + ylab("Temperatura media") + xlab("Precipitación anual") + theme_bw() + scale_color_viridis_d(name = "Presencias")
+```
+
+# Dudas hasta ahora
+
+## Empezemos a modelar
+
+* La forma mas sencilla maxnet
+
+```{r}
+set.seed(2020)
+
+Mod1 <- maxnet(p = Condiciones$Pres, data = Condiciones[,1:19], regmult = 1, maxnet.formula(p = Condiciones$Pres, data = Condiciones[,1:19], classes="lq"))
+```
+
+* Multiplicador de regularización (Número)
+* Classes entre "lqpt"
+
+## Respuestas
+
+```{r}
+plot(Mod1, c("bio1", "bio2", "bio3"))
+```
+
+## Respuestas (cloglog)
+
+```{r}
+plot(Mod1, type = "cloglog", c("bio1", "bio2", "bio3", "bio12"))
+```
+
+# Respuestas
+
+## Respuestas
+
+```{r}
+Mod2 <- maxnet(p = Condiciones$Pres, data = Condiciones[,1:19], regmult = 1, maxnet.formula(p = Condiciones$Pres, data = Condiciones[,1:19], classes="l"))
+
+Mod3 <- maxnet(p = Condiciones$Pres, data = Condiciones[,1:19], regmult = 1, maxnet.formula(p = Condiciones$Pres, data = Condiciones[,1:19], classes="lh"))
+```
+
+## Repuestas lineales
+
+```{r}
+plot(Mod2, c("bio1", "bio2", "bio3", "bio12"))
+```
+
+## Repuestas bisagra
+
+```{r}
+plot(Mod3, c("bio1", "bio2", "bio3", "bio12"))
 ```
