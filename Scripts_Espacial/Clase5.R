@@ -102,6 +102,9 @@ dev.off()
 download.file("https://ndownloader.figshare.com/files/21843771", 
               destfile = "Priority.tiff")
 Priority <- raster("Priority.tiff")
+Priority <- readAll(Priority) 
+
+saveRDS(Priority, "Priority.rds")
 
 library(rgdal)
 
