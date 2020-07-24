@@ -9,7 +9,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = F, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = T, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
 
 library(BIEN)
 library(ENMeval)
@@ -249,6 +249,8 @@ plot(ridge, xvar = "lambda", main = "Ridge (Alpha = 0)\n\n\n")
 
 # Prediccion
 
+## Prediccion
+
 ```{r, eval = F}
 Prediction <- predict(Bioclimatic,
                       Mod4, 
@@ -256,8 +258,6 @@ Prediction <- predict(Bioclimatic,
 
 ```
 
-
-## Veamosla
 
 ```{r, echo = F}
 Prediction <- predict(Bioclimatic,
@@ -273,4 +273,129 @@ ggplot() +
   scale_fill_viridis_c(name = "Probabilidad") + ylab("") + xlab("")
 
 ```
+
+
+# Generando umbrales
+
+## Verdaderos positivos y verdaderos negativos
+
+```{r}
+Eval <- dismo::evaluate(p = Pres[,1:2], a =Aus[,1:2], model = Mod4, x = Bioclimatic, type ="cloglog") 
+
+EvalDF <- Eval@confusion %>% as.data.frame %>% mutate(Threshold = Eval@t) %>% 
+  mutate(TP_TN = (tp/nrow(N_pumilio)) + (tn/5000))
+
+head(EvalDF)
+```
+
+## Eligiendo
+
+```{r, echo = F}
+ggplot(EvalDF, aes(x = Threshold, y = TP_TN)) + 
+  geom_path() + theme_bw()
+```
+
+## Eligiendo
+
+```{r}
+EvalThres <- EvalDF  %>% 
+  dplyr::filter(TP_TN == max(TP_TN)) 
+```
+
+```{r,echo = F}
+ggplot(EvalDF, aes(x = Threshold, y = TP_TN)) + 
+  geom_path() + 
+  geom_vline(xintercept = EvalThres$Threshold, color = "red") + theme_bw()
+```
+
+## Eso genera:
+
+```{r}
+Prediction <- Prediction %>% mutate(Binary = ifelse(layer >= EvalThres$Threshold, 
+                                     "Presencia", 
+                                     "Ausencia"))
+
+```
+
+## Que se vé
+
+```{r, echo = F}
+Prediction <- Prediction %>% 
+  mutate(Binary = ifelse(layer >= EvalThres$Threshold, 
+                                     "Presencia", 
+                                     "Ausencia"))
+
+
+ggplot() +
+  geom_tile(data = Prediction, aes(x = x, y = y, fill = Binary)) +
+  geom_sf(data = SA, alpha = 0) +
+  theme_bw() +
+  scale_fill_viridis_d(name = "Distribución") + ylab("") + xlab("")
+```
+
+## Seleccionando el mejor modelo
+
+* Tenemos que hacer crossvalidation
+* Probar distintos valores de regularización
+* Algunos candidatos de *Features*
+* ENMeval
+
+```{r}
+Results <- ENMevaluate(occ = N_pumilio[,c(3,2)], 
+                       env = Bioclimatic,
+                       RMvalues = c(0.75, 1, 1.25),
+                       n.bg = 5000,
+                       method = "randomkfold",
+                       overlap = F,
+                       kfolds = 5,
+                       bin.output = T,
+                       fc = c("L", "LQ","LQP"),
+                       rasterPreds = F)
+```
+
+
+## Vemos los resultados
+
+```{r}
+Models <- Results@results
+
+Models$ID <- 1:nrow(Models)
+
+Models <- Models %>% arrange(AICc)
+```
+
+## Tabla
+
+```{r, echo = FALSE}
+kable(Models)  %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  scroll_box(width = "100%", height = "350px")
+```
+
+## Seleccionando el mejor modelo
+
+```{r}
+# Indice del mejor modelo
+Models$ID[1]
+# Mejor modelo
+BestModels <- Results@models[[Models$ID[1]]]
+## Prediccion del mejor modelo
+Prediction <- predict(Bioclimatic, 
+                      BestModels, 
+                      type = "cloglog") %>% 
+                      as("SpatialPixelsDataFrame") %>% 
+                      as.data.frame()
+```
+
+## Mejor modelo
+
+```{r, echo = F}
+ggplot() +
+  geom_tile(data = Prediction, aes(x = x, y = y, fill = layer)) +
+  geom_sf(data = SA, alpha = 0) +
+  theme_bw() +
+  scale_fill_viridis_c(name = "Probabilidad") + ylab("") + xlab("")
+```
+
+
 
