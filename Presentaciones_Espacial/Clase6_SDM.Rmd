@@ -9,7 +9,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = F, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
 
 library(BIEN)
 library(ENMeval)
@@ -198,3 +198,79 @@ plot(Mod2, c("bio1", "bio2", "bio3", "bio12"))
 ```{r}
 plot(Mod3, c("bio1", "bio2", "bio3", "bio12"))
 ```
+
+## Default
+
+* Si las presencias son < 10 "l"
+* Si las presencias son < 15 "lq"
+* Si las presencias son < 80 "lqh"
+* Si las presencias son >= 80 "lqph"
+
+```{r}
+Mod4 <- maxnet(p = Condiciones$Pres, data = Condiciones[,1:19], regmult = 1)
+```
+
+## Respuesta default
+
+```{r}
+plot(Mod4, c("bio1", "bio2", "bio3", "bio12"))
+```
+
+# Regularización
+
+## Regularizacion
+
+* Maxent es como un modelo binomial
+* Parte con una estimación para todas las variable
+* Va penalizando cada variable según su importancia
+* Quedamos con variables de valor 0
+* Se corta con crossvalidation
+
+## Así se ve la penalización
+
+```{r, echo = F, fig.height= 10}
+library(glmnet)
+mtc <- mtcars %>% mutate(am = as.factor(am))
+
+train_x <- model.matrix(mpg ~ ., mtc)
+train_y <- mtc$mpg
+
+lasso    <- glmnet(train_x, train_y, alpha = 1.0)
+elastic1 <- glmnet(train_x, train_y, alpha = 0.25)
+elastic2 <- glmnet(train_x, train_y, alpha = 0.75)
+ridge    <- glmnet(train_x, train_y, alpha = 0.0)
+
+par(mfrow = c(2, 2), mar = c(6, 4, 6, 2) + 0.1)
+plot(lasso, xvar = "lambda", main = "Lasso (Alpha = 1)\n\n\n")
+plot(elastic1, xvar = "lambda", main = "Elastic Net (Alpha = .25)\n\n\n")
+plot(elastic2, xvar = "lambda", main = "Elastic Net (Alpha = .75)\n\n\n")
+plot(ridge, xvar = "lambda", main = "Ridge (Alpha = 0)\n\n\n")
+```
+
+# Prediccion
+
+```{r, eval = F}
+Prediction <- predict(Bioclimatic,
+                      Mod4, 
+                      type = "cloglog") 
+
+```
+
+
+## Veamosla
+
+```{r, echo = F}
+Prediction <- predict(Bioclimatic,
+                      Mod4, 
+                      type = "cloglog") %>% 
+                      as("SpatialPixelsDataFrame") %>% 
+                      as.data.frame()
+
+ggplot() +
+  geom_tile(data = Prediction, aes(x = x, y = y, fill = layer)) +
+  geom_sf(data = SA, alpha = 0) +
+  theme_bw() +
+  scale_fill_viridis_c(name = "Probabilidad") + ylab("") + xlab("")
+
+```
+
