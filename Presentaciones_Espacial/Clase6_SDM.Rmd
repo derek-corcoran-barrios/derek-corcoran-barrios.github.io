@@ -9,7 +9,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = T, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = F, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
 
 library(BIEN)
 library(ENMeval)
@@ -350,7 +350,7 @@ Results <- ENMevaluate(occ = N_pumilio[,c(3,2)],
                        kfolds = 5,
                        bin.output = T,
                        fc = c("L", "LQ","LQP"),
-                       rasterPreds = F)
+                       rasterPreds = T)
 ```
 
 
