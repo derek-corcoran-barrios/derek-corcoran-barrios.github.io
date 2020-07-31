@@ -14,13 +14,28 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = T, 
 library(sf)
 library(tidyverse)
 library(raster)
-library(dismo)
 library(rworldxtra) 
 library(MODIS)
-
+library(MODISTools)
 library(kableExtra)
 
 options("kableExtra.html.bsTable" = T)
+```
+
+## Antes que nada
+
+```{r, cache=T}
+TDF_NDVI <- mt_subset(product = "MOD13Q1",
+                    lat = -54,
+                    lon =  -70,
+                    band = "250m_16_days_NDVI" ,
+                    start = "2020-01-01",
+                    end = "2020-06-01",
+                    km_lr = 50,
+                    km_ab = 50,
+                    site_name = "Tierra del fuego",
+                    internal = TRUE,
+                    progress = FALSE)
 ```
 
 # ¿Que son los sensores remotos?
@@ -38,3 +53,142 @@ options("kableExtra.html.bsTable" = T)
 * Modis
 * Landsat
 * Sentinel
+
+## Landsat
+
+* Van 8 misiones
+
+```{r, echo = F}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/en/timeline/87a2d28fbe497b9cd2dfcc98d103af46.png")
+```
+
+* Chequear coinsidencia entre satélites
+
+## Datos landsat
+
+```{r, echo = F}
+Landsat <- tibble::tribble(
+                                   ~Bands, ~`Wavelength.(micrometers)`, ~`Resolution.(meters)`,
+  "Band 1 - Ultra Blue (coastal/aerosol)",             "0.435 - 0.451",                   "30",
+                          "Band 2 - Blue",             "0.452 - 0.512",                   "30",
+                         "Band 3 - Green",             "0.533 - 0.590",                   "30",
+                           "Band 4 - Red",             "0.636 - 0.673",                   "30",
+                           "Band 5 - NIR",             "0.851 - 0.879",                   "30",
+                        "Band 6 - SWIR 1",             "1.566 - 1.651",                   "30",
+                        "Band 7 - SWIR 2",             "2.107 - 2.294",                   "30",
+                  "Band 8 - Panchromatic",             "0.503 - 0.676",                   "15",
+                        "Band 9 - Cirrus",             "1.363 - 1.384",                   "30",
+                    "Band 10 - Thermal 1",             "10.60 - 11.19",            "100* (30)",
+                    "Band 11 - Thermal 2",             "11.50 - 12.51",            "100* (30)"
+  )
+
+kable(Landsat) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  scroll_box(width = "800px", height = "600px")
+```
+
+
+## Sentinel 2
+
+
+
+
+## Ejemplo con MODIS
+
+```{r}
+library(MODISTools)
+products <- mt_products()
+```
+
+```{r, echo = F}
+kable(products) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  scroll_box(width = "800px", height = "600px")
+```
+
+
+## Trabajemos con uno (NDVI/EVI)
+
+```{r}
+bands <- mt_bands(product = "MOD13Q1")
+```
+
+```{r, echo = F}
+kable(bands) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  scroll_box(width = "800px", height = "600px")
+```
+
+## Buscamos fechas
+
+```{r}
+dates <- mt_dates(product = "MOD13Q1", lat = -54, lon = -68) %>% mutate(calendar_date = lubridate::ymd(calendar_date)) %>% arrange(desc(calendar_date))
+```
+
+```{r, echo = F}
+kable(dates) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  scroll_box(width = "800px", height = "600px")
+```
+
+## Bajemos algo
+
+```{r, cache=T, eval = F}
+TDF_NDVI <- mt_subset(product = "MOD13Q1",
+                    lat = -54,
+                    lon =  -70,
+                    band = "250m_16_days_NDVI" ,
+                    start = "2020-01-01",
+                    end = "2020-06-01",
+                    km_lr = 50,
+                    km_ab = 50,
+                    site_name = "Tierra del fuego",
+                    internal = TRUE,
+                    progress = FALSE)
+```
+
+## Pasemos a raster
+
+```{r}
+TDF_Raster <- mt_to_raster(df = TDF_NDVI, reproject = TRUE)
+values(TDF_Raster) <- ifelse(values(TDF_Raster) < 0, NA, values(TDF_Raster))
+```
+
+```{r, echo = F}
+data("countriesHigh")
+TDF <- countriesHigh %>% st_as_sf() %>% st_make_valid() %>% st_crop(TDF_Raster)
+
+TDF_Raster_SF <- TDF_Raster %>% as("SpatialPixelsDataFrame") %>% as.data.frame() %>% pivot_longer(starts_with("X2020"), names_to = "Fecha", values_to = "NDVI") %>% dplyr::filter(!is.na(NDVI)) %>% mutate(Fecha = str_remove_all(Fecha, "X"), Fecha = lubridate::ymd(Fecha)) 
+
+ggplot() + geom_tile(data = TDF_Raster_SF, aes(x = x, y = y, fill = NDVI))+ geom_sf(data = TDF, alpha = 0) + facet_wrap(~Fecha) + scale_fill_viridis_c() + theme_bw() + xlab("") + ylab("")
+```
+
+# Land cover
+
+## Land cover
+
+```{r, cache = T}
+bandas <- mt_bands("MCD12Q1") 
+
+dates <- mt_dates(product = "MCD12Q1", lat = -54, lon = -68) %>% 
+  mutate(calendar_date = lubridate::ymd(calendar_date)) %>% 
+  arrange(desc(calendar_date))
+
+TDF_Type <- mt_subset(product = "MCD12Q1", lat = -54, lon = -70, 
+                      band = "LC_Type1", start = as.character(dates$calendar_date[1]), end = "2020-06-01", 
+                      km_lr = 50, km_ab = 50, site_name = "Tierra del fuego", internal = TRUE, 
+                      progress = FALSE)
+
+TDF_Raster_Type <- mt_to_raster(df = TDF_Type, reproject = TRUE) 
+```
+
+## como se ve
+
+```{r}
+plot(TDF_Raster_Type)
+```
+
+
+## Tranformemoslo a discreto
+
+* de [aca](http://www.fao.org/forestry/4031-0b6287f13b0c2adb3352c5ded18e491fd.pdf)
