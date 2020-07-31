@@ -90,7 +90,34 @@ kable(Landsat) %>%
 
 ## Sentinel 2
 
+* Mayor resolución
+```{r , echo = F}
+Sentinel <- tibble::tribble(
+                             ~Banda,    ~nm,  ~nmw,    ~V4,  ~V5, ~V6,
+      "Band 1 – Coastal aerosol",  442.7,  21L,  442.2,  21L, 60L,
+                 "Band 2 – Blue",  492.4,  66L,  492.1,  66L, 10L,
+                "Band 3 – Green",  559.8,  36L,    559,  36L, 10L,
+                  "Band 4 – Red",  664.6,  31L,  664.9,  31L, 10L,
+  "Band 5 – Vegetation red edge",  704.1,  15L,  703.8,  16L, 20L,
+  "Band 6 – Vegetation red edge",  740.5,  15L,  739.1,  15L, 20L,
+  "Band 7 – Vegetation red edge",  782.8,  20L,  779.7,  20L, 20L,
+                  "Band 8 – NIR",  832.8, 106L,  832.9, 106L, 10L,
+          "Band 8A – Narrow NIR",  864.7,  21L,    864,  22L, 20L,
+         "Band 9 – Water vapour",  945.1,  20L,  943.2,  21L, 60L,
+       "Band 10 – SWIR – Cirrus", 1373.5,  31L, 1376.9,  30L, 60L,
+                "Band 11 – SWIR", 1613.7,  91L, 1610.4,  94L, 20L,
+                "Band 12 – SWIR", 2202.4, 175L, 2185.7, 185L, 20L
+)
 
+kable(Sentinel) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  scroll_box(width = "800px", height = "600px")
+
+```
+
+## Modis
+
+* Moderate Resolution Imaging Spectroradiometer
 
 
 ## Ejemplo con MODIS
