@@ -1,5 +1,5 @@
 ---
-title: "Clase 6 Modelación de Distribución de Especies"
+title: "Clase 7 Detección remota"
 author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
@@ -11,14 +11,12 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = T, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
 
-library(BIEN)
-library(ENMeval)
 library(sf)
 library(tidyverse)
 library(raster)
 library(dismo)
-library(maxnet)
 library(rworldxtra) 
+library(MODIS)
 
 library(kableExtra)
 
@@ -26,3 +24,17 @@ options("kableExtra.html.bsTable" = T)
 ```
 
 # ¿Que son los sensores remotos?
+
+## Sensores remotos
+
+* Datos satelitales
+* Distintas resoluciones
+    + Resolución espacial (Tamaño del grano)
+    + Resolución temporal (Cada cuanto se toman los datos)
+    + Espectro (Distintas bandas)
+
+## Algunos sensores remotos
+
+* Modis
+* Landsat
+* Sentinel
