@@ -1,0 +1,28 @@
+---
+title: "Clase 6 Modelación de Distribución de Especies"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = T, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
+
+library(BIEN)
+library(ENMeval)
+library(sf)
+library(tidyverse)
+library(raster)
+library(dismo)
+library(maxnet)
+library(rworldxtra) 
+
+library(kableExtra)
+
+options("kableExtra.html.bsTable" = T)
+```
+
+# ¿Que son los sensores remotos?
