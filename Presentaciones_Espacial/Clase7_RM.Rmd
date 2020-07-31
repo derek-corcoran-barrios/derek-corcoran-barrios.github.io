@@ -91,6 +91,7 @@ kable(Landsat) %>%
 ## Sentinel 2
 
 * Mayor resolución
+
 ```{r , echo = F}
 Sentinel <- tibble::tribble(
                              ~Banda,    ~nm,  ~nmw,    ~V4,  ~V5, ~V6,
@@ -219,3 +220,70 @@ plot(TDF_Raster_Type)
 ## Tranformemoslo a discreto
 
 * de [aca](http://www.fao.org/forestry/4031-0b6287f13b0c2adb3352c5ded18e491fd.pdf)
+
+# Google earth engine
+
+## Paquete rgee
+
+* Api a google earth engine
+* Google earth engine calcula muy rápido
+* Usa computadoras de google
+
+## rgee
+
+```{r}
+library(rgee)
+```
+
+* Solo la primera vez
+
+```{r, eval =F}
+ee_install()
+```
+
+```{r, eval = F}
+ee_Initialize()
+```
+
+## Precipitacion
+
+```{r, eval = F}
+library(tidyverse)
+library(rgee)
+library(sf)
+
+# ee_reattach() # reattach ee as a reserve word
+ee_Initialize()
+
+nc <- st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
+```
+
+
+## Sigamos
+
+```{r, eval = F}
+terraclimate <- ee$ImageCollection("IDAHO_EPSCOR/TERRACLIMATE")$
+  filterDate("2001-01-01", "2002-01-01")$
+  map(function(x) x$reproject("EPSG:4326")$select("pr"))
+```
+
+## Finalmente
+
+```{r, eval=F}
+ee_nc_rain <- ee_extract(x = terraclimate, y = nc, sf = FALSE)
+colnames(ee_nc_rain) <- sprintf("%02d", 1:12)
+ee_nc_rain$name <- nc$NAME
+```
+
+## Grafico
+
+```{r, eval = F}
+ee_nc_rain %>%
+  pivot_longer(-name, names_to = "month", values_to = "pr") %>%
+  ggplot(aes(x = month, y = pr, group = name, color = pr)) +
+  geom_line(alpha = 0.4) +
+  xlab("Month") +
+  ylab("Precipitation (mm)") +
+  theme_bw()
+```
+

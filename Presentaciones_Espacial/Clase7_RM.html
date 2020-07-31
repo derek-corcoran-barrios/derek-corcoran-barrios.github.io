@@ -3463,9 +3463,11 @@ Band 11 - Thermal 2
 </article></slide><slide class=""><hgroup><h2>Sentinel 2</h2></hgroup><article  id="sentinel-2">
 
 <ul class = 'build'>
-<li>Mayor resolución
+<li>Mayor resolución</li>
+</ul>
 
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:800px; ">
+
 <table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
 
 <thead>
@@ -4036,8 +4038,9 @@ Band 12 – SWIR
 
 </tbody>
 
-</table></div></li>
-</ul>
+</table>
+
+</div>
 
 </article></slide><slide class=""><hgroup><h2>Modis</h2></hgroup><article  id="modis">
 
@@ -13204,7 +13207,56 @@ TDF_Raster_Type &lt;- mt_to_raster(df = TDF_Type, reproject = TRUE)</pre>
 
 <ul class = 'build'>
 <li>de <a href='http://www.fao.org/forestry/4031-0b6287f13b0c2adb3352c5ded18e491fd.pdf' title=''>aca</a></li>
-</ul></article></slide>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Google earth engine</h2></hgroup><article  id="google-earth-engine">
+
+</article></slide><slide class=""><hgroup><h2>Paquete rgee</h2></hgroup><article  id="paquete-rgee">
+
+<ul class = 'build'>
+<li>Api a google earth engine</li>
+<li>Google earth engine calcula muy rápido</li>
+<li>Usa computadoras de google</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>rgee</h2></hgroup><article  id="rgee">
+
+<pre class = 'prettyprint lang-r'>library(rgee)</pre>
+
+<ul class = 'build'>
+<li>Solo la primera vez</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>ee_install()</pre>
+
+<pre class = 'prettyprint lang-r'>ee_Initialize()</pre>
+
+</article></slide><slide class=""><hgroup><h2>Precipitacion</h2></hgroup><article  id="precipitacion">
+
+<pre class = 'prettyprint lang-r'>library(tidyverse)
+library(rgee)
+library(sf)
+# ee_reattach() # reattach ee as a reserve word
+ee_Initialize()
+nc &lt;- st_read(system.file(&quot;shape/nc.shp&quot;, package = &quot;sf&quot;), quiet = TRUE)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Sigamos</h2></hgroup><article  id="sigamos">
+
+<pre class = 'prettyprint lang-r'>terraclimate &lt;- ee$ImageCollection(&quot;IDAHO_EPSCOR/TERRACLIMATE&quot;)$filterDate(&quot;2001-01-01&quot;, 
+    &quot;2002-01-01&quot;)$map(function(x) x$reproject(&quot;EPSG:4326&quot;)$select(&quot;pr&quot;))</pre>
+
+</article></slide><slide class=""><hgroup><h2>Finalmente</h2></hgroup><article  id="finalmente">
+
+<pre class = 'prettyprint lang-r'>ee_nc_rain &lt;- ee_extract(x = terraclimate, y = nc, sf = FALSE)
+colnames(ee_nc_rain) &lt;- sprintf(&quot;%02d&quot;, 1:12)
+ee_nc_rain$name &lt;- nc$NAME</pre>
+
+</article></slide><slide class=""><hgroup><h2>Grafico</h2></hgroup><article  id="grafico">
+
+<pre class = 'prettyprint lang-r'>ee_nc_rain %&gt;% pivot_longer(-name, names_to = &quot;month&quot;, values_to = &quot;pr&quot;) %&gt;% 
+    ggplot(aes(x = month, y = pr, group = name, color = pr)) + 
+    geom_line(alpha = 0.4) + xlab(&quot;Month&quot;) + ylab(&quot;Precipitation (mm)&quot;) + 
+    theme_bw()</pre></article></slide>
 
 
   <slide class="backdrop"></slide>
