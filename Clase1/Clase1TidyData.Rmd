@@ -17,6 +17,7 @@ library(kableExtra)
 options("kableExtra.html.bsTable" = T)
 ```
 
+# Bienvenida
 
 ## Curso Análisis y manipulación de datos en R {.build}
 
@@ -27,6 +28,8 @@ Primeros pasos
 * Evaluación por pares (Quien evalua a los evaluadores)
 * Mucho trabajo personal guiado
 * Pagina donde esta [todo el curso](https://derek-corcoran-barrios.github.io/Libro/_book/index.html)
+
+# Como se organizan los datos en R
 
 ## Estructura de datos {.build}
 
@@ -89,6 +92,8 @@ knitr::include_graphics("DataFrame.jpg")
 
 </div>
 
+# Principios de Tidydata
+
 ## Tidy Data  {.build}
 
 ```{r, echo = FALSE}
@@ -139,6 +144,8 @@ H <- as.data.frame(HairEyeColor)
 kable(H) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box()
 ```
 
+# Trabajemos tidy
+
 ## dplyr {.build}
 
 * Paquete con pocas funciones [muy poderosas](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) para ordenar datos 
@@ -150,6 +157,7 @@ kable(H) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"
 - *select* junto a *starts_with*, *ends_with* o *contains*
 - *mutate* (Genera variables nuevas)
 - *%>%* pipeline
+- *arrange* ordenar
 
 ## summarize y group_by {.build .small}
 
@@ -205,7 +213,7 @@ Consumo <- summarize(Mtcars2, Consumo_promedio = mean(mpg), desv = sd(mpg))
 kable(Consumo) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
-
+# Dudas?
 
 ## mutate {.small}
 
@@ -291,6 +299,7 @@ library(knitr)
 MEAN <- iris %>% group_by(Species) %>% summarize_all(.funs = list(Mean = mean, SD =sd))
 kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
+# Mas dudas?
 
 ## Filter {.build}
 
@@ -377,6 +386,8 @@ kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed
 
 </div>
 
+# Ejercicios
+
 ## Ejercicios {.build .small}
 
 ```{r}
@@ -394,7 +405,7 @@ Usando la base de datos del repositorio del ministerio de ciencias, genera un da
 
 * Ve cuales son las 10 comunas que han tenido la mayor meadiana de prevalencia, para cada una de estas 10 comunas, genera una tabla con la mediana, prevalencia máxima y fecha en que se alcanzó la prevalencia máxmima
 
-
+* Nos vemos a las 12:45
 
 ## Para la otra clase, es necesario: {.small .build}
 
