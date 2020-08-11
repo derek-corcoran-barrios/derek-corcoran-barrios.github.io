@@ -403,7 +403,7 @@ Usando la base de datos del repositorio del ministerio de ciencias, genera un da
 
 ## **Bonus** (Esto requiere investigar no basta con lo que aprendimos)
 
-* Ve cuales son las 10 comunas que han tenido la mayor meadiana de prevalencia, para cada una de estas 10 comunas, genera una tabla con la mediana, prevalencia máxima y fecha en que se alcanzó la prevalencia máxmima
+* Ve cuales son las 10 comunas que han tenido la mayor mediana de prevalencia, para cada una de estas 10 comunas, genera una tabla con la mediana, prevalencia máxima y fecha en que se alcanzó la prevalencia máxima
 
 * Nos vemos a las 12:45
 
