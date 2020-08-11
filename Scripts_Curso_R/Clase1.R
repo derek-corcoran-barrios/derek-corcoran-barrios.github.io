@@ -112,11 +112,83 @@ Iris_Filtrado <- iris_con_NA %>%
 
 
 ### Ejercicios
+# 1 
+#
+#¿Que proporción de las comunas ha tenido en algun momento mas de 50 casos por cada 100.000 habitantes?
+
 library(tidyverse)
-Casos_Activos <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv") %>% 
-  rename(Casos_activos = "Casos activos")
+## Leo la base de datos
+Comunas_sobre_50 <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv") %>% 
+# Elimino los totales regionales
+  dplyr::filter(Comuna != "Total", !str_detect(Comuna, "Desconocido")) %>% 
+  # Cambio nombre de columna
+  rename(Casos_activos = "Casos activos") %>% 
+  # Genero columna de prevalencia
+  mutate(Casos_por_100.000 = 100000*(Casos_activos/Poblacion)) %>% 
+  # Filtro sobre 50
+  dplyr::filter(Casos_por_100.000 > 50) %>% 
+  # Agrupar por comuna
+  group_by(Comuna) %>%
+  # Cuantas veces aparece cada comuna
+  summarise(n = n()) %>% 
+  ## Lo ordenamos
+  arrange(desc(n))
 
-colnames(Casos_Activos) <- make.names(colnames(Casos_Activos))
+n_comunas_sobre_50 = nrow(Comunas_sobre_50)  
+
+
+comunas_totales <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv") %>% 
+  dplyr::filter(Comuna != "Total", !str_detect(Comuna, "Desconocido")) %>% 
+  group_by(Comuna) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(n))
+
+n_comunas <- nrow(comunas_totales)
+
+n_comunas <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv") %>% 
+  dplyr::filter(Comuna != "Total", !str_detect(Comuna, "Desconocido")) %>% 
+  pull(Comuna) %>% unique() %>% 
+  length()
+
+Proporcion <- n_comunas_sobre_50/n_comunas
 
 
 
+#3 Genera una tabla de cuales comunas han tenido sobre 50 casos por cada 100.000 habitantes y de esas comunas crea una variable que sea la prevalencia máxima de dicha comuna.
+
+Prevalencia_max <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv") %>% 
+  dplyr::filter(Comuna != "Total") %>% 
+  rename(Casos_activos = "Casos activos") %>% 
+  mutate(Casos_por_100.000 = 100000*(Casos_activos/Poblacion)) %>% 
+  dplyr::filter(Casos_por_100.000 > 50) %>% 
+  # Agrupamos por comuna
+  group_by(Comuna) %>% 
+  # Filter cuando sea igual al maximo
+  dplyr::filter(Casos_por_100.000 == max(Casos_por_100.000)) %>% 
+  rename(Prevalencia_max = Casos_por_100.000) %>% 
+  arrange(desc(Prevalencia_max))
+
+#
+
+Prevalencia_max_top_10 <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv") %>% 
+  dplyr::filter(Comuna != "Total") %>% 
+  rename(Casos_activos = "Casos activos") %>% 
+  mutate(Casos_por_100.000 = 100000*(Casos_activos/Poblacion)) %>% 
+  dplyr::filter(Casos_por_100.000 > 50) %>% 
+  group_by(Comuna) %>% 
+  dplyr::filter(Casos_por_100.000 == max(Casos_por_100.000)) %>% 
+  rename(Prevalencia_maxima = Casos_por_100.000) %>% 
+  arrange(desc(Prevalencia_maxima))
+
+Prevalencia_max_top_10 <- Prevalencia_max_top_10[1:10,] 
+
+
+Prevalencia_max_top_10 <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv") %>% 
+  dplyr::filter(Comuna != "Total") %>% 
+  rename(Casos_activos = "Casos activos") %>% 
+  mutate(Casos_por_100.000 = 100000*(Casos_activos/Poblacion)) %>% 
+  dplyr::filter(Casos_por_100.000 > 50) %>% 
+  group_by(Comuna) %>% 
+  dplyr::filter(Casos_por_100.000 == max(Casos_por_100.000)) %>% 
+  rename(Prevalencia_maxima = Casos_por_100.000) %>% 
+  dplyr::top_n(Prevalencia_maxima, n = 10)
