@@ -1,16 +1,16 @@
 ---
-title: "Clase 1 Tidy Data y manipulación de datos"
+title: "Clase 1 Investigación reproducible"
 author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
   ioslides_presentation:
     widescreen: true
     incremental: true
-    logo: logo.png
+    logo: LogoRverso.jpeg
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
 library(tidyverse)
 library(broom)
 library(kableExtra)
@@ -23,9 +23,10 @@ options("kableExtra.html.bsTable" = T)
 Primeros pasos
 
 * ¿Quien no ha usado nunca R? [Swirl](https://www.youtube.com/watch?v=w6L7Ye18yPE&feature=youtu.be)
-* Evaluación sencilla (Completar tareas + 1 evaluación)
+* Evaluación sencilla (Informes reproducibles + presentación reproducible)
+* Evaluación por pares (Quien evalua a los evaluadores)
 * Mucho trabajo personal guiado
-* Pagina donde esta [todo el curso](http://www.derek-corcoran-barrios.com/Libro/_book/index.html)
+* Pagina donde esta [todo el curso](https://derek-corcoran-barrios.github.io/Libro/_book/index.html)
 
 ## Estructura de datos {.build}
 
@@ -75,7 +76,7 @@ knitr::include_graphics("Vector.jpg")
 * Cada columna un vector
 * Ejemplo data(iris)
 * Para subsetear data.frame[filas,columnas]
-* Ejemplos iris[,3], iris[,"Petal.Length"], iris[2:5,c(1,5)], iris$Petal.Length
+* Ejemplos iris[,3], iris["Petal.Length"], iris[2:5,c(1,5)], iris$Petal.Length
 
 
 </div>
@@ -134,8 +135,8 @@ knitr::kable(HairEyeColor[,,1]) %>% kable_styling(bootstrap_options = c("striped
 ```{r, echo=FALSE}
 library(epitools)
 library(knitr)
-H <- expand.table(HairEyeColor)
-kable(head(H)) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
+H <- as.data.frame(HairEyeColor)
+kable(H) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box()
 ```
 
 ## dplyr {.build}
@@ -272,6 +273,7 @@ Summary.Byspecies <- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.L
 
 ```{r, echo=FALSE}
 Summary.Byspecies <- summarize(group_by(mutate(iris, Petal.Sepal.Ratio = Petal.Length/Sepal.Length), Species), MEAN = mean(Petal.Sepal.Ratio), SD = sd(Petal.Sepal.Ratio))
+
 kable(Summary.Byspecies) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
@@ -280,13 +282,13 @@ kable(Summary.Byspecies) %>% kable_styling(bootstrap_options = c("striped", "hov
 
 ```{r, eval=FALSE}
 library(tidyverse)
-MEAN <- iris %>% group_by(Species) %>% summarize_all(mean)
+MEAN <- iris %>% group_by(Species) %>% summarize_all(.funs = list(Mean = mean, SD =sd))
 ```
 
 ```{r, echo=FALSE}
 library(dplyr)
 library(knitr)
-MEAN <- iris %>% group_by(Species) %>% summarize_all(mean)
+MEAN <- iris %>% group_by(Species) %>% summarize_all(.funs = list(Mean = mean, SD =sd))
 kable(MEAN) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
@@ -329,13 +331,13 @@ kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed
 
 ```{r, eval = FALSE}
 data("iris")
-DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(funs(mean, sd))
+DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(.funs= list(Mean  = mean, SD = sd))
 ```
 
 ```{r, echo = FALSE}
 library(dplyr)
 data("iris")
-DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(funs(mean, sd))
+DF <- iris %>% filter(Species != "versicolor") %>% group_by(Species) %>% summarise_all(.funs= list(Mean  = mean, SD = sd))
 kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
@@ -377,61 +379,26 @@ kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed
 
 ## Ejercicios {.build .small}
 
-* Usando la base de datos *storms* del paquete *dplyr*, calcula la velocidad promedio y diámetro promedio (hu_diameter) de las tormentas declaradas huracanes por año
-    + soluciónes:
-```{r, eval = FALSE}
-storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
+```{r}
+Casos_Activos <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv")
 ```
 
-```{r, eval = FALSE}
-storms %>% filter(status == "hurricane" & !is.na(hu_diameter)) %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(mean)
-```
 
-```{r, eval = FALSE}
-storms %>% filter(status == "hurricane") %>% select(year, wind, hu_diameter) %>% group_by(year) %>% summarize_all(funs(mean), na.rm = TRUE)
-```
+Usando la base de datos del repositorio del ministerio de ciencias, genera un dataframe que responda lo siguiente:
 
-## Ejercicios 2 {.build .small}
+* ¿Que proporción de las comunas ha tenido en algun momento mas de 50 casos por cada 100.000 habitantes?
+* Genera un dataframe, donde aparezca para cada comuna que haya tenido sobre 50 casos por cada 100.000 habitantes, cuantos días ha tenido sobre ese valor.
+* Genera una tabla de cuales comunas han tenido sobre 50 casos por cada 100.000 habitantes y de esas comunas crea una variable que sea la prevalencia máxima de dicha comuna.
 
-* La base de datos `mpg` del paquete ggplot2 tiene datos de eficiencia vehicular en millas por galón en ciudad (*cty*) en varios vehículos, obten los datos de vehiculos del año 2004 en adelante, que sean compactos, y transforma la eficiencia  Km/litro (1 milla = 1.609 km; 1 galón = 3.78541 litros)
+## **Bonus** (Esto requiere investigar no basta con lo que aprendimos)
 
-```{r, eval = FALSE}
-Solution <- mpg %>% filter(year > 2004 & class == "compact") %>% mutate(kpl = (cty*1.609)/3.78541)
-```
+* Ve cuales son las 10 comunas que han tenido la mayor meadiana de prevalencia, para cada una de estas 10 comunas, genera una tabla con la mediana, prevalencia máxima y fecha en que se alcanzó la prevalencia máxmima
 
-## Bases de datos con que trabajar {.build}
 
-- [Awesome public Datasets](https://github.com/caesar0301/awesome-public-datasets)
-- [Ropensci](https://ropensci.org/packages/#data_access) en base a paquetes de R
-- [cooldatasets](https://www.cooldatasets.com/)
-- [Datos de FiveThirtyEight](https://github.com/fivethirtyeight/data/tree/master/)
 
 ## Para la otra clase, es necesario: {.small .build}
 
 
 * Crearse cuenta de [github](https://github.com/)
-* Instalar los paquetes knitr, rmarkdown y stargazer
+* Instalar los paquetes knitr, rmarkdown y kableExtra
 
-
-
-## Consejo reproducible 1 {.small}
-
-<div style="float: left; width: 40%;">
-
-Usar el paquete pacman (Package manager)
-
-- En R usar los mismos paquetes es clave para reproducibilidad
-- *p_load* cargar el paquete, si no esta instalarlo y luego cargarlo
-- El código de abajo busca el paquete pacman, si no esta lo instala
-- Luego usa *p_load* sobre los otros paquetes
-
-</div>
-
-<div style="float: right; width: 60%;">
-
-```{r, echo = TRUE, eval=FALSE}
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, lubridate)
-```
-
-</div>
