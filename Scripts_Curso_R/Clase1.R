@@ -113,4 +113,10 @@ Iris_Filtrado <- iris_con_NA %>%
 
 ### Ejercicios
 library(tidyverse)
-Casos_Activos <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv")
+Casos_Activos <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv") %>% 
+  rename(Casos_activos = "Casos activos")
+
+colnames(Casos_Activos) <- make.names(colnames(Casos_Activos))
+
+
+
