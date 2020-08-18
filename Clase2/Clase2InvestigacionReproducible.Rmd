@@ -175,6 +175,15 @@ knitr::include_graphics("Rmark.png")
 * Hasta ahora hemos usado `data` (sólo para bases incorporadas en R)
 * Dede hoy usaremos `read_csv` (Para csv, para otros archivos hay otras funciones)
 
+## Datos para trabajar
+
+```{r, eval = F, echo = T}
+plants <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-08-18/plants.csv')
+actions <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-08-18/actions.csv')
+threats <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-08-18/threats.csv')
+```
+
+
 ## Crear un nuevo Rmarkdown
 
 ```{r, echo = F, out.width='100%', fig.align='center'}
@@ -283,7 +292,7 @@ kable(Tabla, digits = 2) %>%
 ```{r}
 msleep_long <- msleep %>% dplyr::select(name, vore, sleep_total, brainwt)
 
-kable(msleep_long, digits = 2) %>%
+kable(msleep_long, digits = 2, caption = "La base de datos entera") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F) %>%
   scroll_box(width = "800px", height = "200px")
 ```
@@ -294,6 +303,18 @@ kable(msleep_long, digits = 2) %>%
 
 ![Tabla](http://www.chemicalprocessing.com/assets/Media/0908/cartoon_0906.jpg)
 
-## Ejercicio
+# Estamos por hoy
 
-* Usando la base de datos *iris* crea un inline code que diga cuál es la media del largo del pétalo de la especie *Iris virginica*
+## Tarea
+
+* Hagan un Rmd con datos para el reporte de felicidad
+* Traten de aplicar todo lo que aprendimos hoy
+    + Crear un github
+    + generar un Rmd
+    + Usar chunks e inline code
+    + Hacer tablas resumen
+
+```{r}
+World_20Happiness_20Report <- read_csv("https://raw.githubusercontent.com/PhilippeCodes/World-Happiness-Report-Data-Analysis/master/World%20Happiness%20Report.csv")
+```
+
