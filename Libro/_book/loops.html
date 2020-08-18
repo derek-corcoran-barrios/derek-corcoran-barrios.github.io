@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 6 Loops (purrr) y bibliografía (rticles) | Manipulación de datos e investigación reproducible en R</title>
   <meta name="description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 6 Loops (purrr) y bibliografía (rticles) | Manipulación de datos e investigación reproducible en R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2019-12-30" />
+<meta name="date" content="2020-08-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="soluciones.html"><a href="soluciones.html#capítulo-3"><i class="fa fa-check"></i><b>8.3</b> Capítulo 3</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-5"><i class="fa fa-check"></i><b>8.3.1</b> Ejercicio 1</a></li>
-<li class="chapter" data-level="8.3.2" data-path="soluciones.html"><a href="soluciones.html#ejercicio-2-3"><i class="fa fa-check"></i><b>8.3.2</b> Ejercicio 2</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i><b>9</b> Referencias</a></li>
@@ -293,9 +292,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="leyendo-la-base-de-datos" class="section level5">
 <h5><span class="header-section-number">6.2.1.1.1</span> leyendo la base de datos</h5>
 <p>El primer paso es leer la base de datos, para esto usamos el <em>tidyverse</em> y cargamos además <em>lubridate</em> por si tenemos que trabajar con las fechas. En la tabla <a href="loops.html#tab:Madrid2017a">6.1</a> vemos los resultados del código a continuación.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb53-3" data-line-number="3">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb59-3" data-line-number="3">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: 59228 parsing failures.
 ##   row col           expected             actual                            file
 ## 87457 NOx 1/0/T/F/TRUE/FALSE 37.0               &#39;csvs_per_year/madrid_2017.csv&#39;
@@ -1368,8 +1367,8 @@ NA
 <div id="limitemonos-a-las-estaciones-seleccionadas" class="section level5">
 <h5><span class="header-section-number">6.2.1.1.2</span> Limitemonos a las estaciones seleccionadas</h5>
 <p>Revisando el archivo <em>stations.csv</em>, podemos ver que el código de estaciones que estudiaremos son 28079036, 28079008,28079058, 28079060 y 28079038, por lo que lo ponemos en un filter. El resultado de esto lo podemos ver en la tabla <a href="loops.html#tab:Madrid2017b">6.2</a></p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>))</a></code></pre></div>
 <pre><code>## Warning: 59228 parsing failures.
 ##   row col           expected             actual                            file
 ## 87457 NOx 1/0/T/F/TRUE/FALSE 37.0               &#39;csvs_per_year/madrid_2017.csv&#39;
@@ -2442,10 +2441,10 @@ NA
 <div id="agreguemos-aparte-el-mes-el-año-y-el-nombre-de-la-estación" class="section level5">
 <h5><span class="header-section-number">6.2.1.1.3</span> Agreguemos aparte el mes, el año y el nombre de la estación</h5>
 <p>Usando <code>mutate</code> y las funciones <code>month</code>y <code>year</code> de lubridate podemos agregar el més y el año para cada observación, además usando <code>left_joint</code>, podemos agreagar el nombre de las estaciones usando la base de datos <em>stations.csv</em>. El resultado de esto lo podemos ver en la tabla <a href="loops.html#tab:Madrid2017c">6.3</a></p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">stations &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;stations.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">station =</span> id)</a>
-<a class="sourceLine" id="cb57-2" data-line-number="2">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb57-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb57-4" data-line-number="4"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(stations)</a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">stations &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;stations.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">station =</span> id)</a>
+<a class="sourceLine" id="cb63-2" data-line-number="2">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb63-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb63-4" data-line-number="4"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(stations)</a></code></pre></div>
 <pre><code>## Warning: 59228 parsing failures.
 ##   row col           expected             actual                            file
 ## 87457 NOx 1/0/T/F/TRUE/FALSE 37.0               &#39;csvs_per_year/madrid_2017.csv&#39;
@@ -3956,8 +3955,8 @@ Plaza Tres Olivos
 </tbody>
 </table>
 <p>Finalmente, agrupamos sacamos el promedio por mes y sacamos las columnas sobrantes al mismo tiempo, como vemos en la tabla <a href="loops.html#tab:Madrid2017d">6.4</a></p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb59-2" data-line-number="2">stations &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;stations.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">station =</span> id)</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb65-2" data-line-number="2">stations &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;stations.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">station =</span> id)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   id = col_double(),
@@ -3967,11 +3966,11 @@ Plaza Tres Olivos
 ##   lat = col_double(),
 ##   elevation = col_double()
 ## )</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb61-3" data-line-number="3"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(stations) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb61-4" data-line-number="4"><span class="st">    </span><span class="kw">group_by</span>(month, name, year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">NO_2 =</span> <span class="kw">mean</span>(NO_<span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb61-5" data-line-number="5">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb67-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb67-3" data-line-number="3"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(stations) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb67-4" data-line-number="4"><span class="st">    </span><span class="kw">group_by</span>(month, name, year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">NO_2 =</span> <span class="kw">mean</span>(NO_<span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb67-5" data-line-number="5">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   date = col_datetime(format = &quot;&quot;),
@@ -4001,6 +4000,7 @@ Plaza Tres Olivos
 ## ..... ... .................. .................. ...............................
 ## See problems(...) for more details.</code></pre>
 <pre><code>## Joining, by = &quot;station&quot;</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;month&#39;, &#39;name&#39; (override with `.groups` argument)</code></pre>
 <table>
 <caption>
 <span id="tab:Madrid2017d">Tabla 6.4: </span>Los primeros 20 datos de calidad de aire del 2017 en Madrid después de filtrar según estación, con mes, año y nombre.
@@ -4309,8 +4309,8 @@ Tres Olivos
 <h5><span class="header-section-number">6.2.1.1.4</span> Últimos detalles</h5>
 <p>Vemos que hay algunos valores del 2018, esto parece raro, ya que leimos los archivos del 2017. Al revisar mas con <code>summarize</code>, vemos que en realidad son tan solo unas pocas observaciones las que generan esta anomalía debido a algunas medidas del 1 de enero del 2018.</p>
 <p>Para eliminarlas agregamos el siguiente código.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb65-2" data-line-number="2">stations &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;stations.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">station =</span> id)</a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb72-2" data-line-number="2">stations &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;stations.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">station =</span> id)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   id = col_double(),
@@ -4320,11 +4320,11 @@ Tres Olivos
 ##   lat = col_double(),
 ##   elevation = col_double()
 ## )</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb67-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb67-3" data-line-number="3"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(stations) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb67-4" data-line-number="4"><span class="st">    </span><span class="kw">group_by</span>(month, name, year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">NO_2 =</span> <span class="kw">mean</span>(NO_<span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb67-5" data-line-number="5">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">500</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-3" data-line-number="3"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(stations) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-4" data-line-number="4"><span class="st">    </span><span class="kw">group_by</span>(month, name, year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">NO_2 =</span> <span class="kw">mean</span>(NO_<span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb74-5" data-line-number="5">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">500</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   date = col_datetime(format = &quot;&quot;),
@@ -4354,6 +4354,7 @@ Tres Olivos
 ## ..... ... .................. .................. ...............................
 ## See problems(...) for more details.</code></pre>
 <pre><code>## Joining, by = &quot;station&quot;</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;month&#39;, &#39;name&#39; (override with `.groups` argument)</code></pre>
 <p>Esto nos dá al fin la receta final que usaremos en el loop.</p>
 </div>
 </div>
@@ -4365,46 +4366,49 @@ Tres Olivos
 <div id="volvamos-a-nuestra-receta" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Volvamos a nuestra receta</h3>
 <p>Veamos el código que usamos para el año 2017</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb71-2" data-line-number="2">stations &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;stations.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">station =</span> id)</a>
-<a class="sourceLine" id="cb71-3" data-line-number="3">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb71-4" data-line-number="4"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb71-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(stations) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb71-6" data-line-number="6"><span class="st">    </span><span class="kw">group_by</span>(month, name, year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">NO_2 =</span> <span class="kw">mean</span>(NO_<span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb71-7" data-line-number="7">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">500</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb79-2" data-line-number="2">stations &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;stations.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">station =</span> id)</a>
+<a class="sourceLine" id="cb79-3" data-line-number="3">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(station <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb79-4" data-line-number="4"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb79-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(stations) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb79-6" data-line-number="6"><span class="st">    </span><span class="kw">group_by</span>(month, name, year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">NO_2 =</span> <span class="kw">mean</span>(NO_<span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb79-7" data-line-number="7">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">500</span>)</a></code></pre></div>
 <p>La primera parte del código es la lectura del archivo</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1">Madrid2017 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;csvs_per_year/madrid_2017.csv&quot;</span>)</a></code></pre></div>
 <p>Para hacer esto por todos los archivos de la base de datos requeriríamos de una lista o vector con los nombres de cada uno de los archivos. ¡Si solo hubiera una función en R que nos permitiera leer los archivos de una carpeta! La función <code>list.files</code> hace eso.</p>
 <p>Entonces el código que vemos abajo genera un vector con todos los nombres de los archivos que queremos incorporar:</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">Archivos &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="st">&quot;csvs_per_year&quot;</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb73-2" data-line-number="2">Archivos</a></code></pre></div>
-<pre><code>##  [1] &quot;csvs_per_year/madrid_2001.csv&quot; &quot;csvs_per_year/madrid_2002.csv&quot; &quot;csvs_per_year/madrid_2003.csv&quot;
-##  [4] &quot;csvs_per_year/madrid_2004.csv&quot; &quot;csvs_per_year/madrid_2005.csv&quot; &quot;csvs_per_year/madrid_2006.csv&quot;
-##  [7] &quot;csvs_per_year/madrid_2007.csv&quot; &quot;csvs_per_year/madrid_2008.csv&quot; &quot;csvs_per_year/madrid_2009.csv&quot;
-## [10] &quot;csvs_per_year/madrid_2010.csv&quot; &quot;csvs_per_year/madrid_2011.csv&quot; &quot;csvs_per_year/madrid_2012.csv&quot;
-## [13] &quot;csvs_per_year/madrid_2013.csv&quot; &quot;csvs_per_year/madrid_2014.csv&quot; &quot;csvs_per_year/madrid_2015.csv&quot;
-## [16] &quot;csvs_per_year/madrid_2016.csv&quot; &quot;csvs_per_year/madrid_2017.csv&quot; &quot;csvs_per_year/madrid_2018.csv&quot;</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">Archivos &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="st">&quot;csvs_per_year&quot;</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb81-2" data-line-number="2">Archivos</a></code></pre></div>
+<pre><code>##  [1] &quot;csvs_per_year/madrid_2001.csv&quot; &quot;csvs_per_year/madrid_2002.csv&quot;
+##  [3] &quot;csvs_per_year/madrid_2003.csv&quot; &quot;csvs_per_year/madrid_2004.csv&quot;
+##  [5] &quot;csvs_per_year/madrid_2005.csv&quot; &quot;csvs_per_year/madrid_2006.csv&quot;
+##  [7] &quot;csvs_per_year/madrid_2007.csv&quot; &quot;csvs_per_year/madrid_2008.csv&quot;
+##  [9] &quot;csvs_per_year/madrid_2009.csv&quot; &quot;csvs_per_year/madrid_2010.csv&quot;
+## [11] &quot;csvs_per_year/madrid_2011.csv&quot; &quot;csvs_per_year/madrid_2012.csv&quot;
+## [13] &quot;csvs_per_year/madrid_2013.csv&quot; &quot;csvs_per_year/madrid_2014.csv&quot;
+## [15] &quot;csvs_per_year/madrid_2015.csv&quot; &quot;csvs_per_year/madrid_2016.csv&quot;
+## [17] &quot;csvs_per_year/madrid_2017.csv&quot; &quot;csvs_per_year/madrid_2018.csv&quot;</code></pre>
 <p>Entonces poner dentro de map, un vector con el nombre de los archivos (<em>Archivos</em>), y una función para leer los archivos (<em>read_csv</em>). Esto es el siguiente código</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">Madrid &lt;-<span class="st"> </span><span class="kw">map</span>(Archivos, read_csv)</a></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1">Madrid &lt;-<span class="st"> </span><span class="kw">map</span>(Archivos, read_csv)</a></code></pre></div>
 <p>Genera una lista donde cada elemento es un data frame de un año de mediciones.</p>
 <p>Cuando se agregan otras funciones mas complejas en un loop usando map. Como por ejemplo <code>filter</code>, ponemos un simbolo <code>~</code> dentro de map, y un <code>.x</code> dentro de filter para representar a cada dataframe que usaremos.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1">Madrid &lt;-<span class="st"> </span><span class="kw">map</span>(Archivos, read_csv) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">filter</span>(.x, station <span class="op">%in%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb76-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">Madrid &lt;-<span class="st"> </span><span class="kw">map</span>(Archivos, read_csv) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">filter</span>(.x, station <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb84-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>)))</a></code></pre></div>
 <p>De esta forma podemos seguir la receta creada anteriormente sin ningún problema.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1">Madrid &lt;-<span class="st"> </span><span class="kw">map</span>(Archivos, read_csv) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">filter</span>(.x, station <span class="op">%in%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb77-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb77-3" data-line-number="3"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">mutate</span>(.x, <span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb77-4" data-line-number="4"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">left_join</span>(.x, stations)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">group_by</span>(.x, month, </a>
-<a class="sourceLine" id="cb77-5" data-line-number="5">    name, year)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">summarise</span>(.x, <span class="dt">NO_2 =</span> <span class="kw">mean</span>(NO_<span class="dv">2</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), </a>
-<a class="sourceLine" id="cb77-6" data-line-number="6">    <span class="dt">n =</span> <span class="kw">n</span>())) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">filter</span>(.x, n <span class="op">&gt;</span><span class="st"> </span><span class="dv">500</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">Madrid &lt;-<span class="st"> </span><span class="kw">map</span>(Archivos, read_csv) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">filter</span>(.x, station <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb85-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb85-3" data-line-number="3"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">mutate</span>(.x, <span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb85-4" data-line-number="4"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">left_join</span>(.x, stations)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">group_by</span>(.x, month, </a>
+<a class="sourceLine" id="cb85-5" data-line-number="5">    name, year)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">summarise</span>(.x, <span class="dt">NO_2 =</span> <span class="kw">mean</span>(NO_<span class="dv">2</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), </a>
+<a class="sourceLine" id="cb85-6" data-line-number="6">    <span class="dt">n =</span> <span class="kw">n</span>())) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">filter</span>(.x, n <span class="op">&gt;</span><span class="st"> </span><span class="dv">500</span>))</a></code></pre></div>
 <p>Pero en este momento tenemos una lista con 17 data frames, en vez de un gran data frame con todos los datos. Para esto debenos unir esta lista usando la función <code>reduce</code>, lo cual nos genera el siguiente código y la tabla <a href="loops.html#tab:Madrid2017e">6.5</a></p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb78-2" data-line-number="2">Madrid &lt;-<span class="st"> </span><span class="kw">map</span>(Archivos, read_csv) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">filter</span>(.x, station <span class="op">%in%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb78-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb78-4" data-line-number="4"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">mutate</span>(.x, <span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb78-5" data-line-number="5"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">left_join</span>(.x, stations)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">group_by</span>(.x, month, </a>
-<a class="sourceLine" id="cb78-6" data-line-number="6">    name, year)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">summarise</span>(.x, <span class="dt">NO_2 =</span> <span class="kw">mean</span>(NO_<span class="dv">2</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), </a>
-<a class="sourceLine" id="cb78-7" data-line-number="7">    <span class="dt">n =</span> <span class="kw">n</span>())) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">filter</span>(.x, n <span class="op">&gt;</span><span class="st"> </span><span class="dv">500</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">reduce</span>(bind_rows)</a></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb86-2" data-line-number="2">Madrid &lt;-<span class="st"> </span><span class="kw">map</span>(Archivos, read_csv) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">filter</span>(.x, station <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb86-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="dv">28079036</span>, <span class="dv">28079008</span>, <span class="dv">28079058</span>, <span class="dv">28079060</span>, <span class="dv">28079038</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb86-4" data-line-number="4"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">mutate</span>(.x, <span class="dt">month =</span> <span class="kw">month</span>(date), <span class="dt">year =</span> <span class="kw">year</span>(date))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb86-5" data-line-number="5"><span class="st">    </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">left_join</span>(.x, stations)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">group_by</span>(.x, month, </a>
+<a class="sourceLine" id="cb86-6" data-line-number="6">    name, year)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">summarise</span>(.x, <span class="dt">NO_2 =</span> <span class="kw">mean</span>(NO_<span class="dv">2</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), </a>
+<a class="sourceLine" id="cb86-7" data-line-number="7">    <span class="dt">n =</span> <span class="kw">n</span>())) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">filter</span>(.x, n <span class="op">&gt;</span><span class="st"> </span><span class="dv">500</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">reduce</span>(bind_rows)</a></code></pre></div>
 <pre><code>## Warning: 59228 parsing failures.
 ##   row col           expected             actual                            file
 ## 87457 NOx 1/0/T/F/TRUE/FALSE 37.0               &#39;csvs_per_year/madrid_2017.csv&#39;

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 5 Modelos en R | Manipulación de datos e investigación reproducible en R</title>
   <meta name="description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 5 Modelos en R | Manipulación de datos e investigación reproducible en R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2019-12-30" />
+<meta name="date" content="2020-08-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="soluciones.html"><a href="soluciones.html#capítulo-3"><i class="fa fa-check"></i><b>8.3</b> Capítulo 3</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-5"><i class="fa fa-check"></i><b>8.3.1</b> Ejercicio 1</a></li>
-<li class="chapter" data-level="8.3.2" data-path="soluciones.html"><a href="soluciones.html#ejercicio-2-3"><i class="fa fa-check"></i><b>8.3.2</b> Ejercicio 2</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i><b>9</b> Referencias</a></li>
@@ -660,7 +659,7 @@ Figura 5.1: Captación de CO2 por plantas dependiente de su subespecie
 <div id="representando-un-modelo-en-r" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> Representando un modelo en R</h3>
 <p>En R la mayoría de los modelos se representan con el siguiente codigo:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">alguna_funcion</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2 <span class="op">+</span><span class="st"> </span>... <span class="op">+</span><span class="st"> </span>Xn, <span class="dt">data =</span> data.frame)</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">alguna_funcion</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2 <span class="op">+</span><span class="st"> </span>... <span class="op">+</span><span class="st"> </span>Xn, <span class="dt">data =</span> data.frame)</a></code></pre></div>
 <p>En este modelo, tenemos la variable respuesta <em>Y</em>, la cual puede estar explcada por una o multiples variables explicativas <em>X</em>, es por esto que el simbolo <code>~</code> se lee explicado por, donde lo que esta a su izquerada es la variable respuesta y a la derecha la variable explicativa. Los datos se encuentran en un data frame y finalmente usaremos alguna función, que identificará algún modelo. Algunas de estas funciones las encontramos en la tabla <a href="modelos.html#tab:Modelos">5.2</a></p>
 <table>
 <caption>
@@ -747,15 +746,15 @@ gbm()
 <div id="volvamos-al-ejemplo-de-las-plantas" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> Volvamos al ejemplo de las plantas</h3>
 <p>Para este ejemplo usaremos un modelo lineal simple, para esto siguiendo la tabla <a href="modelos.html#tab:Modelos">5.2</a> usaremos la función <code>lm</code>:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">Fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>Type, <span class="dt">data =</span> CO2)</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">Fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(uptake <span class="op">~</span><span class="st"> </span>Type, <span class="dt">data =</span> CO2)</a></code></pre></div>
 <div id="usando-broom-para-sacarle-más-a-tu-modelo" class="section level4">
 <h4><span class="header-section-number">5.2.3.1</span> usando broom para sacarle más a tu modelo</h4>
 <p>El paquete broom <span class="citation">(Robinson and Hayes <a href="#ref-Robinson2018">2018</a>)</span> es un paquete adyacente al tidyverse (por lo que debes cargarlo aparte del tidyverse), el cual nos permite tomar información de modelos generados en formato tidy. Hoy veremos 3 funciones de <em>broom</em>, estas son <code>glance</code>, <code>tidy</code> y <code>augment</code>.</p>
 <div id="glance" class="section level5">
 <h5><span class="header-section-number">5.2.3.1.1</span> glance</h5>
 <p>la función glance, nos entregará información general del modelo, como el valor de p, el <span class="math inline">\(R^2\)</span>, log-likelihood, grados de libertad, y/o otros parametros dependiendo del modelo a utilizar. Esta información nos es entregada en un formato de data frame, como vemos en el código siguiente y en la tabla <a href="modelos.html#tab:glance">5.3</a></p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
-<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="kw">glance</span>(Fit1)</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="kw">glance</span>(Fit1)</a></code></pre></div>
 <table>
 <caption>
 <span id="tab:glance">Tabla 5.3: </span>Información del modelo fi1 entregada por la función glance
@@ -795,6 +794,9 @@ deviance
 <th style="text-align:right;">
 df.residual
 </th>
+<th style="text-align:right;">
+nobs
+</th>
 </tr>
 </thead>
 <tbody>
@@ -815,7 +817,7 @@ df.residual
 0
 </td>
 <td style="text-align:right;">
-2
+1
 </td>
 <td style="text-align:right;">
 -300.8007
@@ -832,6 +834,9 @@ df.residual
 <td style="text-align:right;">
 82
 </td>
+<td style="text-align:right;">
+84
+</td>
 </tr>
 </tbody>
 </table>
@@ -839,7 +844,7 @@ df.residual
 <div id="tidy" class="section level5">
 <h5><span class="header-section-number">5.2.3.1.2</span> tidy</h5>
 <p>la función tidy, nos entregará información sobre los parametros del modelo, esto es el intercepto, la pendiente y/o interacciones, como vemos en el código siguiente y en la tabla <a href="modelos.html#tab:tidy">5.4</a></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">tidy</span>(Fit1)</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">tidy</span>(Fit1)</a></code></pre></div>
 <table>
 <caption>
 <span id="tab:tidy">Tabla 5.4: </span>Información del modelo fi1 entregada por la función glance
@@ -904,7 +909,7 @@ TypeMississippi
 <div id="augment" class="section level5">
 <h5><span class="header-section-number">5.2.3.1.3</span> augment</h5>
 <p>la función augment, nos entregará para cada observación de nuestro modelo, varios parametros importantes como el valor predicho, los residuales, el distancia de cook entre otros, esto nos sirve principalmente para estudiar los supuestos de nuestro modelo. A continuación vemos el uso de la función <code>augment</code> y 20 de sus observaciones en la tabla <a href="modelos.html#tab:augment">5.5</a></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">augment</span>(Fit1)</a></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">augment</span>(Fit1)</a></code></pre></div>
 <table>
 <caption>
 <span id="tab:augment">Tabla 5.5: </span>Información del modelo fi1 entregada por la función augment
@@ -921,10 +926,10 @@ Type
 .fitted
 </th>
 <th style="text-align:right;">
-.se.fit
+.resid
 </th>
 <th style="text-align:right;">
-.resid
+.std.resid
 </th>
 <th style="text-align:right;">
 .hat
@@ -935,128 +940,9 @@ Type
 <th style="text-align:right;">
 .cooksd
 </th>
-<th style="text-align:right;">
-.std.resid
-</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:right;">
-25.8
-</td>
-<td style="text-align:left;">
-Mississippi
-</td>
-<td style="text-align:right;">
-20.88333
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
-4.916667
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.830837
-</td>
-<td style="text-align:right;">
-0.0039050
-</td>
-<td style="text-align:right;">
-0.5658697
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-39.2
-</td>
-<td style="text-align:left;">
-Quebec
-</td>
-<td style="text-align:right;">
-33.54286
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
-5.657143
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.825228
-</td>
-<td style="text-align:right;">
-0.0051698
-</td>
-<td style="text-align:right;">
-0.6510927
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-14.4
-</td>
-<td style="text-align:left;">
-Mississippi
-</td>
-<td style="text-align:right;">
-20.88333
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
--6.483333
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.818039
-</td>
-<td style="text-align:right;">
-0.0067901
-</td>
-<td style="text-align:right;">
--0.7461807
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-22.0
-</td>
-<td style="text-align:left;">
-Mississippi
-</td>
-<td style="text-align:right;">
-20.88333
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
-1.116667
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.847238
-</td>
-<td style="text-align:right;">
-0.0002014
-</td>
-<td style="text-align:right;">
-0.1285196
-</td>
-</tr>
 <tr>
 <td style="text-align:right;">
 32.4
@@ -1068,10 +954,10 @@ Mississippi
 20.88333
 </td>
 <td style="text-align:right;">
-1.356945
+11.5166667
 </td>
 <td style="text-align:right;">
-11.516667
+1.3254778
 </td>
 <td style="text-align:right;">
 0.0238095
@@ -1082,13 +968,10 @@ Mississippi
 <td style="text-align:right;">
 0.0214255
 </td>
-<td style="text-align:right;">
-1.3254778
-</td>
 </tr>
 <tr>
 <td style="text-align:right;">
-12.3
+12.0
 </td>
 <td style="text-align:left;">
 Mississippi
@@ -1097,172 +980,24 @@ Mississippi
 20.88333
 </td>
 <td style="text-align:right;">
-1.356945
+-8.8833333
 </td>
 <td style="text-align:right;">
--8.583333
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.795321
-</td>
-<td style="text-align:right;">
-0.0119012
-</td>
-<td style="text-align:right;">
--0.9878742
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-28.1
-</td>
-<td style="text-align:left;">
-Mississippi
-</td>
-<td style="text-align:right;">
-20.88333
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
-7.216667
+-1.0224018
 </td>
 <td style="text-align:right;">
 0.0238095
 </td>
 <td style="text-align:right;">
-8.810831
+8.791552
 </td>
 <td style="text-align:right;">
-0.0084130
-</td>
-<td style="text-align:right;">
-0.8305816
+0.0127476
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-13.0
-</td>
-<td style="text-align:left;">
-Mississippi
-</td>
-<td style="text-align:right;">
-20.88333
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
--7.883333
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.803604
-</td>
-<td style="text-align:right;">
-0.0100392
-</td>
-<td style="text-align:right;">
--0.9073097
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12.5
-</td>
-<td style="text-align:left;">
-Mississippi
-</td>
-<td style="text-align:right;">
-20.88333
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
--8.383333
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.797760
-</td>
-<td style="text-align:right;">
-0.0113530
-</td>
-<td style="text-align:right;">
--0.9648558
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-26.2
-</td>
-<td style="text-align:left;">
-Mississippi
-</td>
-<td style="text-align:right;">
-20.88333
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
-5.316667
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.827905
-</td>
-<td style="text-align:right;">
-0.0045662
-</td>
-<td style="text-align:right;">
-0.6119065
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-35.5
-</td>
-<td style="text-align:left;">
-Mississippi
-</td>
-<td style="text-align:right;">
-20.88333
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
-14.616667
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.694104
-</td>
-<td style="text-align:right;">
-0.0345123
-</td>
-<td style="text-align:right;">
-1.6822634
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-42.1
+37.5
 </td>
 <td style="text-align:left;">
 Quebec
@@ -1271,22 +1006,45 @@ Quebec
 33.54286
 </td>
 <td style="text-align:right;">
-1.356945
+3.9571429
 </td>
 <td style="text-align:right;">
-8.557143
+0.4554360
 </td>
 <td style="text-align:right;">
 0.0238095
 </td>
 <td style="text-align:right;">
-8.795643
+8.836932
 </td>
 <td style="text-align:right;">
-0.0118286
+0.0025295
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.6
+</td>
+<td style="text-align:left;">
+Mississippi
 </td>
 <td style="text-align:right;">
-0.9848599
+20.88333
+</td>
+<td style="text-align:right;">
+9.7166667
+</td>
+<td style="text-align:right;">
+1.1183119
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.780397
+</td>
+<td style="text-align:right;">
+0.0152515
 </td>
 </tr>
 <tr>
@@ -1300,10 +1058,10 @@ Mississippi
 20.88333
 </td>
 <td style="text-align:right;">
-1.356945
+10.2166667
 </td>
 <td style="text-align:right;">
-10.216667
+1.1758580
 </td>
 <td style="text-align:right;">
 0.0238095
@@ -1313,9 +1071,6 @@ Mississippi
 </td>
 <td style="text-align:right;">
 0.0168615
-</td>
-<td style="text-align:right;">
-1.1758580
 </td>
 </tr>
 <tr>
@@ -1329,10 +1084,10 @@ Quebec
 33.54286
 </td>
 <td style="text-align:right;">
-1.356945
+-3.2428571
 </td>
 <td style="text-align:right;">
--3.242857
+-0.3732274
 </td>
 <td style="text-align:right;">
 0.0238095
@@ -1343,13 +1098,10 @@ Quebec
 <td style="text-align:right;">
 0.0016988
 </td>
-<td style="text-align:right;">
--0.3732274
-</td>
 </tr>
 <tr>
 <td style="text-align:right;">
-10.6
+21.9
 </td>
 <td style="text-align:left;">
 Mississippi
@@ -1358,80 +1110,19 @@ Mississippi
 20.88333
 </td>
 <td style="text-align:right;">
-1.356945
+1.0166667
 </td>
 <td style="text-align:right;">
--10.283333
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.772231
-</td>
-<td style="text-align:right;">
-0.0170823
-</td>
-<td style="text-align:right;">
--1.1835308
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-28.5
-</td>
-<td style="text-align:left;">
-Mississippi
-</td>
-<td style="text-align:right;">
-20.88333
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
-7.616667
+0.1170103
 </td>
 <td style="text-align:right;">
 0.0238095
 </td>
 <td style="text-align:right;">
-8.806572
+8.847391
 </td>
 <td style="text-align:right;">
-0.0093715
-</td>
-<td style="text-align:right;">
-0.8766185
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-22.2
-</td>
-<td style="text-align:left;">
-Mississippi
-</td>
-<td style="text-align:right;">
-20.88333
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
-1.316667
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.846891
-</td>
-<td style="text-align:right;">
-0.0002800
-</td>
-<td style="text-align:right;">
-0.1515380
+0.0001670
 </td>
 </tr>
 <tr>
@@ -1445,10 +1136,10 @@ Mississippi
 20.88333
 </td>
 <td style="text-align:right;">
-1.356945
+-10.3833333
 </td>
 <td style="text-align:right;">
--10.383333
+-1.1950400
 </td>
 <td style="text-align:right;">
 0.0238095
@@ -1459,42 +1150,10 @@ Mississippi
 <td style="text-align:right;">
 0.0174161
 </td>
-<td style="text-align:right;">
--1.1950400
-</td>
 </tr>
 <tr>
 <td style="text-align:right;">
-37.2
-</td>
-<td style="text-align:left;">
-Quebec
-</td>
-<td style="text-align:right;">
-33.54286
-</td>
-<td style="text-align:right;">
-1.356945
-</td>
-<td style="text-align:right;">
-3.657143
-</td>
-<td style="text-align:right;">
-0.0238095
-</td>
-<td style="text-align:right;">
-8.838566
-</td>
-<td style="text-align:right;">
-0.0021605
-</td>
-<td style="text-align:right;">
-0.4209084
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-27.9
+7.7
 </td>
 <td style="text-align:left;">
 Mississippi
@@ -1503,22 +1162,305 @@ Mississippi
 20.88333
 </td>
 <td style="text-align:right;">
-1.356945
+-13.1833333
 </td>
 <td style="text-align:right;">
-7.016667
+-1.5172980
 </td>
 <td style="text-align:right;">
 0.0238095
 </td>
 <td style="text-align:right;">
-8.812874
+8.723037
 </td>
 <td style="text-align:right;">
-0.0079531
+0.0280755
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+31.8
+</td>
+<td style="text-align:left;">
+Mississippi
 </td>
 <td style="text-align:right;">
-0.8075632
+20.88333
+</td>
+<td style="text-align:right;">
+10.9166667
+</td>
+<td style="text-align:right;">
+1.2564225
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.762547
+</td>
+<td style="text-align:right;">
+0.0192512
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.9
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+10.0166667
+</td>
+<td style="text-align:right;">
+1.1528396
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.776132
+</td>
+<td style="text-align:right;">
+0.0162078
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+18.0
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+-2.8833333
+</td>
+<td style="text-align:right;">
+-0.3318490
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.842186
+</td>
+<td style="text-align:right;">
+0.0013430
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+30.0
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+9.1166667
+</td>
+<td style="text-align:right;">
+1.0492567
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.788531
+</td>
+<td style="text-align:right;">
+0.0134261
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10.6
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+-10.2833333
+</td>
+<td style="text-align:right;">
+-1.1835308
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.772231
+</td>
+<td style="text-align:right;">
+0.0170823
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+22.0
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+1.1166667
+</td>
+<td style="text-align:right;">
+0.1285196
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.847238
+</td>
+<td style="text-align:right;">
+0.0002014
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+41.4
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+7.8571429
+</td>
+<td style="text-align:right;">
+0.9042954
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.803900
+</td>
+<td style="text-align:right;">
+0.0099726
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13.7
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+-7.1833333
+</td>
+<td style="text-align:right;">
+-0.8267452
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.811176
+</td>
+<td style="text-align:right;">
+0.0083355
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+39.6
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+6.0571429
+</td>
+<td style="text-align:right;">
+0.6971295
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.821870
+</td>
+<td style="text-align:right;">
+0.0059267
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+16.2
+</td>
+<td style="text-align:left;">
+Quebec
+</td>
+<td style="text-align:right;">
+33.54286
+</td>
+<td style="text-align:right;">
+-17.3428571
+</td>
+<td style="text-align:right;">
+-1.9960265
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.630502
+</td>
+<td style="text-align:right;">
+0.0485869
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+19.9
+</td>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:right;">
+20.88333
+</td>
+<td style="text-align:right;">
+-0.9833333
+</td>
+<td style="text-align:right;">
+-0.1131739
+</td>
+<td style="text-align:right;">
+0.0238095
+</td>
+<td style="text-align:right;">
+8.847439
+</td>
+<td style="text-align:right;">
+0.0001562
 </td>
 </tr>
 </tbody>
@@ -1539,8 +1481,8 @@ Mississippi
 <div id="modelos-candidatos" class="section level5">
 <h5><span class="header-section-number">5.2.3.2.1</span> Modelos candidatos</h5>
 <p>Veamos la figura <a href="modelos.html#fig:CO2Mods">5.2</a>. para pensar cuales podrían ser modelos interesantes a explorar.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">ggplot</span>(CO2, <span class="kw">aes</span>(<span class="dt">x =</span> conc, <span class="dt">y =</span> uptake)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Type, </a>
-<a class="sourceLine" id="cb52-2" data-line-number="2">    <span class="dt">shape =</span> Treatment), <span class="dt">size =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">ggplot</span>(CO2, <span class="kw">aes</span>(<span class="dt">x =</span> conc, <span class="dt">y =</span> uptake)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Type, </a>
+<a class="sourceLine" id="cb58-2" data-line-number="2">    <span class="dt">shape =</span> Treatment), <span class="dt">size =</span> <span class="dv">3</span>)</a></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:CO2Mods"></span>
 <img src="Libro_files/figure-html/CO2Mods-1.png" alt="Gráfico exploratorio para generar modelos de la base de datos CO2" width="80%" />
 <p class="caption">

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 8 Soluciones a problemas | Manipulación de datos e investigación reproducible en R</title>
   <meta name="description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 8 Soluciones a problemas | Manipulación de datos e investigación reproducible en R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2019-12-30" />
+<meta name="date" content="2020-08-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="soluciones.html"><a href="soluciones.html#capítulo-3"><i class="fa fa-check"></i><b>8.3</b> Capítulo 3</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-5"><i class="fa fa-check"></i><b>8.3.1</b> Ejercicio 1</a></li>
-<li class="chapter" data-level="8.3.2" data-path="soluciones.html"><a href="soluciones.html#ejercicio-2-3"><i class="fa fa-check"></i><b>8.3.2</b> Ejercicio 2</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i><b>9</b> Referencias</a></li>
@@ -268,19 +267,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ejercicio-1-3" class="section level3">
 <h3><span class="header-section-number">8.1.1</span> Ejercicio 1</h3>
 <p>Algunas posibles soluciones:</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
-<a class="sourceLine" id="cb80-2" data-line-number="2">    hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(hu_diameter)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb81-2" data-line-number="2"><span class="st">    </span><span class="kw">select</span>(year, wind, hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
-<a class="sourceLine" id="cb82-2" data-line-number="2">    hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(mean), </a>
-<a class="sourceLine" id="cb82-3" data-line-number="3">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
+<a class="sourceLine" id="cb88-2" data-line-number="2">    hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(hu_diameter)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb89-2" data-line-number="2"><span class="st">    </span><span class="kw">select</span>(year, wind, hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(mean)</a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">storms <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &quot;hurricane&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(year, wind, </a>
+<a class="sourceLine" id="cb90-2" data-line-number="2">    hu_diameter) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(mean), </a>
+<a class="sourceLine" id="cb90-3" data-line-number="3">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 <div id="ejercicio-2-2" class="section level3">
 <h3><span class="header-section-number">8.1.2</span> Ejercicio 2</h3>
 <p>Una de las soluciones posibles:</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1">Solution &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">2004</span> <span class="op">&amp;</span><span class="st"> </span>class <span class="op">==</span><span class="st"> &quot;compact&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">kpl =</span> (cty <span class="op">*</span><span class="st"> </span><span class="fl">1.609</span>)<span class="op">/</span><span class="fl">3.78541</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">Solution &lt;-<span class="st"> </span>mpg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&gt;</span><span class="st"> </span><span class="dv">2004</span> <span class="op">&amp;</span><span class="st"> </span>class <span class="op">==</span><span class="st"> &quot;compact&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb91-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">kpl =</span> (cty <span class="op">*</span><span class="st"> </span><span class="fl">1.609</span>)<span class="op">/</span><span class="fl">3.78541</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="capítulo-2" class="section level2">
@@ -297,8 +296,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">8.3.1</span> Ejercicio 1</h3>
 <div id="a" class="section level4">
 <h4><span class="header-section-number">8.3.1.1</span> a</h4>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">Sola &lt;-<span class="st"> </span>Huemul <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(lon, lat, basisOfRecord) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb84-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(lat) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(lon))</a></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">Sola &lt;-<span class="st"> </span>Huemul <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(lon, lat, basisOfRecord) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb92-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(lat) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(lon))</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -314,6 +313,50 @@ basisOfRecord
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:right;">
+-72.89979
+</td>
+<td style="text-align:right;">
+-50.85621
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-72.88027
+</td>
+<td style="text-align:right;">
+-49.33296
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-73.00350
+</td>
+<td style="text-align:right;">
+-46.69153
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-72.61874
+</td>
+<td style="text-align:right;">
+-46.76851
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
 <tr>
 <td style="text-align:right;">
 -72.97728
@@ -437,10 +480,32 @@ HUMAN_OBSERVATION
 </tr>
 <tr>
 <td style="text-align:right;">
+-73.99358
+</td>
+<td style="text-align:right;">
+-48.54769
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
 -71.81252
 </td>
 <td style="text-align:right;">
 -46.04818
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-72.54534
+</td>
+<td style="text-align:right;">
+-46.65755
 </td>
 <td style="text-align:left;">
 HUMAN_OBSERVATION
@@ -470,6 +535,17 @@ HUMAN_OBSERVATION
 </tr>
 <tr>
 <td style="text-align:right;">
+-72.33888
+</td>
+<td style="text-align:right;">
+-47.07042
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
 -72.93940
 </td>
 <td style="text-align:right;">
@@ -481,10 +557,43 @@ HUMAN_OBSERVATION
 </tr>
 <tr>
 <td style="text-align:right;">
+-72.75092
+</td>
+<td style="text-align:right;">
+-46.08747
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-72.17776
+</td>
+<td style="text-align:right;">
+-46.88179
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
 -72.91720
 </td>
 <td style="text-align:right;">
 -49.30175
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-72.87917
+</td>
+<td style="text-align:right;">
+-49.37064
 </td>
 <td style="text-align:left;">
 HUMAN_OBSERVATION
@@ -525,6 +634,17 @@ HUMAN_OBSERVATION
 </tr>
 <tr>
 <td style="text-align:right;">
+-72.13481
+</td>
+<td style="text-align:right;">
+-46.11689
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
 -72.89062
 </td>
 <td style="text-align:right;">
@@ -540,6 +660,17 @@ HUMAN_OBSERVATION
 </td>
 <td style="text-align:right;">
 -47.20485
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-72.45489
+</td>
+<td style="text-align:right;">
+-47.00600
 </td>
 <td style="text-align:left;">
 HUMAN_OBSERVATION
@@ -745,6 +876,28 @@ PRESERVED_SPECIMEN
 </tr>
 <tr>
 <td style="text-align:right;">
+-71.36714
+</td>
+<td style="text-align:right;">
+-41.13574
+</td>
+<td style="text-align:left;">
+PRESERVED_SPECIMEN
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-71.71094
+</td>
+<td style="text-align:right;">
+-42.75692
+</td>
+<td style="text-align:left;">
+HUMAN_OBSERVATION
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
 -70.91129
 </td>
 <td style="text-align:right;">
@@ -789,28 +942,6 @@ PRESERVED_SPECIMEN
 </tr>
 <tr>
 <td style="text-align:right;">
--71.36714
-</td>
-<td style="text-align:right;">
--41.13574
-</td>
-<td style="text-align:left;">
-PRESERVED_SPECIMEN
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
--71.71094
-</td>
-<td style="text-align:right;">
--42.75692
-</td>
-<td style="text-align:left;">
-HUMAN_OBSERVATION
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
 -71.64718
 </td>
 <td style="text-align:right;">
@@ -836,7 +967,8 @@ PRESERVED_SPECIMEN
 </div>
 <div id="b" class="section level4">
 <h4><span class="header-section-number">8.3.1.2</span> b</h4>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">Solb &lt;-<span class="st"> </span>Huemul <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(basisOfRecord) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">N =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">Solb &lt;-<span class="st"> </span>Huemul <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(basisOfRecord) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">N =</span> <span class="kw">n</span>())</a></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <table>
 <thead>
 <tr>
@@ -854,7 +986,7 @@ N
 HUMAN_OBSERVATION
 </td>
 <td style="text-align:right;">
-119
+132
 </td>
 </tr>
 <tr>
@@ -863,860 +995,6 @@ PRESERVED_SPECIMEN
 </td>
 <td style="text-align:right;">
 70
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="ejercicio-2-3" class="section level3">
-<h3><span class="header-section-number">8.3.2</span> Ejercicio 2</h3>
-<div id="a-1" class="section level4">
-<h4><span class="header-section-number">8.3.2.1</span> a</h4>
-<p>Primero bajamos la base de datos, lo cual se puede hacer de forma manual o como en el código siguiente utilizando la función <code>download.file</code></p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">download.file</span>(<span class="st">&quot;http://www.ine.cl/docs/default-source/variables-basicas-ambientales/bases-de-datos/series-cronol%C3%B3gicas-de-las-variables-b%C3%A1sicas-ambientales/dimension-aire-factor-estado-excel.xlsx?sfvrsn=c200127c_2&quot;</span>, </a>
-<a class="sourceLine" id="cb86-2" data-line-number="2">    <span class="dt">destfile =</span> <span class="st">&quot;test.xlsx&quot;</span>)</a></code></pre></div>
-<p>Una vez bajada esta base de datos utilizaremos los paquetes <em>readxl</em> para leer los archivos excel, <em>tidyverse</em> para manipular los datos y <em>stringr</em> para trabajar con texto.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="kw">library</span>(readxl)</a>
-<a class="sourceLine" id="cb87-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb87-3" data-line-number="3"><span class="kw">library</span>(stringr)</a></code></pre></div>
-<p>Partimos leyendo la pestaña que contiene las estaciones meteorológicas con su código:</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">EM &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;T001&quot;</span>)</a></code></pre></div>
-<pre><code>## New names:
-## * `` -&gt; ...8
-## * `` -&gt; ...9
-## * `` -&gt; ...10
-## * `` -&gt; ...11
-## * `` -&gt; ...12
-## * … and 1 more problem</code></pre>
-<p>Luego para poder más adelante unir esta base de datos con otras, cambiamos el nombre de la columna <em>Codigo_Est_Meteoro</em> a <em>Est_Meteoro</em> como aparece en las otras bases de datos.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">EM &lt;-<span class="st"> </span>EM <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">Est_Meteoro =</span> Codigo_Est_Meteoro)</a></code></pre></div>
-<p>Luego empezamos a trabajar con la base de datos de temperatura media, para esto leemos la pestaña <em>E10000003</em></p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;E10000003&quot;</span>)</a></code></pre></div>
-<p>Existen varias variables que no utilizaremos, por ejemplo el código de la variable, y la unidad de medida. Además vemos que la variable día, siempre tiene valor 0, por lo cuál podemos eliminarla también.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span>TempMedia <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Codigo_variable, <span class="op">-</span>Unidad_medida)</a></code></pre></div>
-<p>Además podemos cambiar los nombres de la columna <em>ValorF</em> que no tiene ningún significado a <em>TempMedia</em> y <em>Año</em> a <em>Year</em>, esta última variable es cambiada solo por que la letra Ñ puede no ser leída por todos los computadores.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span>TempMedia <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">TempMedia =</span> ValorF, <span class="dt">Year =</span> Año)</a></code></pre></div>
-<p>Si nos fijamos, hay algunos años, en los cuales todos los meses aparecen como 13, esto nos indica que en estos años no se registró en que mes se realizó la medición, por lo cual se eliminarán esas obsevaciones.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span>TempMedia <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Mes <span class="op">!=</span><span class="st"> </span><span class="dv">13</span>)</a></code></pre></div>
-<p>Posterior a esto, unumos la base de datos <em>TempMedia</em> con la base de datos <em>EM</em> y seleccionamos tan solo las columnas que nos interesan y finalmente transformamos el mes en una variable numérica:</p>
-<pre><code>## Joining, by = &quot;Est_Meteoro&quot;</code></pre>
-<p>,</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span><span class="kw">left_join</span>(TempMedia, EM) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Mes, Year, TempMedia, </a>
-<a class="sourceLine" id="cb96-2" data-line-number="2">    Ciudad_localidad) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Mes =</span> <span class="kw">as.numeric</span>(Mes))</a></code></pre></div>
-<p>Si hicieramos todo esto en un comando tendriamos el siguiente código</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">TempMedia &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;E10000003&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>Codigo_variable, <span class="op">-</span>Unidad_medida) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">TempMedia =</span> ValorF, </a>
-<a class="sourceLine" id="cb97-3" data-line-number="3">    <span class="dt">Year =</span> Año) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Mes <span class="op">!=</span><span class="st"> </span><span class="dv">13</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(EM) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb97-4" data-line-number="4"><span class="st">    </span><span class="kw">select</span>(Mes, Year, TempMedia, Ciudad_localidad) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Mes =</span> <span class="kw">as.numeric</span>(Mes))</a></code></pre></div>
-<p>De la misma manera modificamos el código de arriba para la humedad con la salvedad que la columna de día no tiene tilde en esta pestaña a la fecha de 19 de Agosto del 2018:</p>
-<pre><code>## Joining, by = &quot;Est_Meteoro&quot;</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">HumMedia &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;test.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="st">&quot;E10000006&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb99-2" data-line-number="2"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>Codigo_variable, <span class="op">-</span>Unidad_medida) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">HumMedia =</span> ValorF, </a>
-<a class="sourceLine" id="cb99-3" data-line-number="3">    <span class="dt">Year =</span> Año) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Mes <span class="op">!=</span><span class="st"> </span><span class="dv">13</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(EM) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb99-4" data-line-number="4"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(Mes, Year, HumMedia, Ciudad_localidad) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb99-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">Mes =</span> <span class="kw">as.numeric</span>(Mes))</a></code></pre></div>
-<p>En el siguiente código unimos las dos bases de datos, vemos las primeras 20 observaciones de la base de datos resultante en la tabla <a href="soluciones.html#tab:TempHum">8.1</a></p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">TempHum &lt;-<span class="st"> </span><span class="kw">full_join</span>(TempMedia, HumMedia)</a></code></pre></div>
-<pre><code>## Joining, by = c(&quot;Mes&quot;, &quot;Year&quot;, &quot;Ciudad_localidad&quot;)</code></pre>
-<table>
-<caption>
-<span id="tab:TempHum">Tabla 8.1: </span>Las primeras 20 observaciones de temperatura y humedad unidas
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-Mes
-</th>
-<th style="text-align:right;">
-Year
-</th>
-<th style="text-align:right;">
-TempMedia
-</th>
-<th style="text-align:left;">
-Ciudad_localidad
-</th>
-<th style="text-align:right;">
-HumMedia
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-22.0
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-22.2
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-22.1
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-20.3
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-18.2
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-17.0
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-15.0
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-16.0
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-16.6
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-15.9
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-19.1
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-21.1
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-19.7
-</td>
-<td style="text-align:left;">
-Iquique
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-21.1
-</td>
-<td style="text-align:left;">
-Iquique
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-20.9
-</td>
-<td style="text-align:left;">
-Iquique
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-19.9
-</td>
-<td style="text-align:left;">
-Iquique
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-17.6
-</td>
-<td style="text-align:left;">
-Iquique
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-15.9
-</td>
-<td style="text-align:left;">
-Iquique
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-14.6
-</td>
-<td style="text-align:left;">
-Iquique
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-1981
-</td>
-<td style="text-align:right;">
-15.6
-</td>
-<td style="text-align:left;">
-Iquique
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-</tbody>
-</table>
-<p>Con esto vemos que la humedad media no es medida en los mismos años ni en todos los lugares que se mide la temperatura media, pero como ambas variables nos interesan por igual, la mantenemos de todas maneras con sus valores <em>NA</em></p>
-</div>
-<div id="b-1" class="section level4">
-<h4><span class="header-section-number">8.3.2.2</span> b</h4>
-<p>El segundo ejercicio es mucho mas simple, donde solo tenemos que agrupar por ciudad y mes, y usar <code>summarize_all</code> para las funciones <code>mean</code> y <code>sd</code> como vemos en la tabla <a href="soluciones.html#tab:TempHumMonthly">8.2</a></p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1">TempHumMonthly &lt;-<span class="st"> </span>TempHum <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>Year) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Mes, </a>
-<a class="sourceLine" id="cb102-2" data-line-number="2">    Ciudad_localidad) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize_all</span>(<span class="kw">funs</span>(mean, sd), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<table>
-<caption>
-<span id="tab:TempHumMonthly">Tabla 8.2: </span>Las primeras 20 observaciones de temperatura y humedad agrupadas por mes y localidad
-</caption>
-<thead>
-<tr>
-<th style="text-align:right;">
-Mes
-</th>
-<th style="text-align:left;">
-Ciudad_localidad
-</th>
-<th style="text-align:right;">
-TempMedia_mean
-</th>
-<th style="text-align:right;">
-HumMedia_mean
-</th>
-<th style="text-align:right;">
-TempMedia_sd
-</th>
-<th style="text-align:right;">
-HumMedia_sd
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Antártica Chilena
-</td>
-<td style="text-align:right;">
-1.383784
-</td>
-<td style="text-align:right;">
-87.240
-</td>
-<td style="text-align:right;">
-0.6238383
-</td>
-<td style="text-align:right;">
-3.027045
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Antofagasta
-</td>
-<td style="text-align:right;">
-20.186487
-</td>
-<td style="text-align:right;">
-70.120
-</td>
-<td style="text-align:right;">
-0.9068144
-</td>
-<td style="text-align:right;">
-1.666433
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Arica
-</td>
-<td style="text-align:right;">
-22.421622
-</td>
-<td style="text-align:right;">
-63.960
-</td>
-<td style="text-align:right;">
-0.9684280
-</td>
-<td style="text-align:right;">
-3.453694
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Balmaceda
-</td>
-<td style="text-align:right;">
-12.334286
-</td>
-<td style="text-align:right;">
-57.520
-</td>
-<td style="text-align:right;">
-1.2107224
-</td>
-<td style="text-align:right;">
-3.346192
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Calama
-</td>
-<td style="text-align:right;">
-17.000000
-</td>
-<td style="text-align:right;">
-25.000
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Cerrillos
-</td>
-<td style="text-align:right;">
-20.996000
-</td>
-<td style="text-align:right;">
-NaN
-</td>
-<td style="text-align:right;">
-0.7855359
-</td>
-<td style="text-align:right;">
-NaN
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Chillán
-</td>
-<td style="text-align:right;">
-19.794286
-</td>
-<td style="text-align:right;">
-60.960
-</td>
-<td style="text-align:right;">
-0.7490947
-</td>
-<td style="text-align:right;">
-5.691046
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Concepción
-</td>
-<td style="text-align:right;">
-16.729730
-</td>
-<td style="text-align:right;">
-72.060
-</td>
-<td style="text-align:right;">
-0.6753044
-</td>
-<td style="text-align:right;">
-6.944278
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Copiapó
-</td>
-<td style="text-align:right;">
-19.604348
-</td>
-<td style="text-align:right;">
-NaN
-</td>
-<td style="text-align:right;">
-0.7449700
-</td>
-<td style="text-align:right;">
-NaN
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Coyhaique
-</td>
-<td style="text-align:right;">
-13.943243
-</td>
-<td style="text-align:right;">
-59.520
-</td>
-<td style="text-align:right;">
-1.2568790
-</td>
-<td style="text-align:right;">
-3.088203
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Curicó
-</td>
-<td style="text-align:right;">
-20.697143
-</td>
-<td style="text-align:right;">
-57.920
-</td>
-<td style="text-align:right;">
-0.8143874
-</td>
-<td style="text-align:right;">
-6.695670
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Graneros
-</td>
-<td style="text-align:right;">
-21.480000
-</td>
-<td style="text-align:right;">
-NaN
-</td>
-<td style="text-align:right;">
-0.4661330
-</td>
-<td style="text-align:right;">
-NaN
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Iquique
-</td>
-<td style="text-align:right;">
-21.856757
-</td>
-<td style="text-align:right;">
-62.180
-</td>
-<td style="text-align:right;">
-1.0930438
-</td>
-<td style="text-align:right;">
-3.594718
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Isla Juan Fernández
-</td>
-<td style="text-align:right;">
-18.562162
-</td>
-<td style="text-align:right;">
-70.180
-</td>
-<td style="text-align:right;">
-0.5832625
-</td>
-<td style="text-align:right;">
-3.523067
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-La Serena
-</td>
-<td style="text-align:right;">
-17.355556
-</td>
-<td style="text-align:right;">
-76.260
-</td>
-<td style="text-align:right;">
-0.7643651
-</td>
-<td style="text-align:right;">
-2.833372
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Osorno
-</td>
-<td style="text-align:right;">
-15.807407
-</td>
-<td style="text-align:right;">
-71.560
-</td>
-<td style="text-align:right;">
-0.9388725
-</td>
-<td style="text-align:right;">
-6.008993
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Pudahuel
-</td>
-<td style="text-align:right;">
-20.735135
-</td>
-<td style="text-align:right;">
-45.775
-</td>
-<td style="text-align:right;">
-0.8743938
-</td>
-<td style="text-align:right;">
-5.933169
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Puerto Montt
-</td>
-<td style="text-align:right;">
-14.461111
-</td>
-<td style="text-align:right;">
-77.760
-</td>
-<td style="text-align:right;">
-0.7104436
-</td>
-<td style="text-align:right;">
-2.230022
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Punta Arenas
-</td>
-<td style="text-align:right;">
-10.848649
-</td>
-<td style="text-align:right;">
-62.560
-</td>
-<td style="text-align:right;">
-0.7343257
-</td>
-<td style="text-align:right;">
-2.900517
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-Quinta Normal
-</td>
-<td style="text-align:right;">
-21.327027
-</td>
-<td style="text-align:right;">
-50.600
-</td>
-<td style="text-align:right;">
-0.6768590
-</td>
-<td style="text-align:right;">
-8.341163
 </td>
 </tr>
 </tbody>

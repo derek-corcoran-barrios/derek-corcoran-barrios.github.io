@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Manipulación de datos e investigación reproducible en R</title>
   <meta name="description" content="Este libro es una compañia al curso, análisis y manipulación de datos en R" />
-  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Manipulación de datos e investigación reproducible en R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Derek Corcoran" />
 
 
-<meta name="date" content="2019-12-30" />
+<meta name="date" content="2020-08-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="soluciones.html"><a href="soluciones.html#capítulo-3"><i class="fa fa-check"></i><b>8.3</b> Capítulo 3</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="soluciones.html"><a href="soluciones.html#ejercicio-1-5"><i class="fa fa-check"></i><b>8.3.1</b> Ejercicio 1</a></li>
-<li class="chapter" data-level="8.3.2" data-path="soluciones.html"><a href="soluciones.html#ejercicio-2-3"><i class="fa fa-check"></i><b>8.3.2</b> Ejercicio 2</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="referencias.html"><a href="referencias.html"><i class="fa fa-check"></i><b>9</b> Referencias</a></li>
@@ -263,11 +262,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Manipulación de datos e investigación reproducible en R</h1>
 <p class="author"><em>Derek Corcoran</em></p>
-<p class="date"><em>2019-12-30</em></p>
+<p class="date"><em>2020-08-17</em></p>
 </div>
 <div id="requerimientos" class="section level1 unnumbered">
 <h1>Requerimientos</h1>
-<p>Para comenzar el trabajo se necesita la última versión de R y RStudio <span class="citation">(R Core Team <a href="#ref-R-base">2019</a>)</span>.También se requiere de los paquetes <em>pacman</em>, <em>rmarkdown</em>, <em>tidyverse</em> y <em>tinytex</em>. Si no se ha usado R o RStudio anteriormente, el siguiente video muestra cómo instalar ambos programas y los paquetes necesarios para este curso en el siguiente <a href="https://youtu.be/RtkCAKXsVbw">link</a>.</p>
+<p>Para comenzar el trabajo se necesita la última versión de R y RStudio <span class="citation">(R Core Team <a href="#ref-R-base">2020</a>)</span>.También se requiere de los paquetes <em>pacman</em>, <em>rmarkdown</em>, <em>tidyverse</em> y <em>tinytex</em>. Si no se ha usado R o RStudio anteriormente, el siguiente video muestra cómo instalar ambos programas y los paquetes necesarios para este curso en el siguiente <a href="https://youtu.be/RtkCAKXsVbw">link</a>.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/RtkCAKXsVbw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 <p>El código para la instalación de esos paquetes es el siguiente:</p>
@@ -305,7 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="contenidos" class="section level2">
 <h2><span class="header-section-number">0.4</span> Contenidos</h2>
 <ul>
-<li><p>Capítulo <a href="tidydata.html#tidydata">1</a> <em>Tidy Data</em>: En este capítulo se aprenderá a cómo optimizar una de base de datos, sobre la limpieza y transformación de bases de datos, qué es una base de datos <em>tidy</em> y cómo manipular estas bases de datos con el paquete <em>dplyr</em> <span class="citation">(Wickham et al. <a href="#ref-R-dplyr">2019</a>)</span>.</p></li>
+<li><p>Capítulo <a href="tidydata.html#tidydata">1</a> <em>Tidy Data</em>: En este capítulo se aprenderá a cómo optimizar una de base de datos, sobre la limpieza y transformación de bases de datos, qué es una base de datos <em>tidy</em> y cómo manipular estas bases de datos con el paquete <em>dplyr</em> <span class="citation">(Wickham et al. <a href="#ref-R-dplyr">2020</a>)</span>.</p></li>
 <li><p>Capítulo <a href="reproducible.html#reproducible">2</a> <em>Investigación reproducible</em>: En este capítulo se trabajará en la confección de un documento que combine códigos de <code>R</code> y texto para generar documentos reproducibles utilizando el paquete <em>rmarkdown</em> <span class="citation">(Allaire et al. <a href="#ref-Allaire2018">2018</a>)</span>. Además, se verá cómo al usar RStudio se pueden guardar los proyectos en un repositorio de github.</p></li>
 <li><p>Capítulo <a href="tidyverso.html#tidyverso">3</a> <em>El tidyverso</em> y el concepto de pipeline:En este capítulo se aprenderá sobre la limpieza de datos complejos.</p></li>
 <li><p>Capítulo <a href="visualizacion.html#visualizacion">4</a> <em>Visualización de datos</em> visualizar datos vs. visualizar modelos. Insertar gráficos con leyenda en un documento Rmd</p></li>
@@ -353,10 +352,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Kross, Sean, Nick Carchedi, Bill Bauer, and Gina Grdina. 2017. <em>Swirl: Learn R, in R</em>. <a href="https://CRAN.R-project.org/package=swirl">https://CRAN.R-project.org/package=swirl</a>.</p>
 </div>
 <div id="ref-R-base">
-<p>R Core Team. 2019. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
+<p>R Core Team. 2020. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
 </div>
 <div id="ref-R-dplyr">
-<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2019. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.</p>
+<p>Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2020. <em>Dplyr: A Grammar of Data Manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>.</p>
 </div>
 </div>
             </section>
