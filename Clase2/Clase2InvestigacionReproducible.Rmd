@@ -248,6 +248,47 @@ Pueden copiar el codigo de el siguiente [link](https://raw.githubusercontent.com
 * kable parte de knitr, tabla igual a lo ingresado 
 * KableExtra lo [mejora](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
 
+## Ejemplo
+
+```{r}
+data("msleep")
+Tabla <- msleep %>% group_by(vore) %>% summarise_at("sleep_total", .funs = list(Mean = mean, SD = sd)) %>% arrange(desc(Mean))
+
+kable(Tabla)
+```
+
+## Mejoremos un poco
+
+```{r}
+kable(Tabla, digits = 2)
+```
+
+
+## KableExtra
+
+```{r}
+kable(Tabla, digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+
+## KableExtra (cont.)
+
+```{r}
+kable(Tabla, digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+## Tablas largas
+
+```{r}
+msleep_long <- msleep %>% dplyr::select(name, vore, sleep_total, brainwt)
+
+kable(msleep_long, digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F) %>%
+  scroll_box(width = "800px", height = "200px")
+```
+
+
 ## Armemos nuestras propias tablas!!!
 
 
