@@ -6,7 +6,10 @@ Para este capítulo se necesita tener instalado los paquetes *rmarkdown*, *knitr
 
 En este capítulo se explicará qué es investigación reproducible, cómo aplicarla usando github más los paquetes *rmarkdown* [@Allaire2018] y *knitr* [@xie2015]. Además, se aprenderá a usar tablas usando *knitr* [@xie2015] y *stargazer* [@hlavak2018]
 
-Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este [link](https://derek-corcoran-barrios.github.io/Clase2/Clase2InvestigacionReproducible), y en cuanto el video de la clase encontrarás un link aca.
+Recuerda que este libro es un apoyo para el curso BIO4022, puedes seguir la clase de este curso en este [link](https://derek-corcoran-barrios.github.io/Clase2/Clase2InvestigacionReproducible), y en cuanto el video de la clase encontrarás un link [acá](https://youtu.be/CGvQPlpBcso).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CGvQPlpBcso" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 ## Investigación reproducible
 
