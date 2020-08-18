@@ -1,0 +1,32 @@
+---
+title: "Inevstigación reproducible"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
+library(tidyverse)
+library(broom)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Que es la investigación reproducible?
+
+```{r, message=FALSE, echo=FALSE, warning=FALSE}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(ggmap, ggplot2, dplyr, readr, leaflet, dygraphs, xts, lubridate, geojsonio)
+```
+
+* Código, datos (**Crudos**) y texto entrelazados
+* en R: Rmarkdown (Rmd) y Rpresentation (Rpres) entre otros
+
+```{r, echo = FALSE, out.width = "1000px"}
+knitr::include_graphics("Reproducible.png")
+```
+
