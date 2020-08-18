@@ -1,5 +1,5 @@
 ---
-title: "Inevestigación reproducible"
+title: "Investigación reproducible"
 author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
