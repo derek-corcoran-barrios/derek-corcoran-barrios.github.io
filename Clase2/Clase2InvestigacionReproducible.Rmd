@@ -211,3 +211,48 @@ knitr::include_graphics("RMDexample.png")
 
 [link](https://stackoverflow.com/users/3808018/derek-corcoran)
 ```
+
+
+## Chunks
+
+```{r}
+knitr::include_graphics("Chunk.png")
+```
+
++ *echo* = T o F muestro o no codigo
++ *message* = T o F muestra mensajes de paquetes
++ *warning* = T o F muestra advertencias 
++ *eval* = T o F evaluar o no el código
++ *cache* = T o F guarda o no el resultado
++ Para más opciones ver este [link](https://yihui.name/knitr/options/)
+
+## Inline code
+
+![Inline](Inline.png)
+
+- Código entrelazado en el texto
+- Para actualizar medias, máximos, mínimos
+- Valores de p, diferencias estadísticas
+- Pueden ser vectores, no tablas.
+
+## Ejemplo
+
+Pueden copiar el codigo de el siguiente [link](https://raw.githubusercontent.com/derek-corcoran-barrios/CursoR/master/Clase1/Sismos.Rmd), copiarlo en un archivo rmd, apretar knit y debieran ver algo como esto:
+
+![Terremotos](ExampleShown.png)
+
+# Tablas
+
+## Tablas: Kable
+
+* kable parte de knitr, tabla igual a lo ingresado 
+* KableExtra lo [mejora](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
+
+## Armemos nuestras propias tablas!!!
+
+
+![Tabla](http://www.chemicalprocessing.com/assets/Media/0908/cartoon_0906.jpg)
+
+## Ejercicio
+
+* Usando la base de datos *iris* crea un inline code que diga cuál es la media del largo del pétalo de la especie *Iris virginica*
