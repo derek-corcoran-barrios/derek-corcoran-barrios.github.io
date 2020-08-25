@@ -1,0 +1,295 @@
+---
+title: "Clase 3 tidyr y joins"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
+library(tidyverse)
+library(broom)
+library(kableExtra)
+library(knitr)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Paquetes del Tidyverso
+
+En el corazón del Tidyverso
+
+* readr (ya la estamos usando)
+* dplyr (Clase anterior)
+* tidyr (Hoy)
+* forcats (Para variables categóricas)
+* stringr (Para carácteres, Palabras)
+* ggplot2 (Próxima clase)
+* purrr (En clase sobre loops)
+
+
+## Adyacente al Tidyverso
+
+* lubridate para fechas y fechas/horas (Hoy en algunos casos)
+* hms para horas
+* broom tablas para modelos tidy
+* readxl para leer archivos excel
+
+## Tidyr
+
+Dos funciones
+
+* *pivot_longer* hace que tablas anchas se vuelvan largas
+* *pivot_wider* hace que tablas largas se vuelvan anchan
+
+
+```{r, echo=FALSE}
+include_graphics("https://exceleratorbi.com.au/wp-content/uploads/2016/09/image.png")
+```
+
+
+## Pivot_longer
+
+* ¿Como paso de esto?
+
+```{r}
+Contagiados <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna.csv")
+```
+
+* a tidy data?
+
+```{r, echo = F}
+kable(Contagiados %>% head(50)) %>% kable_styling() %>%
+  scroll_box(width = "800px", height = "200px")
+```
+
+## Antes de la solución
+
+Entendamos la función
+
+* **cols:** Columnas a alargar
+* **names_to:** Nombre que tendra la columna con los nombres de las columnas
+* **values_to:** Nombre que tendrá la columna de los valores
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+DF_largo <- Contagiados %>% pivot_longer(starts_with("2020"), names_to = "Fecha", values_to = "Infectados")
+```
+
+
+```{r, echo = FALSE}
+kable(DF_largo %>% head(50)) %>% kable_styling() %>%
+  scroll_box(width = "800px", height = "200px")
+```
+
+## Transformemos la Fecha en fecha
+
+```{r, warning=FALSE, message=FALSE}
+DF_largo <- DF_largo %>% mutate(Fecha = lubridate::ymd(Fecha))
+```
+
+
+```{r, echo = FALSE}
+knitr::kable(DF_largo %>% head(50)) %>% kable_styling() %>%
+  scroll_box(width = "800px", height = "400px")
+```
+
+## En base a esto obtengamos la prevalencia del día mas reciente
+
+```{r}
+Reciente <- DF_largo %>% dplyr::filter(Fecha == max(Fecha)) %>% mutate(Prevalencia = 100000*(Infectados/Poblacion))
+```
+```{r, echo=F}
+kable(Reciente %>% head(50)) %>% kable_styling() %>%  scroll_box(width = "800px", height = "400px")
+```
+
+## pivot_wider
+
+* Inverso de gather hace tablas anchas
+* **names_from:** Variable que pasará a ser nombres de columnas
+* **values_from:** Variable que llenará esas columnas
+* **values_fill:** Valor para rellenar los vacios, default NA
+* **values_fn:** Función para resumir celdas replicadas
+
+```{r}
+data(fish_encounters)
+
+Tabla <- fish_encounters %>%
+  pivot_wider(names_from = station, values_from = seen)
+```
+
+## pivot_wider (cont.)
+
+```{r, echo=FALSE}
+kable(Tabla) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%  scroll_box(width = "800px", height = "400px")
+```
+
+## pivot_wider (Rellenemos con 0s)
+
+
+```{r}
+Tabla <- fish_encounters %>%
+  pivot_wider(names_from = station, values_from = seen, values_fill = 0)
+```
+
+```{r, echo=FALSE}
+kable(Tabla) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%  scroll_box(width = "800px", height = "400px")
+```
+
+## Pivot_wider, resumiendo variables
+
+```{r}
+warpbreaks <- warpbreaks %>% dplyr::select(wool, tension, breaks)
+Wide <- warpbreaks %>%
+  pivot_wider(
+    names_from = wool,
+    values_from = breaks,
+  )
+```
+
+* Veamos esta base de datos
+
+## Pivot_wider, resumiendo variables
+
+```{r}
+warpbreaks <- warpbreaks %>% dplyr::select(wool, tension, breaks)
+Wide <- warpbreaks %>%
+  pivot_wider(names_from = wool,
+    values_from = breaks,
+    values_fn = mean)
+```
+
+```{r, echo=FALSE}
+kable(Wide) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = F) 
+```
+
+# Joins
+
+## Joins
+
+* Para unir bases de datos distintas con columnas en comun
+* **full_join** une todo
+* **left_join** Solo lo que está en la primera base de datos
+* **right_join** Solo lo que esta en la segunda base de datos
+* **anti_join** solo lo que no es comun entre ambas bases de datos
+
+## Ejemplo con the office (Serie)
+
+Tres bases de datos
+
+```{r}
+Episodes <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/The_office/master/The_Office_Episodes_per_Character.csv")
+
+words <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/The_office/master/The_office_Words.csv")
+
+stop_words <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/The_office/master/stop_words.csv")
+```
+
+## Queremos unir dos bases de datos completas
+
+```{r}
+Episodios_words <- full_join(Episodes, words)
+```
+
+```{r, echo=FALSE}
+kable(Episodios_words %>% head(50)) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%  scroll_box(width = "800px", height = "400px")
+```
+
+## Usemos más joins
+
+* Supongamos que solo queremos los 10 personajes con más capitulos y sus palabras
+
+```{r}
+Episodes_top_10 <- Episodes %>% slice_max(order_by = n_episodes, n = 10)
+```
+
+```{r, echo=FALSE}
+kable(Episodes_top_10) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%  scroll_box(width = "800px", height = "400px")
+```
+
+## Palabras de solo estos 10
+
+```{r}
+Episodios_words_10 <- Episodes_top_10 %>% left_join(words)
+```
+
+* Quieren comparar con full_join?
+
+## Veamos las palabras mas usadas
+
+* Solo por los 10 personajes con más capítulos
+* las 20 palabras mas usadas
+
+```{r}
+Mas_Palabras <- Episodios_words_10 %>% group_by(word) %>% summarise(n = n()) %>% slice_max(order_by = n, n = 20)
+```
+
+## Cuales son
+
+* Esto no aprota mucho
+
+```{r, echo=FALSE}
+kable(Mas_Palabras) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%  scroll_box(width = "800px", height = "400px")
+```
+
+## Saquemos las stop words
+
+* anti_join
+
+```{r}
+Mas_Palabras <- Episodios_words_10 %>% anti_join(stop_words) %>% group_by(word) %>% summarise(n = n()) %>% slice_max(order_by = n, n = 20)
+```
+
+## Cuales son
+
+```{r, echo=FALSE}
+kable(Mas_Palabras) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%  scroll_box(width = "800px", height = "400px")
+```
+
+
+## Separemos por personaje
+
+```{r}
+Mas_Palabras <- Episodios_words_10 %>% anti_join(stop_words) %>% group_by(word, speaker) %>% summarise(n = n()) %>% ungroup() %>% group_by(speaker) %>% slice_max(order_by = n, n = 10) %>% arrange(speaker, desc(n))
+```
+
+## Veamos
+
+```{r, echo=FALSE}
+kable(Mas_Palabras) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%  scroll_box(width = "800px", height = "400px")
+```
+
+## O veamos
+
+```{r, echo=FALSE}
+ggplot(Mas_Palabras, aes(x = word, y = n)) + geom_col(aes(fill = speaker)) + facet_wrap(~speaker, scales = "free_y") + coord_flip() + theme_bw() + theme(legend.position = "none")
+```
+
+
+## Tarea 1
+
+* Ver para cada temporada cuales son los 10 personajes con más palabras (cambia en el tiempo?)
+* Quien aumenta y quien disminuye mas?
+* Crear una columna de delta palabras entre temporadas por personaje por episodio de la serie
+
+```{r, eval = F,echo=F}
+Presonajes_por_temp <- words  %>% group_by(speaker, season) %>% summarise(n = n()) %>% ungroup()%>% group_by(season) %>% slice_max(order_by = n, n = 10) %>% ungroup()
+
+Presonajes_por_temp <- Presonajes_por_temp %>% dplyr::select(speaker) %>% distinct()
+
+Eps_Per_Season <- words %>% dplyr::select(season, episode) %>% distinct() %>% group_by(season) %>% summarise(Eps = n())
+
+Palabras_por_Temp <- Presonajes_por_temp %>% left_join(words) %>% group_by(speaker, season) %>% summarise(n = n()) %>% ungroup() %>% pivot_wider(names_from = speaker, values_from = n, values_fill = 0) %>% pivot_longer(cols = Andy:Toby, names_to = "speaker", values_to = "words") %>% arrange(season) %>% left_join(Eps_Per_Season) %>% group_by(speaker) %>% mutate(words = words/Eps, Lag = lag(words), delta = words-Lag)
+```
+
+
