@@ -161,32 +161,37 @@ ggplot(mtcars, aes(x = wt, y = mpg)) + geom_smooth(method = "lm") + geom_point()
 ## Datos de temperatura y humedad
 
 ```{r}
-githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/TempHum.rds")
-download.file(githubURL,"TempHum.rds", method="curl")
-TempHum <- readRDS("TempHum.rds")
+githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Clase4/TempHum.rds")
+download.file(githubURL,"TempHum2.rds", method="curl")
+TempHum <- read_rds("TempHum2.rds") %>% 
+  mutate(Mes = as.numeric(Mes))
 ```
 
 
 ## stat_smooth más control que geom_smooth
 
 ```{r}
-library(dplyr)
-library(knitr)
-PA <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas")
-kable(PA) %>% kable_styling(bootstrap_options = c("striped"))
+library(tidyverse)
+PA <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas") 
 ```
+
+```{r, echo = FALSE}
+kable(PA) %>% kable_styling(bootstrap_options = c("striped")) %>%
+  scroll_box(width = "800px", height = "200px")
+```
+
 
 ## stat_smooth más control que geom_smooth
 
 ```{r}
 library(ggplot2)
-ggplot(PA, aes(x = Mes, y = TempMedia)) + geom_point()
+ggplot(PA, aes(x = Mes, y = Temperatura)) + geom_point()
 ```
 
 ## stat_smooth más control que geom_smooth
 
 ```{r}
-ggplot(PA, aes(x = Mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm") 
+ggplot(PA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method = "lm") 
 ```
 
 ## Ecuación cuadrática
@@ -204,14 +209,14 @@ include_graphics("Lineal.png")
 ## stat_smooth más control que geom_smooth
 
 ```{r}
-ggplot(PA, aes(x = Mes, y = TempMedia)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) 
+ggplot(PA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) 
 ```
 
 ## Que podemos hacer con tidyr??
 
 ```{r}
 library(tidyr)
-San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal") %>%  gather(key = Unidad, value = medida, TempMedia, HumMedia)
+San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal") %>%  pivot_longer(cols = c(Temperatura, Humedad),names_to= "Unidad", values_to = "medida")
 ggplot(San, aes(x = Mes, y = medida)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad)) 
 ```
 
@@ -239,14 +244,35 @@ include_graphics("Chunk.png")
 ## Como combinar gráficos con facet_wrap
 
 ```{r}
-Algunos <- TempHum %>% filter(Ciudad_localidad %in% c("Arica", "Rapa Nui", "La Serena", "Valparaíso", "Quinta Normal", "Concepción", "Valdivia", "Punta Arenas")) %>% gather(key = Unidad, value = medida, TempMedia, HumMedia)
+Algunos <- TempHum %>% filter(Ciudad_localidad %in% c("Arica", "Rapa Nui", "La Serena", "Valparaíso", "Quinta Normal", "Concepción", "Valdivia", "Punta Arenas")) %>% pivot_longer(cols = c(Temperatura, Humedad),names_to= "Unidad", values_to = "medida")
 
 ```
 
 ## Como combinar gráficos
 
 ```{r}
-ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad), alpha = 0.5) + facet_wrap(~Ciudad_localidad, ncol = 2)
+ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad), alpha = 0.5) + facet_wrap(~Ciudad_localidad, ncol = 2)
+```
+
+## Como combinar gráficos (Cont)
+
+```{r}
+ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad), alpha = 0.5) + facet_wrap(~Ciudad_localidad, ncol = 2, scales = "free_y")
+```
+
+## Como combinar gráficos (Cont)
+
+```{r}
+Algunos <- Algunos %>% mutate(Humerdad = fct_relevel(Unidad, "Temperatura"))
+ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad), alpha = 0.5) + facet_wrap(~Ciudad_localidad, ncol = 2, scales = "free_y")
+```
+
+## Como combinar gráficos (Cont)
+
+```{r}
+Algunos <- Algunos %>% filter(Ciudad_localidad %in% c("Arica", "Quinta Normal", "Valdivia", "Punta Arenas")) 
+
+ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad), alpha = 0.5) + facet_wrap(Ciudad_localidad~Unidad, scales = "free", ncol = 2)
 ```
     
 ## Algunos gráficos interesantes hechos con ggplot
