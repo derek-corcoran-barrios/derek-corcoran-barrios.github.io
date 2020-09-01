@@ -285,37 +285,4 @@ Algunos <- Algunos %>% filter(Ciudad_localidad %in% c("Arica", "Quinta Normal", 
 ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad), alpha = 0.5) + facet_wrap(Ciudad_localidad~Unidad, scales = "free", ncol = 2)
 ```
     
-## Algunos gráficos interesantes hechos con ggplot
-
-```{r}
-library(SpatialBall2)
-data("season2017")
-ShotSeasonGraphPlayer(season2017, player = "Stephen Curry")
-```
-
-    
-## Algunos gráficos interesantes
-
-```{r, eval=FALSE}
-Weekly <- readRDS("Alergia.rds") %>% group_by(Semana) %>% summarize(mean = mean(platano_oriental, na.rm = TRUE), max = max(platano_oriental, na.rm = TRUEl), min = min(platano_oriental, na.rm = TRUE), sd = sd(platano_oriental, na.rm = TRUE))
-ggplot(Weekly, aes(x = Semana, y = mean)) + 
-geom_ribbon(aes(ymax = max, ymin = min, fill = "red")) + 
-geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = "blue"), alpha = 1) + 
-geom_line() + 
-  scale_fill_manual(name = "leyenda", values = c("blue", "red"), labels = c('Error estándar','Extremos')) + 
-ylab("polen de platano oriental /m³ de aire") + theme_classic()  + theme(legend.position="bottom") + 
-scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"))
-```
-
-## Algunos gráficos interesantes
-
-```{r, echo=FALSE}
-Weekly <- readRDS("Alergia.rds") %>% group_by(Semana) %>% summarize(mean = mean(platano_oriental, na.rm = TRUE), max = max(platano_oriental, na.rm = TRUE), min = min(platano_oriental, na.rm = TRUE), sd = sd(platano_oriental, na.rm = TRUE))
-ggplot(Weekly, aes(x = Semana, y = mean)) + 
-geom_ribbon(aes(ymax = max, ymin = min, fill = "red")) + 
-geom_ribbon(aes(ymax = mean + sd, ymin = mean - sd, fill = "blue"), alpha = 1) + 
-geom_line() + 
-  scale_fill_manual(name = "leyenda", values = c("blue", "red"), labels = c('Error estándar','Extremos')) + 
-ylab("polen de platano oriental /m³ de aire") + theme_classic()  + theme(legend.position="bottom") + 
-scale_x_continuous(breaks=seq(from = 2.5, to = 49.5, by = 4), labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"))
-```
+# Mapas en ggplot2
