@@ -1,0 +1,44 @@
+---
+title: "Ejemplo clase 4"
+author: "Derek Corcoran"
+date: "9/1/2020"
+output: 
+  bookdown::html_document2:
+    fig.caption: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, error = FALSE, message = FALSE)
+library(tidyverse)
+library(kableExtra)
+```
+
+# Voy a hacer un gráfica
+
+
+Este texto va antes de la figura \@ref(fig:DistribucionTamano)
+
+```{r DistribucionTamano, fig.cap= "Distribución del ancho del sépalo para cada especie de Iris", fig.align='center'}
+ggplot(iris, aes(x = fct_reorder(Species, Sepal.Width), y = Sepal.Width)) + 
+  geom_boxplot(notch = T) +
+  xlab("Especie") + ylab("Ancho Sépalo")
+```
+
+Este texto va antes de la figura \@ref(fig:mapacoronavirus)
+
+Después voy a hablar de otra cosa, por ejemplo una tabla, veamos las medias en la tabla \@ref(tab:tablaFloral)
+
+```{r, transformacion}
+iris2 <- iris %>% group_by(Species) %>% summarise_all(mean)
+```
+
+```{r tablaFloral}
+kable(iris2, caption = "Medias de las medidas florales en las especies del género Iris") %>% kable_styling(bootstrap_options = c("striped"))
+```
+
+
+
+```{r mapacoronavirus, fig.cap= "Mapa de la región metropolitana con prevalencia de covid",out.width = "800px", fig.align='center'}
+knitr::include_graphics("https://ia803206.us.archive.org/23/items/Comunas/Metropolitana_Map_Comunas.gif")
+```
+
