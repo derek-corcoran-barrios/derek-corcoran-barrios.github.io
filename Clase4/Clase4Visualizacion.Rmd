@@ -26,7 +26,7 @@ options("kableExtra.html.bsTable" = T)
 * Dos [links](https://ggplot2.tidyverse.org/) para aprender [mas](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-visualization-2.1.pdf).
 
 ```{r, eval=FALSE}
-library(ggplot2)
+library(tidyverse)
 data("diamonds")
 ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
 ```
@@ -34,8 +34,6 @@ ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme
 ## Ejemplo
 
 ```{r, echo=FALSE}
-library(ggplot2)
-data("diamonds")
 ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
 ```
 
@@ -56,43 +54,34 @@ ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme
 ## color
 
 ```{r}
-library(ggplot2)
-data("diamonds")
 ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut)) + theme_classic()
 ```
 
 ## alpha
 
 ```{r}
-library(ggplot2)
-data("diamonds")
 ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(color = cut), alpha = 0.1) + theme_classic()
 ```
 
 ## size
 
 ```{r}
-library(ggplot2)
-data("mtcars")
 ggplot(mtcars, aes(x = wt, y=mpg)) + geom_point(aes(size = hp)) + theme_classic()
 ```
 
 ## shape
 
-
 ```{r}
-library(ggplot2)
-data("diamonds")
-ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(shape = cut)) + theme_classic()
+ggplot(diamonds, aes(x = carat, y=price)) + geom_point(aes(shape = cut, color = cut)) + theme_classic()
 ```
 
 ## fill
 
 ```{r}
-library(dplyr)
-d2 <- diamonds %>% filter(clarity == "I1" | clarity == "IF")
-ggplot(d2, aes(x = cut, y=price)) + geom_boxplot(aes(fill = clarity)) + theme_classic()
+ggplot(iris, aes(x = Species, y=Sepal.Width)) + geom_boxplot(aes(fill = Species), notch = T) + theme_bw()
 ```
+
+# Una variable categórica una continua
 
 ## Una variable categórica una continua
 
@@ -104,29 +93,47 @@ ggplot(d2, aes(x = cut, y=price)) + geom_boxplot(aes(fill = clarity)) + theme_cl
 ## geom_jitter
 
 ```{r}
-data("iris")
-ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species))
+ggplot(iris, aes(x = Species, y = Sepal.Width)) + geom_jitter(aes(color = Species))
 ```
 
 ## geom_violin
 
 ```{r}
-data("iris")
-ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_violin(fill = "red")
+ggplot(iris, aes(x = Species, y = Sepal.Width)) + geom_violin(fill = "red")
 ```
 
 ## Se pueden combinar
 
 ```{r}
-data("iris")
-ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_violin() + geom_jitter(aes(color = Species))
+ggplot(iris, aes(x = Species, y = Sepal.Width)) + geom_violin() + geom_jitter(aes(color = Species))
 ```
 
 ## Pero el orden importa
 
 ```{r}
-data("iris")
-ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_jitter(aes(color = Species)) + geom_violin()
+ggplot(iris, aes(x = Species, y = Sepal.Width)) + geom_jitter(aes(color = Species)) + geom_violin()
+```
+
+# Como reordenar las variables
+
+## fct_reorder (Reordenar por otra variable)
+
+
+```{r}
+ggplot(iris, aes(x = fct_reorder(Species, Sepal.Width), y=Sepal.Width)) + geom_boxplot(aes(fill = Species), notch = T) + theme_bw()
+```
+
+## fct_reorder (cont)
+
+
+```{r}
+ggplot(iris, aes(x = fct_reorder(Species, Sepal.Width), y=Sepal.Width)) + geom_boxplot(aes(fill = Species), notch = T) + theme_bw() + xlab("lo que se me ocurra")
+```
+
+## fct_relevel
+
+```{r}
+ggplot(iris, aes(x = fct_relevel(Species, "setosa", "virginica"), y=Sepal.Width)) + geom_boxplot(aes(fill = Species), notch = T) + theme_bw() + xlab("lo que se me ocurra")
 ```
 
 
@@ -177,7 +184,7 @@ PA <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas")
 
 ```{r, echo = FALSE}
 kable(PA) %>% kable_styling(bootstrap_options = c("striped")) %>%
-  scroll_box(width = "800px", height = "200px")
+  scroll_box(width = "800px", height = "350px")
 ```
 
 
@@ -196,15 +203,11 @@ ggplot(PA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method =
 
 ## Ecuación cuadrática
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, out.width="400px"}
 library(knitr)
 include_graphics("Cuadratica.png")
 ```
 
-```{r, echo=FALSE}
-library(knitr)
-include_graphics("Lineal.png")
-```
 
 ## stat_smooth más control que geom_smooth
 
@@ -217,17 +220,24 @@ ggplot(PA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method =
 ```{r}
 library(tidyr)
 San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal") %>%  pivot_longer(cols = c(Temperatura, Humedad),names_to= "Unidad", values_to = "medida")
+```
+
+## Que podemos hacer con tidyr?? (Cont.)
+
+```{r}
 ggplot(San, aes(x = Mes, y = medida)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad)) 
 ```
 
+
+
 ## incluirlo en rmd con leyenda abajo
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, out.width="500px"}
 include_graphics("YAML.png")
 ```
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, out.width="500px"}
 include_graphics("Chunk.png")
 ```
 
