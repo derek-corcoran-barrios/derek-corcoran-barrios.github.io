@@ -136,6 +136,30 @@ ggplot(iris, aes(x = fct_reorder(Species, Sepal.Width), y=Sepal.Width)) + geom_b
 ggplot(iris, aes(x = fct_relevel(Species, "setosa", "virginica"), y=Sepal.Width)) + geom_boxplot(aes(fill = Species), notch = T) + theme_bw() + xlab("lo que se me ocurra")
 ```
 
+# Apliquemoslo al Rmd
+
+## incluirlo en rmd con leyenda abajo
+
+```{r, echo=FALSE, out.width="500px"}
+include_graphics("YAML.png")
+```
+
+
+```{r, echo=FALSE, out.width="500px"}
+include_graphics("Chunk.png")
+```
+
+## Agregar referencias a imagenes con bookdown
+
+```{r, echo=FALSE, out.width="300px"}
+include_graphics("Bookdown.png")
+```
+
+```{r, echo=FALSE, out.width="600px"}
+include_graphics("Bookdown2.png")
+```
+
+* Para tablas es igual pero con \ref(tab:Nombre)
 
 ## Dos variables continuas
 
@@ -229,34 +253,7 @@ ggplot(San, aes(x = Mes, y = medida)) + geom_point() +  stat_smooth(method = "lm
 ```
 
 
-
-## incluirlo en rmd con leyenda abajo
-
-```{r, echo=FALSE, out.width="500px"}
-include_graphics("YAML.png")
-```
-
-
-```{r, echo=FALSE, out.width="500px"}
-include_graphics("Chunk.png")
-```
-
-## Agregar referencias a imagenes con bookdown
-
-```{r, echo=FALSE, out.width="500px"}
-include_graphics("Bookdown.png")
-```
-
-
-## Primera evaluación exploración de datos
-
-* Generar un informe rmd
-* Debe tener
-    + chunks
-    + inline code
-    + tabla con leyenda (kable, stargazer)
-    + figura con leyenda
-    + para el xx de Septiembre
+# Varios gráficos juntos
 
 ## Como combinar gráficos con facet_wrap
 
@@ -271,25 +268,14 @@ Algunos <- TempHum %>% filter(Ciudad_localidad %in% c("Arica", "Rapa Nui", "La S
 ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad), alpha = 0.5) + facet_wrap(~Ciudad_localidad, ncol = 2)
 ```
 
-## Como combinar gráficos (Cont)
-
-```{r}
-ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad), alpha = 0.5) + facet_wrap(~Ciudad_localidad, ncol = 2, scales = "free_y")
-```
-
-## Como combinar gráficos (Cont)
-
-```{r}
-Algunos <- Algunos %>% mutate(Humerdad = fct_relevel(Unidad, "Temperatura"))
-ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad), alpha = 0.5) + facet_wrap(~Ciudad_localidad, ncol = 2, scales = "free_y")
-```
-
-## Como combinar gráficos (Cont)
-
-```{r}
-Algunos <- Algunos %>% filter(Ciudad_localidad %in% c("Arica", "Quinta Normal", "Valdivia", "Punta Arenas")) 
-
-ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad), alpha = 0.5) + facet_wrap(Ciudad_localidad~Unidad, scales = "free", ncol = 2)
-```
-    
 # Mapas en ggplot2
+
+## Mapas en ggplot2
+
+```{r, echo = FALSE, out.width="500px", fig.align='center'}
+#knitr::include_graphics("https://ia803206.us.archive.org/23/items/Comunas/Metropolitana_Map_Comunas.gif")
+knitr::include_graphics("/home/derek/derek-corcoran-barrios.github.io/Clase4/Patagonia_Chile23.jpeg")
+```
+
+
+* si les interesea vean [este curso](https://www.youtube.com/playlist?list=PLJWf8KLNrnT50HNhrGRpwNOOsf5XiTH2E), en particular la clase 5 de graficar mapas
