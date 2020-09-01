@@ -169,8 +169,8 @@ ggplot(mtcars, aes(x = wt, y = mpg)) + geom_smooth(method = "lm") + geom_point()
 
 ```{r}
 githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Clase4/TempHum.rds")
-download.file(githubURL,"TempHum2.rds", method="curl")
-TempHum <- read_rds("TempHum2.rds") %>% 
+download.file(githubURL,"TempHum.rds", method="curl")
+TempHum <- read_rds("TempHum.rds") %>% 
   mutate(Mes = as.numeric(Mes))
 ```
 
@@ -240,6 +240,13 @@ include_graphics("YAML.png")
 ```{r, echo=FALSE, out.width="500px"}
 include_graphics("Chunk.png")
 ```
+
+## Agregar referencias a imagenes con bookdown
+
+```{r, echo=FALSE, out.width="500px"}
+include_graphics("Bookdown.png")
+```
+
 
 ## Primera evaluación exploración de datos
 
