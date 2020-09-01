@@ -61,7 +61,8 @@ ggplot(mtcars, aes(x = hp, y = mpg)) +
 
 githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Clase4/TempHum.rds")
 download.file(githubURL, "TempHum.rds", method = "curl")
-TempHum <- read_rds("TempHum.rds") %>% mutate(Mes = as.numeric(Mes))
+TempHum <- read_rds("TempHum.rds") %>% 
+  mutate(Mes = as.numeric(Mes))
 
 
 Valpo <- TempHum %>% filter(Ciudad_localidad == "Valparaíso")  
