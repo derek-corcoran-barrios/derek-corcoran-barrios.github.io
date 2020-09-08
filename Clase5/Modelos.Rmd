@@ -231,19 +231,14 @@ Modelos <- bind_rows(Modelo1, Modelo2, Modelo3, Modelo4, Modelo5) %>% arrange(AI
 kable(Modelos)  %>% kable_styling(bootstrap_options = "striped")
 ```
 
-## No todos los modelos son cubiertos por Broom
+# Extra a ver en el próximo curso
 
-```{r, echo = FALSE}
-ggplot(CO2, aes(x = conc, y = uptake)) + geom_path(aes(color = Type, lty = Treatment, group = Plant)) + geom_point(aes(color = Type, shape = Treatment), size = 2) 
-```
-
-
-# GLMs
+# GLM
 
 ## Distribuciones
 
-```{r}
-knitr::include_graphics("Distributions.jpeg", dpi = 300)
+```{r, echo = F}
+knitr::include_graphics("Distributions.jpeg", dpi = 150)
 ```
 
 
@@ -258,15 +253,16 @@ knitr::include_graphics("Distributions.jpeg", dpi = 300)
 
 ## Modelo lineal generalizado (familia: binomial)
 
-```{r, results= "asis"}
+```{r, results= "asis", echo = F}
 library(tidyverse)
-train <- read_csv("train.csv") %>% filter(Embarked == "S")
-knitr::kable(head(train[,-c(1,4,7,8,9)]), format = "html")
+train <- read_csv("https://raw.githubusercontent.com/BIO4022/Tarea_1/master/Titanic.csv") %>%
+  filter(Embarked == "S")
+knitr::kable(head(train[,-c(1,4,7,8,9)])) %>% kable_styling(bootstrap_options = "striped")
 ```
 
 ## Modelo lineal generalizado (familia: binomial)
 
-```{r}
+```{r, echo = F}
 FitBin <- glm(Survived ~ Fare + Sex, data = train)
 
 DF <- expand.grid(Fare = seq(from = min(train$Fare), to = max(train$Fare), length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
@@ -282,12 +278,12 @@ ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + S
 
 ## Modelo lineal generalizado (familia: binomial)
 
-```{r}
-knitr::kable(broom::tidy(FitBin))
+```{r, echo = F}
+knitr::kable(broom::tidy(FitBin)) %>% kable_styling(bootstrap_options = "striped")
 ```
 
-```{r}
-knitr::kable(broom::glance(FitBin))
+```{r, echo = F}
+knitr::kable(broom::glance(FitBin)) %>% kable_styling(bootstrap_options = "striped")
 ```
 
 $R^2$: `r DescTools::PseudoR2(FitBin, "Nagelkerke")`
@@ -295,7 +291,7 @@ $R^2$: `r DescTools::PseudoR2(FitBin, "Nagelkerke")`
 
 ## Modelo lineal generalizado (familia: binomial)
 
-```{r}
+```{r, echo = F}
 FitBin <- glm(Survived ~ Fare + Sex, data = train)
 
 DF <- expand.grid(Fare = seq(from = -200, to = 1000, length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
@@ -311,7 +307,7 @@ ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + S
 
 ## Modelo lineal generalizado (familia: binomial)
 
-```{r, results="asis", cache = TRUE}
+```{r, results="asis", cache = F, echo = F}
 FitBin2 <- glm(Survived ~ Fare*Sex, data = train, family = binomial())
 ##1
 DF <- expand.grid(Fare = seq(from = min(train$Fare), to = max(train$Fare), length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
@@ -325,19 +321,19 @@ ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + S
 
 ## Modelo lineal generalizado (familia: binomial)
 
-```{r}
-knitr::kable(broom::tidy(FitBin2))
+```{r, echo = F}
+knitr::kable(broom::tidy(FitBin2))  %>% kable_styling(bootstrap_options = "striped")
 ```
 
-```{r}
-knitr::kable(broom::glance(FitBin2))
+```{r, echo = F}
+knitr::kable(broom::glance(FitBin2))  %>% kable_styling(bootstrap_options = "striped")
 ```
 
 $R^2$: `r DescTools::PseudoR2(FitBin2, "Nagelkerke")`
 
 ## Modelo lineal generalizado (familia: binomial)
 
-```{r, results="asis", cache = TRUE}
+```{r, results="asis", cache = F, echo = F}
 FitBin2 <- glm(Survived ~ Fare*Sex, data = train, family = binomial())
 ##1
 DF <- expand.grid(Fare = seq(from = -200, to = 1000, length.out = 50), Prediction = NA, SE = NA, Sex = c("male", "female"))
@@ -349,82 +345,16 @@ DF$SE <- predict(FitBin2, DF, se.fit = TRUE,"response")$se.fit
 ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
 ```
 
-## Función link
 
-* Actua sobre $Y$
-* family Gaussian, link = identidad
-* family Gamma, link = inverso
-* family poisson, link  = log
-* family binomial, link = logit
+# un ejemplo mas
 
-$$Logit = log{\frac{p}{1-p}}$$
+## Modelos de árboles
 
-## Función link
-
-```{r}
-x = c(-1, -0.8, 0.1, 0.2, 0.5, 0.8, 1, 2, 2.3)
-link = data.frame(Valor = x, Identidad = x, Inverso = 1/x, Log = log(x), logit = log(x/(1-x)))
-knitr::kable(link)
-```
-
-## Función link
-
-```{r}
-x = seq(from = -4, to = 4, by = 0.2)
-link = data.frame(Valor = x, Identidad = x, Inverso = 1/x, Log = log(x), logit = log(x/(1-x)))
-link2 <- link %>% gather(key = link, value = transformacion, -Valor)
-ggplot(link2, aes(x = Valor, y = transformacion)) + geom_line(aes(color = link)) + geom_point(aes(color = link)) + theme_classic() + geom_vline(xintercept = c(0,1), lty = 2 , color = "red")
-```
-
-
-## Expandiendo los modelos que puedo usar paquete caret
-
-* Paquete [caret](http://topepo.github.io/caret/index.html), 238 tipos de modelos distintos 
-* Si quieren aprender mucho más acá hay un [tutorial](https://www.youtube.com/watch?v=7Jbb2ItbTC4&t=3s)
-* En lo más básico solo una función *train*
-* Curso de de machine learning en R?
-
-## función train
-
-* Sirve para cualquier modelo, solo hay que cambiar method
-```{r}
-library(caret)
-Eficiencia <- train(mpg ~ wt, method = "lm", data = mtcars)
-glance(Eficiencia$finalModel)
-```
-***
-```{r}
-library(caret)
-Eficiencia2 <- train(mpg ~ wt, method = "glm", data = mtcars)
-glance(Eficiencia2$finalModel)
-```
-
-## función train
-
-```{r, cache = TRUE}
-library(caret)
-Eficiencia3 <- train(mpg ~ wt, method = "bagEarth", data = mtcars)
-Eficiencia3$results
-```
-
-## función train (clasificación)
-
-```{r, eval = FALSE}
-library(caret)
-Especies <- train(Species ~. , method = "glm", data = iris)
-```
-
-## función train (clasificación)
-
-```{r}
+```{r, echo = F}
 library(caret)
 Especies <- train(Species ~. , method = "rpart", data = iris)
 Especies$results
-```
 
-## función train (clasificación)
-
-```{r}
 library(rattle)
 library(rpart.plot)
 rpart.plot(Especies$finalModel)
