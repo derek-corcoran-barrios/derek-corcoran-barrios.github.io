@@ -1,0 +1,31 @@
+---
+title: "Un documento"
+author: "Derek Corcoran"
+date: "9/15/2020"
+output: 
+  bookdown::pdf_document2:
+    fig.caption: yes
+    toc: no
+bibliography: Biblio.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Markdown
+
+
+Como aparece en el trabajo de [@elith2009species; @stockwell2002effects]
+
+## Including Plots
+
+You can also embed plots, for example \@ref(fig:pressure)
+
+```{r pressure, echo=FALSE, fig.cap="Una figura"}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# Referencias
