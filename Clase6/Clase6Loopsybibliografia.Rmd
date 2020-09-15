@@ -245,6 +245,14 @@ knitr::kable(Temp)  %>%
   scroll_box(width = "100%", height = "200px")
 ```
 
+# For loops
+
+## Base de datos
+
+```{r}
+githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Clase6/bio.stack.rds")
+download.file(githubURL,"bio.stack.rds", method="curl")
+```
 
 ## for loops {.smaller .build}
 
@@ -266,15 +274,13 @@ colors <- rev(heat.colors(nb))
 plot(bio.stack, col = colors, breaks = brks)
 ```
 
-## for loops {.smaller .build}
-
-<div style="float: left; width: 50%;">
+## for loops {.build}
 
 ```{r}
 plot(bio.stack[[1]], col = colors, breaks = brks)
 ```
 
-<div style="float: right; width: 50%;">
+## for loops (cont-) {.build}
 
 ```{r}
 years <- as.character(seq(2000, 2070, by = 10))
@@ -354,6 +360,8 @@ para más informacion revisar [acá](http://rmarkdown.rstudio.com/authoring_bibl
 ## Bibliofrafía en Rmd {.build} 
 
 * Una presentación en Rmd
+* [Base de datos](https://www.kaggle.com/unitednations/international-energy-statistics?select=all_energy_statistics.csv)
+* Pueden ser datos de su tesis o bibliográfico
 * Debe tener
     + chunks
     + inline codes
