@@ -303,6 +303,14 @@ for(i in 1:8){
 knitr::include_graphics("Mean_temp.gif")
 ```
 
+# Latex
+
+## Latex
+
+```{r, echo = F, fig.align='center', fig.width= 10}
+knitr::include_graphics("Latex.png")
+```
+
 
 ## rticles {.smaller .build} 
 
