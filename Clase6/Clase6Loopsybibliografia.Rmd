@@ -4,6 +4,7 @@ author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
   ioslides_presentation:
+    widescreen: true
     incremental: true
 ---
 
@@ -16,87 +17,73 @@ options("kableExtra.html.bsTable" = T)
 
 ## Empecemos con un ejercicio {.smaller .build}
 
-* Tomemos la base de datos de calidad de aire de Madrid
-* Leeamos el año 2017
-* Limitemonos a las estaciones de Cuatro Caminos, El Pardo, Escuelas Aguirre, Moratalaz y Tres Olivos 
+* Descarguemos la siguiente base de datos:
+
+```{r}
+download.file("https://github.com/derek-corcoran-barrios/TH_Data/blob/master/T&H.zip?raw=true", "Botones.zip")
+unzip("Botones.zip")
+```
+
+```{r, echo = FALSE, message=FALSE, warning=F}
+file.remove("Botones.zip")
+```
+
+
+* Tomemos estas bases de datos de temperatura y humedad relativa
+* Leeamos la temperatura del sitio H1F102
+* Para cada día tomemos las temperaturas promedio, máxima y mínima para cada día
 * Agreguemos una columna con el año y una con el mes
-* Calculemos los promedios de $NO_2$ para cada mes
-* Eliminemos las columnas innecesarias para estudiar el efecto del $NO_2$ en Madrid
+* Agreguemos una columna con el nombre del sitio
 
 ## Empecemos con un ejercicio (cont) {.smaller .build}
 
 * Leemos los datos
 
-```{r, eval=FALSE}
+```{r}
 library(tidyverse)
 library(lubridate)
-Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv")
+H1F102Tem <- read_csv("T&H/H1F102Tem.csv")
 ```
 
-* Limitemonos a las estaciones de Cuatro Caminos, El Pardo, Escuelas Aguirre, Moratalaz y Tres Olivos 
+* Tranfromemos la columna `Date/Time` en una de día para poder promediar por día y saquemos variables innecesarias
 
-```{r, eval=FALSE}
-Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038))
+```{r}
+H1F102Tem <- H1F102Tem %>% 
+  mutate(DateH = lubridate::dmy_hm(`Date/Time`), Date = date(DateH)) %>% 
+  dplyr::select(-`Date/Time`, -Unit, -a)
 ```
+
 
 * Agreguemos aparte el mes, el año y el nombre de la estación
 
-```{r, eval=FALSE}
-Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  
+```{r}
+H1F102Tem <- H1F102Tem %>% 
+  mutate(Year = lubridate::year(Date), Month = lubridate::month(Date), Name = "H1F102")
 ```
 
 
 ## Empecemos con un ejercicio (cont 2) {.smaller .build}
 
-* Agrupamos sacamos el promedio por mes y sacamos las columnas sobrantes al mismo tiempo
+* Agrupamos sacamos el promedio por día 
 
-```{r, cache=TRUE}
-library(lubridate)
-stations <- read_csv("stations.csv") %>% rename(station = id)
-Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  %>% group_by(month, name, year)  %>% summarise(NO_2 = mean(NO_2, na.rm = TRUE))
+```{r}
+H1F102Tem <- H1F102Tem %>% 
+  group_by(Date, Month, Year, Name) %>% 
+  summarise_at(.vars = "Value", list(Mean = mean, Min = min, Max = max))
 ```
 
-```{r, echo=FALSE, results='asis'}
+
+
+```{r, echo=FALSE}
 library(kableExtra)
-knitr::kable(Madrid2017)  %>%
+knitr::kable(H1F102Tem)  %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
   scroll_box(width = "100%", height = "200px")
 ```
 
-## Empecemos con un ejercicio (cont 4) {.smaller .build}
+# ¿Como lo hacemos con todos los archivos de la carpeta T&H ya tenemos una receta
 
-* Hay algunos que se salen del año, pero son pocos
-
-```{r, cache=TRUE}
-library(lubridate)
-stations <- read_csv("stations.csv") %>% rename(station = id)
-Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  %>% group_by(month, name, year)  %>% summarise(NO_2 = mean(NO_2, na.rm = TRUE), n = n()) %>% filter(n > 500)
-```
-
-```{r, echo=FALSE, results='asis'}
-library(kableExtra)
-knitr::kable(Madrid2017)  %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
-  scroll_box(width = "100%", height = "200px")
-```
-
-## Empecemos con un ejercicio (cont 5) {.smaller .build}
-
-```{r, echo = TRUE}
-ggplot(Madrid2017, aes(x = month, y = NO_2)) + geom_smooth(aes(fill = name)) + geom_point(aes(color = name)) + theme_classic() 
-```
-
-## Empecemos con un ejercicio (cont 6) {.smaller .build}
-
-```{r, echo = TRUE}
-ggplot(Madrid2017, aes(x = month, y = NO_2)) + stat_smooth(method = "lm", formula = y ~ I(x^2) + x, alpha = 0.5,aes(fill = name)) + geom_point(aes(color = name)) + theme_classic()
-```
-
-## ¿Como lo hacemos con todos los archivos de la carpeta csvs_per_year
-
-ya tenemos una receta
-
-## ¿Qué es un loop? {.smaller .build}
+## ¿Qué es un loop?
 
 ### Para Cada x has y {.columns-2 .smaller}
 
@@ -132,21 +119,24 @@ map(.x =x, .f = sqrt)
 ## Volvamos a la receta basica {.smaller .build}
 
 ```{r, eval=FALSE}
-library(lubridate)
-stations <- read_csv("stations.csv") %>% rename(station = id)
-Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv") %>% filter(station %in% c(28079036, 28079008,28079058, 28079060, 28079038)) %>%  mutate(month = month(date), year = year(date)) %>% left_join(stations)  %>% group_by(month, name, year)  %>% summarise(NO_2 = mean(NO_2, na.rm = TRUE), n = n()) %>% filter(n > 500)
+H1F102Tem <- read_csv("T&H/H1F102Tem.csv") %>% 
+  mutate(DateH = lubridate::dmy_hm(`Date/Time`), Date = date(DateH)) %>% 
+  dplyr::select(-`Date/Time`, -Unit, -a) %>% 
+  mutate(Year = lubridate::year(Date), Month = lubridate::month(Date), Name = "H1F102") %>% 
+  group_by(Date, Month, Year, Name) %>% 
+  summarise_at(.vars = "Value", list(Mean = mean, Min = min, Max = max))
 ```
 
 * Vamos a la primera parte
 
 ```{r, eval=FALSE}
-Madrid2017 <- read_csv("csvs_per_year/madrid_2017.csv")
+H1F102Tem <- read_csv("T&H/H1F102Tem.csv")
 ```
 
 * ¿Que queremos?
 
 ```{r, eval=FALSE}
-Madrid <- map(.x = Archivos, .f = read_csv)
+Temperaturas <- map(.x = Archivos, .f = read_csv)
 ```
 
 * Necesitamos un vector o lista *Archivos* que contenga todos los archivos que vamos a leer
@@ -157,33 +147,49 @@ Madrid <- map(.x = Archivos, .f = read_csv)
 knitr::include_graphics("Dexter_thinking.jpg")
 ```
 
-```{r, cache=TRUE}
-Archivos <- list.files("csvs_per_year", full.names = TRUE)
-Archivos
+```{r}
+Archivos <- list.files("T&H", full.names = TRUE)
+Archivos <- Archivos[str_detect(Archivos, "Tem")]
 ```
 
 ## Empezemos nuestro loop {.smaller .build}
 
-```{r, cache=TRUE}
-Madrid <- map(Archivos, read_csv)
+```{r}
+Temp <- map(Archivos, read_csv)
 ```
 
 * Si le agregamos argumentos a una función agregamos un ~ antes de la función y un .x en vez de los datos
 
-```{r, cache=TRUE}
-library(lubridate)
-Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 28079008,28079058, 28079060, 28079038)))
+```{r}
+Temp <- map(Archivos, read_csv) %>% map(~mutate(.x, DateH = lubridate::dmy_hm(`Date/Time`), Date = date(DateH)))
 ```
+
+* Fijemonos en los 3 primeros archivos
+
+## Corrección
+
+
+```{r}
+Temp <- map(Archivos, read_csv) %>% map(~mutate(.x, DateH = lubridate::dmy_hms(`Date/Time`, truncated = 1), Date = date(DateH)))
+```
+
+## Sigamos
 
 * A partir de esto podemos avanzar mucho
 
-```{r, cache=TRUE}
-Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 28079008,28079058, 28079060, 28079038))) %>%  map(~mutate(.x, month = month(date), year = year(date))) %>% map(~left_join(.x, stations)) %>% map(~group_by(.x, month, name, year))  %>% map(~summarise(.x, NO_2 = mean(NO_2, na.rm = TRUE), n = n())) %>% map(~filter(.x,n > 500))
+```{r}
+Temp <- map(Archivos, read_csv) %>% map(~mutate(.x, DateH = lubridate::dmy_hms(`Date/Time`, truncated = 1), Date = date(DateH)))%>% 
+  map(~dplyr::select(.x, -`Date/Time`, -Unit, -a)) %>% 
+  map(~mutate(.x, Year = lubridate::year(Date), Month = lubridate::month(Date))) %>% 
+  map(~group_by(.x, Date, Month, Year)) %>% 
+  map(~summarise_at(.x, .vars = "Value", list(Mean = mean, Min = min, Max = max)))
 ```
+
 
 ## Para finalizar el ejercicio {.smaller .build}
 
-* Tenemos una lista con 17 data frames
+* Tenemos una lista con 114 data frames
+* Falta el nombre
 * Necesitamos guardarlo en uno
 * funcion *reduce* de purrr
 
@@ -201,35 +207,43 @@ map(.x =x, .f = sqrt) %>% reduce(c)
 
 ## Para finalizar el ejercicio {.smaller .build}
 
-```{r, cache=TRUE, echo = TRUE}
-library(lubridate)
-Madrid <- map(Archivos, read_csv) %>% map(~filter(.x, station %in% c(28079036, 28079008,28079058, 28079060, 28079038))) %>%  map(~mutate(.x, month = month(date), year = year(date))) %>% map(~left_join(.x, stations)) %>% map(~group_by(.x, month, name, year))  %>% map(~summarise(.x, NO_2 = mean(NO_2, na.rm = TRUE), n = n())) %>% map(~filter(.x,n > 500)) %>%reduce(bind_rows)
+```{r, echo = TRUE}
+Temp <- map(Archivos, read_csv) %>% map(~mutate(.x, DateH = lubridate::dmy_hms(`Date/Time`, truncated = 1), Date = date(DateH)))%>% 
+  map(~dplyr::select(.x, -`Date/Time`, -Unit, -a)) %>% 
+  map(~mutate(.x, Year = lubridate::year(Date), Month = lubridate::month(Date))) %>% 
+  map(~group_by(.x, Date, Month, Year)) %>% 
+  map(~summarise_at(.x, .vars = "Value", list(Mean = mean, Min = min, Max = max))) %>%   reduce(bind_rows)
 ```
 
-```{r}
+```{r, echo = F}
 library(kableExtra)
-knitr::kable(Madrid)  %>%
+knitr::kable(Temp)  %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
   scroll_box(width = "100%", height = "200px")
 ```
 
+# Falta el nombre
 
-## Para finalizar el ejercicio {.smaller .build}
+## Para finalizar el ejercicio (Map2)
 
+```{r}
+Nombres <- Archivos %>% str_remove_all("T&H/") %>% str_remove_all(".csv")
 
-```{r, echo= FALSE, message=FALSE, fig.width= 13}
-library(gganimate)
-Madrid2 <- filter(Madrid, year < 2018 & year > 2001)
-ggplot(Madrid2,aes(x = month, y = NO_2)) + stat_smooth(method = "lm", formula = y ~ x + I(x^2), alpha = 0.5,aes(fill = name)) + geom_point() + 
-  # Here comes the gganimate code
-  transition_states(
-    year, state_length = 2, transition_length = 1) +
-  enter_fade() + 
-  exit_shrink() +
-  ease_aes('linear') + labs(title = 'Year: {closest_state}', x = 'Month', y = 'NO_2')
-
+Temp <- map(Archivos, read_csv) %>% map(~mutate(.x, DateH = lubridate::dmy_hms(`Date/Time`, truncated = 1), Date = date(DateH)))%>% 
+  map(~dplyr::select(.x, -`Date/Time`, -Unit, -a)) %>% 
+  map(~mutate(.x, Year = lubridate::year(Date), Month = lubridate::month(Date))) %>% 
+  map(~group_by(.x, Date, Month, Year)) %>% 
+  map(~summarise_at(.x, .vars = "Value", list(Mean = mean, Min = min, Max = max))) %>%
+  map2(.y = Nombres,~mutate(.x, Nombre = .y)) %>% 
+  reduce(bind_rows)
 ```
 
+```{r, echo = F}
+library(kableExtra)
+knitr::kable(Temp)  %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
+  scroll_box(width = "100%", height = "200px")
+```
 
 
 ## for loops {.smaller .build}
@@ -270,7 +284,7 @@ plot(bio.stack[[1]], col = colors, breaks = brks, main = paste("Mean temperature
 ## for loops {.smaller .build}
 
 
-```{r, cache= TRUE, message=FALSE, results='hide'}
+```{r, message=FALSE, results='hide'}
 library(animation)
 saveGIF(
 for(i in 1:8){
@@ -345,4 +359,4 @@ para más informacion revisar [acá](http://rmarkdown.rstudio.com/authoring_bibl
     + inline codes
     + figuras
     + Modelos
-    + Jueves 6 de Septiembre
+    + Martes 29 de Septiembre
