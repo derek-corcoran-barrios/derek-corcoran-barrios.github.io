@@ -1,0 +1,59 @@
+---
+title: "Ejemplo clase 7"
+author: "Derek Corcoran"
+date: "9/29/2020"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Titulo mas grande
+
+## primera diapositiva {.smaller .build}
+
+* Alguna cosa
+* Otra cosa mas
+* rerl
+* dskjgnkdnkjgs
+* jkjdsngkdskngnkds
+* gdgldsgkl
+
+```{r}
+suppressMessages(library(tidyverse))
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_boxplot()
+```
+
+## Dos columnas
+
+<div class="columns-2">
+
+* Alguna cosa
+* Otra cosa mas
+* rerl
+* dskjgnkdnkjgs
+* jkjdsngkdskngnkds
+* gdgldsgkl
+
+```{r}
+suppressMessages(library(tidyverse))
+ggplot(iris, aes(x = Species, y = Petal.Length)) + geom_boxplot()
+```
+
+</div>
+
+
+
+## Segunda diapositiva
+
+
+* Voy a poner una imagen de mi computador 
+
+```{r}
+knitr::include_graphics("/home/derek/derek-corcoran-barrios.github.io/Clase6/Citation1.png")
+```
+
