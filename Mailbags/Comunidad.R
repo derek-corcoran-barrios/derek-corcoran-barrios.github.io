@@ -40,9 +40,47 @@ ggplot(Data, aes(MDS1, MDS2)) +
   theme_bw() 
 
 
-Mod2 <- adonis2(dune ~ Management*A1, data = dune.env, by = NULL)
-Mod1 <- adonis(dune ~ Management*A1, data = dune.env, by = NULL)
 
+Sitio1 <- data.frame(Sitio1 = paste0("S", 1:nrow(dune.env)), Management1 = dune.env$Management)
+Sitio2 <- Sitio1 %>% rename(Sitio2  = Sitio1, Management2 = Management1)
+
+bray <- as.matrix(vegdist(dune)) %>% as.data.frame()
+bray[upper.tri(bray)] <- NA
+diag(bray) <- NA
+colnames(bray) <- paste0("S", 1:ncol(bray))
+bray$Sitio1 <- paste0("S", 1:nrow(bray))
+
+bray <-  bray %>% 
+  pivot_longer(cols = -Sitio1, names_to = "Sitio2", values_to = "Distancia") %>% 
+  dplyr::filter(!is.na(Distancia)) %>% 
+  left_join(Sitio1) %>% left_join(Sitio2) %>% 
+  mutate(Tipo = ifelse(Management1 == Management2, "Igual", "Diferente")) %>% 
+  group_split(Management1) %>% 
+  purrr::map(~mutate(.x, codigo1 = dplyr::row_number(), codigo1 = paste0(Management1, codigo1))) %>% 
+  reduce(bind_rows) %>% 
+  group_split(Management2) %>% 
+  purrr::map(~mutate(.x, codigo2 = dplyr::row_number(), codigo2 = paste0(Management2, codigo2))) %>% 
+  reduce(bind_rows) %>% 
+  arrange(codigo1, codigo2) %>% 
+  mutate(Sitio2 = fct_relevel(Sitio2, "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", 
+                              "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18", "S19"),
+         Sitio1 = fct_relevel(Sitio1, "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", 
+                              "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18", "S19"))
+  
+
+ggplot(bray, aes(x = Sitio1, y = Sitio2)) + 
+  geom_tile(aes(fill = Tipo)) + 
+  geom_text(aes(label = round(Distancia, 1))) +
+  theme_bw()
+
+ggplot(bray, aes(x = Tipo, y = Distancia)) + 
+  geom_boxplot(notch = T) + 
+  theme_bw()
+
+
+Mod0 <- adonis2(dune ~ Management, data = dune.env, by = NULL)
+Mod1 <- adonis2(dune ~ Management*A1, data = dune.env, by = NULL)
+Mod2 <- adonis2(dune ~ Use*A1, data = dune.env, by = NULL)
 
 AICc.PERMANOVA <- function(adonis.model) {
   
@@ -125,9 +163,9 @@ AICc.PERMANOVA2 <- function(adonis2.model) {
   
 }
 
+AICc.PERMANOVA2(Mod0)
+AICc.PERMANOVA2(Mod1)
 AICc.PERMANOVA2(Mod2)
-
-AICc.PERMANOVA(Mod1)
 
 
 data(dune)
