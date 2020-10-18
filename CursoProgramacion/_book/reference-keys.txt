@@ -1,0 +1,10 @@
+descripción-del-curso
+descripcion-del-curso
+objetivos
+tidy
+literature
+methods
+applications
+example-one
+example-two
+final-words

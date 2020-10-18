@@ -1,34 +1,41 @@
 --- 
-title: "A Minimal Book Example"
-author: "Yihui Xie"
+title: "Programación y Análisis de Datos Ambientales MedianteSoftware Libre"
+author: "Derek Corcoran y Giorgia Graells"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+description: "Gitbook para el curso Programación y Análisis de Datos Ambientales MedianteSoftware Libre (CBIT200), Universidad Austral"
 ---
 
-# Prerequisites
+# Descripción del curso
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
+* **Nombre asignatura:** Programación y Análisis de Datos Ambientales MedianteSoftware Libre
+* **Código asignatuta:** CBIT200
+* **Docente responsable:** Derek Corcoran B.
+* **Correo electrónico:** derek.corcoran.barrios@gmail.com
+* **Docente colaborador:** Giorgia Graells C.
+* **Correo electrónico:** gygraell@gmail.com
+* **Modalidad de clases:** 
+    + Prácticas online
+    + Sesiones de clases por youtube 
+    + Ayudantias por zoom
+    + Consultas por Discord (chat o video) y correo electrónico
+* **Horario de clases:** Lunes 9:50-13:00 hrs 
+* **Inicio clases:** 5 octubre 2020
+* **Término clases:** 18 enero 2020 (puede existir alguna modificación por calendario académico)
 
-The **bookdown** package can be installed from CRAN or Github:
+## DESCRIPCION DEL CURSO
 
-```{r eval=FALSE}
-install.packages("bookdown")
-# or the development version
-# devtools::install_github("rstudio/bookdown")
-```
+Este curso tiene como objetivo central adquirir los principios de investigación reproducible, conocimientos acerca del diseño y desarrollo de análisis de datos ambientales complejos utilizando el lenguaje de programación R y la plataforma Github.
 
-Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
+### OBJETIVOS
 
-To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
+1. Conocer y entender el concepto de  Investigación Reproducible como una forma y filosofía de  trabajo  que permite que las investigaciones sean más ordenadas y replicables, desde la toma de datos hasta la escritura de resultados utilizando R
 
-```{r include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-```
+2. Realizar análisis críticos de la naturaleza de los datos al realizar análisis exploratorios y reforzar conociminetos en estadística
+
+3. Realizar análisis de datos espaciales, poder hacer mapas y aplicar a preguntas de conservación y manejo de recursos naturales.
+
