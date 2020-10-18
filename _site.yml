@@ -15,7 +15,7 @@ navbar:
     - text: BIO249c
       href: AyduantiaStats/_book/index.html      
     - text: Curso de Programación
-      href: CursoProgramacion/index.html
+      href: CursoProgramacion/_book/index.html
   - text: Donde vivir
     href: DondeVivir.html
   - text: Alergia en Chile
