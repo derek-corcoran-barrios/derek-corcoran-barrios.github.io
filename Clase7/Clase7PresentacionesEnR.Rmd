@@ -28,12 +28,17 @@ options("kableExtra.html.bsTable" = T)
 knitr::include_graphics("Rpres.png")
 ```
 
-
 ## Se escribe igual que Rmarkdown
 
 * \## es para pasar de una a otra diapo
 * {.smaller} texto mas pequeño
 * {.build} empezando de a poco
+
+## para que funcione KableExtra
+
+```{r, echo=FALSE, dpi=70}
+knitr::include_graphics("KableExtra.png")
+```
 
 
 ## Ecuaciones
