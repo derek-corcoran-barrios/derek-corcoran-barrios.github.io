@@ -22,22 +22,6 @@ navbar:
     href: Polen.html
   - text: Earthquakes in Chile
     href: Earthquake.html
-  - text: NBA
-    icon: fa-gear
-    menu:
-    - text: NBA research
-    - text: About
-      href: about.html
-    - text: Team Stats
-      href: TeamStats.html
-    - text: Projected Standings
-      href: Projection.html
-    - text: Spatial power rankings
-      href: Rating.html
-    - text: Shot charts
-      href: ShotCharts.html
-    - text: Blog
-      href: BlogHome
   - text: RPackages
     icon: fa-gear
     menu:
