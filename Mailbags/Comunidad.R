@@ -6,11 +6,10 @@ data("dune.env")
 
 sol <- metaMDS(dune)
 
-
 Data <- sol$points %>% as.data.frame() %>% bind_cols(dune.env)
 
 ggplot(Data, aes(MDS1, MDS2)) +
-  geom_point(aes(color = Management)) +
+  geom_point(aes(color = Management, size = A1)) +
   theme_bw()
 
 
@@ -33,12 +32,16 @@ stat_chull <- function(mapping = NULL, data = NULL, geom = "polygon",
   )
 }
 
+ggplot(dune, aes(x = Achimill, y = Agrostol)) +
+  geom_point()
+
+anosim(dune, grouping = dune.env$Management)
+
 
 ggplot(Data, aes(MDS1, MDS2)) +
   stat_chull(aes(fill = Management), alpha =0.5) +
   geom_point(aes(color = Management)) +
   theme_bw() 
-
 
 
 Sitio1 <- data.frame(Sitio1 = paste0("S", 1:nrow(dune.env)), Management1 = dune.env$Management)
@@ -78,9 +81,12 @@ ggplot(bray, aes(x = Tipo, y = Distancia)) +
   theme_bw()
 
 
-Mod0 <- adonis2(dune ~ Management, data = dune.env, by = NULL)
-Mod1 <- adonis2(dune ~ Management*A1, data = dune.env, by = NULL)
-Mod2 <- adonis2(dune ~ Use*A1, data = dune.env, by = NULL)
+Mod0 <- adonis2(dune ~ 1, data = dune.env, by = "terms")
+Mod1 <- adonis2(dune ~ Management, data = dune.env, by = "terms")
+Mod2 <- adonis2(dune ~ Management*A1, data = dune.env, by = "terms")
+Mod3 <- adonis2(dune ~ Use*A1, data = dune.env, by = "terms")
+Mod4 <- adonis2(dune ~ A1, data = dune.env, by = "terms")
+Mod5 <- adonis2(dune ~ Management + Moisture, data = dune.env, by = "terms")
 
 AICc.PERMANOVA <- function(adonis.model) {
   
@@ -163,9 +169,20 @@ AICc.PERMANOVA2 <- function(adonis2.model) {
   
 }
 
-AICc.PERMANOVA2(Mod0)
+DF<- data.frame(Modelo = paste0("Mod", 0:5), AICc = NA)
+
+
+DF$AICc[1] <- AICc.PERMANOVA2(Mod0)$AICc
+DF$AICc[2] <-  AICc.PERMANOVA2(Mod1)$AICc
+DF$AICc[3] <- AICc.PERMANOVA2(Mod2)$AICc
+DF$AICc[4] <-  AICc.PERMANOVA2(Mod3)$AICc
+DF$AICc[5] <-  AICc.PERMANOVA2(Mod4)$AICc
+DF$AICc[6] <-  AICc.PERMANOVA2(Mod5)$AICc
+
 AICc.PERMANOVA2(Mod1)
 AICc.PERMANOVA2(Mod2)
+AICc.PERMANOVA2(Mod3)
+
 
 
 data(dune)
@@ -181,9 +198,7 @@ mod$anova
 
 
 
-
-spe.hell<- decostand (log1p(vltava.spe), method ='hellinger')
-tbRDA <- rda (spe.hell ~ pH + SOILDPT + ELEVATION, data= vltava.env[,1:18])
+tbRDA <- rda(spe.hell ~ pH + SOILDPT + ELEVATION, data= vltava.env[,1:18])
 par(mfrow =c(1,2))
 ordiplot (tbRDA)
 ef <- envfit (tbRDA ~ pH + SOILDPT + ELEVATION, data= vltava.env, display ='lc')
