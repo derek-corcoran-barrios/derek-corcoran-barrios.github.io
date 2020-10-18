@@ -1,3 +1,3 @@
 # El tidyverso {#tidy}
 
-En esta clase empezaremos a trabajar en r, puedes seguir la presentación en el siguiente link, y a continuación tienes el link de la clase online en youtube:
+En esta clase empezaremos a trabajar en r, puedes seguir la presentación en el siguiente [link](https://derek-corcoran-barrios.github.io/CursoProgrPres/Clase1/Clase1TidyData.html), y a continuación tienes el link de la clase online en youtube:

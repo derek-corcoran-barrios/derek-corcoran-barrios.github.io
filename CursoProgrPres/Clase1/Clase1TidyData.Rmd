@@ -110,6 +110,27 @@ knitr::include_graphics("DataFrame.jpg")
 
 </div>
 
+## Ejercicio {.small}
+
+En el sigiente data frame llamado DF:
+
+```{r, echo = F}
+set.seed(2020)
+DF <- data.frame(Numero = sample(1:5, size =5, replace = F), Letra = sample(LETTERS, size = 5, replace = F), Medida = rnorm(n = 5, mean = 60, sd = 10) ,stringsAsFactors = F)
+
+kable(DF, digits = 2) %>% kable_styling(bootstrap_options = c("striped"), full_width = F)
+```
+
+## Alternativas
+
+cual de los siguientes códigos nos entregaran un data frame `DF2` con solo las filas con letras A y B, y solo las columnas Letra y Medida:
+
+1. `DF2 <- DF[c(2,3),c(1,4)]`
+2. `DF2 <- DF[2:3,1:4]`
+3. `DF2 <- DF[c(1,4),c(2,3)]`
+4. `DF2 <- DF[1:4,2:3]`
+
+
 # Principios de Tidydata
 
 ## Tidy Data  {.build}
