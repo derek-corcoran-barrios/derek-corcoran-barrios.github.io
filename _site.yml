@@ -14,8 +14,8 @@ navbar:
       href: CursoMulti/_book/index.html  
     - text: BIO249c
       href: AyduantiaStats/_book/index.html      
-    - text: Hackathon
-      href: Hack.html
+    - text: Curso de Programación
+      href: CursoProgramacion/index.html
   - text: Donde vivir
     href: DondeVivir.html
   - text: Alergia en Chile
