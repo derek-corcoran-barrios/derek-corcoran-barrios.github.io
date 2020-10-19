@@ -143,46 +143,6 @@ knitr::include_graphics("tidy.png")
 * Cada columna una variable
 * Cada fila una observación
 
-## untidy data
-
-```{r, echo=FALSE, message = FALSE, warning = FALSE,fig.width=8,fig.height=4.5,dpi=300,out.width="960px",out.height="700px"}
-library(knitr)
-include_graphics("UntidyONU.png")
-```
-
-## untidy data
-
-```{r, echo=FALSE, message = FALSE, warning = FALSE,fig.width=8,fig.height=3,dpi=300,out.width="960px",out.height="450px"}
-include_graphics("untidy.jpg")
-```
-
-## untidy data {.small .build}
-
-<div style="float: left; width: 40%;">
-
-* Tablas de contingencia
-* Ejemplo data(HairEyeColor)
-
-</div>
-
-<div style="float: right; width: 60%;">
-
-```{r, echo = FALSE}
-data("HairEyeColor")
-knitr::kable(HairEyeColor[,,1]) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
-```
-
-</div>
-
-### Forma tidy
-
-```{r, echo=FALSE}
-library(epitools)
-library(knitr)
-H <- as.data.frame(HairEyeColor)
-kable(H) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F) %>% scroll_box()
-```
-
 # Trabajemos tidy
 
 ## dplyr {.build}
@@ -391,7 +351,6 @@ kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed
 
 ## Select {.small .build}
 
-<div style="float: left; width: 40%;">
 
 * Selecciona columnas dentro de un data.frame, se pueden restar
 
@@ -414,18 +373,15 @@ iris %>% group_by(Species) %>% select(-contains("Sepal")) %>% summarize_all(mean
 ```{r, echo = FALSE}
 DF <- iris %>% group_by(Species) %>% select(-contains("Sepal")) %>% summarize_all(mean)
 ```
-</div>
 
-<div style="float: right; width: 60%;">
-
+## Resultado
 
 ```{r, echo = FALSE}
 kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F)
 ```
 
-</div>
 
-# Ejercicios
+# 
 
 ## Ejercicios {.build .small}
 
