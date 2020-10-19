@@ -75,18 +75,11 @@ knitr::include_graphics("Vector.jpg")
 
 ## Ejercicio
 
-Supongamos que tenemos el siguiente vector:
+<iframe src="http://etc.ch/xVUm" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
 
-```{r, echo = T, eval = F}
-x <- c(2, 4, 6, 8, 10)
-```
+## Respuesta
 
-cual de los siguientes códigos nos entregaran un vector `y` con los elementos 4 y 8:
-
-1. `y <- x[2,4]`
-2. `y <- x[c(2,4)]`
-3. `y <- x[4,8]`
-4. `y <- x[c(4,8)]`
+<iframe src="https://directpoll.com/r?XDbzPBdJ2bAX0ZEucNkscDXLnxGvY7Z4dpc4SsJ1Rt" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
 
 
 ## Data Frame {.build}
@@ -112,8 +105,6 @@ knitr::include_graphics("DataFrame.jpg")
 
 ## Ejercicio {.small}
 
-En el sigiente data frame llamado DF:
-
 ```{r, echo = F}
 set.seed(2020)
 DF <- data.frame(Numero = sample(1:5, size =5, replace = F), Letra = sample(LETTERS, size = 5, replace = F), Medida = rnorm(n = 5, mean = 60, sd = 10) ,stringsAsFactors = F)
@@ -123,13 +114,11 @@ kable(DF, digits = 2) %>% kable_styling(bootstrap_options = c("striped"), full_w
 
 ## Alternativas
 
-cual de los siguientes códigos nos entregaran un data frame `DF2` con solo las filas con letras A y B, y solo las columnas Letra y Medida:
+<iframe src="http://etc.ch/xVUm" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
 
-1. `DF2 <- DF[c(2,3),c(1,4)]`
-2. `DF2 <- DF[2:3,1:4]`
-3. `DF2 <- DF[c(1,4),c(2,3)]`
-4. `DF2 <- DF[1:4,2:3]`
+## Respuesta
 
+<iframe src="https://directpoll.com/r?XDbzPBdJ3cBY1aFvdOltdEYMoyHwZ8a5eqd5TtK2Su" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
 
 # Principios de Tidydata
 
