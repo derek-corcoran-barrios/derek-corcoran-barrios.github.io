@@ -2,7 +2,7 @@ descripción-del-curso
 descripcion-del-curso
 objetivos
 tidy
-literature
+investigación-reproducible-y-github
 methods
 applications
 example-one
