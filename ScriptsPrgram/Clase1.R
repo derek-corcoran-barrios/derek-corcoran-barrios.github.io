@@ -113,3 +113,16 @@ DF <- iris %>% filter(Species == "virginica") %>% select(contains("Petal"))
 
 
 DF2 <- iris[101:150,3:4]
+
+
+library(tidyverse)
+
+Casos_Activos <- read_csv("https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output/producto19/CasosActivosPorComuna_std.csv")
+
+
+Valdivia = Casos_Activos %>% 
+  filter(Comuna == "Valdivia") %>% 
+  mutate(Casos_por_100.000=(`Casos activos`/Poblacion)*100000)
+
+
+
