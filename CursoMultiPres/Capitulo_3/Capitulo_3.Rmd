@@ -55,7 +55,9 @@ kable(tidy(fit1)) %>% kable_styling(bootstrap_options = c("striped", "hover"), f
 
 ## Calculemos {.smaller .build}
 
-$$\small Weight = 8.75\times Time + 10.92 + \theta_216.17 + \theta_336.50 + \theta_430.23$$
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(fit1, use_coefs = TRUE, wrap = T)
+```
 
 ```{r, echo=F}
 D <-  data.frame(Time = c(0, 0, 4, 4), Diet = as.factor(c(1,4,1, 4))) %>% t %>% as.data.frame()
@@ -97,9 +99,11 @@ ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pre
 kable(tidy(fit2)) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
 ```
 
-## Calculemos
+## Calculemos {.smaller}
 
-$$\small Weight = 7.05\times Time + Time \theta_2\times 1.61 + Time \theta_3\times 3.74 + Time \theta_4\times 2.86 + 27.86$$
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(fit2, use_coefs = TRUE, wrap = T)
+```
 
 * Nuevos datos
 
@@ -137,7 +141,9 @@ kable(tidy(fit3)) %>% kable_styling(bootstrap_options = c("striped", "hover"), f
 
 ## Calculemos {.smaller}
 
-$$\scriptsize Weight = 6.84\times Time + Time \theta_2\times 1.77 + Time \theta_3\times 4.58 + Time \theta_4\times 2.87 + 30.93 + -2.3\theta_2 + -12.7\theta_3 + -0.14\theta_4$$
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(fit3, use_coefs = TRUE, wrap = T)
+```
 
 ```{r, echo=F}
 D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
@@ -244,8 +250,13 @@ ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pre
 tidy(fit2g) %>% kable(digits = 5)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
-## Calculemos
-$$\small Weight = \frac{1}{eq}$$
+## Calculemos {.small}
+
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(fit2g, use_coefs = TRUE, wrap = T,   coef_digits = 5, terms_per_line = 3
+)
+```
+
 
 ```{r, echo=F}
 D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
@@ -306,9 +317,13 @@ ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pre
 tidy(fit2p) %>% kable(digits = 3)%>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
-## Calculemos
+## Calculemos {.small}
 
-$$Weight = e^{eq}$$
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(fit2p, use_coefs = TRUE, wrap = T
+                         #,   coef_digits = 5, terms_per_line = 3
+)
+```
 
 ```{r, echo=F}
 D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
@@ -427,6 +442,15 @@ DF$SE <- predict(FitBin2, DF, se.fit = TRUE,"response")$se.fit
 
 ggplot(DF, aes(x = Fare, y = Prediction)) + geom_ribbon(aes(ymax= Prediction + SE, ymin =Prediction - SE, fill = Sex), alpha = 0.5) + geom_line(aes(lty = Sex)) + theme_classic()
 ```
+
+## Formula {.small}
+
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(FitBin2, use_coefs = TRUE, wrap = T,   coef_digits = 3, terms_per_line = 3
+)
+```
+
+
 
 # Resumen función link
 
