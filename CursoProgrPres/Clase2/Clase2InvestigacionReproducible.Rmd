@@ -1,0 +1,243 @@
+---
+title: "Investigación reproducible y github"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
+library(tidyverse)
+library(broom)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Que es la investigación reproducible?
+
+```{r, message=FALSE, echo=FALSE, warning=FALSE}
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(ggmap, ggplot2, dplyr, readr, leaflet, dygraphs, xts, lubridate, geojsonio)
+```
+
+* Código, datos (**Crudos**) y texto entrelazados
+* en R: Rmarkdown (Rmd)
+
+```{r, echo = FALSE, out.width = "1000px"}
+knitr::include_graphics("Reproducible.png")
+```
+
+# Github
+
+## Github
+
+* Como "Google Drive" o "Dropbox" para código
+* Control de cambios (Podemos volver a cualquier versión anterior)
+* En base a codigo (idealmente), pero hay GUIs
+* Cada proyecto es un repositorio
+
+
+```{r, echo=FALSE}
+knitr::include_graphics("Octocat.png")
+```
+
+## Crear primer repositorio
+
+- Crearse cuenta en github.com
+- Crear repositorio en github
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("StartAProject.png")
+```
+
+## Crear primer repositorio
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("NombreRepo.png")
+```
+
+## Copiar la url
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("GitAdress.png")
+```
+
+## Volvamos a RStudio
+
+* Creamos un proyecto nuevo
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("NewProject.png")
+```
+
+## Pegamos la URL 
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("GitRstudio.png")
+```
+
+## La nueva pestaña git
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("GitPan.png")
+```
+
+## Los "¿tres?" pasos de un repositorio 
+
+* **Git add:** Agregar a los archivos que vas a guardar
+* **Git commit:** Guardar en el repositorio local (Mi computador)
+* **Git push:** Guardar en el repositorio remoto (En la nube)
+* Otros como git merge, git pull, git clone, etc
+
+## Git Add
+
+* Sumar un archivo al repositorio
+* ¿Cuando no hacerlo?
+    + Limite de un archivo de 100 Mb
+    + Límite de un repositorio de un Gb
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("GitAdd.png")
+```
+
+## Git commit
+
+* Con esto dices quiero guardar mis cambios en mi disco duro
+* Se guarda en tu repositorio local (Tu computador)
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("Commit.png")
+```
+
+## Mensaje del commit
+
+* Debe ser relevante (ejemplo, no poner *Version final ahora si*)
+* Si te equivocas puedes restablecer a cualquier commit anterior (si sabes cual es)
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("MensajeCommit.png")
+```
+
+## A guardar el repositorio (git push)
+
+* Con esto subes tu commit a la nube (queda respaldado)
+
+```{r, echo = FALSE, out.width='80%', fig.asp=.75, fig.align="center"}
+knitr::include_graphics("Push.png")
+```
+
+# Clásico error
+
+## Configurar github
+
+```{r, echo = T, eval = F}
+git config --global user.name "derek-corcoran-barrios"
+git config --global user.email "derek-corcoran-barrios@gmail.com"
+```
+
+## Si no resulta
+
+* Si estas en windows instala [git](https://git-scm.com/download/win)
+* Si estas en [mac](https://git-scm.com/download/mac)
+* Si estas en linux 
+
+```{r, echo = T, eval=FALSE}
+sudo apt-get update
+sudo apt-get install git
+```
+
+# Dudas?
+
+## Reproducibilidad en R
+
+```{r, echo = F, out.width='30%', fig.align='center'}
+knitr::include_graphics("Rmark.png")
+```
+
+1. Una carpeta
+    + Datos crudos (csv, xls, html, json)
+    + Codigo y texto (Rmd, Rpres, shiny)
+    + Resultados (Manuscrito, Pagina Web, App)
+
+## Antes de empezar (importar datos)
+
+* Hasta ahora hemos usado `data` (sólo para bases incorporadas en R)
+* Desde hoy usaremos `read_csv` (Para csv, para otros archivos hay otras funciones)
+* Otro tipo de datos son los `.rds`, todo puede ser transformado a este formato
+
+## Datos para trabajar {.small}
+
+* Puedes hacer:
+
+```{r, eval = F, echo = T}
+library(readr)
+plants <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-08-18/plants.csv')
+```
+
+o
+
+```{r, eval = F, echo = T}
+plants <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-08-18/plants.csv')
+```
+
+## Crear un nuevo Rmarkdown
+
+```{r, echo = F, out.width='100%', fig.align='center'}
+knitr::include_graphics("https://archive.org/download/NewRmd/NewRmd.png")
+```
+
+# Esta vez usaremos un template de un `github document`
+
+## Partes de un Rmd
+
+<div class="columns-2">
+  1. Texto
+  2. Chunks
+  3. Inline code
+  4. [Cheat sheet Rmd](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+  5. El botón mágico **Knit**
+
+```{r, echo = FALSE}
+knitr::include_graphics("RMDexample.png")
+```
+
+</div>
+
+## Texto
+
+[link](https://stackoverflow.com/users/3808018/derek-corcoran)
+
+```{r, echo = TRUE, eval=FALSE}
+# Titulo
+
+## subtitulo
+
+*cursiva*
+
+**negrita**
+
+[link](https://stackoverflow.com/users/3808018/derek-corcoran)
+```
+
+
+## Chunks
+
+```{r, echo = F, out.width= "100%"}
+knitr::include_graphics("Chunk.png")
+```
+
+
+# Ejemplo 1
+
+## Elijamos solo plantas de Chile {.build}
+
+* En nuestro Rmd hagamos un data.frame solo con plantas de chile
+* Elijamos solo las columnas de especie
+
+## Ejemplo 2
+
+* En nuestro Rmd hagamos un data.frame resumen, de número de plantas extintas por país de America del Sur
+* Ahora subamoslo a github
