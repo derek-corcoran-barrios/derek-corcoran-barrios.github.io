@@ -1,13 +1,14 @@
 library(caret)
 library(tidyverse)
 library(broom)
+
 ## idea mas simple
 
-ConHP <- lm(mpg ~ hp + wt + qsec, data = mtcars)
-SinHP <- lm(mpg ~ wt + qsec, data = mtcars)
+ConWT <- lm(mpg ~ hp + wt + qsec, data = mtcars)
+SinWT <- lm(mpg ~ hp + qsec, data = mtcars)
 
-RSqCon <- glance(ConHP) %>% pull(r.squared)
-RSqSin <- glance(SinHP) %>% pull(r.squared)
+RSqCon <- glance(ConWT) %>% pull(r.squared)
+RSqSin <- glance(SinWT) %>% pull(r.squared)
 
 RSqCon - RSqSin
 
@@ -43,20 +44,18 @@ Totales_Con_Resid <- broom::tidy(anova(Fit1)) %>%
 
 Totales_Sin_Resid/Totales_Con_Resid
 
-Totales_hp_Resid1 <- broom::tidy(anova(Fit1)) %>% 
-  dplyr::filter(term == "hp") %>% 
+Totales_wt_Resid1 <- broom::tidy(anova(Fit1)) %>% 
+  dplyr::filter(term == "wt") %>% 
   summarise(sumsq = sum(sumsq))
 
-Totales_hp_Resid2 <- broom::tidy(anova(Fit2)) %>% 
-  dplyr::filter(term == "hp") %>% 
+Totales_wt_Resid2 <- broom::tidy(anova(Fit2)) %>% 
+  dplyr::filter(term == "wt") %>% 
   summarise(sumsq = sum(sumsq))
 
 
-Totales_hp_Resid1/Totales_Con_Resid
-Totales_hp_Resid2/Totales_Con_Resid
+Totales_wt_Resid1/Totales_Con_Resid
+Totales_wt_Resid2/Totales_Con_Resid
 
-
-broom::glance(Fit1)
 
 ## Todas las combinaciones
 Variables <- c("hp", "qsec", "wt")
@@ -83,6 +82,8 @@ ggplot(Models, aes(x = term, y = Cont)) +
   theme_bw()
 
 
+Models <- Models %>% group_by(term) %>% summarise(Cont = mean(Cont))
+
 
 ### Paquete Importancia relativa
 
@@ -92,3 +93,10 @@ relaimpo::calc.relimp(Fit1, type = "lmg")
 relaimpo::calc.relimp(Fit1, type = "lmg")@lmg %>% sum()
 
 relaimpo::calc.relimp(Fit1, type = "pratt")
+
+
+#### Caret
+
+Fit1 <- train(mpg ~ hp + wt + qsec, data = mtcars, method = "gam")
+
+varImp(Fit1, scale = F)
