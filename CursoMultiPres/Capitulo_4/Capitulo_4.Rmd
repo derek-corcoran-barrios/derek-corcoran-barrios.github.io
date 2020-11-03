@@ -1,5 +1,5 @@
 ---
-title: "Automatización de selección de modelos, variables fijas y aleatorias"
+title: "Automatización de selección de modelos, variables fijas y aleatorias e introducción a crossvalidation"
 author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
