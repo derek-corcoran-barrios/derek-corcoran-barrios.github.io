@@ -195,6 +195,15 @@ kable(Selected, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "
 
 # Crossvalidation
 
+## A veces no se pueden usar criterios de información {.build}
+
+* No se pueden calcular IC
+* No se cumplen supuestos de criterios de información
+* Comparacion entre distintos tipos de modelos (GLM, vs GAM vs RPART, etc)
+* Se aplican distintas transformaciones a la variable respuesta (GLM)
+* Varios terminos polinomiales (no se debe promediar modelos)
+
+
 ## Alternativas a los métodos de criterios de información
 
 * Simular que presentamos datos nuevos
@@ -341,6 +350,60 @@ ggplot(FOLDS, aes(x = hp, y = mpg)) + geom_point(aes(color = Fold), alpha = 0.5)
 
 * Rsq = `r Rs`
 * Rsq = `r mean(Rs)`
+
+# Con Caret
+
+## CV en caret {.build .small}
+
+* para 1 modelo
+
+```{r, echo = TRUE}
+set.seed(2020)
+ctrl <- trainControl(method = "cv",number = 5)
+
+Modelo <- train(mpg ~ hp, data = mtcars, method = "lm",trControl = ctrl)
+
+DF <- Modelo$resample 
+
+DF <- DF %>% select(Rsquared,Resample)
+```
+
+## Continuado {.small .build}
+
+```{r, echo=FALSE}
+kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+
+## Seleccionando por crossvalidation {.build .small}
+
+```{r, echo = TRUE}
+form1 <- "mpg ~ hp"
+form2 <- "mpg ~ hp + I(hp^2)"
+form3 <- "mpg ~ hp + I(hp^2) + I(hp^3)"
+form4 <- "mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4)"
+form5 <- "mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5)"
+form6 <- "mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5) + I(hp^6)"
+
+forms <- list(form1, form2, form3, form4, form5, form6)
+K = (2:7)
+
+ctrl <- trainControl(method = "cv",number = 5)
+```
+
+## Continuado {.small .build}
+
+```{r, echo = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
+set.seed(2020)
+Tests <- forms %>% map(~train(as.formula(.x), data = mtcars, method = "lm",trControl = ctrl)) %>% map(~as.data.frame(.x$resample)) %>% map(~select(.x, Rsquared))  %>% map(~summarise_all(.x,funs(mean, sd), na.rm = T)) %>% map2(.y = forms,~ mutate(.x, model = .y)) %>% reduce(bind_rows) %>% mutate(K = K) %>% arrange(desc(mean))
+```
+
+## Continuado {.small .build}
+
+```{r, echo=FALSE}
+kable(Tests, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
 
 # Repaso
 
