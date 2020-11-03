@@ -52,7 +52,7 @@ mod2 <- lmer(uptake ~ Type*Treatment + I(log(conc)) + conc + (1|Plant), data = C
 ```
 
 
-```{r, cache = TRUE, echo=TRUE}
+```{r, echo=TRUE}
 options(na.action = "na.fail")
 
 Max.Vars <- floor(nrow(CO2)/10)
@@ -103,7 +103,7 @@ ggplot(NewData, aes(x = conc, y = Pred)) + geom_line(aes(color = Type, lty = Tre
 * ¿Que problema tiene la siguiente base de datos para LMs o GLMs?
 * Ejemplo base de datos `Cement` de MuMIn
 
-```{r, cache=TRUE, echo=FALSE}
+```{r, echo=FALSE}
 library(MuMIn)
 data("Cement")
 
@@ -165,7 +165,7 @@ kable(smat) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_si
 
 ## Como agrego eso a MuMIn (cont)
 
-```{r, cache= TRUE, echo=TRUE}
+```{r, echo=TRUE}
 options(na.action = "na.fail")
 Selected <- dredge(GlobalMod, subset = smat)
 ```
@@ -177,7 +177,7 @@ kable(Selected, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "
 
 ## Incluir además límite de numero de variables
 
-```{r, cache= TRUE, echo=TRUE}
+```{r, echo=TRUE}
 options(na.action = "na.fail")
 Selected <- dredge(GlobalMod, subset = smat, m.lim = c(0, floor(nrow(Cement)/10)))
 ```
@@ -231,7 +231,7 @@ ggplot(mtcars, aes(x = hp, y = mpg)) + geom_smooth(method = "lm", lty = 2, color
 * En este caso K = 5
     + Dividiremos nuestra base de datos en 5 partes iguales
 
-```{r, echo = FALSE, cache=TRUE}
+```{r, echo = FALSE}
 set.seed(2020)
 Folds <- createFolds(mtcars$hp, 5)
 Rs <- vector()
