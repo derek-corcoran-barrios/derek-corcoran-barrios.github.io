@@ -9,7 +9,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = TRUE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 80))
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = F, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 80))
 library(tidyverse)
 library(caret)
 library(MuMIn)
