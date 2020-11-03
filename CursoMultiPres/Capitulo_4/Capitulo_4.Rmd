@@ -405,7 +405,7 @@ kable(Tests, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hov
 ```
 
 
-# Repaso
+# 
 
 # Entender la hipótesis estadística a generar basado en la hipótesis biológica
 
