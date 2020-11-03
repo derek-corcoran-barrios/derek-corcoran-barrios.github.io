@@ -5,7 +5,7 @@ date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
   ioslides_presentation:
     widescreen: true
-    incremental: true
+    incremental: false
 ---
 
 ```{r setup, include=FALSE}
@@ -15,6 +15,7 @@ library(caret)
 library(MuMIn)
 library(broom)
 library(kableExtra)
+library(glmnet)
 options("kableExtra.html.bsTable" = T)
 ```
 
@@ -64,7 +65,7 @@ Seleccion <- dredge(mod2, m.lim = c(0, Max.Vars))
 ```{r, echo = FALSE}
 DF <- as.data.frame(Seleccion) %>%  mutate(weight = as.numeric(weight)) %>% mutate_if(is.factor, as.character)
 
-kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, font_size = 16) %>% scroll_box(width = "100%", height = "400px")
+kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F, font_size = 16) %>% scroll_box(width = "100%", height = "300px")
 ```
 
 * Solo el primer modelo es seleccionado
@@ -73,14 +74,14 @@ kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"
 
 ```{r, eval = FALSE}
 BestModel <- get.models(Seleccion, 1)[[1]]
-broom::tidy(BestModel)
+broom.mixed::tidy(BestModel)
 ```
 
 ```{r, echo=FALSE}
 BestModel <- get.models(Seleccion, 1)[[1]]
-DF <- broom::tidy(BestModel)
+DF <- broom.mixed::tidy(BestModel)
 
-kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
+kable(DF, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F) %>% scroll_box(width = "100%", height = "300px")
 ```
 
 ## Modelo
@@ -192,6 +193,154 @@ kable(Selected, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "
 #sjPlot::plot_model(logitmod, type = "eff", terms = c("temp")) + ggtitle("") + ylab("Probabilidad de fallo") + xlab("Temp F") + theme_classic()
 ```
 
+# Crossvalidation
+
+## Alternativas a los métodos de criterios de información
+
+* Simular que presentamos datos nuevos
+  + Crossvalidation
+  + Bootstrapping
+  + Leave one out
+
+```{r, echo=FALSE}
+knitr::include_graphics("K-fold_cross_validation_EN.jpg", dpi = 70)
+```
+
+
+## k-fold Crossvalidation
+
+* Divido aleatoreamente mi base de datos en $k$ grupos
+* Entreno mis modelos con $k-1$ grupos 
+* Testeo con el grupo $k_i$
+* Promedio medida de desempeño por ejemplo $R^2$
+
+## Volvamos al ejemplo de hp {.build}
+
+```{r, echo = FALSE}
+data(mtcars)
+ggplot(mtcars, aes(x = hp, y = mpg)) + geom_smooth(method = "lm", lty = 2, color = "red") + geom_point() + theme_classic()
+```
+
+* Veamos como evaluamos 1 modelo $mpg = \beta_1 hp +c$
+* $R^2$ = `r round(broom::glance(lm(mpg~hp, data = mtcars))$r.squared,2)`
+
+ Paso 1 K-fold
+
+## Divido my base en K  {.build}
+
+* En este caso K = 5
+    + Dividiremos nuestra base de datos en 5 partes iguales
+
+```{r, echo = FALSE, cache=TRUE}
+set.seed(2020)
+Folds <- createFolds(mtcars$hp, 5)
+Rs <- vector()
+
+COLS <- rainbow(n = 5)
+#data("diamonds")  
+flds <- createFolds(mtcars$hp, k = 5, returnTrain = FALSE)
+FOLDS <- list()
+for(i in 1:5){
+  FOLDS[[i]] <- mtcars[flds[[i]],]
+  FOLDS[[i]]$Fold <- names(flds)[[i]]
+  FOLDS[[i]]$Color <- COLS[i]
+}
+
+FOLDS <- bind_rows(FOLDS)
+
+ggplot(FOLDS, aes(x = hp, y = mpg)) + geom_point(aes(color = Fold), alpha = 0.5) + theme_classic() + scale_color_manual(values =  COLS)
+
+```
+
+# Paso 2 Entreno y testeo para cada K
+
+## Fold 1
+
+```{r, echo=FALSE}
+  temp <- COLS
+  temp[!str_detect(temp, pattern = COLS[1])] <- "black"
+  Train <- filter(FOLDS, Fold != unique(Fold)[1])
+  Test <- filter(FOLDS, Fold == unique(Fold)[1])
+  mod <- lm(mpg ~ hp, data = Train)
+  Test$pred <- predict(mod, Test)
+  Test$Rsq <- round(postResample(pred = Test$pred, obs = Test$mpg)[2],2)
+  print(ggplot(Train, aes(x = hp, y = mpg)) + geom_point(color = "black", alpha = 0.5) + geom_point(data = Test, color = COLS[1]) + geom_line(data = Test, aes(x = hp, y = pred), lty = 2, color = "red") + geom_text(data = Test, x = 250, y = 30, aes(label =paste("Rsq =", Rsq))) + theme_classic() + theme(legend.position = "none") + ylim(c(3, 35))+ xlim(c(45,345))) 
+  
+  Rs[1] <- Test$Rsq
+```
+
+* Rsq = `r Rs`
+
+## Fold 2
+
+```{r, echo=FALSE}
+  temp <- COLS
+  temp[!str_detect(temp, pattern = COLS[2])] <- "black"
+  Train <- filter(FOLDS, Fold != unique(Fold)[2])
+  Test <- filter(FOLDS, Fold == unique(Fold)[2])
+  mod <- lm(mpg ~ hp, data = Train)
+  Test$pred <- predict(mod, Test)
+  Test$Rsq <- round(postResample(pred = Test$pred, obs = Test$mpg)[2],2)
+  
+  Rs[2] <- Test$Rsq
+  
+  print(ggplot(Train, aes(x = hp, y = mpg)) + geom_point(color = "black", alpha = 0.5) + geom_point(data = Test, color = COLS[2]) + geom_line(data = Test, aes(x = hp, y = pred), lty = 2, color = COLS[2]) + geom_text(data = Test, x = 250, y = 30, aes(label =paste("Rsq =", Rsq))) + theme_classic() + theme(legend.position = "none") + ylim(c(3, 35))+ xlim(c(45,345))) 
+  
+```
+
+* Rsq = `r Rs`
+
+## Fold 3
+
+```{r, echo=FALSE}
+  temp <- COLS
+  temp[!str_detect(temp, pattern = COLS[3])] <- "black"
+  Train <- filter(FOLDS, Fold != unique(Fold)[3])
+  Test <- filter(FOLDS, Fold == unique(Fold)[3])
+  mod <- lm(mpg ~ hp, data = Train)
+  Test$pred <- predict(mod, Test)
+  Test$Rsq <- round(postResample(pred = Test$pred, obs = Test$mpg)[2],2)
+  Rs[3] <- Test$Rsq
+  print(ggplot(Train, aes(x = hp, y = mpg)) + geom_point(color = "black", alpha = 0.5) + geom_point(data = Test, color = COLS[3]) + geom_line(data = Test, aes(x = hp, y = pred), lty = 2, color = COLS[3]) + geom_text(data = Test, x = 250, y = 30, aes(label =paste("Rsq =", Rsq))) + theme_classic() + theme(legend.position = "none") + ylim(c(3, 35))+ xlim(c(45,345))) 
+```
+
+* Rsq = `r Rs`
+
+## Fold 4
+
+```{r, echo=FALSE}
+  temp <- COLS
+  temp[!str_detect(temp, pattern = COLS[4])] <- "black"
+  Train <- filter(FOLDS, Fold != unique(Fold)[4])
+  Test <- filter(FOLDS, Fold == unique(Fold)[4])
+  mod <- lm(mpg ~ hp, data = Train)
+  Test$pred <- predict(mod, Test)
+  Test$Rsq <- round(postResample(pred = Test$pred, obs = Test$mpg)[2],2)
+  Rs[4] <- Test$Rsq
+  print(ggplot(Train, aes(x = hp, y = mpg)) + geom_point(color = "black", alpha = 0.5) + geom_point(data = Test, color = COLS[4]) + geom_line(data = Test, aes(x = hp, y = pred), lty = 2, color = COLS[4]) + geom_text(data = Test, x = 250, y = 30, aes(label =paste("Rsq =", Rsq))) + theme_classic() + theme(legend.position = "none") + ylim(c(3, 35))+ xlim(c(45,345))) 
+```
+
+* Rsq = `r Rs`
+
+## Fold 5 {.build}
+
+```{r, echo=FALSE}
+  temp <- COLS
+  temp[!str_detect(temp, pattern = COLS[5])] <- "black"
+  Train <- filter(FOLDS, Fold != unique(Fold)[5])
+  Test <- filter(FOLDS, Fold == unique(Fold)[5])
+  mod <- lm(mpg ~ hp, data = Train)
+  Test$pred <- predict(mod, Test)
+  
+  Test$Rsq <- round(postResample(pred = Test$pred, obs = Test$mpg)[2],2)
+  
+  Rs[5] <- Test$Rsq
+  
+  print(ggplot(Train, aes(x = hp, y = mpg)) + geom_point(color = "black", alpha = 0.5) + geom_point(data = Test, color = COLS[5]) + geom_line(data = Test, aes(x = hp, y = pred), lty = 2, color = COLS[5]) + geom_text(data = Test, x = 250, y = 30, aes(label =paste("Rsq =", Rsq))) + theme_classic() + theme(legend.position = "none") + ylim(c(3, 35))+ xlim(c(45,345))) 
+```
+
+* Rsq = `r Rs`
+* Rsq = `r mean(Rs)`
 
 # Repaso
 
@@ -200,6 +349,7 @@ kable(Selected, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "
 ## Pregunta 1 {.build}
 
 * ¿Cual de estas relaciones es la que uno esperaría ver al finalizar el experimento?
+
 
 ```{r, echo=FALSE, fig.height= 4}
 Fit1 <- glm(weight ~ Time + Diet:Time, family = poisson, data = ChickWeight)
@@ -234,7 +384,6 @@ library(countdown)
 library(beepr)
 ```
 
-`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, play_sound = TRUE)`
 
 * Respuesta: A
 
@@ -253,7 +402,6 @@ C <- glm(weight ~ Time + Time:Diet, family = poisson)
 ```
 
 
-`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
 
 ## Pregunta 2 (cont){.small}
 
@@ -271,14 +419,12 @@ ChickPoissMM3 <- glmer(weight ~ Time + Time*Diet + (1|Chick), family = poisson, 
 * ¿Cuanto pesaria un pollo en el dia 10 en la dieta 2 basado en el modelo anterior?
 
 ```{r, echo=F}
-kable(tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+kable(broom.mixed::tidy(ChickPoissMM2), digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
 ```
 
 * A = `r exp(3.83 + 10*0.07 + 0.02)`
 * B = `r exp(3.83 + 10*0.07 + (10*0.02))`
 * C = `r 3.83 + 10*0.07 + (10*0.02)`
-
-`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
 
 ## Pregunta 3 (cont)
 
@@ -306,7 +452,6 @@ B <- glm(weight ~ Time*Diet, family = poisson)
 C <- glm(weight ~ Time + Time:Diet, family = poisson)
 ```
 
-`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10, top = 0)`
 
 ## Pregunta 5
 
@@ -316,7 +461,6 @@ C <- glm(weight ~ Time + Time:Diet, family = poisson)
 ggplot(DATA2, aes(x = Time, y = Pred, color = Diet)) + geom_ribbon(aes(ymax = Pred + sd, ymin = Pred - sd, fill = Diet), alpha = 0.5) + geom_line(aes(color = Diet)) + theme_bw()
 ```
 
-`r countdown::countdown(minutes = 0, seconds =  40, warn_when = 10)`
 
 ## Pregunta 5 (cont)
 
