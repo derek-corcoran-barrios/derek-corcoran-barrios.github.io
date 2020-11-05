@@ -65,3 +65,33 @@ ggplot() + geom_raster(data = Clim_DF, aes(x = x, y = y, fill = Temp)) + geom_sf
 
 Southern <- Africa %>% dplyr::filter(GEO3 == "Southern Africa")
 
+## Subsetting using numeric variables
+
+MedianGDP <- median(Africa$GDP_MD_)
+
+Richest <- Africa %>% dplyr::filter(GDP_MD_ > MedianGDP)
+
+## Lets say we just want to see climate from Nambibia
+
+# First we create a polygon of Nambibia
+
+Namibia <- Africa %>% dplyr::filter(SOVEREI == "Namibia")
+
+# Then crop climate to that
+
+Clim_Namibia <- Clim %>% crop(Namibia)
+
+#If we plot it we can see that it takes all the *Bounding box*
+
+Clim_Namibia_DF <- Clim_Namibia %>% 
+  as("SpatialPixelsDataFrame") %>% 
+  as.data.frame()
+
+ggplot() + 
+  geom_raster(data = Clim_Namibia_DF, aes(x = x, y = y, fill = Temp)) +
+  geom_sf(data = Namibia, alpha = 0) +
+  labs(x = NULL, y = NULL) +
+  theme_bw() +
+  scale_fill_viridis_c()
+
+
