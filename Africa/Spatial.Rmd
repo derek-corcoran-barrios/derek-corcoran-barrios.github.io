@@ -1,0 +1,226 @@
+---
+title: "Spatial Analysis in R"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
+library(leaflet)
+library(sf)
+library(tidyverse)
+library(rgdal)
+library(raster)
+library(rasterVis)
+library(rworldxtra)
+library(tidyverse)
+library(gridExtra)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+# What is GIS
+
+## Geographic Information System {.build}
+
+* Spatial representation of data
+* Many type of data
+    + Remote sensing data (Spectral data, lidar)
+    + Modeled datasets (Species distribution models)
+    + Expert data (Estimated distribution)
+    + Future planning (Systematic conservation planning)
+    + Fanatasy maps (Middle-earth, Westeros)
+* Two main formats
+    + Vectorial data (Shapefiles)
+    + Grid data (Rasters)
+
+## Vectorial datasets
+
+* Shapefiles (*.shp*)
+* **Points** Example `Abundance.csv` (Cities, species presences, events, sampling sites)
+* Lines (Rivers, Roads, Paths)
+* **Polygons** example `Africa.shp` (Countries, regions, provinces, lakes)
+* Packages (sf, sp)
+
+# Polygons
+
+## Vectorial data example
+
+```{r, echo = TRUE}
+library(sf)
+library(tidyverse)
+
+Africa <- read_sf("Africa.shp")
+
+ggplot() + geom_sf(data = Africa, aes(fill = POP_EST))
+```
+
+## Example vectorial data (cont.)
+
+```{r, echo = TRUE, eval = F}
+ggplot() + geom_sf(data = Africa, aes(fill = GEO3))
+```
+
+# Points example
+
+## Read from csv
+
+```{r, echo = TRUE}
+Abundance <- read_csv("Abundance.csv")
+Abundance_sf <- Abundance %>% st_as_sf(coords = c(9,10),crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")
+ggplot() + geom_sf(data = Africa, aes(fill = POP_EST)) + geom_sf(data = Abundance_sf, color = "red")
+```
+
+## Plot points using another variable
+
+```{r,echo = T, eval = F}
+ggplot() + geom_sf(data = Africa, aes(fill = POP_EST)) + geom_sf(data = Abundance_sf, aes(color = Family))
+```
+
+## Plot points using another variable
+
+```{r,echo = T, eval = F}
+ggplot() + geom_sf(data = Africa, aes(fill = POP_EST)) + geom_sf(data = Abundance_sf, aes(size = Measurement))
+```
+
+# Grid Data
+
+## Grid data
+
+* Similar to a picture
+* Each pixel has certain characterstics (resolution, projection, units)
+* Example `Clim.tif`
+
+
+## Read mean temperature and precipitation
+
+```{r, echo = T}
+Clim <- stack("Clim.tif")
+plot(Clim)
+```
+
+## Change names
+
+```{r, echo = T}
+names(Clim) <- c("Temp", "Prec")
+plot(Clim, colNA = "black")
+```
+
+# Summary
+
+## To read
+
+```{r}
+DF <- tibble(Action = c("Read"), Shapefile = c("read_sf"), CSV = c("read_csv"), Raster =c("stack/raster"))
+
+kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+# Plot together
+
+## Transform raster to DF
+
+```{r, echo = T}
+Clim_DF <- Clim %>% 
+  as("SpatialPixelsDataFrame") %>% 
+  as.data.frame()
+
+head(Clim_DF)
+```
+
+## Plot together
+
+```{r, echo = T}
+ggplot() + geom_raster(data = Clim_DF, aes(x = x, y = y, fill = Temp)) + geom_sf(data = Africa, alpha = 0) + geom_sf(data = Abundance_sf, aes(size = Measurement))
+```
+
+## Improve scale
+
+```{r, echo = T, eval = F}
+ggplot() + geom_raster(data = Clim_DF, aes(x = x, y = y, fill = Temp)) + geom_sf(data = Africa, alpha = 0) + geom_sf(data = Abundance_sf, aes(size = Measurement)) + scale_fill_viridis_c(name = "Temperature")
+```
+
+## White background
+
+```{r, echo = T, eval = F}
+ggplot() + geom_raster(data = Clim_DF, aes(x = x, y = y, fill = Temp)) + geom_sf(data = Africa, alpha = 0) + geom_sf(data = Abundance_sf, aes(size = Measurement)) + scale_fill_viridis_c(name = "Temperature") +
+theme_bw()
+```
+
+## Remove axis names
+
+```{r, echo = T}
+ggplot() + geom_raster(data = Clim_DF, aes(x = x, y = y, fill = Temp)) + geom_sf(data = Africa, alpha = 0) + geom_sf(data = Abundance_sf, aes(size = Measurement)) + scale_fill_viridis_c(name = "Temperature") +
+theme_bw() + labs(y = NULL, x = NULL)
+```
+
+# Subsetting and cropping 
+
+## Subsetting Vectorial data
+
+```{r, echo = TRUE}
+Southern <- Africa %>% dplyr::filter(GEO3 == "Southern Africa")
+
+ggplot() + geom_sf(data = Southern) + theme_bw()
+```
+
+## Subsetting Vectorial data
+
+```{r, echo = TRUE}
+SouthCentral <- Africa %>% dplyr::filter(GEO3 %in% c("Southern Africa", "Central Africa"))
+
+ggplot() + geom_sf(data = SouthCentral) + theme_bw()
+```
+
+## Modificar datos vectoriales
+
+```{r, echo = T}
+#Africa <- Africa %>% mutate(Poblacion_mill = POP_EST/1000000)
+#ggplot() + geom_sf(data = Africa, aes(fill = Poblacion_mill)) + theme_bw() + scale_fill_viridis_c()
+```
+
+## Modificar datos vectoriales (Cont.)
+
+
+```{r, echo = T}
+#Africa <- Africa %>% mutate(PIB_per_Cap = GDP_MD_EST/POP_EST)
+#ggplot() + geom_sf(data = Africa, aes(fill = PIB_per_Cap)) + theme_bw()
+```
+
+## Exportar y leer datos vectoriales
+
+```{r, echo = T}
+#Africa <- Africa %>% dplyr::select(NAME, Poblacion_mill, PIB_per_Cap, GLOCAF)
+#write_sf(Africa, "Africa.shp")
+#Africa2 <- read_sf("Africa.shp")
+#ggplot() + geom_sf(data = Africa2, aes(fill = GLOCAF)) + #theme_dark() 
+```
+
+
+## Algunas bases de datos vectoriales
+
+* [Datos vectoriales del mundo](http://www.diva-gis.org/gdata)
+* [Datos vectoriales de Chile](https://www.bcn.cl/siit/mapas_vectoriales)
+
+
+## Algunas bases de datos vectoriales
+
+* En raster función `getData("GADM")`
+
+```{r, echo = T}
+#Peru <- getData(name = "GADM", country = "PER", level = 1) %>% #st_as_sf()
+#ggplot() + geom_sf(data = Peru) + theme(legend.position = "none")
+```
+
+
+# Raster
+
+
+```{r, echo = T}
+#Prec <- getData("worldclim", res = 10, var = "prec") 
+#Prec
+```
