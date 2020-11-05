@@ -37,7 +37,7 @@ options("kableExtra.html.bsTable" = T)
 * Two main formats
     + Vectorial data (Shapefiles)
     + Grid data (Rasters)
-
+    
 ## Vectorial datasets
 
 * Shapefiles (*.shp*)
@@ -201,43 +201,109 @@ Clim_Namibia <- Clim %>% crop(Namibia)
 
 * If we plot it we can see that it takes all the *Bounding box*
 
-## Modificar datos vectoriales
+# Modify datasets
 
-```{r, echo = T}
-#Africa <- Africa %>% mutate(Poblacion_mill = POP_EST/1000000)
-#ggplot() + geom_sf(data = Africa, aes(fill = Poblacion_mill)) + theme_bw() + scale_fill_viridis_c()
+## Create vectorial variables with mutate
+
+* Lets generate GDP_Per_Capita
+* We will divide `GDP_MD_` by `POP_EST` with mutate
+
+```{r}
+Africa <- Africa %>% mutate(GDP_Per_Capita = GDP_MD_/POP_EST)
 ```
 
-## Modificar datos vectoriales (Cont.)
+* Now we can see that new variable
 
-
-```{r, echo = T}
-#Africa <- Africa %>% mutate(PIB_per_Cap = GDP_MD_EST/POP_EST)
-#ggplot() + geom_sf(data = Africa, aes(fill = PIB_per_Cap)) + theme_bw()
+```{r}
+ggplot() +
+  geom_sf(data = Africa, aes(fill = GDP_Per_Capita)) +
+  scale_fill_viridis_c() +
+  theme_bw()
 ```
 
-## Exportar y leer datos vectoriales
+## Create Grid variables
+
+* Temperature in Fahrenheit
 
 ```{r, echo = T}
-#Africa <- Africa %>% dplyr::select(NAME, Poblacion_mill, PIB_per_Cap, GLOCAF)
-#write_sf(Africa, "Africa.shp")
-#Africa2 <- read_sf("Africa.shp")
-#ggplot() + geom_sf(data = Africa2, aes(fill = GLOCAF)) + #theme_dark() 
+Fahrenheit <- (Clim[[1]]*(9/5)) + 32
 ```
 
+# Export your data 
 
-## Algunas bases de datos vectoriales
+## Export your data
 
-* [Datos vectoriales del mundo](http://www.diva-gis.org/gdata)
-* [Datos vectoriales de Chile](https://www.bcn.cl/siit/mapas_vectoriales)
+* For vectorial data
+
+```{r, echo = T, eval = FALSE}
+write_sf(Namibia, "Namibia.shp")
+```
+
+* For raster data
+
+```{r, echo = T, eval = FALSE}
+writeRaster(Fahrenheit, "Temp_F.tif", format="GTiff", overwrite=TRUE)
+```
+
+* **Formats:** .grd, .asc, .sdat, .rst, .nc, .tif, .envi, .bil, .img
+
+# Summary
+
+## To write
+
+```{r}
+DF <- tibble(Action = c("Read", "Write"), Shapefile = c("read_sf", "write_sf"), CSV = c("read_csv", "write_sf"), Raster =c("stack/raster", "writeRaster"))
+
+kable(DF) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+# Resources
+
+## Resources
+
+* [SF](https://r-spatial.github.io/sf/)
+* [raster](https://rspatial.org/raster/)
+* [Example interactive map using leaflet](https://rpubs.com/derek_corcoran/Mapa_El_Soldado)
+* [Interactive maps](https://rstudio.github.io/leaflet/)
+* [Spatial Data Science book](https://keen-swartz-3146c4.netlify.app/)
+* [Example of webapp in r using shiny](https://www.ecoinformatica.net/GCMcompareR.html)
 
 
-## Algunas bases de datos vectoriales
+# If we get the chance
 
-* En raster función `getData("GADM")`
+## Model abundance
 
-```{r, echo = T}
-#Peru <- getData(name = "GADM", country = "PER", level = 1) %>% #st_as_sf()
-#ggplot() + geom_sf(data = Peru) + theme(legend.position = "none")
+* Model abundance of Heuglin's white-eye (*Zosterops poliogaster*)
+
+```{r}
+ForModel <- Abundance_sf %>% dplyr::filter(Best_guess_binomial == "Zosterops poliogaster")
+
+Area <- Clim %>% crop(ForModel)
+```
+
+```{r, echo= F}
+Area_DF <- Area %>% as("SpatialPixelsDataFrame") %>% as.data.frame()
+Area_Africa <- Africa %>% st_crop(ForModel)
+ggplot() + geom_raster(data = Area_DF,aes(x = x, y = y, fill = Temp)) + geom_sf(data =Area_Africa, alpha = 0) + geom_sf(data = ForModel, aes(size = Effort_corrected_measurement)) + theme_bw() + scale_fill_viridis_c() +
+  labs(x = NULL, y = NULL)
+```
+
+## Prediction
+
+```{r, echo = F}
+Area <- Clim %>% crop(ForModel)
+
+Data <- raster::extract(Area, ForModel) %>% as.data.frame()
+
+ForModel <- bind_cols(ForModel, Data)
+
+Model <- glm(Effort_corrected_measurement ~ Temp + Prec, family = poisson, data = ForModel)
+
+Prediction <- predict(Area, Model, type = "response")
+
+Prediction_DF <- Prediction %>% as("SpatialPixelsDataFrame") %>% as.data.frame() %>% rename(Abundance = layer)
+
+ggplot() + geom_raster(data = Prediction_DF,aes(x = x, y = y, fill = Abundance)) + geom_sf(data =Area_Africa, alpha = 0) + geom_sf(data = ForModel, aes(size = Effort_corrected_measurement)) + theme_bw() + scale_fill_viridis_c(trans = 'log') +
+  labs(x = NULL, y = NULL)
 ```
 

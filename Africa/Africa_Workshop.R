@@ -93,5 +93,41 @@ ggplot() +
   labs(x = NULL, y = NULL) +
   theme_bw() +
   scale_fill_viridis_c()
+## Create vectorial variables with mutate
+
+# Lets generate GDP_Per_Capita
+# We will divide `GDP_MD_` by `POP_EST` with mutate# 
+
+Africa <- Africa %>% mutate(GDP_Per_Capita = GDP_MD_/POP_EST)
+
+ggplot() +
+  geom_sf(data = Africa, aes(fill = GDP_Per_Capita)) +
+  scale_fill_viridis_c() +
+  theme_bw()
+
+## Create Grid variables
+
+# Temperature in Fahrenheit
+
+Fahrenheit <- (Clim[[1]]*(9/5)) + 32
+
+plot(Fahrenheit)
+
+## Generate a model
 
 
+ForModel <- Abundance_sf %>% 
+  dplyr::filter(Best_guess_binomial == "Zosterops poliogaster") %>% 
+  dplyr::select(Effort_corrected_measurement)
+
+Area <- Clim %>% crop(ForModel)
+
+Data <- raster::extract(Area, ForModel) %>% as.data.frame()
+
+ForModel <- bind_cols(ForModel, Data)
+
+Model <- glm(Effort_corrected_measurement ~ Temp + Prec, family = poisson, data = ForModel)
+
+Prediction <- predict(Area, Model, type = "response")
+
+plot(log(Prediction))
