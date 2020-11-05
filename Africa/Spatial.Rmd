@@ -30,10 +30,10 @@ options("kableExtra.html.bsTable" = T)
 * Spatial representation of data
 * Many type of data
     + Remote sensing data (Spectral data, lidar)
-    + Modeled datasets (Species distribution models)
+    + Modelled datasets (Species distribution models)
     + Expert data (Estimated distribution)
     + Future planning (Systematic conservation planning)
-    + Fanatasy maps (Middle-earth, Westeros)
+    + Fantasy maps (Middle-earth, Westeros)
 * Two main formats
     + Vectorial data (Shapefiles)
     + Grid data (Rasters)
@@ -92,7 +92,7 @@ ggplot() + geom_sf(data = Africa, aes(fill = POP_EST)) + geom_sf(data = Abundanc
 ## Grid data
 
 * Similar to a picture
-* Each pixel has certain characterstics (resolution, projection, units)
+* Each pixel has certain characteristics (resolution, projection, units)
 * Example `Clim.tif`
 
 
@@ -158,9 +158,9 @@ ggplot() + geom_raster(data = Clim_DF, aes(x = x, y = y, fill = Temp)) + geom_sf
 theme_bw() + labs(y = NULL, x = NULL)
 ```
 
-# Subsetting and cropping 
+# Sub setting and cropping 
 
-## Subsetting Vectorial data
+## Sub setting Vectorial data
 
 ```{r, echo = TRUE}
 Southern <- Africa %>% dplyr::filter(GEO3 == "Southern Africa")
@@ -168,14 +168,14 @@ Southern <- Africa %>% dplyr::filter(GEO3 == "Southern Africa")
 ggplot() + geom_sf(data = Southern) + theme_bw()
 ```
 
-## Subsetting Vectorial data
+## Sub setting Vectorial data
 
 ```{r, echo = TRUE}
 SouthCentral <- Africa %>% dplyr::filter(GEO3 %in% c("Southern Africa", "Central Africa"))
 ```
 
 
-## Subsetting using numeric variables
+## Sub setting using numeric variables
 
 ```{r}
 MedianGDP <- median(Africa$GDP_MD_)
