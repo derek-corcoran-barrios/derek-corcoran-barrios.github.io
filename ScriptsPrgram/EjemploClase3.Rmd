@@ -1,0 +1,32 @@
+---
+title: "Ejemplo clase 3"
+author: "Derek Corcoran"
+date: "11/9/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+library(tidyverse)
+library(kableExtra)
+```
+
+## Explorando la base de datos msleep
+
+En este documento vamos a explorar la base de datos *msleep* una base de datos que tiene registro del tiempo diario de sueño de mamíferos, en la siguente tabla, podemos ver la base de datos completa
+
+```{r}
+data("msleep")
+kable(msleep, digits = 2) %>% kable_styling(bootstrap_options = c("hover", "striped")) %>% scroll_box(height = "200px", width = "600px")
+```
+
+Si consideraos todos los datos de la base de datos *msleep*, el número de horas promedio que duerme un mamífero de la base de datos es de `r msleep$sleep_total %>% mean() %>% round(2)`, de ellos `r round(((msleep %>% filter(vore == "carni") %>% nrow())/nrow(msleep))*100, 2)`% son carnivoros, `r round(((msleep %>% filter(vore == "herbi") %>% nrow())/nrow(msleep))*100, 2)`% son herbivoros, `r round(((msleep %>% filter(vore == "omni") %>% nrow())/nrow(msleep))*100, 2)`% son omnivoros, y hay  `r round(((msleep %>% filter(is.na(vore)) %>% nrow())/nrow(msleep))*100, 2)`% mamíferos de los cuales no se sabe su alimentación.
+
+```{r}
+DF <- msleep %>% group_by(conservation) %>% summarise(Sleep = mean(sleep_total), SD = sd(sleep_total)) %>% arrange(desc(Sleep))
+
+kable(DF, digits = 3, caption = "En esta tabla vemos el número promedio de horas de sueño de mamíferos agrupados según su estado de conservación de acuerdo a la IUCN") %>% kable_styling(bootstrap_options = c("striped", "hover"), full_width = F)
+```
+
+
+Link de [cheat sheets](https://rstudio.com/wp-content/uploads/2019/01/Cheatsheets_2019.pdf)
