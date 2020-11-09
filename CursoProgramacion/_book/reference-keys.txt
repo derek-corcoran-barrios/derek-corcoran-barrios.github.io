@@ -3,7 +3,7 @@ descripcion-del-curso
 objetivos
 tidy
 investigación-reproducible-y-github
-methods
+mas-usos-de-rmd
 applications
 example-one
 example-two

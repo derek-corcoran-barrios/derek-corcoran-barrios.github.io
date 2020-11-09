@@ -1,3 +1,4 @@
-# Methods
+# Mas usos de Rmd
 
-We describe our methods in this chapter.
+En esta clase usaremos rmarkdown y github, puedes seguir la presentación en el siguiente [link](https://derek-corcoran-barrios.github.io/CursoProgrPres/Clase3/Clase3RmdAvanzado.html), y a continuación tienes el link de la clase online en youtube:
+
