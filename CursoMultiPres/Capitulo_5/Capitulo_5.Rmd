@@ -1,5 +1,5 @@
 ---
-title: "Límites de selección de modelos y como resolverlo"
+title: "Regresión Penalizada"
 author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
@@ -9,15 +9,73 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, tidy = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, tidy = TRUE)
 library(MuMIn)
 library(tidyverse)
 library(broom)
 library(caret)
 library(kableExtra)
+library(glmnet)
+library(patchwork)
 options("kableExtra.html.bsTable" = T)
 ```
 
+## Regresión penalizada
+
+Empezemos con una regresión lineal simple:
+
+```{r}
+data("mtcars")
+Fit <- lm(mpg ~ wt, data = mtcars)
+```
+
+```{r, echo = FALSE}
+kable(broom::tidy(Fit), digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Como obtenemos la pendiente y el intercepto? {.build}
+
+* Usando mínimos cuadrados
+
+$$ SSE = \sum_{i = 1}^n{(y_i - \hat{y_i})^2}$$
+
+## Ejemplo:
+
+```{r, echo = F, animation.hook="gifski", interval = 0.1}
+
+#MinSq <- data.frame(Beta = seq(0, -10, length.out = 100), MinSq = NA) %>% arrange(Beta)
+#mt <- mtcars
+
+#for(i in 1:nrow(MinSq)){
+#  mt$pred <- 30.1 + MinSq$Beta[i]*mt$wt
+#MinSq$MinSq[i] <- mt %>% mutate(resid_sq = (mpg - pred)^2) %>% summarise(MinSq = sum(resid_sq)) %>% pull(MinSq)
+
+#G1 <- ggplot(mt, aes(x = wt, y = mpg)) + geom_path(aes(y = pred)) + geom_linerange(aes(ymin = pred, ymax = mpg)) + geom_point() + theme_bw()
+
+#G2 <- ggplot(MinSq, aes(x = Beta, y = MinSq)) + geom_path() + ylim(c(400,17000))+ theme_bw() + geom_label(aes(x = -5, y = 12000, label = paste0("MinSq =",round(min(MinSq, na.rm = T),0)))) + geom_vline(data =(dplyr::filter(MinSq, MinSq == min(MinSq, na.rm = T))) ,aes(xintercept = Beta), lty = 2, color = "red")
+#Final <- G1 + G2
+#print(Final)
+#}
+
+```
+
+## Cuando esto es un problema
+
+* A veces nuestra poblacion es muy distinta a nuestra muestra
+
+```{r, echo = F}
+mt <- mtcars
+set.seed(725)
+mt_20 <- mt %>% dplyr::sample_frac(0.2)
+Fit_20 <- lm(mpg ~ wt, data = mt_20)
+  
+mt$Pred <- predict(Fit_20, mt)
+
+ggplot(mt, aes(x = wt, y = mpg)) + geom_path(aes(y = Pred)) + geom_point() + geom_point(data = mt_20, color = "red") + theme_bw()
+```
+
+
+# Nuestro primer hiperparámetro $\lambda$
 
 ## k-fold repeated Crossvalidation
 
@@ -78,7 +136,7 @@ SelectedMods <- model.sel(models)
 ## Seleccionando por AICc (cont)
 
 ```{r, echo = FALSE}
-SelectedMods <- SelectedMods %>% dplyr::select(-df, -logLik) %>% mutate(weight = as.numeric(weight))
+SelectedMods <- SelectedMods %>% as_data_frame() %>% dplyr::select(-df, -logLik) %>% mutate(weight = as.numeric(weight))
 kable(SelectedMods, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
