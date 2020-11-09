@@ -16,6 +16,11 @@ navbar:
       href: AyduantiaStats/_book/index.html      
     - text: Curso de Programación
       href: CursoProgramacion/_book/index.html
+  - text: Tareas
+    icon: fa-gear
+    menu:
+    - text: Tarea interactiva 1
+      href: Tarea_2.html
   - text: Donde vivir
     href: DondeVivir.html
   - text: Alergia en Chile

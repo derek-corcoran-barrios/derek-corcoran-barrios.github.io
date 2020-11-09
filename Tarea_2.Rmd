@@ -1,0 +1,13 @@
+---
+title: ''
+output: html_document
+---
+  
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<iframe src ="http://ec2-3-139-89-57.us-east-2.compute.amazonaws.com/shiny/rstudio/sample-apps/Tarea_2/"
+style="border: 0; position:absolute; top:2; left:0; right:0; bottom:0; width:100%; height:95%"/>
+</iframe>
+  
