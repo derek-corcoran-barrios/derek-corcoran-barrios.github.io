@@ -1,0 +1,120 @@
+---
+title: "Investigación reproducible, continuando rmd"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
+library(tidyverse)
+library(broom)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Partes de un Rmd
+
+<div class="columns-2">
+  1. Texto
+  2. Cunks
+  3. Inline code
+  4. [Cheat sheet Rmd](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+  5. El botón mágico **Knit**
+
+```{r, echo = FALSE}
+knitr::include_graphics("https://derek-corcoran-barrios.github.io/Clase2/RMDexample.png")
+```
+
+</div>
+
+## Texto
+
+[link](https://stackoverflow.com/users/3808018/derek-corcoran)
+
+```{r, echo = TRUE, eval=FALSE}
+# Titulo
+
+## subtitulo
+
+*cursiva*
+
+**negrita**
+
+[link](https://stackoverflow.com/users/3808018/derek-corcoran)
+```
+
+
+## Chunks
+
+```{r, echo = F}
+knitr::include_graphics("https://derek-corcoran-barrios.github.io/Clase2/Chunk.png")
+```
+
++ *echo* = T o F muestro o no codigo
++ *message* = T o F muestra mensajes de paquetes
++ *warning* = T o F muestra advertencias 
++ *eval* = T o F evaluar o no el código
++ *cache* = T o F guarda o no el resultado
++ Para más opciones ver este [link](https://yihui.name/knitr/options/)
+
+## Inline code
+
+![Inline](https://derek-corcoran-barrios.github.io/Clase2/Inline.png)
+
+- Código entrelazado en el texto
+- Para actualizar medias, máximos, mínimos
+- Valores de p, diferencias estadísticas
+- Pueden ser vectores, no tablas.
+
+# Tablas
+
+## Tablas: Kable
+
+* kable parte de knitr, tabla igual a lo ingresado 
+* KableExtra lo [mejora](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
+
+## Ejemplo
+
+```{r}
+data("msleep")
+Tabla <- msleep %>% group_by(vore) %>% summarise_at("sleep_total", .funs = list(Mean = mean, SD = sd)) %>% arrange(desc(Mean))
+
+kable(Tabla)
+```
+
+## Mejoremos un poco
+
+```{r}
+kable(Tabla, digits = 2)
+```
+
+
+## KableExtra
+
+```{r}
+kable(Tabla, digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+
+## KableExtra (cont.)
+
+```{r}
+kable(Tabla, digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+## Tablas largas
+
+```{r}
+msleep_long <- msleep %>% dplyr::select(name, vore, sleep_total, brainwt)
+
+kable(msleep_long, digits = 2, caption = "La base de datos entera") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F) %>%
+  scroll_box(width = "800px", height = "200px")
+```
+
+# Tarea
