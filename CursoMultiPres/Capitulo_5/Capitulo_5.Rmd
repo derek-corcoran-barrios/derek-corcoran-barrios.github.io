@@ -39,6 +39,23 @@ kable(broom::tidy(Fit), digits = 3) %>% kable_styling(bootstrap_options = c("str
 
 $$\underset{SEE}{\text{minimize}}  = \sum_{i = 1}^n{(y_i - \hat{y_i})^2}$$
 
+## Minimos cuadrados
+
+```{r}
+Preds <- augment(Fit)
+ggplot(Preds, aes(x = wt, y = mpg)) + geom_point() + geom_path(aes(y = .fitted)) + geom_linerange(aes(ymin = .fitted, ymax = mpg)) + theme_bw()
+```
+
+## Suma de errores cuadrados
+
+```{r}
+SSE <- Preds %>% mutate(SE = .resid^2) %>% summarise(SSE = sum(SE))
+```
+
+```{r, echo = F}
+kable(SSE, digits = 2) %>%  kable_paper("hover")
+```
+
 ## Ejemplo:
 
 ```{r, echo = F, animation.hook="gifski", interval = 0.25}
@@ -201,14 +218,6 @@ ggplot(DF, aes(x = Lambda, y = Estimador, color = Parametro)) + geom_path() + ge
 DF %>% dplyr::filter(Lambda == ridge$lambda.min) %>% kable() %>% kable_paper("hover")
 ```
 
-## k-fold repeated Crossvalidation
-
-* Repito esto n veces
-* 10-repeated-5-fold-crossvalidation = 50 $R^2$
-
-```{r, echo = F}
-knitr::include_graphics("nrepeatkfold.gif", dpi = 30)
-```
 
 ## Mejor modelo
 
@@ -256,7 +265,7 @@ mejor.Fit <- glmnet(x, y, family = "binomial", alpha = 1, lamda = Fit$lambda.min
 ```
 
 ```{r}
-tidy(Fit)
+tidy(mejor.Fit)
 ```
 
 
