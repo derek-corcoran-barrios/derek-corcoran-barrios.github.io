@@ -241,6 +241,13 @@ tidy(Mejor_Lasso) %>% kable() %>% kable_paper("hover")
 tidy(Mejor_Ridge) %>% kable() %>% kable_paper("hover")
 ```
 
+# Elastic net
+
+## Elastic net
+
+$$\underset{SEE}{\text{minimize}}  = \sum_{i = 1}^n{(y_i - \hat{y_i})^2} + \lambda(\alpha\times\lvert \beta \lvert + (1- \alpha)\times \beta^2)$$
+
+
 # Tiene las mismas familias que glm
 
 ## Binomial 
