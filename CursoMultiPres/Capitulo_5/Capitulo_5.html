@@ -5869,24 +5869,13 @@ Fit &lt;- cv.glmnet(x, y, nfolds = 10, family = &quot;binomial&quot;, alpha = 1)
 
 </article></slide><slide class=""><hgroup><h2>Mejor modelo</h2></hgroup><article  id="mejor-modelo-1">
 
-<pre class = 'prettyprint lang-r'>mejor.Fit &lt;- glmnet(x, y, family = &quot;binomial&quot;, alpha = 1, lamda = Fit$lambda.min)</pre>
+<pre class = 'prettyprint lang-r'>mejor.Fit &lt;- glmnet(x, y, family = &quot;binomial&quot;, alpha = 1, lambda = Fit$lambda.min)</pre>
 
 <pre class = 'prettyprint lang-r'>tidy(mejor.Fit)</pre>
 
-<pre >## # A tibble: 7,362 x 5
-##    term         step estimate lambda dev.ratio
-##    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
-##  1 (Intercept)     1    0.718  0.250 -3.86e-15
-##  2 (Intercept)     2    0.772  0.239  1.99e- 2
-##  3 (Intercept)     3    0.825  0.228  3.81e- 2
-##  4 (Intercept)     4    0.876  0.217  5.48e- 2
-##  5 (Intercept)     5    0.926  0.208  7.01e- 2
-##  6 (Intercept)     6    0.974  0.198  8.41e- 2
-##  7 (Intercept)     7    1.02   0.189  9.70e- 2
-##  8 (Intercept)     8    1.07   0.180  1.09e- 1
-##  9 (Intercept)     9    1.11   0.172  1.20e- 1
-## 10 (Intercept)    10    1.16   0.164  1.30e- 1
-## # … with 7,352 more rows</pre></article></slide>
+<pre >## # A tibble: 0 x 5
+## # … with 5 variables: term &lt;chr&gt;, step &lt;dbl&gt;, estimate &lt;dbl&gt;, lambda &lt;dbl&gt;,
+## #   dev.ratio &lt;dbl&gt;</pre></article></slide>
 
 
   <slide class="backdrop"></slide>
