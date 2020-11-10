@@ -234,3 +234,30 @@ tidy(Mejor_Ridge) %>% kable() %>% kable_paper("hover")
 
 # Tiene las mismas familias que glm
 
+## Binomial 
+
+```{r}
+train <-  read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/CursoMultiPres/Capitulo_3/train.csv") 
+train <- train[complete.cases(train),]
+```
+
+```{r}
+x <- model.matrix(Survived ~., data = train)
+x <- x[,-1]
+y <- train$Survived
+set.seed(2020)
+Fit <- cv.glmnet(x, y , nfolds = 10, family = "binomial", alpha = 1)
+```
+
+## Mejor modelo
+
+```{r}
+mejor.Fit <- glmnet(x, y, family = "binomial", alpha = 1, lamda = Fit$lambda.min)
+```
+
+```{r}
+tidy(Fit)
+```
+
+
+

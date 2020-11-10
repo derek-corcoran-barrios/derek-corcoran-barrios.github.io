@@ -4342,7 +4342,7 @@ wt
 
 </table>
 
-</article></slide><slide class=""><hgroup><h2>Como obtenemos la pendiente y el intercepto?</h2></hgroup><article  id="como-obtenemos-la-pendiente-y-el-intercepto" class="build">
+</article></slide><slide class=""><hgroup><h2>Como obtenemos la pendiente y el intercepto?</h2></hgroup><article  class="build" id="como-obtenemos-la-pendiente-y-el-intercepto">
 
 <ul class = 'build'>
 <li>Usando mínimos cuadrados</li>
@@ -5760,7 +5760,39 @@ carb
 
 </table>
 
-</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Tiene las mismas familias que glm</h2></hgroup><article  id="tiene-las-mismas-familias-que-glm"></article></slide>
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Tiene las mismas familias que glm</h2></hgroup><article  id="tiene-las-mismas-familias-que-glm">
+
+</article></slide><slide class=""><hgroup><h2>Binomial</h2></hgroup><article  id="binomial">
+
+<pre class = 'prettyprint lang-r'>train &lt;- read_csv(&quot;https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/CursoMultiPres/Capitulo_3/train.csv&quot;)
+train &lt;- train[complete.cases(train), ]</pre>
+
+<pre class = 'prettyprint lang-r'>x &lt;- model.matrix(Survived ~ ., data = train)
+x &lt;- x[, -1]
+y &lt;- train$Survived
+set.seed(2020)
+Fit &lt;- cv.glmnet(x, y, nfolds = 10, family = &quot;binomial&quot;, alpha = 1)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Mejor modelo</h2></hgroup><article  id="mejor-modelo-1">
+
+<pre class = 'prettyprint lang-r'>mejor.Fit &lt;- glmnet(x, y, family = &quot;binomial&quot;, alpha = 1, lamda = Fit$lambda.min)</pre>
+
+<pre class = 'prettyprint lang-r'>tidy(Fit)</pre>
+
+<pre >## # A tibble: 100 x 6
+##    lambda estimate std.error conf.low conf.high nzero
+##     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;
+##  1  0.250     1.28    0.0673     1.21      1.34     0
+##  2  0.239     1.26    0.0692     1.19      1.33     1
+##  3  0.228     1.24    0.0706     1.17      1.31     1
+##  4  0.217     1.23    0.0711     1.16      1.30     1
+##  5  0.208     1.21    0.0679     1.14      1.27     1
+##  6  0.198     1.19    0.0651     1.12      1.25     1
+##  7  0.189     1.17    0.0626     1.11      1.23     1
+##  8  0.180     1.16    0.0604     1.10      1.22     1
+##  9  0.172     1.14    0.0584     1.08      1.20     1
+## 10  0.164     1.13    0.0566     1.07      1.19     1
+## # … with 90 more rows</pre></article></slide>
 
 
   <slide class="backdrop"></slide>
