@@ -246,6 +246,59 @@ tidy(Mejor_Ridge) %>% kable() %>% kable_paper("hover")
 ## Elastic net
 
 $$\underset{SEE}{\text{minimize}}  = \sum_{i = 1}^n{(y_i - \hat{y_i})^2} + \lambda(\alpha\times\lvert \beta \lvert + (1- \alpha)\times \beta^2)$$
+# Que alfa uso? (segundo hiperparámetro)
+
+## Preparemos los folds:
+
+```{r}
+library(caret)
+set.seed(2020)
+Index <- createDataPartition(mtcars$mpg, p = 0.8, list = F)
+Train <- mtcars[Index,] 
+Test <- mtcars[-Index,] 
+
+set.seed(2020)
+Folds <- createFolds(Train$mpg, k = 10, list = F)
+```
+
+## Generemos los modelos
+
+```{r}
+x <- model.matrix(mpg ~., data =Train)
+x <- x[,-1] 
+y <- Train$mpg
+
+lasso <- cv.glmnet(x, y, alpha = 1, foldid = Folds)
+
+ridge <- cv.glmnet(x, y, alpha = 0, foldid = Folds)
+
+ElasticNet <- cv.glmnet(x, y, alpha = 0.5, foldid = Folds)
+```
+
+## Mejores modelos
+
+```{r}
+Mejor_Lasso <- glmnet(x, y, alpha = 1, lambda = lasso$lambda.min)
+
+Mejor_Ridge <- glmnet(x, y, alpha = 0, lambda = ridge$lambda.min)
+
+Mejor_Elastic <- glmnet(x, y, alpha = 0.5, lambda = ElasticNet$lambda.min)
+```
+
+## Testeo
+
+```{r}
+NewX <- model.matrix(mpg ~., data =Test)
+NewX <- NewX[,-1] 
+
+NewY <- Test$mpg
+
+caret::postResample(pred = predict(Mejor_Ridge, newx = NewX), obs = NewY)
+
+caret::postResample(pred = predict(Mejor_Lasso, newx = NewX), obs = NewY)
+
+caret::postResample(pred = predict(Mejor_Elastic, newx = NewX), obs = NewY)
+```
 
 
 # Tiene las mismas familias que glm

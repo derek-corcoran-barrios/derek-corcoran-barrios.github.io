@@ -5799,7 +5799,60 @@ carb
 
 </article></slide><slide class=""><hgroup><h2>Elastic net</h2></hgroup><article  id="elastic-net-1">
 
-<p>\[\underset{SEE}{\text{minimize}}  = \sum_{i = 1}^n{(y_i - \hat{y_i})^2} + \lambda(\alpha\times\lvert \beta \lvert + (1- \alpha)\times \beta^2)\]</p>
+<p>\[\underset{SEE}{\text{minimize}}  = \sum_{i = 1}^n{(y_i - \hat{y_i})^2} + \lambda(\alpha\times\lvert \beta \lvert + (1- \alpha)\times \beta^2)\] # Que alfa uso? (segundo hiperparámetro)</p>
+
+</article></slide><slide class=""><hgroup><h2>Preparemos los folds:</h2></hgroup><article  id="preparemos-los-folds">
+
+<pre class = 'prettyprint lang-r'>library(caret)
+set.seed(2020)
+Index &lt;- createDataPartition(mtcars$mpg, p = 0.8, list = F)
+Train &lt;- mtcars[Index, ]
+Test &lt;- mtcars[-Index, ]
+
+set.seed(2020)
+Folds &lt;- createFolds(Train$mpg, k = 10, list = F)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Generemos los modelos</h2></hgroup><article  id="generemos-los-modelos">
+
+<pre class = 'prettyprint lang-r'>x &lt;- model.matrix(mpg ~ ., data = Train)
+x &lt;- x[, -1]
+y &lt;- Train$mpg
+
+lasso &lt;- cv.glmnet(x, y, alpha = 1, foldid = Folds)
+
+ridge &lt;- cv.glmnet(x, y, alpha = 0, foldid = Folds)
+
+ElasticNet &lt;- cv.glmnet(x, y, alpha = 0.5, foldid = Folds)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Mejores modelos</h2></hgroup><article  id="mejores-modelos">
+
+<pre class = 'prettyprint lang-r'>Mejor_Lasso &lt;- glmnet(x, y, alpha = 1, lambda = lasso$lambda.min)
+
+Mejor_Ridge &lt;- glmnet(x, y, alpha = 0, lambda = ridge$lambda.min)
+
+Mejor_Elastic &lt;- glmnet(x, y, alpha = 0.5, lambda = ElasticNet$lambda.min)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Testeo</h2></hgroup><article  id="testeo">
+
+<pre class = 'prettyprint lang-r'>NewX &lt;- model.matrix(mpg ~ ., data = Test)
+NewX &lt;- NewX[, -1]
+
+NewY &lt;- Test$mpg
+
+caret::postResample(pred = predict(Mejor_Ridge, newx = NewX), obs = NewY)</pre>
+
+<pre >##      RMSE  Rsquared       MAE 
+## 2.3963952 0.9562932 2.1473740</pre>
+
+<pre class = 'prettyprint lang-r'>caret::postResample(pred = predict(Mejor_Lasso, newx = NewX), obs = NewY)</pre>
+
+<pre >##      RMSE  Rsquared       MAE 
+## 3.3250799 0.8561916 2.5226143</pre>
+
+<pre class = 'prettyprint lang-r'>caret::postResample(pred = predict(Mejor_Elastic, newx = NewX), obs = NewY)</pre>
+
+<pre >##      RMSE  Rsquared       MAE 
+## 3.2308941 0.8700966 2.4776365</pre>
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Tiene las mismas familias que glm</h2></hgroup><article  id="tiene-las-mismas-familias-que-glm">
 
