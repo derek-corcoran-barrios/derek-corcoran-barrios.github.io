@@ -58,9 +58,9 @@ kable(SSE, digits = 2) %>%  kable_paper("hover")
 
 ## Ejemplo:
 
-```{r, echo = F, animation.hook="gifski", interval = 0.25}
+```{r, echo = F, animation.hook="gifski", interval = 0.15}
 
-MinSq <- data.frame(Beta = seq(0, -10, length.out = 50), MinSq = NA) %>% arrange(Beta)
+MinSq <- data.frame(Beta = seq(0, -10, length.out = 80), MinSq = NA) %>% arrange(Beta)
 mt <- mtcars
 
 for(i in 1:nrow(MinSq)){
