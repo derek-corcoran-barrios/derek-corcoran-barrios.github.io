@@ -9,7 +9,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, tidy = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, tidy = TRUE, cache = F)
 library(MuMIn)
 library(tidyverse)
 library(broom)
@@ -37,7 +37,7 @@ kable(broom::tidy(Fit), digits = 3) %>% kable_styling(bootstrap_options = c("str
 
 * Usando mínimos cuadrados
 
-$$ SSE = \sum_{i = 1}^n{(y_i - \hat{y_i})^2}$$
+$$\underset{SEE}{\text{minimize}}  = \sum_{i = 1}^n{(y_i - \hat{y_i})^2}$$
 
 ## Ejemplo:
 
@@ -65,7 +65,7 @@ $$ SSE = \sum_{i = 1}^n{(y_i - \hat{y_i})^2}$$
 
 ```{r, echo = F}
 mt <- mtcars
-set.seed(725)
+set.seed(672)
 mt_20 <- mt %>% dplyr::sample_frac(0.2)
 Fit_20 <- lm(mpg ~ wt, data = mt_20)
   
@@ -73,6 +73,51 @@ mt$Pred <- predict(Fit_20, mt)
 
 ggplot(mt, aes(x = wt, y = mpg)) + geom_path(aes(y = Pred)) + geom_point() + geom_point(data = mt_20, color = "red") + theme_bw()
 ```
+
+## Parametros
+
+```{r}
+tidy(Fit_20) %>% kable %>% kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+
+## Penalizamos con $\lambda$
+
+* Usando penalización
+
+$$\underset{SEE}{\text{minimize}}  = \sum_{i = 1}^n{(y_i - \hat{y_i})^2} + \lambda(\beta_{}^2)$$
+
+## Veamos como cambian los parametros:
+
+```{r, animation.hook="gifski", interval = 0.1, echo = F}
+x <- mt_20 %>% dplyr::select(wt) %>% mutate(New = 0) %>% as.matrix()
+# Outcome variable
+y <- mt_20 %>% pull(mpg)
+Fit_Pen <- glmnet(x, y, alpha = 0)
+DF <- Fit_Pen$beta %>% as.matrix() %>% t() %>% as.data.frame()
+DF$a0 <- Fit_Pen$a0
+DF$Lambda <- Fit_Pen$lambda
+DF <- DF %>% filter(Lambda < 300) %>% arrange(Lambda)
+for(i in 1:nrow(DF)){
+  mt$Pred <- DF$a0[i] + mt$wt*DF$wt[i]
+  DF$MinSq[i] <- mt %>% mutate(MinSq = (Pred - mpg)^2) %>% summarise(MinSq = sum(MinSq)) %>% pull(MinSq)
+g <- ggplot(mt, aes(x = wt, y = mpg)) + geom_path(aes(y = Pred)) + geom_point() + geom_point(data = mt_20, color = "red") + theme_bw() + ggtitle(paste("Lambda =", round(DF$Lambda[i],2))) + ylim(c(-10, 35))
+print(g)
+}
+```
+
+
+## Seleccionando Lambda
+
+```{r, echo = FALSE}
+ggplot(DF, aes(x = Lambda, y = MinSq)) + geom_path() + theme_bw()
+```
+
+```{r, echo = F}
+DF %>% dplyr::filter(MinSq == min(MinSq)) %>% select(-New) %>% kable(digits = 2) %>% kable_paper("hover")
+```
+
+
 
 
 # Nuestro primer hiperparámetro $\lambda$
@@ -136,7 +181,7 @@ SelectedMods <- model.sel(models)
 ## Seleccionando por AICc (cont)
 
 ```{r, echo = FALSE}
-SelectedMods <- SelectedMods %>% as_data_frame() %>% dplyr::select(-df, -logLik) %>% mutate(weight = as.numeric(weight))
+SelectedMods <- SelectedMods %>% as_tibble() %>% dplyr::select(-df, -logLik) %>% mutate(weight = as.numeric(weight))
 kable(SelectedMods, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 
