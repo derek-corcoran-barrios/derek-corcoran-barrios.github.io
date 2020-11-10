@@ -117,10 +117,89 @@ ggplot(DF, aes(x = Lambda, y = MinSq)) + geom_path() + theme_bw()
 DF %>% dplyr::filter(MinSq == min(MinSq)) %>% select(-New) %>% kable(digits = 2) %>% kable_paper("hover")
 ```
 
-
-
-
 # Nuestro primer hiperparámetro $\lambda$
+
+## Usamos cross-validation para seleccionarlo
+
+* **ridge:** alpha = 0, mejor en predicciones (todas las variables son útiles)
+
+$$\underset{SEE}{\text{minimize}}  = \sum_{i = 1}^n{(y_i - \hat{y_i})^2} + \lambda(\beta_{}^2)$$
+
+* **Lasso:** alpha = 1, selecciona variables (pueden haber variables inutiles)
+
+$$\underset{SEE}{\text{minimize}}  = \sum_{i = 1}^n{(y_i - \hat{y_i})^2} + \lambda(\lvert \beta \lvert)$$
+* **Elatic-net:** 1 > alpha > 0, intermedio
+
+# Comparemos en con hp como en la clase anterior
+
+## Ejemplo
+
+```{r}
+library(glmnet)
+x <- model.matrix(mpg ~., data = mtcars)
+x <- x[,-1]
+y <- mtcars$mpg
+```
+
+```{r}
+set.seed(2020)
+ridge <- cv.glmnet(x, y, alpha = 0, nfolds = 10)
+```
+
+```{r}
+set.seed(2020)
+lasso <- cv.glmnet(x, y, alpha = 1, nfolds = 10)
+```
+
+## Ver crossvalidation lasso
+
+```{r}
+plot(lasso)
+```
+
+## Variables
+
+```{r, echo = FALSE}
+DF <- lasso$glmnet.fit$beta %>% as.matrix() %>% t() %>% as.data.frame()
+
+DF$Lambda <- lasso$glmnet.fit$lambda
+
+DF <- DF %>% pivot_longer(-Lambda, names_to = "Parametro", values_to = "Estimador")
+
+ggplot(DF, aes(x = Lambda, y = Estimador, color = Parametro)) + geom_path() + geom_vline(xintercept = lasso$lambda.min, color = "red", lty = 2) + theme_bw() 
+```
+
+## Parametros
+
+```{r, echo = FALSE}
+DF %>% dplyr::filter(Lambda == lasso$lambda.min) %>% kable() %>% kable_paper("hover")
+```
+
+# Ridge
+
+## Ver crossvalidation lasso
+
+```{r}
+plot(ridge)
+```
+
+## Variables
+
+```{r, echo = FALSE}
+DF <- ridge$glmnet.fit$beta %>% as.matrix() %>% t() %>% as.data.frame()
+
+DF$Lambda <- ridge$glmnet.fit$lambda
+
+DF <- DF %>% pivot_longer(-Lambda, names_to = "Parametro", values_to = "Estimador")
+
+ggplot(DF, aes(x = Lambda, y = Estimador, color = Parametro)) + geom_path() + geom_vline(xintercept = ridge$lambda.min, color = "red", lty = 2) + theme_bw() + scale_x_log10()
+```
+
+## Parametros
+
+```{r, echo = FALSE}
+DF %>% dplyr::filter(Lambda == ridge$lambda.min) %>% kable() %>% kable_paper("hover")
+```
 
 ## k-fold repeated Crossvalidation
 
@@ -131,100 +210,27 @@ DF %>% dplyr::filter(MinSq == min(MinSq)) %>% select(-New) %>% kable(digits = 2)
 knitr::include_graphics("nrepeatkfold.gif", dpi = 30)
 ```
 
-## k-fold repeated Crossvalidation (cont)
+## Mejor modelo
 
-```{r, echo = FALSE, cache = TRUE}
-set.seed(2018)
-ctrl <- trainControl(method = "repeatedcv",number = 5, repeats = 10)
-
-Tests2 <- train(mpg ~ hp, data = mtcars, method = "lm",trControl = ctrl)$resample %>% select(Rsquared,Resample)
-
-kable(Tests2, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(width = "100%", height = "400px")
+```{r}
+Mejor_Lasso <- glmnet(x, y,alpha = 1, lambda = lasso$lambda.min)
 ```
 
-* $R^2$ = `r mean(Tests2$Rsquared)`
-
-## k-fold repeated Crossvalidation (cont)
-
-```{r, echo=F}
-ggplot(Tests2, aes(Rsquared)) + geom_density(fill = "grey") + geom_vline(xintercept = mean(Tests2$Rsquared), lty = 2, color = "red") + theme_classic()
+```{r}
+Mejor_Ridge <- glmnet(x, y,alpha = 0, lambda = ridge$lambda.min)
 ```
 
-# Seleccionando modelos usando k-fold repeated Crossvalidation
-
-## Modelos candidatos:
-
-* $mpg = \beta_1hp + c$
-* $mpg = \beta_1hp + \beta_2hp^2 + c$
-* $mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + c$
-* $mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + \beta_4hp^4 + c$
-* $mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + \beta_4hp^4 + \beta_5hp^5 + c$
-* $mpg = \beta_1hp + \beta_2hp^2 + \beta_3hp^3 + \beta_4hp^4 + \beta_5hp^5 + \beta_6hp^6 + c$
-
-## Seleccionando por AICc
-
-```{r, echo = TRUE}
-data("mtcars")
-
-fit1 <- lm(mpg ~ hp, data = mtcars)
-fit2 <- lm(mpg ~ hp + I(hp^2), data = mtcars)
-fit3 <- lm(mpg ~ hp + I(hp^2) + I(hp^3), data = mtcars)
-fit4 <- lm(mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4), data = mtcars)
-fit5 <- lm(mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5), data = mtcars)
-fit6 <- lm(mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5) + I(hp^6), data = mtcars)
-
-models <- list(fit1, fit2, fit3, fit4, fit5, fit6)
-SelectedMods <- model.sel(models)
-
-```
-
-## Seleccionando por AICc (cont)
+## Tidy lasso
 
 ```{r, echo = FALSE}
-SelectedMods <- SelectedMods %>% as_tibble() %>% dplyr::select(-df, -logLik) %>% mutate(weight = as.numeric(weight))
-kable(SelectedMods, digits = 2) %>% kable_styling(bootstrap_options = c("striped", "hover"))
+tidy(Mejor_Lasso) %>% kable() %>% kable_paper("hover")
 ```
 
-## Seleccionando por n-repeated-K-fold-crossvalidation {.build .small}
+## Tidy ridge
 
-* para 1 modelo
-
-```{r, echo = TRUE}
-set.seed(2020)
-ctrl <- trainControl(method = "repeatedcv",number = 5, repeats = 50)
-
-DF <- train(mpg ~ hp, data = mtcars, method = "lm",trControl = ctrl)$resample 
-
-DF <- DF %>% select(Rsquared,Resample)
+```{r, echo = FALSE}
+tidy(Mejor_Ridge) %>% kable() %>% kable_paper("hover")
 ```
 
-
-## Ejercicio resuelto {.small}
-
-```{r, echo = TRUE}
-form1 <- "mpg ~ hp"
-form2 <- "mpg ~ hp + I(hp^2)"
-form3 <- "mpg ~ hp + I(hp^2) + I(hp^3)"
-form4 <- "mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4)"
-form5 <- "mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5)"
-form6 <- "mpg ~ hp + I(hp^2) + I(hp^3) + I(hp^4) + I(hp^5) + I(hp^6)"
-
-forms <- list(form1, form2, form3, form4, form5, form6)
-K = (2:7)
-
-ctrl <- trainControl(method = "repeatedcv",number = 5, repeats = 50)
-```
-
-## Continuado {.small .build}
-
-```{r, cache= TRUE, echo = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 30)}
-set.seed(2020)
-Tests <- forms %>% map(~train(as.formula(.x), data = mtcars, method = "lm",trControl = ctrl)) %>% map(~as.data.frame(.x$resample)) %>% map(~select(.x, Rsquared))  %>% map(~summarise_all(.x,funs(mean, sd), na.rm = T)) %>% map2(.y = forms,~ mutate(.x, model = .y)) %>% reduce(bind_rows) %>% mutate(K = K) %>% arrange(desc(mean))
-```
-
-## Continuado {.small .build}
-
-```{r, echo=FALSE}
-kable(Tests, digits = 3) %>% kable_styling(bootstrap_options = c("striped", "hover"))
-```
+# Tiene las mismas familias que glm
 
