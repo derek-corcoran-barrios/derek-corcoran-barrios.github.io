@@ -321,7 +321,7 @@ Fit <- cv.glmnet(x, y , nfolds = 10, family = "binomial", alpha = 1)
 ## Mejor modelo
 
 ```{r}
-mejor.Fit <- glmnet(x, y, family = "binomial", alpha = 1, lambda = Fit$lambda.min)
+mejor.Fit <- glmnet(x, y, family = "binomial", alpha = 1)
 ```
 
 ```{r}
