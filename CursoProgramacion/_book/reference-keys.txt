@@ -4,7 +4,5 @@ objetivos
 tidy
 investigación-reproducible-y-github
 mas-usos-de-rmd
-applications
-example-one
-example-two
+visualización-en-r-con-ggplot2
 final-words

@@ -1,7 +1,5 @@
-# Applications
+# Visualización en r con ggplot2
 
-Some _significant_ applications are demonstrated in this chapter.
+En esta clase aprenderemos a visulizar datos con `ggplot2`, puedes seguir la presentación en el siguiente [link](https://derek-corcoran-barrios.github.io/CursoProgrPres/Clase4/Clase4Visualizacion.html), y a continuación tienes el link de la clase online en youtube:
 
-## Example one
-
-## Example two
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o6ab2qFDzB0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
