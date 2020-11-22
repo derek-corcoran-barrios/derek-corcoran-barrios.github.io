@@ -209,83 +209,20 @@ data("mtcars")
 ggplot(mtcars, aes(x = wt, y = mpg)) + geom_smooth(method = "lm") + geom_point()
 ```
 
-## Datos de temperatura y humedad
-
-```{r}
-githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Clase4/TempHum.rds")
-download.file(githubURL,"TempHum.rds", method="curl")
-TempHum <- read_rds("TempHum.rds") %>% 
-  mutate(Mes = as.numeric(Mes))
-```
-
-
-## stat_smooth más control que geom_smooth
-
-```{r}
-library(tidyverse)
-PA <- TempHum %>% filter(Ciudad_localidad == "Punta Arenas") 
-```
-
-```{r, echo = FALSE}
-kable(PA) %>% kable_styling(bootstrap_options = c("striped")) %>%
-  scroll_box(width = "800px", height = "350px")
-```
-
-
-## stat_smooth más control que geom_smooth
-
-```{r}
-library(ggplot2)
-ggplot(PA, aes(x = Mes, y = Temperatura)) + geom_point()
-```
-
-## stat_smooth más control que geom_smooth
-
-```{r}
-ggplot(PA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method = "lm") 
-```
-
-## Ecuación cuadrática
-
-```{r, echo=FALSE, out.width="400px"}
-library(knitr)
-include_graphics("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Clase4/Cuadratica.png")
-```
-
-
-## stat_smooth más control que geom_smooth
-
-```{r}
-ggplot(PA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) 
-```
-
-## Que podemos hacer con tidyr??
-
-```{r}
-library(tidyr)
-San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal") %>%  pivot_longer(cols = c(Temperatura, Humedad),names_to= "Unidad", values_to = "medida")
-```
-
-## Que podemos hacer con tidyr?? (Cont.)
-
-```{r}
-ggplot(San, aes(x = Mes, y = medida)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad)) 
-```
-
-
 # Varios gráficos juntos
 
 ## Como combinar gráficos con facet_wrap
 
-```{r}
-Algunos <- TempHum %>% filter(Ciudad_localidad %in% c("Arica", "Rapa Nui", "La Serena", "Valparaíso", "Quinta Normal", "Concepción", "Valdivia", "Punta Arenas")) %>% pivot_longer(cols = c(Temperatura, Humedad),names_to= "Unidad", values_to = "medida")
 
-```
-
-## Como combinar gráficos
 
 ```{r}
-ggplot(Algunos , aes(x = Mes, y = medida)) + geom_point(aes(color = Unidad)) +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad), alpha = 0.5) + facet_wrap(~Ciudad_localidad, ncol = 2)
+ggplot(PA, aes(x = STATUS_YR, y = TERR_AREA)) +
+  geom_point(aes(color = DESIG)) +
+  theme_bw() + 
+  scale_y_log10(labels = scales::comma) +
+  labs(x = "Año", y = "Área en hectáreas", title = "Áreas protegidas de Chile") +
+  facet_wrap(~IUCN_CAT)
+
 ```
 
 # Mapas en ggplot2

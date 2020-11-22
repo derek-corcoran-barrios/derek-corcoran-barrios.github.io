@@ -1,0 +1,86 @@
+---
+title: "Regresiones lineales y pivots"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
+library(tidyverse)
+library(broom)
+library(kableExtra)
+library(knitr)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Datos de temperatura y humedad
+
+```{r}
+githubURL <- ("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Clase4/TempHum.rds")
+download.file(githubURL,"TempHum.rds", method="curl")
+TempHum <- read_rds("TempHum.rds") %>% 
+  mutate(Mes = as.numeric(Mes))
+```
+
+```{r, echo = F, include=FALSE}
+file.remove("TempHum.rds")
+```
+
+## stat_smooth más control que geom_smooth
+
+```{r}
+library(tidyverse)
+VA <- TempHum %>% filter(Ciudad_localidad == "Valdivia") 
+```
+
+```{r, echo = FALSE}
+kable(VA) %>% kable_styling(bootstrap_options = c("striped")) %>%
+  scroll_box(width = "800px", height = "350px")
+```
+
+## stat_smooth más control que geom_smooth
+
+```{r}
+ggplot(VA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method = "lm") 
+```
+
+## Ecuación cuadrática
+
+```{r, echo=FALSE, out.width="400px"}
+library(knitr)
+include_graphics("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Clase4/Cuadratica.png")
+```
+
+
+## stat_smooth más control que geom_smooth
+
+```{r}
+ggplot(VA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) 
+```
+
+## Que podemos hacer con tidyr??
+
+```{r}
+library(tidyr)
+San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal") %>%  pivot_longer(cols = c(Temperatura, Humedad),names_to= "Unidad", values_to = "medida")
+```
+
+## Que podemos hacer con tidyr?? (Cont.)
+
+```{r}
+ggplot(San, aes(x = Mes, y = medida)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad)) 
+```
+
+
+# Varios gráficos juntos
+
+## Como combinar gráficos con facet_wrap
+
+```{r}
+Algunos <- TempHum %>% filter(Ciudad_localidad %in% c("Arica", "Rapa Nui", "La Serena", "Valparaíso", "Quinta Normal", "Concepción", "Valdivia", "Punta Arenas")) %>% pivot_longer(cols = c(Temperatura, Humedad),names_to= "Unidad", values_to = "medida")
+
+```
