@@ -43,7 +43,7 @@ file.remove("Data.rds")
 ## Veamos los datos
 
 ```{r,echo = F}
-ggplot(Data, aes(x = Altura, DAP)) + geom_point() + theme_bw()
+ggplot(Data, aes(y = Altura, x = DAP)) + geom_point() + theme_bw()
 ```
 
 
@@ -53,10 +53,10 @@ ggplot(Data, aes(x = Altura, DAP)) + geom_point() + theme_bw()
 alguna_funcion(Y ~ X1 + X2 + ... + Xn, data = data.frame)
 ```
 
-* **Y:** Variable respuesta (Captación de $CO_2$)
+* **Y:** Variable respuesta (Altura)
 * **`~`:** Explicado por
-* **$X_n$:** Variable explicativa n (Subespecie, tratamiento, etc.)
-* **data.frame:*** Base de datos (CO2)
+* **$X_n$:** Variable explicativa n (DAP)
+* **data.frame:*** Base de datos (Data)
 * **alguna_funcion:** El modelo a testear (nuestra simplificación de la realidad)
 
 ## Algunos modelos en R
@@ -66,6 +66,149 @@ Modelos <- data.frame(Modelos = c("Prueba de t" ,"ANOVA", "Modelo lineal simple"
 
 kable(Modelos, row.names = FALSE) %>% kable_styling(bootstrap_options = "striped")
 ```
+
+# Modelo lineal
+
+## Ejemplo
+
+```{r, echo = T}
+Modelo <- lm(Altura ~ DAP, data = Data)
+
+Parametros <- broom::tidy(Modelo)
+```
+
+```{r, echo = F}
+kable(Parametros, row.names = FALSE, digits = 3) %>% kable_styling(bootstrap_options = "striped")
+```
+
+## Veamos el modelo
+
+```{r, echo=FALSE}
+Intercepto <- Parametros %>% dplyr::filter(term == "(Intercept)") %>% pull(estimate)
+Beta <- Parametros %>% dplyr::filter(term != "(Intercept)") %>% pull(estimate)
+
+ggplot(Data, aes(y = Altura, x = DAP)) + geom_point() + geom_function(fun = function(x) Intercepto + Beta*x) + theme_bw()
+```
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(Modelo, use_coefs = T)
+```
+
+## Vemoslo gráficamente más cerca
+
+```{r, echo = F}
+DataIn<- Data %>% dplyr::filter(DAP >= 0 & DAP <= 10) 
+library(ggrepel)
+ggplot(DataIn, aes(y = Altura, x = DAP)) + 
+  geom_function(fun = function(x) Intercepto + Beta*x) + 
+  theme_bw() + xlim(c(0,10)) + 
+  geom_point(x = 0, y = Intercepto, color = "red") + 
+  geom_label_repel(data = data.frame(x= 0, y = Intercepto),aes(x = x, y = y), color = "red", label = round(Intercepto,2), nudge_y = 0, nudge_x = 1) +
+  geom_vline(xintercept = 0, lty = 2) +
+  geom_point(x = 5, y = (Intercepto + 5*Beta), color = "red") +
+  geom_point(x = 6, y = (Intercepto + 6*Beta), color = "red") +
+  annotate(geom = "segment", x = 5, y = (Intercepto + 5*Beta), xend = 6, yend = (Intercepto + 5*Beta), color = "red") +
+  annotate(geom = "segment", x = 6, y = (Intercepto + 5*Beta), xend = 6, yend = (Intercepto + 6*Beta), color = "red") +
+  annotate(geom = "text",x = 5.5, y = 6.5, label = paste("Delta", "== 1"), parse = TRUE, color = "red") +
+  annotate(geom = "text",x = 6.6, y = 6.85, label = paste("Delta ==", round(Beta, 2)), parse = TRUE, color = "red")
+```
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(Modelo, use_coefs = T)
+```
+
+## Que significa que p sea menor a 0.05
+
+```{r, echo = F}
+kable(Parametros, row.names = FALSE) %>% kable_styling(bootstrap_options = "striped")
+```
+
+```{r, echo = F}
+sjPlot::plot_model(model = Modelo, show.intercept = T) + theme_bw()
+```
+
+## Que significa que p sea menor a 0.05
+
+```{r}
+ggplot(Data, aes(y = Altura, x = DAP)) + geom_point() + geom_smooth(method = "lm") + theme_bw()
+```
+
+# Dudas?
+
+## Varianza explicada 
+
+```{r, eval = FALSE}
+glance(Modelo)
+```
+
+```{r, echo = F}
+kable(glance(Modelo), digits = 3) %>% kable_styling(bootstrap_options = "striped")
+```
+```{r, echo = FALSE}
+Data$Pred <- predict(Modelo, Data)
+
+ggplot(Data, aes(x = DAP, y = Altura)) + 
+  geom_linerange(aes(ymin = Altura, ymax = Pred), lty = 2, color = "red") +
+  geom_point() +
+  geom_path(aes(y = Pred)) +
+  theme_bw()
+```
+
+## R2
+
+```{r, echo = F}
+SDs <- c(2,21,41, 61, 81, 101)
+
+DF <- list()
+
+for(i in 1:length(SDs)){
+  x <- 1:100
+  set.seed(2020)
+  y <- 2.5*x + rnorm(n = 100, sd = SDs[i])
+  DF[[i]] <- data.frame(x = x, y = y, R2 =NA, Beta = NA, Intercepto = NA)
+  Temp <- lm(y ~ x, data = DF[[i]])
+  DF[[i]]$R2 <- glance(Temp) %>% pull(r.squared) %>% round(2)
+  DF[[i]]$Beta <- tidy(Temp) %>% dplyr::filter(term != "(Intercept)") %>% pull(estimate)
+  DF[[i]]$Intercepto <- tidy(Temp) %>% dplyr::filter(term == "(Intercept)") %>% pull(estimate)
+}
+
+DF <- DF %>% reduce(bind_rows)
+
+
+ggplot(DF, aes(x = x, y = y)) + 
+  geom_point() +
+  geom_smooth(method = "lm") + 
+  facet_wrap(~R2) + 
+  theme_bw()
+```
+
+
+## Puede ser negativo
+
+```{r, echo = F}
+SDs <- c(2,41,81, 121, 161, 201)
+
+DF <- list()
+
+for(i in 1:length(SDs)){
+  x <- 1:100
+  set.seed(2020)
+  y <- -5*x + rnorm(n = 100, sd = SDs[i])
+  DF[[i]] <- data.frame(x = x, y = y, R2 =NA, Beta = NA, Intercepto = NA)
+  Temp <- lm(y ~ x, data = DF[[i]])
+  DF[[i]]$R2 <- glance(Temp) %>% pull(r.squared) %>% round(2)
+  DF[[i]]$Beta <- tidy(Temp) %>% dplyr::filter(term != "(Intercept)") %>% pull(estimate)
+  DF[[i]]$Intercepto <- tidy(Temp) %>% dplyr::filter(term == "(Intercept)") %>% pull(estimate)
+}
+
+DF <- DF %>% reduce(bind_rows)
+
+
+ggplot(DF, aes(x = x, y = y)) + 
+  geom_point() +
+  geom_smooth(method = "lm") + 
+  facet_wrap(~R2) + 
+  theme_bw()
+```
+
 
 ## Datos de temperatura y humedad
 
