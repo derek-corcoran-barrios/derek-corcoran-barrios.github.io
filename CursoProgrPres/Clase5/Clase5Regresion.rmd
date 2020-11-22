@@ -17,6 +17,56 @@ library(knitr)
 options("kableExtra.html.bsTable" = T)
 ```
 
+# Modelos
+
+## ¿Qué es un modelo?
+
+* Un modelo es una versión simplificada de la realidad que nos permite hacer inferencias o prediccións sobre una población
+* Un modelo es un resumen adecuado de la realidad
+* Un modelo es una simplificación or aproximación a la realidad y por ende no reflejará toda la realidad (Burnham y Anderson)
+* Todos los modelos estan equivocados, algunos son útiles (George Box)
+
+# Veamos un ejemplo
+
+## Altura versus DAP
+
+```{r}
+githubURL <- ("https://raw.githubusercontent.com/Curso-programacion/Datos_Arboles/master/Data.rds")
+download.file(githubURL,"Data.rds", method="curl")
+Data <- read_rds("Data.rds")
+```
+
+```{r, echo = F, include=FALSE}
+file.remove("Data.rds")
+```
+
+## Veamos los datos
+
+```{r,echo = F}
+ggplot(Data, aes(x = Altura, DAP)) + geom_point() + theme_bw()
+```
+
+
+## Formula de un modelo
+
+```{r, echo = TRUE, eval=FALSE}
+alguna_funcion(Y ~ X1 + X2 + ... + Xn, data = data.frame)
+```
+
+* **Y:** Variable respuesta (Captación de $CO_2$)
+* **`~`:** Explicado por
+* **$X_n$:** Variable explicativa n (Subespecie, tratamiento, etc.)
+* **data.frame:*** Base de datos (CO2)
+* **alguna_funcion:** El modelo a testear (nuestra simplificación de la realidad)
+
+## Algunos modelos en R
+
+```{r Modelos, echo = FALSE}
+Modelos <- data.frame(Modelos = c("Prueba de t" ,"ANOVA", "Modelo lineal simple", "modelo lineal generalizado", "Modelo aditivo", "Modelo no lineal", "modelos lineales mixtos", "Boosted regression trees"), Funcion = c("t.test()", "aov()", "lm()", "glm()", "gam()", "nls()", "lmer()", "gbm()"))
+
+kable(Modelos, row.names = FALSE) %>% kable_styling(bootstrap_options = "striped")
+```
+
 ## Datos de temperatura y humedad
 
 ```{r}
@@ -82,5 +132,4 @@ ggplot(San, aes(x = Mes, y = medida)) + geom_point() +  stat_smooth(method = "lm
 
 ```{r}
 Algunos <- TempHum %>% filter(Ciudad_localidad %in% c("Arica", "Rapa Nui", "La Serena", "Valparaíso", "Quinta Normal", "Concepción", "Valdivia", "Punta Arenas")) %>% pivot_longer(cols = c(Temperatura, Humedad),names_to= "Unidad", values_to = "medida")
-
 ```
