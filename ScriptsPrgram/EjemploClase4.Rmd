@@ -1,0 +1,54 @@
+---
+title: "Metamos gráficos"
+author: "Derek Corcoran"
+date: "11/16/2020"
+output: 
+  bookdown::html_document2:
+    figure_caption: true
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(kableExtra)
+data(iris)
+```
+
+# Iris
+
+## Diferencias entre especies
+
+Veamos como se diferencian especies del genero *Iris*, en la figura \@ref(fig:FiguraSepalo)
+
+```{r FiguraSepalo, fig.cap= "En esta figura vemos como vambia el ancho del sepalo en cada especie de iris"}
+ggplot(iris, aes(x = fct_reorder(Species, Sepal.Width), y = Sepal.Width)) +
+  geom_boxplot(notch = T, aes(fill = Species))+
+    theme_bw() + labs(x = "Species")
+```
+
+Mas adelante veremos como esto cambia según cada atributo floral
+
+
+Vemos a continuación las medias de los distintos atributos florales en la tabla \@ref(tab:MediasFlorales)
+
+```{r MediasFlorales}
+DF <- iris %>% group_by(Species) %>% summarise_all(mean)
+
+kable(DF, digits = 3, caption = "Media de las distintos atributos florales") %>% kable_paper()
+```
+
+# Mtcars
+
+Mostraremos el cambio de eficiencia a medida que cambia el peso del auto como vemos en la figura \@ref(fig:Eficiencia)
+
+```{r Eficiencia, fig.cap="Peso vs eficiencia"}
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point() + geom_smooth(method = "lm")
+```
+
+
+```{r Eficiencia2, fig.cap="Peso vs eficiencia"}
+ggplot(mtcars, aes(x = wt, y = mpg)) + geom_point() + geom_smooth(method = "lm")
+```
+
+
