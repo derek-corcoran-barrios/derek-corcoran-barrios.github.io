@@ -1,0 +1,45 @@
+---
+title: "Ejemplo5"
+author: "Derek Corcoran"
+date: "`r Sys.Date()`"
+output: 
+  bookdown::html_document2:
+    figure_caption: true
+    toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(broom)
+library(kableExtra)
+
+Data <- read_rds("Data.rds")
+```
+
+# Exploración de datos
+
+Exploraremos la relación entre dos de nuestras variables en la figure \@ref(fig:GraficoPunto)
+
+```{r GraficoPunto, fig.cap= "Relación entre la Altura y Diámetro a la altura del pecho en dos familias de coniferas"}
+ggplot(Data, aes(x = DAP, y = Altura)) + 
+  geom_point(aes(color = Familia)) + 
+  theme_bw()
+```
+
+## Regresión lineal
+
+Veremos cual es la relación entre estas variables haciendo un modelo lineal
+
+```{r}
+Modelo <- lm(Altura ~ DAP, data = Data)
+
+Parametros <- tidy(Modelo)
+```
+
+En la tabla \@ref(tab:Parametros)
+
+```{r Parametros}
+kable(Parametros, caption = "Parámetros de la regresión") %>% kable_paper()
+```
+
