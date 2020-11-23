@@ -5,4 +5,4 @@ tidy
 investigación-reproducible-y-github
 mas-usos-de-rmd
 visualización-en-r-con-ggplot2
-final-words
+regresion-lineal-y-pivoting

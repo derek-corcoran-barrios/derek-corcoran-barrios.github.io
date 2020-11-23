@@ -1,3 +1,5 @@
-# Final Words
+# Regresion lineal y pivoting
 
-We have finished a nice book.
+En esta clase aprenderemos a hacer regresiones lineales con r usando el paquete `broom`, puedes seguir la presentación en el siguiente [link](https://derek-corcoran-barrios.github.io/CursoProgrPres/Clase5/Clase5Regresion.html), y a continuación tienes el link de la clase online en youtube:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Awo-oL6wqto" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
