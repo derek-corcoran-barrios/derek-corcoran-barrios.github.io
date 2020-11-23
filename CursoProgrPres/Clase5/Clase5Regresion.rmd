@@ -3,9 +3,9 @@ title: "Regresiones lineales y pivots"
 author: "Derek Corcoran"
 date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
-  ioslides_presentation:
-    widescreen: true
-    incremental: true
+  ioslides_presentation: 
+    incremental: yes
+    widescreen: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -121,7 +121,7 @@ equatiomatic::extract_eq(Modelo, use_coefs = T)
 kable(Parametros, row.names = FALSE) %>% kable_styling(bootstrap_options = "striped")
 ```
 
-```{r, echo = F}
+```{r echo=F, fig.height=3.5, fig.width=7, fig.align='center'}
 sjPlot::plot_model(model = Modelo, show.intercept = T) + theme_bw()
 ```
 
@@ -142,7 +142,7 @@ glance(Modelo)
 ```{r, echo = F}
 kable(glance(Modelo), digits = 3) %>% kable_styling(bootstrap_options = "striped")
 ```
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.height=3.8, fig.width=7, fig.align='center'}
 Data$Pred <- predict(Modelo, Data)
 
 ggplot(Data, aes(x = DAP, y = Altura)) + 
@@ -223,7 +223,7 @@ TempHum <- read_rds("TempHum.rds") %>%
 file.remove("TempHum.rds")
 ```
 
-## stat_smooth más control que geom_smooth
+## Datos Valdivia
 
 ```{r}
 library(tidyverse)
@@ -235,7 +235,7 @@ kable(VA) %>% kable_styling(bootstrap_options = c("striped")) %>%
   scroll_box(width = "800px", height = "350px")
 ```
 
-## stat_smooth más control que geom_smooth
+## Modelo lineal?
 
 ```{r}
 ggplot(VA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method = "lm") 
@@ -243,7 +243,7 @@ ggplot(VA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method =
 
 ## Ecuación cuadrática
 
-```{r, echo=FALSE, out.width="400px"}
+```{r, echo=FALSE, out.width="400px", fig.align='center'}
 library(knitr)
 include_graphics("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Clase4/Cuadratica.png")
 ```
@@ -254,6 +254,75 @@ include_graphics("https://raw.githubusercontent.com/derek-corcoran-barrios/derek
 ```{r}
 ggplot(VA, aes(x = Mes, y = Temperatura)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2)) 
 ```
+
+# Regresión lineal, forma cuadrática
+
+## Regresión
+
+```{r}
+ModeloCuad <- lm(Temperatura ~ Mes + I(Mes^2), data = VA)
+Parametros <- tidy(ModeloCuad)
+```
+
+```{r, echo = F}
+kable(Parametros) %>% kable_styling(bootstrap_options = "striped")
+```
+
+## Varias formas
+
+```{r, echo = F}
+library(patchwork)
+
+DF <- data.frame(x = 1:100)
+
+A <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x) 2 + x) + ggtitle("y ~ x") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+B <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x) 50 + -0.5*x^2 + 50*x) + ggtitle("y ~ x + I(x^2)") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+C <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x) 50 + 0.5*x^2 + -50*x) + ggtitle("y ~ x + I(x^2)") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+D <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x) 50 + -0.5*x^2) + ggtitle("y ~I(x^2)") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+E <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x) 50 + 0.5*x^2) + ggtitle("y ~I(x^2)") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+G <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x)  -76 + 17*log(x) + -0.02*x) + ggtitle("y ~ x + I(log(x))") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+(A + B + C) / (D + E + G)
+```
+
+
+# Pivoting
 
 ## Que podemos hacer con tidyr??
 
@@ -266,13 +335,4 @@ San <- TempHum %>% filter(Ciudad_localidad == "Quinta Normal") %>%  pivot_longer
 
 ```{r}
 ggplot(San, aes(x = Mes, y = medida)) + geom_point() +  stat_smooth(method = "lm", formula = y ~ x + I(x^2), aes(fill = Unidad, color = Unidad)) 
-```
-
-
-# Varios gráficos juntos
-
-## Como combinar gráficos con facet_wrap
-
-```{r}
-Algunos <- TempHum %>% filter(Ciudad_localidad %in% c("Arica", "Rapa Nui", "La Serena", "Valparaíso", "Quinta Normal", "Concepción", "Valdivia", "Punta Arenas")) %>% pivot_longer(cols = c(Temperatura, Humedad),names_to= "Unidad", values_to = "medida")
 ```
