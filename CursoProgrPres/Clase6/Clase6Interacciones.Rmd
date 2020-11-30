@@ -1,0 +1,213 @@
+---
+title: "Regresiones lineales e interacciones"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation: 
+    incremental: yes
+    widescreen: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts = list(width.cutoff = 50))
+library(tidyverse)
+library(broom)
+library(kableExtra)
+library(knitr)
+library(patchwork)
+library(equatiomatic)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Formula (g)lm con interacciones {.build}
+
+Supongamos que tenemos dos variables $X_1$ categorica e $X_2$ es continua
+
+* $C_0$ Intercepto
+* $C_1$ modificador de intercepto para nivel 1
+* $\beta_1$ pendiente de argumento 1
+
+$$y = \beta_1X_1 + \beta_2X_2 + \beta_3X_1X_2 + C_0 + C_1$$
+
+## Algunas especificaciones de un modelo lineal
+
+```{r, echo = FALSE}
+ggplot(ChickWeight, aes(x = Time, y = weight, group = Chick)) + geom_line(aes(color = Diet)) + geom_point(aes(color = Diet)) + theme_classic()
+DF <- expand.grid(Diet = as.factor(c(1,2,3,4)), Time = 0:24)
+```
+
+## Cambio intercepto pero no pendiente
+
+```{r}
+fit1 <- lm(weight ~ Time + Diet, data=ChickWeight)
+```
+
+```{r, echo=FALSE}
+DF$Pred <- predict(fit1, DF)
+DF$SE <- predict(fit1, DF, se.fit = T)$se.fit
+ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet)) + theme_classic()
+```
+
+## Parametros {.build}
+
+```{r, echo = FALSE}
+kable(tidy(fit1)) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+```
+
+## Calculemos {.smaller .build}
+
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(fit1, use_coefs = TRUE, wrap = T)
+```
+
+```{r, echo=F}
+D <-  data.frame(Time = c(0, 0, 4, 4), Diet = as.factor(c(1,4,1, 4))) %>% t %>% as.data.frame()
+colnames(D) <- c("", "", "", "")
+kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+```{r}
+(8.75*0) + 10.92 + (0*16.17) + (0*36.5) + (0*30.23)
+```
+
+```{r}
+(8.75*0) + 10.92 + (0*16.17) + (0*36.5) + (1*30.23)
+```
+
+```{r}
+(8.75*4) + 10.92 + (0*16.17) + (0*36.5) + (0*30.23)
+```
+
+```{r}
+(8.75*4) + 10.92 + (0*16.17) + (0*36.5) + (1*30.23)
+```
+
+## Cambio Pendiente pero no intercepto
+
+```{r}
+fit2 <- lm(weight ~ Time + Time:Diet, data=ChickWeight)
+```
+
+```{r, echo=FALSE}
+DF$Pred <- predict(fit2, DF)
+DF$SE <- predict(fit2, DF, se.fit = T)$se.fit
+ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet))+ theme_classic()
+```
+
+## Parametros
+
+```{r, echo = FALSE}
+kable(tidy(fit2)) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+```
+
+## Calculemos {.smaller}
+
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(fit2, use_coefs = TRUE, wrap = T)
+```
+
+* Nuevos datos
+
+```{r, echo=F}
+D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
+kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+```{r}
+(7.05*3) + (3*0*1.61) + (3*0*3.74) + (3*0*2.86) + 27.86
+```
+
+```{r}
+(7.05*4) + (4*0*1.61) + (4*0*3.74) + (4*1*2.86) + 27.86
+```
+
+# Dudas?
+
+## Cambio Pendiente e intercepto
+
+```{r}
+fit3 <- lm(weight ~ Time*Diet, data=ChickWeight)
+```
+
+```{r, echo=FALSE}
+DF$Pred <- predict(fit3, DF)
+DF$SE <- predict(fit3, DF, se.fit = T)$se.fit
+ggplot(DF, aes(x = Time, y = Pred)) + geom_ribbon(aes(ymin = Pred -SE,ymax = Pred + SE, fill = Diet), alpha = 0.5)+ geom_line(aes(color = Diet))+ theme_classic()
+```
+
+## Parametros
+
+```{r, echo = FALSE}
+kable(tidy(fit3)) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20)
+```
+
+## Calculemos {.smaller}
+
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(fit3, use_coefs = TRUE, wrap = T)
+```
+
+```{r, echo=F}
+D <-  data.frame(Time = c(3, 4), Diet = as.factor(c(1,4)))
+kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size = 20, full_width = F)
+```
+
+```{r}
+(6.84*3) + (3*0*1.77) + (3*0*4.58) + (3*0*2.87) + 30.93 + (-2.3*0) + (-12.7*0) + (-0.14*0)
+```
+
+```{r}
+(6.84*4) + (4*0*1.77) + (4*0*4.58) + (4*1*2.87) + 30.93 + (-2.3*0) + (-12.7*0) + (-0.14*1)
+```
+
+
+## Forma
+
+```{r, echo = F}
+
+DF <- data.frame(x = 1:100)
+
+A <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x) 2 + x) + ggtitle("y ~ x") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+B <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x) 50 + -0.5*x^2 + 50*x) + ggtitle("y ~ x + I(x^2)") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+C <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x) 50 + 0.5*x^2 + -50*x) + ggtitle("y ~ x + I(x^2)") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+D <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x) 50 + -0.5*x^2) + ggtitle("y ~I(x^2)") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+E <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x) 50 + 0.5*x^2) + ggtitle("y ~I(x^2)") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+G <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x)  -76 + 17*log(x) + -0.02*x) + ggtitle("y ~ x + I(log(x))") +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+(A + B + C) / (D + E + G)
+```
