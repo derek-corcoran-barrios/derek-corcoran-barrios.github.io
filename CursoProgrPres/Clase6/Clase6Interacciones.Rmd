@@ -19,6 +19,86 @@ library(equatiomatic)
 options("kableExtra.html.bsTable" = T)
 ```
 
+## Volvamos a los modelos lineales {.smaller .build}
+
+```{r, echo = T}
+data("mtcars")
+Modelo1 <- lm(mpg ~ wt, data = mtcars)
+```
+
+
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(Modelo1, use_coefs = TRUE, wrap = T)
+```
+
+* Mas de una variable
+
+```{r, echo = T}
+data("mtcars")
+Modelo2 <- lm(mpg ~ wt + hp, data = mtcars)
+```
+
+
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(Modelo2, use_coefs = TRUE, wrap = T)
+```
+
+* wt = 3, hp = 150
+
+```{r}
+37.23 - 3.88*3 - 0.03*150
+```
+
+## Tambien para variables categóricas {.smaller .build}
+
+```{r}
+mt <- mtcars %>% mutate(am = ifelse(am == 0, "Automatic", "Manual"))
+
+Modelo3 <- lm(mpg ~ am, data = mt)
+```
+
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(Modelo3, use_coefs = TRUE, wrap = T)
+```
+
+* ${am}_{Manual}$ en una variable binaria, si am es = "Manual" es 1, si no es 0
+* Si un auto es manual entonces:
+
+```{r}
+17.15 + 7.24*1
+```
+
+* Si un auto es automático entonces:
+
+```{r}
+17.15 + 7.24*0
+```
+
+## O ambas
+
+```{r}
+Modelo4 <- Modelo3 <- lm(mpg ~ am + wt, data = mt)
+```
+
+```{r, echo = F, results='asis'}
+equatiomatic::extract_eq(Modelo4, use_coefs = TRUE, wrap = T)
+```
+
+* am = "automatico", wt = 3
+
+```{r}
+37.32 - 0.02*0 + 5.35*3
+```
+
+* am = "manual", wt = 3
+
+```{r}
+37.32 - 0.02*0 + 5.35*3
+```
+
+
+
+
 ## Formula lm con interacciones {.build}
 
 Supongamos que tenemos dos variables $X_1$ categorica e $X_2$ es continua
@@ -162,14 +242,18 @@ kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size 
 
 ## CO2
 
-```{r, echo = T}
-data("CO2")
-```
+
 
 ```{r,echo=F}
 kable(CO2) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(height = "300px", width = "800px")
 ```
 
+## Como se ve
+
+```{r, echo = F}
+ggplot(CO2, aes(x = conc, y = uptake)) + geom_point(aes(color = Type, shape = Treatment)) +
+  geom_path(aes(color = Type, lty = Treatment, group = Plant)) + theme_bw()
+```
 
 # Forma
 
@@ -224,3 +308,7 @@ G <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x)  -76 + 17*log(x) +
 
 (A + B + C) / (D + E + G)
 ```
+
+# Último ejemplo
+
+##
