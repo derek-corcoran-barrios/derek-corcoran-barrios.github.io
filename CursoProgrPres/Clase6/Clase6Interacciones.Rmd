@@ -309,6 +309,44 @@ G <- ggplot(DF, aes(x = x)) + geom_function(fun = function(x)  -76 + 17*log(x) +
 (A + B + C) / (D + E + G)
 ```
 
-# Último ejemplo
+# A que se parece?
 
-##
+## CO2 {.build}
+
+```{r}
+Model <- lm(uptake ~ conc + I(log(conc)) + Treatment + Type, data = CO2)
+```
+
+```{r, echo = F}
+kable(tidy(Model), digits = 3) %>% kable_paper()
+```
+## Veamos
+
+```{r, echo = F}
+sjPlot::plot_model(Model, type = "pred", terms = c("conc" , "Treatment", "Type"))
+```
+
+
+
+## Hay interacción?
+
+```{r, echo = F}
+ggplot(CO2, aes(x = conc, y = uptake)) + geom_point(aes(color = Type, shape = Treatment)) +
+  geom_path(aes(color = Type, lty = Treatment, group = Plant)) + theme_bw()
+```
+
+## Interaccion
+
+```{r}
+Model2 <- lm(uptake ~ conc + I(log(conc)) + Treatment*Type, data = CO2)
+```
+
+```{r, echo = F}
+kable(tidy(Model2), digits = 3) %>% kable_paper()
+```
+
+## Veamos
+
+```{r, echo = F}
+sjPlot::plot_model(Model2, type = "pred", terms = c("conc" , "Treatment", "Type"))
+```
