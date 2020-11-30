@@ -19,7 +19,7 @@ library(equatiomatic)
 options("kableExtra.html.bsTable" = T)
 ```
 
-## Formula (g)lm con interacciones {.build}
+## Formula lm con interacciones {.build}
 
 Supongamos que tenemos dos variables $X_1$ categorica e $X_2$ es continua
 
@@ -28,6 +28,7 @@ Supongamos que tenemos dos variables $X_1$ categorica e $X_2$ es continua
 * $\beta_1$ pendiente de argumento 1
 
 $$y = \beta_1X_1 + \beta_2X_2 + \beta_3X_1X_2 + C_0 + C_1$$
+
 
 ## Algunas especificaciones de un modelo lineal
 
@@ -159,6 +160,18 @@ kable(D) %>% kable_styling(bootstrap_options = c("striped", "hover"), font_size 
 (6.84*4) + (4*0*1.77) + (4*0*4.58) + (4*1*2.87) + 30.93 + (-2.3*0) + (-12.7*0) + (-0.14*1)
 ```
 
+## CO2
+
+```{r, echo = T}
+data("CO2")
+```
+
+```{r,echo=F}
+kable(CO2) %>% kable_styling(bootstrap_options = c("striped", "hover")) %>% scroll_box(height = "300px", width = "800px")
+```
+
+
+# Forma
 
 ## Forma
 
