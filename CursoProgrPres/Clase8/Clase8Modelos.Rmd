@@ -78,7 +78,7 @@ ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos, aes(color = species, si
 ## o un panel por especie
 
 ```{r}
-ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos) + theme_bw() + facet_wrap(~species)
+ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos, aes(size = Measurement)) + theme_bw() + facet_wrap(~species)
 ```
 
 
