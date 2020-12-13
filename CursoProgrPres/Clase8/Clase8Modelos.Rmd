@@ -122,7 +122,7 @@ plot(Bioclim)
 ## Extracción de datos en los puntos
 
 ```{r}
-Clima <- extract(Bioclim, B_impatiens) %>% as.data.frame()
+Clima <- raster::extract(Bioclim, B_impatiens) %>% as.data.frame()
 ```
 
 ```{r, echo = FALSE}
