@@ -1,0 +1,228 @@
+---
+title: "Modelos con rasters"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
+library(leaflet)
+library(sf)
+library(tidyverse)
+library(rgdal)
+library(raster)
+library(rasterVis)
+library(rworldxtra)
+library(tidyverse)
+library(gridExtra)
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+## Estudio de abundancia
+
+```{r, echo = TRUE, eval=TRUE}
+library(rworldxtra)
+library(raster)
+library(sf)
+library(tidyverse)
+```
+
+Datos son parte de [PREDICTS](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.2579)
+
+```{r}
+data("countriesHigh")
+Datos <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Bombus.csv")
+
+## Miremos los datos
+
+Datos <- Datos %>% st_as_sf(coords = c(5,6), crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")
+
+Mapa <- countriesHigh %>% st_as_sf() %>% st_crop(Datos)
+```
+
+```{r, eval=F}
+write_sf(Datos, "Datos.shp")
+```
+
+## Vamos graficando
+
+```{r}
+ggplot() + geom_sf(data = Mapa) + theme_bw()
+```
+
+
+## Agreguemos los puntos
+
+```{r}
+ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos) + theme_bw()
+```
+
+## Agreguemos colores por especie
+
+```{r}
+ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos, aes(color = species)) + theme_bw()
+```
+
+## Agreguemos el tamaño por abundancia
+
+```{r}
+ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos, aes(color = species, size = Measurement)) + theme_bw()
+```
+
+
+## o un panel por especie
+
+```{r}
+ggplot() + geom_sf(data = Mapa) + geom_sf(data =  Datos) + theme_bw() + facet_wrap(~species)
+```
+
+
+## Resumen
+
+* Ver video [tidyverse](https://youtu.be/5tjCeFb2oSk)
+
+```{r, echo = FALSE}
+Datos %>% as.data.frame() %>% group_by(species) %>% summarise(n = n(), mean = mean(Measurement), max = max(Measurement), min = min(Measurement)) %>% arrange(desc(mean)) %>% kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%
+  scroll_box(width = "100%", height = "400px")
+```
+
+# Ahora a modelar
+
+## Modelemos abundancia de Bombus impatiens
+
+```{r}
+B_impatiens <- Datos %>%  dplyr::filter(species == "Bombus impatiens")
+
+ggplot() + geom_sf(data = Mapa) + geom_sf(data =  B_impatiens, aes(size = Measurement)) + theme_bw()
+```
+
+## Obtengamos datos climaticos
+
+```{r}
+Bioclim <- getData("worldclim", var = "bio", res = 2.5) %>% crop(B_impatiens)
+plot(Bioclim)
+```
+
+## Que es esto?
+
+[Worlclim capas bioclimáticas](https://www.worldclim.org/data/bioclim.html)
+
+```{r}
+Bioclim <- Bioclim[[c(1,7,12,15)]]
+plot(Bioclim)
+```
+
+# Ahora juntemos las bases de datos
+
+## Extracción de datos en los puntos
+
+```{r}
+Clima <- extract(Bioclim, B_impatiens) %>% as.data.frame()
+```
+
+```{r, echo = FALSE}
+kable(Clima) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%  scroll_box(width = "100%", height = "400px")
+```
+
+
+## Juntamos con abundancia
+
+```{r}
+B_impatiens <- B_impatiens %>% bind_cols(Clima)
+```
+
+## Veamos relaciones
+
+```{r,echo=FALSE}
+For_Plot <- B_impatiens %>% pivot_longer(cols = bio1:bio15, names_to = "Variable") %>% mutate(Variable = fct_relevel(Variable, "bio1", "bio7", "bio12"))
+
+ggplot(For_Plot, aes(x = value, y = Measurement)) + geom_point()  + facet_wrap(~Variable, scales = "free_x") + theme_bw()
+```
+
+# A modelar
+
+## GLM
+
+* Para mas información ver [este video](https://youtu.be/1gLswJR7ZSc) sobre GLMs
+
+```{r}
+Fit1 <- glm(Measurement ~ bio1 + I(bio1^2) + bio7 + I(bio7^2) + bio12 + I(bio12^2) + bio15+ I(bio15^2), family = poisson , data = B_impatiens)
+```
+
+```{r, echo = FALSE}
+broom::tidy(Fit1) %>%  kable() %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>%  scroll_box(width = "100%", height = "400px")
+```
+
+## Predecir en un raster
+
+```{r}
+Prediccion <- predict(Bioclim, Fit1, type = "response")
+plot(Prediccion, colNA = "black")
+```
+
+
+# Dudas?
+
+## Mapa con SF
+
+```{r}
+Prediccion_DF <- Prediccion %>% as("SpatialPixelsDataFrame") %>% as.data.frame() %>% rename(Abundancia = layer)
+
+ggplot() + geom_tile(data = Prediccion_DF, aes(x = x, y = y, fill = Abundancia)) + geom_sf(data = Mapa, alpha = 0) + theme_bw() + scale_fill_viridis_c() + xlab("") + ylab("")
+```
+
+## Mapa con los puntos
+
+```{r,eval=FALSE}
+ggplot() + geom_tile(data = Prediccion_DF, aes(x = x, y = y, fill = Abundancia)) + geom_sf(data = Mapa, alpha = 0) + geom_sf(data = B_impatiens, aes(size = Measurement)) + theme_bw() + scale_fill_viridis_c(option = "plasma") + theme(legend.position = "bottom") + xlab("") + ylab("")
+```
+
+## Mapa con los puntos
+
+```{r, echo=FALSE}
+ggplot() + geom_tile(data = Prediccion_DF, aes(x = x, y = y, fill = Abundancia)) + geom_sf(data = Mapa, alpha = 0) + geom_sf(data = B_impatiens, aes(size = Measurement)) + theme_bw() + scale_fill_viridis_c(option = "plasma")  + theme(legend.position = "bottom") + xlab("") + ylab("")
+```
+
+
+# Predicción futura
+
+## Capas
+
+```{r}
+Futuro <- getData('CMIP5', var='bio', res=2.5, rcp=85, model='HD', year=70) %>% crop(B_impatiens)
+
+Futuro <- Futuro[[c(1,7,12,15)]]
+
+names(Futuro)
+```
+
+```{r, eval = FALSE}
+names(Futuro) <- c("bio1", "bio7", "bio12", "bio15")
+Futuro_pred <- predict(Futuro, Fit1, type = "response")
+plot(Futuro_pred, colNA = "black")
+```
+
+## Capas
+
+```{r, echo = FALSE}
+names(Futuro) <- c("bio1", "bio7", "bio12", "bio15")
+Futuro_pred <- predict(Futuro, Fit1, type = "response")
+plot(Futuro_pred, colNA = "black")
+```
+
+## Comparacion
+
+```{r, echo = FALSE}
+Soluciones <- stack(Prediccion, Futuro_pred)
+
+Soluciones_DF <- Soluciones %>% as("SpatialPixelsDataFrame") %>% as.data.frame() %>% rename(Presente = layer.1, Futuro = layer.2) %>% pivot_longer(Presente:Futuro, names_to = "Tiempo", values_to = "Abundancia") %>% mutate(Tiempo = fct_relevel(Tiempo, "Presente"))
+
+ggplot() + geom_tile(data = Soluciones_DF, aes(x = x, y = y, fill = Abundancia)) + geom_sf(data = Mapa, alpha = 0) + theme_bw() + scale_fill_viridis_c(option = "plasma") + xlab("") + ylab("") + facet_grid(Tiempo~.)
+```
+
+
