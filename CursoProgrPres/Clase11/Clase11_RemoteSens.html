@@ -4217,7 +4217,7 @@ slide:not(.current) .plotly.html-widget{
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">10/01, 2021</p>
+            <p style="margin-top: 6px; margin-left: -2px;">11/01, 2021</p>
           </hgroup>
   </slide>
 
@@ -5146,7 +5146,120 @@ ee_Initialize()</pre>
 
 <ul class = 'build'>
 <li>Leamos la capa de google earth engine</li>
-</ul></article></slide>
+</ul>
+
+<pre class = 'prettyprint lang-r'>col &lt;- ee$ImageCollection(&quot;COPERNICUS/S2_SR&quot;)</pre>
+
+<ul class = 'build'>
+<li>Filtramos por latitud y longitud y por fecha</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>point &lt;- ee$Geometry$Point(-71.6002957, -33.0055093)
+start &lt;- ee$Date(&quot;2020-02-11&quot;)
+end &lt;- ee$Date(&quot;2020-02-20&quot;)
+filter &lt;- col$filterBounds(point)$filterDate(start, end)
+img &lt;- filter$first()</pre>
+
+</article></slide><slide class=""><hgroup><h2>Visualización</h2></hgroup><article  id="visualización">
+
+<ul class = 'build'>
+<li>Seleccionamos bandas</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>vPar &lt;- list(bands = c(&quot;B4&quot;, &quot;B3&quot;, &quot;B2&quot;), min = 100, max = 8000, 
+    gamma = c(1.9, 1.7, 1.7))</pre>
+
+<ul class = 'build'>
+<li>Visualizamos</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>Map$setCenter(-71.6002957, -33.0055093, zoom = 10)
+Map$addLayer(img, vPar, &quot;Color real&quot;)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Ahora NDVI</h2></hgroup><article  id="ahora-ndvi">
+
+<ul class = 'build'>
+<li>Obtenemos el NDVI</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>getNDVI &lt;- function(image) {
+    return(image$normalizedDifference(c(&quot;B8&quot;, &quot;B4&quot;)))
+}
+ndvi1 &lt;- getNDVI(img)
+ndviPar &lt;- list(palette = c(&quot;#cccccc&quot;, &quot;#f46d43&quot;, &quot;#fdae61&quot;, 
+    &quot;#fee08b&quot;, &quot;#d9ef8b&quot;, &quot;#a6d96a&quot;, &quot;#66bd63&quot;, &quot;#1a9850&quot;), min = 0, 
+    max = 1)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Como se vé</h2></hgroup><article  id="como-se-vé">
+
+<pre class = 'prettyprint lang-r'>Map$setCenter(-71.6002957, -33.0055093, zoom = 10)
+Map$addLayer(ndvi1, ndviPar, &quot;NDVI verano&quot;)</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Análisis continuo</h2></hgroup><article  id="análisis-continuo">
+
+</article></slide><slide class=""><hgroup><h2>Más NDVI</h2></hgroup><article  id="más-ndvi">
+
+<ul class = 'build'>
+<li>Leemos un polígono y lo tranformamos en fomrato <code>ee</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>library(raster)
+library(sf)
+library(tidyverse)
+ee_x &lt;- st_read(system.file(&quot;shape/nc.shp&quot;, package = &quot;sf&quot;))
+ValpoVina &lt;- getData(&quot;GADM&quot;, country = &quot;CHL&quot;, level = 2) %&gt;% 
+    st_as_sf() %&gt;% dplyr::filter(NAME_1 == &quot;Valparaíso&quot;, NAME_2 %in% 
+    c(&quot;Valparaíso&quot;)) %&gt;% st_transform(st_crs(ee_x)) %&gt;% sf_as_ee()</pre>
+
+</article></slide><slide class=""><hgroup><h2>Cortamos NDVI</h2></hgroup><article  id="cortamos-ndvi">
+
+<ul class = 'build'>
+<li>Obtenemos NDVI para un año</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>start &lt;- ee$Date(&quot;2020-01-01&quot;)
+end &lt;- ee$Date(&quot;2020-12-31&quot;)
+col &lt;- ee$ImageCollection(&quot;LANDSAT/LE07/C01/T1_8DAY_NDVI&quot;)
+filter &lt;- col$filterBounds(point)$filterDate(start, end)$select(&quot;NDVI&quot;)
+ee_ndvi_valpo &lt;- ee_extract(x = filter, y = ValpoVina, sf = FALSE)
+ee_ndvi_valpo2 &lt;- ee_ndvi_valpo %&gt;% pivot_longer(everything(), 
+    values_to = &quot;NDVI&quot;) %&gt;% mutate(Fecha = lubridate::ymd(str_remove_all(name, 
+    &quot;X&quot;)))
+ggplot(ee_ndvi_valpo2, aes(x = Fecha, y = NDVI)) + geom_path() + 
+    geom_point()</pre>
+
+</article></slide><slide class=""><hgroup><h2>Ahora veamos varios años</h2></hgroup><article  id="ahora-veamos-varios-años">
+
+<pre class = 'prettyprint lang-r'>start &lt;- ee$Date(&quot;2014-01-01&quot;)
+end &lt;- ee$Date(&quot;2020-12-31&quot;)
+col &lt;- ee$ImageCollection(&quot;LANDSAT/LE07/C01/T1_8DAY_NDVI&quot;)
+filter &lt;- col$filterBounds(point)$filterDate(start, end)$select(&quot;NDVI&quot;)
+ee_ndvi_valpo &lt;- ee_extract(x = filter, y = ValpoVina, sf = FALSE)
+ee_ndvi_valpo2 &lt;- ee_ndvi_valpo %&gt;% pivot_longer(everything(), 
+    values_to = &quot;NDVI&quot;) %&gt;% mutate(Fecha = lubridate::ymd(str_remove_all(name, 
+    &quot;X&quot;)))
+ggplot(ee_ndvi_valpo2, aes(x = Fecha, y = NDVI)) + geom_path() + 
+    geom_point()</pre>
+
+</article></slide><slide class=""><hgroup><h2>Análisis</h2></hgroup><article  id="análisis">
+
+<ul class = 'build'>
+<li>Que pasa por día</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>ee_ndvi_valpo2 &lt;- ee_ndvi_valpo2 %&gt;% mutate(Dia = lubridate::yday(Fecha), 
+    Mes = lubridate::month(Fecha))
+ggplot(ee_ndvi_valpo2, aes(x = Dia, y = NDVI)) + geom_point()</pre>
+
+<ul class = 'build'>
+<li>Que pasa por mes</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>ee_ndvi_valpo_summary &lt;- ee_ndvi_valpo2 %&gt;% group_by(Mes) %&gt;% 
+    summarise(sd = sd(NDVI), NDVI = mean(NDVI))
+ggplot(ee_ndvi_valpo_summary, aes(x = Mes, y = NDVI)) + geom_ribbon(aes(ymax = NDVI + 
+    sd, ymin = NDVI - sd), alpha = 0.3, fill = &quot;red&quot;) + geom_point() + 
+    geom_path()</pre></article></slide>
 
 
   <slide class="backdrop"></slide>

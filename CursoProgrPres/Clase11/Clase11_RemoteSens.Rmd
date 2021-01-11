@@ -123,4 +123,131 @@ ee_Initialize()
 
 * Leamos la capa de google earth engine
 
+```{r, eval = F}
+col<-ee$ImageCollection('COPERNICUS/S2_SR')
+```
+
+* Filtramos por latitud y longitud y por fecha
+
+```{r, eval = F}
+point <- ee$Geometry$Point(-71.6002957, -33.0055093)
+start <- ee$Date("2020-02-11")
+end <- ee$Date("2020-02-20")
+filter<-col$filterBounds(point)$filterDate(start,end)
+img <- filter$first()
+```
+
+## Visualización
+
+* Seleccionamos bandas
+
+```{r, eval = F}
+vPar <- list(bands = c("B4", "B3", "B2"),
+             min = 100,max = 8000,             
+             gamma = c(1.9,1.7,1.7))
+```
+
+* Visualizamos
+
+```{r, eval = F}
+Map$setCenter(-71.6002957, -33.0055093, zoom = 10)
+Map$addLayer(img, vPar, "Color real")
+```
+
+## Ahora NDVI
+
+* Obtenemos el NDVI
+
+```{r, eval=F}
+getNDVI <- function(image) {  
+  return(image$normalizedDifference(c("B8", "B4")))
+  }
+ndvi1 <- getNDVI(img)
+
+
+ndviPar <- list(palette = c(  
+  "#cccccc", "#f46d43", "#fdae61", "#fee08b",  "#d9ef8b", "#a6d96a", "#66bd63", "#1a9850"),
+  min=0,max=1)
+```
+
+## Como se vé
+
+```{r, eval = F}
+Map$setCenter(-71.6002957, -33.0055093, zoom = 10)
+Map$addLayer(ndvi1, ndviPar, "NDVI verano")
+```
+
+# Análisis continuo
+
+## Más NDVI
+
+* Leemos un polígono y lo tranformamos en fomrato `ee`
+
+```{r, eval = F}
+library(raster)
+library(sf)
+library(tidyverse)
+
+ee_x <- st_read(system.file("shape/nc.shp", package = "sf")) 
+
+ValpoVina <- getData("GADM", country = "CHL", level = 2) %>% 
+  st_as_sf() %>% 
+  dplyr::filter(NAME_1 == "Valparaíso", NAME_2 %in% c("Valparaíso")) %>%
+  st_transform(st_crs(ee_x)) %>% 
+  sf_as_ee()
+```
+
+## Cortamos NDVI
+
+* Obtenemos NDVI para un año
+
+```{r, eval = FALSE}
+start <- ee$Date("2020-01-01")
+end <- ee$Date("2020-12-31")
+
+
+col<-ee$ImageCollection("LANDSAT/LE07/C01/T1_8DAY_NDVI")
+filter<-col$filterBounds(point)$filterDate(start,end)$select("NDVI")
+
+ee_ndvi_valpo <- ee_extract(x = filter, y = ValpoVina, sf = FALSE)
+
+ee_ndvi_valpo2 <- ee_ndvi_valpo %>% pivot_longer(everything(), values_to = "NDVI") %>% mutate(Fecha = lubridate::ymd(str_remove_all(name, "X")))
+
+ggplot(ee_ndvi_valpo2, aes(x = Fecha, y = NDVI)) + geom_path() + geom_point()
+```
+
+## Ahora veamos varios años
+
+```{r, eval = F}
+start <- ee$Date("2014-01-01")
+end <- ee$Date("2020-12-31")
+
+
+col<-ee$ImageCollection("LANDSAT/LE07/C01/T1_8DAY_NDVI")
+filter<-col$filterBounds(point)$filterDate(start,end)$select("NDVI")
+
+ee_ndvi_valpo <- ee_extract(x = filter, y = ValpoVina, sf = FALSE)
+
+ee_ndvi_valpo2 <- ee_ndvi_valpo %>% pivot_longer(everything(), values_to = "NDVI") %>% mutate(Fecha = lubridate::ymd(str_remove_all(name, "X")))
+ggplot(ee_ndvi_valpo2, aes(x = Fecha, y = NDVI)) + geom_path() + geom_point()
+```
+
+## Análisis
+
+* Que pasa por día
+
+```{r, eval = F}
+ee_ndvi_valpo2 <- ee_ndvi_valpo2 %>% mutate(Dia = lubridate::yday(Fecha), Mes =  lubridate::month(Fecha))
+
+ggplot(ee_ndvi_valpo2, aes(x = Dia, y = NDVI)) + geom_point()
+```
+
+* Que pasa por mes
+
+```{r, eval = F}
+ee_ndvi_valpo_summary <- ee_ndvi_valpo2 %>% group_by(Mes) %>% summarise(sd = sd(NDVI), NDVI = mean(NDVI))
+
+ggplot(ee_ndvi_valpo_summary, aes(x = Mes, y = NDVI)) + geom_ribbon(aes(ymax = NDVI + sd, ymin = NDVI -sd), alpha = 0.3, fill = "red") + geom_point() + geom_path()
+
+```
 
