@@ -1,0 +1,126 @@
+---
+title: "Remote sensing"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = T, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60), fig.align='center')
+
+library(sf)
+library(tidyverse)
+library(raster)
+library(rworldxtra) 
+library(kableExtra)
+options("kableExtra.html.bsTable" = T)
+```
+
+
+# ¿Que son los sensores remotos?
+
+## Sensores remotos
+
+* Datos satelitales
+* Distintas resoluciones
+    + Resolución espacial (Tamaño del grano)
+    + Resolución temporal (Cada cuanto se toman los datos)
+    + Espectro (Distintas bandas)
+
+## Algunos sensores remotos
+
+* Modis
+* Landsat
+* Sentinel
+
+## Landsat
+
+* Van 8 misiones
+
+```{r, echo = F}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/en/timeline/87a2d28fbe497b9cd2dfcc98d103af46.png")
+```
+
+* Chequear coinsidencia entre satélites
+
+## Datos landsat
+
+```{r, echo = F}
+Landsat <- tibble::tribble(
+                                   ~Bands, ~`Wavelength.(micrometers)`, ~`Resolution.(meters)`,
+  "Band 1 - Ultra Blue (coastal/aerosol)",             "0.435 - 0.451",                   "30",
+                          "Band 2 - Blue",             "0.452 - 0.512",                   "30",
+                         "Band 3 - Green",             "0.533 - 0.590",                   "30",
+                           "Band 4 - Red",             "0.636 - 0.673",                   "30",
+                           "Band 5 - NIR",             "0.851 - 0.879",                   "30",
+                        "Band 6 - SWIR 1",             "1.566 - 1.651",                   "30",
+                        "Band 7 - SWIR 2",             "2.107 - 2.294",                   "30",
+                  "Band 8 - Panchromatic",             "0.503 - 0.676",                   "15",
+                        "Band 9 - Cirrus",             "1.363 - 1.384",                   "30",
+                    "Band 10 - Thermal 1",             "10.60 - 11.19",            "100* (30)",
+                    "Band 11 - Thermal 2",             "11.50 - 12.51",            "100* (30)"
+  )
+
+kable(Landsat) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  scroll_box(width = "800px", height = "600px")
+```
+
+
+## Sentinel 2
+
+* Mayor resolución
+
+```{r , echo = F}
+Sentinel <- tibble::tribble(
+                             ~Banda,    ~nm,  ~nmw,    ~V4,  ~V5, ~V6,
+      "Band 1 – Coastal aerosol",  442.7,  21L,  442.2,  21L, 60L,
+                 "Band 2 – Blue",  492.4,  66L,  492.1,  66L, 10L,
+                "Band 3 – Green",  559.8,  36L,    559,  36L, 10L,
+                  "Band 4 – Red",  664.6,  31L,  664.9,  31L, 10L,
+  "Band 5 – Vegetation red edge",  704.1,  15L,  703.8,  16L, 20L,
+  "Band 6 – Vegetation red edge",  740.5,  15L,  739.1,  15L, 20L,
+  "Band 7 – Vegetation red edge",  782.8,  20L,  779.7,  20L, 20L,
+                  "Band 8 – NIR",  832.8, 106L,  832.9, 106L, 10L,
+          "Band 8A – Narrow NIR",  864.7,  21L,    864,  22L, 20L,
+         "Band 9 – Water vapour",  945.1,  20L,  943.2,  21L, 60L,
+       "Band 10 – SWIR – Cirrus", 1373.5,  31L, 1376.9,  30L, 60L,
+                "Band 11 – SWIR", 1613.7,  91L, 1610.4,  94L, 20L,
+                "Band 12 – SWIR", 2202.4, 175L, 2185.7, 185L, 20L
+)
+
+kable(Sentinel) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  scroll_box(width = "800px", height = "600px")
+
+```
+
+# RGEE
+
+## Google Earth Engine
+
+* Servidores de google para [calculos geoespaciales](https://earthengine.google.com/)
+* Gran cantidad de [bases de datos](https://developers.google.com/earth-engine/datasets/) disponibles
+* Tutorial en [español](https://barja8.github.io/Handbook_rgee/pdf/vol01.pdf)
+* Veamos [NDVI](https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LE07_C01_T1_8DAY_NDVI) de Landsat 7
+
+## NDVI
+
+```{r, echo = F, out.width="50%"}
+knitr::include_graphics("https://www.agricolus.com/wp-content/uploads/2018/05/NDVI_healthy_stressed.png")
+```
+
+* entre -1 y 1
+
+## Empezemos el rgee
+
+```{r, eval = F}
+library(rgee)
+ee_Initialize()
+```
+
+* Leamos la capa de google earth engine
+
+
