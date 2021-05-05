@@ -26,6 +26,8 @@ options("kableExtra.html.bsTable" = T)
 library(leaflet)
 ```
 
+* Find help [here](https://rstudio.github.io/leaflet/)
+
 ## We will start by using some points
 
 ```{r}
@@ -115,6 +117,64 @@ M <- leaflet() %>%
                      popup = ~Site_name, label = ~Abundance,
                      radius = 10*(Bombus$Abundance/max(Bombus$Abundance)))
   
-  M %>% addLegend(pal = pal, values = unique(Bombus$species))
+```
+
+## With size!
+
+```{r}
+M %>% addLegend(pal = pal, values = unique(Bombus$species))
+```
+
+
+# Hide show species
+
+## We need 2 files
+
+```{r}
+Species <- split(Bombus, Bombus$species)
+```
+
+* Need to add the group
+
+```{r}
+M <- leaflet() %>% 
+    addTiles() %>% 
+    addCircles(data = Species[[1]], lng = ~Longitude, ~Latitude, color = ~pal(species), fillColor = ~pal(species), group = names(Species)[1],
+               popup = ~Site_name, label = ~Abundance)  %>% 
+    addCircles(data = Species[[2]], lng = ~Longitude, ~Latitude, color = ~pal(species), fillColor = ~pal(species), group = names(Species)[2],
+               popup = ~Site_name, label = ~Abundance) %>% 
+    addLegend(pal = pal, values = unique(Bombus$species))
+```
+
+## How it looks
+
+```{r}
+M %>% addLayersControl(overlayGroups = names(Species))
+```
+
+# Exercise time Try to use one species and use the colorNumeric function to get an abundance color legend
+
+## Abundance legend
+
+```{r}
+pal <- colorNumeric(
+  palette = "RdYlBu",
+  domain = Species[[1]]$Abundance
+)
+```
+
+
+
+```{r}
+M <- leaflet(data = Species[[1]]) %>% 
+    addTiles() %>% 
+    addCircles(lng = ~Longitude, ~Latitude, color = ~pal(Abundance), fillColor = ~pal(Abundance), popup = ~Site_name) %>% 
+    addLegend(pal = pal, values = ~Abundance, title = "Standardized abundance")
+```
+
+## Map
+
+```{r, echo = F}
+M %>% addMeasure()
 ```
 
