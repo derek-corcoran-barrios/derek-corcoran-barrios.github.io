@@ -1,0 +1,120 @@
+---
+title: "Leaflet miniworkshop"
+author: "Derek Corcoran"
+date: "`r format(Sys.time(), '%d/%m, %Y')`"
+output:
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+#remotes::install_github("rlesur/klippy")
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
+library(leaflet)
+library(kableExtra)
+
+options("kableExtra.html.bsTable" = T)
+```
+
+
+
+## load packages
+
+```{r, echo = TRUE, eval= FALSE}
+library(leaflet)
+```
+
+## We will start by using some points
+
+```{r}
+Bombus <- read.csv("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Species.csv")
+Bombus <- Bombus[,c(3,5:7,9)]
+colnames(Bombus)[5] <- "Abundance"
+```
+
+```{r, echo = FALSE}
+ knitr::kable(Bombus) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  scroll_box(width = "100%", height = "350px")
+```
+
+
+## Lets just add points to a map
+
+```{r}
+M <- leaflet() %>% 
+  addTiles() %>% 
+  addCircles(data = Bombus, lng = ~Longitude, ~Latitude) 
+```
+
+* Otras opciones
+    + addAwesomeMarkers
+    + addCircleMarkers
+    + addMarkers
+
+## We can add some controls
+
+```{r}
+M %>% addMeasure(primaryLengthUnit = "meters", primaryAreaUnit = "hectare")
+```
+
+
+## Change color by species
+
+* Generate a pallete
+
+```{r}
+pal <- colorFactor(c("red", "blue"), domain = unique(Bombus$species))
+```
+
+* Add it to the species with color and fillColor
+
+```{r}
+M <- leaflet() %>% 
+    addTiles() %>% 
+    addCircles(data = Bombus, lng = ~Longitude, ~Latitude, color = ~pal(species), fillColor = ~pal(species))
+```
+
+* Add Legend
+
+```{r}
+M <- M %>% addLegend(pal = pal, values = unique(Bombus$species))
+```
+
+
+## Change color
+
+```{r, echo = FALSE}
+M
+```
+
+## Add popups and labels
+
+```{r}
+M <- leaflet() %>% 
+    addTiles() %>% 
+    addCircles(data = Bombus, lng = ~Longitude, ~Latitude, 
+               color = ~pal(species), fillColor = ~pal(species),
+               popup = ~Site_name, label = ~Abundance)
+```
+
+
+# Problem Species overlap
+
+## We can change size for abundace
+
+* Switched to CircleMarkers
+
+```{r}
+  M <- leaflet() %>% 
+    addTiles() %>% 
+    addCircleMarkers(data = Bombus, lng = ~Longitude, ~Latitude, 
+                     color = ~pal(species), fillColor = ~pal(species),
+                     popup = ~Site_name, label = ~Abundance,
+                     radius = 10*(Bombus$Abundance/max(Bombus$Abundance)))
+  
+  M %>% addLegend(pal = pal, values = unique(Bombus$species))
+```
+

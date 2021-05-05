@@ -24,7 +24,7 @@ M
 
 ## Some control
 
-M %>% addMeasure()
+M %>%  addMeasure(primaryLengthUnit = "meters", primaryAreaUnit = "hectare")
 
 # color by species
 
@@ -48,7 +48,7 @@ pal <- colorFactor(c("red", "blue"), domain = unique(Bombus$species))
   M %>% addLegend(pal = pal, values = unique(Bombus$species))
   
   ## Or size of circles
-  
+    
   M <- leaflet() %>% 
     addTiles() %>% 
     addCircleMarkers(data = Bombus, lng = ~Longitude, ~Latitude, 
