@@ -178,3 +178,25 @@ M <- leaflet(data = Species[[1]]) %>%
 M %>% addMeasure()
 ```
 
+## Extras
+
+```{r}
+esri <- grep("^Esri", providers, value = TRUE)
+esri <- esri[c(5,2,4,10)]
+
+for (provider in esri) {
+  M <- M %>% addProviderTiles(provider, group = provider)
+}
+
+M <- M %>%
+  addLayersControl(baseGroups = names(esri),
+                   options = layersControlOptions(collapsed = TRUE)) %>%
+  addMiniMap(tiles = esri[[4]], toggleDisplay = TRUE,
+             position = "topleft")
+```
+
+## Final
+
+```{r}
+M
+```
