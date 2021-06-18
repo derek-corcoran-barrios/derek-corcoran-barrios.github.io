@@ -11,7 +11,7 @@ data(meuse)
 
 ## Transformar a SF
 
-Meuse <- meuse %>% st_as_sf(coords = c(1,2), crs = "+init=epsg:28992")
+Meuse <- meuse %>% st_as_sf(coords = c(1,2), crs = 28992)
 
 ggplot() + 
   geom_sf(data = Meuse, aes(color = zinc)) + 
@@ -138,7 +138,7 @@ Spat_pred <- krige(log(zinc) ~ x + y, meuse, meuse.grid, model = Abn_fit_Spat) %
   st_as_sf(crs = "+init=epsg:28992") %>% 
   mutate(Modelo = "Espacial")
 
-Dist_pred <- krige(log(zinc) ~ dist, Meuse, Meuse_grid_SF, model = Abn_fit_Dist) %>% 
+Dist_pred <- krige(fromula = log(zinc) ~ dist, data = Meuse, newdata = Meuse_grid_SF, model = Abn_fit_Dist) %>% 
   mutate(Modelo = "distancia")
 
 Dist_sq_pred <- krige(log(zinc) ~ dist, Meuse, Meuse_grid_SF, model = Abn_fit_Dist_sq) %>% 
