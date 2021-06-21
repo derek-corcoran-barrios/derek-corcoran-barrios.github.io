@@ -59,7 +59,7 @@ for (provider in esri) {
                            "Sand:", round(Test$afsandno + Test$agsandno), "<br>",
                            "Coord x:", Test$coords.x1, "<br>",
                            "Coord y:", Test$coords.x2)) %>% 
-    leaflet::addCircles(data = as_Spatial(dplyr::filter(Test, Ranking != "1 - 200")), group = ">  200", color = ~pal(Ranking), popup = paste("<b>Ranking:", Test$Rank,"</b>", "<br>", 
+    leaflet::addCircles(data = as_Spatial(dplyr::filter(Test, Ranking == "201 - 400")), group = "201 - 400", color = ~pal(Ranking), popup = paste("<b>Ranking:", Test$Rank,"</b>", "<br>", 
                                                                                     "Habitat:", Test$habtype, "<br>",
                                                                                     "Dataset:", Test$Dataset, "<br>",
                            "Canopy height:", Test$Canopy_Height, "<br>",
@@ -70,7 +70,7 @@ for (provider in esri) {
 
 l <- l %>%
   addLayersControl(baseGroups = names(esri),
-                   overlayGroups = c("1 - 200", ">  200"),
+                   overlayGroups = c("1 - 200", "201 - 400"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
   addMeasure(position = "topleft",
              primaryLengthUnit = "meters",
