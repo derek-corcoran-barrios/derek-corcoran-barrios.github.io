@@ -58,6 +58,24 @@ pal <- colorFactor(
 
 for (provider in esri) {
   l <- l %>% addProviderTiles(provider, group = provider) %>% 
+    leaflet::addCircles(data = as_Spatial(dplyr::filter(Test, Ranking == "> 800")), group = "> 800", color = ~pal(Ranking), popup = paste("<b>Ranking:", dplyr::filter(Test, Ranking == "> 800")$Rank,"</b>", "<br>", 
+                                                                                    "Habitat:", dplyr::filter(Test, Ranking == "> 800")$habtype, "<br>",
+                                                                                    "Dataset:", Test$Dataset, "<br>",
+                           "Canopy height:", dplyr::filter(Test, Ranking == "> 800")$Canopy_Height, "<br>",
+                           "Sand:", round(dplyr::filter(Test, Ranking == "> 800")$afsandno + dplyr::filter(Test, Ranking == "> 800")$agsandno), "<br>",
+                           "Coord x:", dplyr::filter(Test, Ranking == "> 800")$coords.x1, "<br>",
+                           "Coord y:", dplyr::filter(Test, Ranking == "> 800")$coords.x2, "<br>",
+                           "Lon:", dplyr::filter(Test, Ranking == "> 800")$Lon, "<br>",
+                           "Lat:", dplyr::filter(Test, Ranking == "> 800")$Lat)) %>% 
+    leaflet::addCircles(data = as_Spatial(dplyr::filter(Test, Ranking == "601 - 800")), group = "601 - 800", color = ~pal(Ranking), popup = paste("<b>Ranking:", dplyr::filter(Test, Ranking == "601 - 800")$Rank,"</b>", "<br>", 
+                                                                                    "Habitat:", dplyr::filter(Test, Ranking == "601 - 800")$habtype, "<br>",
+                                                                                    "Dataset:", Test$Dataset, "<br>",
+                           "Canopy height:", dplyr::filter(Test, Ranking == "601 - 800")$Canopy_Height, "<br>",
+                           "Sand:", round(dplyr::filter(Test, Ranking == "601 - 800")$afsandno + dplyr::filter(Test, Ranking == "601 - 800")$agsandno), "<br>",
+                           "Coord x:", dplyr::filter(Test, Ranking == "601 - 800")$coords.x1, "<br>",
+                           "Coord y:", dplyr::filter(Test, Ranking == "601 - 800")$coords.x2, "<br>",
+                           "Lon:", dplyr::filter(Test, Ranking == "601 - 800")$Lon, "<br>",
+                           "Lat:", dplyr::filter(Test, Ranking == "601 - 800")$Lat)) %>% 
     leaflet::addCircles(data = as_Spatial(dplyr::filter(Test, Ranking == "401 - 600")), group = "401 - 600", color = ~pal(Ranking), popup = paste("<b>Ranking:", dplyr::filter(Test, Ranking == "401 - 600")$Rank,"</b>", "<br>", 
                                                                                     "Habitat:", dplyr::filter(Test, Ranking == "401 - 600")$habtype, "<br>",
                                                                                     "Dataset:", Test$Dataset, "<br>",
@@ -98,7 +116,7 @@ for (provider in esri) {
 
 l <- l %>%
   addLayersControl(baseGroups = names(esri),
-                   overlayGroups = c("Richness Trend", "1 - 200", "201 - 400", "401 - 600"),
+                   overlayGroups = c("Richness Trend", "1 - 200", "201 - 400", "401 - 600", "601 - 800", "> 800"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
   addMeasure(position = "topleft",
              primaryLengthUnit = "meters",
