@@ -14,31 +14,70 @@ library(leaflet)
 library(kableExtra)
 library(sf)
 library(raster)
+library(tidyverse)
+
+OnlyPoints <- readRDS("Onlypoints4.rds")
 
 options("kableExtra.html.bsTable" = T)
 ```
 
-## R Markdown
+## Map 1
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r, cache=FALSE}
+library(leaflet)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+Coords <- OnlyPoints %>% dplyr::filter(Rank > 0) %>% as_Spatial()
 
-## Slide with Bullets
+Coords <- Coords@coords %>% as.data.frame()
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+Test <- OnlyPoints %>% dplyr::filter(Rank > 0)%>% st_transform(crs = "+proj=longlat +datum=WGS84") %>% 
+  mutate(Ranking = case_when(Rank <= 200 ~ "1 - 200",
+                             Rank > 200 & Rank <= 400 ~ "201 - 400",
+                             Rank > 400 & Rank <= 600 ~ "401 - 600",
+                             Rank > 600 & Rank <= 800 ~ "601 - 800",
+                             Rank > 800 ~ "> 800"),
+         Ranking = fct_relevel(Ranking, "1 - 200", "201 - 400","401 - 600", "601 - 800")) %>% 
+  cbind(Coords)
+l <-leaflet()
 
-## Slide with R Output
+esri <- grep("^Esri", providers, value = TRUE)
+esri <- esri[c(5,2,4,10)]
 
-```{r cars, echo = TRUE}
-summary(cars)
+pal <- colorFactor(
+  palette = c('#d7191c','#fdae61','#abd9e9','#2c7bb6', "black"),
+  domain= Test$Ranking,
+  ordered = TRUE,
+  na.color = "#808080"
+)
+
+for (provider in esri) {
+  l <- l %>% addProviderTiles(provider, group = provider) %>% 
+  leaflet::addCircles(data = as_Spatial(dplyr::filter(Test, Ranking == "1 - 200")), group = "1 - 200", color = ~pal(Ranking), popup = paste("<b>Ranking:", Test$Rank,"</b>", "<br>", 
+                                                                                    "Habitat:", Test$habtype, "<br>",
+                                                                                    "Dataset:", Test$Dataset, "<br>",
+                           "Canopy height:", Test$Canopy_Height, "<br>",
+                           "Sand:", round(Test$afsandno + Test$agsandno), "<br>",
+                           "Coord x:", Test$coords.x1, "<br>",
+                           "Coord y:", Test$coords.x2)) %>% 
+    leaflet::addCircles(data = as_Spatial(dplyr::filter(Test, Ranking != "1 - 200")), group = ">  200", color = ~pal(Ranking), popup = paste("<b>Ranking:", Test$Rank,"</b>", "<br>", 
+                                                                                    "Habitat:", Test$habtype, "<br>",
+                                                                                    "Dataset:", Test$Dataset, "<br>",
+                           "Canopy height:", Test$Canopy_Height, "<br>",
+                           "Sand:", round(Test$afsandno + Test$agsandno), "<br>",
+                           "Coord x:", Test$coords.x1, "<br>",
+                           "Coord y:", Test$coords.x2))
+}
+
+l <- l %>%
+  addLayersControl(baseGroups = names(esri),
+                   overlayGroups = c("1 - 200", ">  200"),
+                   options = layersControlOptions(collapsed = TRUE)) %>%
+  addMeasure(position = "topleft",
+             primaryLengthUnit = "meters",
+             primaryAreaUnit = "hectares")
+
+l %>% addLegend("bottomright", pal = pal ,title = "Rank",opacity = 1, values = Test$Ranking) %>%
+  addEasyButton(easyButton(
+    icon="fa-crosshairs", title="Locate Me",
+    onClick=JS("function(btn, map){ map.locate({setView: true}); }")))
 ```
-
-## Slide with Plot
-
-```{r pressure}
-plot(pressure)
-```
-
