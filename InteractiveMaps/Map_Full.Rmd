@@ -17,7 +17,7 @@ OnlyPoints <- readRDS("Onlypoints4.rds")
 options("kableExtra.html.bsTable" = T)
 ```
 
-```{r, cache=FALSE}
+```{r, cache=FALSE, out.width = '100%'}
 library(leaflet)
 
 Coords <- OnlyPoints %>% dplyr::filter(Rank > 0) %>% as_Spatial()
