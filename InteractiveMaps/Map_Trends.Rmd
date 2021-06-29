@@ -1,0 +1,133 @@
+---
+title: "Diversity Trends"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE, tidy = TRUE, tidy.opts= list(blank = FALSE, width.cutoff = 60))
+library(leaflet)
+library(leaflet.extras)
+library(kableExtra)
+library(sf)
+library(raster)
+library(tidyverse)
+
+Diversity <- readRDS("Diversity_Trends.rds")
+
+Increase <- Diversity %>% dplyr::filter(Trend == "Increase")
+
+Stable <- Diversity %>% dplyr::filter(Trend == "Stable")
+
+Decrease <- Diversity %>% dplyr::filter(Trend == "Decrease")
+
+rm(Diversity)
+
+gc()
+
+options("kableExtra.html.bsTable" = T)
+```
+
+```{r, cache=FALSE, out.width = '100%'}
+library(leaflet)
+
+Coords_Increase <- Increase %>% as_Spatial()
+
+Coords_Increase <- Coords_Increase@coords %>% as.data.frame()
+
+Coords2_Increase <- Increase %>% st_transform(crs = "+proj=longlat +datum=WGS84") %>% as_Spatial()
+
+Coords2_Increase <- Coords2_Increase@coords %>% as.data.frame() %>% rename(Lon = coords.x1, Lat = coords.x2)
+
+Increase <- Increase %>% 
+  st_transform(crs = "+proj=longlat +datum=WGS84") %>% 
+  cbind(Coords_Increase) %>% 
+  cbind(Coords2_Increase)
+
+##
+
+Coords_Decrease <- Decrease %>% as_Spatial()
+
+Coords_Decrease <- Coords_Decrease@coords %>% as.data.frame()
+
+Coords2_Decrease <- Decrease %>% st_transform(crs = "+proj=longlat +datum=WGS84") %>% as_Spatial()
+
+Coords2_Decrease <- Coords2_Decrease@coords %>% as.data.frame() %>% rename(Lon = coords.x1, Lat = coords.x2)
+
+Decrease <- Decrease %>% 
+  st_transform(crs = "+proj=longlat +datum=WGS84") %>% 
+  cbind(Coords_Decrease) %>% 
+  cbind(Coords2_Decrease)
+
+##
+
+Coords_Stable <- Stable %>% as_Spatial()
+
+Coords_Stable <- Coords_Stable@coords %>% as.data.frame()
+
+Coords2_Stable <- Stable %>% st_transform(crs = "+proj=longlat +datum=WGS84") %>% as_Spatial()
+
+Coords2_Stable <- Coords2_Stable@coords %>% as.data.frame() %>% rename(Lon = coords.x1, Lat = coords.x2)
+
+Stable <- Stable %>% 
+  st_transform(crs = "+proj=longlat +datum=WGS84") %>% 
+  cbind(Coords_Stable) %>% 
+  cbind(Coords2_Stable)
+
+l <-leaflet()
+
+esri <- grep("^Esri", providers, value = TRUE)
+esri <- esri[c(5,2,4,10)]
+
+pal_increase <- colorNumeric(
+  palette = c('#fee0d2','#fc9272','#de2d26'),
+  domain= Increase$estimate,
+  na.color = "#808080"
+)
+
+pal_decrease <- colorNumeric(
+  palette = c('#3182bd','#9ecae1','#deebf7'),
+  domain= Decrease$estimate,
+  na.color = "#808080"
+)
+
+for (provider in esri) {
+  l <- l %>% addProviderTiles(provider, group = provider)    
+}
+
+l <- l %>% 
+      leaflet::addCircleMarkers(data = as_Spatial(Stable),  radius = 6, group = "Stable", color = "#ffffbf", popup = paste("<b>Slope:", round(Stable$estimate,3),"</b>", "<br>", 
+                                                                                    "Habitat:", Stable$habtype, "<br>",
+                           "Coord x:", Stable$coords.x1, "<br>",
+                           "Coord y:", Stable$coords.x2, "<br>",
+                           "Lon:", Stable$Lon, "<br>",
+                           "Lat:", Stable$Lat)) %>%
+    leaflet::addCircleMarkers(data = as_Spatial(Increase),  radius = 6, group = "Increase", color = ~pal_increase(estimate), popup = paste("<b>Slope:", round(Increase$estimate,3),"</b>", "<br>", 
+                                                                                    "Habitat:", Increase$habtype, "<br>",
+                           "Coord x:", Increase$coords.x1, "<br>",
+                           "Coord y:", Increase$coords.x2, "<br>",
+                           "Lon:", Increase$Lon, "<br>",
+                           "Lat:", Increase$Lat)) %>%
+  leaflet::addCircleMarkers(data = as_Spatial(Decrease),  radius = 6, group = "Decrease", color = ~pal_decrease(estimate), popup = paste("<b>Slope:", round(Decrease$estimate,3),"</b>", "<br>", 
+                                                                                    "Habitat:", Decrease$habtype, "<br>",
+                           "Coord x:", Decrease$coords.x1, "<br>",
+                           "Coord y:", Decrease$coords.x2, "<br>",
+                           "Lon:", Decrease$Lon, "<br>",
+                           "Lat:", Decrease$Lat)) %>%
+  addLayersControl(baseGroups = names(esri),
+                   overlayGroups = c("Stable", "Increase", "Decrease"),
+                   options = layersControlOptions(collapsed = TRUE)) %>%
+  addMeasure(position = "topleft",
+             primaryLengthUnit = "meters",
+             primaryAreaUnit = "hectares")
+
+l %>%  
+  addLegend(
+  position = "bottomright",
+  colors = c('#3182bd','#9ecae1','#deebf7',"#ffffbf", '#fee0d2','#fc9272','#de2d26'),
+  labels = c("Decreasing","", "", "Stable","", "", "Increasing"), opacity = 1,
+  title = "Richness trend"
+) %>%
+  addEasyButton(easyButton(
+    icon="fa-crosshairs", title="Locate Me",
+    onClick=JS("function(btn, map){ map.locate({setView: true}); }")))
+```
