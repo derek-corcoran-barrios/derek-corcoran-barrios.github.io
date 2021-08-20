@@ -30,6 +30,19 @@ Husby_Centroids <- read_sf("Husby_centroids.shp") %>%
                            Group == 5 ~ "C1",
                            Group == 6 ~ "C2"))
 
+Husby_Centroids <- Husby_Centroids %>% 
+  mutate(Code = paste(Group, formatC(rowid, digits = 2, flag = "0"), sep = "_"), Treatment = NA) %>% group_by(Code) %>% group_split()
+
+Treatments <- LETTERS[1:3]
+
+for(i in 1:length(Husby_Centroids)){
+  Husby_Centroids[[i]]$Treatment <- sample(Treatments, replace = F)
+}
+
+Husby_Centroids <- Husby_Centroids %>% reduce(bind_rows) %>% 
+  mutate(Code = paste(Code, Treatment, sep = "_")) %>% 
+  dplyr::select(-Treatment)
+
 Husby_Monitor <- read_sf("MonitoringPointsHusby.shp") %>%
   st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs")
 
@@ -63,8 +76,10 @@ l <- l %>%
     leaflet::addCircleMarkers(data = as_Spatial(Husby_Monitor), radius = 6, group = "Monitoring", color = ~"white", popup = paste("Lon:", Husby_Monitor$long, "<br>",
                            "Lat:", Husby_Monitor$lat)) %>% 
     leaflet::addCircleMarkers(data = as_Spatial(Husby_Centroids), radius = 6, group = "Points", color = ~pal(Group), popup = paste("Lon:", Husby_Centroids$long, "<br>",
-                           "Lat:", Husby_Centroids$lat)) %>%
-  addPolygons(data = as_Spatial(Husby), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8) %>% 
+                           "Lat:", Husby_Centroids$lat, "<br>",
+                           "Group:", Husby_Centroids$Group, "<br>", 
+                           "Code:", Husby_Centroids$Code)) %>%
+  addPolygons(data = as_Spatial(Husby), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 1, popup = Husby$Group) %>% 
   addLayersControl(baseGroups = names(esri),
                    overlayGroups = c("Points", "Groups", "Monitoring"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
