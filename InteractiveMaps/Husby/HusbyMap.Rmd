@@ -14,6 +14,9 @@ library(raster)
 
 Husby_Raster <- read_rds("HusbyRaster.rds")
 
+Husby_Roads <- read_rds("roads_Husby.rds") %>% st_transform(crs ="+proj=longlat +datum=WGS84 +no_defs")
+
+
 Husby_Raster <- Husby_Raster[[1]] %>% projectRaster(crs ="+proj=longlat +datum=WGS84 +no_defs")
 
 Husby <- read_sf("GroupsHusby.shp") %>% 
@@ -120,8 +123,9 @@ l <- l %>%
                            "Group:", Husby_Centroids$Group, "<br>", 
                            "Code:", Husby_Centroids$Code)) %>%
   addPolygons(data = as_Spatial(Husby), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Husby$Group, fillOpacity = 0.8) %>% 
+ addPolylines(data = Husby_Roads, color = "red", group = "Roads") %>% 
   addLayersControl(baseGroups = names(esri),
-                   overlayGroups = c("Points", "Groups", "Monitoring"),
+                   overlayGroups = c("Points", "Groups", "Monitoring", "Roads"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
   addMeasure(position = "topleft",
              primaryLengthUnit = "meters",

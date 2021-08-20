@@ -16,6 +16,8 @@ Trojborg_Raster <- read_rds("TrojborgRaster.rds")
 
 Trojborg_Raster <- Trojborg_Raster[[1]] %>% projectRaster(crs ="+proj=longlat +datum=WGS84 +no_defs")
 
+Trojborg_Roads <- read_rds("roads_Trojborg.rds") %>% st_transform(crs ="+proj=longlat +datum=WGS84 +no_defs")
+
 Trojborg <- read_sf("GroupsTrojborg.shp") %>% 
   st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs") %>% 
   mutate(Group = case_when(Group == 1 ~ "A1",
@@ -127,8 +129,9 @@ l <- l %>%
                            "Group:", Trojborg_Centroids$Group, "<br>", 
                            "Code:", Trojborg_Centroids$Code)) %>%
   addPolygons(data = as_Spatial(Trojborg), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Trojborg$Group, fillOpacity = 0.8) %>% 
+  addPolylines(data = Trojborg_Roads, color = "red", group = "Roads") %>% 
   addLayersControl(baseGroups = names(esri),
-                   overlayGroups = c("Points", "Groups", "Monitoring"),
+                   overlayGroups = c("Points", "Groups", "Monitoring", "Roads"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
   addMeasure(position = "topleft",
              primaryLengthUnit = "meters",
