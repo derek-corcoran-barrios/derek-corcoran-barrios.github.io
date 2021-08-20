@@ -132,7 +132,7 @@ l <- l %>%
                            "Group:", Husby_Centroids$Group, "<br>", 
                            "Code:", Husby_Centroids$Code)) %>%
   addPolygons(data = as_Spatial(Husby), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Husby$Group, fillOpacity = 0.8) %>% 
-  addPolygons(data = as_Spatial(Husby_Large), group = "Large groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Husby$Group, fillOpacity = 0.8) %>% 
+  addPolygons(data = as_Spatial(Husby_Large), group = "Large groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Husby_Large$Group, fillOpacity = 0.8) %>% 
  addPolylines(data = Husby_Roads, color = "red", group = "Roads") %>% 
   addLayersControl(baseGroups = names(esri),
                    overlayGroups = c("Points", "Groups", "Monitoring", "Roads", "Large groups"),
