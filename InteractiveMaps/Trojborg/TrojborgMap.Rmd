@@ -30,6 +30,22 @@ Trojborg_Centroids <- read_sf("Trojborg_centroids.shp") %>%
                            Group == 5 ~ "C1",
                            Group == 6 ~ "C2"))
 
+Trojborg_Centroids <- Trojborg_Centroids %>% 
+  mutate(Code = paste(Group, formatC(rowid, digits = 2, flag = "0"), sep = "_"), Treatment = NA) %>% group_by(Code) %>% group_split()
+
+Treatments <- LETTERS[1:3]
+
+for(i in 1:length(Trojborg_Centroids)){
+  set.seed(i)
+  Trojborg_Centroids[[i]]$Treatment <- sample(Treatments, replace = F)
+}
+
+Trojborg_Centroids <- Trojborg_Centroids %>% reduce(bind_rows) %>% 
+  mutate(Code = paste(Code, Treatment, sep = "_")) %>% 
+  dplyr::select(-Treatment)
+
+write_sf(Trojborg_Centroids, "Final_Centroids_Trojborg.shp")
+
 Trojborg_Monitor <- read_sf("MonitoringPointsTrojborg.shp") %>%
   st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs")
 
@@ -63,8 +79,10 @@ l <- l %>%
     leaflet::addCircleMarkers(data = as_Spatial(Trojborg_Monitor), radius = 6, group = "Monitoring", color = ~"white", popup = paste("Lon:", Trojborg_Monitor$long, "<br>",
                            "Lat:", Trojborg_Monitor$lat)) %>% 
     leaflet::addCircleMarkers(data = as_Spatial(Trojborg_Centroids), radius = 6, group = "Points", color = ~pal(Group), popup = paste("Lon:", Trojborg_Centroids$long, "<br>",
-                           "Lat:", Trojborg_Centroids$lat)) %>%
-  addPolygons(data = as_Spatial(Trojborg), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8) %>% 
+                           "Lat:", Trojborg_Centroids$lat, "<br>",
+                           "Group:", Trojborg_Centroids$Group, "<br>", 
+                           "Code:", Trojborg_Centroids$Code)) %>%
+  addPolygons(data = as_Spatial(Trojborg), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Trojborg$Group) %>% 
   addLayersControl(baseGroups = names(esri),
                    overlayGroups = c("Points", "Groups", "Monitoring"),
                    options = layersControlOptions(collapsed = TRUE)) %>%

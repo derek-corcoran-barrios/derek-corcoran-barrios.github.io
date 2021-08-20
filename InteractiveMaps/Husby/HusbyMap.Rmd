@@ -36,12 +36,15 @@ Husby_Centroids <- Husby_Centroids %>%
 Treatments <- LETTERS[1:3]
 
 for(i in 1:length(Husby_Centroids)){
+  set.seed(i)
   Husby_Centroids[[i]]$Treatment <- sample(Treatments, replace = F)
 }
 
 Husby_Centroids <- Husby_Centroids %>% reduce(bind_rows) %>% 
   mutate(Code = paste(Code, Treatment, sep = "_")) %>% 
   dplyr::select(-Treatment)
+
+write_sf(Husby_Centroids, "Final_Centroids_Husby.shp")
 
 Husby_Monitor <- read_sf("MonitoringPointsHusby.shp") %>%
   st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs")
