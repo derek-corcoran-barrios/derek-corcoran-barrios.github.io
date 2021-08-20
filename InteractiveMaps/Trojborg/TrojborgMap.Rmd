@@ -12,6 +12,10 @@ library(leaflet)
 library(sf)
 library(raster)
 
+Trojborg_Raster <- read_rds("TrojborgRaster.rds")
+
+Trojborg_Raster <- Trojborg_Raster[[1]] %>% projectRaster(crs ="+proj=longlat +datum=WGS84 +no_defs")
+
 Trojborg <- read_sf("GroupsTrojborg.shp") %>% 
   st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs") %>% 
   mutate(Group = case_when(Group == 1 ~ "A1",
@@ -46,16 +50,55 @@ Trojborg_Centroids <- Trojborg_Centroids %>% reduce(bind_rows) %>%
 
 write_sf(Trojborg_Centroids, "Final_Centroids_Trojborg.shp")
 
-Trojborg_Monitor <- read_sf("MonitoringPointsTrojborg.shp") %>%
-  st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs")
+
+Trojborg_Monitor <- list()
+
+for(i in 1:nrow(Trojborg)){
+  set.seed(i)
+  Mask <- mask(Trojborg_Raster, Trojborg[i,])
+  try({
+  Pres <- Trojborg_Centroids %>% dplyr::filter(Group == Trojborg[i,]$Group[1]) %>% as_Spatial()
+  
+    RandomPoints <- dismo::randomPoints(Mask, n = 30, p = Pres) %>% 
+    as.data.frame() %>% 
+    st_as_sf(coords = c(1,2), crs ="+proj=longlat +datum=WGS84 +no_defs") %>% 
+    mutate(Group = Trojborg[i,]$Group[1]) %>% 
+    st_transform(crs = "+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs") %>% 
+    st_buffer(dist = 25) %>% 
+    st_transform(crs ="+proj=longlat +datum=WGS84 +no_defs") 
+  for(j in i:nrow(RandomPoints)){
+    if(j == 1){
+      Temp <- RandomPoints[j,]
+    }
+    else if (j != 1 & sum(st_intersects(Temp, RandomPoints[j,], sparse = F)) == 0){
+      Temp <- rbind(Temp, RandomPoints[j,])
+      print(j)
+    }
+  }
+  Trojborg_Monitor[[i]] <- Temp %>% st_centroid() %>% dplyr::distinct()
+  })
+}
+
+cond <- !sapply(Trojborg_Monitor, is.null)
+
+Trojborg_Monitor <- Trojborg_Monitor[cond]
+
+Trojborg_Monitor <- Trojborg_Monitor %>% reduce(rbind) %>% dplyr::distinct()
+
+Trojborg_Monitor <- Trojborg_Monitor %>% group_split(Group) %>% purrr::map(~tibble::rowid_to_column(.x)) %>% reduce(rbind)
 
 separated_coord <- Trojborg_Monitor %>% 
   mutate(lat = unlist(map(Trojborg_Monitor$geometry,1)),
          long = unlist(map(Trojborg_Monitor$geometry,2))) %>% 
   as.data.frame() %>% 
-  dplyr::select(lat, long)
+  dplyr::select(lat, long) %>% 
+  dplyr::distinct()
 
-Trojborg_Monitor <- Trojborg_Monitor %>% cbind(separated_coord)
+Trojborg_Monitor <- Trojborg_Monitor %>% 
+  cbind(separated_coord) %>% 
+  mutate(Code = paste("B", Group, rowid, sep = "_")) %>% 
+  dplyr::select(-rowid)
+write_sf(Trojborg_Monitor, "Trojborg_Monitor.shp")
 ```
 
 ```{r}
@@ -77,12 +120,13 @@ for (provider in esri) {
 
 l <- l %>% 
     leaflet::addCircleMarkers(data = as_Spatial(Trojborg_Monitor), radius = 6, group = "Monitoring", color = ~"white", popup = paste("Lon:", Trojborg_Monitor$long, "<br>",
-                           "Lat:", Trojborg_Monitor$lat)) %>% 
+                           "Lat:", Trojborg_Monitor$lat, "<br>",
+                           "Code:",Trojborg_Monitor$Code)) %>% 
     leaflet::addCircleMarkers(data = as_Spatial(Trojborg_Centroids), radius = 6, group = "Points", color = ~pal(Group), popup = paste("Lon:", Trojborg_Centroids$long, "<br>",
                            "Lat:", Trojborg_Centroids$lat, "<br>",
                            "Group:", Trojborg_Centroids$Group, "<br>", 
                            "Code:", Trojborg_Centroids$Code)) %>%
-  addPolygons(data = as_Spatial(Trojborg), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, fillOpacity = 0.8, popup = Trojborg$Group) %>% 
+  addPolygons(data = as_Spatial(Trojborg), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Trojborg$Group, fillOpacity = 0.8) %>% 
   addLayersControl(baseGroups = names(esri),
                    overlayGroups = c("Points", "Groups", "Monitoring"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
