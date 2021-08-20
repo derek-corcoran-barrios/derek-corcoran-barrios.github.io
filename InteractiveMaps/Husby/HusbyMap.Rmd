@@ -12,6 +12,10 @@ library(leaflet)
 library(sf)
 library(raster)
 
+Husby_Raster <- read_rds("HusbyRaster.rds")
+
+Husby_Raster <- Husby_Raster[[1]] %>% projectRaster(crs ="+proj=longlat +datum=WGS84 +no_defs")
+
 Husby <- read_sf("GroupsHusby.shp") %>% 
   st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs") %>% 
   mutate(Group = case_when(Group == 1 ~ "A1",
@@ -46,16 +50,48 @@ Husby_Centroids <- Husby_Centroids %>% reduce(bind_rows) %>%
 
 write_sf(Husby_Centroids, "Final_Centroids_Husby.shp")
 
-Husby_Monitor <- read_sf("MonitoringPointsHusby.shp") %>%
-  st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs")
+
+Husby_Monitor <- list()
+
+for(i in 1:nrow(Husby)){
+  set.seed(i)
+  Mask <- mask(Husby_Raster, Husby[i,])
+  Pres <- Husby_Centroids %>% dplyr::filter(Group == Husby[i,]$Group[1]) %>% as_Spatial()
+  RandomPoints <- dismo::randomPoints(Mask, n = 30, p = Pres) %>% 
+    as.data.frame() %>% 
+    st_as_sf(coords = c(1,2), crs ="+proj=longlat +datum=WGS84 +no_defs") %>% 
+    mutate(Group = Husby[i,]$Group[1]) %>% 
+    st_transform(crs = "+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs") %>% 
+    st_buffer(dist = 25) %>% 
+    st_transform(crs ="+proj=longlat +datum=WGS84 +no_defs") 
+  for(j in i:nrow(RandomPoints)){
+    if(j == 1){
+      Temp <- RandomPoints[j,]
+    }
+    else if (j != 1 & sum(st_intersects(Temp, RandomPoints[j,], sparse = F)) == 0){
+      Temp <- rbind(Temp, RandomPoints[j,])
+      print(j)
+    }
+  }
+  Husby_Monitor[[i]] <- Temp %>% st_centroid() %>% dplyr::distinct()
+}
+
+Husby_Monitor <- Husby_Monitor %>% reduce(rbind) %>% dplyr::distinct()
+
+Husby_Monitor <- Husby_Monitor %>% group_split(Group) %>% purrr::map(~tibble::rowid_to_column(.x)) %>% reduce(rbind)
 
 separated_coord <- Husby_Monitor %>% 
   mutate(lat = unlist(map(Husby_Monitor$geometry,1)),
          long = unlist(map(Husby_Monitor$geometry,2))) %>% 
   as.data.frame() %>% 
-  dplyr::select(lat, long)
+  dplyr::select(lat, long) %>% 
+  dplyr::distinct()
 
-Husby_Monitor <- Husby_Monitor %>% cbind(separated_coord)
+Husby_Monitor <- Husby_Monitor %>% 
+  cbind(separated_coord) %>% 
+  mutate(Code = paste("B", Group, rowid, sep = "_")) %>% 
+  dplyr::select(-rowid)
+write_sf(Husby_Monitor, "Husby_Monitor.shp")
 ```
 
 ```{r}
@@ -77,12 +113,13 @@ for (provider in esri) {
 
 l <- l %>% 
     leaflet::addCircleMarkers(data = as_Spatial(Husby_Monitor), radius = 6, group = "Monitoring", color = ~"white", popup = paste("Lon:", Husby_Monitor$long, "<br>",
-                           "Lat:", Husby_Monitor$lat)) %>% 
+                           "Lat:", Husby_Monitor$lat, "<br>",
+                           "Code:",Husby_Monitor$Code)) %>% 
     leaflet::addCircleMarkers(data = as_Spatial(Husby_Centroids), radius = 6, group = "Points", color = ~pal(Group), popup = paste("Lon:", Husby_Centroids$long, "<br>",
                            "Lat:", Husby_Centroids$lat, "<br>",
                            "Group:", Husby_Centroids$Group, "<br>", 
                            "Code:", Husby_Centroids$Code)) %>%
-  addPolygons(data = as_Spatial(Husby), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 1, popup = Husby$Group) %>% 
+  addPolygons(data = as_Spatial(Husby), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Husby$Group, fillOpacity = 0.8) %>% 
   addLayersControl(baseGroups = names(esri),
                    overlayGroups = c("Points", "Groups", "Monitoring"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
