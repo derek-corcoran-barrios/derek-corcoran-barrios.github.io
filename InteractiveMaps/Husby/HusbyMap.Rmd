@@ -28,6 +28,15 @@ Husby <- read_sf("GroupsHusby.shp") %>%
                            Group == 5 ~ "C1",
                            Group == 6 ~ "C2"))
 
+Husby_Large <- read_sf("GroupsHusbyLarge.shp") %>% 
+  st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs") %>% 
+  mutate(Group = case_when(Group == 1 ~ "A1",
+                           Group == 2 ~ "A2",
+                           Group == 3 ~ "B1",
+                           Group == 4 ~ "B2",
+                           Group == 5 ~ "C1",
+                           Group == 6 ~ "C2"))
+
 Husby_Centroids <- read_sf("Husby_centroids.shp") %>% 
   st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs")%>% 
   mutate(Group = case_when(Group == 1 ~ "A1",
@@ -123,14 +132,15 @@ l <- l %>%
                            "Group:", Husby_Centroids$Group, "<br>", 
                            "Code:", Husby_Centroids$Code)) %>%
   addPolygons(data = as_Spatial(Husby), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Husby$Group, fillOpacity = 0.8) %>% 
+  addPolygons(data = as_Spatial(Husby_Large), group = "Large groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Husby$Group, fillOpacity = 0.8) %>% 
  addPolylines(data = Husby_Roads, color = "red", group = "Roads") %>% 
   addLayersControl(baseGroups = names(esri),
-                   overlayGroups = c("Points", "Groups", "Monitoring", "Roads"),
+                   overlayGroups = c("Points", "Groups", "Monitoring", "Roads", "Large groups"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
   addMeasure(position = "topleft",
              primaryLengthUnit = "meters",
              primaryAreaUnit = "hectares") %>% 
-  hideGroup("Groups")
+  hideGroup(c("Groups", "Large groups"))
 
 l %>% addLegend("bottomright", pal = pal ,title = "Husby sites",opacity = 1, values = Husby_Centroids$Group) %>%
   addEasyButton(easyButton(
