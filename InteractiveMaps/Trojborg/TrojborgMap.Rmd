@@ -82,7 +82,7 @@ l <- l %>%
                            "Lat:", Trojborg_Centroids$lat, "<br>",
                            "Group:", Trojborg_Centroids$Group, "<br>", 
                            "Code:", Trojborg_Centroids$Code)) %>%
-  addPolygons(data = as_Spatial(Trojborg), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Trojborg$Group) %>% 
+  addPolygons(data = as_Spatial(Trojborg), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, fillOpacity = 0.8, popup = Trojborg$Group) %>% 
   addLayersControl(baseGroups = names(esri),
                    overlayGroups = c("Points", "Groups", "Monitoring"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
