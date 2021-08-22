@@ -130,7 +130,7 @@ for (provider in esri) {
 }
 
 l <- l %>% 
-    leaflet::addCircleMarkers(data = as_Spatial(Trojborg_Monitor), radius = 6, group = "Monitoring", color = ~"white", popup = paste("Lon:", Trojborg_Monitor$long, "<br>",
+    leaflet::addCircleMarkers(data = as_Spatial(Trojborg_Monitor), radius = 6, group = "Monitoring", color = ~pal(Group), popup = paste("Lon:", Trojborg_Monitor$long, "<br>",
                            "Lat:", Trojborg_Monitor$lat, "<br>",
                            "Code:",Trojborg_Monitor$Code)) %>% 
     leaflet::addCircleMarkers(data = as_Spatial(Trojborg_Centroids), radius = 6, group = "Points", color = ~pal(Group), popup = paste("Lon:", Trojborg_Centroids$long, "<br>",

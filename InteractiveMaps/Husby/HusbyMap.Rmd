@@ -11,6 +11,7 @@ library(tidyverse)
 library(leaflet)
 library(sf)
 library(raster)
+library(janitor)
 
 Husby_Raster <- read_rds("HusbyRaster.rds")
 
@@ -101,12 +102,27 @@ separated_coord <- Husby_Monitor %>%
 
 Husby_Monitor <- Husby_Monitor %>% 
   cbind(separated_coord) %>% 
-  mutate(Code = paste("B", Group, rowid, sep = "_")) %>% 
+  mutate(Code = paste("M", Group, rowid, sep = "_")) %>% 
   dplyr::select(-rowid)
 write_sf(Husby_Monitor, "Husby_Monitor.shp")
 ```
 
 ```{r}
+
+Klit2 <- read_csv("Husby_klit.csv") %>% 
+  janitor::clean_names() %>% 
+  dplyr::select("plot_id", "natur_vurderet_som2") %>% 
+  rename(id = plot_id, natur = natur_vurderet_som2)
+
+Klit <- read_sf("husby_klit_sample.shp") %>% 
+  dplyr::select(lat, long, id) %>% 
+  merge(Klit2) %>% 
+  mutate(natur = as.character(natur)) %>% 
+  st_transform() %>% 
+  st_transform(crs ="+proj=longlat +datum=WGS84 +no_defs") %>% 
+  st_intersection(Husby_Large) %>% 
+  mutate(Code = paste("J", Group, natur, formatC(id, digits = 2, flag = "0"), sep = "_"))
+
 l <-leaflet()
 
 esri <- grep("^Esri", providers, value = TRUE)
@@ -124,7 +140,12 @@ for (provider in esri) {
 }
 
 l <- l %>% 
-    leaflet::addCircleMarkers(data = as_Spatial(Husby_Monitor), radius = 6, group = "Monitoring", color = ~"white", popup = paste("Lon:", Husby_Monitor$long, "<br>",
+     leaflet::addCircleMarkers(data = as_Spatial(Klit), radius = 6, group = "Julie", color = "grey", popup = paste("Lon:", Klit$long, "<br>",
+                           "Lat:", Klit$lat, "<br>",
+                           "Group:", Klit$Group, "<br>",
+                           "Natur", Klit$natur,"<br>",
+                           "Code:", Klit$Code)) %>%
+    leaflet::addCircleMarkers(data = as_Spatial(Husby_Monitor), radius = 6, group = "Monitoring", color = ~pal(Group), popup = paste("Lon:", Husby_Monitor$long, "<br>",
                            "Lat:", Husby_Monitor$lat, "<br>",
                            "Code:",Husby_Monitor$Code)) %>% 
     leaflet::addCircleMarkers(data = as_Spatial(Husby_Centroids), radius = 6, group = "Points", color = ~pal(Group), popup = paste("Lon:", Husby_Centroids$long, "<br>",
@@ -135,7 +156,7 @@ l <- l %>%
   addPolygons(data = as_Spatial(Husby_Large), group = "Large groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Husby_Large$Group, fillOpacity = 0.8) %>% 
  addPolylines(data = Husby_Roads, color = "red", group = "Roads") %>% 
   addLayersControl(baseGroups = names(esri),
-                   overlayGroups = c("Points", "Groups", "Monitoring", "Roads", "Large groups"),
+                   overlayGroups = c("Points", "Groups", "Monitoring", "Julie", "Roads", "Large groups"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
   addMeasure(position = "topleft",
              primaryLengthUnit = "meters",
