@@ -113,6 +113,9 @@ write_sf(Trojborg_Monitor, "Trojborg_Monitor.shp")
 ```
 
 ```{r}
+
+Trojborg_outline <- Trojborg %>% st_union() %>% st_as_sf()
+
 l <-leaflet()
 
 esri <- grep("^Esri", providers, value = TRUE)
@@ -139,9 +142,10 @@ l <- l %>%
                            "Code:", Trojborg_Centroids$Code)) %>%
   addPolygons(data = as_Spatial(Trojborg), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Trojborg$Group, fillOpacity = 0.8) %>% 
   addPolygons(data = as_Spatial(Trojborg_Large), group = "Large groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Trojborg_Large$Group, fillOpacity = 0.8) %>% 
-  addPolylines(data = Trojborg_Roads, color = "red", group = "Roads") %>% 
+  addPolylines(data = Trojborg_Roads, color = "red", group = "Roads") %>%
+  addPolygons(data = as_Spatial(Trojborg_outline), color = "blue", fillOpacity = 0, group = "Outline") %>% 
   addLayersControl(baseGroups = names(esri),
-                   overlayGroups = c("Points", "Groups", "Monitoring", "Roads", "Large groups"),
+                   overlayGroups = c("Points", "Groups", "Monitoring", "Roads", "Large groups", "Outline"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
   addMeasure(position = "topleft",
              primaryLengthUnit = "meters",
