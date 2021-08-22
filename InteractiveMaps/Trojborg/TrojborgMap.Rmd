@@ -121,6 +121,10 @@ l <-leaflet()
 esri <- grep("^Esri", providers, value = TRUE)
 esri <- esri[c(5,2,4,10)]
 
+Trojborg_Centroids <- Trojborg_Centroids %>% 
+  rbind(read_rds("Final_ones_out.Trojborg.rds")) %>% 
+  arrange(Code)
+
 pal <- colorFactor(
   palette = c("#9e0142", "#d53e4f", "#fee08b", "#ffffbf", "#66c2a5", "#3288bd"),
   domain= as.character(sort(unique(Trojborg_Centroids$Group))),
