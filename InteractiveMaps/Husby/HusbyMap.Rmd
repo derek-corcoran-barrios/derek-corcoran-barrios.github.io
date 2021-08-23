@@ -102,7 +102,7 @@ separated_coord <- Husby_Monitor %>%
 
 Husby_Monitor <- Husby_Monitor %>% 
   cbind(separated_coord) %>% 
-  mutate(Code = paste("M", Group, rowid, sep = "_")) %>% 
+  mutate(Code = paste("M", Group, formatC(rowid, digits = 2, flag = "0"), sep = "_")) %>% 
   dplyr::select(-rowid)
 write_sf(Husby_Monitor, "Husby_Monitor.shp")
 ```
@@ -176,17 +176,17 @@ l %>% addLegend("bottomright", pal = pal ,title = "Husby sites",opacity = 1, val
     icon="fa-croshairs", title="Locate Me",
     onClick=JS("function(btn, map){ map.locate({setView: true}); }")))
 
-#All_Points_Husby <- list(Husby_Centroids, Husby_Monitor, Klit) %>% purrr::map(~dplyr::select(.x, Code)) %>% purrr::map(~dplyr::relocate(.x, Code, .before = everything())) %>% purrr::reduce(rbind)
+All_Points_Husby <- list(Husby_Centroids, Husby_Monitor, Klit) %>% purrr::map(~dplyr::select(.x, Code)) %>% purrr::map(~dplyr::relocate(.x, Code, .before = everything())) %>% purrr::reduce(rbind)
 
-#ToGPX <- All_Points_Husby %>% arrange(Code) %>% dplyr::select(Code) %>% 
-#  st_transform("+proj=longlat + ellps=WGS84") %>% 
-#  as_Spatial()
+ToGPX <- All_Points_Husby %>% arrange(Code) %>% dplyr::select(Code) %>% 
+  st_transform("+proj=longlat + ellps=WGS84") %>% 
+  as_Spatial()
 
 # use the ID field for the names
-#ToGPX@data$name <- ToGPX@data$Code  
-#library(rgdal)
+ToGPX@data$name <- ToGPX@data$Code  
+library(rgdal)
 #Now only write the "name" field to the file
-#writeOGR(ToGPX["name"], driver="GPX", layer="waypoints", 
+writeOGR(ToGPX["name"], driver="GPX", layer="waypoints", 
          dsn="AllPointsHusby.gpx")
 
 ```

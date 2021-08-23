@@ -107,7 +107,7 @@ separated_coord <- Trojborg_Monitor %>%
 
 Trojborg_Monitor <- Trojborg_Monitor %>% 
   cbind(separated_coord) %>% 
-  mutate(Code = paste("M", Group, rowid, sep = "_")) %>% 
+  mutate(Code = paste("M", Group, formatC(rowid, digits = 2, flag = "0"), sep = "_")) %>% 
   dplyr::select(-rowid)
 write_sf(Trojborg_Monitor, "Trojborg_Monitor.shp")
 ```
