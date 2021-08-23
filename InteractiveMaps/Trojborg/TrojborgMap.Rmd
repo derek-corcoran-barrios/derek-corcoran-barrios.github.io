@@ -107,14 +107,14 @@ separated_coord <- Trojborg_Monitor %>%
 
 Trojborg_Monitor <- Trojborg_Monitor %>% 
   cbind(separated_coord) %>% 
-  mutate(Code = paste("B", Group, rowid, sep = "_")) %>% 
+  mutate(Code = paste("M", Group, rowid, sep = "_")) %>% 
   dplyr::select(-rowid)
 write_sf(Trojborg_Monitor, "Trojborg_Monitor.shp")
 ```
 
 ```{r}
 
-Trojborg_outline <- Trojborg %>% st_union() %>% st_as_sf()
+Trojborg_outline <- Trojborg %>% st_union() %>% st_as_sf() %>% st_cast("POLYGON")
 
 l <-leaflet()
 
@@ -123,7 +123,8 @@ esri <- esri[c(5,2,4,10)]
 
 Trojborg_Centroids <- Trojborg_Centroids %>% 
   rbind(read_rds("Final_ones_out.Trojborg.rds")) %>% 
-  arrange(Code)
+  arrange(Code) %>% 
+  mutate(Code = paste("E", Code, sep = "_"))
 
 pal <- colorFactor(
   palette = c("#9e0142", "#d53e4f", "#fee08b", "#ffffbf", "#66c2a5", "#3288bd"),
@@ -147,7 +148,7 @@ l <- l %>%
   addPolygons(data = as_Spatial(Trojborg), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Trojborg$Group, fillOpacity = 0.8) %>% 
   addPolygons(data = as_Spatial(Trojborg_Large), group = "Large groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Trojborg_Large$Group, fillOpacity = 0.8) %>% 
   addPolylines(data = Trojborg_Roads, color = "red", group = "Roads") %>%
-  addPolygons(data = as_Spatial(Trojborg_outline), color = "blue", fillOpacity = 0, group = "Outline") %>% 
+  addPolylines(data = as_Spatial(Trojborg_outline), color = "blue", fillOpacity = 0, group = "Outline") %>% 
   addLayersControl(baseGroups = names(esri),
                    overlayGroups = c("Points", "Groups", "Monitoring", "Roads", "Large groups", "Outline"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
@@ -160,5 +161,18 @@ l %>% addLegend("bottomright", pal = pal ,title = "Trojborg sites",opacity = 1, 
   addEasyButton(easyButton(
     icon="fa-crosshairs", title="Locate Me",
     onClick=JS("function(btn, map){ map.locate({setView: true}); }")))
+
+All_Points_Trojborg <- list(Trojborg_Centroids, Trojborg_Monitor) %>% purrr::map(~dplyr::select(.x, Code)) %>% purrr::map(~dplyr::relocate(.x, Code, .before = everything())) %>% purrr::reduce(rbind)
+
+ToGPX <- All_Points_Trojborg %>% arrange(Code) %>% dplyr::select(Code) %>% 
+  st_transform("+proj=longlat + ellps=WGS84") %>% 
+  as_Spatial()
+
+# use the ID field for the names
+ToGPX@data$name <- ToGPX@data$Code  
+library(rgdal)
+#Now only write the "name" field to the file
+writeOGR(ToGPX["name"], driver="GPX", layer="waypoints", 
+         dsn="AllPointsTrojborg.gpx")
 
 ```

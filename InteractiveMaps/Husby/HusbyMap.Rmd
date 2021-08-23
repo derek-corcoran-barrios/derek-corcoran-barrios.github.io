@@ -123,11 +123,12 @@ Klit <- read_sf("husby_klit_sample.shp") %>%
   st_intersection(Husby_Large) %>% 
   mutate(Code = paste("J", Group, natur, formatC(id, digits = 2, flag = "0"), sep = "_"))
 
-Husby_outline <- Husby %>% st_union() %>% st_as_sf()
+Husby_outline <- Husby %>% st_union() %>% st_as_sf() %>% st_cast("POLYGON")
 
 Husby_Centroids <- Husby_Centroids %>% 
   rbind(read_rds("Final_ones_out.husby.rds")) %>% 
-  arrange(Code)
+  arrange(Code) %>% 
+  mutate(Code = paste("E", Code, sep = "_"))
 
 l <-leaflet()
 
@@ -161,7 +162,7 @@ l <- l %>%
   addPolygons(data = as_Spatial(Husby), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Husby$Group, fillOpacity = 0.8) %>% 
   addPolygons(data = as_Spatial(Husby_Large), group = "Large groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Husby_Large$Group, fillOpacity = 0.8) %>% 
  addPolylines(data = Husby_Roads, color = "red", group = "Roads") %>% 
-  addPolygons(data = as_Spatial(Husby_outline), color = "blue", fillOpacity = 0, group = "Outline") %>% 
+  addPolylines(data = as_Spatial(Husby_outline), color = "blue", fillOpacity = 0, group = "Outline") %>% 
   addLayersControl(baseGroups = names(esri),
                    overlayGroups = c("Points", "Groups", "Monitoring", "Julie", "Roads", "Large groups", "Outline"),
                    options = layersControlOptions(collapsed = TRUE)) %>%
@@ -172,7 +173,20 @@ l <- l %>%
 
 l %>% addLegend("bottomright", pal = pal ,title = "Husby sites",opacity = 1, values = Husby_Centroids$Group) %>%
   addEasyButton(easyButton(
-    icon="fa-crosshairs", title="Locate Me",
+    icon="fa-croshairs", title="Locate Me",
     onClick=JS("function(btn, map){ map.locate({setView: true}); }")))
+
+#All_Points_Husby <- list(Husby_Centroids, Husby_Monitor, Klit) %>% purrr::map(~dplyr::select(.x, Code)) %>% purrr::map(~dplyr::relocate(.x, Code, .before = everything())) %>% purrr::reduce(rbind)
+
+#ToGPX <- All_Points_Husby %>% arrange(Code) %>% dplyr::select(Code) %>% 
+#  st_transform("+proj=longlat + ellps=WGS84") %>% 
+#  as_Spatial()
+
+# use the ID field for the names
+#ToGPX@data$name <- ToGPX@data$Code  
+#library(rgdal)
+#Now only write the "name" field to the file
+#writeOGR(ToGPX["name"], driver="GPX", layer="waypoints", 
+         dsn="AllPointsHusby.gpx")
 
 ```
