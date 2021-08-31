@@ -3,6 +3,12 @@ title: "Test map"
 output: html_document
 ---
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -22,4 +28,30 @@ leaflet() %>%
     onClick=JS("function(btn, map){ map.locate({setView: true, enableHighAccuracy: true }); }")))
 ```
 
-## New tried for the
+## New test for control.locate
+
+### with easybutton
+
+I want a marker to follow me arround, so my first try was to just change *.locate* for *.control.locate* but no luck
+
+```{r}
+leaflet() %>% 
+  addTiles() %>%
+  setView(-71.0382679, 42.3489054, zoom = 18) %>% 
+  addEasyButton(easyButton(
+    icon="fa-crosshairs", title="Follow Me",
+    onClick=JS("function(btn, map){ map.control.locate()}")))
+```
+
+### With htmlwidget
+
+```{r}
+leaflet() %>% 
+  addTiles() %>%
+  setView(-71.0382679, 42.3489054, zoom = 18) %>%
+  htmlwidgets::onRender("
+    var lc = L.control.locate({
+    position: 'topright'}
+}).addTo(map);")
+```
+
