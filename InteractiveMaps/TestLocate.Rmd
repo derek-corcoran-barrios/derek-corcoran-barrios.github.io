@@ -1,0 +1,25 @@
+---
+title: "Test map"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(leaflet)
+```
+
+## Old map.locate option
+
+I usually made this maps for the field
+
+```{r}
+leaflet() %>% 
+  addTiles() %>%
+  setView(-71.0382679, 42.3489054, zoom = 18) %>% 
+  addEasyButton(easyButton(
+    icon="fa-crosshairs", title="Locate Me",
+    onClick=JS("function(btn, map){ map.locate({setView: true, enableHighAccuracy: true }); }")))
+```
+
+## New tried for the
