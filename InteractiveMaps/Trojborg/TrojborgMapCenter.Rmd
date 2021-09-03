@@ -163,16 +163,17 @@ l <- l %>%
   addPolygons(data = as_Spatial(Trojborg_Large), group = "Large groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = Trojborg_Large$Group, fillOpacity = 0.8) %>% 
   addPolylines(data = Trojborg_Roads, color = "red", group = "Roads") %>%
   addPolylines(data = as_Spatial(Trojborg_outline), color = "blue", fillOpacity = 0, group = "Outline") %>% 
+  addLegend("bottomright", pal = pal ,title = "Trojborg sites",opacity = 1, values = Trojborg_Centroids$Group,  group = "Legend") %>% 
   addLayersControl(baseGroups = names(esri),
-                   overlayGroups = c("Points", "Groups", "Monitoring", "Roads", "Large groups", "Outline"),
+                   overlayGroups = c("Points", "Groups", "Monitoring", "Roads", "Large groups", "Outline", "Legend"),
                    options = layersControlOptions(collapsed = TRUE),
-                   position = "bottomleft") %>%
+                   position = "topright") %>%
   addMeasure(position = "topleft",
              primaryLengthUnit = "meters",
              primaryAreaUnit = "hectares") %>% 
-  hideGroup(c("Groups","Large groups"))
+  hideGroup(c("Groups","Large groups", "Legend"))
 
-  l %>% addLegend("bottomright", pal = pal ,title = "Trojborg sites",opacity = 1, values = Trojborg_Centroids$Group) %>%
+  l  %>%
    addControlGPS(
     options = gpsOptions(
       position = "topleft",
