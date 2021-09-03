@@ -1,5 +1,5 @@
 ---
-title: "Map Trojborg"
+title: ""
 output: html_document
 ---
 
@@ -150,7 +150,8 @@ l <- l %>%
   addPolylines(data = as_Spatial(Trojborg_outline), color = "blue", fillOpacity = 0, group = "Outline") %>% 
   addLayersControl(baseGroups = names(esri),
                    overlayGroups = c("Points", "Groups", "Monitoring", "Roads", "Large groups", "Outline"),
-                   options = layersControlOptions(collapsed = TRUE)) %>%
+                   options = layersControlOptions(collapsed = TRUE),
+                   position = "bottomleft") %>%
   addMeasure(position = "topleft",
              primaryLengthUnit = "meters",
              primaryAreaUnit = "hectares") %>% 
