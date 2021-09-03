@@ -1,10 +1,25 @@
 ---
 title: ""
-output: html_document
+output:
+  rmdformats::robobook:
+    highlight: kate
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = FALSE)
+library(knitr)
+library(rmdformats)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=FALSE,
+	             cache = FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+
 library(tidyverse)
 library(leaflet)
 library(leaflet.extras)
@@ -111,7 +126,7 @@ Trojborg_Monitor <- Trojborg_Monitor %>%
 write_sf(Trojborg_Monitor, "Trojborg_Monitor.shp")
 ```
 
-```{r}
+```{r, out.width= "100%"}
 
 Trojborg_outline <- Trojborg %>% st_union() %>% st_as_sf() %>% st_cast("POLYGON")
 
@@ -157,7 +172,7 @@ l <- l %>%
              primaryAreaUnit = "hectares") %>% 
   hideGroup(c("Groups","Large groups"))
 
-l %>% addLegend("bottomright", pal = pal ,title = "Trojborg sites",opacity = 1, values = Trojborg_Centroids$Group) %>%
+  l %>% addLegend("bottomright", pal = pal ,title = "Trojborg sites",opacity = 1, values = Trojborg_Centroids$Group) %>%
    addControlGPS(
     options = gpsOptions(
       position = "topleft",
