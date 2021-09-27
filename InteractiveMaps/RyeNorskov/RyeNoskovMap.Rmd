@@ -1,0 +1,105 @@
+---
+title: ""
+output:
+  rmdformats::robobook:
+    highlight: kate
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(rmdformats)
+
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=FALSE,
+	             cache = FALSE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+
+library(tidyverse)
+library(leaflet)
+library(leaflet.extras)
+library(sf)
+library(raster)
+
+RyeNoskov_Raster <- read_rds("FinalStack.rds")
+
+
+RyeNoskov <- stars::st_as_stars(RyeNoskov_Raster) %>% 
+  stars::st_contour() %>% 
+  st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs") %>% 
+  mutate(Group = case_when(vegetation_density == "[0.5,1.5)" ~ "A",
+                           vegetation_density == "[1.5,2.5)" ~ "B",
+                           vegetation_density == "[2.5,3.5)" ~ "C")) %>% 
+  dplyr::select(Group)
+
+
+RyeNoskov_Centroids <- read_sf("Experimental.shp") %>% 
+  st_transform(crs = "+proj=longlat +datum=WGS84 +no_defs") %>% 
+  rename(Group = Class)
+```
+
+```{r, out.width= "100%"}
+
+RyeNorskov_outline <- RyeNoskov %>% st_union() %>% st_as_sf() %>% st_cast("POLYGON")
+
+l <-leaflet()
+
+esri <- grep("^Esri", providers, value = TRUE)
+esri <- esri[c(5,2,4,10)]
+
+
+pal <- colorFactor(
+  palette = c('#1b9e77','#d95f02','#7570b3'),
+  domain= as.character(sort(unique(RyeNoskov_Centroids$Group))),
+  ordered = TRUE,
+  na.color = "#808080"
+)
+
+for (provider in esri) {
+  l <- l %>% addProviderTiles(provider, group = provider)    
+}
+
+l <- l %>% 
+    leaflet::addCircleMarkers(data = as_Spatial(RyeNoskov_Centroids), radius = 6, group = "Monitoring", color = ~pal(Group), popup = paste("Code:",RyeNoskov_Centroids$ID)) %>% 
+  addPolygons(data = as_Spatial(RyeNoskov), group = "Groups", color = ~pal(Group), fillColor = ~pal(Group), opacity = 0.8, popup = RyeNoskov$Group, fillOpacity = 0.8) %>% 
+  addPolylines(data = as_Spatial(RyeNorskov_outline), color = "blue", fillOpacity = 0, group = "Outline") %>% 
+  addLegend("bottomright", pal = pal ,title = "RyeNoskov sites",opacity = 1, values = RyeNoskov_Centroids$Group,  group = "Legend") %>% 
+  addLayersControl(baseGroups = names(esri),
+                   overlayGroups = c("Groups", "Monitoring", "Outline", "Legend"),
+                   options = layersControlOptions(collapsed = TRUE),
+                   position = "topright") %>%
+  addMeasure(position = "topleft",
+             primaryLengthUnit = "meters",
+             primaryAreaUnit = "hectares") %>% 
+  hideGroup(c("Monitoring", "Legend"))
+
+  l  %>%
+   addControlGPS(
+    options = gpsOptions(
+      position = "topleft",
+      activate = TRUE, 
+      autoCenter = TRUE,
+      setView = TRUE)) %>% 
+  activateGPS()
+
+
+
+#All_Points_Trojborg <- list(Trojborg_Centroids, Trojborg_Monitor) %>% purrr::map(~dplyr::select(.x, Code)) %>% purrr::map(~dplyr::relocate(.x, Code, .before = everything())) %>% purrr::reduce(rbind)
+
+#ToGPX <- All_Points_Trojborg %>% arrange(Code) %>% dplyr::select(Code) %>% 
+#  st_transform("+proj=longlat + ellps=WGS84") %>% 
+#  as_Spatial()
+
+# use the ID field for the names
+#ToGPX@data$name <- ToGPX@data$Code  
+#library(rgdal)
+#Now only write the "name" field to the file
+#writeOGR(ToGPX["name"], driver="GPX", layer="waypoints", 
+#         dsn="AllPointsTrojborg.gpx")
+
+```
