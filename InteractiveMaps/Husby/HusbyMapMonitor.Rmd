@@ -97,6 +97,6 @@ l <- l %>%
 
 l %>% addLegend("bottomright", pal = pal ,title = "Husby sites",opacity = 1, values = Husby$Group) %>%
   addEasyButton(easyButton(
-    icon="fa-croshairs", title="Locate Me",
-    onClick=JS("function(btn, map){ map.locate({setView: true}); }")))
+    icon="fa-crosshairs", title="Locate Me",
+    onClick=JS("function(btn, map){ map.locate({setView: true, enableHighAccuracy: true }); }")))
 ```
