@@ -1,0 +1,77 @@
+---
+title: "Mapa Areas"
+author: "Derek Corcoran"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(leaflet)
+library(terra)
+library(sf)
+library(tidyverse)
+```
+
+```{r, cache = T}
+Circle <- terra::vect("Circle.shp") |> 
+  terra::project("+proj=longlat +datum=WGS84") |> 
+  sf::st_as_sf()
+
+Ownership <- terra::vect("Ownership.shp") |> 
+  aggregate(by = "Ownership")
+
+Natura <- terra::vect("Natura2000.shp")
+Natura <- Natura["n2000_navn"] 
+Natura$Area <- Natura |> 
+  terra::expanse(unit = "ha") |> 
+  as.numeric() |> 
+  round(2)
+Natura <- Natura |>
+  terra::intersect(Ownership) |> 
+  terra::project("+proj=longlat +datum=WGS84") |> 
+  sf::st_as_sf() |> 
+  dplyr::select(n2000_navn, Ownership, Area)
+
+Paragraph3 <- terra::vect("Paragraph3.shp")
+Paragraph3$Area <- Paragraph3 |> 
+  terra::expanse(unit = "ha") |> 
+  as.numeric() |> 
+  round(2)
+Paragraph3 <- Paragraph3 |>
+  terra::intersect(Ownership) |> 
+  terra::project("+proj=longlat +datum=WGS84") |> 
+  sf::st_as_sf()
+
+
+Forest <- terra::vect("Urort_Skov.shp") |> 
+  terra::project("+proj=longlat +datum=WGS84") |> 
+  sf::st_as_sf()
+```
+
+
+```{r}
+ESRI <- c("Esri.WorldImagery", "Esri.WorldStreetMap", "Esri.WorldGrayCanvas")
+
+
+l <- leaflet() 
+
+for (provider in ESRI) {
+  l <- l %>% addProviderTiles(provider, group = provider)
+}
+
+
+l |> addPolylines(data = Circle, weight = 1, color = "red")  |> addPolygons(data = Paragraph3, color = "orange", group = "Paragraph 3")|>  
+  addPolygons(data = Forest, color = "green", group = "Forest")|> 
+  addPolygons(data = Natura, color = "red", group = "Natura 2000")|> 
+  
+   addLayersControl(baseGroups = ESRI,
+    overlayGroups = c("Forest", "Natura 2000", "Paragraph 3"),
+    options = layersControlOptions(collapsed = FALSE)
+  ) |> 
+  addEasyButton(easyButton(
+    icon="fa-crosshairs", title="Locate Me",
+    onClick=JS("function(btn, map){ map.locate({setView: true}); }")))
+```
+
+
