@@ -8,6 +8,8 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(leaflet)
+library(leaflet.extras)
+library(leaflet.extras2)
 library(terra)
 library(sf)
 library(tidyverse)
@@ -68,10 +70,16 @@ l |> addPolylines(data = Circle, weight = 1, color = "red")  |> addPolygons(data
    addLayersControl(baseGroups = ESRI,
     overlayGroups = c("Forest", "Natura 2000", "Paragraph 3"),
     options = layersControlOptions(collapsed = FALSE)
-  ) |> 
-  addEasyButton(easyButton(
-    icon="fa-crosshairs", title="Locate Me",
-    onClick=JS("function(btn, map){ map.locate({setView: true}); }")))
+  ) |>   addControlGPS(
+    options = gpsOptions(
+      position = "topleft",
+      activate = TRUE, 
+      autoCenter = TRUE,
+      setView = TRUE)) |> 
+leaflet.extras::activateGPS()
+  #addEasyButton(easyButton(
+  #  icon="fa-crosshairs", title="Locate Me",
+  #  onClick=JS("function(btn, map){ map.locate({setView: true}); }")))
 ```
 
 
