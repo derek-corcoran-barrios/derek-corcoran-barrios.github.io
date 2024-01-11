@@ -1,0 +1,31 @@
+---
+title: ""
+output: html_fragment
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(terra)
+library(tidyterra)
+library(leaflet)
+AarhusSols <- terra::rast("AarhusSols.tif")
+AarhusSols <- as.numeric(AarhusSols[[1:4]])
+Pal <- colorBin(palette = c('#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf'), domain = values((AarhusSols)[[1]]), na.color = "transparent")
+factor_labels <- c("ForestDryPoor", "ForestDryRich", "ForestWetPoor", "ForestWetRich", 
+                   "OpenDryPoor", "OpenDryRich", "OpenWetPoor", "OpenWetRich") 
+```
+
+```{r}
+leaflet() |> addProviderTiles("CartoDB.DarkMatter") |> addRasterImage(AarhusSols[[1]], color = Pal, group = "0") |>
+  addRasterImage(AarhusSols[[2]], color = Pal, group = "0.05") |> addRasterImage(AarhusSols[[3]], color = Pal, group = "0.1") |>  addRasterImage(AarhusSols[[4]], color = Pal, group = "0.15") |>
+  addLegend(
+  "bottomright",
+  title = "Land Use",
+  colors = c('#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf'),
+  labels = factor_labels,
+  opacity = 1
+) |> addLayersControl(
+    baseGroups = c("0", "0.05", "0.1", "0.15"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
+```
+
