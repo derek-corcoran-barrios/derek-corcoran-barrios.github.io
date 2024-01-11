@@ -65,7 +65,7 @@ html_code
 
 # Local resilience
 
-## Rewildilng Mols Bjerge National Park (Local)
+## Rewildilng Mols Bjerge National Park (Local) {.smaller}
 
 * Return from a disturbance
 
@@ -82,8 +82,7 @@ Mols_SF <- read_csv("210201_Mols_PlantData .csv") %>%
   reduce(bind_rows)
 ```
 
-* 22 sites (Blocks)
-* 5 Treatments in each
+* rewildling (NBS) vs enclousure
 
 ```{r, cache = FALSE}
 
@@ -117,26 +116,12 @@ NewData <- readRDS("NewDataPlot.rds")
 G <-ggplot(NewData, aes(x = Year, y = Predicted)) +
   geom_path(aes(color = treatment)) +
   facet_wrap(~initial_habitat) +
-  theme_bw()
+  theme_bw() +
+  labs(y = "Alpha Diversity")
 
 plotly::ggplotly(G)
 ```
 
-
-```{r}
-# Replace 'image1.jpg' and 'image2.jpg' with the actual file paths or URLs of your images
-#image1 <- "images/Beavers.png"
-#image2 <- "images/Beavers2.png"
-
-# Creating HTML code to display images side by side
-#html_code <- div(
-#  style = "display: flex; justify-content: space-between;",
-#  img(src = image1, width = "48%"),
-# img(src = image2, width = "48%")
-#)
-
-#html_code
-```
 
 
 ## Resilience in Networks {.columns-2}
@@ -225,8 +210,8 @@ html_code
 
 <div style="float: left; width: 40%;">
 * Incorporating species dispersal (Species on the move)
+* Considering Food security
 * Quadratic Network flow (Dr. Anouschka Hof, animal dispersal and anthropogenic dispersal, currently suppervising PhD student in South Africa)
-* Stochastic models
 * Multiple scenarios
 </div>
 
@@ -235,6 +220,12 @@ html_code
 knitr::include_graphics("images/image1.gif")
 ```
 </div>
+
+## Geographic representation
+
+```{r, out.width="80%"}
+knitr::include_graphics("images/NetworkFlow.gif")
+```
 
 
 # Future directions
@@ -407,7 +398,7 @@ DiagrammeR("graph LR;
 $$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} + \text{Human dimension}\end{align*}$$
 
 > - First iteration: 
->    - Number of neighbors $\text{Human dimension} = -\text{Penalty} \cdot \text{nNeighbors}$
+>    - Economic yield and number of owners
 > - Second iteration:
 >    - Characterization of neighbors, who is in the areas of interest (Farmers, Home owners, private companies, municipalities)
 >    - What are their interest
@@ -420,6 +411,7 @@ $$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} +
 ## External colaborations
 
 * Spatial Optimization (Wendy Foden, South Africa; Patrick Roherdanz, USA; Signe Normand, Denmark; Pablo Marquet, Chile)
+* Numerical optimization (Roberto Cominetti, Chile)
 * Stochastic models in migration and optimization (Cristobal Quiñinao, Chile)
 * Biodiversity datasets (Brian Enquist, USA)
 * Trophic and Mutualistic networks (Isidora Ávila-Thieme, Chile)
