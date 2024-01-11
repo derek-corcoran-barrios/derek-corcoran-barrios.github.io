@@ -41,6 +41,7 @@ names(Solutions) <- names(Sensitivity)[1:nlyr(Solutions)]
 
 * Grew up sorrounded by nature and sheepranching in Patagonia
 * Field Work Ecologist -> Work with stakeholders -> Landscape modeling -> Data Science 
+* Focus on transdisciplinarity
 
 
 ```{r}
@@ -176,7 +177,7 @@ knitr::include_graphics("images/image3.png")
 ## Learning from the past
 
 <div style="float: left; width: 40%;">
-* Who, when and where became extinct
+* Who, when and where became extinct (Villavicencio, N., Corcoran, D., & Marquet, P. 2019)
 
 ```{r, out.height=400}
 knitr::include_graphics("images/image5.gif")
@@ -189,15 +190,13 @@ knitr::include_graphics("images/MVAs.png")
 ```
 </div>
 
-## Future resilience
+## Future resilience (SPARC)
 
-```{r, out.width="80%"}
-knitr::include_graphics("images/SPARC.png")
-```
+* Spatial Planning for Area Conservation in Response to Climate Change (SPARC) 
+* SPARC is coordinated by Conservation International and involves scientists and policy experts from over 20 institutions across the tropics
+* Neotropical Coordinator/Project Researcher 
 
-
-
-```{r, out.height="60%", out.width="60%"}
+```{r, out.height="60%", out.width="30%"}
 knitr::include_graphics("images/NorthernAndes.png")
 ```
 
@@ -222,6 +221,22 @@ html_code <- div(
 html_code
 ```
 
+## Network flow
+
+<div style="float: left; width: 40%;">
+* Incorporating species dispersal (Species on the move)
+* Quadratic Network flow (Dr. Anouschka Hof, animal dispersal and anthropogenic dispersal, currently suppervising PhD student in South Africa)
+* Stochastic models
+* Multiple scenarios
+</div>
+
+<div style="float: right; width: 60%;">
+```{r, out.width="60%"}
+knitr::include_graphics("images/image1.gif")
+```
+</div>
+
+
 # Future directions
 
 ## How to plan for futute landscapes {.smaller}
@@ -242,21 +257,6 @@ $\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} + 
 >   - Food security
 >   - Resource security (Eg. Renewable energy, water)
 >   - Minimize conflict
-  
-## How do we deal with uncertainty
-
-<div style="float: left; width: 40%;">
-* Incorporating species dispersal (Species on the move)
-* Quadratic Network flow (Dr. Anouschka Hof, animal dispersal and anthropogenic dispersal, currently suppervising PhD student in South Africa)
-* Stochastic models
-* Multiple scenarios
-</div>
-
-<div style="float: right; width: 60%;">
-```{r, out.width="60%"}
-knitr::include_graphics("images/image1.gif")
-```
-</div>
 
 ## Example Landuse
 
@@ -419,8 +419,9 @@ $$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} +
 
 ## External colaborations
 
-* Spatial Optimization (Wendy Foden, South Africa; Patrick Roherdanz, USA; Signe Normand, Denmark, Pablo Marquet, Chile)
+* Spatial Optimization (Wendy Foden, South Africa; Patrick Roherdanz, USA; Signe Normand, Denmark; Pablo Marquet, Chile)
 * Stochastic models in migration and optimization (Cristobal Quiñinao, Chile)
+* Biodiversity datasets (Brian Enquist, USA)
 * Trophic and Mutualistic networks (Isidora Ávila-Thieme, Chile)
 
 # questions
