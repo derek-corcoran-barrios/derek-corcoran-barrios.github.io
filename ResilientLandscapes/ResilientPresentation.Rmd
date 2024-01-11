@@ -171,7 +171,7 @@ knitr::include_graphics("images/image5.gif")
 
 <div style="float: right; width: 60%;">
 ```{r, out.height="80%", out.width="80%"}
-knitr::include_graphics("images/MVAs.png")
+knitr::include_graphics("images/TrophicPast.jpg")
 ```
 </div>
 
@@ -213,6 +213,7 @@ html_code
 * Considering Food security
 * Quadratic Network flow (Dr. Anouschka Hof, animal dispersal and anthropogenic dispersal, currently suppervising PhD student in South Africa)
 * Multiple scenarios
+* [Example report](https://static1.squarespace.com/static/57be0f8abebafb6d2e14828f/t/5d9cbb4d7c5b6d42d382e0ae/1570552656952/NorthernAndes_FinalPDF.pdf)
 </div>
 
 <div style="float: right; width: 60%;">
@@ -223,7 +224,7 @@ knitr::include_graphics("images/image1.gif")
 
 ## Geographic representation
 
-```{r, out.width="80%"}
+```{r, out.width="60%"}
 knitr::include_graphics("images/NetworkFlow.gif")
 ```
 
@@ -415,5 +416,6 @@ $$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} +
 * Stochastic models in migration and optimization (Cristobal Quiñinao, Chile)
 * Biodiversity datasets (Brian Enquist, USA)
 * Trophic and Mutualistic networks (Isidora Ávila-Thieme, Chile)
+* Human Dimension (Giorgia Graells, Chile; Pil Pedersen, Denmark)
 
 # questions
