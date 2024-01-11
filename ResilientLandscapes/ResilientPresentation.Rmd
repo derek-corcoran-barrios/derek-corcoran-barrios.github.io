@@ -1,5 +1,5 @@
 ---
-title: "Navigating Towards Resilient Landscapes: A Vision for Wildlife Ecology and Conservation"
+title: "Navigating towards Resilient Landscapes: A Vision for Wildlife Ecology and Conservation"
 author: "Derek Corcoran"
 date: "`r Sys.Date()`"
 output:
@@ -39,7 +39,7 @@ names(Solutions) <- names(Sensitivity)[1:nlyr(Solutions)]
 
 ## Introduction
 
-* Grew up sorrounded by nature and sheepranching in Patagonia
+* Grew up surrounded by nature and farming in Patagonia
 * Field Work Ecologist -> Work with stakeholders -> Landscape modeling -> Data Science 
 * Focus on transdisciplinarity
 
@@ -61,7 +61,7 @@ html_code <- div(
 html_code
 ```
 
-# Two visions of resilience
+# Two scales of resilience
 
 # Local resilience
 
@@ -123,10 +123,9 @@ plotly::ggplotly(G)
 ```
 
 
-
 ## Resilience in Networks {.columns-2}
 
-* Measures of network staibility
+* Measures of network stability
 * Trophic and mutualistic 
 * With rewiring potential hypothesis
 * Potential colaboration (Dr. Liesbeth Bakker)
@@ -141,16 +140,16 @@ knitr::include_graphics("images/NetworkExtinctionImg.png")
 knitr::include_graphics("images/NetworkWeight.png")
 ```
 
-# Spatio-temporal aspect
+# Landscape and temporal scale
 
-## Spatio-temporal aspect
+## Landscape and temporal scale
 
 <div style="float: left; width: 40%;">
 * Systematic conservation planning
 * What areas are irreplaceable
-* How do we manage for impacts
+* How do we manage for climate change
 * Optimization of resilient landscapes
-* Network flow
+* Network flow (more on this later)
 </div>
 
 <div style="float: right; width: 60%;">
@@ -162,7 +161,7 @@ knitr::include_graphics("images/image3.png")
 ## Learning from the past
 
 <div style="float: left; width: 40%;">
-* Who, when and where became extinct (Villavicencio, N., Corcoran, D., & Marquet, P. 2019)
+* Who, when, why, and where became extinct (Villavicencio, N., Corcoran, D., & Marquet, P. 2019)
 
 ```{r, out.height=400}
 knitr::include_graphics("images/image5.gif")
@@ -213,8 +212,8 @@ html_code
 * Considering Food security
 * Quadratic Network flow (Currently suppervising PhD student in South Africa)
 * Multiple scenarios
-* [Example report](https://static1.squarespace.com/static/57be0f8abebafb6d2e14828f/t/5d9cbb4d7c5b6d42d382e0ae/1570552656952/NorthernAndes_FinalPDF.pdf)
 * Possible collaboration with Dr. Anouschka Hof
+* [Example report](https://static1.squarespace.com/static/57be0f8abebafb6d2e14828f/t/5d9cbb4d7c5b6d42d382e0ae/1570552656952/NorthernAndes_FinalPDF.pdf)
 </div>
 
 <div style="float: right; width: 60%;">
@@ -234,24 +233,25 @@ knitr::include_graphics("images/NetworkFlow.gif")
 
 ## How to plan for futute landscapes {.smaller}
 
-$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} + \text{Human dimension} - Invasibity\end{align*}$ 
+$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} + \text{Human dimension}\end{align*}$ 
 
 >- Biodiversity
->   - Community composition
->   - Phylodiversity
->   - Rarity
+>   - Community composition and rarity
+>   - Phylogenetic Diversity
 >   - Functional diversity
 >- Resilience
 >   - Contiguity (Area)
->   - Global Change Vulnerability
+>   - Ecosystem Functioning and Global Change Vulnerability
 >   - Network stability (Trophic and/or mutualistic)
 >   - Stochastic components
 >- Human dimension
->   - Food security
->   - Resource security (Eg. Renewable energy, water)
+>   - Food and resource security (Eg. Renewable energy, water)
 >   - Minimize conflict
 
-## Example Landuse
+## Example Landuse (Global contribution)
+
+
+
 
 ```{r}
 library(readr)
@@ -321,9 +321,10 @@ htmltools::div(
 
 $\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} \cdot \text{bonus}\end{align*}$
 
+* 14% of Denmark's agriculture to nature
 * Trade-off
 
-## Individual cell values
+## Individual cell values (Local contribution)
 
 ```{r}
 library(terra)
@@ -402,8 +403,8 @@ $$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} +
 > - First iteration: 
 >    - Economic yield and number of owners
 > - Second iteration:
->    - Characterization of neighbors, who is in the areas of interest (Farmers, Home owners, private companies, municipalities)
->    - What are their interest
+>    - Characterization of actors, who is in the areas of interest (Farmers, Home owners, private companies, municipalities)
+>    - What are their interests
 > - Third iteration:
 >     - Interview them, what are their concerns (quantitative surveys, Q method, Dr. Arjen Buijs)
 >     - add them to the optimization
@@ -418,5 +419,6 @@ $$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} +
 * Biodiversity datasets (Brian Enquist, USA)
 * Trophic and Mutualistic networks (Isidora Ávila-Thieme, Chile)
 * Human Dimension (Giorgia Graells, Chile; Pil Pedersen, Denmark)
+* Paleoecology (Natalia Villavicencio, Chile)
 
-# questions
+# Questions
