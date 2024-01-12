@@ -248,6 +248,17 @@ $\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} + 
 >   - Food and resource security (Eg. Renewable energy, water)
 >   - Minimize conflict
 
+## Example Landuse
+
+```{r}
+#knitr::include_app(url = #"http://18.159.101.5/shiny/rstudio/sample-apps/hello/", height = #"1000px")
+```
+
+
+<iframe src="https://derek-corcoran-barrios.github.io/COG/TestCOG2.html" style="border: 0; position:absolute; top:5%; left:0; right:0; bottom:0; width:100%; height:95%">
+
+* 14% of Denmark's agriculture to nature
+
 ## Example Landuse (Global contribution)
 
 
@@ -321,7 +332,6 @@ htmltools::div(
 
 $\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} \cdot \text{bonus}\end{align*}$
 
-* 14% of Denmark's agriculture to nature
 * Trade-off
 
 ## Individual cell values (Local contribution)
