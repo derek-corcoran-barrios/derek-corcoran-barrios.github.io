@@ -210,7 +210,7 @@ html_code
 <div style="float: left; width: 40%;">
 * Incorporating species dispersal (Species on the move)
 * Considering Food security
-* Quadratic Network flow (Currently suppervising PhD student in South Africa)
+* Quadratic [Network flow](https://youtu.be/u0ccCJn0wZg) (Currently suppervising PhD student in South Africa)
 * Multiple scenarios
 * Possible collaboration with Dr. Anouschka Hof
 * [Example report](https://static1.squarespace.com/static/57be0f8abebafb6d2e14828f/t/5d9cbb4d7c5b6d42d382e0ae/1570552656952/NorthernAndes_FinalPDF.pdf)
