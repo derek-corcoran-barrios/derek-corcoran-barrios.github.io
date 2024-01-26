@@ -294,4 +294,4 @@ $$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} +
 ## External colaborations
 
 -   Stochastic models in migration and optimization (Cristobal Quiñinao, Chile)
--   Trophic and Mutualistic networks (Isidora Ávila-Thieme, Chile, Erik Kusch, Norwat)
+-   Trophic and Mutualistic networks (Isidora Ávila-Thieme, Chile, Erik Kusch, Norway)
