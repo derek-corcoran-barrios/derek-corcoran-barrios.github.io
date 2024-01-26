@@ -1,0 +1,131 @@
+---
+title: ""
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(leaflet)
+```
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+<script src="https://unpkg.com/georaster"></script>
+
+<script src="https://unpkg.com/georaster-layer-for-leaflet/dist/georaster-layer-for-leaflet.min.js"></script>
+
+```{r, warning = FALSE, echo = F}
+leaflet(width = 0, height = 0)
+```
+
+
+<style>
+        /* Overall map style */
+        #map {position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
+
+        .legend {
+            padding: 6px 8px;
+            font: 14px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            /*box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);*/
+            /*border-radius: 5px;*/
+            line-height: 24px;
+            color: #555;
+        }
+
+        .legend h4 {
+            text-align: left;
+            font-size: 16px;
+            margin: 2px 12px 8px;
+            color: #777;
+        }
+
+        .legend span {
+            position: relative;
+            margin: 0 0px 0 8px;
+            bottom: 3px;
+        }
+
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin: 0 8px 0 14px;
+            opacity: 1;
+        }
+
+        .legend i.icon {
+            background-size: 18px;
+            background-color: rgba(255, 255, 255, 1);
+        }
+	</style>
+
+
+<div id="map" style="width: 100%; height: 480px; position: relative;"></div>
+
+<script>
+  // Load base tiles ----
+
+  // OpenStreetMap Tiles
+    // Dark Matter Tiles
+  var DarkMatter = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
+  });
+
+  // Initiate leaflet ----
+  // This needs to be done before loading the Georasters
+  var map = L.map('map', { 
+      center: [56.25, 12], // Centered on Denmark
+      zoom: 7, // Worked well
+      layers: [DarkMatter] // Default layers
+  });
+
+  // Set URL to cog
+  var random_rast_dk_url = "https://raw.githubusercontent.com/derek-corcoran-barrios/DanishLanduseProblem/master/SolutionNum.tif"
+
+  // Load georaster layer and add to map
+  parseGeoraster(random_rast_dk_url).then(georaster => {
+      var random_rast_dk = new GeoRasterLayer({
+          georaster,
+          opacity: 0.75,
+          resolution: 128, // 128 seems to be a good compromise
+          pixelValuesToColorFn: function(pixelValues){
+              var pixelValue = pixelValues[0]; 
+              // Map pixel values to colors
+              var colorArray = ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5'];
+              if (pixelValue >= 1 && pixelValue <= 8){
+                  return colorArray[pixelValue - 1];
+              } else {
+                  return undefined;
+              }   
+          }
+      });       
+      random_rast_dk.addTo(map);
+  });
+  
+  var legend = L.control({ position: "bottomright" });
+legend.onAdd = function(map) {
+    var div = L.DomUtil.create("div", "legend");
+    
+    div.innerHTML += "<h4>Projected landuse</h4>";
+    div.innerHTML += '<i class="legend-icon" style="background: #8dd3c7"></i><span class="legend-text">ForestDryPoor</span><br>';
+    div.innerHTML += '<i class="legend-icon" style="background: #ffffb3"></i><span class="legend-text">ForestDryRich</span><br>';
+    div.innerHTML += '<i class="legend-icon" style="background: #bebada"></i><span class="legend-text">ForestWetPoor</span><br>';
+    div.innerHTML += '<i class="legend-icon" style="background: #fb8072"></i><span class="legend-text">ForestWetRich</span><br>';
+    div.innerHTML += '<i class="legend-icon" style="background: #80b1d3"></i><span class="legend-text">OpenDryPoor</span><br>';
+    div.innerHTML += '<i class="legend-icon" style="background: #fdb462"></i><span class="legend-text">OpenDryRich</span><br>';
+    div.innerHTML += '<i class="legend-icon" style="background: #b3de69"></i><span class="legend-text">OpenWetPoor</span><br>';
+    div.innerHTML += '<i class="legend-icon" style="background: #fccde5"></i><span class="legend-text">OpenWetRich</span><br>';
+
+    return div;
+};
+
+// Add legend
+legend.addTo(map);
+
+
+
+</script>
