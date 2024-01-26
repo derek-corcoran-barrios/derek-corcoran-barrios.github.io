@@ -252,7 +252,6 @@ knitr::include_graphics("images/NetworkExtinctionImg.png")
 ::: {style="float: left; width: 40%;"}
 -   Incorporating species dispersal (Species on the move)
 -   Multiple scenarios
--   [Example report](https://static1.squarespace.com/static/57be0f8abebafb6d2e14828f/t/5d9cbb4d7c5b6d42d382e0ae/1570552656952/NorthernAndes_FinalPDF.pdf)
 :::
 
 ::: {style="float: right; width: 60%;"}
