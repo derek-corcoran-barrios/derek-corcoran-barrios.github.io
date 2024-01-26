@@ -227,6 +227,10 @@ leafsync::sync(L1, L2, ncol = 2, sync = "all")
 
 $\begin{align*} \text{Maximize} & = \text{Biodiversity}_c + \text{Resilience}_c\cdot \text{bonus}\end{align*}$
 
+## Work in progress
+
+* Stochasticity and climate change vulnerability
+
 ## Resilience in Networks {.columns-2}
 
 -   Measures of network stability
@@ -242,35 +246,12 @@ $\begin{align*} \text{Maximize} & = \text{Biodiversity}_c + \text{Resilience}_c\
 knitr::include_graphics("images/NetworkExtinctionImg.png")
 ```
 
-## Future resilience
-
--   We use all of this to take decisions about the future (Hannah, L., Roehrdanz, P.R., Marquet, P.A., Enquist, B.J., Midgley, G., Foden, W., Lovett, J.C., Corlett, R.T., Corcoran, D., Butchart, S.H. and Boyle, B., 2020)
-
-```{r}
-library(htmltools)
-
-# Replace 'image1.jpg' and 'image2.jpg' with the actual file paths or URLs of your images
-image1 <- "images/image2.gif"
-image2 <- "images/image6.gif"
-
-# Creating HTML code to display images side by side
-html_code <- div(
-  style = "display: flex; justify-content: space-between;",
-  img(src = image1, width = "48%"),
-  img(src = image2, width = "48%")
-)
-
-html_code
-```
 
 ## Network flow
 
 ::: {style="float: left; width: 40%;"}
 -   Incorporating species dispersal (Species on the move)
--   Considering Food security
--   Quadratic [Network flow](https://youtu.be/u0ccCJn0wZg) (Currently suppervising PhD student in South Africa)
 -   Multiple scenarios
--   Possible collaboration with Dr. Anouschka Hof
 -   [Example report](https://static1.squarespace.com/static/57be0f8abebafb6d2e14828f/t/5d9cbb4d7c5b6d42d382e0ae/1570552656952/NorthernAndes_FinalPDF.pdf)
 :::
 
@@ -302,10 +283,10 @@ $$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} +
 > -   First iteration:
 >     -   Economic yield and number of owners
 > -   Second iteration:
->     -   Characterization of actors, who is in the areas of interest (Farmers, Home owners, private companies, municipalities)
+>     -   Characterization of actors, who is in the areas of interest (Farmers, Home owners, private companies, municipalities, Frederik)
 >     -   What are their interests
 > -   Third iteration:
->     -   Interview them, what are their concerns (quantitative surveys, Q method, Dr. Arjen Buijs)
+>     -   Interview them, what are their concerns (quantitative surveys, Q method, Maya, Pil, Sara)
 >     -   add them to the optimization
 
 # External colaborations
@@ -313,4 +294,4 @@ $$\begin{align*} \text{Maximize}  & =  \text{Biodiversity} + \text{Resilience} +
 ## External colaborations
 
 -   Stochastic models in migration and optimization (Cristobal Quiñinao, Chile)
--   Trophic and Mutualistic networks (Isidora Ávila-Thieme, Chile)
+-   Trophic and Mutualistic networks (Isidora Ávila-Thieme, Chile, Erik Kusch, Norwat)
