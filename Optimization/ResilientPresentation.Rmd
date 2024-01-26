@@ -61,64 +61,39 @@ $\begin{align*} \text{Maximize} & = \text{Biodiversity} + \text{Resilience} + \t
 
 $$\max_{\text{ConservationIndex}} \sum_{l, c}^{L,C} \text{LanduseDecision}_{l, c} \cdot \text{S}_{l, c} \cdot \text{PD}_{l, c}\cdot \text{Rar}_{l, c}$$
 
-## Resilience in Networks {.columns-2}
-
--   Measures of network stability
--   Trophic and mutualistic
--   With rewiring potential hypothesis
--   Potential colaboration (Eva and Alejo)
-
-<p class="forceBreak">
-
-</p>
-
 ```{r}
-knitr::include_graphics("images/NetworkExtinctionImg.png")
+library(terra)
+library(tidyterra)
+library(leaflet)
+AarhusSols <- terra::rast("AarhusSols.tif")
+AarhusSols <- as.numeric(AarhusSols[[1]])
+Pal <- colorBin(palette = c('#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf'), domain = values((AarhusSols)[[1]]), na.color = "transparent")
+factor_labels <- c("ForestDryPoor", "ForestDryRich", "ForestWetPoor", "ForestWetRich", 
+                   "OpenDryPoor", "OpenDryRich", "OpenWetPoor", "OpenWetRich") 
+
+L <- leaflet(height = 300) |> addProviderTiles("CartoDB.DarkMatter") |> addRasterImage(AarhusSols[[1]], color = Pal, group = "0") |>
+  addLegend(
+  "bottomright",
+  title = "Land Use",
+  colors = c('#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf'),
+  labels = factor_labels,
+  opacity = 1
+) 
+
+L
 ```
 
-## Future resilience
+# Resilience
 
--   We use all of this to take decisions about the future (Hannah, L., Roehrdanz, P.R., Marquet, P.A., Enquist, B.J., Midgley, G., Foden, W., Lovett, J.C., Corlett, R.T., Corcoran, D., Butchart, S.H. and Boyle, B., 2020)
+## Resilience
 
-```{r}
-library(htmltools)
+> -   Resilience
+>     -   Contiguity (Area)
+>     -   Stochastic components and Global Change Vulnerability
+>     -   Network stability (Trophic and/or mutualistic)*
+>     -   Ecosystem Functioning*
 
-# Replace 'image1.jpg' and 'image2.jpg' with the actual file paths or URLs of your images
-image1 <- "images/image2.gif"
-image2 <- "images/image6.gif"
-
-# Creating HTML code to display images side by side
-html_code <- div(
-  style = "display: flex; justify-content: space-between;",
-  img(src = image1, width = "48%"),
-  img(src = image2, width = "48%")
-)
-
-html_code
-```
-
-## Network flow
-
-::: {style="float: left; width: 40%;"}
--   Incorporating species dispersal (Species on the move)
--   Considering Food security
--   Quadratic [Network flow](https://youtu.be/u0ccCJn0wZg) (Currently suppervising PhD student in South Africa)
--   Multiple scenarios
--   Possible collaboration with Dr. Anouschka Hof
--   [Example report](https://static1.squarespace.com/static/57be0f8abebafb6d2e14828f/t/5d9cbb4d7c5b6d42d382e0ae/1570552656952/NorthernAndes_FinalPDF.pdf)
-:::
-
-::: {style="float: right; width: 60%;"}
-```{r, out.width="60%"}
-knitr::include_graphics("images/image1.gif")
-```
-:::
-
-## Geographic representation
-
-```{r, out.width="60%"}
-knitr::include_graphics("images/NetworkFlow.gif")
-```
+$$\max_{\text{ObjectiveFunction}} \sum_{i, j} \text{DecisionVariable}_{l, i} \cdot \text{DecisionVariable}_{l, j} \cdot \text{Bonus}$$
 
 ## Example Landuse (Global contribution)
 
@@ -251,6 +226,66 @@ leafsync::sync(L1, L2, ncol = 2, sync = "all")
 ```
 
 $\begin{align*} \text{Maximize} & = \text{Biodiversity}_c + \text{Resilience}_c\cdot \text{bonus}\end{align*}$
+
+## Resilience in Networks {.columns-2}
+
+-   Measures of network stability
+-   Trophic and mutualistic
+-   With rewiring potential hypothesis
+-   Potential colaboration (Eva and Alejo)
+
+<p class="forceBreak">
+
+</p>
+
+```{r}
+knitr::include_graphics("images/NetworkExtinctionImg.png")
+```
+
+## Future resilience
+
+-   We use all of this to take decisions about the future (Hannah, L., Roehrdanz, P.R., Marquet, P.A., Enquist, B.J., Midgley, G., Foden, W., Lovett, J.C., Corlett, R.T., Corcoran, D., Butchart, S.H. and Boyle, B., 2020)
+
+```{r}
+library(htmltools)
+
+# Replace 'image1.jpg' and 'image2.jpg' with the actual file paths or URLs of your images
+image1 <- "images/image2.gif"
+image2 <- "images/image6.gif"
+
+# Creating HTML code to display images side by side
+html_code <- div(
+  style = "display: flex; justify-content: space-between;",
+  img(src = image1, width = "48%"),
+  img(src = image2, width = "48%")
+)
+
+html_code
+```
+
+## Network flow
+
+::: {style="float: left; width: 40%;"}
+-   Incorporating species dispersal (Species on the move)
+-   Considering Food security
+-   Quadratic [Network flow](https://youtu.be/u0ccCJn0wZg) (Currently suppervising PhD student in South Africa)
+-   Multiple scenarios
+-   Possible collaboration with Dr. Anouschka Hof
+-   [Example report](https://static1.squarespace.com/static/57be0f8abebafb6d2e14828f/t/5d9cbb4d7c5b6d42d382e0ae/1570552656952/NorthernAndes_FinalPDF.pdf)
+:::
+
+::: {style="float: right; width: 60%;"}
+```{r, out.width="60%"}
+knitr::include_graphics("images/image1.gif")
+```
+:::
+
+## Geographic representation
+
+```{r, out.width="60%"}
+knitr::include_graphics("images/NetworkFlow.gif")
+```
+
 
 ## Adding human dimension {.smaller}
 
