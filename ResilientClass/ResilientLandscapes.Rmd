@@ -1,0 +1,120 @@
+---
+title: "Resilient Landscapes"
+author: "Derek Corcoran"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE,
+                      error = FALSE)
+
+library(ggplot2)
+library(tidyterra)
+library(leaflet.minicharts)
+library(leaflet)
+library(plotly)
+library(htmlwidgets)
+library(leafpop)
+library(tidyverse)
+library(gganimate)
+library(ggrepel)
+```
+
+## Resilience on maps
+
+
+```{r}
+knitr::include_graphics("TP_animation_CB.gif")
+```
+
+
+## Resiliency
+
+```{r, echo=FALSE}
+simulate_abundance <- function(ecosystem, steady_state, stressor_start, stressor_duration, stressor_slope = -0.1, recovery_duration, recovery_slope = 0.1, top_recovery = 100, noise = 2) {
+  time <- seq(1, (stressor_start + stressor_duration + recovery_duration))
+  
+  abundance <- c(rep(steady_state, stressor_start - 1),
+                 steady_state * exp(stressor_slope * (1:stressor_duration)))
+  
+  Min <- min(abundance)
+  
+  Left <- length(time) - length(abundance)
+  
+  recovery <- c(Min * exp(recovery_slope * (1:Left)))
+  
+  recovery <- ifelse(recovery > top_recovery, top_recovery, recovery)
+  
+  abundance <- c(abundance, recovery)
+  
+  abundance <- abundance + rnorm(length(abundance), mean = 0, sd = noise)
+  
+  data.frame(time = time, ecosystem = rep(ecosystem, length(time)), abundance = abundance, stressor_duration = stressor_duration, stressor_slope = stressor_slope, recovery_slope = recovery_slope)
+}
+
+resistent <- simulate_abundance("resistent", steady_state = 100, stressor_start = 31, stressor_duration = 2, stressor_slope = -0.05, recovery_slope = 0.1,recovery_duration = 67)
+
+resilient <- simulate_abundance("resilient", steady_state = 100, stressor_start = 31, stressor_duration = 10, recovery_duration = 59,  stressor_slope = -0.05, recovery_slope = 0.1)
+
+non_resilient <- simulate_abundance("non-resilient", steady_state = 100, stressor_start = 31, stressor_duration = 10, recovery_duration = 59,  stressor_slope = -0.05, recovery_slope = 0.04,  top_recovery = 70)
+
+
+all_data <- dplyr::bind_rows(resistent, resilient, non_resilient)
+
+accumulate_by <- function(dat, var) {
+  var <- lazyeval::f_eval(var, dat)
+  lvls <- plotly:::getLevels(var)
+  dats <- lapply(seq_along(lvls), function(x) {
+    cbind(dat[var %in% lvls[seq(1, x)], ], frame = lvls[[x]])
+  })
+  dplyr::bind_rows(dats)
+}
+
+
+fig <- all_data
+fig <- fig %>% accumulate_by(~time)
+
+gg <- ggplot(fig, aes(x=time, y=abundance)) +
+  geom_vline(xintercept = 30, lty = 2) +
+  geom_path(aes(frame = frame, color = ecosystem)) + facet_grid(ecosystem~.) + theme_bw() + theme(legend.position = "none")
+gg <- ggplotly(gg)
+
+gg <- gg %>% animation_opts(
+  frame = 100, 
+  transition = 0, 
+  redraw = FALSE
+)
+gg <- gg %>% animation_slider(
+  hide = T
+)
+gg <- gg %>% animation_button(
+  x = 1, xanchor = "right", y = 0, yanchor = "bottom"
+)
+gg
+```
+
+## Popup graph
+
+```{r}
+
+library(sf)
+library(leaflet)
+library(lattice)
+
+pnt = st_as_sf(data.frame(x = c(174.764474, 173), y = c(-36.877245, -35)),
+                coords = c("x", "y"),
+                crs = 4326)
+
+p2 = levelplot(t(volcano), col.regions = terrain.colors(100))
+p3 <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+
+leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(data = pnt, group = "pnt") %>%
+  addPopupGraphs(list(p2, p3), group = "pnt", width = 300, height = 400)
+```
+
+## Right balance between heterogeneity (mosaic) and continuity Large patch size
