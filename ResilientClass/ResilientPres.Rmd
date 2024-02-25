@@ -185,6 +185,14 @@ knitr::include_graphics("GeneticResilience.png")
 
 :::
 
+## Ecological Resilience at the Landscape Level:
+
+* Ecological resilience at the landscape level extends the concept of resilience to interactions and dynamics occurring across multiple ecosystems and habitats within a landscape.
+
+* Considers the interconnectedness of different ecosystems and their ability to collectively respond to disturbances.
+* Involves spatial heterogeneity and the distribution of resilience across landscapes.
+* Focuses on the dynamics of ecosystems in relation to each other and the overall landscape configuration.
+
 
 ## On a landscape
 
