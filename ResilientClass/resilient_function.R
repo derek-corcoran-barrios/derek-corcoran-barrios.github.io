@@ -128,3 +128,76 @@ gg <- gg %>% animation_slider(
 gg <- gg %>% animation_button(
   x = 1, xanchor = "right", y = 0, yanchor = "bottom"
 )
+
+
+library(tidyverse)
+
+# Function to simulate abundance over time with a disturbance and spatial interactions
+simulate_landscape <- function(rows, cols, disturbance_prob, recovery_prob, subsidy_prob, n_steps) {
+  landscape <- matrix("Agriculture", nrow = rows, ncol = cols)  # Initialize all cells as agriculture
+  
+  # Randomly set some cells to be forest
+  forest_cells <- sample(seq_len(rows * cols), size = 0.2 * rows * cols)
+  landscape[forest_cells] <- "Forest"
+  
+  # Function to simulate disturbance and recovery for a single cell
+  simulate_cell <- function(abundance, disturbance_prob, recovery_prob, subsidy_prob, neighbor_abundance) {
+    if (runif(1) < disturbance_prob && abundance > 0) {
+      # Cell experiences disturbance
+      abundance <- abundance * exp(-0.1)  # Exponential decay for disturbance
+    } else if (runif(1) < recovery_prob && abundance < 100) {
+      # Cell recovers from disturbance
+      abundance <- min(100, abundance * exp(0.05))  # Exponential growth for recovery
+    }
+    
+    # Subsidy from neighboring cell
+    if (runif(1) < subsidy_prob && neighbor_abundance == 100) {
+      abundance <- min(100, abundance + 10)  # Subsidy value
+    }
+    
+    return(abundance)
+  }
+  
+  # Simulation steps
+  for (step in 1:n_steps) {
+    new_landscape <- landscape  # Create a new landscape to store updated cell states
+    
+    for (i in 1:rows) {
+      for (j in 1:cols) {
+        cell_type <- landscape[i, j]
+        neighbor_abundance <- ifelse(i > 1, landscape[i - 1, j], 0)  # Assume no subsidy from edge cells
+        new_landscape[i, j] <- simulate_cell(abundance = ifelse(cell_type == "Forest", 100, 0),
+                                             disturbance_prob = disturbance_prob,
+                                             recovery_prob = recovery_prob,
+                                             subsidy_prob = subsidy_prob,
+                                             neighbor_abundance = neighbor_abundance)
+      }
+    }
+    
+    landscape <- new_landscape  # Update the landscape for the next time step
+  }
+  
+  return(landscape)
+}
+
+# Set random seed for reproducibility
+set.seed(123)
+
+# Simulate landscapes for two scenarios
+landscape_sparse <- simulate_landscape(rows = 10, cols = 10, disturbance_prob = 0.1, recovery_prob = 0.1, subsidy_prob = 0.1, n_steps = 50)
+landscape_dense <- simulate_landscape(rows = 100, cols = 100, disturbance_prob = 0.1, recovery_prob = 0.1, subsidy_prob = 0.1, n_steps = 50)
+
+# Plot the landscapes
+plot_landscape <- function(landscape, title) {
+  ggplot(data = reshape2::melt(landscape), aes(x = Var2, y = Var1, fill = value)) +
+    geom_tile() +
+    scale_fill_manual(values = c("Agriculture" = "lightgreen", "Forest" = "darkgreen")) +
+    labs(title = title, x = "Column", y = "Row") +
+    theme_minimal()
+}
+
+plot_landscape(landscape_sparse, "Sparse Landscape") +
+  theme(legend.position = "none")
+
+plot_landscape(landscape_dense, "Dense Landscape") +
+  theme(legend.position = "none")

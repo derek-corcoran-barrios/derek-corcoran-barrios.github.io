@@ -21,6 +21,7 @@ library(leafpop)
 library(tidyverse)
 library(gganimate)
 library(ggrepel)
+library(terra)
 ```
 
 ## Resilience on maps
@@ -98,23 +99,126 @@ gg
 
 ## Popup graph
 
-```{r}
 
-library(sf)
-library(leaflet)
-library(lattice)
-
-pnt = st_as_sf(data.frame(x = c(174.764474, 173), y = c(-36.877245, -35)),
-                coords = c("x", "y"),
-                crs = 4326)
-
-p2 = levelplot(t(volcano), col.regions = terrain.colors(100))
-p3 <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
-
-leaflet() %>%
-  addTiles() %>%
-  addCircleMarkers(data = pnt, group = "pnt") %>%
-  addPopupGraphs(list(p2, p3), group = "pnt", width = 300, height = 400)
-```
 
 ## Right balance between heterogeneity (mosaic) and continuity Large patch size
+
+
+# Introduction
+
+Ecosystem Landscape Resilience is a critical concept in ecology, focusing on the ability of landscapes to absorb disturbances and recover to a stable state. In this example, we'll simulate landscape dynamics using R, considering scenarios with different spatial configurations of forests and agriculture. The simulation will incorporate disturbances, recovery mechanisms, and the influence of neighboring cells on recovery.
+
+# Landscape Simulation
+
+## Creating Landscape Grids
+
+We start by creating two landscape scenarios: one with a sparse distribution of forests and agriculture, and another with a more abundant forest core surrounded by agriculture.
+
+```{r}
+# Insert R code for creating landscape grids
+```
+
+Simulating Disturbances and Recovery
+
+Next, we simulate disturbances and recovery processes on the landscape grids. Disturbances are introduced to forest cells with a certain probability, and recovery follows either a resilient or non-resilient path. Additionally, neighboring cells that have already recovered provide a subsidy to the current cell.
+
+
+# Insert R code for simulating disturbances and recovery
+
+Results
+
+Let's visualize the landscape scenarios and their dynamics over time. We'll use ggplot2 for the visualization.
+
+
+
+# Insert R code for visualization (ggplot2 or other libraries)
+
+Discussion
+
+The simulation demonstrates how landscape resilience varies with different spatial configurations. The interplay between disturbance, recovery, and the influence of neighboring cells provides insights into the dynamics of ecosystems at a landscape scale. Understanding these processes is crucial for effective ecosystem management and conservation.
+Conclusion
+
+In this example, we' ve explored a simple simulation of landscape resilience, emphasizing the importance of spatial configuration in influencing ecosystem dynamics. This simulation can serve as a foundation for further discussions and explorations in the field of Ecosystem Landscape Resilience.
+
+
+```{r}
+Resilients <- list()
+Plots <- list()
+  
+for(i in 1:30){
+  Resilients[[i]] <- simulate_abundance("resilient", steady_state = 100, stressor_start = 31, stressor_duration = 10, recovery_duration = 59,  stressor_slope = -0.05, recovery_slope = 0.1)
+  Plots[[i]] <- ggplot(Resilients[[i]], aes(x = time, y = abundance)) + geom_path() + theme_bw()
+}
+
+Resilients <- Resilients |> 
+  purrr::reduce(dplyr::bind_rows)
+
+
+Resilients_sum <- Resilients |> 
+  summarise(abundance = sum(abundance), .by = time)
+
+
+non_resilients <- list()
+
+for(i in 1:5){
+  non_resilients[[i]] <- simulate_abundance("non-resilient", steady_state = 100, stressor_start = 31, stressor_duration = 10, recovery_duration = 59,  stressor_slope = -0.05, recovery_slope = 0.04,  top_recovery = 70)
+  Plots[[i + 30]] <- ggplot(non_resilients[[i]], aes(x = time, y = abundance)) + geom_path() + theme_bw()
+}
+
+non_resilients <- non_resilients |> 
+  purrr::reduce(dplyr::bind_rows)
+
+
+non_resilients_sum <- non_resilients |> 
+  summarise(abundance = sum(abundance), .by = time)
+
+Forest <- terra::rast("Forest.tif")
+
+
+Forest_Int <- terra::rast("Forest_Int.tif")
+
+Forest_Poly <- terra::ifel(Forest_Int == 1, 1, NA) |> 
+  as.polygons() |> disagg()
+
+Forest_Poly$area <- terra:::expanse(Forest_Poly, unit = "ha")
+
+BigArea <- Forest_Poly[Forest_Poly$area == max(Forest_Poly$area),]
+
+
+ContArea <- crop(Forest, BigArea)
+
+set.seed(2024)
+Sample <- spatSample(ContArea, 100, xy = TRUE, as.points = T) |> 
+  tidyterra::slice_max(order_by = focal_mean, n = 35) |> 
+  tidyterra::arrange(desc(focal_mean)) 
+
+Sample$ID <- 1:nrow(Sample)
+
+set.seed(2024)
+
+Sample$Type <- sample(c("Resilient", "Non-resilient"), size = nrow(Sample), replace = T, prob = c(0.85, 0.15))
+
+Sample <- Sample |> tidyterra::arrange(desc(Type))
+
+
+
+Sample_sf <- terra::project(Sample, y = "epsg:4623")
+
+Pal <- colorFactor(c("red", "blue"), domain = sort(Sample_sf$Type))
+
+
+leaflet() |> addProviderTiles("Esri.WorldImagery") |> 
+  addCircleMarkers(data = Sample_sf, radius = 3, color = ~Pal(Type), group = "pnt") |> 
+  addPopupGraphs(Plots, group = "pnt", width = 300, height = 400)
+
+```
+
+## Cumulative
+
+```{r}
+all <- dplyr::bind_rows(Resilients, non_resilients) |> 
+  summarise(abundance = sum(abundance), .by = time)
+
+ggplot(all, aes(x = time, y = abundance)) + geom_path()
+```
+
