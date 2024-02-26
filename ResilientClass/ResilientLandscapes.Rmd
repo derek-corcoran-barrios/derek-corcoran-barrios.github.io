@@ -1,15 +1,18 @@
 ---
-title: "Resilient Landscapes"
+title: "Resilient Landscapes in Ecology"
 author: "Derek Corcoran"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  bookdown::html_document2
+bibliography: "https://api.citedrive.com/bib/13488d75-b6a4-4f70-8d50-955fa36e33a8/references.bib?x=eyJpZCI6ICIxMzQ4OGQ3NS1iNmE0LTRmNzAtOGQ1MC05NTVmYTM2ZTMzYTgiLCAidXNlciI6ICI4NjQ0IiwgInNpZ25hdHVyZSI6ICIyYmNlMjVlNjFkNGJiYzQ3MmRiZGEwM2NhZjQ3NjRlYTUxZjliMWRkOTNhZmNmMmYwYjY3NmRmNjI5OGFjMWVhIn0=/bibliography.bib" 
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE,
                       warning = FALSE,
                       message = FALSE,
-                      error = FALSE)
+                      error = FALSE,
+                      cache = FALSE)
 
 library(ggplot2)
 library(tidyterra)
@@ -22,17 +25,28 @@ library(tidyverse)
 library(gganimate)
 library(ggrepel)
 library(terra)
+library(sf)
+library(viridis)
+library(SpatioTemporalCont)
 ```
 
-## Resilience on maps
+# Resilient Landscapes in Ecology
 
+## Introduction
 
-```{r}
-knitr::include_graphics("TP_animation_CB.gif")
-```
+This document serves as a comprehensive companion to the presentation titled ["Resilient Landscapes in Ecology"](https://derek-corcoran-barrios.github.io/ResilientClass/ResilientPres.html#1). The presentation covers various aspects of ecological resilience, including definitions, examples, and practical applications.
 
+## Resiliency in Ecology
 
-## Resiliency
+Ecological resilience is a crucial concept in understanding how ecosystems respond to disturbances. As defined by Holling [@holling1973resilience], it refers to the time required for an ecosystem to return to equilibrium following a perturbation. Another perspective highlights the capacity of a system to absorb disturbance and reorganize while retaining its essential functions, structure, identity, and feedbacks.
+
+![Resilience Process](https://www.researchgate.net/profile/Nathaniel-Ratcliff-2/publication/335750004/figure/fig1/AS:801975427940352@1568217250952/The-resilience-process-as-a-function-of-robustness-and-rapidity-Note-In-this-gure-it-is.ppm)
+
+## Resiliency Factors
+
+The resiliency of an ecosystem is influenced by various factors such as fire, drought, disease, and more. It depends on the intensity, type, frequency, and how fast conditions change. 
+
+In the following image you can see the difference of a system that is resilient, one that is not resilient and one that is resistant, showing how much a system is affected by a disturbance (resilient vs resistant) and weather it comes back to its original state (resilient vs non resiliant). Here we see how an attribute changes over time for ecosystems with different levels of resilience.
 
 ```{r, echo=FALSE}
 simulate_abundance <- function(ecosystem, steady_state, stressor_start, stressor_duration, stressor_slope = -0.1, recovery_duration, recovery_slope = 0.1, top_recovery = 100, noise = 2) {
@@ -80,7 +94,7 @@ fig <- fig %>% accumulate_by(~time)
 
 gg <- ggplot(fig, aes(x=time, y=abundance)) +
   geom_vline(xintercept = 30, lty = 2) +
-  geom_path(aes(frame = frame, color = ecosystem)) + facet_grid(ecosystem~.) + theme_bw() + theme(legend.position = "none")
+  geom_path(aes(frame = frame, color = ecosystem)) + facet_grid(ecosystem~.) + theme_bw() + theme(legend.position = "none") + labs(y = "attribute")
 gg <- ggplotly(gg)
 
 gg <- gg %>% animation_opts(
@@ -97,128 +111,152 @@ gg <- gg %>% animation_button(
 gg
 ```
 
-## Popup graph
+### Key definitions
 
 
+- **Resilient Ecosystems:** These are ecosystems that not only withstand disturbances (resistant) but also have the ability to recover and return to their original state after being affected. Resilient ecosystems exhibit a capacity to absorb disturbances and reorganize while retaining their essential functions, structure, and identity. 
 
-## Right balance between heterogeneity (mosaic) and continuity Large patch size
+- **Non-Resilient Ecosystems:** Unlike resilient ecosystems, non-resilient ecosystems struggle to recover and may experience long-lasting impacts from disturbances. They lack the ability to bounce back to their original state effectively.
 
+- **Resistant Ecosystems:** Resistant ecosystems can withstand disturbances without undergoing significant changes. While they may resist the immediate impacts of a disturbance, they may not necessarily return to their original state after the disturbance is over.
 
-# Introduction
+## Importance of Resilience
 
-Ecosystem Landscape Resilience is a critical concept in ecology, focusing on the ability of landscapes to absorb disturbances and recover to a stable state. In this example, we'll simulate landscape dynamics using R, considering scenarios with different spatial configurations of forests and agriculture. The simulation will incorporate disturbances, recovery mechanisms, and the influence of neighboring cells on recovery.
+One of the key motivations for studying ecological resilience is the rise of extreme weather events. Here we can see a visual representation of the number of natural disaster events over time, highlighting events such as droughts, floods, wildfires, extreme temperatures, and extreme weather courtesy of our world in data.
 
-# Landscape Simulation
-
-## Creating Landscape Grids
-
-We start by creating two landscape scenarios: one with a sparse distribution of forests and agriculture, and another with a more abundant forest core surrounded by agriculture.
-
-```{r}
-# Insert R code for creating landscape grids
+```{r, echo=FALSE}
+knitr::include_url("https://ourworldindata.org/grapher/number-of-natural-disaster-events?time=1900..2023&facet=entity&uniformYAxis=0&country=Drought~Flood~Wildfire~Extreme+temperature~Extreme+weather")
 ```
 
-Simulating Disturbances and Recovery
+## Nature-Based Solutions
 
-Next, we simulate disturbances and recovery processes on the landscape grids. Disturbances are introduced to forest cells with a certain probability, and recovery follows either a resilient or non-resilient path. Additionally, neighboring cells that have already recovered provide a subsidy to the current cell.
+An example of nature-based solutions (NBS) is presented using data from Mols Bjerge National Park. In the following map, you can see three different habitat types that have been compared where rewildling has or not happend.
 
+```{r Mols}
+Mols_SF <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/ResilientLandscapes/210201_Mols_PlantData%20.csv") %>%
+  # Filter only size 10 in PlotSize
+  dplyr::filter(PlotSize == 10.00, YEAR == 2017) %>% 
+  dplyr::select("BlockNo",  "Latitude", "Longitude", 
+"InitialHabitat") %>%
+  distinct() %>% 
+  st_as_sf(coords = c(3,2), crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0") %>% 
+  group_split(BlockNo) %>% 
+  purrr::map(~sample_n(.x,size = 1)) %>% 
+  reduce(bind_rows)
 
-# Insert R code for simulating disturbances and recovery
-
-Results
-
-Let's visualize the landscape scenarios and their dynamics over time. We'll use ggplot2 for the visualization.
-
-
-
-# Insert R code for visualization (ggplot2 or other libraries)
-
-Discussion
-
-The simulation demonstrates how landscape resilience varies with different spatial configurations. The interplay between disturbance, recovery, and the influence of neighboring cells provides insights into the dynamics of ecosystems at a landscape scale. Understanding these processes is crucial for effective ecosystem management and conservation.
-Conclusion
-
-In this example, we' ve explored a simple simulation of landscape resilience, emphasizing the importance of spatial configuration in influencing ecosystem dynamics. This simulation can serve as a foundation for further discussions and explorations in the field of Ecosystem Landscape Resilience.
+pal <- colorFactor(c('#66c2a5','#fc8d62','#8da0cb'), domain =c("Rangeland", "Forest", "Meadow"))
 
 
-```{r}
-Resilients <- list()
-Plots <- list()
-  
-for(i in 1:30){
-  Resilients[[i]] <- simulate_abundance("resilient", steady_state = 100, stressor_start = 31, stressor_duration = 10, recovery_duration = 59,  stressor_slope = -0.05, recovery_slope = 0.1)
-  Plots[[i]] <- ggplot(Resilients[[i]], aes(x = time, y = abundance)) + geom_path() + theme_bw()
+l <-leaflet(data = Mols_SF)  %>% 
+  addCircleMarkers(popup = ~as.character(InitialHabitat), label = ~as.character(InitialHabitat), color = ~pal(InitialHabitat), opacity = 0.8) %>% addLegend("bottomright", pal = pal, values = ~InitialHabitat,
+                                                                                                                                                            title = "Initial Habitat 2017",
+                                                                                                                                                            opacity = 1) 
+
+esri <- grep("^Esri", providers, value = TRUE)
+esri <- esri[c(5,2,4,10)]
+
+for (provider in esri) {
+  l <- l %>% addProviderTiles(provider, group = provider)
 }
 
-Resilients <- Resilients |> 
-  purrr::reduce(dplyr::bind_rows)
-
-
-Resilients_sum <- Resilients |> 
-  summarise(abundance = sum(abundance), .by = time)
-
-
-non_resilients <- list()
-
-for(i in 1:5){
-  non_resilients[[i]] <- simulate_abundance("non-resilient", steady_state = 100, stressor_start = 31, stressor_duration = 10, recovery_duration = 59,  stressor_slope = -0.05, recovery_slope = 0.04,  top_recovery = 70)
-  Plots[[i + 30]] <- ggplot(non_resilients[[i]], aes(x = time, y = abundance)) + geom_path() + theme_bw()
-}
-
-non_resilients <- non_resilients |> 
-  purrr::reduce(dplyr::bind_rows)
-
-
-non_resilients_sum <- non_resilients |> 
-  summarise(abundance = sum(abundance), .by = time)
-
-Forest <- terra::rast("Forest.tif")
-
-
-Forest_Int <- terra::rast("Forest_Int.tif")
-
-Forest_Poly <- terra::ifel(Forest_Int == 1, 1, NA) |> 
-  as.polygons() |> disagg()
-
-Forest_Poly$area <- terra:::expanse(Forest_Poly, unit = "ha")
-
-BigArea <- Forest_Poly[Forest_Poly$area == max(Forest_Poly$area),]
-
-
-ContArea <- crop(Forest, BigArea)
-
-set.seed(2024)
-Sample <- spatSample(ContArea, 100, xy = TRUE, as.points = T) |> 
-  tidyterra::slice_max(order_by = focal_mean, n = 35) |> 
-  tidyterra::arrange(desc(focal_mean)) 
-
-Sample$ID <- 1:nrow(Sample)
-
-set.seed(2024)
-
-Sample$Type <- sample(c("Resilient", "Non-resilient"), size = nrow(Sample), replace = T, prob = c(0.85, 0.15))
-
-Sample <- Sample |> tidyterra::arrange(desc(Type))
-
-
-
-Sample_sf <- terra::project(Sample, y = "epsg:4623")
-
-Pal <- colorFactor(c("red", "blue"), domain = sort(Sample_sf$Type))
-
-
-leaflet() |> addProviderTiles("Esri.WorldImagery") |> 
-  addCircleMarkers(data = Sample_sf, radius = 3, color = ~Pal(Type), group = "pnt") |> 
-  addPopupGraphs(Plots, group = "pnt", width = 300, height = 400)
-
+l %>%
+  addLayersControl(baseGroups = names(esri),
+                   options = layersControlOptions(collapsed = TRUE)) %>%
+  addMiniMap(tiles = esri[[4]], toggleDisplay = TRUE,
+             position = "topleft")
 ```
 
-## Cumulative
+We can see in the following figure that in the control area (where cows and horses have been allowed to graze) after a massive drought in 2018, diversity has recovered fully to pre-drought levels. On the other hand, we can see that in the treatment, where enclosures have not allowed for grazing, there is less resilient, and so far, the diversity has not returned to its base state.
 
-```{r}
-all <- dplyr::bind_rows(Resilients, non_resilients) |> 
-  summarise(abundance = sum(abundance), .by = time)
+```{r PredRichness, include=FALSE}
+NewData <- download.file("https://github.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/raw/master/ResilientLandscapes/NewDataPlot.rds", "NewDataPlot.rds")
 
-ggplot(all, aes(x = time, y = abundance)) + geom_path()
+NewData <- readRDS("NewDataPlot.rds")
+
+file.remove("NewDataPlot.rds")
 ```
+
+
+```{r PredRichness2}
+G <-ggplot(NewData, aes(x = Year, y = Predicted)) +
+  geom_path(aes(color = treatment)) +
+  facet_wrap(~initial_habitat) +
+  theme_bw() +
+  labs(y = "Alpha Diversity")
+
+plotly::ggplotly(G)
+```
+
+
+## Genetic Diversity and Resilience
+
+The presentation explores the relationship between genetic diversity and resilience. A study involving 10 generations of populations subjected to a novel stressor reveals that higher genetic diversity contributes to higher resilience.
+
+![Genetic Resilience](GeneticResilience.png)
+
+## Ecological Resilience at the Landscape Level
+
+The landscape-level perspective on ecological resilience considers interconnected dynamics, spatial heterogeneity, and overall ecosystem dynamics. Visual representations provide insights into how landscapes distribute resilience.
+
+![Spatial Heterogeneity](https://www.researchgate.net/publication/344879263/figure/fig1/AS:1010015070584832@1617817766555/An-example-of-sites-distributed-in-a-heterogeneous-landscape-subject-to-various-forms-of.ppm)
+
+## On a Landscape
+
+A simulation on a landscape scale is presented, comparing the abundance of resilient and non-resilient ecosystems over time. The accompanying map overlays these simulations on an actual landscape.
+
+```{r PopupMap, echo=FALSE}
+# Landscape simulation and map code
+```
+
+## Connectivity in Ecology
+
+The importance of connectivity in maintaining biodiversity is emphasized. Visualizations depict the impact of habitat loss and fragmentation on population size, genetic diversity, and gene flow.
+
+![Connectivity Impact](https://www.frontiersin.org/files/Articles/606222/fgene-11-606222-HTML/image_m/fgene-11-606222-g001.jpg)
+
+## Grassland Connectivity
+
+The document also explores grassland connectivity using land use data. A spatial raster map illustrates the proportion of grassland in the landscape.
+
+```{r GrasslandProp, echo=FALSE}
+# Grassland connectivity code
+```
+
+## Area vs Diversity
+
+The relationship between area and genetic diversity is investigated. A scatter plot with a regression line demonstrates how larger areas tend to support higher genetic diversity.
+
+```{r areaDiv, echo=FALSE}
+# Area vs Diversity plot code
+```
+
+## Heterogeneity in Habitats
+
+Habitat heterogeneity is explored as a factor contributing to higher biodiversity. The 'rescue effect' and 'drainage effect' are discussed, and visual representations depict these concepts.
+
+![Rescue Effect](https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41467-021-24877-0/MediaObjects/41467_2021_24877_Fig1_HTML.png?as=webp)
+
+## Regulating Populations
+
+The regulation of populations in heterogeneous landscapes is discussed, considering the impact of habitat heterogeneity, complementarity in vegetation responses, and the influence of livestock.
+
+![Livestock Influence](https://ars.els-cdn.com/content/image/1-s2.0-S0048969723034496-gr1.jpg)
+
+# In Practice
+
+## Optimize Landscapes
+
+The final section introduces practical applications, emphasizing the optimization of landscapes by incorporating biodiversity, connectivity, and genetic diversity.
+
+```{r COG, echo=FALSE}
+# Embedding an external interactive resource
+```
+
+## Conclusion
+
+In conclusion, the presentation and this accompanying document provide a comprehensive exploration of resilient landscapes in ecology. The interactive elements, simulations, and visualizations contribute to a deeper understanding of the complex dynamics within ecosystems.
+
+## References
+
+The presentation draws from various sources, and the references are provided for further exploration.
 
