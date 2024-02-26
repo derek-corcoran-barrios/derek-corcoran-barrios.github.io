@@ -478,6 +478,13 @@ L
 knitr::include_url("https://derek-corcoran-barrios.github.io/COG/TestCOG2.html", height = "1000px")
 ```
 
+## Take home message
+
+* With increased extreme events we have to worry about resilience
+* Highly connected landscapes are more resilient
+* More heterogeneous landscapes are more resilient
+* We have to cover both aspects for restoration in landscape ecology
+* We can plan for both
 
 # Questions
 
