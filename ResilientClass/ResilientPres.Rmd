@@ -185,14 +185,25 @@ knitr::include_graphics("GeneticResilience.png")
 
 :::
 
-## Ecological Resilience at the Landscape Level:
+## Ecological Resilience at the Landscape Level: {.smaller}
 
-* Ecological resilience at the landscape level extends the concept of resilience to interactions and dynamics occurring across multiple ecosystems and habitats within a landscape.
+::: {style="float: left; width: 38%;"}
 
-* Considers the interconnectedness of different ecosystems and their ability to collectively respond to disturbances.
-* Involves spatial heterogeneity and the distribution of resilience across landscapes.
-* Focuses on the dynamics of ecosystems in relation to each other and the overall landscape configuration.
+* **Interconnected Dynamics**: Diverse ecosystems collectively respond to disturbances within landscape resilience.
 
+* **Spatial Heterogeneity**: Considers resilience distribution across landscapes, emphasizing varied spatial patterns.
+
+* **Ecosystem Dynamics**: Addresses overall configuration and interactions of interconnected ecosystems within the landscape.
+
+:::
+
+::: {style="float: right; width: 60%;"}
+
+```{r heterogeneity, out.width="70%"}
+knitr::include_graphics("https://www.researchgate.net/publication/344879263/figure/fig1/AS:1010015070584832@1617817766555/An-example-of-sites-distributed-in-a-heterogeneous-landscape-subject-to-various-forms-of.ppm")
+```
+
+:::
 
 ## On a landscape
 
@@ -275,8 +286,33 @@ leaflet() |> addProviderTiles("Esri.WorldImagery") |>
 all <- dplyr::bind_rows(Resilients, non_resilients) |> 
   summarise(abundance = sum(abundance), .by = time)
 
-ggplot(all, aes(x = time, y = abundance)) + geom_path()
+# G <- plotly::ggplotly(ggplot(all, aes(x = time, y = abundance)) + geom_path() + theme_bw())
+ 
+# G
+ 
+fig <- all
+fig <- fig %>% accumulate_by(~time)
+
+gg <- ggplot(fig, aes(x=time, y=abundance)) +
+  geom_vline(xintercept = 30, lty = 2) +
+  geom_path(aes(frame = frame)) + theme_bw() + theme(legend.position = "none") + labs(y = "attribute")
+gg <- ggplotly(gg)
+
+gg <- gg %>% animation_opts(
+  frame = 100, 
+  transition = 0, 
+  redraw = FALSE
+)
+gg <- gg %>% animation_slider(
+  hide = T
+)
+gg <- gg %>% animation_button(
+  x = 1, xanchor = "right", y = 0, yanchor = "bottom"
+)
+gg
 ```
+
+# Connectivity
 
 ## Higher connectivity leads to higher diversity
 ::: {style="float: left; width: 40%;"}
@@ -342,6 +378,64 @@ Diverse <- read_csv("Diversity.csv") |>
 G <- ggplot(Diverse, aes(x = Area, y = pi)) + geom_smooth(method = "lm") + geom_point() + theme_bw()+ labs(x = "Area [ha]", y = "Genetic diversity")
 plotly::ggplotly(G) 
 ```
+# Heterogeneity
+
+## Higher heterogeneity higher diversity {.smaller}
+
+::: {style="float: left; width: 40%;"}
+* **Habitat Dynamics**: Impact of habitat fragmentation and eutrophication on biodiversity.
+
+* **Mechanisms at Play**: Explores the 'rescue effect' for rapid recolonization and the 'drainage effect' for stabilizing biodiversity in meta-food-webs.
+
+* **Biodiversity Promotion**: Higher biodiversity in heterogeneous landscapes, landscape heterogeneity in promoting biodiversity [@Ryser_2021].
+
+:::
+
+::: {style="float: right; width: 50%;"}
+
+```{r rescue, out.width="90%"}
+
+knitr::include_graphics("https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41467-021-24877-0/MediaObjects/41467_2021_24877_Fig1_HTML.png?as=webp")
+
+```
+
+
+:::
+
+## Regulating populations {.smaller}
+
+::: {style="float: left; width: 40%;"}
+
+* **Habitat Heterogeneity**: Habitat heterogeneity, allows wild ungulates to mitigate fluctuations in plant production by utilizing diverse resources throughout the year.
+
+* **Complementarity in Vegetation Responses**: Complementarity effect among different vegetation types, increasing food availability predictability across years for ungulates.
+
+* **Livestock Influence**: Dual impact of domestic ungulates, positive effects on wild ungulate density at lower abundances but negative effects at higher densities [@Giralt_Rueda_2023].
+
+:::
+
+::: {style="float: right; width: 50%;"}
+
+```{r rescue2, out.width="90%"}
+
+knitr::include_graphics("https://ars.els-cdn.com/content/image/1-s2.0-S0048969723034496-gr1.jpg")
+
+```
+
+
+:::
+
+# In practice
+
+## Optimize landscapes
+
+* Including biodiversity, connectivity and genetic diversity (Corcoran et al. in prep)
+
+```{r COG}
+knitr::include_url("https://derek-corcoran-barrios.github.io/COG/TestCOG2.html", height = "1000px")
+```
+
+
 
 ## References
 
