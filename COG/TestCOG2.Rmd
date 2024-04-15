@@ -102,7 +102,7 @@ leaflet(width = 0, height = 0)
   });
 
   // Set URL to cog
-  var random_rast_dk_url = "https://www.erda.au.dk/vgrid/Sustainscapes/SolutionNum.tif"
+  var random_rast_dk_url = "https://s3.eu-central-1.amazonaws.com/sustainscapes.data/SolutionNum.tif"
 
   // Load georaster layer and add to map
   parseGeoraster(random_rast_dk_url).then(georaster => {
