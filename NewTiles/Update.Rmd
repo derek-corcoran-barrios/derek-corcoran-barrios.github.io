@@ -5,7 +5,6 @@ date: "`r format(Sys.time(), '%d/%m, %Y')`"
 output:
   ioslides_presentation:
     widescreen: true
-    incremental: true
 ---
 
 ```{r setup, include=FALSE}
@@ -42,13 +41,19 @@ knitr::include_graphics("SAR.png")
 
 * Species Richness, Phylogenetic diversity, Rarity
 
-```{r Richness}
+```{r Richness, include=FALSE}
 Richness <- terra::rast("Richness_ForestDryRich.tif")
 
-ggplot() + geom_spatraster(data = Richness) + scale_fill_wiki_c() + labs(title ="Forest Dry Rich", caption = "Richness") + theme_bw()
+RichPlot <- ggplot() + geom_spatraster(data = Richness) + scale_fill_wiki_c(trans = scales::log1p_trans(), breaks = c(0, 10, 100)) + labs(title ="Forest Dry Rich", caption = "Richness") + theme_bw()
 ```
 
+```{r RichPlot, cache=FALSE}
+RichPlot
+```
+
+
 * One estimate per habitat type
+
 ## Summary of solution for all of Denmark
 
 ```{r tableSolution}
