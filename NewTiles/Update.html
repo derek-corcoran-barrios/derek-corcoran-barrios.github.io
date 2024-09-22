@@ -4559,6 +4559,9 @@ Ag
 
 <script>
 /* **** Leaflet **** */
+var DarkMatter = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
+  });
 
 // Base layers
 //  .. OpenStreetMap
@@ -4566,9 +4569,6 @@ var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '
 
 //  .. CartoDB Positron
 var cartodb = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'});
-
-//  .. OSM Toner
-var toner = L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'});
 
 //  .. White background
 var white = L.tileLayer("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAAA1BMVEX///+nxBvIAAAAH0lEQVQYGe3BAQ0AAADCIPunfg43YAAAAAAAAAAA5wIhAAAB9aK9BAAAAABJRU5ErkJggg==");
@@ -4585,7 +4585,7 @@ var map = L.map('map', {
     layers: [osm]
 });
 
-var basemaps = {"OpenStreetMap": osm, "CartoDB Positron": cartodb, "Stamen Toner": toner, "Without background": white}
+var basemaps = {"OpenStreetMap": osm, "CartoDB Positron": cartodb, "Dark matter": DarkMatter, "Without background": white}
 var overlaymaps = {"Layer": lyr}
 
 // Title
@@ -4596,7 +4596,7 @@ title.onAdd = function(map) {
     return this._div;
 };
 title.update = function(props) {
-    this._div.innerHTML = "ReGrBu2_rescaled.tif";
+    this._div.innerHTML = "Solutions landuse";
 };
 title.addTo(map);
 
