@@ -22,12 +22,33 @@ library(htmlwidgets)
 
 ## Brief recap
 
+
+<div style="float: left; width: 40%;">
 * Transform 14% of Denmark from agriculture to nature
 * Maximize biodiversity and contiguity of nature areas
 * At least 250,000 hectares of new forest promised 
 * At least 140,000 hectares of wet areas
+</div>
+
+<div style="float: right; width: 60%;">
+```{r SAR}
+knitr::include_graphics("SAR.png")
+```
+
+</div>
+
+## Maximize biodiversity
 
 
+* Species Richness, Phylogenetic diversity, Rarity
+
+```{r Richness}
+Richness <- terra::rast("Richness_ForestDryRich.tif")
+
+ggplot() + geom_spatraster(data = Richness) + scale_fill_wiki_c() + labs(title ="Forest Dry Rich", caption = "Richness") + theme_bw()
+```
+
+* One estimate per habitat type
 ## Summary of solution for all of Denmark
 
 ```{r tableSolution}
@@ -298,3 +319,36 @@ kbl(Open, digits = 2, caption = "Top 6 communes on proportional change open natu
 * The selection process first ranks the top 20 communes by proportional change in open nature
 
 * From those, top 6 based on the largest total area of newly added nature.
+
+## Example 1
+
+```{r Calc, cache=TRUE}
+Current <- terra::rast("Template.tif") |> as.numeric()
+
+Solution <- terra::rast("Solution.tif")
+
+levels(Current) <- levels(Solution)
+
+
+Test <- c(Current, Solution) |> magrittr::set_names(c("Before", "After")) |> terra::crop(tidyterra::filter(Communes, NAME_2 == Open$Commune[5])) |> terra::mask(tidyterra::filter(Communes, NAME_2 == Open$Commune[5]))
+
+
+O1 <- ggplot() + geom_spatvector(data = tidyterra::filter(Communes, NAME_2 == Open$Commune[5])) + geom_spatraster(data = Test)+ scale_fill_manual(name = "Current", values =  c("white","#01665e", "#35978f", "#80cdc1", "#c7eae5", "#f6e8c3", "#dfc27d", "#bf812d", "#8c510a"), na.value = "#00000000") + theme_dark() + facet_wrap(~lyr) + ggtitle(Open$Commune[5])
+
+Horsens <- c(Current, Solution) |> magrittr::set_names(c("Before", "After")) |> terra::crop(tidyterra::filter(Communes, NAME_2 == Open$Commune[4])) |> terra::mask(tidyterra::filter(Communes, NAME_2 == Open$Commune[4]))
+
+
+O2 <- ggplot() + geom_spatvector(data = tidyterra::filter(Communes, NAME_2 == Open$Commune[4])) + geom_spatraster(data = Horsens)+ scale_fill_manual(name = "Current", values =  c("white","#01665e", "#35978f", "#80cdc1", "#c7eae5", "#f6e8c3", "#dfc27d",
+                                                                                                                                                                          "#bf812d", "#8c510a"), na.value = "#00000000") + theme_dark() + facet_wrap(~lyr) + ggtitle(Open$Commune[4])
+```
+
+
+```{r plotOpen1}
+O1
+```
+
+## Example 2
+
+```{r plotOpen2}
+O2
+```
