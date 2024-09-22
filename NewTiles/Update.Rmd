@@ -160,6 +160,7 @@ legend.addTo(map);
 </script>
 
 
+# Most added nature
 
 
 ## Areas with the most added nature
@@ -189,19 +190,27 @@ Total <-  data.frame(Commune = Communes$NAME_2,
   dplyr::mutate(Prop_Change = ((Solution-Current)/Current)*100) |>
   dplyr::filter(Prop_Change > 10 & Prop_Change < Inf ) |>
   dplyr::slice_max(order_by = Prop_Change, n = 20) |>
-  dplyr::slice_max(order_by = Solution, n = 10) |> 
+  dplyr::slice_max(order_by = Solution, n = 6) |> 
   dplyr::mutate(Solution = (Solution*200*200)/1000000,
                 Current = (Current*200*200)/1000000)
 ```
 
 ```{r TableMost}
-kbl(Total, digits = 2, caption = "Top 10 communes on proportional change") |> 
+kbl(Total, digits = 2, caption = "Top 6 communes on proportional change") |> 
   kableExtra::kable_paper()
 ```
 
-## Bornholm
+* The selection process first ranks the top 20 communes by proportional change in open nature
 
-```{r}
+* From those, top 6 based on the largest total area of newly added nature.
+
+## Example 1
+
+```{r Tests}
+
+library(ggplot2)
+library(tidyterra)
+
 Current <- terra::rast("Template.tif") |> as.numeric()
 
 Solution <- terra::rast("Solution.tif")
@@ -215,9 +224,69 @@ Communes <- geodata::gadm("denmark", level = 2, getwd()) |>
 
 Test <- c(Current, Solution) |> magrittr::set_names(c("Before", "After")) |> terra::crop(tidyterra::filter(Communes, NAME_2 == Total$Commune[1]))
 
-library(ggplot2)
-library(tidyterra)
+Test2 <- c(Current, Solution) |> magrittr::set_names(c("Before", "After")) |> terra::crop(tidyterra::filter(Communes, NAME_2 == Total$Commune[2])) |> terra::mask(tidyterra::filter(Communes, NAME_2 == Total$Commune[2]))
 
-ggplot() + geom_spatvector(data = tidyterra::filter(Communes, NAME_2 == Total$Commune[1])) + geom_spatraster(data = Test)+ scale_fill_manual(name = "Current", values =  c("white","#01665e", "#35978f", "#80cdc1", "#c7eae5", "#f6e8c3", "#dfc27d","#bf812d", "#8c510a"), na.value = "#00000000") + theme_dark() + facet_wrap(~lyr) + ggtitle(Total$Commune[1])
+Test6 <- c(Current, Solution) |> magrittr::set_names(c("Before", "After")) |> terra::crop(tidyterra::filter(Communes, NAME_2 == Total$Commune[6])) |> terra::mask(tidyterra::filter(Communes, NAME_2 == Total$Commune[6]))
+
+
+G2 <- ggplot() + geom_spatvector(data = tidyterra::filter(Communes, NAME_2 == Total$Commune[2])) + geom_spatraster(data = Test2)+ scale_fill_manual(name = "Current", values =  c("white","#01665e", "#35978f", "#80cdc1", "#c7eae5", "#f6e8c3", "#dfc27d",
+                                                                                                                                                                            "#bf812d", "#8c510a"), na.value = "#00000000") + theme_dark() + facet_wrap(~lyr) + ggtitle(Total$Commune[[2]])
+
+G1 <- ggplot() + geom_spatvector(data = tidyterra::filter(Communes, NAME_2 == Total$Commune[1])) + geom_spatraster(data = Test)+ scale_fill_manual(name = "Current", values =  c("white","#01665e", "#35978f", "#80cdc1", "#c7eae5", "#f6e8c3", "#dfc27d","#bf812d", "#8c510a"), na.value = "#00000000") + theme_dark() + facet_wrap(~lyr) + ggtitle(Total$Commune[1])
+
+G6 <- ggplot() + geom_spatvector(data = tidyterra::filter(Communes, NAME_2 == Total$Commune[6])) + geom_spatraster(data = Test6)+ scale_fill_manual(name = "Current", values =  c("white","#01665e", "#35978f", "#80cdc1", "#c7eae5", "#f6e8c3", "#dfc27d","#bf812d", "#8c510a"), na.value = "#00000000") + theme_dark() + facet_wrap(~lyr)+ ggtitle(Total$Commune[6])
 ```
 
+```{r plotBornholm}
+G1
+```
+
+## Example 2
+
+```{r plotAssens}
+G2
+```
+
+## Example 3
+
+```{r plotAarhus}
+G6
+```
+
+# Most added Open
+
+## Most added Open
+
+```{r addedOpen, cache=TRUE, include=FALSE}
+Current <- terra::rast("Template.tif") |>
+  SpatioTemporalCont::generate_dummy_stack(Vars = c("ODP_N", "ODR_N", "OWP_N", "OWR_N "))
+
+Solution <- terra::rast("Solution.tif") |>
+  SpatioTemporalCont::generate_dummy_stack(Vars = c("ODP_N", "ODR_N", "OWP_N", "OWR_N "))
+
+Communes <- geodata::gadm("denmark", level = 2, getwd()) |>
+  terra::project(terra::crs(Solution)) |>
+  tidyterra::select(NAME_2)
+
+SolutionZonal <- zonal(Solution, Communes, "sum", na.rm=T)
+
+CurrentZonal <- zonal(Current, Communes, "sum", na.rm=T)
+
+Open <-  data.frame(Commune = Communes$NAME_2,
+                     Current = rowSums(CurrentZonal, na.rm = T),
+                     Solution = rowSums(SolutionZonal, na.rm = T)) |>
+  dplyr::mutate(Prop_Change = ((Solution-Current)/Current)*100) |>
+  dplyr::filter(Prop_Change > 10 & Prop_Change < Inf ) |>
+  dplyr::slice_max(order_by = Prop_Change, n = 20) |>
+  dplyr::slice_max(order_by = Solution, n = 6)
+```
+
+```{r TableMostOpen}
+kbl(Open, digits = 2, caption = "Top 6 communes on proportional change open nature") |> 
+  kableExtra::kable_paper()
+```
+
+
+* The selection process first ranks the top 20 communes by proportional change in open nature
+
+* From those, top 6 based on the largest total area of newly added nature.
