@@ -52,6 +52,20 @@ kbl(SummaryResults, digits = 2) |> kable_paper()
     .src {
         font-size: 10pt;
     }
+    .legend {
+        background: white;
+        padding: 6px 8px;
+        font-size: 12px;
+        line-height: 18px;
+        color: #555;
+    }
+    .legend i {
+        width: 18px;
+        height: 18px;
+        float: left;
+        margin-right: 8px;
+        opacity: 0.7;
+    }
 </style>
 
 <div id="map"></div>
@@ -123,7 +137,28 @@ L.control.layers(basemaps, overlaymaps, {collapsed: true}).addTo(map);
 
 // Fit to overlay bounds (SW and NE points with (lat, lon))
 map.fitBounds([[54.350986203547414, 15.597242237512058], [57.81260803961569, 7.879075389227694]]);
+
+
+// Add color scale legend
+var colorScale = ["#01665e", "#35978f", "#80cdc1", "#c7eae5", "#f6e8c3", "#dfc27d", "#bf812d", "#8c510a"];
+var categories = ["FDP", "FDR", "FWP", "FWR", "ODP", "ODR", "OWP", "OWR"];
+
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function(map) {
+    var div = L.DomUtil.create('div', 'legend');
+    // Loop through categories and colors to generate labels
+    for (var i = 0; i < categories.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + colorScale[i] + '"></i> ' +
+            categories[i] + '<br>';
+    }
+    return div;
+};
+
+legend.addTo(map);
 </script>
+
 
 
 
@@ -183,7 +218,6 @@ Test <- c(Current, Solution) |> magrittr::set_names(c("Before", "After")) |> ter
 library(ggplot2)
 library(tidyterra)
 
-ggplot() + geom_spatvector(data = tidyterra::filter(Communes, NAME_2 == Total$Commune[1])) + geom_spatraster(data = Test)+ scale_fill_manual(name = "Current", values =  c("white","#01665e", "#35978f", "#80cdc1", "#c7eae5", "#f6e8c3", "#dfc27d",
-                                                  "#bf812d", "#8c510a"), na.value = "#00000000") + theme_dark() + facet_wrap(~lyr) + ggtitle(Total$Commune[1])
+ggplot() + geom_spatvector(data = tidyterra::filter(Communes, NAME_2 == Total$Commune[1])) + geom_spatraster(data = Test)+ scale_fill_manual(name = "Current", values =  c("white","#01665e", "#35978f", "#80cdc1", "#c7eae5", "#f6e8c3", "#dfc27d","#bf812d", "#8c510a"), na.value = "#00000000") + theme_dark() + facet_wrap(~lyr) + ggtitle(Total$Commune[1])
 ```
 
