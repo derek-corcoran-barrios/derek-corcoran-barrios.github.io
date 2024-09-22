@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <TileMap version="1.0.0" tilemapservice="http://tms.osgeo.org/1.0.0">
+      <Title>ReGrBu2_rescaled.tif</Title>
+      <Abstract></Abstract>
+      <SRS>EPSG:3857</SRS>
+      <BoundingBox minx="7.87907538922769" miny="54.35098620354741" maxx="15.59724223751206" maxy="57.81260803961569"/>
+      <Origin x="7.87907538922769" y="54.35098620354741"/>
+      <TileFormat width="500" height="500" mime-type="image/png" extension="png"/>
+      <TileSets profile="mercator">
+        <TileSet href="https://sustainscapes.github.io/NewTiles/7" units-per-pixel="1222.99245234375007" order="7"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/8" units-per-pixel="611.49622617187504" order="8"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/9" units-per-pixel="305.74811308593752" order="9"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/10" units-per-pixel="152.87405654296876" order="10"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/11" units-per-pixel="76.43702827148438" order="11"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/12" units-per-pixel="38.21851413574219" order="12"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/13" units-per-pixel="19.10925706787109" order="13"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/14" units-per-pixel="9.55462853393555" order="14"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/15" units-per-pixel="4.77731426696777" order="15"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/16" units-per-pixel="2.38865713348389" order="16"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/17" units-per-pixel="1.19432856674194" order="17"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/18" units-per-pixel="0.59716428337097" order="18"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/19" units-per-pixel="0.29858214168549" order="19"/>
+        <TileSet href="https://sustainscapes.github.io/NewTiles/20" units-per-pixel="0.14929107084274" order="20"/>
+      </TileSets>
+    </TileMap>
+    
