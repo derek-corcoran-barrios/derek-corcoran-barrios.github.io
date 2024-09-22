@@ -20,6 +20,14 @@ library(htmltools)
 library(htmlwidgets)
 ```
 
+## Brief recap
+
+* Transform 14% of Denmark from agriculture to nature
+* Maximize biodiversity and contiguity of nature areas
+* At least 250,000 hectares of new forest promised 
+* At least 140,000 hectares of wet areas
+
+
 ## Summary of solution for all of Denmark
 
 ```{r tableSolution}
