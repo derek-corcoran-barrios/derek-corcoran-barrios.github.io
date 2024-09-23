@@ -8,8 +8,8 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+```{r setup, include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
 library(terra)
 library(kableExtra)
 library(tidyterra)
@@ -48,7 +48,7 @@ Richness <- terra::rast("Richness_ForestDryRich.tif")
 RichPlot <- ggplot() + geom_spatraster(data = Richness) + scale_fill_wiki_c(trans = scales::log1p_trans(), breaks = c(0, 10, 100)) + labs(title ="Forest Dry Rich", caption = "Richness") + theme_bw()
 ```
 
-```{r RichPlot, cache=FALSE}
+```{r RichPlot}
 RichPlot
 ```
 
@@ -366,8 +366,19 @@ O2
 Will have
 
 * Carbon
+* Private vs State
 
 Nice to have later on
 
 * Soil
 * Restore natural areas
+
+# Questions
+
+# Equations
+
+## Overall
+
+$$\color{Red}{\text{Biodiversity} = \sum_{l}^L \sum_{c}^C \text{LD}_{l,c} \times \frac{\text{S}_{l,c} + \text{PD}_{l,c} + \text{R}_{l,c}}{3} \times \text{CC}_{c}}$$
+
+
