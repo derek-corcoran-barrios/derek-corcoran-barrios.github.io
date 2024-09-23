@@ -357,3 +357,16 @@ O1
 ```{r plotOpen2}
 O2
 ```
+
+# Things to add
+
+## New elements
+
+Will have
+
+* Carbon
+
+Nice to have later on
+
+* Soil
+* Restore natural areas
