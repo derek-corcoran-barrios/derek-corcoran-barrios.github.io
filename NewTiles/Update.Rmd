@@ -383,6 +383,5 @@ $$\color{Red}{\text{Biodiversity} = \sum_{l}^L \sum_{c}^C \text{LD}_{l,c} \times
 
 $$\color{blue}{\text{Contiguity}_\text{New} =\text{Contiguity}[l,i,j] \times \text{CanChange}[i] \times \text{CanChange}[j]\times \text{LD}_{l,j}}$$
 
-$$\color{green}{\text{Contiguity}_\text{Existing} =\text{Existingnature}[l,i] \times \text{LanduseDecision}[l,j] \times \text{CanChange}[j]}$$
 
 
